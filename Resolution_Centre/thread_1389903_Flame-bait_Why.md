@@ -1,0 +1,33 @@
+---
+title: "Flame-bait: Why?"
+date: 2010-01-25
+forum: Resolution Centre
+---
+
+### Post by k64 on 2010-01-25
+[http://ubuntuforums.org/showthread.php?p=8720072#post8720072](http://ubuntuforums.org/showthread.php?p=8720072#post8720072)
+
+In this post, I was stating pure fact about proprietary changes to the Linux kernel. I was not insulting any other members by any means, and was not being sarcastic or insulting about corporations, communities, or users' preferences. I also was not using anything snarky in the post. In fact, I stated in the post that I** didn't** expect Linus Torvalds to respond.
+
+How is it flame-bait? Here is the part of the GPL that states that you can't have proprietary code within the Linux kernel:
+
+[quote="GNU GPL Item 10"]
+ 10. Automatic Licensing of Downstream Recipients.
+
+  Each time you convey a covered work, the recipient automatically receives a license from the original licensors, to run, modify and propagate that work, subject to this License.  You are not responsible for enforcing compliance by third parties with this License.
+
+  An "entity transaction" is a transaction transferring control of an organization, or substantially all assets of one, or subdividing an organization, or merging organizations.  If propagation of a covered work results from an entity transaction, each party to that transaction who receives a copy of the work also receives whatever licenses to the work the party's predecessor in interest had or could give under the previous paragraph, plus a right to possession of the Corresponding Source of the work from the predecessor in interest, if the predecessor has it or can get it with reasonable efforts.
+
+  You may not impose any further restrictions on the exercise of the rights granted or affirmed under this License.  For example, you may not impose a license fee, royalty, or other charge for exercise of rights granted under this License, and you may not initiate litigation (including a cross-claim or counterclaim in a lawsuit) alleging that any patent claim is infringed by making, using, selling, offering for sale, or importing the Program or any portion of it.[/quote]
+
+---
+
+### Post by KiwiNZ on 2010-01-25
+You have been told numerous time your interpretation is wrong. You have continued to push this wrong point of view .You have continued to create pointless threads which can now only be considered as an attempt to create needless argument. That is flame bait.
+
+I uphold the staff decision in this matter.
+
+I will also urge you to tone it down.
+
+---
+
