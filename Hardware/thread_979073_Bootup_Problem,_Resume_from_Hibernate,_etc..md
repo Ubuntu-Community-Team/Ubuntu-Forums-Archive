@@ -1,0 +1,11 @@
+---
+title: "Bootup Problem, Resume from Hibernate, etc."
+date: 2008-11-11
+forum: Hardware
+---
+
+### Post by HDTimeshifter on 2008-11-11
+Since I upgraded to Ubuntu 8.10 and turned on hibernation, I've been having various hardware problems.  This is on a new PC build, that has been running for less than a month: 2 weeks continuously on with Ubuntu 8.04 for burn in with no problems (except that the ethernet port wasn't supported, and a download and recompile of the Atheros drivers fixed), and 12 days since upgrading to Ubuntu 8.10.  I turned on power saving features including hibernation shortly after the upgrade and it seemed to hibernate ok at first with the exception that it wouldn't wake with the mouse, but only with the keyboard (which is actually ok, since my old Windows PC that this replaced would accidentaly turn on whenever I open and closed my desk drawer, shaking the mouse).  However, after a restart required by a package update, probably nVidia drivers, it froze up at a full progress bar and a greenish (rather than the usual orangish) screen and bar.  A hardware reboot after this seemed to work.  A couple of days ago, when I did a software reboot (while troubleshooting Nautilus/Samba/Vista incompatibility), it did the same thing - froze up with a greenish full progress bar.  The last few days, it has not hibernated but stayed on continuously, and on Sunday, I noticed that the keyboard caps light has been reversed - on when caps are off and vice-versa.  Last night, when I went to work on it, the mouse and keyboard were unresponsive and the screen frozen, so I had to do a hardware reboot, but it locked up at the green full progress bar again.  A second hardware reboot was ok and documents open at the time of the crash/reboot restored ok.  I don't know if the problem is Ubuntu 8.10 or hibernation under Ubuntu or the combination of both since I turned on hibernation just after the upgrade.  Has anybody else had the same boot problems or caps lock or unresponsive mouse and keyboard with froze screen?  and I haven't had a chance to search the hardware compatibilty lists, but I have an ASUS P5Q Pro LGA 775 Intel P45 ATX Motherboard with Core 2 Quad Q6600, Antec P182 case, Corsair CMPSU-450VX 450W power supply, ASUS EN9500GT video card, MS PS/2 mouse, Compaq PS/2 keyboard.
+
+---
+

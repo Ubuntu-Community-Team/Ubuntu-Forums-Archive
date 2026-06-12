@@ -1,0 +1,11 @@
+---
+title: "USB C Device Not detected"
+date: 2019-02-13
+forum: Hardware
+---
+
+### Post by Optimus_Jazz on 2019-02-13
+Im trying to get a usb-c docking station working so I can run a multi-display setup. However, when I plug the docking station in, it is never detected. Viewing the kern.log shows no activity when removing & inserting the device from the usb-c ports. It does however output log on a normal usb 3.0 . . . any ideas ?
+
+---
+

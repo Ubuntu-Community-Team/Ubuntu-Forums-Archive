@@ -1,0 +1,138 @@
+---
+title: "Need help, New to Linux"
+date: 2017-10-02
+forum: Hardware
+---
+
+### Post by dawilson78 on 2017-10-02
+I am trying to build a MAME machine and need the lightest weight software I can get my hands on that is still supported.  Mint 14 ran great up until I went to get updates.  Soon found out its not supported anymore. The hardware i want to use came out of an old laundry coin machine.  It had windows xp embedded installed when I got it. I will list hardware specs below.  The Software I am currently using is Linux 4.10.0-35-generic (i686), with Retropie/emulationstation.  I am only using 1 system (MAME) with about 100 games.  The issue I am currently running into is the sound stutters in games, in menu, and even just trying to watch youtube in browser.
+
+HardWare:
+
+[TABLE]
+[TR]
+[TD="class: sstitle, colspan: 2"]Computer[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Processor[/TD]
+[TD="class: value"]2x Intel(R) Atom(TM) CPU Z510   @ 1.10GHz[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Memory[/TD]
+[TD="class: value"]2050MB (182MB used)[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Operating System[/TD]
+[TD="class: value"]Ubuntu 17.04[/TD]
+[/TR]
+[TR]
+[TD="class: field"]User Name[/TD]
+[TD="class: value"]arcade [/TD]
+[/TR]
+[TR]
+[TD="class: field"]Date/Time[/TD]
+[TD="class: value"]Mon 02 Oct 2017 05:30:35 PM EDT[/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Display[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Resolution[/TD]
+[TD="class: value"]1024x768 pixels[/TD]
+[/TR]
+[TR]
+[TD="class: field"]OpenGL Renderer[/TD]
+[TD="class: value"]Unknown[/TD]
+[/TR]
+[TR]
+[TD="class: field"]X11 Vendor[/TD]
+[TD="class: value"]The X.Org Foundation[/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Multimedia[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Audio Adapter[/TD]
+[TD="class: value"]HDA-Intel - HDA Intel MID[/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Input Devices[/TD]
+[/TR]
+[TR]
+[TD="class: field"] Power Button[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: field"] Sleep Button[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: field"] Video Bus[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: field"] Dell Dell USB Keyboard[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: field"] HID 413c:3010[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Printers[/TD]
+[/TR]
+[TR]
+[TD="class: field"]No printers found[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]SCSI Disks[/TD]
+[/TR]
+[TR]
+[TD="class: field"]ATA TOSHIBA MK4036GA[/TD]
+[TD="class: value"][/TD]
+[/TR]
+[/TABLE]
+[TABLE]
+[TR]
+[TD="class: stitle, colspan: 2"]Operating System[/TD]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Version[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Kernel[/TD]
+[TD="class: value"]Linux 4.10.0-35-generic (i686)[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Compiled[/TD]
+[TD="class: value"]#39-Ubuntu SMP Wed Sep 13 07:45:58 UTC 2017[/TD]
+[/TR]
+[TR]
+[TD="class: field"]C Library[/TD]
+[TD="class: value"]GNU C Library version (Ubuntu GLIBC 2.24-9ubuntu2.2) 2.24 (unstable)[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Default C Compiler[/TD]
+[TD="class: value"]GNU C Compiler version 6.3.0 20170406 (Ubuntu 6.3.0-12ubuntu2)[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Distribution[/TD]
+[TD="class: value"]Ubuntu 17.04[/TD]
+[/TR]
+[/TABLE]
+
+---
+
+### Post by QIII on 2017-10-02
+Hello!
+
+My first guess is that the Unity DE is simply too much for thst hardware.  Have you tried Xubuntu or Lubuntu?
+
+---
+
+### Post by dawilson78 on 2017-10-02
+this is a lubuntu distro...at least thats what loading screen says.
+
+---
+

@@ -1,0 +1,777 @@
+---
+title: "Brasero Error (MEDIA: closed or not recordable)"
+date: 2015-05-09
+forum: Hardware
+---
+
+### Post by Joel_Kingsley on 2015-05-09
+**brasero-session.log**
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/media/ubuntu/FreeAgent Drive/Backup Files/zorin-os-9-core-64.isoChecking session consistency (brasero_burn_check_session_consistency brasero-burn.c:1739)
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_set_output_size_for_current_track
+BraseroBurnURI stopping
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_session_output_size
+BraseroBurnURI output set (IMAGE) image = /tmp/brasero_tmp_JOV1XX.bin toc = none
+BraseroBurnURI called brasero_job_get_session_output_size
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_current_track
+BraseroBurnURI no burn:// URI found
+BraseroBurnURI stopping
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_set_output_size_for_current_track
+BraseroLocalTrack stopping
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_session_output_size
+BraseroLocalTrack output set (IMAGE) image = /tmp/brasero_tmp_37U1XX.bin toc = none
+BraseroLocalTrack called brasero_job_get_session_output_size
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_current_track
+BraseroLocalTrack no remote URIs
+BraseroLocalTrack stopping
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_flags
+BraseroChecksumImage Dummy operation, skipping
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_flags
+BraseroChecksumImage Dummy operation, skipping
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn unsupported operation
+BraseroLibburn deactivating
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_device
+BraseroLibburn Drive (/dev/sr0) init result = 1
+BraseroLibburn called brasero_job_get_flags
+BraseroLibburn called brasero_job_get_media
+BraseroLibburn called brasero_job_get_fd_in
+BraseroLibburn called brasero_job_get_tracks
+BraseroLibburn Setting multi 0
+BraseroLibburn Setting burnproof 1
+BraseroLibburn Setting dummy 1
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn burn_drive_convert_fs_adr( /dev/sr0 )
+BraseroLibburn Writing
+BraseroLibburn called brasero_job_set_dangerous
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn burn_drive_is_enumerable_adr( /dev/sr0 ) is true
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn Async START UNIT succeeded after 0.1 seconds
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn mmc_set_streaming: end_lba=2297887 ,  r=11080000 ,  w=22160
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn Allocating buffer via mmap()
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn dvd/bd Profile= 11h , obs= 32768 , obs_pad= 1
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn DVD pre-track 01 : get_nwa(0), ret= 1 , d->nwa= 0
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_actioniso error
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn syncing cache
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn called brasero_job_get_session_output_size
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn Async SYNCHRONIZE CACHE succeeded after 0.2 seconds
+BraseroLibburn Closing
+BraseroLibburn called brasero_job_set_dangerous
+BraseroLibburn called brasero_job_set_current_action
+BraseroLibburn Closing track 01  (absolute track number 1)
+BraseroLibburn Async CLOSE TRACK SESSION succeeded after 0.2 seconds
+BraseroLibburn Closing session
+BraseroLibburn Async CLOSE TRACK SESSION succeeded after 4.0 seconds
+BraseroLibburn called brasero_job_set_dangerous
+BraseroLibburn Finished successfully session
+BraseroLibburn stopping
+Dummy session successfully finished (brasero_burn_record_session brasero-burn.c:2415)
+Checking session consistency (brasero_burn_check_session_consistency brasero-burn.c:1739)
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_set_output_size_for_current_track
+BraseroBurnURI stopping
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_session_output_size
+BraseroBurnURI output set (IMAGE) image = /tmp/brasero_tmp_GMHDYX.bin toc = none
+BraseroBurnURI called brasero_job_get_session_output_size
+BraseroBurnURI called brasero_job_get_action
+BraseroBurnURI called brasero_job_get_current_track
+BraseroBurnURI no burn:// URI found
+BraseroBurnURI stopping
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_set_output_size_for_current_track
+BraseroLocalTrack stopping
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_session_output_size
+BraseroLocalTrack output set (IMAGE) image = /tmp/brasero_tmp_XSHDYX.bin toc = none
+BraseroLocalTrack called brasero_job_get_session_output_size
+BraseroLocalTrack called brasero_job_get_action
+BraseroLocalTrack called brasero_job_get_current_track
+BraseroLocalTrack no remote URIs
+BraseroLocalTrack stopping
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_flags
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_fd_in
+BraseroChecksumImage called brasero_job_set_output_size_for_current_track
+BraseroChecksumImage stopping
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_flags
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_session_output_size
+BraseroChecksumImage output set (IMAGE) image = /tmp/brasero_tmp_EZHDYX.bin toc = none
+BraseroChecksumImage called brasero_job_get_session_output_size
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_action
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_input_type
+BraseroChecksumImage called brasero_job_set_current_action
+BraseroChecksumImage called brasero_job_get_fd_in
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage Starting checksuming file /home/ubuntu/Desktop/zorin-os-9-core-64.iso (size = 1495289856)
+BraseroChecksumImage called brasero_job_get_fd_out
+BraseroChecksumImage called brasero_job_get_current_track
+BraseroChecksumImage Setting new checksum (type = 2) adbbb5e3ca718f8485db25de0c2ba0cd ((null) before)
+BraseroChecksumImage Finished track successfully
+BraseroChecksumImage stopping
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn unsupported operation
+BraseroLibburn deactivating
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_action
+BraseroLibburn called brasero_job_get_device
+BraseroLibburn Drive (/dev/sr0) init result = 1
+BraseroLibburn called brasero_job_get_flags
+BraseroLibburn called brasero_job_get_media
+BraseroLibburn called brasero_job_get_fd_in
+BraseroLibburn called brasero_job_get_tracks
+BraseroLibburn Setting multi 0
+BraseroLibburn Setting burnproof 1
+BraseroLibburn Setting dummy 0
+BraseroLibburn Precheck failed MEDIA: closed or not recordable, 
+BraseroLibburn stopping
+Session error : MEDIA: closed or not recordable,  (brasero_burn_record brasero-burn.c:2856)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+I tried burning the **Ubuntu 14.04** iso file into a Sony DVD R, while this error came up after closing the burning session.
+**I am running Ubuntu 14.04 live from a usb disk while burning the iso**. I cannot install ubuntu directly to my pc due to some reason. What is the problem?
+
+---
+
+### Post by sudodus on 2015-05-09
+If the computer runs live from a USB drive (pendrive, HDD or SSD), it should also be possible to install from that live session. Have you checked that the md5sum matches the listed value at [https://help.ubuntu.com/community/UbuntuHashes](https://help.ubuntu.com/community/UbuntuHashes). It is often easier to succeed with a USB drive than with a DVD.
+
+But if you have problems and want to try again to burn a DVD, you might try with ***k3b***, which is a good burning program. Burn at the lowest possible speed.
+
+---
+
+### Post by scdbackup on 2015-05-10
+Hi,
+
+the following messages from libburn suggest that a burn run on
+a DVD-R ended without error indication:
+
+> BraseroLibburn dvd/bd Profile= 11h , obs= 32768 , obs_pad= 1
+> BraseroLibburn DVD pre-track 01 : get_nwa(0), ret= 1 , d->nwa= 0
+> BraseroLibburn Async CLOSE TRACK SESSION succeeded after 4.0 seconds
+
+But then it was only a dummy burn ?
+
+> Dummy session successfully finished (brasero_burn_record_session brasero-burn.c:2415)
+
+DVD-R can do that if requested. But the drive is in undefined
+state afterwards until the medium gets ejected and reloaded.
+
+> BraseroLibburn Precheck failed MEDIA: closed or not recordable,
+> BraseroLibburn stopping
+> Session error : MEDIA: closed or not recordable, (brasero_burn_record brasero-burn.c:2856)
+
+Brasero reports that libburn refuses to write because probably
+the drive said that the medium was closed. This is one of the
+possible consequences of dummy burning without reloading.
+
+So why the dummy burn on the first hand ?
+
+Command line alternatives:
+
+  growisofs -dvd-compat -Z  /dev/sr0=/home/ubuntu/Desktop/zorin-os-9-core-64.iso
+
+or
+
+  xorriso -as cdrecord -v dev=/dev/sr0 -eject /home/ubuntu/Desktop/zorin-os-9-core-64.iso
+
+
+Have a nice day :)
+
+Thomas
+
+---
+
+### Post by Joel_Kingsley on 2015-05-10
+> **scdbackup said:**
+> Hi,
+
+the following messages from libburn suggest that a burn run on
+a DVD-R ended without error indication:
+
+> BraseroLibburn dvd/bd Profile= 11h , obs= 32768 , obs_pad= 1
+> BraseroLibburn DVD pre-track 01 : get_nwa(0), ret= 1 , d->nwa= 0
+> BraseroLibburn Async CLOSE TRACK SESSION succeeded after 4.0 seconds
+
+But then it was only a dummy burn ?
+
+> Dummy session successfully finished (brasero_burn_record_session brasero-burn.c:2415)
+
+DVD-R can do that if requested. But the drive is in undefined
+state afterwards until the medium gets ejected and reloaded.
+
+> BraseroLibburn Precheck failed MEDIA: closed or not recordable,
+> BraseroLibburn stopping
+> Session error : MEDIA: closed or not recordable, (brasero_burn_record brasero-burn.c:2856)
+
+Brasero reports that libburn refuses to write because probably
+the drive said that the medium was closed. This is one of the
+possible consequences of dummy burning without reloading.
+
+So why the dummy burn on the first hand ?
+
+Command line alternatives:
+
+  growisofs -dvd-compat -Z  /dev/sr0=/home/ubuntu/Desktop/zorin-os-9-core-64.iso
+
+or
+
+  xorriso -as cdrecord -v dev=/dev/sr0 -eject /home/ubuntu/Desktop/zorin-os-9-core-64.iso
+
+
+Have a nice day :)
+
+Thomas
+
+Thank you very much. I tried the command line alternative(growisofs) and it worked. The iso is burned successfully.:-)
+
+---
+

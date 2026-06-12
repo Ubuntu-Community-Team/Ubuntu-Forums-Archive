@@ -1,0 +1,376 @@
+---
+title: "Modem 3G Arnet ZTE MF110 Ubuntu 9.04"
+date: 2009-11-21
+forum: Hardware
+---
+
+### Post by faktorqm on 2009-11-21
+Hola, estoy acá en FDF, e intente conectar el modem del titulo. Logrée que me detecte el modem mas no conectarme. 
+
+Aqui algunos reportes. Me estoy conectando utilizando "sudo wvdial" como indico Gmunioz en otro post similar.
+
+/var/log/messages:
+
+```
+Nov 21 19:07:47 deliciosa pppd[5783]: pppd 2.4.5 started by root, uid 0
+Nov 21 19:07:47 deliciosa pppd[5783]: Using interface ppp0
+Nov 21 19:07:47 deliciosa pppd[5783]: Connect: ppp0 <--> /dev/ttyUSB2
+Nov 21 19:07:47 deliciosa pppd[5783]: CHAP authentication succeeded
+Nov 21 19:07:47 deliciosa pppd[5783]: CHAP authentication succeeded
+Nov 21 19:08:22 deliciosa pppd[5783]: IPCP: timeout sending Config-Requests 
+Nov 21 19:08:28 deliciosa pppd[5783]: Connection terminated.
+Nov 21 19:08:28 deliciosa pppd[5783]: Modem hangup
+Nov 21 19:08:28 deliciosa pppd[5783]: Exit.
+
+```
+
+Esta es la salida de sudo wvdial:
+
+```
+lila@deliciosa:~$ sudo wvdial
+--> WvDial: Internet dialer version 1.60
+--> Cannot get information for serial port.
+--> Initializing modem.
+--> Sending: ATZ
+ATZ
+OK
+--> Sending: AT+CFUN=1
+AT+CFUN=1
+OK
+--> Sending: ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+OK
+--> Sending: AT+CGDCONT=1,"IP","gprs.personal.com"
+AT+CGDCONT=1,"IP","gprs.personal.com"
+OK
+--> Modem initialized.
+--> Sending: ATM1L3DT*99#
+--> Waiting for carrier.
+CONNECT 7200000
+--> Carrier detected.  Starting PPP immediately.
+--> Starting pppd at Sat Nov 21 19:13:30 2009
+--> Pid of pppd: 6855
+--> Using interface ppp0
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> pppd: &#65533;u[02]  x[02] 
+--> Disconnecting at Sat Nov 21 19:14:08 2009
+--> The PPP daemon has died: A modem hung up the phone (exit code = 16)
+--> man pppd explains pppd error codes in more detail.
+--> Try again and look into /var/log/messages and the wvdial and pppd man pages for more information.
+lila@deliciosa:~$ 
+
+```
+
+/etcx/wvdial.conf
+
+```
+
+[Dialer Defaults]
+Init = ATZ
+Init2 = AT+CFUN=1
+Init3 = ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+Init4 = AT+CGDCONT=1,"IP","gprs.personal.com"
+Abort on No Dialtone = on
+New PPPD = yes
+Password = adgj
+Check Def Route = on
+Phone = *99#
+Idle Seconds = 0
+Abort on Busy = off
+Modem Type = USB Modem
+Stupid Mode = on
+Baud = 9600
+Auto DNS = off
+Dial Command = ATM1L3DT
+Auto Reconnect = off
+Ask Password = off
+ISDN = off
+Dial Attempts = 1
+Username = gprs
+Carrier Check = on
+Modem = /dev/ttyUSB
+```
+
+/etc/usb_modeswitch.conf:
+
+```
+########################################################
+# ZTE MF628+ (tested version from Telia / Sweden)
+# ZTE MF626
+# ZTE MF633
+# ZTE MF636 (aka "Telstra / BigPond 7.2 Mobile Card")
+#
+# Contributor: Joakim Wennergren
+
+DefaultVendor=  0x19d2
+DefaultProduct= 0x2000
+
+TargetVendor=   0x19d2
+TargetProduct=  0x0031
+
+# only for reference and 0.x versions
+MessageEndpoint=0x01
+
+MessageContent="55534243123456782000000080000c85010101180101010101000000000000"
+
+# if that command doesn't work, try the other ("eject")
+MessageContent="5553424312345678000000000000061b000000030000000000000000000000"
+
+```
+
+si necesitan algo mas de informacion, sientanse libres de preguntar. Salu2!
+
+---
+
+### Post by gmunioz on 2009-11-21
+Hola fak....:
+
+Prueba editar el archivo resolv.conf
+
+```
+sudo gedit /etc/resolv.conf
+```
+
+Pon en interior estas líneas:
+
+```
+nameserver  200.45.191.35 
+nameserver  200.45.191.40
+```
+
+Estos son los de Arnet.
+Si este error debido a fallas en la negociación
+de la conexión con el proveedor, persiste puede 
+ser que no haya cobertura adecuada o si es a tarjeta 
+que este bloqueado por falta de saldo.
+
+---
+
+### Post by faktorqm on 2009-11-23
+Hola, primero que nada muchas gracias por responder. 
+
+Si yo me imagine algo de eso, pero cuando no tenes saldo directamente te dice "no carrier" (o el famoso error 619 de windows). En windows funcionaba lo mas bien (lo probe tambien).
+
+Buscando el error en internet salen 1000 cosas pero casi nada relacionado con cosas 3g, por que de hecho el error es mas de ppp que otra cosa.
+
+Lo de los DNS no lo probe, quedaria que la usuaria nos diga (prometio hacerse un user en el foro y postear).
+
+Tambien la conexion desaparecio del network manager. Toque demasiado los archivos .rules y luego no sabia cual borrar y cua dejar. Ahora si corres el asistente se "confunde", y te agrega la conexion, pero cuando la editas y guardas se borra. 
+
+Saludos!!!
+
+---
+
+### Post by lpagola on 2009-11-23
+Hola chicos,
+gracias por la paciencia con este bendito modem.
+
+Probé agregar los dns de arnet, yo tenía ahi 10.0.0.2 que es la ip de mi modem ethernet. Agregué los otros 2 debajo, por lo que mi resolv.conf quedó así:
+
+```
+# Generated by NetworkManager
+nameserver 10.0.0.2
+nameserver  200.45.191.35 
+nameserver  200.45.191.40
+```
+No sé si sea correcto. 
+Luego ejecute en la consola el wvdial y me devuelve esto:
+
+```
+lila@deliciosa:~$ sudo wvdial
+--> WvDial: Internet dialer version 1.60
+--> Cannot get information for serial port.
+--> Initializing modem.
+--> Sending: ATZ
+ATZ
+OK
+--> Sending: AT+CFUN=1
+AT+CFUN=1
+OK
+--> Sending: ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+OK
+--> Sending: AT+CGDCONT=1,"IP","gprs.personal.com"
+AT+CGDCONT=1,"IP","gprs.personal.com"
+OK
+--> Modem initialized.
+--> Sending: ATM1L3DT*99#
+--> Waiting for carrier.
+CONNECT 7200000
+--> Carrier detected.  Starting PPP immediately.
+--> Starting pppd at Mon Nov 23 19:27:14 2009
+--> Pid of pppd: 11959
+--> Using interface ppp0
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> pppd: &#65533;%&#65533;[08] (&#65533;[08]
+--> Disconnecting at Mon Nov 23 19:27:52 2009
+--> The PPP daemon has died: A modem hung up the phone (exit code = 16)
+--> man pppd explains pppd error codes in more detail.
+--> Try again and look into /var/log/messages and the wvdial and pppd man pages for more information.
+
+```
+
+me parece que es casi lo mismo que antes, no?
+Ahora me fijo si logro recuperar el log que menciona ahi.
+saludos,
+
+---
+
+### Post by lpagola on 2009-11-23
+me fijé en man pppd y no dice mucho más sobre el error 16, que el modem cortó la conexión.
+
+y en /var/log/messages tengo esto:
+
+```
+Nov 23 19:35:47 deliciosa pppd[12843]: pppd 2.4.5 started by root, uid 0
+Nov 23 19:35:47 deliciosa pppd[12843]: Using interface ppp0
+Nov 23 19:35:47 deliciosa pppd[12843]: Connect: ppp0 <--> /dev/ttyUSB2
+Nov 23 19:35:47 deliciosa pppd[12843]: CHAP authentication succeeded
+Nov 23 19:35:47 deliciosa pppd[12843]: CHAP authentication succeeded
+Nov 23 19:36:19 deliciosa pppd[12843]: IPCP: timeout sending Config-Requests 
+Nov 23 19:36:25 deliciosa pppd[12843]: Connection terminated.
+Nov 23 19:36:25 deliciosa pppd[12843]: Modem hangup
+Nov 23 19:36:25 deliciosa pppd[12843]: Exit.
+```
+
+No sé cuanto ayude, pero ahi va por las dudas.
+Gracias.
+
+---
+
+### Post by z37a on 2009-11-23
+Te comento nomas que lo del 10.0.0.2 no va a funcionar ya que eso es una ip publica, y justamente los otros dns con ip privadas son los que necesitas.
+
+PD: Esperemos salga alguna solución que esto me interesa ver como termina!!!
+
+---
+
+### Post by guillermolisi on 2009-11-23
+El modem viene bien hasta esta linea que es la que produce el cierre/cuelgue del modem:
+> Nov 23 19:36:19 deliciosa pppd[12843]: IPCP: timeout sending Config-Requests
+Aqui hay una comunicacion que no se termina de establecer y el modem cuelga/cierra.
+
+---
+
+### Post by matiashenn on 2010-01-12
+Hola amigos de Ubuntu Forums. Ya consiguieron hacer funcionar al modem ZTE mf110 (valga la redundancia) en ubuntu? como no vi mas respuesta pregunto, yo hoy logre hacerlo, si alguien necesita comuniquese aqui y le paso mis archivos .conf y la version del usb_modeswitch que usé. lo hice funcionar utilizando el network manager y logre que automatize el paso de pen a modem al conectarlo siguiendo info de varias webs. saludos!
+:popcorn::popcorn::popcorn:
+
+---
+
+### Post by guillermolisi on 2010-01-12
+> **matiashenn said:**
+> Hola amigos de Ubuntu Forums. Ya consiguieron hacer funcionar al modem ZTE mf110 (valga la redundancia) en ubuntu? como no vi mas respuesta pregunto, yo hoy logre hacerlo, si alguien necesita comuniquese aqui y le paso mis archivos .conf y la version del usb_modeswitch que usé. lo hice funcionar utilizando el network manager y logre que automatize el paso de pen a modem al conectarlo siguiendo info de varias webs. saludos!
+:popcorn::popcorn::popcorn:
+Serias tan amable de exponer, aunque mas no sea como adjuntos, los archivos .conf y el resto de la informacion que utilizaste para este logro, como para que quien repita lo hecho llegue al mismo destino ?
+
+Gracias !
+
+---
+
+### Post by lagunaf on 2010-01-24
+[B]matiashenn favor podrias postear un instructivo y los archivos de configuración de tu equipo?.
+Gracias!!.
+Saludos.
+[/B]
+
+---
+
+### Post by z37a on 2010-01-27
+Alguien probo este módem de Arnet/Personal con 9.10?
+
+---
+
+### Post by atari130xe on 2010-01-29
+> **z37a said:**
+> Alguien probo este módem de Arnet/Personal con 9.10?
+
+Mirà el tema no es la cia de celulares sino el modem en sì, mi hna tiene uno igual pero de claro, los experimentos que hice ya para que funcione no tiene nombre jejeje (en ubuntu 9.10) hasta ahora sin exito lo maximo que alcancè es que me reconozca el modem con wvdial pero luego de ahi nada màs. Los que si andan son los Huawei que por ej lo tiene una amiga mia a la que le instalè Karmic y le funciona espectacular.
+
+---
+
+### Post by z37a on 2010-01-30
+> **atari130xe said:**
+> Mirà el tema no es la cia de celulares sino el modem en sì, mi hna tiene uno igual pero de claro, los experimentos que hice ya para que funcione no tiene nombre jejeje (en ubuntu 9.10) hasta ahora sin exito lo maximo que alcancè es que me reconozca el modem con wvdial pero luego de ahi nada màs. Los que si andan son los Huawei que por ej lo tiene una amiga mia a la que le instalè Karmic y le funciona espectacular.
+
+Pregunte por la cía, solo por el echo de que al ser de Arnet y o de personal capaz tiene diferentes configuraciones y por eso no funciona, pero entonces ya me queda claro que el problema esta en el hardware, en el driver mas precisamente.
+
+---
+
+### Post by z37a on 2010-01-31
+Gente, antes que nada perdón por doble post, pero quiero comentar algo que hable con un técnico de arnet por teléfono.
+
+Aclaro antes que nada que el módem no es mio, si no de uno de mis mejores amigos.
+
+Ayer llame a Arnet, luego de instalarle el nuevo módem wifi que le llego a este amigo, llame a Arnet para hacerle 2 consultas, entre ellas sobre el uso del módem con Linux, me sorprendió que el que me atendió sabia lo que era una distribución, generalmente trabaja gente ahí que no sabe ni lo que es una IP, por suerte no fue el caso. En la charla que tuve telefónicamente le comente que el módem recién había llegado hace semana y media, y que era incompatible con mi sistema, me pregunto si usaba mac le dije que Linux, a lo que me contesto que puede ser que sea compatible con algunas distribuciones(no me ayudo en eso pero por lo menos eso es mucho!!!), a lo que le conteste que estuve averiguando y note que no era para nada compatible(lo probé en 9.10 y daba errores feos en el bash al solo enchufarlo), a lo que le pregunte si era posible cambiarlo por un huawei, me dijo que de ser posible lo es siempre y cuando halla disponibilidad de módems, que me comunique el lunes con gestión comercial y solicite un cambio de módem.
+
+Bueno, quería comentar eso, tal vez si los que tienen este módem empiezan a pedir cambios escuchen y hagan algo. El Lunes mi amigo va a estar llamando y luego comento como termino todo.
+
+---
+
+### Post by marianom on 2010-01-31
+Y probaste con usb_modeswitch? No lo veo mencionado en el conf pero puede ser que ande.
+
+---
+
+### Post by JuanitoMint on 2010-02-01
+para aquellos que quieran evitarse todo el lio del usbmodeswitch les comento que el modem trae unos comandos para deshabilitar el autorun del CD
+AT+ZCDRUN=8 
+se deshabilita
+AT+ZCDRUN=9
+lo volvemos al estado anterior o sea con el autorun
+yo probe con varios modelos en karmic y los detecta correctamente, pero igual no puedo establecer la conexion
+
+---
+
+### Post by atari130xe on 2010-02-01
+> **marianom said:**
+> Y probaste con usb_modeswitch? No lo veo mencionado en el conf pero puede ser que ande.
+
+hola mariano, en mi caso probé con modem switch (en karmic y en mint helena que es igual) consegui pasar de 2000 a 2003 la identificacion del modem con lsusb y que al probar la conexion con network manager la "ruedita" gire como loca sin parar quedando ahi el tema, me pregunto como hacen los que logran conectarse :(
+
+---
+
+### Post by atari130xe on 2010-02-01
+> **JuanitoMint said:**
+> para aquellos que quieran evitarse todo el lio del usbmodeswitch les comento que el modem trae unos comandos para deshabilitar el autorun del CD
+AT+ZCDRUN=8 
+se deshabilita
+AT+ZCDRUN=9
+lo volvemos al estado anterior o sea con el autorun
+yo probe con varios modelos en karmic y los detecta correctamente, pero igual no puedo establecer la conexion
+
+Como aplicás esos comandos?
+
+---
+
+### Post by JuanitoMint on 2010-02-02
+desde cualquier emulador de terminal de windows
+
+---
+
+### Post by atari130xe on 2010-02-02
+> **JuanitoMint said:**
+> desde cualquier emulador de terminal de windows
+
+Ok suponiendo que inserto el modem directamente en windows podrías por favor escribir los pasos? abrir CMD? no comprendo.(podrias escribir los pasos por favor? gracias!
+
+---
+
+### Post by JuanitoMint on 2010-02-03
+mirá aca lo explique mejor sin ir a windows
+
+[http://ubuntuforums.org/showthread.php?p=8768529#post8768529](http://ubuntuforums.org/showthread.php?p=8768529#post8768529)
+
+---
+

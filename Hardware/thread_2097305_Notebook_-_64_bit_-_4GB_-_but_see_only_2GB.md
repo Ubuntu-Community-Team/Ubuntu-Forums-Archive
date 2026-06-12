@@ -1,0 +1,275 @@
+---
+title: "Notebook - 64 bit - 4GB - but see only 2GB"
+date: 2012-12-22
+forum: Hardware
+---
+
+### Post by Cseszkum on 2012-12-22
+Hello,
+I'm a new linux user. I have an Acer Aspire E1-571 notebook.  It has 4GB RAM. I installed Xubuntu 12.10 (64 bit), but it sees only 2GB  ram instead of 4GB. :(
+Bios sees all 4GB. (It's a very pure bios, I could set time, boot order and security. No advanced setting page.)
+
+Some info:
+[FONT=Courier New]> lsb_release -a
+
+Distributor ID:    Ubuntu
+Description:    Ubuntu 12.10
+Release:    12.10
+Codename:    quantal
+
+> uname -a
+
+Linux VarpAcer 3.5.0-21-generic #32-Ubuntu SMP Tue Dec 11 18:51:59 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
+
+> sudo lshw -short
+
+H/W path        Device      Class          Description
+======================================================
+                            system         Aspire E1-571 (Type1Sku0)
+/0                          bus            EA50_HC_CR
+/0/0                        memory         128KiB BIOS
+/0/10                       memory         4GiB System Memory
+/0/10/0                     memory         [empty]
+/0/10/1                     memory         [empty]
+/0/10/2                     memory         4GiB DIMM DDR3 Synchronous 666 MHz (1,5 ns)
+/0/10/3                     memory         [empty]
+/0/20                       processor      Intel(R) Core(TM) i3-3110M CPU @ 2.40GHz
+/0/20/22                    memory         32KiB L1 cache
+/0/20/23                    memory         256KiB L2 cache
+/0/20/24                    memory         3MiB L3 cache
+/0/21                       memory         32KiB L1 cache
+/0/100                      bridge         3rd Gen Core processor DRAM Controller
+/0/100/2                    display        3rd Gen Core processor Graphics Controller
+/0/100/16                   communication  7 Series/C210 Series Chipset Family MEI Controller #1
+/0/100/1a                   bus            7 Series/C210 Series Chipset Family USB Enhanced Host Controller #2
+/0/100/1b                   multimedia     7 Series/C210 Series Chipset Family High Definition Audio Controller
+/0/100/1c                   bridge         7 Series/C210 Series Chipset Family PCI Express Root Port 1
+/0/100/1c/0     eth0        network        NetLink BCM57785 Gigabit Ethernet PCIe
+/0/100/1c/0.1               generic        NetXtreme BCM57765 Memory Card Reader
+/0/100/1c/0.2               generic        Broadcom Corporation
+/0/100/1c/0.3               generic        Broadcom Corporation
+/0/100/1c.1                 bridge         7 Series/C210 Series Chipset Family PCI Express Root Port 2
+/0/100/1c.1/0   eth1        network        BCM4313 802.11b/g/n Wireless LAN Controller
+/0/100/1d                   bus            7 Series/C210 Series Chipset Family USB Enhanced Host Controller #1
+/0/100/1f                   bridge         HM77 Express Chipset LPC Controller
+/0/100/1f.2                 storage        7 Series Chipset Family 6-port SATA Controller [AHCI mode]
+/0/100/1f.3                 bus            7 Series/C210 Series Chipset Family SMBus Controller
+/0/1            scsi0       storage        
+/0/1/0.0.0      /dev/sda    disk           500GB Hitachi HTS54505
+/0/1/0.0.0/1    /dev/sda1   volume         461GiB EXT4 volume
+/0/1/0.0.0/2    /dev/sda2   volume         3933MiB Extended partition
+/0/1/0.0.0/2/5  /dev/sda5   volume         3933MiB Linux swap / Solaris partition
+/0/2            scsi2       storage        
+/0/2/0.0.0      /dev/cdrom  disk           DVD-RW DVRTD11RS
+
+> cat /proc/meminfo
+
+MemTotal:        1919616 kB
+MemFree:          132696 kB
+Buffers:           29828 kB
+Cached:           866512 kB
+SwapCached:            0 kB
+Active:           595208 kB
+Inactive:        1030496 kB
+Active(anon):     366948 kB
+Inactive(anon):   451072 kB
+Active(file):     228260 kB
+Inactive(file):   579424 kB
+Unevictable:       31264 kB
+Mlocked:           31264 kB
+SwapTotal:       4027388 kB
+SwapFree:        4027068 kB
+Dirty:             18016 kB
+Writeback:             0 kB
+AnonPages:        760668 kB
+Mapped:           119408 kB
+Shmem:             82804 kB
+Slab:              66920 kB
+SReclaimable:      43680 kB
+SUnreclaim:        23240 kB
+KernelStack:        3144 kB
+PageTables:        19268 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     4987196 kB
+Committed_AS:    2237964 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      546748 kB
+VmallocChunk:   34359189687 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       53248 kB
+DirectMap2M:     1912832 kB
+
+> free -m
+
+             total       used       free     shared    buffers     cached
+Mem:          1874       1771        103          0         29        870
+-/+ buffers/cache:        871       1002
+Swap:         3932          0       3932
+
+> sudo fwts memmapdump -
+
+Results generated by fwts: Version V0.26.00 (Wed Sep 19 15:55:55 CST 2012).
+
+Some of this work - Copyright (c) 1999 - 2010, Intel Corp. All rights reserved.
+Some of this work - Copyright (c) 2010 - 2012, Canonical.
+
+This test run on 20/12/12 at 13:54:33 on host Linux VarpAcer 3.5.0-21-generic #32-Ubuntu SMP Tue Dec
+11 18:51:59 UTC 2012 x86_64.
+
+Running tests: memmapdump.
+
+Dump system memory map.
+----------------------------------------------------------------------------------------------------
+Test 1 of 1: Dump system memory map.
+Memory Map Layout
+-----------------
+0000000000000000 - 000000000009d7ff  (System RAM)
+000000000009d800 - 000000000009ffff  (reserved)
+00000000000e0000 - 00000000000fffff  (reserved)
+0000000000100000 - 000000001fffffff  (System RAM)
+0000000020000000 - 00000000201fffff  (reserved)
+0000000020200000 - 0000000040003fff  (System RAM)
+0000000040004000 - 0000000040004fff  (reserved)
+0000000040005000 - 00000000a6abefff  (System RAM)
+00000000a6abf000 - 00000000a6ebefff  (reserved)
+00000000a6ebf000 - 00000000a6fbefff  (ACPI Non-volatile Storage)
+00000000a6fbf000 - 00000000a6ffefff  (ACPI Non-volatile Storage)
+00000000a6fff000 - 00000000a6ffffff  (System RAM)
+00000000a7000000 - 00000000af9fffff  (reserved)
+00000000e0000000 - 00000000efffffff  (reserved)
+00000000feb00000 - 00000000feb03fff  (reserved)
+00000000fec00000 - 00000000fec00fff  (reserved)
+00000000fed10000 - 00000000fed19fff  (reserved)
+00000000fed1c000 - 00000000fed1ffff  (reserved)
+00000000fee00000 - 00000000fee00fff  (reserved)
+00000000ffc80000 - 00000000ffffffff  (reserved)
+0000000100000000 - 000000014f5fffff  (System RAM)
+
+> sudo lshw -C memory 
+
+  *-firmware
+       description: BIOS
+       vendor: Acer
+       physical id: 0
+       version: V1.09
+       date: 07/30/2012
+       size: 128KiB
+       capacity: 3520KiB
+        capabilities: pci upgrade shadowing cdboot bootselect edd  int13floppynec int13floppytoshiba int13floppy360 int13floppy1200  int13floppy720 int13floppy2880 int9keyboard int10video acpi usb  biosbootspecification uefi
+  *-memory
+       description: System Memory
+       physical id: 10
+       slot: System board or motherboard
+       size: 4GiB
+     *-bank:0
+          description: [empty]
+          product: Empty
+          vendor: Empty
+          physical id: 0
+          serial: Empty
+          slot: DIMM0
+     *-bank:1
+          description: [empty]
+          product: Empty
+          vendor: Empty
+          physical id: 1
+          serial: Empty
+          slot: DIMM1
+     *-bank:2
+          description: DIMM DDR3 Synchronous 666 MHz (1,5 ns)
+          product: NT4GC64B8HG0NS-CG
+          vendor: Nanya Technology
+          physical id: 2
+          serial: 36172C02
+          slot: DIMM1
+          size: 4GiB
+          width: 64 bits
+          clock: 666MHz (1.5ns)
+     *-bank:3
+          description: [empty]
+          product: Empty
+          vendor: Empty
+          physical id: 3
+          serial: Empty
+          slot: DIMM3
+  *-cache:0
+       description: L1 cache
+       physical id: 22
+       slot: L1 Cache
+       size: 32KiB
+       capacity: 32KiB
+       capabilities: internal write-through instruction
+  *-cache:1
+       description: L2 cache
+       physical id: 23
+       slot: L2 Cache
+       size: 256KiB
+       capacity: 256KiB
+       capabilities: internal write-through unified
+  *-cache:2
+       description: L3 cache
+       physical id: 24
+       slot: L3 Cache
+       size: 3MiB
+       capacity: 3MiB
+       capabilities: internal write-back unified
+  *-cache
+       description: L1 cache
+       physical id: 21
+       slot: L1 Cache
+       size: 32KiB
+       capacity: 32KiB
+       capabilities: internal write-through data[/FONT]
+
+Somebody has any idea?
+...or I missed something?
+
+---
+
+### Post by sudodus on 2012-12-22
+Welcome to the Ubuntu Forums :-)
+
+[s]What kernel type is it? pae or non-pae. I think the standard kernel of Xubuntu is non-pae, which is necessary for several old cpus, for example for my old IBM Thinkpad T41. But you need pae to use more than 2 GB of RAM, so I suggest that you check this issue and get a pae version, if this is the case.[/s]
+...
+*Edit*: You did install 64-bit version and it works, then it is not the pae issue, both the cpu and the kernel are far above that problem.
+
+---
+
+### Post by sudodus on 2012-12-22
+Instead let us discuss along another line:
+
+Is it the same problem, when you run a live session booted from the Xubuntu install CD/DVD/USB drive?
+
+What about Xubuntu 12.04 LTS? Here you need to select the 64-bit version or generic-pae (otherwise you might run into the the non-pae version, which cannot use more than 2GB of RAM).
+
+12.04 lasts until April 2015, and can be expected to be very stable, so it is also a good choice.
+
+---
+
+### Post by Cseszkum on 2012-12-23
+Thx for reply sudodus!
+
+Good ideas! I try to live CD, and it sees full of ram. Strange... but it has a previous kernel...
+
+And you wrote the LTS supported ubuntu. I wanted to install that, but it seems I failed when I downloaded it... ](*,)
+I changed to LTS and it sees full of ram.
+Thx for this christmas gift! :) :) :)
+All the best!
+
+---
+
+### Post by sudodus on 2012-12-23
+You are welcome
+
+:KS
+
+---
+

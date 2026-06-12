@@ -1,0 +1,141 @@
+---
+title: "How to modify /etc/init.d/gpsd for bluetooth gps"
+date: 2010-03-08
+forum: Hardware
+---
+
+### Post by rdanti on 2010-03-08
+Hello
+
+I have Ubuntu 9.10 and I am trying to connect my Bluetooth GPS using GPSD and this guide:
+
+
+[http://gpsd.berlios.de/bt.html](http://gpsd.berlios.de/bt.html)
+
+
+but I don't understand how to modify the file gpsd in /etc/init.d
+
+The guide at point 5 says:
+
+
+
+[I][COLOR="Red"]Edit /etc/init.d/gpsd so that it automatically starts up listening to /dev/rfcomm0
+
+
+	...
+	#GPS_DEV="/dev/ttyS3"
+	GPS_DEV="/dev/rfcomm0"
+	...[/COLOR][/I]
+
+
+
+The file gpsd located in /etc/init.d is:
+
+
+
+[I][COLOR="Blue"]#!/bin/sh
+#
+#	Authors: Tilman Koschnick <til@subnetz.org>
+#                Bernd Zeimetz <bzed@debian.org>
+#
+
+### BEGIN INIT INFO
+# Provides:          gpsd
+# Required-Start:    $syslog $network dbus
+# Should-Start:      bluetooth
+# Required-Stop:     $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start the GPS (Global Positioning System) daemon
+### END INIT INFO
+
+set -e
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/gpsd
+DESC="GPS (Global Positioning System) daemon"
+PIDFILE="/var/run/gpsd.pid"
+SELF=$(cd $(dirname $0); pwd -P)/$(basename $0)
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+# include gpsd defaults
+if [ -f /etc/default/gpsd ] ; then
+	. /etc/default/gpsd
+else
+	log_failure_msg "gpsd: error: Cannot find /etc/default/gpsd."
+	exit 1
+fi
+
+case "$1" in
+  start)
+	if [ "x$START_DAEMON" = "xtrue" ] ; then
+		log_daemon_msg "Starting $DESC" "gpsd"
+		start-stop-daemon --start --quiet \
+			--exec $DAEMON -- $DAEMON_OPTS -P $PIDFILE $DEVICES \
+			&& log_end_msg 0 \
+			|| log_end_msg 1
+	else
+		log_daemon_msg "Not starting $DESC" "gpsd" && log_end_msg 0
+	fi		
+	;;
+  stop)
+	if [ "x$START_DAEMON" = "xtrue" ] ; then
+		log_daemon_msg "Stopping $DESC" "gpsd"
+		WARN=$(start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE)
+		log_end_msg 0
+		[ -n "$WARN" ] && log_warning_msg "$WARN"
+	else
+		log_daemon_msg "Not stopping $DESC" "gpsd" && log_end_msg 0
+	fi		
+	;;
+  reload|force-reload)
+	log_action_msg "gpsd: Resetting connection to GPS device" 
+	WARN=$(start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile $PIDFILE)
+	[ -n "$WARN" ] && log_warning_msg "$WARN"
+	;;
+  restart)
+	set +e; $SELF stop; set -e
+		$SELF start
+	;;
+  status)
+	status_of_proc $DAEMON gpsd
+	;;
+  *)
+	N=/etc/init.d/gpsd
+	echo "Usage: $N {start|stop|restart|reload|force-reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0[/COLOR][/I]
+
+
+May you help me ?
+
+---
+
+### Post by sickofthesea on 2010-04-14
+> **rdanti said:**
+> Hello
+
+I have Ubuntu 9.10 and I am trying to connect my Bluetooth GPS using GPSD and this guide:
+
+
+[http://gpsd.berlios.de/bt.html](http://gpsd.berlios.de/bt.html)
+
+
+but I don't understand how to modify the file gpsd in /etc/init.d
+
+
+
+Open a terminal and type:
+
+"sudo dpkg-reconfigure gpsd"
+
+Enter your password and follow the prompts.
+
+---
+

@@ -1,0 +1,227 @@
+---
+title: "Black screen after installing 5770 driver"
+date: 2011-02-03
+forum: Hardware
+---
+
+### Post by zone-x on 2011-02-03
+hello every one :)
+i installed ubuntu 10.10 2day after that i went to the additional drivers and activated my driver
+it asked me to reboot so i did after that the PC booted normally and then the screen went black but the login music is in the back ground !
+i cant see any thing !!!! :(
+what to do ???
+my pc specs are
+MB: gigabyte EP43-UD3L
+CPU : intel Q8300 2.5/4
+VGA : ATI 5770 1gb powercolor
+RAM: 4 gb kingstone 1066
+
+thanx for ur help :D
+
+---
+
+### Post by zone-x on 2011-02-03
+i have reinstalled the system but still the same issue :(
+black screen at login it shuts down as if there is now signal
+
+---
+
+### Post by lukaszr on 2011-02-03
+Had the same exact issue. 
+
+Here's a link I came across that actually got my HD6870 video card working perfectly with the latest drivers from ATI (for my card). 
+
+[http://wiki.cchtml.com/index.php/Ubuntu_Maverick_Installation_Guide#The_Options]("http://wiki.cchtml.com/index.php/Ubuntu_Maverick_Installation_Guide#The_Options")
+
+I'm sure if you did like I did, and follow the directions there step by step (ofcourse modifying values based on your versions of software etc.) you should have no problem getting your card working. 
+
+Cheers, PM me if you have any further questions.
+
+---
+
+### Post by zone-x on 2011-02-04
+thanx so much for ur attention 
+so i did the Generic Config :
+$ sudo aticonfig --initial -f
+and rebooted to find my self at the same no signal screen and the key comps only restarts the system nothing more 
+
+ohh : i didnt say that i have a CRT monitor connected via VGA cable
+
+now ill have to reinstall so i can see my screen again :(
+
+---
+
+### Post by lukaszr on 2011-02-04
+Ok, here is every command I executed when installing the drivers for my 6870. Please make sure you use your versions of software, as mine are dedicated to my system. 
+
+```
+
+**sudo apt-get install update** //Update your system. 
+**sudo apt-get install build-essential cdbs fakeroot dh-make debhelper debconf libstdc++6 dkms libqtgui4 wget execstack libelfg0**
+**sudo apt-get install ia32-libs**
+**sudo apt-get remove --purge xserver-xorg-video-radeon** **DO NOT FORGET TO RUN THIS COMMAND!**
+**chmod +x ati-driver-installer-11-1-x86.x86_64.run**
+**sh ati-driver-installer-11-1-x86.x86_64.run --buildpkg Ubuntu/maverick**
+**sudo dpkg -i fglrx*.deb**
+**sudo nano /etc/X11/xorg.conf** //if xorg.conf doesn't exist, create it.
+[INDENT]Now you must enter the following in the xorg.conf file.
+[CODE][I]Section "Device"
+ Identifier "ATI radeon 6870"
+ Driver "fglrx"
+EndSection[/I]
+```
+[/INDENT]
+**sudo aticonfig --input=/etc/X11/xorg.conf --tls=1**
+**sudo reboot**
+
+And you should successfully have ATI drivers installed. To test if they work run the following in the terminal. 
+**fgl_glxgears**
+[/CODE]
+
+Hope this helps, and anyone else who stumbles across this issue. Cheers.
+
+---
+
+### Post by zone-x on 2011-02-06
+still the same issue
+so i got my hands on my old x1950 and installed a new system the VGA driver was natively supported with a 1024*768 res only !! and a higher one at 1370*768 so one good option for 4:3 
+so new system again and used my 5770 and installed driver from additional drivers and used the 5770 on my Sony TV and it work at a res of 1370*768 !!!
+so y not working @ my old monitor :S
+
+---
+
+### Post by zone-x on 2011-03-09
+bump :(
+
+---
+
+### Post by zone-x on 2011-03-10
+here is my Q on askubuntu.com
+
+[http://askubuntu.com/questions/29637/no-signal-to-monitor-after-driver-install]("http://askubuntu.com/questions/29637/no-signal-to-monitor-after-driver-install")
+
+---
+
+### Post by Yellow Pasque on 2011-03-10
+The GPU can't read the monitor's EDID through the VGA, so you'll probably have to specify modes and HorizSync/VertRefresh manually.
+
+---
+
+### Post by zone-x on 2011-03-16
+u r right look what happed when i used my monitor as default 
+[link]("http://img339.imageshack.us/i/photobd.jpg/")
+
+---
+
+### Post by Yellow Pasque on 2011-03-16
+EDID's can get corrupted (it happened to me too). My monitor spews the same invalid checksum messages and lost the DVI when that started happening. I'd like my DVI back, but it requires an RMA or a program that can write to EDID's (assuming the manufacturer didn't lock the EDID). The only one I've found is a Windows program called Powerstrip, which costs $30 for the full version that has such capability. I really don't have extra cash to spend on the DVI when the VGA works almost as well.
+
+---
+
+### Post by zone-x on 2011-03-16
+i have download Powerstrip and its a fully functional trail so what to do next 
+and i have to tell u that i cant read my EDID on windows 2 using many programs 
+i guess that windows doesn't get affected by the EDID thing
+
+---
+
+### Post by zone-x on 2011-03-16
+here is my moninfo file details
+
+> ; INF file generated by Monitor Asset Manager (2.59.0.934), 3/16/2011
+; Copyright (c) EnTech Taiwan, 1995-2011.
+; Internet: [http://www.entechtaiwan.com](http://www.entechtaiwan.com)
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Monitor
+ClassGUID={4d36e96e-e325-11ce-bfc1-08002be10318}
+Provider=%MFG%
+DriverVer=3/16/2011, 1.0.0.0
+;CatalogFile=YourSignedCatalogFile.cat
+
+[DestinationDirs]
+DefaultDestDir=23
+
+[SourceDisksNames]
+1=%DISC%
+
+[SourceDisksFiles]
+;YourColorProfileFile.icm
+
+[Manufacturer]
+%VENDOR%=EDID_OVERRIDE,NTx86,NTamd64
+
+[EDID_OVERRIDE.NTx86]
+%PRODUCTID%=OVERRIDDEN-EDID.Install, MONITOR\PRC0D1D
+
+[EDID_OVERRIDE.NTamd64]
+%PRODUCTID%=OVERRIDDEN-EDID.Install.NTamd64, MONITOR\PRC0D1D
+
+[OVERRIDDEN-EDID.Install.NTx86]
+DelReg=DEL_CURRENT_REG
+AddReg=OVERRIDDEN-EDID.AddReg, MODE1, DPMS
+CopyFiles=OVERRIDDEN-EDID.CopyFiles
+
+[OVERRIDDEN-EDID.Install.NTamd64]
+DelReg=DEL_CURRENT_REG
+AddReg=OVERRIDDEN-EDID.AddReg, MODE1, DPMS
+CopyFiles=OVERRIDDEN-EDID.CopyFiles
+
+[OVERRIDDEN-EDID.Install.NTx86.HW]
+AddReg=OVERRIDDEN-EDID_AddReg
+
+[OVERRIDDEN-EDID.Install.NTamd64.HW]
+AddReg=OVERRIDDEN-EDID_AddReg
+
+[OVERRIDDEN-EDID_AddReg]
+;Base EDID
+HKR,EDID_OVERRIDE,"0",0x01,0x10,0xB5,0x03,0x00,0x00,0x00,0x17,0x41,0x42,0x43,0x1D,0x0D,0x8F,0x34,0xC2,0x45,0x1A,0x08,0x0B,0x41,0x42,0x43,0x20,0x32,0x34,0x57,0x44,0x44,0x30,0x38,0x01,0x00,0x0C,0x07,0x02,0x40,0x01,0x80,0x07,0xB0,0x04,0x18,0x78,0x3C,0x75,0x02,0x00,0x0D,0xB1,0x3D,0xA7,0x54,0xCC,0x49,0x99,0x66,0x25,0x0F,0x00,0x5F,0x51,0x03,0x00,0x14,0x27,0x3C,0x00,0x85,0x7F,0x07,0x9F,0x00,0x2F,0x80,0x1F,0x00,0xAF,0x04,0x22,0x00,0x02,0x00,0x05,0x00,0x07,0x00,0x0A,0x28,0x85,0x02,0x08,0x0C,0x00,0x04,0x00,0x10,0x00,0x08,0x00,0x08,0x7F,0x80,0x3F,0x40,0x00,0x00,0x00,0x00,0x0A,0x00,0x0D,0x43,0x39,0x35,0x33,0x36,0x36,0x36,0x35,0x31,0x37,0x38,0x53,0x54,0x0B,0x00,0x1D,0x41
+;Extension bloc #1, e.g., CEA-EXT, DID-EXT, etc.
+HKR,EDID_OVERRIDE,"1",0x01,0x42,0x43,0x20,0x32,0x34,0x22,0x20,0x4C,0x43,0x44,0x20,0x44,0x69,0x73,0x70,0x6C,0x61,0x79,0x20,0x31,0x39,0x32,0x30,0x78,0x31,0x32,0x30,0x30,0x0D,0x00,0x06,0x88,0x20,0x20,0x40,0x20,0x20,0x0E,0x00,0x12,0x80,0x10,0x06,0x1B,0x2C,0x34,0x3F,0x3C,0x60,0x43,0x4B,0x6C,0x44,0x82,0x4D,0x3B,0x42,0xF0,0x8B,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+
+[DEL_CURRENT_REG]
+HKR,MODES
+HKR,EDID_OVERRIDE
+HKR,,MaxResolution
+HKR,,DPMS
+HKR,,ICMProfile
+
+[DPMS]
+HKR,,DPMS,,1
+
+[MODE1]
+HKR,,MaxResolution,,"37,0"
+
+[OVERRIDDEN-EDID.AddReg]
+HKR,"MODES\37,0",Mode1,,""
+
+[OVERRIDDEN-EDID.CopyFiles]
+;YourColorProfileFile.icm
+
+[Strings]
+MFG="EnTech Taiwan"
+DISC="Monitor EDID Override Installation Disk"
+PRODUCTID="PRC PRC0D1D (PRC0D1D EDID Override)"
+VENDOR="PRC"
+
+
+
+---
+
+### Post by Yellow Pasque on 2011-03-16
+> **zone-x said:**
+> i have download Powerstrip and its a fully functional trial so what to do next
+
+[http://blog.komeil.com/2008/06/fixing-edid-dvi-monitors-no-signal.html](http://blog.komeil.com/2008/06/fixing-edid-dvi-monitors-no-signal.html)
+
+You need a good copy of the EDID. I found the powerstrip trial to lack the 'Update EDID' shown in the tutorial, which is a real shame because I have the exact same monitor discussed in the tutorial and there's a good copy of my EDID available for download.
+Let me know if you see the 'Update EDID' option in your trial. Maybe they added it recently (I doubt that, though).
+
+---
+
+### Post by zone-x on 2011-03-17
+will i got my hands on a powerstrip copy that can update EDID but my monitor cable dose not support DDC/CI so i cant flash it :(
+
+---
+

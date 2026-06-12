@@ -1,0 +1,231 @@
+---
+title: "hd may be failing  - need help with analysis"
+date: 2019-07-25
+forum: Hardware
+---
+
+### Post by ATSC on 2019-07-25
+Hey :-)
+
+
+something might be wrong with one of my hdd's. The system became really slow and after a restart I found "buffer I/O errors in the syslog:
+[https://pastebin.com/QPP4VKuf](https://pastebin.com/QPP4VKuf) The hd is formatted as ext4.
+
+I used Smartctl for an analysis:
+
+```
+smartctl 6.5 2016-01-24 r4214 [x86_64-linux-4.4.0-21-generic] (local build)
+Copyright (C) 2002-16, Bruce Allen, Christian Franke, www.smartmontools.org
+
+=== START OF INFORMATION SECTION ===
+Model Family:     SAMSUNG SpinPoint P120
+Device Model:     SAMSUNG SP2514N
+Serial Number:    S08BJ1JL636676
+Firmware Version: VF100-41
+User Capacity:    250,059,350,016 bytes [250 GB]
+Sector Size:      512 bytes logical/physical
+Device is:        In smartctl database [for details use: -P show]
+ATA Version is:   ATA/ATAPI-7 T13/1532D revision 4a
+Local Time is:    Thu Jul 25 21:30:29 2019 CEST
+
+==> WARNING: May need -F samsung3 enabled; see manual for details.
+
+SMART support is: Available - device has SMART capability.
+SMART support is: Enabled
+
+=== START OF READ SMART DATA SECTION ===
+SMART overall-health self-assessment test result: PASSED
+
+General SMART Values:
+Offline data collection status:  (0x02)    Offline data collection activity
+                    was completed without error.
+                    Auto Offline Data Collection: Disabled.
+Self-test execution status:      ( 121)    The previous self-test completed having
+                    the read element of the test failed.
+Total time to complete Offline 
+data collection:         ( 4897) seconds.
+Offline data collection
+capabilities:              (0x5b) SMART execute Offline immediate.
+                    Auto Offline data collection on/off support.
+                    Suspend Offline collection upon new
+                    command.
+                    Offline surface scan supported.
+                    Self-test supported.
+                    No Conveyance Self-test supported.
+                    Selective Self-test supported.
+SMART capabilities:            (0x0003)    Saves SMART data before entering
+                    power-saving mode.
+                    Supports SMART auto save timer.
+Error logging capability:        (0x01)    Error logging supported.
+                    General Purpose Logging supported.
+Short self-test routine 
+recommended polling time:      (   1) minutes.
+Extended self-test routine
+recommended polling time:      (  81) minutes.
+SCT capabilities:            (0x003f)    SCT Status supported.
+                    SCT Error Recovery Control supported.
+                    SCT Feature Control supported.
+                    SCT Data Table supported.
+
+SMART Attributes Data Structure revision number: 16
+Vendor Specific SMART Attributes with Thresholds:
+ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
+  1 Raw_Read_Error_Rate     0x000f   253   100   051    Pre-fail  Always       -       1
+  3 Spin_Up_Time            0x0007   100   100   025    Pre-fail  Always       -       6272
+  4 Start_Stop_Count        0x0032   098   098   000    Old_age   Always       -       2573
+  5 Reallocated_Sector_Ct   0x0033   098   098   010    Pre-fail  Always       -       19
+  7 Seek_Error_Rate         0x000f   253   253   051    Pre-fail  Always       -       0
+  8 Seek_Time_Performance   0x0025   253   253   015    Pre-fail  Offline      -       0
+  9 Power_On_Hours          0x0032   100   100   000    Old_age   Always       -       2305
+ 10 Spin_Retry_Count        0x0033   253   253   051    Pre-fail  Always       -       0
+ 11 Calibration_Retry_Count 0x0012   253   253   000    Old_age   Always       -       0
+ 12 Power_Cycle_Count       0x0032   099   099   000    Old_age   Always       -       1367
+187 Reported_Uncorrect      0x0032   001   001   000    Old_age   Always       -       786934
+190 Airflow_Temperature_Cel 0x0022   103   097   000    Old_age   Always       -       45
+194 Temperature_Celsius     0x0022   103   097   000    Old_age   Always       -       45
+195 Hardware_ECC_Recovered  0x001a   100   100   000    Old_age   Always       -       47804
+196 Reallocated_Event_Count 0x0032   098   098   000    Old_age   Always       -       19
+197 Current_Pending_Sector  0x0012   093   093   000    Old_age   Always       -       70
+198 Offline_Uncorrectable   0x0030   253   253   000    Old_age   Offline      -       0
+199 UDMA_CRC_Error_Count    0x003e   200   200   000    Old_age   Always       -       0
+200 Multi_Zone_Error_Rate   0x000a   253   100   000    Old_age   Always       -       0
+201 Soft_Read_Error_Rate    0x000a   253   100   000    Old_age   Always       -       1
+
+SMART Error Log Version: 1
+ATA Error Count: 498 (device log contains only the most recent five errors)
+    CR = Command Register [HEX]
+    FR = Features Register [HEX]
+    SC = Sector Count Register [HEX]
+    SN = Sector Number Register [HEX]
+    CL = Cylinder Low Register [HEX]
+    CH = Cylinder High Register [HEX]
+    DH = Device/Head Register [HEX]
+    DC = Device Command Register [HEX]
+    ER = Error register [HEX]
+    ST = Status register [HEX]
+Powered_Up_Time is measured from power on, and printed as
+DDd+hh:mm:SS.sss where DD=days, hh=hours, mm=minutes,
+SS=sec, and sss=millisec. It "wraps" after 49.710 days.
+
+Error 498 occurred at disk power-on lifetime: 2305 hours (96 days + 1 hours)
+  When the command that caused the error occurred, the device was active or idle.
+
+  After command completion occurred, registers were:
+  ER ST SC SN CL CH DH
+  -- -- -- -- -- -- --
+  40 51 08 80 2c 81 f2  Error: UNC 8 sectors at LBA = 0x02812c80 = 42019968
+
+  Commands leading to the command that caused the error were:
+  CR FR SC SN CL CH DH DC   Powered_Up_Time  Command/Feature_Name
+  -- -- -- -- -- -- -- --  ----------------  --------------------
+  c8 00 08 80 2c 81 f2 00      00:23:55.625  READ DMA
+  ec 00 00 00 00 00 b0 00      00:23:55.625  IDENTIFY DEVICE
+  ef 03 45 00 00 00 b0 00      00:23:55.625  SET FEATURES [Set transfer mode]
+  ec 00 00 00 00 00 b0 00      00:23:53.813  IDENTIFY DEVICE
+
+Error 497 occurred at disk power-on lifetime: 2305 hours (96 days + 1 hours)
+  When the command that caused the error occurred, the device was active or idle.
+
+  After command completion occurred, registers were:
+  ER ST SC SN CL CH DH
+  -- -- -- -- -- -- --
+  40 51 08 80 2c 81 f2  Error: UNC 8 sectors at LBA = 0x02812c80 = 42019968
+
+  Commands leading to the command that caused the error were:
+  CR FR SC SN CL CH DH DC   Powered_Up_Time  Command/Feature_Name
+  -- -- -- -- -- -- -- --  ----------------  --------------------
+  c8 00 08 80 2c 81 f2 00      00:23:52.000  READ DMA
+  c8 00 08 a0 2c 81 f2 00      00:23:52.000  READ DMA
+  ec 00 00 00 00 00 b0 00      00:23:52.000  IDENTIFY DEVICE
+  ef 03 45 00 00 00 b0 00      00:23:52.000  SET FEATURES [Set transfer mode]
+  ec 00 00 00 00 00 b0 00      00:23:50.188  IDENTIFY DEVICE
+
+Error 496 occurred at disk power-on lifetime: 2305 hours (96 days + 1 hours)
+  When the command that caused the error occurred, the device was active or idle.
+
+  After command completion occurred, registers were:
+  ER ST SC SN CL CH DH
+  -- -- -- -- -- -- --
+  40 51 08 80 2c 81 f2  Error: UNC 8 sectors at LBA = 0x02812c80 = 42019968
+
+  Commands leading to the command that caused the error were:
+  CR FR SC SN CL CH DH DC   Powered_Up_Time  Command/Feature_Name
+  -- -- -- -- -- -- -- --  ----------------  --------------------
+  c8 00 08 80 2c 81 f2 00      00:23:48.375  READ DMA
+  ec 00 00 00 00 00 b0 00      00:23:48.375  IDENTIFY DEVICE
+  ef 03 45 00 00 00 b0 00      00:23:48.375  SET FEATURES [Set transfer mode]
+  ec 00 00 00 00 00 b0 00      00:23:46.563  IDENTIFY DEVICE
+
+Error 495 occurred at disk power-on lifetime: 2305 hours (96 days + 1 hours)
+  When the command that caused the error occurred, the device was active or idle.
+
+  After command completion occurred, registers were:
+  ER ST SC SN CL CH DH
+  -- -- -- -- -- -- --
+  40 51 08 80 2c 81 f2  Error: UNC 8 sectors at LBA = 0x02812c80 = 42019968
+
+  Commands leading to the command that caused the error were:
+  CR FR SC SN CL CH DH DC   Powered_Up_Time  Command/Feature_Name
+  -- -- -- -- -- -- -- --  ----------------  --------------------
+  c8 00 08 80 2c 81 f2 00      00:23:44.750  READ DMA
+  ec 00 00 00 00 00 b0 00      00:23:44.750  IDENTIFY DEVICE
+  ef 03 45 00 00 00 b0 00      00:23:44.750  SET FEATURES [Set transfer mode]
+  ec 00 00 00 00 00 b0 00      00:23:42.938  IDENTIFY DEVICE
+
+Error 494 occurred at disk power-on lifetime: 2305 hours (96 days + 1 hours)
+  When the command that caused the error occurred, the device was active or idle.
+
+  After command completion occurred, registers were:
+  ER ST SC SN CL CH DH
+  -- -- -- -- -- -- --
+  40 51 08 80 2c 81 f2  Error: UNC 8 sectors at LBA = 0x02812c80 = 42019968
+
+  Commands leading to the command that caused the error were:
+  CR FR SC SN CL CH DH DC   Powered_Up_Time  Command/Feature_Name
+  -- -- -- -- -- -- -- --  ----------------  --------------------
+  c8 00 08 80 2c 81 f2 00      00:23:41.188  READ DMA
+  ec 00 00 00 00 00 b0 00      00:23:41.125  IDENTIFY DEVICE
+  ef 03 45 00 00 00 b0 00      00:23:41.125  SET FEATURES [Set transfer mode]
+  ec 00 00 00 00 00 b0 00      00:23:39.313  IDENTIFY DEVICE
+
+SMART Self-test log structure revision number 1
+Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
+# 1  Extended offline    Completed: read failure       90%      2305         37751675
+# 2  Extended offline    Completed: read failure       90%      2305         37751675
+# 3  Extended offline    Completed: read failure       90%      2305         37751675
+
+SMART Selective self-test log data structure revision number 0
+Note: revision number not 1 implies that no selective self-test has ever been run
+ SPAN  MIN_LBA  MAX_LBA  CURRENT_TEST_STATUS
+    1        0        0  Not_testing 
+    2        0        0  Not_testing
+    3        0        0  Not_testing
+    4        0        0  Not_testing
+    5        0        0  Not_testing
+Selective self-test flags (0x0):
+  After scanning selected spans, do NOT read-scan remainder of disk.
+If Selective self-test is pending on power-up, resume after 0 minute delay.
+```
+
+The results are a bit cryptic to me - any help is much appreciated! Is there anything that I can do about it - perhaps overwrite affected blocks with zeroes?
+
+many thanks in advance!
+
+---
+
+### Post by TheFu on 2019-07-25
+```
+196 Reallocated_Event_Count 0x0032   098   098   000    Old_age   Always       -       19
+197 Current_Pending_Sector  0x0012   093   093   000    Old_age   Always       -       70
+
+```
+
+You have data loss already.  Stop using the disk.  The next thing you do with it should be to backup everything on it after booting from alternate media.  If you have great backups, then just pull the disk and replace it with a new one.  Drill holes through the platters - say 10 of them.
+
+---
+
+### Post by Autodave on 2019-07-25
+One or two blows from a 20lb sledge hammer will do the trick also.  Quicker than drilling and I always feel much better afterwards......just a good feeling to quickly destroy a piece of computer equipment that has failed me.
+
+---
+

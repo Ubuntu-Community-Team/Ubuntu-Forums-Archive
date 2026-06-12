@@ -1,0 +1,268 @@
+---
+title: "Problems in dual monitor"
+date: 2010-08-31
+forum: Hardware
+---
+
+### Post by BreakDaLotus on 2010-08-31
+I've successfully installed the drivers on my Fujitsu v5535 and now i  have a resolution of 1280x800 (60Hz). But i still can't have dual  monitor on my laptop. It doesn't recognize my desktop monitor. Can  someone help me? Or did someone have the same problem?
+
+[IMG]http://img205.imageshack.us/img205/4408/1280x800v.png[/IMG]
+
+Here is my xorg.conf
+
+```
+Section "ServerLayout"
+    Identifier     "X.org Configured"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Mouse0" "CorePointer"
+    InputDevice    "Keyboard0" "CoreKeyboard"
+EndSection
+
+Section "Files"
+    ModulePath   "/usr/lib/xorg/modules"
+    FontPath     "/usr/share/fonts/X11/misc"
+    FontPath     "/usr/share/fonts/X11/cyrillic"
+    FontPath     "/usr/share/fonts/X11/100dpi/:unscaled"
+    FontPath     "/usr/share/fonts/X11/75dpi/:unscaled"
+    FontPath     "/usr/share/fonts/X11/Type1"
+    FontPath     "/usr/share/fonts/X11/100dpi"
+    FontPath     "/usr/share/fonts/X11/75dpi"
+    FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+    FontPath     "built-ins"
+EndSection
+
+Section "Module"
+    Load  "extmod"
+    Load  "dbe"
+    Load  "glx"
+    Load  "record"
+    Load  "dri2"
+    Load  "dri"
+EndSection
+
+Section "InputDevice"
+    Identifier  "Keyboard0"
+    Driver      "kbd"
+EndSection
+
+Section "InputDevice"
+    Identifier  "Mouse0"
+    Driver      "mouse"
+    Option        "Protocol" "auto"
+    Option        "Device" "/dev/input/mice"
+    Option        "ZAxisMapping" "4 5 6 7"
+EndSection
+
+Section "Monitor"
+    Identifier   "Monitor0"
+    VendorName   "Monitor Vendor"
+    ModelName    "Monitor Model"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz"
+        ### [arg]: arg optional
+        #Option     "FastVram"               # [<bool>]
+        #Option     "HostBus"                # [<bool>]
+        #Option     "BenchmarkMemcpy"        # [<bool>]
+        #Option     "UseSSE"                 # [<bool>]
+        #Option     "MaxXFBMem"              # <i>
+        #Option     "Accel"                  # [<bool>]
+        #Option     "TurboQueue"             # [<bool>]
+        #Option     "RenderAcceleration"     # [<bool>]
+        #Option     "DRI"                    # [<bool>]
+        #Option     "AGPSize"                # <i>
+        #Option     "GARTSize"               # <i>
+        #Option     "ShadowFB"               # [<bool>]
+        #Option     "Rotate"                 # <str>
+        #Option     "Reflect"                # <str>
+        #Option     "EnableSiSCtrl"          # [<bool>]
+        #Option     "SWCursor"               # [<bool>]
+        #Option     "HWCursor"               # [<bool>]
+        #Option     "ColorHWCursor"          # [<bool>]
+        #Option     "UseColorHWCursor"       # [<bool>]
+        #Option     "ColorHWCursorBlending"     # [<bool>]
+        #Option     "ColorHWCursorBlendThreshold"     # <i>
+        #Option     "InternalModes"          # [<bool>]
+        #Option     "ConstantDPI"            # [<bool>]
+        #Option     "OverruleFrequencyRanges"     # [<bool>]
+        #Option     "RestoreBySetMode"       # [<bool>]
+        #Option     "Vesa"                   # [<bool>]
+        #Option     "ForceCRT1Type"          # <str>
+        #Option     "ForceCRT1"              # [<bool>]
+        #Option     "ForceCRT2Type"          # <str>
+        #Option     "CRT2Detection"          # [<bool>]
+        #Option     "CRT1LCD"                # [<bool>]
+        #Option     "ForceCRT2ReDetection"     # [<bool>]
+        #Option     "EnableHotkey"           # [<bool>]
+        #Option     "ForceCRT1VGAAspect"     # <str>
+        #Option     "ForceCRT2VGAAspect"     # <str>
+        #Option     "UseROMData"             # [<bool>]
+        #Option     "UseOEMData"             # [<bool>]
+        #Option     "ScaleLCD"               # [<bool>]
+        #Option     "CenterLCD"              # [<bool>]
+        #Option     "PanelDelayCompensation"     # <i>
+        #Option     "PDC"                    # <i>
+        #Option     "PanelDelayCompensation2"     # <i>
+        #Option     "PDC2"                   # <i>
+        #Option     "PanelDelayCompensation1"     # <i>
+        #Option     "PDC1"                   # <i>
+        #Option     "EMI"                    # <i>
+        #Option     "LVDSHL"                 # <i>
+        #Option     "ForcePanelRGB"          # <i>
+        #Option     "SpecialTiming"          # <str>
+        #Option     "TVStandard"             # <str>
+        #Option     "TVXPosOffset"           # <i>
+        #Option     "TVYPosOffset"           # <i>
+        #Option     "SISTVEdgeEnhance"       # <i>
+        #Option     "SISTVAntiFlicker"       # <str>
+        #Option     "SISTVSaturation"        # <i>
+        #Option     "SISTVCFilter"           # [<bool>]
+        #Option     "SISTVYFilter"           # <i>
+        #Option     "SISTVColorCalibFine"     # <i>
+        #Option     "SISTVColorCalibCoarse"     # <i>
+        #Option     "SISTVXScale"            # <i>
+        #Option     "SISTVYScale"            # <i>
+        #Option     "SenseYPbPr"             # [<bool>]
+        #Option     "YPbPrAspectRatio"       # <str>
+        #Option     "TVBlueWorkAround"       # [<bool>]
+        #Option     "CHTVType"               # [<bool>]
+        #Option     "CHTVOverscan"           # [<bool>]
+        #Option     "CHTVSuperOverscan"      # [<bool>]
+        #Option     "CHTVLumaBandwidthCVBS"     # <i>
+        #Option     "CHTVLumaBandwidthSVIDEO"     # <i>
+        #Option     "CHTVLumaFlickerFilter"     # <i>
+        #Option     "CHTVChromaBandwidth"     # <i>
+        #Option     "CHTVChromaFlickerFilter"     # <i>
+        #Option     "CHTVCVBSColor"          # [<bool>]
+        #Option     "CHTVTextEnhance"        # <i>
+        #Option     "CHTVContrast"           # <i>
+        #Option     "SIS6326TVAntiFlicker"     # <str>
+        #Option     "SIS6326TVEnableYFilter"     # [<bool>]
+        #Option     "SIS6326TVYFilterStrong"     # [<bool>]
+        #Option     "SIS6326TVForcePlug"     # <str>
+        #Option     "SIS6326FSCAdjust"       # <i>
+        #Option     "CRT1Gamma"              # [<bool>]
+        #Option     "CRT2Gamma"              # [<str>]
+        #Option     "GammaBrightness"        # <str>
+        #Option     "GammaBrightnessCRT2"     # <str>
+        #Option     "CRT2GammaBrightness"     # <str>
+        #Option     "Brightness"             # <str>
+        #Option     "NewGammaBrightness"     # <str>
+        #Option     "CRT2Brightness"         # <str>
+        #Option     "CRT2NewGammaBrightness"     # <str>
+        #Option     "Contrast"               # <str>
+        #Option     "NewGammaContrast"       # <str>
+        #Option     "CRT2Contrast"           # <str>
+        #Option     "CRT2NewGammaContrast"     # <str>
+        #Option     "CRT1Saturation"         # <i>
+        #Option     "Xvideo"                 # [<bool>]
+        #Option     "XvOnCRT2"               # [<bool>]
+        #Option     "XvGamma"                # [<str>]
+        #Option     "XvDefaultContrast"      # <i>
+        #Option     "XvDefaultBrightness"     # <i>
+        #Option     "XvDefaultHue"           # <i>
+        #Option     "XvDefaultSaturation"     # <i>
+        #Option     "XvDefaultDisableGfx"     # [<bool>]
+        #Option     "XvDefaultDisableGfxLR"     # [<bool>]
+        #Option     "XvChromaMin"            # <i>
+        #Option     "XvChromaMax"            # <i>
+        #Option     "XvUseChromaKey"         # [<bool>]
+        #Option     "XvInsideChromaKey"      # [<bool>]
+        #Option     "XvYUVChromaKey"         # [<bool>]
+        #Option     "XvDisableColorKey"      # [<bool>]
+        #Option     "XvDefaultAdaptor"       # <str>
+        #Option     "YV12"                   # [<bool>]
+        #Option     "MergedFB"               # [<str>]
+        #Option     "TwinView"               # [<str>]
+        #Option     "MergedFBAuto"           # [<bool>]
+        #Option     "CRT2HSync"              # <str>
+        #Option     "SecondMonitorHorizSync"     # <str>
+        #Option     "CRT2VRefresh"           # <str>
+        #Option     "SecondMonitorVertRefresh"     # <str>
+        #Option     "CRT2Position"           # <str>
+        #Option     "TwinViewOrientation"     # <str>
+        #Option     "MetaModes"              # <str>
+        #Option     "MergedDPI"              # <str>
+        #Option     "MergedXinerama"         # [<bool>]
+        #Option     "TwinviewXineramaInfo"     # [<bool>]
+        #Option     "MergedXineramaScreen0"     # [<str>]
+        #Option     "MergedXineramaCRT2IsScreen0"     # [<bool>]
+        #Option     "MergedNonRectangular"     # [<bool>]
+        #Option     "MergedMouseRestriction"     # [<bool>]
+        #Option     "FutroTiming"            # [<bool>]
+    Identifier  "Card0"
+    Driver      "sis671"
+    VendorName  "Silicon Integrated Systems [SiS]"
+    BoardName   "771/671 PCIE VGA Display Adapter"
+    BusID       "PCI:1:0:0"
+EndSection
+
+Section "Screen"
+    Identifier "Screen0"
+    Device     "Card0"
+    Monitor    "Monitor0"
+    SubSection "Display"
+        Viewport   0 0
+        Depth     1
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     4
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     8
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     15
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     16
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     24
+    EndSubSection
+EndSection
+
+```
+
+---
+
+### Post by Zli Zeka on 2011-07-02
+anyone?
+
+update?
+
+solution?
+
+---
+
+### Post by BreakDaLotus on 2011-07-03
+ahahah almost one year later....
+
+i not found the solution... i have to read more foruns. It's linux, it's possible
+
+---
+
+### Post by nooodles on 2011-07-03
+Hey guy.  First up - I'm not support knowing level...but what the hay!  it's all for fun right!
+
+I found this link:
+[INDENT] Fujitsu Siemens Esprimo Mobile V5535
+[http://en.gentoo-wiki.com/wiki/Fujitsu_Siemens_Esprimo_Mobile_V5535#Graphics_Card](http://en.gentoo-wiki.com/wiki/Fujitsu_Siemens_Esprimo_Mobile_V5535#Graphics_Card)
+[/INDENT]It's for Gentoo - and I don't know if that will affect much..so - at your own risk....
+
+
+Beyond that, I've done it a few times with NVidia graphics...but never with SIS... the above link references that SIS seams to have little interest in anything supporting linux...but there's no date stamp.
+
+Also - Which environment are you running?  Gnome?  Unity?  KDE (kubuntu)?
+
+---
+
