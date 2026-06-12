@@ -1,0 +1,227 @@
+---
+title: "Lubuntu on Powermac G4 533 Digital Audio"
+date: 2014-10-16
+forum: Apple Hardware Users
+---
+
+### Post by Bjorn_Gudmundsson on 2014-10-16
+I got lubuntu 14.04 to run on my old Powermac  G4 533 Digital Audio with a 17" Apple Studio Display CRT (ADC) it has a nvidia MX 2 videocard.
+
+Configuring the video was the main headache but now I have crystal clear display in the following resolutions:
+
+Screen 0: minimum 320 x 200, current 1056 x 792, maximum 4096 x 4096
+VGA-1 connected 1056x792+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+   1600x1200_65.00   64.0  
+   1280x1024_75.00   75.0  
+   1056x792_96.00   96.0* 
+   1024x768_99.00   99.0  
+   832x624_120.00  120.0  
+   800x600_124.00  124.0  
+   640x480_153.00  153.0  
+
+I had to add the following command to yaboot.conf to force the video on:     **append="quiet video=VGA-1:e"** and create a xorg.conf file with modelines for this monitor.
+And it's possible to boot the newworld macs like this one from a usb just burn your iso to USB with dd on a linux machine. Hold down the alt (option) key and turn on the mac. Wait until you get a list of icons of bootable drives, select the USB disk and click the arrow on the screen.
+
+[TABLE]
+[TR]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Processor[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Machine[/TD]
+[TD="class: value"]PowerMac3,4[/TD]
+[/TR]
+[TR]
+[TD="class: field"]CPU[/TD]
+[TD="class: value"]PowerPC 7400, altivec supported (533,00MHz)[/TD]
+[/TR]
+[TR]
+[TD="class: field"]L2 Cache[/TD]
+[TD="class: value"]1024kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Frequency[/TD]
+[TD="class: value"]533,00MHz[/TD]
+[/TR]
+[TR]
+[TD="class: field"]BogoMips[/TD]
+[TD="class: value"]66,00[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Byte Order[/TD]
+[TD="class: value"]Big Endian[/TD]
+[/TR]
+[/TABLE]
+[TABLE]
+[TR]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]Memory[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Total Memory[/TD]
+[TD="class: value"]506516 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Free Memory[/TD]
+[TD="class: value"]51460 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Buffers[/TD]
+[TD="class: value"]10860 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Cached[/TD]
+[TD="class: value"]145036 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Cached Swap[/TD]
+[TD="class: value"]4940 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Active[/TD]
+[TD="class: value"]161476 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Inactive[/TD]
+[TD="class: value"]252464 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Active(anon)[/TD]
+[TD="class: value"]97672 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Inactive(anon)[/TD]
+[TD="class: value"]174548 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Active(file)[/TD]
+[TD="class: value"]63804 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Inactive(file)[/TD]
+[TD="class: value"]77916 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Unevictable[/TD]
+[TD="class: value"]32 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Mlocked[/TD]
+[TD="class: value"]32 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]High Memory[/TD]
+[TD="class: value"]0 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Free High Memory[/TD]
+[TD="class: value"]0 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Low Memory[/TD]
+[TD="class: value"]506516 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Free Low Memory[/TD]
+[TD="class: value"]51460 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Virtual Memory[/TD]
+[TD="class: value"]860700 kB[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Free Virtual Memory[/TD]
+[TD="class: value"]819472 kB[/TD]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[TD="class: value"][/TD]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[/TABLE]
+[TABLE]
+[TR]
+[/TR]
+[TR]
+[TD="class: sstitle, colspan: 2"]PCI Devices[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Host bridge[/TD]
+[TD="class: value"]Apple Inc. UniNorth 1.5 AGP[/TD]
+[/TR]
+[TR]
+[TD="class: field"]VGA compatible controller[/TD]
+[TD="class: value"]NVIDIA Corporation NV11 [GeForce2 MX/MX 400] (rev a1) (prog-if 00 [VGA controller])[/TD]
+[/TR]
+[TR]
+[TD="class: field"]Host bridge[/TD]
+[TD="class: value"]Apple Inc. UniNorth 1.5 PCI[/TD]
+[/TR]
+[/TABLE]
+
+[TABLE]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[/TR]
+[TR]
+[TD="class: value"][/TD]
+[/TR]
+[/TABLE]
+I attach my xorg.conf, yaboot.conf and Xorg.0.log if it could be of help to someone:
+
+[ATTACH]257281[/ATTACH]
+[ATTACH]257282[/ATTACH]
+[ATTACH]257283[/ATTACH]
+
+---
+
+### Post by turnkit on 2014-10-22
+> **Bjorn_Gudmundsson said:**
+> I got lubuntu 14.04 to run on my old Powermac  G4 533 Digital Audio with a 17" Apple Studio Display CRT (ADC) it has a nvidia MX 2 videocard.
+
+Configuring the video was the main headache [...] 
+
+I had to add the following command to yaboot.conf to force the video on:     **append="quiet video=VGA-1:e"** and create a xorg.conf file with modelines for this monitor.
+
+
+Support for old Mac, specifically in regard to no display seen, wrong default frequencies, has been the main problem with Ubuntu going back to 2005.  It's sad it's still not automated and so many older Macs can't get used by unsophisticated Ubuntu users who can't do what Bjorn did.
+
+Is there a way to encourage the collection of the correct video modes for these older G3, G4 and G5 machines so that they will work automatically on install?
+
+---
+
