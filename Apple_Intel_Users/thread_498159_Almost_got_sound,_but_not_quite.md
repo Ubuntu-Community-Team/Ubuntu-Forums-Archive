@@ -1,0 +1,700 @@
+---
+title: "Almost got sound, but not quite"
+date: 2007-07-11
+forum: Apple Intel Users
+---
+
+### Post by violinmandan on 2007-07-11
+I was trying to get sound to work on my MacBook (with Santa Rosa and Kubuntu 7.04) using the instructions on post #13 of the thread at [http://ubuntuforums.org/showthread.php?t=418681&page=2](http://ubuntuforums.org/showthread.php?t=418681&page=2) and a funny thing happened. After I did ```
+sudo modprobe snd_hda_intel model=macpro
+``` I heard the speakers "click" as if they were going to work, but they didn't. I ran alsamixer and found that the headphone volume was 0 and I couldn't get it up. Any suggestions?
+
+---
+
+### Post by nicfagn on 2007-07-11
+It seems that the Santa Rosa macbooks use the same codec chipset used in macpros, but with a different channel configuration. So using the macpro parameter could force the headphone volume to an incorrect input or output.
+To say this for sure, you should post the result of:
+```
+cat /proc/asound/card0/codec#0
+```
+
+Bye 
+Nicola
+
+---
+
+### Post by nicfagn on 2007-07-11
+According to this [post]("http://ubuntuforums.org/showpost.php?p=2951037&postcount=26") the model=w2jc should mostly work. You should read the rest of the thread for more info.
+
+If you don't mind can you post the codec info anyway, I am curious. :)
+
+---
+
+### Post by dragonwings on 2007-07-11
+try 
+ 
+sudo asoundconf list            to get list of sound cards
+
+now try
+
+sudo asoundconf  set-default-card  ________________( name of one of the sound cards you got
+                                                                                             from above in the underlined area
+                                                                                               NOTE DO NOT INCLUDE UNDERLINE)
+
+eg for my desktop pc i put 
+ sudo asoundconf  set-default-card Audigy2
+
+i also got sound running perfect on a mates macbook  using ubuntu 7.04 fiesty 
+i cant remember if it just worked or i had to do the above. it was one of the two.
+
+---
+
+### Post by violinmandan on 2007-07-11
+> **nicfagn said:**
+> According to this [post]("http://ubuntuforums.org/showpost.php?p=2951037&postcount=26") the model=w2jc should mostly work. You should read the rest of the thread for more info.
+
+If you don't mind can you post the codec info anyway, I am curious. :)
+
+I've attached the codec info.
+
+Setting model=w2jc results in the same click, but still no sound and the headphone volume is still all the way down.
+
+Could it be my sound settings? I've also attached my sound hardware settings.
+
+Also, setting a new default card with asoundconf doesn't do anything.
+
+I get the feeling I'm missing something simple here...
+
+---
+
+### Post by Gen2ly on 2007-07-11
+Have you tried model=auto.  I've discovered that alsa is pretty good at detecting it's own settings.
+
+---
+
+### Post by violinmandan on 2007-07-11
+> **Dirk.R.Gently said:**
+> Have you tried model=auto.  I've discovered that alsa is pretty good at detecting it's own settings.
+
+I tried it. No sound, but (again) the same click.
+
+I don't know if this is important, but sometimes Audacity says, "Error while opening the sound device. Please check the output device settings and the project sample rate."
+
+---
+
+### Post by nicfagn on 2007-07-12
+With model=w2jc you should be able to use the speakers and the mic, no headphone tough.
+With the command:
+```
+alsamixer
+```
+or something equivalent, you must check that the volume of the channels you need is unmuted and at a suitable level. 
+If in doubt, unmute and max out all the volumes you find.
+
+If this doesn't work, you can try the patch I derived from the one I did for my iMac 24, attached to this post.
+To use the patch follow the steps in this [post]("http://ubuntuforums.org/showpost.php?p=2978364&postcount=41"), replacing **udiff-patch_realtek.txt** with **patch_realtek.c-macbookpro-patch.txt**.
+In this case, make sure you don't specify the model as a parameter, since it is detected automatically.
+Unfortunately I can't test the patch myself, but if it works, you should be able to use the headphone with automatic speaker muting on headphone jack insertion.
+
+---
+
+### Post by violinmandan on 2007-07-12
+I tried both methods and neither worked.
+
+This time I'm attaching both panels of my sound settings.
+
+Also (and I probably should have mentioned this earlier), when I do ```
+rmmod snd_hda_codec
+``` it says ```
+ERROR: Module snd_hda_codec does not exist in /proc/modules
+```
+
+Does that help?
+
+---
+
+### Post by nicfagn on 2007-07-13
+> **violinmandan said:**
+> I tried both methods and neither worked.
+
+This time I'm attaching both panels of my sound settings.
+
+Also (and I probably should have mentioned this earlier), when I do ```
+rmmod snd_hda_codec
+``` it says ```
+ERROR: Module snd_hda_codec does not exist in /proc/modules
+```
+
+Does that help?
+
+The module snd_hda_codec is not generated by latest alsa versions, there is only snd_hda_intel.
+
+Can you see snd_hda_intel in the output of:
+```
+lsmod | grep snd
+```
+What is the ouput of the command:
+```
+cat /proc/asound/version
+```
+What is the ouput of the command:
+```
+amixer
+```
+
+I use gnome, so I don't know the panels you mention, but they should be ok at their default.
+
+---
+
+### Post by violinmandan on 2007-07-13
+lsmod | grep snd:
+```
+snd_hda_intel         334624  0
+snd_pcm_oss            50176  0
+snd_mixer_oss          20096  1 snd_pcm_oss
+snd_pcm                93960  2 snd_hda_intel,snd_pcm_oss
+snd_seq_oss            38912  0
+snd_seq_midi_event     10240  1 snd_seq_oss
+snd_seq                63520  4 snd_seq_oss,snd_seq_midi_event
+snd_timer              27400  2 snd_pcm,snd_seq
+snd_seq_device         10900  2 snd_seq_oss,snd_seq
+snd                    71464  8 snd_hda_intel,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_seq_oss,snd_seq,snd_timer,snd_seq_device
+soundcore              10272  1 snd
+snd_page_alloc         12944  2 snd_hda_intel,snd_pcm
+```
+
+cat /proc/asound/version:
+```
+Advanced Linux Sound Architecture Driver Version 1.0.14.
+Compiled on Jul 12 2007 for kernel 2.6.20-15-generic (SMP).
+```
+
+amixer:
+```
+Simple mixer control 'Headphone',0
+  Capabilities: pswitch
+  Playback channels: Front Left - Front Right
+  Mono:
+  Front Left: Playback [on]
+  Front Right: Playback [on]
+Simple mixer control 'PCM',0
+  Capabilities: pvolume
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 255
+  Mono:
+  Front Left: Playback 255 [100%] [0.00dB]
+  Front Right: Playback 255 [100%] [0.00dB]
+Simple mixer control 'Front',0
+  Capabilities: pvolume pswitch
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 64
+  Mono:
+  Front Left: Playback 64 [100%] [0.00dB] [on]
+  Front Right: Playback 64 [100%] [0.00dB] [on]
+Simple mixer control 'Line',0
+  Capabilities: pvolume pswitch
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 31 [100%] [12.00dB] [on]
+  Front Right: Playback 31 [100%] [12.00dB] [on]
+Simple mixer control 'IEC958',0
+  Capabilities: pswitch pswitch-joined cswitch cswitch-joined
+  Playback channels: Mono
+  Capture channels: Mono
+  Mono: Playback [on] Capture [off]
+Simple mixer control 'PC Speaker',0
+  Capabilities: pvolume pswitch
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 31 [100%] [12.00dB] [on]
+  Front Right: Playback 31 [100%] [12.00dB] [on]
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [on]
+  Front Right: Capture 0 [0%] [-16.00dB] [on]
+Simple mixer control 'Capture',1
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [off]
+  Front Right: Capture 0 [0%] [-16.00dB] [off]
+Simple mixer control 'Capture',2
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [off]
+  Front Right: Capture 0 [0%] [-16.00dB] [off]
+Simple mixer control 'Input Source',0
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+Simple mixer control 'Input Source',1
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+Simple mixer control 'Input Source',2
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+```
+
+Hope this helps!
+
+---
+
+### Post by nicfagn on 2007-07-13
+Looking at the amixer output it seems that you are still forcing the macpro model.
+To check this unload the snd_hda_intel module with:
+```
+sudo rmmod snd_hda_intel
+```
+and reload it with:
+```
+sudo modprobe snd_hda_intel model=macbookpro
+```
+If it works, you probably have left the model=macpro option set in some config file and you have to delete it.
+
+Hope this is the right one :)
+
+---
+
+### Post by chem on 2007-07-13
+What the heck model is w2jc anyway?  I mean, originally what hardware?  All this almost-but-not-quite makes it seems like a serious ALSA bug still remains.
+
+[http://news.gmane.org/gmane.linux.alsa.user](http://news.gmane.org/gmane.linux.alsa.user)
+
+have fun~
+
+---
+
+### Post by nicfagn on 2007-07-13
+> **chem said:**
+> What the heck model is w2jc anyway?  I mean, originally what hardware?  All this almost-but-not-quite makes it seems like a serious ALSA bug still remains.
+
+[http://news.gmane.org/gmane.linux.alsa.user](http://news.gmane.org/gmane.linux.alsa.user)
+
+have fun~
+
+The option model=w2jc is just a workaround that should partially work with the new macbook pros.
+In fact w2jc identifies the sound subsystem of a specific Asus notebook model.
+
+Obviously this is a temporary solution until the new mac notebooks are officially supported by alsa, but I won't bet it will be very soon.
+While I waited a patch for my iMac 24, I had the time to write a patch on my own!!! :)
+
+Having known the pain, I 'm trying to reuse the patch, with needed adaptations, for the macbook pro.
+Hope this works. 
+
+Bye
+
+---
+
+### Post by violinmandan on 2007-07-13
+> **nicfagn said:**
+> Looking at the amixer output it seems that you are still forcing the macpro model.
+To check this unload the snd_hda_intel module with:
+```
+sudo rmmod snd_hda_intel
+```
+and reload it with:
+```
+sudo modprobe snd_hda_intel model=macbookpro
+```
+If it works, you probably have left the model=macpro option set in some config file and you have to delete it.
+
+Hope this is the right one :)
+
+Success!
+I had to delete the file /etc/modprobe.d/alsa_local (which, ironically, I created trying to fix the problem).
+The sound sometimes skips a little and crackles at high volumes, and there's no headphones, but it works!
+
+Thanks for all the help!
+
+---
+
+### Post by nicfagn on 2007-07-13
+> **violinmandan said:**
+> Success!
+
+Great!!! :popcorn:
+
+> I had to delete the file /etc/modprobe.d/alsa_local (which, ironically, I created trying to fix the problem).
+
+You're not the first to fall into this trap.
+
+> The sound sometimes skips a little and crackles at high volumes, and there's no headphones, but it works!
+
+
+The patch tries to be very minimal so it's not strange that it has some problem. If I had a macbook pro Santa Rosa perhaps I could refine it but unfortunately this is not the case.
+I expected the headphone to work, though. :(
+
+> Thanks for all the help!
+
+With your cooperation it was enjoyable, especially after knowing it worked ;)
+
+---
+
+### Post by nicfagn on 2007-07-13
+Violinmandan, could you post the current outputs of:
+```
+amixer
+``` 
+and 
+```
+cat /proc/asound/card0/codec#0
+```
+You know the same old curiosity of mine ;-)
+I hope to find what is not working in the patch, at least for the headphone.
+
+Thanks
+
+---
+
+### Post by violinmandan on 2007-07-13
+> **nicfagn said:**
+> Violinmandan, could you post the current outputs of:
+```
+amixer
+``` 
+and 
+```
+cat /proc/asound/card0/codec#0
+```
+You know the same old curiosity of mine ;-)
+I hope to find what is not working in the patch, at least for the headphone.
+
+Thanks
+
+amixer:
+```
+Simple mixer control 'Master',0
+  Capabilities: pvolume pswitch
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 64
+  Mono:
+  Front Left: Playback 33 [52%] [-31.00dB] [on]
+  Front Right: Playback 33 [52%] [-31.00dB] [on]
+Simple mixer control 'PCM',0
+  Capabilities: pvolume
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 255
+  Mono:
+  Front Left: Playback 255 [100%] [0.00dB]
+  Front Right: Playback 255 [100%] [0.00dB]
+Simple mixer control 'IEC958',0
+  Capabilities: pswitch pswitch-joined cswitch cswitch-joined
+  Playback channels: Mono
+  Capture channels: Mono
+  Mono: Playback [on] Capture [off]
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [off]
+  Front Right: Capture 0 [0%] [-16.00dB] [off]
+Simple mixer control 'Capture',1
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [off]
+  Front Right: Capture 0 [0%] [-16.00dB] [off]
+Simple mixer control 'Capture',2
+  Capabilities: cvolume cswitch
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 46
+  Front Left: Capture 0 [0%] [-16.00dB] [off]
+  Front Right: Capture 0 [0%] [-16.00dB] [off]
+Simple mixer control 'Input Source',0
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+Simple mixer control 'Input Source',1
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+Simple mixer control 'Input Source',2
+  Capabilities: enum
+  Items: 'Mic' 'Front Mic' 'Line' 'CD'
+  Item0: 'Mic'
+```
+
+cat /proc/asound/card0/codec#0:
+```
+Codec: Realtek ALC885
+Address: 0
+Vendor Id: 0x10ec0885
+Subsystem Id: 0x106b2c00
+Revision Id: 0x100103
+Default PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Default Amp-In caps: N/A
+Default Amp-Out caps: N/A
+Node 0x02 [Audio Output] wcaps 0x11: Stereo
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Node 0x03 [Audio Output] wcaps 0x11: Stereo
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Node 0x04 [Audio Output] wcaps 0x11: Stereo
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Node 0x05 [Audio Output] wcaps 0x11: Stereo
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Node 0x06 [Audio Output] wcaps 0x211: Stereo Digital
+  PCM:
+    rates [0x5e0]: 44100 48000 88200 96000 192000
+    bits [0x1e]: 16 20 24 32
+    formats [0x1]: PCM
+Node 0x07 [Audio Input] wcaps 0x10011b: Stereo Amp-In
+  Amp-In caps: ofs=0x10, nsteps=0x2e, stepsize=0x03, mute=1
+  Amp-In vals:  [0x80 0x80]
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+  Connection: 1
+     0x24
+Node 0x08 [Audio Input] wcaps 0x10011b: Stereo Amp-In
+  Amp-In caps: ofs=0x10, nsteps=0x2e, stepsize=0x03, mute=1
+  Amp-In vals:  [0x80 0x80]
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+  Connection: 1
+     0x23
+Node 0x09 [Audio Input] wcaps 0x10011b: Stereo Amp-In
+  Amp-In caps: ofs=0x10, nsteps=0x2e, stepsize=0x03, mute=1
+  Amp-In vals:  [0x80 0x80]
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+  Connection: 1
+     0x22
+Node 0x0a [Audio Input] wcaps 0x100391: Stereo Digital
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0x1e]: 16 20 24 32
+    formats [0x1]: PCM
+  Connection: 1
+     0x1f
+Node 0x0b [Audio Mixer] wcaps 0x20010b: Stereo Amp-In
+  Amp-In caps: ofs=0x17, nsteps=0x1f, stepsize=0x05, mute=1
+  Amp-In vals:  [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97] [0x97 0x97]
+  Connection: 10
+     0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x14 0x15 0x16 0x17
+Node 0x0c [Audio Mixer] wcaps 0x20010f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x00 0x00] [0x80 0x80]
+  Amp-Out caps: ofs=0x40, nsteps=0x40, stepsize=0x03, mute=0
+  Amp-Out vals:  [0x21 0x21]
+  Connection: 2
+     0x02 0x0b
+Node 0x0d [Audio Mixer] wcaps 0x20010f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x00 0x00] [0x80 0x80]
+  Amp-Out caps: ofs=0x40, nsteps=0x40, stepsize=0x03, mute=0
+  Amp-Out vals:  [0x40 0x40]
+  Connection: 2
+     0x03 0x0b
+Node 0x0e [Audio Mixer] wcaps 0x20010f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x00 0x00] [0x80 0x80]
+  Amp-Out caps: ofs=0x40, nsteps=0x40, stepsize=0x03, mute=0
+  Amp-Out vals:  [0x40 0x40]
+  Connection: 2
+     0x04 0x0b
+Node 0x0f [Audio Mixer] wcaps 0x20010f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x00 0x00] [0x80 0x80]
+  Amp-Out caps: ofs=0x40, nsteps=0x40, stepsize=0x03, mute=0
+  Amp-Out vals:  [0x40 0x40]
+  Connection: 2
+     0x05 0x0b
+Node 0x10 [Vendor Defined Widget] wcaps 0xf00000: Mono
+Node 0x11 [Vendor Defined Widget] wcaps 0xf00000: Mono
+Node 0x12 [Vendor Defined Widget] wcaps 0xf00000: Mono
+Node 0x13 [Vendor Defined Widget] wcaps 0xf00000: Mono
+Node 0x14 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x00 0x00]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x90100140: [Fixed] Speaker at Int N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x40: OUT
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x15 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x00 0x00]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x012b4050: [Jack] HP Out at Ext Rear
+    Conn = Comb, Color = Green
+  Pin-ctls: 0xc0: OUT HP
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x16 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x083c: IN OUT HP Detect
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+  Connection: 5
+     0x0c 0x0d 0x0e* 0x0f 0x26
+Node 0x17 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x083c: IN OUT HP Detect
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+  Connection: 5
+     0x0c 0x0d 0x0e 0x0f* 0x26
+Node 0x18 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x90a00110: [Fixed] Mic at Int N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x24: IN
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x19 [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x1a [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x018b3020: [Jack] Line In at Ext Rear
+    Conn = Comb, Color = Blue
+  Pin-ctls: 0x20: IN
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x1b [Pin Complex] wcaps 0x40018f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x03, stepsize=0x27, mute=0
+  Amp-In vals:  [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00] [0x00 0x00]
+  Amp-Out caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-Out vals:  [0x80 0x80]
+  Pincap 0x08373c: IN OUT HP Detect
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+  Connection: 5
+     0x0c* 0x0d 0x0e 0x0f 0x26
+Node 0x1c [Pin Complex] wcaps 0x400001: Stereo
+  Pincap 0x0820: IN
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+Node 0x1d [Pin Complex] wcaps 0x400000: Mono
+  Pincap 0x0820: IN
+  Pin Default 0x400000f0: [N/A] Line Out at Ext N/A
+    Conn = Unknown, Color = Unknown
+  Pin-ctls: 0x20: IN
+Node 0x1e [Pin Complex] wcaps 0x400300: Mono Digital
+  Pincap 0x0810: OUT
+  Pin Default 0x014be060: [Jack] SPDIF Out at Ext Rear
+    Conn = Comb, Color = White
+  Pin-ctls: 0x40: OUT
+  Connection: 1
+     0x06
+Node 0x1f [Pin Complex] wcaps 0x400200: Mono Digital
+  Pincap 0x0820: IN
+  Pin Default 0x01cbe030: [Jack] SPDIF In at Ext Rear
+    Conn = Comb, Color = White
+  Pin-ctls: 0x20: IN
+Node 0x20 [Vendor Defined Widget] wcaps 0xf00040: Mono
+Node 0x21 [Volume Knob Widget] wcaps 0x600080: Mono
+Node 0x22 [Audio Mixer] wcaps 0x20010b: Stereo Amp-In
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80]
+  Connection: 11
+     0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x14 0x15 0x16 0x17 0x0b
+Node 0x23 [Audio Mixer] wcaps 0x20010b: Stereo Amp-In
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80]
+  Connection: 11
+     0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x14 0x15 0x16 0x17 0x0b
+Node 0x24 [Audio Mixer] wcaps 0x20010b: Stereo Amp-In
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80] [0x80 0x80]
+  Connection: 11
+     0x18 0x19 0x1a 0x1b 0x1c 0x1d 0x14 0x15 0x16 0x17 0x0b
+Node 0x25 [Audio Output] wcaps 0x11: Stereo
+  PCM:
+    rates [0x560]: 44100 48000 96000 192000
+    bits [0xe]: 16 20 24
+    formats [0x1]: PCM
+Node 0x26 [Audio Mixer] wcaps 0x20010f: Stereo Amp-In Amp-Out
+  Amp-In caps: ofs=0x00, nsteps=0x00, stepsize=0x00, mute=1
+  Amp-In vals:  [0x00 0x00] [0x80 0x80]
+  Amp-Out caps: ofs=0x40, nsteps=0x40, stepsize=0x03, mute=0
+  Amp-Out vals:  [0x40 0x40]
+  Connection: 2
+     0x25 0x0b
+```
+
+Unfortunately, I've run into another problem...
+Adept upgraded the kernel, and now the sound won't work when running on that kernel. (I'm running the old kernel now, and sound still works on it).
+Do your patch and alsa 1.0.14 work for the new kernel (2.6.20-16 I think).
+I just want to know before I go messing with everything again.
+
+---
+
+### Post by nicfagn on 2007-07-13
+> Unfortunately, I've run into another problem...
+Adept upgraded the kernel, and now the sound won't work when running on that kernel. (I'm running the old kernel now, and sound still works on it).
+Do your patch and alsa 1.0.14 work for the new kernel (2.6.20-16 I think).
+I just want to know before I go messing with everything again.
+
+Yes they should work, I use them on Gutsy with a 2.6.22-8 kernel.
+You have to redo the configure, make and make install-modules steps and then reboot.
+
+You can also try the model=w2jc parameter, it likely didn't work before because you overrode it with the alsa_local file.
+It surely is a simpler solution, if it works.
+
+---
+
+### Post by violinmandan on 2007-07-14
+It worked on the new kernel just by installing the patched drivers and rebooting.
+Thanks again!
+
+---
+
