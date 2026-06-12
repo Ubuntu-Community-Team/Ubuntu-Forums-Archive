@@ -1,0 +1,251 @@
+---
+title: "Are there any voltage monitoring utilities for Intel CPU's?"
+date: 2014-10-11
+forum: General Help
+---
+
+### Post by jdallara on 2014-10-11
+Hello,
+
+  I'm looking for a utility that can monitor CPU voltages in a manner similar to what turbostat and powertop can do for frequencies.
+
+Thanks
+
+---
+
+### Post by oldfred on 2014-10-11
+Found this:
+[http://www.phoronix.com/scan.php?page=news_item&px=OTIwNg](http://www.phoronix.com/scan.php?page=news_item&px=OTIwNg)
+
+Watts Up Power Meter Pro USB device
+[http://www.phoronix.com/scan.php?page=news_item&px=OTU3OA](http://www.phoronix.com/scan.php?page=news_item&px=OTU3OA)
+
+---
+
+### Post by jdallara on 2014-10-11
+Sorry, should have been more specific.  I have an ASUS Z97M-PLUS MB.  sensors only gives the following output:
+
+```
+jon@mothership:~$ sensors
+acpitz-virtual-0
+Adapter: Virtual device
+temp1:        +27.8°C  (crit = +105.0°C)
+temp2:        +29.8°C  (crit = +105.0°C)
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Physical id 0:  +60.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 0:         +50.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 1:         +59.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 2:         +60.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 3:         +57.0°C  (high = +80.0°C, crit = +100.0°C)
+
+pkg-temp-0-virtual-0
+Adapter: Virtual device
+temp1:        +59.0°C 
+```
+
+What I want is for it to give something like the following I saw:
+
+```
+
+ventrical@ventrical-Asus-Overclock:~$ sensors
+atk0110-acpi-0
+Adapter: ACPI interface
+Vcore Voltage:      +1.56 V  (min =  +1.45 V, max =  +1.75 V)
+ +3.3 Voltage:      +1.61 V  (min =  +3.00 V, max =  +3.60 V)
+ +5.0 Voltage:      +1.54 V  (min =  +4.50 V, max =  +5.50 V)
++12.0 Voltage:     +12.04 V  (min = +11.20 V, max = +13.20 V)
+CPU FAN Speed:     4041 RPM  (min =    0 RPM, max = 1800 RPM)
+CHASSIS FAN Speed:    0 RPM  (min =    0 RPM, max = 1800 RPM)
+POWER FAN Speed:      0 RPM  (min =    0 RPM, max = 1800 RPM)
+CPU Temperature:    +38.0°C  (high = +90.0°C, crit = +125.0°C)
+MB Temperature:     +32.0°C  (high = +70.0°C, crit = +125.0°C)
+Power Temperature:  +10.0°C  (high = +80.0°C, crit = +125.0°C)
+
+nouveau-pci-0400
+Adapter: PCI adapter
+temp1:        +38.0°C  (high = +95.0°C, hyst =  +3.0°C)
+                       (crit = +130.0°C, hyst =  +2.0°C)
+                       (emerg = +135.0°C, hyst =  +5.0°C)
+```
+
+
+I need to have visibility of the VCORE voltage.  Do I need to install the ACPI package?  Or more precisely, why is my system using ISA instead of ACPI?  The BIOS is UEFI.
+
+Thanks
+
+---
+
+### Post by tgalati4 on 2014-10-11
+I've used [phctool]("http://www.linux-phc.org/forum/index.php") to control undervoltages for an IBM T43p thinkpad.  It shows the voltage at each frequency step and you can bump the voltage up or down in increments until your computer either blows up or freezes.  I was able to get 15 to 20% increase in battery life and decrease wattage from 22 watts to 15-17 watts with less fan usage.
+
+---
+
+### Post by jdallara on 2014-10-21
+Unfortunately it doesn't support newer kernels and processors >2013.  Thanks though.  Big question is why doesn't sensors print out the voltages?
+
+Jon.
+
+---
+
+### Post by tgalati4 on 2014-10-21
+*Sensors* gets its data from instrumentation chips--specialized analog-to-digital converters that are hung off of the data bus.  Tapping voltages inside the CPU require a specialized kernel module (which often requires a recompile of the kernel as it did for *phctool*).  So it's not surprising that *sensors* does not support internal CPU voltages.  
+
+You can often get the voltage supplying the CPU chipset (called Vcore), but you have to modify /etc/sensors3.conf.  There are at least 8 placeholders for voltage (in1 through in8).  You need to define the label and reasonable ranges for each before they will display with *sensors*.  You also need to research your instrumentation chip.  Some chips will monitor voltage, some don't.
+
+```
+cat /etc/sensors3.conf
+```
+
+Make a backup first, before changing the configuration file.
+
+---
+
+### Post by jdallara on 2014-12-01
+Its a problem with lm-sensors and the new Z97 chipset.  Add 'acpi_enforce_resources=lax' to the kernel boot parameters and then install the nct6775 module.
+
+Jon
+
+---
+
+### Post by gordintoronto on 2014-12-02
+It appears you are running in a virtual machine. The actual hardware is not visible in this case.
+
+---
+
+### Post by pqwoerituytrueiwoq on 2014-12-03
+> **jdallara said:**
+> Its a problem with lm-sensors and the new Z97 chipset.  Install 'acpi-enforce-resources=lax' to the kernel boot parameters and then install the nct6775 module.
+
+Jon
+WOW i can now see my fans in there
+```
+sudo modprobe nct6775
+```
+using the ubuntu mainline 3.16.7 kernel
+edit
+[FONT=courier new]acpi-enforce-resources=lax[/FONT] did not do anything for me
+i made the modprobe permanent by adding the model to /etc/modules
+```
+sudo nct6775 | sudo tee -a /etc/modules
+```
+*i have a Z97 board and a i5-4960k
+```
+chad@M4A79XTD-EVO:~$ cat /etc/modules| tail -5
+# Generated by sensors-detect on Sat Nov  9 23:59:59 2013
+# Chip drivers
+#it87
+coretemp
+nct6775
+chad@M4A79XTD-EVO:~$ sensors
+coretemp-isa-0000
+Adapter: ISA adapter
+Physical id 0:  +32.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 0:         +30.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 1:         +26.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 2:         +30.0°C  (high = +80.0°C, crit = +100.0°C)
+Core 3:         +31.0°C  (high = +80.0°C, crit = +100.0°C)
+
+nct6791-isa-0290
+Adapter: ISA adapter
+in0:                    +0.90 V  (min =  +0.00 V, max =  +1.74 V)
+in1:                    +1.72 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in2:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in3:                    +3.41 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in4:                    +1.03 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in5:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in6:                    +0.00 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in7:                    +3.52 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in8:                    +3.34 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in9:                    +1.02 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in10:                   +0.00 V  (min =  +0.00 V, max =  +0.00 V)
+in11:                   +1.01 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in12:                   +0.75 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in13:                   +0.86 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+in14:                   +0.21 V  (min =  +0.00 V, max =  +0.00 V)  ALARM
+fan1:                     0 RPM  (min =    0 RPM)
+fan2:                   851 RPM  (min =    0 RPM)
+fan3:                   431 RPM  (min =    0 RPM)
+fan4:                   436 RPM  (min =    0 RPM)
+fan5:                     0 RPM  (min =    0 RPM)
+fan6:                   898 RPM
+SYSTIN:                 +30.0°C  (high =  +0.0°C, hyst =  +0.0°C)  ALARM  sensor = thermistor
+CPUTIN:                 +75.0°C  (high = +80.0°C, hyst = +75.0°C)  sensor = thermistor
+AUXTIN0:                +82.0°C    sensor = thermistor
+AUXTIN1:               -128.0°C    sensor = thermistor
+AUXTIN2:                +25.0°C    sensor = thermistor
+AUXTIN3:               +104.0°C    sensor = thermistor
+PECI Agent 0:           +32.0°C  (high = +80.0°C, hyst = +75.0°C)
+                                 (crit = +100.0°C)
+PCH_CHIP_CPU_MAX_TEMP:   +0.0°C  
+PCH_CHIP_TEMP:           +0.0°C  
+PCH_CPU_TEMP:            +0.0°C  
+intrusion0:            ALARM
+intrusion1:            ALARM
+beep_enable:           disabled
+```
+
+---
+
+### Post by jdallara on 2014-12-03
+Nope.  Module problem.
+
+---
+
+### Post by jdallara on 2014-12-03
+I edited my previous post.  Should have been underscores not hyphens.  ACPI will have a fit on some systems if the nct6775 module is installed with out that boot parameter.  Take a look at this link:  [http://permalink.gmane.org/gmane.linux.drivers.sensors/36526](http://permalink.gmane.org/gmane.linux.drivers.sensors/36526)
+
+Jon.
+
+---
+
+### Post by pqwoerituytrueiwoq on 2014-12-03
+interesting seems you can name the sensors using /etc/sensors3.conf as well as apply math to the values to so it will give you human readable numbers
+i wonder how one figures out which input is which sensor, this is my board
+[URL="http://www.asrock.com/mb/Intel/Fatal1ty%20Z97%20Killer/?cat=Specifications"]Manufacturer: ASRock
+Product Name: Z97 Killer[/URL]
+Edit: confirmed my fans
+```
+chip "nct6791-isa-0290"
+ label fan1 "Chassis Fan 1 Speed"
+ label fan2 "CPU Fan 1 Speed"
+ label fan3 "Chassis Fan 3 Speed"
+ label fan4 "Chassis Fan 4 Speed"
+ label fan5 "Power Fan Speed"
+ label fan6 "CPU Fan 2 Speed"
+```
+
+---
+
+### Post by tgalati4 on 2014-12-03
+Stick your finger into the fan.  If the expected label slows down, then you have the right one.
+
+It's trial-and-error since there are few standards on how instrumentation is set up.
+
+With some research on your motherboard and instrumentation chipset, and reasonable sensor3.conf values, you can get some pretty sophisticated monitoring.
+
+If your machine is dual-boot, look for as many instrumentation values using Windows/manufacturer's utilities--those are typically the ones that you will be able to detect in linux.
+
+Finding temperture labels is tricky.  You can use a freeze spray to chill down a sensor and see if it responds, or use *cpuburn* to load up a processor and how the die temps increase, then the motherboard sensor increase, then the PSU circuitry heat up.  Similar with graphics cards, run a graphics benchmark and watch the GPU sensor heat up.
+
+---
+
+### Post by pqwoerituytrueiwoq on 2014-12-03
+id rather not stick my finger in a delta fan (i don't have delta fans, but that is not the point)
+id rather unplug the fan
+
+i labled my fan the same as in the UEFI bios
+
+i have a windows install on a alt hdd and 2 hot swap bays
+but i am pretty sure i need to reinstall that copy
+
+---
+
+### Post by jdallara on 2014-12-03
+Check the link that I pointed to.  It has a sensors config file that you can add to /etc/sensors.d with some of the voltages labeled.
+
+Jon
+
+---
+

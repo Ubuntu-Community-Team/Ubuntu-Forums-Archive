@@ -1,0 +1,147 @@
+---
+title: "Installing Multiple OS"
+date: 2010-07-31
+forum: General Help
+---
+
+### Post by linux1534 on 2010-07-31
+Hi,
+
+I wanna install multiple versions of linux on my machine. I have win7 already installed on my pc.
+
+I wanna start by installing ubuntu and use the GRUB to be able to boot all operating system installed on it.
+
+So how do I go about doing this? Install ubuntu with GRUB and install the other linux versions without a boot loader I guess and than edit ubuntu GRUB to be able to load all of them. Is that about right? :)
+
+But how I can edit GRUB to be able to boot all these operating systems all together?
+
+I just wanna make sure everything is set before I start.
+
+
+Thanks.
+
+---
+
+### Post by smellyman on 2010-07-31
+See [documentation]("https://help.ubuntu.com/community/WindowsDualBoot")
+
+Also, there is a lot of youtube videos that give step by step instructions.
+
+---
+
+### Post by worksofcraft on 2010-07-31
+I think you just install all the operating systems in separate partitions. Do the most up to date Ubuntu one last so you get the latest grub and it should be all automatic.
+
+---
+
+### Post by sofasurfer on 2010-07-31
+Not sure but I think you must do windows first and then linux, not linux and then windows. 
+I may be wrong on that but just thought I'd mention it.
+
+---
+
+### Post by linux1534 on 2010-07-31
+I already installed Win7. And I did my partitioning.
+
+So install the other linux versions first and than ubuntu last with it being able to detect and all and load it up in the grub?
+
+I couldn't find anything useful in the documentation posted.
+
+The GRUB documentation was more useful though. Although I am not sure how to edit it and add operation systems to it. Just copy and paste the line with a, for example, /dev/hda1/ to as many partitions are available and have an operating system on it and just copy and replace it?
+
+Just in case the installation doesn't detect them right or I may want to change something after I installed ubuntu.
+
+---
+
+### Post by garvinrick4 on 2010-07-31
+Windows 7 is in a primary partition and its recovery also that is 2 primarys you are allowed
+4 so go into gparted and make large extended partition and that is a primary partition and inside that extended partition you can put all the logical partitions you want which linux can survive in. So just think of the extended partition as a house for all your linux installs.
+You can make your partitions in gparted and then use manual install when installing Ubuntu
+and pick the partitions you want that you already made. Linux inside of an extended partition will start at sd5 while Windows will be in the first 4 partitions sda1 thru sda4 and will only live in primary partitions. A bit greedy but that is how it is. 
+ Make sure when you install Ubuntu in last page of install #8 that you use the advanced tab and pick sda to put grub in. Not sda1 or sda5 but always sda
+ Sometimes when installing Ubuntu in Windows 7 there will be a sda1 partition that is called SYSTEM that is a boot partition but still put your grub in sda
+ Good luck and Google gparted and partitioning and read up. Gparted is a valuable asset in linux use.
+
+---
+
+### Post by garvinrick4 on 2010-07-31
+You can always install or reinstall grub2 with live Cd their are plenty of users that will tell you how if needed not that tough to do.
+
+---
+
+### Post by linux1534 on 2010-07-31
+Yes, I have my partitions installed already.
+
+I just need to get GRUB working properly after I installed all those operating systems.
+
+---
+
+### Post by garvinrick4 on 2010-07-31
+attached: sda8 is formatted in fat32 will also show up in Windows as a letter such as F: drive.
+
+---
+
+### Post by garvinrick4 on 2010-07-31
+Notice in previous post how I gave each install a label. It is easier to mount and use in Live CD to fix installs.
+
+Lets say sda5 is labeled maverick for this: Use your own: grab live cd and boot from:
+
+```
+sudo mkdir /media/maverick
+``````
+sudo mount /dev/sda5 /media/maverick
+``````
+sudo grub-install --recheck --root-directory=/media/maverick /dev/sda 
+``````
+sudo umount /media/maverick
+
+```I have:
+made a directory
+mounted install with grub I want to use
+installed grub to sda
+unmounted install (not a typo umount is right)
+Done grub installed.
+When boot into grub2 install
+```
+sudo update-grub
+```
+
+---
+
+### Post by linux1534 on 2010-08-01
+Ok well all linux OSes are installed and work. All I wanna do now is edit grub and remove a few links (there are a few too much and some not working). How can I do that?
+
+I checked but there is no /boot/grub/menu.lst or maybe its another file I'm supposed to edit?
+
+
+EDIT:
+Ah I got it, its the grub.cfg file.
+
+
+Thanks very much for the help.
+
+---
+
+### Post by worksofcraft on 2010-08-01
+> **linux1534 said:**
+> 
+EDIT:
+Ah I got it, its the grub.cfg file.
+
+
+
+I hope you noticed the bit in grub.cfg that says...
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+
+meh, whatevah... you might wanna check thread [http://ubuntuforums.org/showthread.php?t=1538989](http://ubuntuforums.org/showthread.php?t=1538989)
+save us having a repeat performance ;)
+
+;D
+
+---
+

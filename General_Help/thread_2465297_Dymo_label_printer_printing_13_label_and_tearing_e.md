@@ -1,0 +1,137 @@
+---
+title: "Dymo label printer printing 1/3 label and tearing early since Ubuntu 20.04 upgrade"
+date: 2021-07-28
+forum: General Help
+---
+
+### Post by dora5 on 2021-07-28
+My DYMO LabelWriter 450 Turbo worked perfectly in Ubuntu 18.04, but since I upgraded to Ubuntu 20.04, it consistently prints 1/3 of the label and spits out 3/4 of the label, tearing off 3/4 of the label.
+
+   I have been using glabel to set up and print my labels.
+
+
+I have tried removing the printer, removing the driver, as printer-driver-dymo (which may or may not have removed the driver, see below) and reinstalling it by several methods.  I downloaded version 1.4.0-9 from the debian repository and installed it - several times.  It is the same version as is in Synaptic Package manager, and installing it through Synaptic didn't work either.
+
+  On the Dymo web site linux drivers can no longer be found on the U.S. version of its site.   A github version is 1.4.0-8.   The linux driver formerly on the dymo web site did not work due to errors in install script, and a fixed version for 1.4.0-8 at Github was what worked for me - in Ubuntu 18.04.
+
+
+I checked to make sure Dymo is set up properly for my labels - and it is printing in the correct direction and seemingly the correct size.  It just prints only a few letters.    
+
+
+I have tried setting up a new label without reference to Dymo, to the specified width and length, and the same thing happens.   
+
+
+If I print a test print the entire page prints in a third of the label, or something.   
+
+
+I have test printed using the button on the Dymo, and verified that the printer prints whole labels, just not from the computer.
+
+  I got another dymo 450 turbo printer and another usb cable, with same identical results.  
+
+I tried all of the install methods listed below on my different computer (not Dell), running Ubuntu 20.04 upgraded from 18.04 with the same results.  
+
+
+From below it appears the installer installed the correct files where it was supposed to put them, but the OS is not using the driver, but a generic USB line printer driver usblp instead, which is not printing correctly.
+
+   I just tried installing the drivers from Synaptic and then rebooting and then plugging in the dymo, and after configuring I got a message saying it needs additional drivers and they couldn't be found. But I checked and the driver file is in usr/lib/cups/driver.   The system log says it attached usblp - the usb line printer driver that isn't working.
+
+Here are the places I've downloaded and tried the install files from; they are both source files that need to be compiled, and deb packages that are now on Synaptic and the debian and Ubuntu repositories; you can actually install it by sudo apt-get install.
+
+sudo apt-get install printer-driver-dymo  (installs deb file from universe repository
+installed with Synaptic.  
+[https://packages.debian.org/sid/amd64/printer-driver-dymo/download](https://packages.debian.org/sid/amd64/printer-driver-dymo/download)  printer-driver-dymo_1.4.0-9_amd64.deb  
+[http://ftp.debian.org/debian/pool/main/d/dymo-cups-drivers/](http://ftp.debian.org/debian/pool/main/d/dymo-cups-drivers/)  same thing tried at different time
+[EMAIL="git@salsa.debian.org:printing-team/dymo-cups-drivers.git"]git@salsa.debian.org:printing-team/dymo-cups-drivers.git[/EMAIL] ([https://salsa.debian.org/printing-team/dymo-cups-drivers](https://salsa.debian.org/printing-team/dymo-cups-drivers))
+Used these instructions
+[https://10pm.ca/ubuntu-linux-mint-and-dymo-labelwriter-4xl-drivers/](https://10pm.ca/ubuntu-linux-mint-and-dymo-labelwriter-4xl-drivers/)   
+
+
+[https://packages.ubuntu.com/source/bionic/dymo-cups-drivers](https://packages.ubuntu.com/source/bionic/dymo-cups-drivers)  
+
+
+[https://github.com/Kyle-Falconer/DYMO-SDK-for-Linux](https://github.com/Kyle-Falconer/DYMO-SDK-for-Linux)  This is how I installed it in Ubuntu 18.04 and it worked until I upgraded to 20.04.   This is actually a new version of the install files he had two days ago with different instructions - and the new version doesn't even compile.  It halts with recursive errors about cupsBackChannelRead not declared in this scope.
+
+
+The deb files also exist at [https://mirrors.aliyun.com/ubuntu-ports/pool/universe/d/dymo-cups-drivers/](https://mirrors.aliyun.com/ubuntu-ports/pool/universe/d/dymo-cups-drivers/) but they don't have the amd version for the latest driver.   
+
+
+
+All of the debian packages installed with a list of further dependencies than the ones listed, and installed the listed files where the list said they should be isntalled on my system, but Cups failed to pick up on the driver and consistently used usblp instead.   
+
+The source code packages at one point did the same thing and printed the same goofy labels, but now none of them put the listed files in their proper locations, which exist in my system.  For instance, /usr/lib/cups/drivers is actually in that location.   However, the output generated by the ./configure (no matter what was with ./configure or what was or was not done before it), and make commands contained many warnings of the some stuff is depreciated and use other stuff, whether it went ahead and used the other stuff, or used the depreciated stuff, is not clear, and a lot of stuff missing.  I don't even know if tha tmatters.  However the installation seems to end by doing exactly nothing.   
+
+One effort to install a .deb package terminated on removing dvdcss... a codex that plays movies.   I have since updated it.   And I've not seen that happen again.   It might just be that my system thought it needed to be removed at that moment.   
+
+It doesn't seem to matter if the installation files install the drivers or not, since the Dymo printer always ends up using the usblp driver.   The system never gets to the point of knowing what driver to use.
+
+I have the long outputs from two attempts to install two of those source file packages if anyone wants to see them and look at the warnings.  
+
+
+Several ideas:
+
+
+--Since telling it to go find the driver just removes whatever it was using for a driver, not finds the correct driver, I doubt that blacklisting usblp would help.   Something seems to be preventing the system from finding the driver that is located where it should be. 
+
+
+--- I notice that the assorted files tell me that the driver file is "dymo", but that "printer-driver-dymo" was installed.   Should they state the same name?    If the OS is looking for "printer-driver-dymo" and what is there is "dymo" it won't find it.
+
+
+-- Is there a configuration file that should tell the OS what driver to use and where to find it?   Logically it seems like the installer failed to put that instruction in that configuration file.  How do I add it and to what configuration file?   Now, that would make logical sense if the file the information was supposed to be written to changed between Ubuntu 18.04 and Ubuntu 20.04, which would hardly be the only stupid, nefarious, designed to be difficult change that occurred.   If the file had simply been overwritten during the upgrade, reinstalling would have fixed the issue.
+
+
+-- someone posted about an upgrade in a different operating system maybe 16 years ago causing CUPS to not know how to find the driver and suggested a script to fix it, but then the bug was fixed - but this was ancient of days and I don't know whether to try the script.  Anyone aware of a similar bug in Ubuntu 20.04?
+
+Troubleshooting:
+
+
+In Settings, devices, printers:   LabelWriter-450-Turbo shows that it is using Driver DYMO LabelWriter 450 Turbo - which is the name of the device, NOT the driver.   
+When click on Search for Drivers, DYMO LabelWriter 450 Turbo disappears and nothing else takes it's place.
+
+
+dora@dora-OptiPlex-790:~$ sudo lshw -c printer
+   *-usb:3
+         description: Printer 
+         product: DYMO LabelWriter 450 Turbo
+         vendor:  DYMO
+         physical id: 7
+         bus info:  usb@2:1.7
+         version:  1.12
+         serial:  16042514191439
+         capabilities:  usb-2.00 bidirectional
+         configuration:  driver=usblp maxpower=2mA  speed=12Mbit/s   
+**[COLOR=black]File list of package *[COLOR=#444444]printer-driver-dymo[/COLOR]* in *[COLOR=#444444]sid[/COLOR]* of architecture *[COLOR=#444444]amd64[/COLOR]*[/COLOR]**
+
+[COLOR=#333333][FONT=Monaco]/usr/lib/cups/driver/dymo
+/usr/lib/cups/filter/raster2dymolm
+/usr/lib/cups/filter/raster2dymolw
+/usr/share/cups/ppd-updaters/printer-driver-dymo.ppd-updater
+/usr/share/doc/printer-driver-dymo/changelog.Debian.gz
+/usr/share/doc/printer-driver-dymo/changelog.gz
+/usr/share/doc/printer-driver-dymo/copyright
+[/FONT][/COLOR]
+
+
+I verified that these files are each installed in the above specified locations.
+
+
+contents of /user/lib/cups/driver
+includes:  
+dymo    size 22.6 kB  modified 22 Mar 2020   (Have photo)  This is a python program.   
+
+
+cat .var.kig.aot.gustirt,kig | grep -3 ^Install  | grep dymo  gives 
+
+
+Install: printer-driver-dymo:amd64 (1.4.0-9build1)
+Install: printer-driver-dymo:amd64 (1.4.0-9build1)
+
+
+aptitude search printer | grep ^i gives 
+
+
+list of printer-driver-name
+includes 
+printer-driver-dymo - printer driver for DYMO label printers.
+
+---
+

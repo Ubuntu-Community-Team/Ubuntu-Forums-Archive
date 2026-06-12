@@ -1,0 +1,148 @@
+---
+title: "Lightpd and phpmyadmin 404 Not Found"
+date: 2011-04-22
+forum: General Help
+---
+
+### Post by leegold on 2011-04-22
+Hi,
+
+Every time I try to access localhost/phpmyadmin or localhost/phpmyadmin/index.php I get a 404 - Not Found. But, [http://localhost/testphp.php](http://localhost/testphp.php) works OK. I had Apache installed in the past but removed it and recently installed Lighttpd. I'm using Lubuntu 10.10 a flavor of Ubuntu and using my laptop (localhost)as a testbed to learn. I have tried restarting Lighttpd after each change to the conf file. Please tell me if more info is needed to help fix it and I will post it. Here is my lighttpd.conf. Thanks for the help:
+
+# Debian lighttpd configuration file
+#
+
+############ Options you really have to take care of ####################
+
+## modules to load
+server.modules = (
+            "mod_alias",
+            "mod_compress",
+#           "mod_rewrite",
+#           "mod_redirect",
+#           "mod_usertrack",
+#           "mod_expire",
+            "mod_flv_streaming",
+#           "mod_evasive" 
+            "mod_fastcgi" 
+)
+
+## a static document-root, for virtual-hosting take look at the
+## server.virtual-* options
+server.document-root       = "/var/www/" 
+
+## where to upload files to, purged daily.
+server.upload-dirs = ( "/var/cache/lighttpd/uploads" )
+
+## where to send error-messages to
+server.errorlog            = "/var/log/lighttpd/error.log" 
+
+## files to check for if .../ is requested
+index-file.names           = ( "index.php", "index.html",
+                               "index.htm", "default.htm",
+                               "index.lighttpd.html" )
+
+## Use the "Content-Type" extended attribute to obtain mime type if possible
+# mimetype.use-xattr = "enable" 
+
+##
+# which extensions should not be handle via static-file transfer
+#
+# .php, .pl, .fcgi are most often handled by mod_fastcgi or mod_cgi
+static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+
+######### Options that are good to be but not neccesary to be changed #######
+
+## Use ipv6 only if available. (disabled for while, check #560837)
+#include_shell "/usr/share/lighttpd/use-ipv6.pl" 
+
+## bind to port (default: 80)
+# server.port               = 81
+
+## bind to localhost only (default: all interfaces)
+## server.bind                = "localhost" 
+
+## error-handler for status 404
+#server.error-handler-404  = "/error-handler.html" 
+#server.error-handler-404  = "/error-handler.php" 
+
+## to help the rc.scripts
+server.pid-file            = "/var/run/lighttpd.pid" 
+
+##
+## Format: <errorfile-prefix><status>.html
+## -> ..../status-404.html for 'File not found'
+#server.errorfile-prefix    = "/var/www/" 
+
+## virtual directory listings
+dir-listing.encoding        = "utf-8" 
+server.dir-listing          = "enable" 
+
+### only root can use these options
+#
+# chroot() to directory (default: no chroot() )
+#server.chroot            = "/" 
+
+## change uid to <uid> (default: don't change)
+server.username            = "www-data" 
+
+## change gid to <gid> (default: don't change)
+server.groupname           = "www-data" 
+
+#### compress module
+compress.cache-dir          = "/var/cache/lighttpd/compress/" 
+compress.filetype           = ("text/plain", "text/html", "application/x-javascript", "text/css")
+
+#### url handling modules (rewrite, redirect, access)
+# url.rewrite                 = ( "^/$"             => "/server-status" )
+# url.redirect                = ( "^/wishlist/(.+)" => "http://www.123.org/$1" )
+
+#### expire module
+# expire.url                  = ( "/buggy/" => "access 2 hours", "/asdhas/" => "access plus 1 seconds 2 minutes")
+
+#### external configuration files
+## mimetype mapping
+include_shell "/usr/share/lighttpd/create-mime.assign.pl" 
+
+## load enabled configuration files,
+## read /etc/lighttpd/conf-available/README first
+include_shell "/usr/share/lighttpd/include-conf-enabled.pl" 
+
+## added later by goldtech
+
+fastcgi.server = ( ".php" => ((
+                     "bin-path" => "/usr/bin/php-cgi",
+                     "socket" => "/tmp/php.socket" 
+                 )))
+
+flv-streaming.extensions = ( ".flv" )
+
+alias.url = ( "/phpmyadmin/” => “/usr/share/phpmyadmin/")
+
+------end of file
+
+---
+
+### Post by cavalier911 on 2011-04-22
+```
+sudo dpkg-reconfigure phpmyadmin
+```
+Choose lighttpd
+
+---
+
+### Post by leegold on 2011-04-22
+Hi cavalier911,
+
+I did: "sudo dpkg-reconfigure phpmyadmin" like you said.
+
+And removed the 
+
+"alias.url = ( "/phpmyadmin/"...snip 
+
+line from the conf file.
+
+That fixed it! Thank you so much! :):D
+
+---
+

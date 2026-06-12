@@ -1,0 +1,147 @@
+---
+title: "[SOLVED] Why are partitions password protected?"
+date: 2007-11-02
+forum: General Help
+---
+
+### Post by bwood720 on 2007-11-02
+I am extremely new to linux (less than 2 weeks) and am annoyed that every time I boot up linux (I can't hibernate for some reason--but that's another issue) I have to type in my password if I want to access my NTFS partition. I obviously don't want to cut or copy all of my MP3's to my linux partition, so accessing them from the NTFS works great, except the annoyance caused every time I boot into Ubuntu. If I run Rhythmbox Music Player before entering the password it obviously can't find my music and begins temporarily removing it from my library. 
+
+So, in order for Rhythmbox Music Player to play my music I have to open up Computer under Places and access my NTFS partition, type in the password and then I can go play my MP3's. Kind of annoying, don't you think? I know it's probably for security, but just to read my partition shouldn't be dangerous (at least I wouldn't think). 
+
+Being new to linux I don't understand much of anything about it's command prompts, etc. so naturally I didn't understand the other articles I found about this annoyance on this forum and others.
+
+Thanks
+
+---
+
+### Post by maybeway36 on 2007-11-02
+Try looking in /etc/fstab. Press Alt+F2 and type
+```
+gksu gedit /etc/fstab
+```
+Then find the NTFS line and make sure the options list includes
+```
+users
+```
+
+---
+
+### Post by Pumalite on 2007-11-02
+Maybe this helps:
+
+Open a terminal and
+Code:
+
+sudo chown yourusername /whereveritismounted
+
+---
+
+### Post by Happy_Man on 2007-11-02
+Hmmm.... if you would, could you please post the contents of the file /etc/fstab?
+
+---
+
+### Post by bwood720 on 2007-11-03
+The contents of /etc/fstab is shown below; I don't see anywhere where it mentions an ntfs partition. I have a dell 1300 laptop that has a bunch of partitions (dell utility, some dell restore partition, a FAT32 partition for transferring my windows files to linux and then of course my linux, and windows partitions) 
+
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# /dev/sda6
+UUID=35ae78aa-faca-44af-9a47-18dfd2521d62 /               ext3    defaults,errors=remount-ro 0       1
+# /dev/sda7
+UUID=a9b39182-f81e-4733-97b3-aa8f45ff7ce1 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec 0       0
+
+
+Also, I don't know anything about where anything on my system is "mounted" (I'm really inexperienced with Linux).
+
+Thanks.
+
+---
+
+### Post by dukejib on 2007-11-03
+@bwood720;3695891
+
+Make sure you have these packages installed
+ntfs-3g
+ntfs-config
+
+then 
+
+enter the following entries in your **/etc/fstab**
+```
+
+# Entry for /dev/sda1 :
+UUID=C67867E77867D529 /media/sda1 ntfs-3g defaults,locale=en_US.UTF-8 0 1
+```
+Then
+```
+
+sudo mount -a
+```
+
+This will work only if you have your first partition is NTFS.
+
+---
+
+### Post by Happy_Man on 2007-11-03
+To check this, check the output of the command ```
+sudo fdisk -l
+``` to see which partition is NTFS, then change the entry to reflect that. Also, get rid of the UUID string in that and replace with just "/dev/sda1" or whatever your partition is numbered. So it would perhaps look like this: ```
+# Entry for /dev/sda1 :
+/dev/sda1 /media/sda1 ntfs-3g defaults,locale=en_US.UTF-8 0 1
+```
+
+---
+
+### Post by mahousaru on 2007-11-03
+UUIDs are good things, they stop your devices from getting mixed up.  They are unique for your own partitions and can be found using:
+
+```
+ls /dev/disk/by-uuid -alh
+```
+
+Personally I rank in order of usefulness using UUIDs, then labels and finally followed by devices.  Some people like labels more as they are human readable, but this requires you to enforce a strict naming policy.
+
+---
+
+### Post by bwood720 on 2007-11-03
+Ok, so I just about tried everything listed above and couldn't get linux to even recognize my partition after that. I typed in ntfs-3g in terminal and it suggested (sda2 is my ntfs partition): 
+
+ntfs-3g /dev/sda2 /mnt/win -o force,locale=en_EN.UTF-8
+
+I've tried customizing that as suggested and ended up with:
+
+ntfs-3g /dev/sda2 /mnt/win -o force,user,locale=en_EN.UTF-8
+or 
+ntfs-3g /dev/sda2 /mnt/win -o force,defaults,locale=en_EN.UTF-8
+
+However, it stills prompts me for my password to access that drive after booting into linux.
+
+
+So I tried the ntfs-config (which I first had to download and install) and it found my ntfs partition. I configured it to have write access for internal and external (sure, why not?) drives, then rebooted, and found that it no longer prompts me for my password.
+
+By the way, my fstab file now looks like:
+
+# /etc/fstab: static file system information.
+#
+#  -- This file has been automaticly generated by ntfs-config -- 
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+proc /proc proc defaults 0 0
+# Entry for /dev/sda6 :
+UUID=35ae78aa-faca-44af-9a47-18dfd2521d62 / ext3 defaults,errors=remount-ro 0 1
+# Entry for /dev/sda7 :
+UUID=a9b39182-f81e-4733-97b3-aa8f45ff7ce1 none swap sw 0 0
+/dev/scd0 /media/cdrom0 udf,iso9660 user,noauto,exec 0 0
+/dev/sda2 /media/Brian ntfs-3g defaults,locale=en_US.UTF-8 0 0
+
+
+Thanks for all the help guys! My linux frustration is slowly going down.
+
+---
+

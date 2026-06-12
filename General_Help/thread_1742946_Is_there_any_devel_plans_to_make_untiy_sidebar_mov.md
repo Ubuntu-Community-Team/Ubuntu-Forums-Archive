@@ -1,0 +1,21 @@
+---
+title: "Is there any devel plans to make untiy sidebar movable? /retain classic menu nav"
+date: 2011-04-29
+forum: General Help
+---
+
+### Post by vintagedaddyo on 2011-04-29
+Greetings...,
+
+*Cairo-Dock type bar->minus major config abilities-> minus anchor/drag/position abilities-> minus design bling-> adding search functionality = Unity sidebar
+
+*Cairo-Dock type bar-> have config abilities -> added search function -> position and scaling abilities -> keep old top dd menus intact -> keep unity bar for mobile and netbook versions = win
+
+I have been using Ubuntu since the start as well as many other Linux dists over the years and have grown accustomed to the ease of use and simplistic approach of the gnome desktop gui. Unity sidebar not only annoys me and saddens me, personally I feel it should have stayed in the netbook type genre as it really throws an older user for a loop. Is Ubuntu turning into Linspire, is the future going to be like Freespire? Well their future was rather short wasn't it? Too many requests from former or current Winblows users for Winblows like features and not enough focus on the preferences of diehard Linux user's group's in my opinion was indeed the downfall there in the past..., are we now seeing that as a possibility here too? Take a quick net search in regards to Unity sidebar complaints and you may be surprised at how many rants from solid Linux users or soon to be ex-Ubuntu users are floating around on the net. Change is often good but not always appreciated or needed and certain barely configurable changes are often major deal breakers in a project. Like for example every comment I have seen in regards to any direction of re-positioning said new sidebar claim that there will or may not be possible nor recommended plans to have optional movement in the near future..., though I have heard a few folks have managed hacks to workaround said problem, the general response is ..., well just switch to classic if you don't like it..., yet at the same time I hear the same people saying well the classic options are planned to be removed..., WTH? How is that a bloody solution? So telling old diehard linux users just to go back to thier beloved "classic" layout for the time being is the current solution? If classic is planned to be dropped how is that a solution? I love the old saying "if something isn't broken why try to fix it?" Well the old menu is much smaller , it wasnt broken, takes less time to do the same job and is preferred by alot of users..., so why plan to remove it completely? Also why not before you had released said dist package was this subject not discussed by the developers and been like "hey we are gonna **** alot of folks off perhaps we should add the option in the new desktop layout to continue using classic menu or move sidebar as a default option before release of 11?
+The sidebar takes approx 3 to 5 more clicks to obtain same results that in my classic setup would take perhaps 1 or 2 clicks to do the same. If I wanted to be reminded of Windblows or Mac then I would have purchased said OS's not QQ'd to Ubuntu to add features that keep sending our beloved OS towards looking and feeling more and more like the competitions releases every year. Already since upgrading several clients sys's, my phone will not stop ringing in regards to this annoying new sidebar..., all want it removed or to move it to the bottom..., as do I, in the meantime I am still using my beloved classic layout and pray that some sort of happy medium is come to from the developers, because I think if the plan is to make Unity sidebar the only choice for the future of Ubuntu..., you will may begin see a bunch of new forks based on the good ol reliable Ubuntu prior to 11 in the Ubuntu community and or people choosing another more classic dist that keeps us logging in and saying...., aaah ..., we are home. I am truly sorry for my rant or if it offened anyone as tha was not my intention, but today is the first day since the Ubuntu project was first started that I am rather disappointed in the OS new menu system and layout and may start to look for another option now. Thanks for your time dedication and the good years since 2004 Ubuntu team.
+
+
+~cya :(
+
+---
+

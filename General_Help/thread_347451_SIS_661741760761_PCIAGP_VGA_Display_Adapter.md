@@ -1,0 +1,308 @@
+---
+title: "SIS 661/741/760/761 PCI/AGP VGA Display Adapter"
+date: 2007-01-27
+forum: General Help
+---
+
+### Post by PetePete on 2007-01-27
+i'm looking for some graphics acceleration for my laptops graphics card.. even running the openGL screensavers makes it jerky.
+
+lshw shows up
+product: 661/741/760/761 PCI/AGP VGA Display Adapter
+
+currently i've got the driver set to 'sis' which is   a bit generic i thinks !
+
+anyone know what i should install?
+
+---
+
+### Post by bremedios on 2007-03-13
+Any luck with this?  I have the same setup and am looking for at least something better than the VESA that Ubuntu comes configured with by default.
+
+---
+
+### Post by bremedios on 2007-03-13
+I changed mine to the sis driver from vesa and all the tearing is gone.  I'll be trying out a few other apps now but it already looks much better.
+
+---
+
+### Post by g8m on 2007-03-13
+A resource I found for the sis display adapters i found was. [http://www.winischhofer.net/](http://www.winischhofer.net/)
+
+But it doesnt give much hope. The hardware doesnt support 3d very well. I enabled
+the default sis driver in xorg.conf, but if i enter glxinfo in a terminal, the X-server crashes.
+
+I recently installed feisty, and it still crashes. Me thinks, this hardware sucks. It's good enough
+for normal use though. Browsing, mp3, playing movies, etc.
+
+If someone knows how to run beryl on this hardware, let me know...
+
+---
+
+### Post by 7DR3AM7 on 2008-03-13
+Hello!!! I have the Same problem!!!    bremedios,  How did u do it? can u explain me pls, im a newbie about linux but I was able to connect the laptop to wireless and all the stuff, now my problem is the screen!!!!!!!
+
+---
+
+### Post by bremedios on 2008-03-14
+You should be able to change it via the GUI (System->Administration->Screens and Graphics) or by changing the xorg.conf file directly (/etc/Xll/xorg.conf)
+
+---
+
+### Post by ogost on 2008-04-01
+> **bremedios said:**
+> You should be able to change it via the GUI (System->Administration->Screens and Graphics) or by changing the xorg.conf file directly (/etc/Xll/xorg.conf)
+Hi! I'm pretty much having same difficulties. The problem is, there is no menu item named "Screens and Graphics" at System->Administration on my laptop. How can I change the xorg.conf file? I mean, just open it and edit it?
+
+---
+
+### Post by ogost on 2008-04-01
+I've tried to edit the xorg.conf file with gedit, but I can't save the changes cuz I have no permissions...
+
+---
+
+### Post by bremedios on 2008-04-01
+It may be called something different on earlier versions of Ubuntu, or it is also possible that your user account just does not have the permissions.  I would recommend doing it through the UI as it is safer.  I am running 7.10 (Gutsy Gibbon) right now and is what I used to reference the name of the configuration item.
+
+If you are editing the /etc/xorg.conf file manually you will need to have root permissions so you may simply use sudo for your favorite text editor (i.e. "sudo vim /etc/X11/xorg.conf").
+
+If you go this route, I would backup your xorg.conf file first as if you mess it up, you will not be able to boot back into the Desktop.
+
+Good luck,
+Brad.
+
+---
+
+### Post by ogost on 2008-04-02
+Hi Brad!
+Thanks for the quick reply! I've already figured out that I should use sudo. Anyways I've edited xorg.conf, but there is no effect. I'm still having jerky 3D and VIdeo output. 
+I'm running Ubuntu 6.06 on Acer Aspire 3630 dualboot with XP. Also I'm running Ubuntu x86_64 on AMD64 and again having trouble with NVidia drivers, but that's a different story.
+
+Best regards
+Tsogi D
+
+---
+
+### Post by bremedios on 2008-04-02
+If you want, you could post your xorg.conf file and I can take a quick look at that.
+
+I'm sorry that I don't have more information for you, unfortunately, the Acer was not my laptop I simply installed / configured Ubuntu for it so I am mostly going from memory.  I do think that it is a little strange that you couldn't change it from the GUI though as I don't remember having to go to the command line to edit xorg.conf.
+
+Things to check:
+ 1. Make sure you have the correct sis driver installed.
+ 2. Make sure that the SIS driver is loading and not the VESA driver.
+ 3. Make sure that your changes are being kept across a reboot (maybe the system over-writes it?)
+
+---
+
+### Post by ogost on 2008-04-03
+Thanks, Brat! Here's the xorg.conf file. It hasn't changed after reboot.
+
+How do i check wether the correct drivers are installed? From System -> Administration -> Device Manager it shows Silicon Integrated Systems, 661FX/M661FX/M661X. 
+I've searched for drivers on sis.com, there are only drivers for Red Hat 7.0 and 7.2.
+
+How do I check wether the SIS driver is loading? I'm just beginning to get familiar with the *nix systems. Actually I'm a system adminstrator myself, but I've worked only with Windows systems. 
+
+
+```
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc104"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"sis"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-51
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+```
+
+---
+
+### Post by bremedios on 2008-04-03
+You can check to see if you have the driver installed via "System->Administration->Synaptic Package Manager".
+
+Look For
+  "xserver-xorg-video-sis" and "displayconfig-gtk" (this is "System->Administration->Screens and Graphics").
+
+If the displayconfig-gtk is missing I would install it and try to use the Graphical Method once more. I can't think of why it wouldn't be installed by default though.
+
+By the way, which version of Ubuntu are you using?  I only have experience with Ubuntu 7.10 (Gutsy Gibbon) with respect to the Sis Graphics.
+
+---
+
+### Post by ogost on 2008-04-04
+I'm using Ubuntu 6.06 LTS. It seems I don't have the SIS drivers installed: the Synaptic Package Manager doesn't show "xserver-xorg-video-sis" and "displayconfig-gtk" at all. I have everything checked in the "Repositories"... :confused:
+
+---
+
+### Post by bremedios on 2008-04-05
+I have the main, universe, restricted and multiverse repositories enabled.  After you enable those I would make sure that you have checked the Reload button to make sure that Synaptic is running off the correct list of packages.
+
+Even if you do that, it is possible that the packages had a different name under 6.06.  For the display, I would simply try searching for "sis" and see what comes up.
+
+Is there a reason that you are running on 6.06?  Is there the possibility of upgrading to 7.10 or even 8.04 when it comes out in 3 weeks or so?
+
+If you must use 6.06 I think that your solution will likely be one of 3.
+
+1. Find the sis package name for 6.06 and ensure that it is installed and get it working.
+
+2. Enable the backports repos and install the sis driver from there (it may require other packages to be upgraded.)  This assumes that the backports (un-supported) has a newer sis driver than what 6.06 is using.
+
+3. Manually install a new version of the sis package.
+
+Good luck.
+
+---
+
+### Post by ogost on 2008-04-07
+Actually there is no particular reason for using 6.06. It's just that I don't have much time and bandwidth to download a newer version. I think I will upgrade to 8.04 when it comes out. Thanks Brat for the help!
+
+---
+

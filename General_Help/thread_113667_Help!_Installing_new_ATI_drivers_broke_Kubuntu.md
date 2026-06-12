@@ -1,0 +1,744 @@
+---
+title: "Help! Installing new ATI drivers broke Kubuntu"
+date: 2006-01-06
+forum: General Help
+---
+
+### Post by hubbadub on 2006-01-06
+I just followed the guide here: [http://ubuntuforums.org/showpost.php?p=423584](http://ubuntuforums.org/showpost.php?p=423584)
+and it seemed to work fine. At the end, I configured my system for TV-out as well using fglrxconfig. Also, beforehand, I backed up my xorg.conf as xorg.conf.bak.
+
+Well, upon reboot I found that I broke X somehow. Right now I have boot options for the default Kubuntu 386 kernel, as well as 2.6.12.10-686 kernel. No other boot time things are installed, so my system is pretty stock.
+
+Doing a command line "sudo dpkg-reconfigure xserver-xorg" and going back to the default ATI driver doesnt fix the problem, and neither does copying the backup I made before hand.
+
+I can get to a login screen. However, login fails. From a prompt, it says:
+> 
+X: warning; process set to priority -1 instead of requested priority 0
+Fatal server error: Server is already active for display 0
+If this server is no longer running, remove /tmp/.X0-lock and start again
+
+So, I go to the temp folder, and "rm .XO-lock" then run a "sudo startx" command. Login fails again, but it gives out this error message:
+Quote:
+xauth: creating new authority file /home/chris/.serverauth.8055
+X: warning; process set to priority -1 instead of requested priority 0
+X Window System Version 6.8.2 (Ubuntu 6.8.2-77 20051010174523 [email]root@vernadsky.buil[/email]dd)
+Release Date: 9 February 2005
+X Protocol Version 11, Revision 0, Release 6.8.2
+Build Operating System: Linux 2.6.10 i686 [ELF]
+Current Operating System: Linux ubuntu 2.6.12-10-686-smp #1 SMP Thu Dec 22 12:13:35 UTC 2005 i686
+Build Date: 10 October 2005
+Before reporting problems, check [http://wiki.X.Org](http://wiki.X.Org)
+to make sure that you have the latest version.
+Module Loader present
+OS Kernel: Linux version 2.6.12-10-686-smp (buildd@terranova) (gcc version 3.4.5 20050809 (prerelease) (Ubuntu 3.4.4-6ubuntu8)) #1 SMP Thu Dec 22 12:13:35 UTC 2005
+Markers: (--) probed, (**) from config file, (==) default setting,
+(++) from command line, (!!) notice, (II) informational,
+(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(==) Log file: "/var/log/Xorg.0.log", Time: Fri Jan 6 04:03:45 2006
+(==) Using config file: "/etc/X11/xorg.conf"
+Skipping "/usr/X11R6/lib/modules/extensions/libGLcore.a:m_debug_clip.o": No symbols found
+Skipping "/usr/X11R6/lib/modules/extensions/libGLcore.a:m_debug_norm.o": No symbols found
+Skipping "/usr/X11R6/lib/modules/extensions/libGLcore.a:m_debug_xform.o": No symbols found
+(WW) RADEON: No matching Device section for instance (BusID PCI:1:0:1) found
+Skipping "/usr/X11R6/lib/modules/libfb.a:fbmmx.o": No symbols found
+Warning: font renderer for ".pcf" already registered at priority 0
+Warning: font renderer for ".pcf.Z" already registered at priority 0
+Warning: font renderer for ".pcf.gz" already registered at priority 0
+Warning: font renderer for ".snf" already registered at priority 0
+Warning: font renderer for ".snf.Z" already registered at priority 0
+Warning: font renderer for ".snf.gz" already registered at priority 0
+Warning: font renderer for ".bdf" already registered at priority 0
+Warning: font renderer for ".bdf.Z" already registered at priority 0
+Warning: font renderer for ".bdf.gz" already registered at priority 0
+Warning: font renderer for ".pmf" already registered at priority 0
+
+waiting for X server to shut down
+
+---
+
+### Post by hubbadub on 2006-01-06
+Here is my xorg.conf file:
+> 
+Section "Files"
+FontPath "/usr/share/X11/fonts/misc"
+FontPath "/usr/share/X11/fonts/cyrillic"
+FontPath "/usr/share/X11/fonts/100dpi/:unscaled"
+FontPath "/usr/share/X11/fonts/75dpi/:unscaled"
+FontPath "/usr/share/X11/fonts/Type1"
+FontPath "/usr/share/X11/fonts/CID"
+FontPath "/usr/share/X11/fonts/100dpi"
+FontPath "/usr/share/X11/fonts/75dpi"
+# paths to defoma fonts
+FontPath "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+FontPath "/var/lib/defoma/x-ttcidfont-conf.d/dirs/CID"
+EndSection
+
+Section "Module"
+Load "GLcore"
+Load "i2c"
+Load "bitmap"
+Load "ddc"
+Load "dri"
+Load "extmod"
+Load "freetype"
+Load "glx"
+Load "int10"
+Load "type1"
+Load "vbe"
+EndSection
+
+Section "InputDevice"
+Identifier "Generic Keyboard"
+Driver "kbd"
+Option "CoreKeyboard"
+Option "XkbRules" "xorg"
+Option "XkbModel" "pc104"
+Option "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+Identifier "Configured Mouse"
+Driver "mouse"
+Option "CorePointer"
+Option "Device" "/dev/input/mice"
+Option "Protocol" "ImPS/2"
+Option "Emulate3Buttons" "true"
+Option "ZAxisMapping" "4 5"
+EndSection
+
+Section "Device"
+Identifier "ATI Technologies, Inc. Radeon 9800 Pro (R350 NH)"
+Driver "ati"
+BusID "PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+Identifier "CPD-G220R"
+Option "DPMS"
+EndSection
+
+Section "Screen"
+Identifier "Default Screen"
+Device "ATI Technologies, Inc. Radeon 9800 Pro (R350 NH)"
+Monitor "CPD-G220R"
+DefaultDepth 24
+SubSection "Display"
+Depth 1
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+SubSection "Display"
+Depth 4
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+SubSection "Display"
+Depth 8
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+SubSection "Display"
+Depth 15
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+SubSection "Display"
+Depth 16
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+SubSection "Display"
+Depth 24
+Modes "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+EndSubSection
+EndSection
+
+Section "ServerLayout"
+Identifier "Default Layout"
+Screen "Default Screen"
+InputDevice "Generic Keyboard"
+InputDevice "Configured Mouse"
+EndSection
+
+Section "DRI"
+Mode 0666
+EndSection
+
+---
+
+### Post by Tuf on 2006-01-07
+I had the same experience after using the same directions:/
+I messed with it for a bit and determined my xorg.conf file was basically empty.
+
+Im a Linux n00b so I just threw the install CD back in and reinstalled.  After looking on the ATI site I see my X850XT AGP video card is not supported by the latest drivers.
+
+At this point I am not sure what to do either.  My card is listed as supported in earlier releases.  The default driver doesnt offer enough 3D acceleration to watch DVD or videos at fullscreen.
+
+Unfortunately all of my computers are ATI equipped so I can't really expect anything better on a different box.
+
+I think I will keep plugging along looking for a solution until its apparent there isn't one :D
+
+---
+
+### Post by veloct on 2006-01-07
+you don't have to sudo startx. What driver are you using?
+
+---
+
+### Post by flight_master on 2006-01-07
+Hello, First off, create a backup of your current xorg.conf file:
+
+```
+ sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf.backup
+```
+
+Next, open up your Xorg.conf file:
+
+```
+sudo kwrite /etc/X11/xorg.conf
+```
+
+And use the following values:
+
+```
+
+# File: xorg.conf
+# File generated by fglrxconfig (C) ATI Technologies, a substitute for xf86config.
+
+# Note by ATI: the below copyright notice is there for servicing possibly
+# pending third party rights on the file format and the instance of this file.
+#
+# Copyright (c) 1999 by The XFree86 Project, Inc.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# THE XFREE86 PROJECT BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+# OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# 
+# Except as contained in this notice, the name of the XFree86 Project shall
+# not be used in advertising or otherwise to promote the sale, use or other
+# dealings in this Software without prior written authorization from the
+# XFree86 Project.
+#
+
+# **********************************************************************
+# Refer to the XF86Config(4/5) man page for details about the format of 
+# this file.
+# **********************************************************************
+
+# **********************************************************************
+# DRI Section
+# **********************************************************************
+Section "dri"
+# Access to OpenGL ICD is allowed for all users:
+    Mode 0666
+# Access to OpenGL ICD is restricted to a specific user group:
+#    Group 100    # users
+#    Mode 0660
+EndSection
+
+# **********************************************************************
+# Module section -- this  section  is used to specify
+# which dynamically loadable modules to load.
+# **********************************************************************
+#
+Section "Module"
+
+# This loads the DBE extension module.
+
+    Load        "dbe"  	# Double buffer extension
+
+# This loads the miscellaneous extensions module, and disables
+# initialisation of the XFree86-DGA extension within that module.
+    SubSection  "extmod"
+      Option    "omit xfree86-dga"   # don't initialise the DGA extension
+    EndSubSection
+
+# This loads the Type1 and FreeType font modules
+    Load        "type1"
+    Load        "freetype"
+
+# This loads the GLX module
+    Load        "glx"   # libglx.a
+    Load        "dri"   # libdri.a
+
+EndSection
+
+# **********************************************************************
+# Files section.  This allows default font and rgb paths to be set
+# **********************************************************************
+
+Section "Files"
+
+# The location of the RGB database.  Note, this is the name of the
+# file minus the extension (like ".txt" or ".db").  There is normally
+# no need to change the default.
+
+    RgbPath	"/usr/X11R6/lib/X11/rgb"
+
+# Multiple FontPath entries are allowed (which are concatenated together),
+# as well as specifying multiple comma-separated entries in one FontPath
+# command (or a combination of both methods)
+# 
+# If you don't have a floating point coprocessor and emacs, Mosaic or other
+# programs take long to start up, try moving the Type1 and Speedo directory
+# to the end of this list (or comment them out).
+# 
+
+#    FontPath   "/usr/X11R6/lib/X11/fonts/local/"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/misc/"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/75dpi/:unscaled"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/100dpi/:unscaled"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/Type1/"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/Speedo/"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/75dpi/"
+#    FontPath   "/usr/X11R6/lib/X11/fonts/100dpi/"
+
+# The module search path.  The default path is shown here.
+
+#    ModulePath "/usr/X11R6/lib/modules"
+
+EndSection
+
+# **********************************************************************
+# Server flags section.
+# **********************************************************************
+
+Section "ServerFlags"
+
+# Uncomment this to cause a core dump at the spot where a signal is 
+# received.  This may leave the console in an unusable state, but may
+# provide a better stack trace in the core dump to aid in debugging
+
+#    Option "NoTrapSignals"
+
+# Uncomment this to disable the <Crtl><Alt><BS> server abort sequence
+# This allows clients to receive this key event.
+
+#    Option "DontZap"
+
+# Uncomment this to disable the <Crtl><Alt><KP_+>/<KP_-> mode switching
+# sequences.  This allows clients to receive these key events.
+
+#    Option "Dont Zoom"
+
+# Uncomment this to disable tuning with the xvidtune client. With
+# it the client can still run and fetch card and monitor attributes,
+# but it will not be allowed to change them. If it tries it will
+# receive a protocol error.
+
+#    Option "DisableVidModeExtension"
+
+# Uncomment this to enable the use of a non-local xvidtune client. 
+
+#    Option "AllowNonLocalXvidtune"
+
+# Uncomment this to disable dynamically modifying the input device
+# (mouse and keyboard) settings. 
+
+#    Option "DisableModInDev"
+
+# Uncomment this to enable the use of a non-local client to
+# change the keyboard or mouse settings (currently only xset).
+
+#    Option "AllowNonLocalModInDev"
+
+EndSection
+
+# **********************************************************************
+# Input devices
+# **********************************************************************
+
+# **********************************************************************
+# Core keyboard's InputDevice section
+# **********************************************************************
+
+Section "InputDevice"
+
+    Identifier	"Keyboard1"
+    Driver	"kbd"
+# For most OSs the protocol can be omitted (it defaults to "Standard").
+# When using XQUEUE (only for SVR3 and SVR4, but not Solaris),
+# uncomment the following line.
+
+#    Option "Protocol"   "Xqueue"
+
+    Option "AutoRepeat" "500 30"
+
+# Specify which keyboard LEDs can be user-controlled (eg, with xset(1))
+#    Option "Xleds"      "1 2 3"
+
+#    Option "LeftAlt"    "Meta"
+#    Option "RightAlt"   "ModeShift"
+
+# To customise the XKB settings to suit your keyboard, modify the
+# lines below (which are the defaults).  For example, for a non-U.S.
+# keyboard, you will probably want to use:
+#    Option "XkbModel"   "pc102"
+# If you have a US Microsoft Natural keyboard, you can use:
+#    Option "XkbModel"   "microsoft"
+#
+# Then to change the language, change the Layout setting.
+# For example, a german layout can be obtained with:
+#    Option "XkbLayout"  "de"
+# or:
+#    Option "XkbLayout"  "de"
+#    Option "XkbVariant" "nodeadkeys"
+#
+# If you'd like to switch the positions of your capslock and
+# control keys, use:
+#    Option "XkbOptions" "ctrl:swapcaps"
+
+# These are the default XKB settings for XFree86
+#    Option "XkbRules"   "xfree86"
+#    Option "XkbModel"   "pc101"
+#    Option "XkbLayout"  "us"
+#    Option "XkbVariant" ""
+#    Option "XkbOptions" ""
+
+#    Option "XkbDisable"
+
+    Option "XkbRules"	"xfree86"
+    Option "XkbModel"	"pc101"
+    Option "XkbLayout"	"us"
+
+EndSection
+
+
+# **********************************************************************
+# Core Pointer's InputDevice section
+# **********************************************************************
+
+Section "InputDevice"
+
+# Identifier and driver
+
+    Identifier	"Mouse1"
+    Driver "mouse"
+    Option "Protocol"   "ImPS/2"
+    Option "ZAxisMapping"   "4 5"
+    Option "Device"     "/dev/input/mice"
+
+# When using XQUEUE, comment out the above two lines, and uncomment
+# the following line.
+
+#    Option "Protocol"   "Xqueue"
+
+# Baudrate and SampleRate are only for some Logitech mice. In
+# almost every case these lines should be omitted.
+
+#    Option "BaudRate"   "9600"
+#    Option "SampleRate" "150"
+
+# Emulate3Buttons is an option for 2-button Microsoft mice
+# Emulate3Timeout is the timeout in milliseconds (default is 50ms)
+
+#    Option "Emulate3Buttons"
+#    Option "Emulate3Timeout"    "50"
+
+# ChordMiddle is an option for some 3-button Logitech mice
+
+#    Option "ChordMiddle"
+
+EndSection
+
+
+# **********************************************************************
+# Other input device sections 
+# this is optional and is required only if you
+# are using extended input devices.  This is for example only.  Refer
+# to the XF86Config man page for a description of the options.
+# **********************************************************************
+#
+# Section "InputDevice" 
+#    Identifier  "Mouse2"
+#    Driver      "mouse"
+#    Option      "Protocol"      "MouseMan"
+#    Option      "Device"        "/dev/mouse2"
+# EndSection
+#
+# Section "InputDevice"
+#    Identifier "spaceball"
+#    Driver     "magellan"
+#    Option     "Device"         "/dev/cua0"
+# EndSection
+#
+# Section "InputDevice"
+#    Identifier "spaceball2"
+#    Driver     "spaceorb"
+#    Option     "Device"         "/dev/cua0"
+# EndSection
+#
+# Section "InputDevice"
+#    Identifier "touchscreen0"
+#    Driver     "microtouch"
+#    Option     "Device"         "/dev/ttyS0"
+#    Option     "MinX"           "1412"
+#    Option     "MaxX"           "15184"
+#    Option     "MinY"           "15372"
+#    Option     "MaxY"           "1230"
+#    Option     "ScreenNumber"   "0"
+#    Option     "ReportingMode"  "Scaled"
+#    Option     "ButtonNumber"   "1"
+#    Option     "SendCoreEvents"
+# EndSection
+#
+# Section "InputDevice"
+#    Identifier "touchscreen1"
+#    Driver     "elo2300"
+#    Option     "Device"         "/dev/ttyS0"
+#    Option     "MinX"           "231"
+#    Option     "MaxX"           "3868"
+#    Option     "MinY"           "3858"
+#    Option     "MaxY"           "272"
+#    Option     "ScreenNumber"   "0"
+#    Option     "ReportingMode"  "Scaled"
+#    Option     "ButtonThreshold"    "17"
+#    Option     "ButtonNumber"   "1"
+#    Option     "SendCoreEvents"
+# EndSection
+
+# **********************************************************************
+# Monitor section
+# **********************************************************************
+
+# Any number of monitor sections may be present
+
+Section "Monitor"
+    Identifier  "Monitor0"
+# === mode lines based on GTF ===
+# VGA @ 100Hz
+# Modeline "640x480@100" 43.163 640 680 744 848 480 481 484 509 +hsync +vsync
+# SVGA @ 100Hz
+# Modeline "800x600@100" 68.179 800 848 936 1072 600 601 604 636 +hsync +vsync
+# XVGA @ 100Hz
+# Modeline "1024x768@100" 113.309 1024 1096 1208 1392 768 769 772 814 +hsync +vsync
+# 1152x864 @ 60Hz
+# Modeline "1152x864@60" 81.642 1152 1216 1336 1520 864 865 868 895 +hsync +vsync
+# 1152x864 @ 85Hz
+# Modeline "1152x864@85" 119.651 1152 1224 1352 1552 864 865 868 907 +hsync +vsync
+# 1152x864 @ 100Hz
+# Modeline "1152x864@100" 143.472 1152 1232 1360 1568 864 865 868 915 +hsync +vsync
+# 1280x960 @ 75Hz
+# Modeline "1280x960@75" 129.859 1280 1368 1504 1728 960 961 964 1002 +hsync +vsync
+# 1280x960 @ 100Hz
+# Modeline "1280x960@100" 178.992 1280 1376 1520 1760 960 961 964 1017  +hsync +vsync
+# SXGA @ 100Hz
+# Modeline "1280x1024@100" 190.960 1280 1376 1520 1760 1024 1025 1028 1085 +hsync +vsync
+# SPEA GDM-1950 (60Hz,64kHz,110MHz,-,-): 1280x1024 @ V-freq: 60.00 Hz, H-freq: 63.73 KHz
+# Modeline "GDM-1950"  109.62  1280 1336 1472 1720  1024 1024 1026 1062 -hsync -vsync
+# 1600x1000 @ 60Hz
+# Modeline "1600x1000" 133.142 1600 1704 1872 2144 1000 1001 1004 1035 +hsync +vsync
+# 1600x1000 @ 75Hz
+# Modeline "1600x1000" 169.128 1600 1704 1880 2160 1000 1001 1004 1044 +hsync +vsync
+# 1600x1000 @ 85Hz
+# Modeline "1600x1000" 194.202 1600 1712 1888 2176 1000 1001 1004 1050 +hsync +vsync
+# 1600x1000 @ 100Hz
+# Modeline "1600x1000" 232.133 1600 1720 1896 2192 1000 1001 1004 1059 +hsync +vsync
+# 1600x1024 @ 60Hz
+# Modeline "1600x1024" 136.385 1600 1704 1872 2144 1024 1027 1030 1060 +hsync +vsync
+# 1600x1024 @ 75Hz
+# Modeline "1600x1024" 174.416 1600 1712 1888 2176 1024 1025 1028 1069 +hsync +vsync
+# 1600x1024 @ 76Hz
+# Modeline "1600x1024" 170.450 1600 1632 1792 2096 1024 1027 1030 1070 +hsync +vsync
+# 1600x1024 @ 85Hz
+# Modeline "1600x1024" 198.832 1600 1712 1888 2176 1024 1027 1030 1075 +hsync +vsync
+# 1920x1080 @ 60Hz
+# Modeline "1920x1080" 172.798 1920 2040 2248 2576 1080 1081 1084 1118 -hsync -vsync
+# 1920x1080 @ 75Hz
+# Modeline "1920x1080" 211.436 1920 2056 2264 2608 1080 1081 1084 1126 +hsync +vsync
+# 1920x1200 @ 60Hz
+# Modeline "1920x1200" 193.156 1920 2048 2256 2592 1200 1201 1203 1242 +hsync +vsync
+# 1920x1200 @ 75Hz
+# Modeline "1920x1200" 246.590 1920 2064 2272 2624 1200 1201 1203 1253 +hsync +vsync
+# 2048x1536 @ 60
+# Modeline "2048x1536" 266.952 2048 2200 2424 2800 1536 1537 1540 1589 +hsync +vsync
+# 2048x1536 @ 60
+# Modeline "2048x1536" 266.952 2048 2200 2424 2800 1536 1537 1540 1589 +hsync +vsync
+# 1400x1050 @ 60Hz M9 Laptop mode 
+# ModeLine "1400x1050" 122.000 1400 1488 1640 1880 1050 1052 1064 1082 +hsync +vsync
+# 1920x2400 @ 25Hz for IBM T221, VS VP2290 and compatible display devices
+# Modeline "1920x2400@25" 124.620 1920 1928 1980 2048 2400 2401 2403 2434 +hsync +vsync
+# 1920x2400 @ 30Hz for IBM T221, VS VP2290 and compatible display devices
+# Modeline "1920x2400@30" 149.250 1920 1928 1982 2044 2400 2402 2404 2434 +hsync +vsync
+
+EndSection
+
+
+# **********************************************************************
+# Graphics device section
+# **********************************************************************
+
+# Any number of graphics device sections may be present
+
+# Standard VGA Device:
+
+Section "Device"
+    Identifier  "Standard VGA"
+    VendorName  "Unknown"
+    BoardName   "Unknown"
+
+# The chipset line is optional in most cases.  It can be used to override
+# the driver's chipset detection, and should not normally be specified.
+
+#    Chipset     "generic"
+
+# The Driver line must be present.  When using run-time loadable driver
+# modules, this line instructs the server to load the specified driver
+# module.  Even when not using loadable driver modules, this line
+# indicates which driver should interpret the information in this section.
+
+    Driver      "vga"
+# The BusID line is used to specify which of possibly multiple devices
+# this section is intended for.  When this line isn't present, a device
+# section can only match up with the primary video device.  For PCI
+# devices a line like the following could be used.  This line should not
+# normally be included unless there is more than one video device
+# installed.
+
+#    BusID       "PCI:0:10:0"
+
+#    VideoRam    256
+
+#    Clocks      25.2 28.3
+
+EndSection
+
+# === ATI device section ===
+
+Section "Device"
+    Identifier                          "ATI Graphics Adapter"
+    Driver                              "fglrx"
+# ### generic DRI settings ###
+# === disable PnP Monitor  ===
+    #Option                              "NoDDC"
+# === disable/enable XAA/DRI ===
+    Option "no_accel"                   "no"
+    Option "no_dri"                     "no"
+# === misc DRI settings ===
+    Option "mtrr"                       "off" # disable DRI mtrr mapper, driver has its own code for mtrr
+# ### FireGL DDX driver module specific settings ###
+# === Screen Management ===
+    Option "DesktopSetup"               "(null)" 
+    Option "ScreenOverlap"              "0" 
+    Option "GammaCorrectionI"           "0x00000000"
+    Option "GammaCorrectionII"          "0x00000000"
+# === OpenGL specific profiles/settings ===
+    Option "Capabilities"               "0x00000000"
+    Option "CapabilitiesEx"             "0x00000000"
+# === Video Overlay for the Xv extension ===
+    Option "VideoOverlay"               "on"
+# === OpenGL Overlay ===
+# Note: When OpenGL Overlay is enabled, Video Overlay
+#       will be disabled automatically
+    Option "OpenGLOverlay"              "off"
+# === Center Mode (Laptops only) ===
+    Option "CenterMode"                 "off"
+# === Pseudo Color Visuals (8-bit visuals) ===
+    Option "PseudoColorVisuals"         "off"
+# === QBS Management ===
+    Option "Stereo"                     "off"
+    Option "StereoSyncEnable"           "1"
+# === FSAA Management ===
+    Option "FSAAEnable"                 "no"
+    Option "FSAAScale"                  "1"
+    Option "FSAADisableGamma"           "no"
+    Option "FSAACustomizeMSPos"         "no"
+    Option "FSAAMSPosX0"                "0.000000"
+    Option "FSAAMSPosY0"                "0.000000"
+    Option "FSAAMSPosX1"                "0.000000"
+    Option "FSAAMSPosY1"                "0.000000"
+    Option "FSAAMSPosX2"                "0.000000"
+    Option "FSAAMSPosY2"                "0.000000"
+    Option "FSAAMSPosX3"                "0.000000"
+    Option "FSAAMSPosY3"                "0.000000"
+    Option "FSAAMSPosX4"                "0.000000"
+    Option "FSAAMSPosY4"                "0.000000"
+    Option "FSAAMSPosX5"                "0.000000"
+    Option "FSAAMSPosY5"                "0.000000"
+# === Misc Options ===
+    Option "UseFastTLS"                 "0"
+    Option "BlockSignalsOnLock"         "on"
+    Option "UseInternalAGPGART"         "yes"
+    Option "ForceGenericCPU"            "no"
+    BusID "PCI:1:0:0"    # vendor=1002, device=4150
+    Screen 0
+EndSection
+
+# **********************************************************************
+# Screen sections
+# **********************************************************************
+
+# Any number of screen sections may be present.  Each describes
+# the configuration of a single screen.  A single specific screen section
+# may be specified from the X server command line with the "-screen"
+# option.
+Section "Screen"
+    Identifier  "Screen0"
+    Device      "ATI Graphics Adapter"
+    Monitor     "Monitor0"
+    DefaultDepth 24
+    #Option "backingstore"
+
+    Subsection "Display"
+        Depth       24
+        Modes       "1280x1024" "1024x768" "800x600" "640x480"
+        ViewPort    0 0  # initial origin if mode is smaller than desktop
+#        Virtual     1280 1024
+    EndSubsection
+EndSection
+
+# **********************************************************************
+# ServerLayout sections.
+# **********************************************************************
+
+# Any number of ServerLayout sections may be present.  Each describes
+# the way multiple screens are organised.  A specific ServerLayout
+# section may be specified from the X server command line with the
+# "-layout" option.  In the absence of this, the first section is used.
+# When now ServerLayout section is present, the first Screen section
+# is used alone.
+
+Section "ServerLayout"
+
+# The Identifier line must be present
+    Identifier  "Server Layout"
+
+# Each Screen line specifies a Screen section name, and optionally
+# the relative position of other screens.  The four names after
+# primary screen name are the screens to the top, bottom, left and right
+# of the primary screen.
+
+    Screen "Screen0"
+
+# Each InputDevice line specifies an InputDevice section name and
+# optionally some options to specify the way the device is to be
+# used.  Those options include "CorePointer", "CoreKeyboard" and
+# "SendCoreEvents".
+
+    InputDevice "Mouse1" "CorePointer"
+    InputDevice "Keyboard1" "CoreKeyboard"
+
+EndSection
+
+### EOF ###
+
+```
+
+
+Let me know if that helps.
+
+Regards,
+Christian
+
+---
+

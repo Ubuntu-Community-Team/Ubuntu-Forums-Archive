@@ -1,0 +1,647 @@
+---
+title: "synaptic/dpkg error"
+date: 2009-03-01
+forum: General Help
+---
+
+### Post by eoba on 2009-03-01
+Hello.
+
+After installing ubuntu studio synaptic returned this error  
+
+E: dpkg was interrupted, you must manually run 'dpkg --configure -a' to correct the problem. 
+E: _cache->open() failed, please report.
+
+So I browsed the forums and learned that I should execute
+
+sudo dpkg --configure -a
+sudo apt-get update
+sudo apt-get upgrade
+
+However upon running the first command I receive this error
+
+dpkg: failed to write status record about `ppp' to `/var/lib/dpkg/status': No space left on device
+
+(BTW there are 3.5 gigs free on the hard drive.)
+
+Thank you very much.
+
+---
+
+### Post by taurus on 2009-03-01
+Post the output of this command from a terminal then.
+
+```
+df -h
+```
+
+---
+
+### Post by eoba on 2009-03-01
+OK,
+
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1             5.6G  5.5G     0 100% /
+varrun                498M  116K  498M   1% /var/run
+varlock               498M     0  498M   0% /var/lock
+udev                  498M   80K  498M   1% /dev
+devshm                498M  228K  498M   1% /dev/shm
+lrm                   498M   44M  455M   9% /lib/modules/2.6.24-23-generic/volatile
+/dev/sda3              48G   43G  2.5G  95% /home
+overflow              1.0M   20K 1004K   2% /tmp
+/dev/sdb3              20G  528K   20G   1% /media/MUSOS
+/dev/sdb5             9.8G  2.0G  7.9G  21% /media/TRANSFER
+/dev/sdb4             126G  121G  4.7G  97% /media/data1
+/dev/sdc2              28G   24G  4.4G  85% /media/IPOD5G30
+/dev/sdb1              79G   73G  5.5G  94% /media/data2_
+
+
+Is sda1 the partition I should be concerned with?  If so, then I guess the only thing to do is remove some applications via command line?
+
+Regards.
+
+---
+
+### Post by taurus on 2009-03-01
+> **eoba said:**
+> OK,
+
+Filesystem            Size  Used Avail Use% Mounted on
+**[COLOR="Red"]/dev/sda1             5.6G  5.5G     0 100% /[/COLOR]**
+varrun                498M  116K  498M   1% /var/run
+varlock               498M     0  498M   0% /var/lock
+udev                  498M   80K  498M   1% /dev
+devshm                498M  228K  498M   1% /dev/shm
+lrm                   498M   44M  455M   9% /lib/modules/2.6.24-23-generic/volatile
+/dev/sda3              48G   43G  2.5G  95% /home
+overflow              1.0M   20K 1004K   2% /tmp
+/dev/sdb3              20G  528K   20G   1% /media/MUSOS
+/dev/sdb5             9.8G  2.0G  7.9G  21% /media/TRANSFER
+/dev/sdb4             126G  121G  4.7G  97% /media/data1
+/dev/sdc2              28G   24G  4.4G  85% /media/IPOD5G30
+/dev/sdb1              79G   73G  5.5G  94% /media/data2_
+
+
+Is sda1 the partition I should be concerned with?  If so, then I guess the only thing to do is remove some applications via command line?
+
+Regards.
+
+You need to make some space on /.
+
+```
+sudo apt-get clean
+sudo apt-get autoremove
+df -h
+```
+Look in /var to make sure you don't have any large files taking up all the valuable space on /.
+
+```
+sudo du -h /var
+```
+
+---
+
+### Post by eoba on 2009-03-01
+Thank you so much.  It looks like everything works again.  The largest files in /var were 60M.  This doesn't seem like it would qualify as large, would it?  
+
+Thanks again, I really appreciate it.
+
+---
+
+### Post by taurus on 2009-03-01
+Make sure you empty root's trash bin.
+
+```
+sudo du -h /root
+```
+
+---
+
+### Post by eoba on 2009-03-02
+you da man.
+
+---
+
+### Post by eoba on 2010-06-05
+OK, so I have had the same problem a couple of more times since my original post and have overcome it with the methods provided, but this time I've run:
+
+sudo apt-get clean
+sudo apt-get autoremove
+sudo dpkg --configure -a
+sudo apt-get update
+sudo apt-get upgrade
+df -h
+
+Still unable to free significant space.  Here is the output of various commands.
+
+
+df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1             5.6G  5.4G     0 100% /
+varrun                498M  120K  498M   1% /var/run
+varlock               498M     0  498M   0% /var/lock
+udev                  498M   80K  498M   1% /dev
+devshm                498M   12K  498M   1% /dev/shm
+lrm                   498M   45M  454M   9% /lib/modules/2.6.24-28-generic/volatile
+/dev/sda3              48G   43G  3.0G  94% /home
+overflow              1.0M   16K 1008K   2% /tmp
+
+sudo du /root | sort -nr | head -20
+
+2152	/root
+1076	/root/.synaptic
+1064	/root/.synaptic/log
+880	/root/.gstreamer-0.10
+64	/root/.gnome2
+48	/root/.gconf
+24	/root/.gconf/apps
+20	/root/.gnome2/share
+20	/root/.gconf/desktop
+20	/root/.gconf/apps/gedit-2
+16	/root/.gconf/desktop/gnome
+16	/root/.gconf/apps/gedit-2/preferences
+16	/root/.dbus
+12	/root/.gnome2/accels
+12	/root/.gconf/desktop/gnome/accessibility
+12	/root/.gconf/apps/gedit-2/preferences/ui
+12	/root/.dbus/session-bus
+12	/root/.config
+8	/root/.ssh
+8	/root/.gnome2/share/fonts
+
+
+sudo du -h /root
+
+8.0K	/root/.gconf/apps/gedit-2/preferences/ui/statusbar
+12K	/root/.gconf/apps/gedit-2/preferences/ui
+16K	/root/.gconf/apps/gedit-2/preferences
+20K	/root/.gconf/apps/gedit-2
+24K	/root/.gconf/apps
+8.0K	/root/.gconf/desktop/gnome/accessibility/keyboard
+12K	/root/.gconf/desktop/gnome/accessibility
+16K	/root/.gconf/desktop/gnome
+20K	/root/.gconf/desktop
+48K	/root/.gconf
+4.0K	/root/.gconfd
+12K	/root/.gnome2/accels
+8.0K	/root/.gnome2/share/fonts
+8.0K	/root/.gnome2/share/cursor-fonts
+20K	/root/.gnome2/share
+4.0K	/root/.gnome2/network-admin-locations
+4.0K	/root/.gnome2/nautilus-scripts
+64K	/root/.gnome2
+4.0K	/root/.gnome2_private
+8.0K	/root/.ssh
+1.1M	/root/.synaptic/log
+1.1M	/root/.synaptic
+4.0K	/root/.wapi
+12K	/root/.dbus/session-bus
+16K	/root/.dbus
+880K	/root/.gstreamer-0.10
+4.0K	/root/.mozilla
+8.0K	/root/.config/gtk-2.0
+12K	/root/.config
+2.2M    /root
+
+sudo du -h /var
+6.7M	/var/backups
+5.0M	/var/cache/app-install
+4.0K	/var/cache/apt/archives/partial
+72K	/var/cache/apt/archives
+26M	/var/cache/apt
+4.0K	/var/cache/cups/rss
+4.3M	/var/cache/cups
+6.4M	/var/cache/debconf
+36K	/var/cache/dictionaries-common
+412K	/var/cache/fontconfig
+4.0K	/var/cache/gnome-system-tools/backup
+8.0K	/var/cache/gnome-system-tools
+924K	/var/cache/hald
+4.0K	/var/cache/jockey
+4.0K	/var/cache/man/X11R6
+4.0K	/var/cache/man/cat1
+4.0K	/var/cache/man/cat2
+4.0K	/var/cache/man/cat3
+4.0K	/var/cache/man/cat4
+4.0K	/var/cache/man/cat5
+4.0K	/var/cache/man/cat6
+4.0K	/var/cache/man/cat7
+4.0K	/var/cache/man/cat8
+4.0K	/var/cache/man/fsstnd/cat1
+24K	/var/cache/man/fsstnd
+4.0K	/var/cache/man/local
+4.0K	/var/cache/man/oldlocal
+4.0K	/var/cache/man/opt
+20K	/var/cache/man/cs
+24K	/var/cache/man/de
+24K	/var/cache/man/es
+20K	/var/cache/man/fi
+20K	/var/cache/man/fr.ISO8859-1
+20K	/var/cache/man/fr.UTF-8
+48K	/var/cache/man/fr
+20K	/var/cache/man/gl
+20K	/var/cache/man/hu
+20K	/var/cache/man/id
+20K	/var/cache/man/it.ISO8859-1
+20K	/var/cache/man/it.UTF-8
+24K	/var/cache/man/it
+24K	/var/cache/man/ja
+20K	/var/cache/man/ko
+20K	/var/cache/man/pl.ISO8859-2
+20K	/var/cache/man/pl.UTF-8
+24K	/var/cache/man/pl
+20K	/var/cache/man/pt_BR
+20K	/var/cache/man/ru.KOI8-R
+20K	/var/cache/man/ru.UTF-8
+24K	/var/cache/man/ru
+24K	/var/cache/man/sv
+20K	/var/cache/man/tr
+20K	/var/cache/man/zh_CN
+20K	/var/cache/man/zh_TW
+20K	/var/cache/man/pa
+20K	/var/cache/man/vi
+20K	/var/cache/man/pt
+1.3M	/var/cache/man
+136K	/var/cache/modass
+4.0K	/var/cache/pppconfig
+4.0K	/var/cache/samba
+8.0K	/var/cache/system-tools-backends/backup/First/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/First/var/cache
+16K	/var/cache/system-tools-backends/backup/First/var
+20K	/var/cache/system-tools-backends/backup/First
+8.0K	/var/cache/system-tools-backends/backup/1/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/1/var/cache
+16K	/var/cache/system-tools-backends/backup/1/var
+8.0K	/var/cache/system-tools-backends/backup/1/etc/network
+56K	/var/cache/system-tools-backends/backup/1/etc
+76K	/var/cache/system-tools-backends/backup/1
+8.0K	/var/cache/system-tools-backends/backup/2/etc
+12K	/var/cache/system-tools-backends/backup/2
+28K	/var/cache/system-tools-backends/backup/3/etc
+32K	/var/cache/system-tools-backends/backup/3
+8.0K	/var/cache/system-tools-backends/backup/4/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/4/var/cache
+16K	/var/cache/system-tools-backends/backup/4/var
+20K	/var/cache/system-tools-backends/backup/4
+32K	/var/cache/system-tools-backends/backup/5/etc
+36K	/var/cache/system-tools-backends/backup/5
+28K	/var/cache/system-tools-backends/backup/6/etc
+32K	/var/cache/system-tools-backends/backup/6
+8.0K	/var/cache/system-tools-backends/backup/7/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/7/var/cache
+16K	/var/cache/system-tools-backends/backup/7/var
+20K	/var/cache/system-tools-backends/backup/7
+8.0K	/var/cache/system-tools-backends/backup/8/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/8/var/cache
+16K	/var/cache/system-tools-backends/backup/8/var
+20K	/var/cache/system-tools-backends/backup/8
+8.0K	/var/cache/system-tools-backends/backup/9/var/cache/system-tools-backends
+12K	/var/cache/system-tools-backends/backup/9/var/cache
+16K	/var/cache/system-tools-backends/backup/9/var
+20K	/var/cache/system-tools-backends/backup/9
+292K	/var/cache/system-tools-backends/backup
+300K	/var/cache/system-tools-backends
+80K	/var/cache/ldconfig
+528K	/var/cache/hwtest
+20K	/var/cache/localepurge
+4.0K	/var/cache/fonts
+46M	/var/cache
+4.0K	/var/crash
+12K	/var/games/atris
+8.0K	/var/games/kobo-deluxe/scores
+12K	/var/games/kobo-deluxe
+64K	/var/games
+4.0K	/var/lib/NetworkManager
+32K	/var/lib/acpi-support
+8.0K	/var/lib/alsa
+4.0K	/var/lib/apparmor
+12K	/var/lib/apt/lists/partial
+45M	/var/lib/apt/lists
+4.0K	/var/lib/apt/mirrors/partial
+8.0K	/var/lib/apt/mirrors
+4.0K	/var/lib/apt/periodic
+20K	/var/lib/apt/keyrings
+45M	/var/lib/apt
+3.8M	/var/lib/aptitude
+3.5M	/var/lib/aspell
+16K	/var/lib/avahi-autoipd
+52K	/var/lib/belocs
+324K	/var/lib/scrollkeeper/C
+60K	/var/lib/scrollkeeper/af
+60K	/var/lib/scrollkeeper/am
+60K	/var/lib/scrollkeeper/an
+76K	/var/lib/scrollkeeper/ar
+60K	/var/lib/scrollkeeper/as
+60K	/var/lib/scrollkeeper/az
+68K	/var/lib/scrollkeeper/be
+120K	/var/lib/scrollkeeper/bg
+60K	/var/lib/scrollkeeper/bn
+60K	/var/lib/scrollkeeper/br
+60K	/var/lib/scrollkeeper/bs
+152K	/var/lib/scrollkeeper/ca
+60K	/var/lib/scrollkeeper/co
+92K	/var/lib/scrollkeeper/cs
+60K	/var/lib/scrollkeeper/cy
+76K	/var/lib/scrollkeeper/da
+140K	/var/lib/scrollkeeper/de
+140K	/var/lib/scrollkeeper/el
+72K	/var/lib/scrollkeeper/en
+148K	/var/lib/scrollkeeper/en_GB
+60K	/var/lib/scrollkeeper/eo
+276K	/var/lib/scrollkeeper/es
+64K	/var/lib/scrollkeeper/et
+104K	/var/lib/scrollkeeper/eu
+60K	/var/lib/scrollkeeper/fa
+136K	/var/lib/scrollkeeper/fi
+60K	/var/lib/scrollkeeper/fo
+272K	/var/lib/scrollkeeper/fr
+60K	/var/lib/scrollkeeper/ga
+72K	/var/lib/scrollkeeper/gl
+60K	/var/lib/scrollkeeper/gu
+68K	/var/lib/scrollkeeper/he
+60K	/var/lib/scrollkeeper/hr
+116K	/var/lib/scrollkeeper/hu
+60K	/var/lib/scrollkeeper/hy
+60K	/var/lib/scrollkeeper/ia
+72K	/var/lib/scrollkeeper/id
+72K	/var/lib/scrollkeeper/is
+200K	/var/lib/scrollkeeper/it
+116K	/var/lib/scrollkeeper/ja
+60K	/var/lib/scrollkeeper/ka
+60K	/var/lib/scrollkeeper/kk
+68K	/var/lib/scrollkeeper/kn
+160K	/var/lib/scrollkeeper/ko
+60K	/var/lib/scrollkeeper/ku
+60K	/var/lib/scrollkeeper/ky
+60K	/var/lib/scrollkeeper/lb
+60K	/var/lib/scrollkeeper/lg
+60K	/var/lib/scrollkeeper/li
+60K	/var/lib/scrollkeeper/lo
+64K	/var/lib/scrollkeeper/lt
+64K	/var/lib/scrollkeeper/lv
+60K	/var/lib/scrollkeeper/mg
+60K	/var/lib/scrollkeeper/mi
+60K	/var/lib/scrollkeeper/ml
+60K	/var/lib/scrollkeeper/mn
+60K	/var/lib/scrollkeeper/mr
+64K	/var/lib/scrollkeeper/ms
+60K	/var/lib/scrollkeeper/my
+68K	/var/lib/scrollkeeper/nb
+60K	/var/lib/scrollkeeper/ne
+108K	/var/lib/scrollkeeper/nl
+60K	/var/lib/scrollkeeper/nn
+60K	/var/lib/scrollkeeper/no
+200K	/var/lib/scrollkeeper/oc
+60K	/var/lib/scrollkeeper/or
+124K	/var/lib/scrollkeeper/pa
+80K	/var/lib/scrollkeeper/pl
+120K	/var/lib/scrollkeeper/pt
+176K	/var/lib/scrollkeeper/pt_BR
+60K	/var/lib/scrollkeeper/rm
+96K	/var/lib/scrollkeeper/ro
+196K	/var/lib/scrollkeeper/ru
+60K	/var/lib/scrollkeeper/rw
+60K	/var/lib/scrollkeeper/se
+60K	/var/lib/scrollkeeper/si
+92K	/var/lib/scrollkeeper/sk
+60K	/var/lib/scrollkeeper/sl
+60K	/var/lib/scrollkeeper/sq
+72K	/var/lib/scrollkeeper/sr
+60K	/var/lib/scrollkeeper/sr@Latn
+264K	/var/lib/scrollkeeper/sv
+60K	/var/lib/scrollkeeper/sw
+60K	/var/lib/scrollkeeper/ta
+60K	/var/lib/scrollkeeper/te
+60K	/var/lib/scrollkeeper/tg
+60K	/var/lib/scrollkeeper/th
+60K	/var/lib/scrollkeeper/tk
+60K	/var/lib/scrollkeeper/tl
+68K	/var/lib/scrollkeeper/tr
+60K	/var/lib/scrollkeeper/ug
+148K	/var/lib/scrollkeeper/uk
+60K	/var/lib/scrollkeeper/ur
+60K	/var/lib/scrollkeeper/uz
+76K	/var/lib/scrollkeeper/vi
+60K	/var/lib/scrollkeeper/wa
+60K	/var/lib/scrollkeeper/wo
+60K	/var/lib/scrollkeeper/xh
+60K	/var/lib/scrollkeeper/yi
+60K	/var/lib/scrollkeeper/yo
+148K	/var/lib/scrollkeeper/zh_CN
+104K	/var/lib/scrollkeeper/zh_TW
+60K	/var/lib/scrollkeeper/zu
+6.0M	/var/lib/scrollkeeper/TOC
+5.3M	/var/lib/scrollkeeper/index
+21M	/var/lib/scrollkeeper
+8.0K	/var/lib/bluetooth/00:1D:60:10:7E:28
+12K	/var/lib/bluetooth
+8.0K	/var/lib/dbus
+148K	/var/lib/defoma/fontconfig.d
+4.0K	/var/lib/defoma/gs.d/dirs/CMap
+188K	/var/lib/defoma/gs.d/dirs/fonts
+196K	/var/lib/defoma/gs.d/dirs
+316K	/var/lib/defoma/gs.d
+180K	/var/lib/defoma/libwmf0.2-7.d
+160K	/var/lib/defoma/pango.d
+1.8M	/var/lib/defoma/psfontmgr.d
+84K	/var/lib/defoma/scripts
+4.0K	/var/lib/defoma/x-ttcidfont-conf.d/dirs/CID
+292K	/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType
+300K	/var/lib/defoma/x-ttcidfont-conf.d/dirs
+708K	/var/lib/defoma/x-ttcidfont-conf.d
+3.9M	/var/lib/defoma
+16K	/var/lib/dhcp3
+8.0K	/var/lib/dictionaries-common/aspell
+12K	/var/lib/dictionaries-common/wordlist
+12K	/var/lib/dictionaries-common/ispell
+36K	/var/lib/dictionaries-common
+164K	/var/lib/texmf/web2c/metafont
+2.4M	/var/lib/texmf/web2c/pdftex
+256K	/var/lib/texmf/web2c/tex
+2.8M	/var/lib/texmf/web2c
+12K	/var/lib/texmf/tex/generic/config
+16K	/var/lib/texmf/tex/generic
+20K	/var/lib/texmf/tex
+92K	/var/lib/texmf/fonts/map/dvips/updmap
+96K	/var/lib/texmf/fonts/map/dvips
+52K	/var/lib/texmf/fonts/map/pdftex/updmap
+56K	/var/lib/texmf/fonts/map/pdftex
+24K	/var/lib/texmf/fonts/map/dvipdfm/updmap
+28K	/var/lib/texmf/fonts/map/dvipdfm
+184K	/var/lib/texmf/fonts/map
+188K	/var/lib/texmf/fonts
+3.1M	/var/lib/texmf
+4.0K	/var/lib/displayconfig-gtk/locations
+8.0K	/var/lib/displayconfig-gtk
+52K	/var/lib/doc-base/info
+8.0K	/var/lib/doc-base/omf/slib
+8.0K	/var/lib/doc-base/omf/nano-faq
+8.0K	/var/lib/doc-base/omf/nat
+8.0K	/var/lib/doc-base/omf/xterm-faq
+8.0K	/var/lib/doc-base/omf/pnm2ppa-calibrate
+8.0K	/var/lib/doc-base/omf/fontconfig-user
+8.0K	/var/lib/doc-base/omf/grokking-the-gimp
+8.0K	/var/lib/doc-base/omf/shared-mime-info
+8.0K	/var/lib/doc-base/omf/fdutils-faq
+8.0K	/var/lib/doc-base/omf/blt
+8.0K	/var/lib/doc-base/omf/dc
+8.0K	/var/lib/doc-base/omf/imagemagick
+8.0K	/var/lib/doc-base/omf/swh-plugins
+8.0K	/var/lib/doc-base/omf/users-and-groups
+8.0K	/var/lib/doc-base/omf/cups
+8.0K	/var/lib/doc-base/omf/man-db
+8.0K	/var/lib/doc-base/omf/kino-manual
+8.0K	/var/lib/doc-base/omf/debian-java-faq
+8.0K	/var/lib/doc-base/omf/packet-filter
+8.0K	/var/lib/doc-base/omf/lame
+8.0K	/var/lib/doc-base/omf/time
+8.0K	/var/lib/doc-base/omf/python-pysqlite2
+8.0K	/var/lib/doc-base/omf/ispell-manual
+8.0K	/var/lib/doc-base/omf/gimp-help-en
+8.0K	/var/lib/doc-base/omf/fdutils
+8.0K	/var/lib/doc-base/omf/install-docs-man
+8.0K	/var/lib/doc-base/omf/gnupginterface
+8.0K	/var/lib/doc-base/omf/python-policy
+8.0K	/var/lib/doc-base/omf/libpng12
+8.0K	/var/lib/doc-base/omf/pnm2ppa-color
+8.0K	/var/lib/doc-base/omf/doc-base
+8.0K	/var/lib/doc-base/omf/java-policy
+8.0K	/var/lib/doc-base/omf/xterm-ctlseqs
+8.0K	/var/lib/doc-base/omf/cmt
+8.0K	/var/lib/doc-base/omf/pnm2ppa-ppa-networking
+8.0K	/var/lib/doc-base/omf/midish
+8.0K	/var/lib/doc-base/omf/diveintopython
+8.0K	/var/lib/doc-base/omf/idjc
+308K	/var/lib/doc-base/omf
+180K	/var/lib/doc-base/documents
+544K	/var/lib/doc-base
+396K	/var/lib/dpkg/alternatives
+68M	/var/lib/dpkg/info
+4.0K	/var/lib/dpkg/parts
+24K	/var/lib/dpkg/triggers
+4.0K	/var/lib/dpkg/updates
+76M	/var/lib/dpkg
+16K	/var/lib/gcj-4.2
+44K	/var/lib/gconf/debian.defaults
+34M	/var/lib/gconf/defaults
+4.0K	/var/lib/gconf/debian.mandatory
+34M	/var/lib/gconf
+16K	/var/lib/gdm
+8.0K	/var/lib/thunderbird/extensions.d
+12K	/var/lib/thunderbird
+4.0K	/var/lib/guidance-backends
+4.0K	/var/lib/hal
+24K	/var/lib/initramfs-tools
+4.0K	/var/lib/initscripts
+12K	/var/lib/locales/supported.d
+16K	/var/lib/locales
+8.0K	/var/lib/logrotate
+176K	/var/lib/misc
+8.0K	/var/lib/mozilla-firefox/extensions.d
+12K	/var/lib/mozilla-firefox
+8.0K	/var/lib/pycentral
+8.0K	/var/lib/security
+4.0K	/var/lib/sgml-base
+32K	/var/lib/gufw/cfg_files
+36K	/var/lib/gufw
+4.0K	/var/lib/snmp
+4.0K	/var/lib/synaptic
+8.0K	/var/lib/tex-common/language-cnf
+16K	/var/lib/tex-common/fontmap-cfg
+16K	/var/lib/tex-common/fmtutil-cnf
+44K	/var/lib/tex-common
+52K	/var/lib/ucf/cache
+128K	/var/lib/ucf
+4.0K	/var/lib/update-manager
+20K	/var/lib/update-notifier/user.d
+24K	/var/lib/update-notifier
+8.0K	/var/lib/urandom
+4.0K	/var/lib/vim/addons
+8.0K	/var/lib/vim
+24K	/var/lib/x11
+4.0K	/var/lib/xkb
+32K	/var/lib/xml-core
+4.0K	/var/lib/libuuid
+24K	/var/lib/binfmts
+4.0K	/var/lib/PolicyKit-public
+16K	/var/lib/PolicyKit
+12K	/var/lib/ufw
+4.0K	/var/lib/gnome-session
+8.0M	/var/lib/mlocate
+4.0K	/var/lib/polkit-1/localauthority/90-mandatory.d
+4.0K	/var/lib/polkit-1/localauthority/10-vendor.d
+4.0K	/var/lib/polkit-1/localauthority/20-org.d
+4.0K	/var/lib/polkit-1/localauthority/30-site.d
+4.0K	/var/lib/polkit-1/localauthority/50-local.d
+24K	/var/lib/polkit-1/localauthority
+28K	/var/lib/polkit-1
+8.0K	/var/lib/hp
+198M	/var/lib
+4.0K	/var/local
+0	/var/lock
+4.0K	/var/log/apparmor
+48K	/var/log/apt
+60K	/var/log/cups
+912K	/var/log/dist-upgrade
+12K	/var/log/fsck
+48K	/var/log/gdm
+812K	/var/log/installer
+4.0K	/var/log/news
+4.0K	/var/log/samba
+4.0K	/var/log/unattended-upgrades
+7.1M	/var/log
+4.0K	/var/mail
+4.0K	/var/opt
+0	/var/run/sudo/aboe
+0	/var/run/sudo
+0	/var/run/wpa_supplicant0
+0	/var/run/console
+0	/var/run/udev-configure-printer
+4.0K	/var/run/cups/certs
+12K	/var/run/cups
+8.0K	/var/run/hald
+8.0K	/var/run/avahi-daemon
+0	/var/run/sshd
+8.0K	/var/run/NetworkManager
+4.0K	/var/run/dbus
+8.0K	/var/run/klogd
+0	/var/run/PolicyKit
+0	/var/run/screen
+0	/var/run/pppconfig
+4.0K	/var/run/network
+0	/var/run/sendsigs.omit.d
+120K	/var/run
+16K	/var/spool/anacron
+8.0K	/var/spool/cron/atjobs
+4.0K	/var/spool/cron/atspool
+4.0K	/var/spool/cron/crontabs
+20K	/var/spool/cron
+4.0K	/var/spool/cups-pdf/ANONYMOUS
+4.0K	/var/spool/cups-pdf/SPOOL
+12K	/var/spool/cups-pdf
+4.0K	/var/spool/cups/tmp
+28K	/var/spool/cups
+4.0K	/var/spool/openoffice/uno_packages/cache
+8.0K	/var/spool/openoffice/uno_packages
+12K	/var/spool/openoffice
+92K	/var/spool
+4.0K	/var/tmp/kdecache-aboe/help
+64K	/var/tmp/kdecache-aboe/kio_help/usr/share/doc/kde/HTML/en/rosegarden
+68K	/var/tmp/kdecache-aboe/kio_help/usr/share/doc/kde/HTML/en
+72K	/var/tmp/kdecache-aboe/kio_help/usr/share/doc/kde/HTML
+76K	/var/tmp/kdecache-aboe/kio_help/usr/share/doc/kde
+80K	/var/tmp/kdecache-aboe/kio_help/usr/share/doc
+84K	/var/tmp/kdecache-aboe/kio_help/usr/share
+88K	/var/tmp/kdecache-aboe/kio_help/usr
+92K	/var/tmp/kdecache-aboe/kio_help
+588K	/var/tmp/kdecache-aboe
+592K	/var/tmp
+257M	/var
+
+
+Also /usr has 4gb in it.
+
+Thank you.
+
+---
+

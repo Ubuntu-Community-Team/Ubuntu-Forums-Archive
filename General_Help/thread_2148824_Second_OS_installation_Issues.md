@@ -1,0 +1,1247 @@
+---
+title: "Second OS installation Issues"
+date: 2013-05-26
+forum: General Help
+---
+
+### Post by Jock123 on 2013-05-26
+Greetings Ubuntu Forumites,
+
+I've been trying to install ubuntu x64 alongside ubuntu x32, but once the installation is complete I keep getting the following error messages when booting the new installation:
+
+```
+no such device c8057260-.....-ce6ee4a16b18
+file: /boot/vmlinuz-3.5.0-27 generic not found
+you need to load the kernel first
+```
+
+(The above isn't exact - I just noted it down quickly, however the part of the UUID I noted is accurate)
+
+I expect that it is something simple and obvious that I have/haven't done.
+
+Here is some information that may help someone to help me.
+
+```
+sudo fdisk -l
+
+Disk /dev/sda: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disk identifier: 0x000c3fa1
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1            2048  1031456767   515727360   83  Linux
+/dev/sda2      1031456768  1064224767    16384000   82  Linux swap / Solaris
+/dev/sda3      1064226814  3017349119   976561153    5  Extended
+Partition 3 does not start on physical sector boundary.
+/dev/sda4      3017349120  3229093887   105872384   83  Linux
+/dev/sda5      1064226816  3017349119   976561152   83  Linux
+```
+
+
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 72 for .
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 12.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sda2: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info: 
+
+sda3: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info: 
+
+sda5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Grub2 (v1.99)
+    Boot sector info:  Grub2 (v1.99) is installed in the boot sector of sda5 
+                       and looks at sector 1832046800 of the same hard drive 
+                       for core.img. core.img is at this location and looks 
+                       in partition 72 for .
+    Operating System:  Ubuntu 12.10
+    Boot files:        /boot/grub/menu.lst /boot/grub/grub.cfg /etc/fstab
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1               2,048 1,031,456,767 1,031,454,720  83 Linux
+/dev/sda2       1,031,456,768 1,064,224,767    32,768,000  82 Linux swap / Solaris
+/dev/sda3       1,064,226,814 3,017,349,119 1,953,122,306   5 Extended
+/dev/sda5       1,064,226,816 3,017,349,119 1,953,122,304  83 Linux
+/dev/sda4       3,017,349,120 3,229,093,887   211,744,768  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        3c004f90-9ed9-4d6b-bb57-d5cf63245971   ext4       
+/dev/sda2        cfce6cb2-96be-45dd-acd6-aaf256cd00e7   swap       
+/dev/sda4        63e55468-155a-4cb5-b916-b99a6aa353c7   ext4       share
+/dev/sda5        28b43bb9-3837-4b3f-8794-ca21f987c3c0   ext4       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /media/jy/3c004f90-9ed9-4d6b-bb57-d5cf63245971 ext4       (rw,nosuid,nodev,uhelper=udisks2)
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd0,msdos1'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  3c004f90-9ed9-4d6b-bb57-d5cf63245971
+else
+  search --no-floppy --fs-uuid --set=root 3c004f90-9ed9-4d6b-bb57-d5cf63245971
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_GB
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "${linux_gfx_mode}" != "text" ]; then load_video; fi
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-3c004f90-9ed9-4d6b-bb57-d5cf63245971' {
+recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  3c004f90-9ed9-4d6b-bb57-d5cf63245971
+    else
+      search --no-floppy --fs-uuid --set=root 3c004f90-9ed9-4d6b-bb57-d5cf63245971
+    fi
+    linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=3c004f90-9ed9-4d6b-bb57-d5cf63245971 ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.5.0-17-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-3c004f90-9ed9-4d6b-bb57-d5cf63245971' {
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-advanced-3c004f90-9ed9-4d6b-bb57-d5cf63245971' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  3c004f90-9ed9-4d6b-bb57-d5cf63245971
+        else
+          search --no-floppy --fs-uuid --set=root 3c004f90-9ed9-4d6b-bb57-d5cf63245971
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=3c004f90-9ed9-4d6b-bb57-d5cf63245971 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-recovery-3c004f90-9ed9-4d6b-bb57-d5cf63245971' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  3c004f90-9ed9-4d6b-bb57-d5cf63245971
+        else
+          search --no-floppy --fs-uuid --set=root 3c004f90-9ed9-4d6b-bb57-d5cf63245971
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=3c004f90-9ed9-4d6b-bb57-d5cf63245971 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Ubuntu 12.10 (12.10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    else
+      search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    fi
+    linux /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+    initrd /boot/initrd.img-3.5.0-31-generic
+}
+submenu 'Advanced options for Ubuntu 12.10 (12.10)' $menuentry_id_option 'osprober-gnulinux-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-31-generic (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-31-generic--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-31-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-31-generic (recovery mode) (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-31-generic-root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single
+        initrd /boot/initrd.img-3.5.0-31-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-30-generic (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-30-generic--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-30-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-30-generic (recovery mode) (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-30-generic-root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single
+        initrd /boot/initrd.img-3.5.0-30-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-28-generic (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-28-generic--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-28-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-28-generic (recovery mode) (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-28-generic-root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single
+        initrd /boot/initrd.img-3.5.0-28-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-27-generic (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-27-generic--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-27-generic (recovery mode) (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-27-generic-root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single
+        initrd /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-17-generic (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-17-generic--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-17-generic (recovery mode) (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-17-generic-root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro single
+        initrd /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu 12.10, memtest86+ (on /dev/sda5)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/memtest86+.bin--28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        linux /boot/memtest86+.bin 
+    }
+}
+
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda1/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=3c004f90-9ed9-4d6b-bb57-d5cf63245971 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda2 during installation
+UUID=cfce6cb2-96be-45dd-acd6-aaf256cd00e7 none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+               =                boot/grub/grub.cfg                             1
+               =                boot/initrd.img-3.5.0-17-generic               2
+               =                boot/vmlinuz-3.5.0-17-generic                  1
+               =                initrd.img                                     2
+               =                initrd.img.old                                 3
+               =                vmlinuz                                        1
+
+=========================== sda5/boot/grub/menu.lst: ===========================
+
+--------------------------------------------------------------------------------
+# menu.lst - See: grub(8), info grub, update-grub(8)
+#            grub-install(8), grub-floppy(8),
+#            grub-md5-crypt, /usr/share/doc/grub
+#            and /usr/share/doc/grub-legacy-doc/.
+
+## default num
+# Set the default entry to the entry number NUM. Numbering starts from 0, and
+# the entry number 0 is the default if the command is not used.
+#
+# You can specify 'saved' instead of a number. In this case, the default entry
+# is the entry saved with the command 'savedefault'.
+# WARNING: If you are using dmraid do not use 'savedefault' or your
+# array will desync and will not let you boot your system.
+default        0
+
+## timeout sec
+# Set a timeout, in SEC seconds, before automatically booting the default entry
+# (normally the first entry defined).
+timeout        3
+
+## hiddenmenu
+# Hides the menu by default (press ESC to see the menu)
+hiddenmenu
+
+# Pretty colours
+#color cyan/blue white/blue
+
+## password ['--md5'] passwd
+# If used in the first section of a menu file, disable all interactive editing
+# control (menu entry editor and command-line)  and entries protected by the
+# command 'lock'
+# e.g. password topsecret
+#      password --md5 $1$gLhU0/$aW78kHK1QfV3P2b2znUoe/
+# password topsecret
+
+#
+# examples
+#
+# title        Windows 95/98/NT/2000
+# root        (hd0,0)
+# makeactive
+# chainloader    +1
+#
+# title        Linux
+# root        (hd0,1)
+# kernel    /vmlinuz root=/dev/hda2 ro
+#
+
+#
+# Put static boot stanzas before and/or after AUTOMAGIC KERNEL LIST
+
+### BEGIN AUTOMAGIC KERNELS LIST
+## lines between the AUTOMAGIC KERNELS LIST markers will be modified
+## by the debian update-grub script except for the default options below
+
+## DO NOT UNCOMMENT THEM, Just edit them to your needs
+
+## ## Start Default Options ##
+## default kernel options
+## default kernel options for automagic boot options
+## If you want special options for specific kernels use kopt_x_y_z
+## where x.y.z is kernel version. Minor versions can be omitted.
+## e.g. kopt=root=/dev/hda1 ro
+##      kopt_2_6_8=root=/dev/hdc1 ro
+##      kopt_2_6_8_2_686=root=/dev/hdc2 ro
+# kopt=root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro
+
+## default grub root device
+## e.g. groot=(hd0,0)
+# groot=28b43bb9-3837-4b3f-8794-ca21f987c3c0
+
+## should update-grub create alternative automagic boot options
+## e.g. alternative=true
+##      alternative=false
+# alternative=true
+
+## should update-grub lock alternative automagic boot options
+## e.g. lockalternative=true
+##      lockalternative=false
+# lockalternative=false
+
+## additional options to use with the default boot option, but not with the
+## alternatives
+## e.g. defoptions=vga=791 resume=/dev/hda5
+# defoptions=quiet splash
+
+## should update-grub lock old automagic boot options
+## e.g. lockold=false
+##      lockold=true
+# lockold=false
+
+## Xen hypervisor options to use with the default Xen boot option
+# xenhopt=
+
+## Xen Linux kernel options to use with the default Xen boot option
+# xenkopt=console=tty0
+
+## altoption boot targets option
+## multiple altoptions lines are allowed
+## e.g. altoptions=(extra menu suffix) extra boot options
+##      altoptions=(recovery) single
+# altoptions=(recovery mode) single
+
+## controls how many kernels should be put into the menu.lst
+## only counts the first occurence of a kernel, not the
+## alternative kernel options
+## e.g. howmany=all
+##      howmany=7
+# howmany=all
+
+## specify if running in Xen domU or have grub detect automatically
+## update-grub will ignore non-xen kernels when running in domU and vice versa
+## e.g. indomU=detect
+##      indomU=true
+##      indomU=false
+# indomU=detect
+
+## should update-grub create memtest86 boot option
+## e.g. memtest86=true
+##      memtest86=false
+# memtest86=true
+
+## should update-grub adjust the value of the default booted system
+## can be true or false
+# updatedefaultentry=false
+
+## should update-grub add savedefault to the default options
+## can be true or false
+# savedefault=false
+
+## ## End Default Options ##
+
+title        Ubuntu 12.10, kernel 3.5.0-31-generic
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash 
+initrd        /boot/initrd.img-3.5.0-31-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-31-generic (recovery mode)
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro  single
+initrd        /boot/initrd.img-3.5.0-31-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-30-generic
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash 
+initrd        /boot/initrd.img-3.5.0-30-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-30-generic (recovery mode)
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro  single
+initrd        /boot/initrd.img-3.5.0-30-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-28-generic
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash 
+initrd        /boot/initrd.img-3.5.0-28-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-28-generic (recovery mode)
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro  single
+initrd        /boot/initrd.img-3.5.0-28-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-27-generic
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash 
+initrd        /boot/initrd.img-3.5.0-27-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-27-generic (recovery mode)
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro  single
+initrd        /boot/initrd.img-3.5.0-27-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-17-generic
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro quiet splash 
+initrd        /boot/initrd.img-3.5.0-17-generic
+
+title        Ubuntu 12.10, kernel 3.5.0-17-generic (recovery mode)
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro  single
+initrd        /boot/initrd.img-3.5.0-17-generic
+
+title        Ubuntu 12.10, memtest86+
+uuid        28b43bb9-3837-4b3f-8794-ca21f987c3c0
+kernel        /boot/memtest86+.bin
+
+### END DEBIAN AUTOMAGIC KERNELS LIST
+--------------------------------------------------------------------------------
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd0,msdos5'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+else
+  search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_GB
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "${linux_gfx_mode}" != "text" ]; then load_video; fi
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    else
+      search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    fi
+    linux    /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.5.0-31-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    menuentry 'Ubuntu, with Linux 3.5.0-31-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-31-generic-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-31-generic ...'
+        linux    /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-31-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-31-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-31-generic-recovery-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-31-generic ...'
+        linux    /boot/vmlinuz-3.5.0-31-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-31-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-30-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-30-generic-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-30-generic ...'
+        linux    /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-30-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-30-generic-recovery-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-30-generic ...'
+        linux    /boot/vmlinuz-3.5.0-30-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-30-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-28-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-28-generic-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-28-generic ...'
+        linux    /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-28-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-28-generic-recovery-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-28-generic ...'
+        linux    /boot/vmlinuz-3.5.0-28-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-28-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-27-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-27-generic-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-27-generic ...'
+        linux    /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-27-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-27-generic-recovery-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-27-generic ...'
+        linux    /boot/vmlinuz-3.5.0-27-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-advanced-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-recovery-28b43bb9-3837-4b3f-8794-ca21f987c3c0' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        else
+          search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    else
+      search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    fi
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos5 --hint-efi=hd0,msdos5 --hint-baremetal=ahci0,msdos5  28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    else
+      search --no-floppy --fs-uuid --set=root 28b43bb9-3837-4b3f-8794-ca21f987c3c0
+    fi
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Ubuntu 12.10 (12.10)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+    else
+      search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+    fi
+    linux /boot/vmlinuz-3.5.0-27-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro quiet splash
+    initrd /boot/initrd.img-3.5.0-27-generic
+}
+submenu 'Advanced options for Ubuntu 12.10 (12.10)' $menuentry_id_option 'osprober-gnulinux-advanced-c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-27-generic (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-27-generic--c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-27-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-27-generic (recovery mode) (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-27-generic-root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single-c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-27-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single
+        initrd /boot/initrd.img-3.5.0-27-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-26-generic (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-26-generic--c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-26-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-26-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-26-generic (recovery mode) (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-26-generic-root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single-c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-26-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single
+        initrd /boot/initrd.img-3.5.0-26-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-17-generic (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-17-generic--c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-17-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro quiet splash
+        initrd /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu 12.10, kernel 3.5.0-17-generic (recovery mode) (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.5.0-17-generic-root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single-c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/vmlinuz-3.5.0-17-generic root=UUID=c8057260-4f56-433c-90d5-ce6ee4a16b18 ro single
+        initrd /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu 12.10, memtest86+ (on /dev/sda1)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/memtest86+.bin--c8057260-4f56-433c-90d5-ce6ee4a16b18' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  c8057260-4f56-433c-90d5-ce6ee4a16b18
+        else
+          search --no-floppy --fs-uuid --set=root c8057260-4f56-433c-90d5-ce6ee4a16b18
+        fi
+        linux /boot/memtest86+.bin 
+    }
+}
+
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda5/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda5 during installation
+UUID=28b43bb9-3837-4b3f-8794-ca21f987c3c0 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda2 during installation
+UUID=cfce6cb2-96be-45dd-acd6-aaf256cd00e7 none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sda5: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+               =                boot/grub/grub.cfg                             1
+               =                boot/grub/menu.lst                             1
+               =                boot/initrd.img-3.5.0-17-generic               3
+               =                boot/initrd.img-3.5.0-27-generic               3
+               =                boot/initrd.img-3.5.0-28-generic               1
+               =                boot/initrd.img-3.5.0-30-generic               1
+               =                boot/initrd.img-3.5.0-31-generic               1
+               =                boot/vmlinuz-3.5.0-17-generic                  1
+               =                boot/vmlinuz-3.5.0-27-generic                  1
+               =                boot/vmlinuz-3.5.0-28-generic                  1
+               =                boot/vmlinuz-3.5.0-30-generic                  1
+               =                boot/vmlinuz-3.5.0-31-generic                  2
+               =                initrd.img                                     1
+               =                initrd.img.old                                 1
+               =                vmlinuz                                        2
+               =                vmlinuz.old                                    2
+
+=============================== StdErr Messages: ===============================
+
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+
+```
+
+It seems that the error reffering to the UUID at boot is not found in the* blkid* output.
+
+I have tried updating grub, here is that output:
+
+```
+sudo update-grub
+Searching for GRUB installation directory ... found: /boot/grub
+Searching for default file ... found: /boot/grub/default
+Testing for an existing GRUB menu.lst file ... found: /boot/grub/menu.lst
+Searching for splash image ... none found, skipping ...
+Found kernel: /boot/vmlinuz-3.5.0-31-generic
+Found kernel: /boot/vmlinuz-3.5.0-30-generic
+Found kernel: /boot/vmlinuz-3.5.0-28-generic
+Found kernel: /boot/vmlinuz-3.5.0-27-generic
+Found kernel: /boot/vmlinuz-3.5.0-17-generic
+Found kernel: /boot/memtest86+.bin
+Updating /boot/grub/menu.lst ... done
+
+```
+
+Unfortunately, when trying to boot again I get the same errors. I don't know if it's relevant but the first time I updated grub I had to create *menu.lst*
+I'm really at a loss, hopefully someone can find a solution for me.
+Thanks for reading.
+Regards.
+
+---
+

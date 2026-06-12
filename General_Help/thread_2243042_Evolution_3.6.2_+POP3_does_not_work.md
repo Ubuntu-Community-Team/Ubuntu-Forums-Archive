@@ -1,0 +1,84 @@
+---
+title: "Evolution 3.6.2 +POP3 does not work"
+date: 2014-09-05
+forum: General Help
+---
+
+### Post by XylophoneTeeth on 2014-09-05
+I don't even know where to begin with this but to obviate the expected common responses by saying
+1: i can't update without hardware upgrades
+2: i don't want to deal with an australis-ridden thunderbird
+
+This is Evolution 3.6.2 on Quantal
+all account configuration parameters are taken from gmail/OWA as appropriate
+
+Several of my institutional emails have been migrated to gmail and OWA accounts recently, and instead of dealing with a bunch of different web accounts, i want to set them all up in Evolution.  I can set up the accounts using IMAP, but for some reason (possibly a my slow/erratic connection), Evolution keeps getting stuck trying to resync all of the folders even though they're entirely cached locally already.  This takes several hours and almost always fails anyway.  I figured i would try to fall back on a POP3 connection, but if i enter any of the account details for such a connection, Evolution does nothing.  The account is listed in the preferences dialog, but not in the sidebar.  Typically, no noticeable attempt is made to contact the server, no password prompt is made.  
+
+At this point, no POP3 accounts will initialize.  What's more, Evolution now hangs on exit and segfaults about 10% of the times when it's started. I've tried deleting all traces of evolution and related packages, as well as all the userdata directories ~/.local/share/evolution, ~/.config/evolution, ~/.cache/evolution.  Reinstalling evolution still results in a pre-configured, broken Evolution that won't initialize POP accounts and hangs on exit.
+There's other bugginess, but this is perhaps the most simplified way i can think to describe it.
+
+_To recap, i suppose the key questions are:_
+[LIST=1]
+[*]Why do the settings persist even when all user data is deleted? (this may be perpetuating the problem) 
+[*]Is there any way to troubleshoot the POP3 connection? 
+[*]Is there any way to find out why it hangs on exit? 
+[/LIST]
+
+regarding (2):
+while Evolution is running with one latent gmail account configured, i can do an lsof on the process and it shows a cryptic line
+```
+evolution 937 xylophone   19u     IPv4     96153      0t0      TCP bacon.local:33869->ie-in-f108.1e100.net:pop3s (ESTABLISHED)
+```
+though i don't know that this is anything other than some sort of local abstraction
+
+---
+
+### Post by XylophoneTeeth on 2014-09-07
+well, i've spent way too much time messing with this, and it only gets more broken.  
+it doesn't help that the newest version of seahorse for quantal is broken too.
+i realize i've corralled myself into a bad scenario with old versions and such, and maybe things would work better with an update
+but for me, i'm done with evolution.  As much as i hate to give up, i just used thunderbird anyway.  
+
+For what it's worth, and tastes may vary, my beef with thunderbird was curbed in part by doing the following things:
+
+[LIST]
+[*]Revert to an older version 
+[*]Install [LittleBird]("https://addons.mozilla.org/en-US/thunderbird/addon/littlebird-for-thunderbird/") theme (makes UI consistent, readable, and compact) 
+[*]set **mail.tabs.autoHide** to TRUE (what are tabs even for in a mail reader?) 
+[*]Install [ImportExportTools]("https://addons.mozilla.org/en-us/thunderbird/addon/importexporttools/") (to import offline mail archives, etc) 
+[/LIST]
+ 
+in 17 and 24, TB seems to set the background color of the folder view explicitly (to a bluish white) when the QuickFilter has matches.  When using dark gtk themes with light text color, this results in an unreadable folder view.  Using Stylish, the following can be used to modify the background highlight to suit whatever you want.  I used a transparent green to remind me that the filter is enabled.
+```
+
+#threadTree[filterActive="matches"] {
+  background-color: rgba(0,255,0,0.1);
+}
+ 
+#threadTree[filterActive="nomatches"] {
+  background: -moz-repeating-linear-gradient(top left -45deg, #ff4444,
+              #ff4444 5px, #882222 5px, #882222 10px);
+}
+
+```
+
+Finally, for anyone googling such problems:
+Since i also run my mail reader and browser on different X displays (multihead), i had to find a way to make links open properly and avoid the error 
+>  "Firefox is already running, but is not responding. To open a new window, you must first close the existing Firefox process, or restart your system."
+I wrote a simple script:
+```
+#!/bin/bash
+# allows mail client to pass URLs to a browser on a different $DISPLAY
+# assuming browser is on :0  (edit if necessary)
+
+cdisp=$DISPLAY
+DISPLAY=:0     
+firefox $1
+DISPLAY=$cdisp
+```
+then set **network.protocol-handler.warn-external.http**  and **network.protocol-handler.warn-external.https** to TRUE.  This forces a user dialog when a link of either type is clicked.  Select the new script in both cases.  Once successful, the dialog shouldn't pop up again.  The resultant settings generated by these actions are visible/editable in the Attachments section of the Preferences dialog.
+
+While the settings are specific to Thunderbird, the script and conceptual method should work with Evolution or other applications.
+
+---
+

@@ -1,0 +1,27 @@
+---
+title: "Support Shell Password"
+date: 2019-08-18
+forum: General Help
+---
+
+### Post by chils41 on 2019-08-18
+Hello,
+
+I have root access to the machine and I can login using that but then the system asks for "Support Shell Password".
+How can I change or remove Shell Password so that I can gain complete admin access to the system.
+
+I am very new to linux/ubuntu/lubuntu so please excuse my n00b ness.
+
+Please see the attached screen shots.
+
+[IMG]https://photos.app.goo.gl/EkDVXSDgiZYStw5x6[/IMG][IMG]https://photos.app.goo.gl/ah73aUnPCugdN9Jw5[/IMG][IMG]https://lh3.googleusercontent.com/yZGcEo6iIt3wixpIloIhasSBrUoTtCx4snt_kbHPFUmQv6422QT6eDF3O6fpWNk01FuDYkCbxq9DQFGaw7Ps6qkabt_N7eUZVIG3VJcihRIjApwRs5IyBm_E6lrAHZQ42HLNbsvtTq0cCXOBYtIVx_SzlGdnzI6ya6PAXXhON0Knf4Q8HbSYUdPLAw-mmGWUIwKwQDwHUDi8OnpsU1y9D42T5N2SUYZmzD49M4p1WALvGx6CoEVyKewsOGFpssx_LnfXgZavq79qDyORZDbTBwZcOULaeVUVuL6wn5E8Z175rTfOX-UqMiR2DOp-Ujji9GSfVrDnfwgCqOg_L1WOxmU6PQPBCv8okbTOmOx77taZ3UbHYOFEYHycJenJ_FbH55J7RsB1XtTlne1dqCgGGvotbdlA-iQM9lpI_zQTuFKvgCL7pjISGKWWFKYUAdV1upuru0mwsoLBexNG1zhp_7Uzq0-zeTD76IbG6GVRlHOthC4ltP4H7fALhnLWlXg02PdVBeIRyqQP5154SVd1ZP_IOeTalXOZ4cZOQXaT_bDelrumEb5Qg21GYauv1SuQQgW5UbBb-c7oV3JURmblUPrGVdp_yIopoFnjtnmtcQ3ZgyaIVpV-0-wh1gotgfUb3cS4K3OZ6EgpJNOArf2p8gHCJ_4nl-eG=w1052-h789-no[/IMG]
+[IMG]https://lh3.googleusercontent.com/hEU7f-Qb5kZQ8U4UvFZ4RudjRGeKaX7kDPtGuGF6eYZfO5uQSB_rPy2pC4rWm1VbRGVXzgsQZdVwyANVb5tWNWS5U3e16RNajAwjrarOZ2IHcplZvpzMTDm-HDOnaZaQ3NO3Hl6d2xyxq5xnUjslmSxsVBUd_304TTQPxmYflkUj5tUft_WkcPz7-op6PGmGDr5_Xj2Qt3Sc5f9AklT2gT9ZO4YV5yH8aJbkGjhuey78LSxYrsrECb1mS9mnO_J2ioR-5v3V7m9Xu7JKe73btFWhmn78ySxbCeXk6brL9qRMP0pSyxR7A_Lcoodb8nejXPttsgIPvcUHjdHTS562PDlkMM6lP7oTOILbnx38mtGFNjbVYHgffk9jY6hWIOTmJ5V1zmGjU9HpnkNS8Rg6_WoxZYEycl6cAou0pmiodz6Ik6yJID1iZZ8UcxVZ_vEkbJWe3ilrLFsbWIql4mU_sSZLTYZoS_lPVc9VroyBUOPDpoVJahC2LomA1Zq_n9eK7Or2C-vbXwjvyQQYZ9Na6wX65i5dPylTvtrl9kQ2KpMwbdlLqf6sf-cDT_ILVL8rjM1_oaPZJK_vQ7amIINdtJ48p5ow3RbkIgSyojPVl4eqhetdnWhsPAYOuKwf036v0Abp9CBU3ToWh7XgaBnwo0nQurxFBai5=w939-h789-no[/IMG]
+[IMG]https://lh3.googleusercontent.com/LBc1bpswuUGITzAX2t0ZrxyREcazjbhA-hJJv4i0i38W0Op_A9FDpeUhxNBErmXbvkrSKeV7tvXH-OGEnFz-J7PArIRYzsE0bS25rDGuTbfA-nmujmwxcP2yYvi13kSFPkgs9vQPzac5sujmJnZU58ZnFz4eZB811hjlDdbWsOFCURbldptf8_NvnCKjFR7bNj7uVSZLCvXIHK2BODfiF5PZzy5i4v2tAvhLBIPSO3-RHfIwxjbIA1DV6tSWX0MBo2lYC6N2E22z8BhrJtl2BxydnAA9uNU1U0hUFSsZtVWh1RHUFnvg8bqbIy71efh11NZrryWs0_vw1w9-PdVf8WDlTB2mXIoyBSaeL0gVa9dwfJ8VRijsCCF0pL5hX2px8y_WacLVHzTp1gl_k-vlwCPYMO3FsNMSOuVjEXScLGlxaKcAwxr-7biewl-YaMJPr4O10uTDpgyKAqlPG5YDBTuhR6sFL_tCbS4DUeVmUSFnCMY2QvrLTW7GzynSi3him0cru8sF1OR-ybBDY5QJvrb0hW1o8Y6Azv3CwGAo92EZsAPBvBgoRUGT2vBBVv4Ihn3FnrwqrW94sP1UhygbPErtzhODEsjREFHvjZbAFVPjKTxTnUKIYgbpss45ZHu7SoVxxd6HMfJ0VqP9qo-sJlG4hu1AlzNB=w293-h220-no[/IMG]
+
+---
+
+### Post by uRock on 2019-08-18
+Is your company paying for extended support? 14.04 is no longer supported, unless the company is paying Canonical. If they're paying for support, then you should be able to contact Canonical directly. [https://ubuntu.com/support/contact-us](https://ubuntu.com/support/contact-us)
+
+---
+

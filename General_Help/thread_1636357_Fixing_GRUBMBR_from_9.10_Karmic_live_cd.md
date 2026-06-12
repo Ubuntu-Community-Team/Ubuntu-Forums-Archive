@@ -1,0 +1,323 @@
+---
+title: "Fixing GRUB/MBR from 9.10 Karmic live cd"
+date: 2010-12-03
+forum: General Help
+---
+
+### Post by Jayy on 2010-12-03
+I had installed 10.10 on another partition, and then I wiped it, so I need to reinstall grub on my 9.10 partition. I have tried a few methods, including one that had worked for me in the past.
+But every time I boot my computer, it just says "GRUB loading.", and hangs.
+
+How should I fix this?
+
+Thanks.
+
+---
+
+### Post by wilee-nilee on 2010-12-03
+So from a booted live Ubuntu cd or thumbdrive lets see the bootscript read out; in my signature just click on it and follow the instructions. Come back to the thread and click on the # in the reply panel this makes code tags  paste all the text in between.
+
+This script will give us the necessary tools to know what is where.
+
+---
+
+### Post by Jayy on 2010-12-03
+Thanks for the reply.
+sda1 is my Ubuntu 9.10 install that I'm trying to run grub on.
+sda3 is were I installed 10.10 (and so grub ran off of it). then I wiped it and attempted to install Arch Linux on it, so that is where it is at now.
+And as I said, I have tried to reload grub onto sda1.
+
+edit: I changed the bootable flag to sda1, but I still get the same problem at boot. ("GRUB loading." and then it hangs)
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda1 and 
+                       looks at sector 3223455 of the same hard drive for 
+                       core.img, core.img is at this location on /dev/sda and 
+                       looks on partition #1 for /boot/grub.
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       xfs
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda3: _________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  -
+    Boot sector info:  
+    Mounting failed:
+mount: wrong fs type, bad option, bad superblock on /dev/sda3,
+       missing codepage or helper program, or other error
+       In some cases useful info is found in syslog - try
+       dmesg | tail  or so
+
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x00015ae3
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63    80,003,699    80,003,637  83 Linux
+/dev/sda2          80,003,761   176,008,139    96,004,379   5 Extended
+/dev/sda5          80,003,763   160,007,399    80,003,637  83 Linux
+/dev/sda6         160,007,463   176,008,139    16,000,677  82 Linux swap / Solaris
+/dev/sda3    *    176,008,140   215,078,219    39,070,080  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        9067879a-5e21-4729-85e5-fcb271b987bc   ext4                                     
+/dev/sda3        99a777cc-4e15-4fb5-8b92-bc91342a6e50   ext3                                     
+/dev/sda5        1bbb10df-662c-452e-b6d6-cc21e9b9f30c   xfs                                      
+/dev/sda6        9809c629-6e3a-495c-be0c-7655c5166970   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (rw)
+/dev/loop0       /rofs                    squashfs   (rw)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 9067879a-5e21-4729-85e5-fcb271b987bc
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-22-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 9067879a-5e21-4729-85e5-fcb271b987bc
+    linux    /boot/vmlinuz-2.6.31-22-generic root=UUID=9067879a-5e21-4729-85e5-fcb271b987bc ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-22-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-22-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 9067879a-5e21-4729-85e5-fcb271b987bc
+    linux    /boot/vmlinuz-2.6.31-22-generic root=UUID=9067879a-5e21-4729-85e5-fcb271b987bc ro single 
+    initrd    /boot/initrd.img-2.6.31-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=9067879a-5e21-4729-85e5-fcb271b987bc /               ext4    errors=remount-ro 0       1
+# /home was on /dev/sda5 during installation
+UUID=1bbb10df-662c-452e-b6d6-cc21e9b9f30c /home           xfs     defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=9809c629-6e3a-495c-be0c-7655c5166970 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+   1.6GB: boot/grub/core.img
+   1.5GB: boot/grub/grub.cfg
+   8.4GB: boot/initrd.img-2.6.31-22-generic
+   7.8GB: boot/vmlinuz-2.6.31-22-generic
+   8.4GB: initrd.img
+   7.8GB: vmlinuz
+
+```
+
+---
+
+### Post by Jayy on 2010-12-03
+I'm thinking it is probably a MBR problem because I'm not even getting a grub prompt or error....
+
+---
+
+### Post by oldfred on 2010-12-03
+Script makes it look like it is installed ok. Usually then the simple two line mount & install reinstall does not work (or is that what you did?)
+
+How to restore the Ubuntu/XP/Vista/7 bootloader (Updated for Ubuntu 9.10)
+[http://ubuntuforums.org/showthread.php?t=1014708](http://ubuntuforums.org/showthread.php?t=1014708)
+[https://help.ubuntu.com/community/Grub2#Reinstalling%20GRUB%202](https://help.ubuntu.com/community/Grub2#Reinstalling%20GRUB%202)
+
+#Install MBR from LiveCD, Ubuntu install on sda1 and want grub2 in drive sda's MBR:
+#Find linux partition, change sda1 if not correct, and/or even sda if sdb wanted:
+sudo fdisk -l
+#confirm that linux is sda1
+sudo mount /dev/sda1 /mnt
+sudo grub-install --root-directory=/mnt/ /dev/sda
+#If that returns any errors run:
+sudo grub-install --recheck --root-directory=/mnt/ /dev/sda
+
+If that does not work then you need to do the full chroot method.
+full chroot version:
+[https://wiki.ubuntu.com/Grub2#Recover%20Grub%202%20via%20LiveCD](https://wiki.ubuntu.com/Grub2#Recover%20Grub%202%20via%20LiveCD)
+
+Grub Rescue Prompt Megathread - drs305
+[http://ubuntuforums.org/showthread.php?t=1594052](http://ubuntuforums.org/showthread.php?t=1594052)
+chroot & grub uninstall & reinstall
+[http://ubuntuforums.org/showthread.php?t=1581099](http://ubuntuforums.org/showthread.php?t=1581099)
+
+It also looks like you have an issue with sda3. You either need to run fsck, reformat or delete it.
+
+---
+
+### Post by Jayy on 2010-12-03
+Thanks for the reply.
+I never get the "grub rescue>" prompt...
+Besides that I have done the other two methods a million times, but if it means anything, this is the output from **sudo grub-install --root-directory=/mnt/ /dev/sda**
+```
+Installation finished. No error reported.
+This is the contents of the device map /mnt//boot/grub/device.map.
+Check if this is correct or not. If any of the lines is incorrect,
+fix it and re-run the script `grub-install'.
+
+(hd0)    /dev/sda
+
+```edit:
+When I run **sudo grub-install --recheck /dev/sda** I get the following output:
+
+```
+grub-probe: error: cannot find a device for /boot/grub.
+
+No path or device is specified.
+Try ``grub-probe --help'' for more information.
+Auto-detection of a filesystem module failed.
+Please specify the module with the option `--modules' explicitly.
+```
+
+---
+
+### Post by oldfred on 2010-12-03
+Do not know. Maybe the error on sda3 is causing problems on reading drive. I might try fixing that and see if it makes any difference.
+
+---
+
+### Post by Jayy on 2010-12-03
+Haha, thank you! That worked.
+
+Thanks all for the help.
+
+---
+

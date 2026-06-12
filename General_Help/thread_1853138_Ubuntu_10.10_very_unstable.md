@@ -1,0 +1,11 @@
+---
+title: "Ubuntu 10.10 very unstable"
+date: 2011-10-01
+forum: General Help
+---
+
+### Post by Mike1056 on 2011-10-01
+Okay, so I'm having some major problems with my Typically stable 64-bit install of Ubuntu.  Here it goes...I was getting a message in my Ubuntu 10.04 saying that the ICEauthority couldn't update.  I thought that seemed quite strange but no matter.  Just hit enter and I could use the computer as normal (except it wouldn't load the sound system).  I got a little tired of it and tried upgrading to Ubuntu 10.10 thinking that that would take care of it.  It didn't.  I looked online and found that I had to make myself the owner of the home folder (which I did and everything worked fine). Well, now it's just acting weird.  It will give me all kinds of error messages before loading (more than I have time to read), then opens like normal.  It runs like normal for a while, but then acts weird at times.  I was using firefox and clicked a button in the browser and it totally shut firefox down.  Wouldn't reopen until I rebooted.  I clicked the "System" menu and it disappeared.  I kept the power button held in until it powered off and then powered it back on.  It seemed fine but did the same kinds of things.  Also, there have been no updates for the past few days...just seems odd.  I'm in the Ubuntu 11.04 partition which I designated 24 GB just to try it out.  I'm not a fan of the new layout at all. I like having my panel on the top of the screen, I know how to find what I'm looking for in Ubuntu 10.10...too many radical changes in 11.04.  Plus, my 10.10 install has been modified to look like a Mac but I have my doubts as to whether that's even possible in 11.04.  I ran Disk Utility and the disk does have a few bad sectors (3 of them).  It says, "Number of sectors waiting to be remapped.  If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remaped.  Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt."  From Ubuntu 11.04, I ran, "Check Filesystem" and it came back clean.  Is there something that I can do?  I'm really disliking this.  A LOT!!  Thanks!
+
+---
+

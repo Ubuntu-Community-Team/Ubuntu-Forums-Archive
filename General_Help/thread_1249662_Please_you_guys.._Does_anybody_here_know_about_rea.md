@@ -1,0 +1,39 @@
+---
+title: "Please you guys.. Does anybody here know about really BIG external hard drives?"
+date: 2009-08-25
+forum: General Help
+---
+
+### Post by Spaarkplug on 2009-08-25
+Hi all,
+
+I am a grad student. We are about to buy a 16 TB hard drive solution. Here -> [http://www.lacie.com/us/products/product.htm?pid=11261](http://www.lacie.com/us/products/product.htm?pid=11261)
+This is the biggest, quietest small business drive you can buy presently in the market. Only one problem. Its interface with your computer is eSATA II. (1 Firewire USB and 3eSATA ii ports in the back). Now, normally this is not an issue,.. but you are talking about 16TB's which will be under RAID 5 configuration. There is a very likely chance we will soon add another 16 TB's to the same unit. The controller that comes with it supports upto 32TB (Under RAID 5 that is a usable space of 24TB after parity)
+
+So, the eSATA II cables from the drives to the controller card connected to the computer can only provide so much data rates considering eSATA ii speeds (admitting they are fast, but not fast enough). However, as far data transfer reliability is concerned does eSATA ii is not the best when you are decoding and encoding 700GBs of video considering latency in mind. This drive is not a network attached storage unit, though having access to the drive from the network is given since it is being connected to its own system which is connected to the network.
+
+My question today is this. Does anybody here know of a Fibre channel controller card that I can use with a Big drive like this? I would really appreciate if somebody here could help me out. Most Fiber channel controller cards are for solutions over a network, and provides very high reliability. Now in our case, though our primary purpose is not to serve a network(the unit will be connected to a dedicated computer tower of its own, which has 2 ethernet card which is connected to a switch), we want the reliability of the network drives. This is not a question concerning fail over data redundancy, but the chances and risks of using the eSATA ii interface to communicate to such a BIG drive from the system side. The question is of bandwidth and data throughput and data rates of Fibre channel over eSATA ii. The drives are being shipped as we speak. (Another thing is the eSATA II cables are only 4 feet long, and any extension over 7 ft is not highly recommended from practical wisdom.)
+
+Ideally an enterprise solution would have been good., But this point we are not going to get an enterprise solution because of the following reasons : All enterprise drives come rack mountable with its on APUs and UPS power supply and a built in computer with a processor built and its on dedicated drives running on stable Linux OS. Also, noise is a factor with big enterprise drives. they make lots of noise from its cooling system. Where as this particular hard drive solution we are looking for needs to go under a desk because of the nature of its application. And finally, the enterprise solution houses the drives in hot swappable bays which anyone can pull out and walk away which is a chief concern. As I've made clear, we are not looking for an enterprise solution, only its reliability, throughput and transfer speed. The whole unit has to be quiet in operation as it sits in a professors office where it is secure and safe, and finally there is the aesthetic factor of good looks. (No way he is going to let me buy a rack unit in his office) This is a few hundred year old University, and its offices and furniture are Mahagony and Redwood finish, cables run through concealed woodfinish channels. (Only visible piece of modern technology is the keyboard and its mouse)
+
+By now you may gather, that I am the student the Professor has tasked to get the job done, and he won't hear nothing short of 'Yes Sir' (He grew up during the moon mission and space race). and my ignorance and lack of wisdom of a professional and experienced Network technician is apparent here. Nevertheless, I need to get this done with or without your help. (under a certain budget thanks to the crashing economy and budget cuts).
+
+I would like to consider the higher speeds promised by Network drives. Can I buy a Fibre channel controller and use it here? Which controller should I buy? I understand the system would need me to install an iSCSI initiator. Which means, I would have to configure the dedicated tower pretty much as a server. What packages are we talking about here? And at RAID 5 configuration, how do I configure them with SCSI Fibre channel controller? ANy one here care to help out a student. Ofcourse, I hopefully assume you know what you are talking about. Please don't bury me with technical know how and what not.
+
+[And to those who may have a question, why not the Universities own Network Admins/Sys Admins? The answer is, we don't have time to deal with the Bureaucracy of dealing with them, and their snobby know it all attitude and then the budgeting of this setup is the Professor personal expense for R&D development, which is separate from universities budgeting, and plus I guess the prof would rather have his students to the grunt work than pay them do it]
+
+[Sorry for the long blab. But i feel satisfied that i made every point]
+
+[Newbies, no hard feelings, but this is not for you to answer]
+
+[What OS is the prof.s desktop? Its Windows (sadly). What OS is the new tower for the External LaCie Drive. I am thinking Ubuntu 9.04 or Debian.]
+
+---
+
+### Post by blueridgedog on 2009-08-25
+The external enclosure you linked to takes SATA drives as the medium and has no ability to connect to a fiber channel switch or card on a server.  Even if it could it could not automagically improve the speed of the two 8 gig drives inserted into it.  To get fiber channel speed, you will need a fiber channel storage array (see [http://www.sandirect.com/index.php?manufacturers_id=36&gclid=CPC3qbGiwJwCFSBN5QodYVr9mw](http://www.sandirect.com/index.php?manufacturers_id=36&gclid=CPC3qbGiwJwCFSBN5QodYVr9mw) and [http://www.superwarehouse.com/Seagate_Cheetah_15K.6_450_GB_Fibre_Channel_Internal_Hard_Drive/ST3450856FC/p/1538724](http://www.superwarehouse.com/Seagate_Cheetah_15K.6_450_GB_Fibre_Channel_Internal_Hard_Drive/ST3450856FC/p/1538724) for example) that is then connected to a fiber channel switch or to a fiber channel card in a server.  
+
+Unless your budget is considerably more than what is implied with your current choice, I can't see fiber channel being within reach.  If you can afford more, then you can look at external enclosures with fiber channel based drives.  The speed of each drive will jump to potentially 400 mb/s versus the estimated 200 mb/s with the sata solution (rough estimates), but you would need fiber channel from start to finish.
+
+---
+

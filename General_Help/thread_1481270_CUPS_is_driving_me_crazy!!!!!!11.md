@@ -1,0 +1,158 @@
+---
+title: "CUPS is driving me crazy!!!!!!11"
+date: 2010-05-12
+forum: General Help
+---
+
+### Post by NCLI on 2010-05-12
+I've been trying to get CUPS working on a headless server, in order to share the printers connected to it with the rest of the network. The problem is that I can't add printers via the web interface, or rather, that I can log in, as it will not authorize my account. I've tried lppasswd, adding cupsys to the group 'shadow'(only to have the system tell me that there is no user called cupsys), and been editing the cupd.conf for hours. On top of all tha, I can't even get to the web-interface without running "/etc/init.d/cups restart"!
+
+I'll appreciate any advice you can give me, here is my cupsd.conf:
+```
+#
+# Sample configuration file for the CUPS scheduler.  See "man cupsd.conf" for a
+# complete description of this file.
+#
+
+# Log general information in error_log - change "warn" to "debug"
+# for troubleshooting...
+LogLevel warn
+
+# Deactivate CUPS' internal logrotating, as we provide a better one, especially
+# LogLevel debug2 gets usable now
+MaxLogSize 0
+
+# Only listen for connections from the local machine.
+Listen 631
+Listen /var/run/cups/cups.sock
+
+# Show shared printers on the local network.
+Browsing On
+BrowseOrder allow,deny
+BrowseAllow all
+BrowseLocalProtocols CUPS dnssd
+BrowseAddress @LOCAL
+Allow all
+
+# Default authentication type, when authentication is required...
+DefaultAuthType Basic
+
+# Restrict access to the server...
+<Location />
+  Order allow,deny
+  Allow all
+</Location>
+
+# Restrict access to the admin pages...
+<Location /admin>
+  Order allow,deny
+  Allow all
+</Location>
+
+# Restrict access to configuration files...
+<Location /admin/conf>
+  AuthType Default
+  Allow all
+  Require valid-user
+  Order allow,deny
+</Location>
+
+# Set the default printer/job policies...
+<Policy default>
+  # Job-related operations must be done by the owner or an administrator...
+  <Limit Send-Document Send-URI Hold-Job Release-Job Restart-Job Purge-Jobs Set-Job-Attributes Create-Job-Subscription Renew-Subscription Cancel-Subscription Get-Notifications Reprocess-Job Cancel-Current-Job Suspend-Current-Job Resume-Job CUPS-Move-Job CUPS-Get-Document>
+    Allow all
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # All administration operations require an administrator to authenticate...
+  <Limit CUPS-Add-Modify-Printer CUPS-Delete-Printer CUPS-Add-Modify-Class CUPS-Delete-Class CUPS-Set-Default CUPS-Get-Devices>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # All printer operations require a printer operator to authenticate...
+  <Limit Pause-Printer Resume-Printer Enable-Printer Disable-Printer Pause-Printer-After-Current-Job Hold-New-Jobs Release-Held-New-Jobs Deactivate-Printer Activate-Printer Restart-Printer Shutdown-Printer Startup-Printer Promote-Job Schedule-Job-After CUPS-Accept-Jobs CUPS-Reject-Jobs>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # Only the owner or an administrator can cancel or authenticate a job...
+  <Limit Cancel-Job CUPS-Authenticate-Job>
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  <Limit All>
+    Order deny,allow
+  </Limit>
+</Policy>
+
+# Set the authenticated printer/job policies...
+<Policy authenticated>
+  # Job-related operations must be done by the owner or an administrator...
+  <Limit Create-Job Print-Job Print-URI>
+    AuthType Default
+    Order deny,allow
+  </Limit>
+
+  <Limit Send-Document Send-URI Hold-Job Release-Job Restart-Job Purge-Jobs Set-Job-Attributes Create-Job-Subscription Renew-Subscription Cancel-Subscription Get-Notifications Reprocess-Job Cancel-Current-Job Suspend-Current-Job Resume-Job CUPS-Move-Job CUPS-Get-Document>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # All administration operations require an administrator to authenticate...
+  <Limit CUPS-Add-Modify-Printer CUPS-Delete-Printer CUPS-Add-Modify-Class CUPS-Delete-Class CUPS-Set-Default>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # All printer operations require a printer operator to authenticate...
+  <Limit Pause-Printer Resume-Printer Enable-Printer Disable-Printer Pause-Printer-After-Current-Job Hold-New-Jobs Release-Held-New-Jobs Deactivate-Printer Activate-Printer Restart-Printer Shutdown-Printer Startup-Printer Promote-Job Schedule-Job-After CUPS-Accept-Jobs CUPS-Reject-Jobs>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  # Only the owner or an administrator can cancel or authenticate a job...
+  <Limit Cancel-Job CUPS-Authenticate-Job>
+    AuthType Default
+    Require valid-user
+    Order deny,allow
+  </Limit>
+
+  <Limit All>
+    Order deny,allow
+  </Limit>
+</Policy>
+
+#
+# End of "$Id: cupsd.conf.in 8805 2009-08-31 16:34:06Z mike $".
+#
+```
+
+---
+
+### Post by gmargo on 2010-05-12
+Did you have a question?
+
+---
+
+### Post by NCLI on 2010-05-12
+> **gmargo said:**
+> Did you have a question?
+
+Sorry about that, it seems that I deleted the contents of my post when I copy-pasted my cupsd.conf from the terminal. I've rewritten my post.
+
+---
+
+### Post by NCLI on 2010-05-15
+Bump.
+
+---
+

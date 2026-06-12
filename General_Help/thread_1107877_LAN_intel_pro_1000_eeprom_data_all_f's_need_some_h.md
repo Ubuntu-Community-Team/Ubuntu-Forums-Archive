@@ -1,0 +1,567 @@
+---
+title: "LAN intel pro 1000 eeprom data all f's need some help"
+date: 2009-03-27
+forum: General Help
+---
+
+### Post by sdowney717 on 2009-03-27
+is there a way to restore this laptop intel pro 1000 pl lan card?
+sudo ethtool -e eth0 >savemyeep.txt
+shows the file dump is overwritten with solid f's
+
+
+```
+Offset		Values
+------		------
+0x0000		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0010		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0020		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0030		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0040		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0050		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0060		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0070		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0080		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0090		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x00f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0100		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0110		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0120		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0130		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0140		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0150		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0160		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0170		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0180		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0190		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x01f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0200		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0210		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0220		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0230		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0240		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0250		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0260		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0270		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0280		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0290		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x02f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0300		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0310		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0320		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0330		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0340		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0350		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0360		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0370		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0380		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0390		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x03f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0400		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0410		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0420		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0430		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0440		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0450		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0460		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0470		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0480		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0490		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x04f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0500		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0510		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0520		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0530		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0540		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0550		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0560		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0570		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0580		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0590		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x05f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0600		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0610		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0620		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0630		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0640		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0650		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0660		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0670		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0680		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0690		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x06f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0700		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0710		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0720		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0730		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0740		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0750		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0760		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0770		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0780		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0790		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x07f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0800		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0810		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0820		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0830		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0840		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0850		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0860		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0870		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0880		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0890		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x08f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0900		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0910		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0920		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0930		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0940		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0950		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0960		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0970		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0980		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0990		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x09f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0a90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0aa0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ab0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ac0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ad0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ae0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0af0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0b90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ba0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0bb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0bc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0bd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0be0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0bf0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0c90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ca0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0cb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0cc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0cd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ce0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0cf0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0d90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0da0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0db0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0dc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0dd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0de0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0df0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0e90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ea0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0eb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ec0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ed0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ee0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ef0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0f90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0fa0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0fb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0fc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0fd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0fe0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x0ff0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1000		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1010		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1020		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1030		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1040		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1050		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1060		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1070		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1080		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1090		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x10f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1100		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1110		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1120		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1130		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1140		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1150		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1160		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1170		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1180		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1190		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x11f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1200		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1210		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1220		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1230		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1240		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1250		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1260		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1270		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1280		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1290		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x12f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1300		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1310		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1320		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1330		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1340		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1350		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1360		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1370		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1380		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1390		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x13f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1400		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1410		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1420		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1430		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1440		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1450		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1460		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1470		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1480		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1490		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x14f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1500		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1510		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1520		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1530		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1540		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1550		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1560		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1570		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1580		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1590		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x15f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1600		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1610		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1620		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1630		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1640		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1650		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1660		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1670		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1680		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1690		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x16f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1700		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1710		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1720		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1730		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1740		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1750		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1760		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1770		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1780		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1790		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x17f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1800		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1810		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1820		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1830		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1840		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1850		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1860		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1870		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1880		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1890		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x18f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1900		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1910		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1920		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1930		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1940		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1950		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1960		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1970		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1980		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1990		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19a0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19b0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19c0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19d0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19e0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x19f0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1a90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1aa0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ab0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ac0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ad0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ae0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1af0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1b90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ba0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1bb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1bc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1bd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1be0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1bf0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1c90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ca0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1cb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1cc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1cd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ce0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1cf0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1d90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1da0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1db0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1dc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1dd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1de0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1df0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1e90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ea0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1eb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ec0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ed0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ee0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ef0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f00		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f10		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f20		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f30		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f40		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f50		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f60		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f70		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f80		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1f90		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1fa0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1fb0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1fc0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1fd0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1fe0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+0x1ff0		ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 
+```
+
+---
+
+### Post by sdowney717 on 2009-03-27
+[http://blog.vodkamelone.de/archives/146-Unbricking-an-Intel-Pro1000-e1000-network-interface.html](http://blog.vodkamelone.de/archives/146-Unbricking-an-Intel-Pro1000-e1000-network-interface.html)
+
+found this but perhaps i need a good file to reprogram the card?
+
+02:00.0 Ethernet controller: Intel Corporation 82573L Gigabit Ethernet Controller
+
+```
+ubuntu@ubuntu:~$ lspci
+00:00.0 Host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and 945GT Express Memory Controller Hub (rev 03)
+00:02.0 VGA compatible controller: Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:02.1 Display controller: Intel Corporation Mobile 945GM/GMS/GME, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:1b.0 Audio device: Intel Corporation 82801G (ICH7 Family) High Definition Audio Controller (rev 02)
+00:1c.0 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 1 (rev 02)
+00:1c.1 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 2 (rev 02)
+00:1c.2 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 3 (rev 02)
+00:1d.0 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #1 (rev 02)
+00:1d.1 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #2 (rev 02)
+00:1d.2 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #3 (rev 02)
+00:1d.3 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #4 (rev 02)
+00:1d.7 USB Controller: Intel Corporation 82801G (ICH7 Family) USB2 EHCI Controller (rev 02)
+00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev e2)
+00:1f.0 ISA bridge: Intel Corporation 82801GBM (ICH7-M) LPC Interface Bridge (rev 02)
+00:1f.2 IDE interface: Intel Corporation 82801GBM/GHM (ICH7 Family) SATA IDE Controller (rev 02)
+00:1f.3 SMBus: Intel Corporation 82801G (ICH7 Family) SMBus Controller (rev 02)
+02:00.0 Ethernet controller: Intel Corporation 82573L Gigabit Ethernet Controller
+05:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG [Golan] Network Connection (rev 02)
+07:06.0 CardBus bridge: Texas Instruments PCIxx12 Cardbus Controller
+07:06.1 FireWire (IEEE 1394): Texas Instruments PCIxx12 OHCI Compliant IEEE 1394 Host Controller
+07:06.2 Mass storage controller: Texas Instruments 5-in-1 Multimedia Card Reader (SD/MMC/MS/MS PRO/xD)
+07:06.3 SD Host controller: Texas Instruments PCIxx12 SDA Standard Compliant SD Host Controller
+
+```
+
+---
+

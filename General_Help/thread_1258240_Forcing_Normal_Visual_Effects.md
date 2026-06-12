@@ -1,0 +1,141 @@
+---
+title: "Forcing Normal Visual Effects"
+date: 2009-09-04
+forum: General Help
+---
+
+### Post by Finalfantasykid on 2009-09-04
+Ok, so I conviced my sister to install Ubuntu 9.04 on her aging laptop(yay!).  She has an acer aspire 5000.
+
+Her specs are roughly...
+
+512MB Shared DDR(64MB for graphics)
+1.6GHz AMD(single core)
+Integrated Graphics (SiS?)
+
+So far things seem to be working fine, however whenever a window or something like a video is played, horizontal lines start appearing randomly on the screen, mostly on the left side, and flicker for a few seconds.  This actually happens on my Dell XPS laptop, however I have my visual effects set to advanced, so I do not have to be bothered by those lines.  However since my sister's computer has weak graphics performance, she is stuck on the low setting, and those lines end up showing up and can be very annoying.
+
+So is there some way to either force Normal Visual effects, or is there a way to eliminate these lines?
+
+EDIT:  This is what I get from lspci
+
+```
+00:00.0 Host bridge: Silicon Integrated Systems [SiS] 760/M760 Host (rev 03)
+00:01.0 PCI bridge: Silicon Integrated Systems [SiS] SG86C202
+00:02.0 ISA bridge: Silicon Integrated Systems [SiS] SiS963 [MuTIOL Media IO] (rev 25)
+00:02.1 SMBus: Silicon Integrated Systems [SiS] SiS961/2 SMBus Controller
+00:02.5 IDE interface: Silicon Integrated Systems [SiS] 5513 [IDE]
+00:02.6 Modem: Silicon Integrated Systems [SiS] AC'97 Modem Controller (rev a0)
+00:02.7 Multimedia audio controller: Silicon Integrated Systems [SiS] AC'97 Sound Controller (rev a0)
+00:03.0 USB Controller: Silicon Integrated Systems [SiS] USB 1.1 Controller (rev 0f)
+00:03.1 USB Controller: Silicon Integrated Systems [SiS] USB 1.1 Controller (rev 0f)
+00:03.2 USB Controller: Silicon Integrated Systems [SiS] USB 2.0 Controller
+00:04.0 Ethernet controller: Silicon Integrated Systems [SiS] SiS900 PCI Fast Ethernet (rev 91)
+00:06.0 CardBus bridge: Texas Instruments PCI1410 PC card Cardbus Controller (rev 02)
+00:0b.0 Network controller: Broadcom Corporation BCM4318 [AirForce One 54g] 802.11g Wireless LAN Controller (rev 02)
+00:18.0 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] HyperTransport Technology Configuration
+00:18.1 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Address Map
+00:18.2 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] DRAM Controller
+00:18.3 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Miscellaneous Control
+01:00.0 VGA compatible controller: Silicon Integrated Systems [SiS] 661/741/760 PCI/AGP or 662/761Gx PCIE VGA Display Adapter
+
+```
+
+---
+
+### Post by mikewhatever on 2009-09-04
+How about turning the visual effects off?
+
+---
+
+### Post by Finalfantasykid on 2009-09-04
+Ya the visual effects are off, the problem is I can't turn them on.  The harware probably isn't powerful enough, but the visual effects for Normal arn't exactly too extreme, so I am wondering if I can force it to go to normal.
+
+But like I said earlier, if I can't get the normal effects to work, then I need to atleast get rid of these lines on the side...
+
+---
+
+### Post by mikewhatever on 2009-09-04
+If the hardware is not powerful enough to run smoothly without compiz, turning visual effects on would not make things better. Can you post the output of **glxinfo | grep rendering**.
+
+---
+
+### Post by Finalfantasykid on 2009-09-04
+> direct rendering: Yes
+That is what I get...
+
+```
+(==) SIS(0): DRI disabled
+(II) SIS(0): Checking OS for SSE support is not supported in this version of X.org
+(II) SIS(0): If your OS supports SSE, set the option "UseSSE" to "on".
+(--) SIS(0): 65536K shared video RAM (UMA)
+(--) SIS(0): DRAM type: DDR SDRAM
+(--) SIS(0): Memory clock: 198.861 MHz
+(--) SIS(0): DRAM bus width: 64 bit
+(--) SIS(0): Linear framebuffer at 0xE8000000
+(--) SIS(0): MMIO registers at 0xE2100000 (size 64K)
+(--) SIS(0): VideoRAM: 65536 KB
+(II) SIS(0): Using 64928K of framebuffer memory at offset 0K
+(--) SIS(0): Hardware supports two video overlays
+(II) SIS(0): 
+    Dear SiS76x user, your machine is using a shared memory framebuffer.
+    Due to hardware limitations of the SiS chip in combination with the
+    AMD CPU, video overlay support is very limited on this machine. If you
+    experience flashing lines in the video and/or the graphics display
+    during video playback, reduce the color depth and/or the resolution
+    and/or the refresh rate. Alternatively, use the video blitter.
+```
+
+I checked out the log for X.org, and I noticed this.  It seems fairly interesting.  It is suggesting that I enable video blitter, and something called UseSSE.
+
+---
+
+### Post by mikewhatever on 2009-09-04
+Direct rendering means you should usually be able to run compiz, not sure what's wrong.
+
+---
+
+### Post by Finalfantasykid on 2009-09-04
+Here is the Xorg.conf file.
+
+```
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# Note that some configuration settings that could be done previously
+# in this file, now are automatically configured by the server and settings
+# here are ignored.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Device"
+    Identifier    "Configured Video Device"
+EndSection
+
+Section "Monitor"
+    Identifier    "Configured Monitor"
+    HorizSync    28.0 - 80.0
+    VertRefresh    48.0 - 75.0
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Monitor        "Configured Monitor"
+    Device        "Configured Video Device"
+    
+EndSection
+```
+
+---
+

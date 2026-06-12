@@ -1,0 +1,640 @@
+---
+title: "Help with tar.gz installation please"
+date: 2010-11-30
+forum: General Help
+---
+
+### Post by SmorlFox on 2010-11-30
+Hi, I'm a complete novice with ubuntu and would really appreciate some help installing a .tag.gz file...
+
+first, let me show you this instruction i was given...
+
+1. Download example.tar.gz; note download location In terminal.
+
+So - How do i note/notice the d/l location using terminal? 
+
+I have tried keeping the terminal open as i d/l the file in the hope it might display.. something but alas!
+
+I need the location so i can input it into this instruction...
+
+5. tar xfz "location and name of downloaded .tar.gz file"
+
+So anyway,  if anyone can help me i'd be very grateful, 
+
+Thanks in advance...
+
+---
+
+### Post by gandaran on 2010-11-30
+> So - How do i note/notice the d/l location using terminal?
+if the downloaded package is in the Downloads folder type in terminal
+cd /home/'user'/Downloads ('user' is your account username)
+> 5. tar xfz "location and name of downloaded .tar.gz file"
+save yourself all the typing work and just right click the package then choose extract here.
+usually theres a readme file in the tar packages with install instructions, read it.
+
+---
+
+### Post by rahilm on 2010-11-30
+u'll have to cd to the downloaded folder..
+if you downloaded the tar via firefox. You can right click the download in the download window that opens and select open containing folder...
+
+or else.. if u know the folder in which the file is located, open it...
+
+You have to cd to this directory..
+a hasslefree way of doin this is to press control+L  when the folder is open.. this will display the location below the menu bar and it will be already selected.. .just ctr+c and paste it in the terminal..
+
+```
+
+cd "<paste path>" 
+```
+don't forget the quotes....
+
+then you can proceed..
+
+---
+
+### Post by SmorlFox on 2010-11-30
+Thanks alot guys, your help is much appreciated.  However, i fear i have bitten off more than i can chew with this install. basically once i try the MAKE command, i am getting all sorts of problems like...
+
+paul@ubuntu:~/src/Vrui-2.0-002$ make
+/bin/sh: /usr/bin/g++: not found
+expr: syntax error
+---- Configured Vrui options: ----
+Installation directory: /home/paul/Vrui-2.0-002
+Run-time library search paths enabled
+Realtime library uses timers
+Multithreaded rendering disabled
+PNG image file format disabled
+JPG image file format disabled
+TIFF image file format disabled
+ALSA sound device support disabled
+SPEEX speech compression support disabled
+Spatial sound using OpenAL disabled
+Video4Linux2 video device support disabled
+FireWire DC1394 video device support disabled
+Theora video codec support disabled
+Swapgroup support for Vrui windows disabled
+Vrui will save screenshots in PPM format
+Support for spatial audio disabled
+Support to save screen captures in Ogg/Theora format disabled
+Event device support (for joysticks and USB devices) disabled
+Bluetooth support (for Nintendo Wii controller) disabled
+---- End of Vrui configuration options ----
+Compiling Misc/BufferCharacterSource.cpp...
+make: /usr/bin/g++: Command not found
+make: *** [o/g++.g0.O3/Misc/BufferCharacterSource.o] Error 127
+
+Most of this is way over my head so if you could decipher some of it for me i'd be very grateful.
+
+BTW in case your wondering, i am trying to install software to take control of my Kinect, as seen here on this video... 
+
+[http://www.youtube.com/watch?v=7QrnwoO1-8A](http://www.youtube.com/watch?v=7QrnwoO1-8A)
+
+In a later video, the guy releases the software for download...
+
+[http://www.youtube.com/watch?v=7TGF30-5KuQ](http://www.youtube.com/watch?v=7TGF30-5KuQ)
+
+And this is where i'm at.  It sure looks like alot of fun to mess about with, I'm itching to get my hands on it but my limited knowledge of ubuntu is proving a real stumbling block...
+
+hopefully with help from this forum, i'll eventually overcome these issues! 
+
+Fingers crossed.
+
+---
+
+### Post by oldos2er on 2010-11-30
+Have you installed build-essential? ```
+sudo apt-get install build-essential
+```
+
+---
+
+### Post by SmorlFox on 2010-11-30
+Spookily i have just tried that. It did update etc...
+
+I ran the Make command...
+
+paul@ubuntu:~/src/Vrui-2.0-002$ make
+---- Configured Vrui options: ----
+Installation directory: /home/paul/Vrui-2.0-002
+Run-time library search paths enabled
+Realtime library uses timers
+Multithreaded rendering disabled
+PNG image file format disabled
+TIFF image file format disabled
+ALSA sound device support disabled
+SPEEX speech compression support disabled
+Spatial sound using OpenAL disabled
+Video4Linux2 video device support disabled
+FireWire DC1394 video device support disabled
+Theora video codec support disabled
+Swapgroup support for Vrui windows disabled
+Vrui will save screenshots in PPM format
+Support for spatial audio disabled
+Support to save screen captures in Ogg/Theora format disabled
+Event device support (for joysticks and USB devices) disabled
+Bluetooth support (for Nintendo Wii controller) disabled
+---- End of Vrui configuration options ----
+Compiling Misc/GzippedFileCharacterSource.cpp...
+Misc/GzippedFileCharacterSource.cpp:26: fatal error: zlib.h: No such file or directory
+compilation terminated.
+make: *** [o/g++-3.g0.O3/Misc/GzippedFileCharacterSource.o] Error 1
+paul@ubuntu:~/src/Vrui-2.0-002$ 
+
+Looking better, least theres no;
+
+/bin/sh: /usr/bin/g++: not found
+expr: syntax error
+
+As we saw before.
+
+Then when i ran the Make Install  command...
+
+paul@ubuntu:~/src/Vrui-2.0-002$ make install
+Installing header files...
+Installing libraries...
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libMisc.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libPlugins.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libRealtime.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libThreads.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libComm.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libMath.g++-3.so.2.0': No such file or directory
+install: cannot stat `/home/paul/src/Vrui-2.0-002/lib/libGeometry.g++-3.so.2.0': No such file or directory
+ 
+etc...
+
+?
+
+---
+
+### Post by oldos2er on 2010-11-30
+Did you run 'make' first?
+
+---
+
+### Post by SmorlFox on 2010-11-30
+Yes I did run make first.
+
+Just edited post to show details.
+
+---
+
+### Post by oldos2er on 2010-11-30
+'make' has to complete successfully before you can run 'make install.' "fatal error: zlib.h: No such file or directory" is telling you a dependency is missing. Was there a README file in the tar.gz? Sometimes dependencies are listed there.
+
+---
+
+### Post by SmorlFox on 2010-11-30
+Okay, First i'll apologise for pasting such a long section but I just don't know what i'm looking for...
+
+Here is the README:      :(
+
+========================================================================
+README for Vrui version 2.0, build 002
+Copyright (c) 1998-2010 Oliver Kreylos
+========================================================================
+
+Overview
+========
+
+Vrui is a C++ software development toolkit for highly interactive
+virtual reality applications, with a focus on portability between vastly
+different virtual reality environments, from laptop or desktop computers
+to CAVEs and other fully immersive systems. More information about Vrui
+can be found at [http://idav.ucdavis.edu/~okreylos/ResDev/Vrui](http://idav.ucdavis.edu/~okreylos/ResDev/Vrui) or
+[http://www.keckcaves.org](http://www.keckcaves.org).
+
+Vrui's development was supported by the University of California, Davis,
+by the UC Davis W.M. Keck Center for Active Visualization in the Earth
+Sciences (KeckCAVES, [http://www.keckcaves.org](http://www.keckcaves.org)), the W.M. Keck
+Foundation, and the National Science Foundation.
+
+Requirements
+============
+
+On all operating systems, Vrui is based on the X Window System (X11) and
+OpenGL. On Mac OS X, X11 is an optional component and can be installed
+from the installation media. To build Vrui from source on Mac OS X, it
+may be necessary to install the optional xcode component from the
+installation media. On Linux, we strongly recommend installing
+appropriate vendor-supplied OpenGL drivers (such as those released by
+Nvidia or ATI/AMD) for optimal 3D graphics performance.
+
+Vrui uses additional libraries if it detects them on the local system,
+such as libpng, libjpeg, and libtiff to read/write images in PNG, JPEG,
+and TIFF formats, respectively, and OpenAL to render three-dimensional
+sound. On Mac OS X, libpng, libjpeg, and libtiff need to be downloaded
+from their respective repositories and built from source. On Linux,
+OpenAL might not be installed by default and needs to be installed via
+the distribution's package manager.
+
+Quick Installation Guide for the Impatient
+==========================================
+
+(Replace <build> by the current Vrui build number.)
+
+0. (Install required packages, if necessary or desired.)
+
+1. Create src directory in home directory:
+   > mkdir ~/src
+
+2. Change into ~/src directory and unpack the Vrui tarball:
+   > cd ~/src
+   > tar xfz <download path>/Vrui-2.0-<build>.tar.gz
+   - or -
+   > tar xf <download path>/Vrui-2.0-<build>.tar
+
+3. Change into Vrui base directory:
+   > cd Vrui-2.0-<build>
+
+4. Build Vrui inside the Vrui base directory:
+   > make
+   or, for multi-processor machines
+   > make -j<number of CPUs>
+
+5. Install Vrui into Vrui-2.0-<build> in home directory:
+   > make install
+
+6. If there are error messages during the build, read below.
+
+Building and Running Vrui Example Applications
+----------------------------------------------
+
+1. Change into example application directory:
+   > cd ~/src/Vrui-2.0-<build>/ExamplePrograms
+
+2. Build example applications:
+   > make
+
+3. (On MacOS X: Start X11.)
+
+4. Run Earth renderer:
+   > ./bin/ShowEarthModel
+
+5. Read about Vrui's default user interface in HTML documentation in
+   ~/src/Vrui-2.0-<build>/Documentation.
+
+Detailed Installation notes
+===========================
+
+Installation is performed via the central makefile in the
+Vrui-2.0-<build> base directory. The only settings that probably need to
+be changed are the installation path (where the Vrui include, library,
+executable, and configuration files will be copied), the path to the C++
+compiler, and whether to build-in support for optional libraries such as
+libpng, libjpeg, or libtiff.
+
+NOTE: It is important *not* to install Vrui into the same directory it
+is built in. A typical installation would download the source tarball
+into a special "source" directory, say ~/src, and extract it from there,
+resulting in the sources being in ~/src/Vrui-2.0-<build>. Then Vrui can
+be installed in ~/Vrui-2.0-<build> (the default) without any problems.
+After installation, the source tarball and the ~/src/Vrui-2.0-<build>
+directory can in principle be deleted. Here is a diagram of the
+directory structure described above:
+
+~ (home directory)
+    |
+    +- src (unpack Vrui tarball from in here)
+    |    |
+    |    +- Vrui-2.0-<build> (package root directory, run "make" in here)
+    |        |
+    |        +- BuildRoot (additional make settings)
+    |        |
+    |        +- ExamplePrograms (Vrui example program source
+    |        :  codes)
+    |        :
+    |        :
+    |        +- d (dependency files, created by "make")
+    |        |
+    |        +- o (object files, created by "make")
+    |        |
+    |        +- lib / lib64 (library files and plug-ins,
+    |        |  created by "make")
+    |        |
+    |        +- exe (executable files, created by "make")
+    |
+    +- Vrui-2.0-<build> (created by "make install")
+        |
+        +- include (Vrui development header files)
+        |
+        +- lib / lib64 (library files and plug-ins)
+        |
+        +- bin (Vrui programs)
+        |
+        +- etc (Vrui configuration files)
+        |
+        +- share (font definitions, texture images, etc.)
+
+Root Installation Directory
+---------------------------
+
+The root installation directory is set by changing the value of
+INSTALLDIR at the top of the makefile, or by passing INSTALLDIR=<desired
+installation directory> on make's command line. Vrui installs itself in
+the usual subdirectories under the root installation directory:
+
+- include: Contains header files for Vrui development
+- lib or lib64: Contains shared libraries and Vrui plug-ins
+- bin: Contains executables
+- etc: Contains configuration files
+- share: Contains additional files (texture fonts etc.)
+
+If the root installation directory is set to /usr or /usr/local, Vrui
+will drop right into an existing Linux installation. However, to
+simplify removing a Vrui installation (there is no make uninstall yet),
+it is recommended to install Vrui in its private root directory, such
+as /usr/local/Vrui-2.0-<build>. If installed this way, it can be cleanly
+uninstalled by simply removing the root installation directory.
+
+During installation, Vrui creates a makefile fragment (Vrui.makeinclude)
+in $(INSTALLDIR)/etc. This fragment should be included by the makefiles
+of all Vrui-based projects to simplify compiling and linking. The
+makefiles provided with the Vrui example applications show how this
+should be done, and how it results in simple makefiles that build on any
+environment with a properly installed version of Vrui.
+
+Path to the C++ Compiler
+------------------------
+
+The compiler is selected in the file BuildRoot/SystemDefinitions. The
+compiler suite's base directory is set by changing the GNUC_BASEDIR
+variable, or by passing GNUC_BASEDIR=<gcc base directory> on make's
+command line. The default C++ compiler is /usr/bin/g++.
+
+Note about g++ version 4.1.0 and greater
+----------------------------------------
+
+Starting with version 4.1.0, g++ no longer injects friend functions
+defined inside a class declaration into the surrounding namespace. The
+build system (BuildRoot/SystemDefinitions and BuildRoot/BasicMakefile)
+contains code to detect the compiler version and add the
+-ffriend-injection flag to the compiler's command line if the version
+number is greater or equal 4.1.0. However, if compiling the example
+programs in ExamplePrograms generates error messages about undeclared
+functions, the flag -ffriend-injection needs to be manually added to the
+compiler command line when building Vrui and Vrui-based applications.
+The best place to add the flag is to the end of CSYSFLAGS at the
+beginning of BuildRoot/SystemDefinitions before building. Alternatively,
+the flag can be added to CFLAGS inside the example programs' build
+directories after Vrui has been built/installed.
+
+Machine Endianness
+------------------
+
+Vrui contains support for reading/writing binary files with automatic
+endianness conversion, and sending/receiving data over TCP pipes with
+automatic network endianness detection and endianness conversion. For
+this to work, the OS must offer an include file that sets the #define
+macros __LITTLE_ENDIAN, __BIG_ENDIAN, and __BYTE_ORDER. __BYTE_ORDER
+must be equal to __LITTLE_ENDIAN on little-endian machines, and equal to
+__BIG_ENDIAN on big-endian machines. The Misc/Endianness.h header file
+includes the appropriate system header files for Linux and Mac OS X, but
+might need to be adapted for other operating systems.
+
+Support for PNG, JPEG, and TIFF
+-------------------------------
+
+The image handling library that is part of the Vrui toolkit supports
+reading and writing image files in PNG, JPEG, and TIFF formats. These
+features are based on the libpng, libjpeg, and libtiff libraries,
+respectively. If the host computer does not contain either of these
+libraries, support for PNG, JPEG, or TIFF images can be disabled
+separately in the makefile by setting IMAGES_USE_PNG, IMAGES_USE_JPEG,
+or IMAGES_USE_TIFF to 0, respectively. The Vrui makefile now contains
+code to automatically detect whether libpng, libjpeg, and/or libtiff are
+installed, and sets these three variables accordingly. More precisely,
+the makefile looks for png.h, jpeglib.h, and tiffio.h in /usr/include
+and /usr/local/include. If either library is installed in a different
+directory on the host system, the makefile variables need to be set
+manually, and the paths to the libraries need to be adjusted in
+BuildRoot/Packages.
+
+Vrui uses the PNG (Portable Network Graphics) image file format to save
+screenshots taken from a Vrui application window using the image
+handling library. If that library is not configured to support PNG
+images (see above), Vrui will automatically fall back to saving
+screenshots in binary PPM format.
+
+Support for ALSA and SPEEX
+--------------------------
+TBW.
+
+Support for Video4Linux2, DC1394, and Theora
+--------------------------------------------
+TBW.
+
+Support for OpenAL
+------------------
+
+Vrui contains full support for spatial audio using the OpenAL 3D sound
+API. Since OpenAL is not yet widely used, this support can be disabled
+in the makefile, removing dependency on the OpenAL header files and
+libraries. To disable OpenAL support, the value of the
+SYSTEM_HAVE_OPENAL variable can be set to 0. The Vrui makefile now
+contains code to automatically detect whether OpenAL is installed on the
+host system by looking for AL/al.h in /usr/include and
+/usr/local/include. If OpenAL is installed elsewhere, the
+SYSTEM_HAVE_OPENAL makefile variable needs to be set manually, and the
+paths to OpenAL need to be adjusted in BuildRoot/Packages.
+
+Support for shared-memory multi-pipe rendering systems
+------------------------------------------------------
+
+As of version 1.0-035, Vrui contains a mechanism to optimally run on
+shared-memory multi-pipe rendering systems such as SGI Onyx or Prism, or
+newer multi-CPU computers with multiple graphics cards. Support for
+multithreaded rendering is enabled by setting GLSUPPORT_USE_TLS to 1 in
+the makefile. Since this somewhat impacts rendering performance, it is
+recommended to only enable multithreaded support if (one of) the target
+VR environments requires it.
+
+If the host compiler and run-time environment do not support a __thread
+storage class for thread-local storage, SYSTEM_HAVE_TLS in
+BuildRoot/SystemDefinitions must be set to 0 to fall back to POSIX
+thread-local storage (for an additional performance penalty).
+
+Building and Installing Vrui
+============================
+
+The easiest way to install Vrui is to cd to the Vrui-2.0-<build> root
+directory, and type make, followed by make install. If the root
+installation directory (see above) is a system directory, make install
+has to be run as root. In that case, it is safer to first run make
+(which will build in the current directory) as a non-root user, and
+afterwards become root and run make install.
+
+Source-specific settings
+------------------------
+
+Vrui contains a few settings that might need to be adapted due to
+different operating system or OpenGL versions. The settings that
+typically cause trouble can be changed from within the main makefile
+(they are listed in a section towards the beginning). If Vrui fails to
+build with compiler errors, that is the first place to look. The
+makefile lists which sources cause trouble, and how to address them.
+
+Building debug version
+----------------------
+
+The Vrui libraries and executables are by default built without
+debugging information and with full optimization (-O3). It is possible
+to build Vrui with full debugging information and without optimization
+by defining the DEBUG variable in the makefile. The easiest way to
+achieve this is to pass DEBUG=1 on the make command line, i.e., to type
+"make DEBUG=1" followed by "make DEBUG=1 install". Vrui is set up such
+that debug and non-debug versions can coexist in the same installation
+directory. To build applications with either version, the appropriate
+Vrui makefile fragment has to be included in the makefile.
+- For non-debug Vrui:
+  include $(VRUIDIR)/etc/Vrui.makeinclude
+- For debug Vrui:
+  include $(VRUIDIR)/etc/Vrui.debug.makeinclude
+
+To make full use of the debugger, the Vrui application itself needs to
+be compiled/linked with debugging information as usual. The easiest way
+to achieve this is to add the appropriate flags to VRUI_CFLAGS, as in
+VRUI_CFLAGS += -g2 -O0, or to use makefiles similar to the ones used by
+the example applications (see below).
+
+Building Example Vrui Applications
+==================================
+
+The ExamplePrograms directory in the Vrui-2.0-<build> base directory
+contains several small example programs, and two larger applications in
+their own directories (MeshEditor and VRMLViewer).
+
+ExamplePrograms contains several very simple Vrui applications to show
+the basic development approach, and ShowEarthModel, one "realistic"
+application to visualize global earthquake distributions.
+MeshEditor contains a prototypical and fairly complex VR surface editing
+application, and VRMLViewer contains a stand-alone viewer for simple
+VRML files (it does not support VRML's full specification) that mostly
+serves as an example of how higher-level scene graph functionality can
+be layered on top of the Vrui API.
+
+All applications can be built by running make in their respective
+directories. If Vrui was not installed in its default location
+(~/Vrui-2.0-<build>), the VRUIDIR variable at the top of each makefile
+needs to be changed.
+
+The example application makefiles show how to create debug/release
+versions without changing the makefile by respecting the DEBUG make
+command line argument ("make DEBUG=1") in the same way as the toolkit
+build itself. The application makefiles do not currently allow
+coexisting targets; changing between debug and release mode requires a
+"make clean".
+
+Running Vrui Applications
+=========================
+
+Vrui applications are started in the usual fashion, by typing the
+executable name from the directory containing the executable, and
+providing any required command line parameters. Vrui applications will
+configure themselves to the machine on which they are running by reading
+an appropriate root section in the Vrui.cfg configuration file in the
+installation's etc directory. The root section is determined by the
+following cascade:
+
+1. By default, Vrui reads the section that has the same name as the
+   local machine (as reported by hostname).
+
+2. If an environment variable VRUI_ROOTSECTION exists, Vrui will use its
+   value as the root section
+
+3. If an application's command line contains the arguments
+   -rootSection <section name>, Vrui will use <section name> as the root
+   section.
+
+4. If the root section selected by the above cascade does not exist in
+   the configuration file, Vrui will fall back to the root section
+   compiled into the library (defaults to "Desktop").
+
+The HTML pages in the Documentation directory contain additional
+information about configuring, running, and using Vrui applications.
+
+---
+
+### Post by oldos2er on 2010-11-30
+This looks like it's going to quickly surpass my knowledge level; I don't see any simple list of dependencies there.
+
+I would suggest you contact the author, via the URLs given at the top of the document.
+
+---
+
+### Post by SmorlFox on 2010-12-01
+Oh dear, well I guess I'd better give up the ghost! The author recommended I join an ubuntu forum for help!
+
+Is there anyone else out there who could help me?
+
+---
+
+### Post by SeijiSensei on 2010-12-01
+The solution to your immediate problem, the missing zlib.h header file, can be fixed by installing the **zlibg1-dev** package.
+
+Also, you can't install a program without using sudo.  So after you've recompiled, you need to run "sudo make install" so the installer can write to privileged directories.
+
+That said, there's still a long list of missing dependencies (PNG, ALSA, OpenAL, etc.) that might affect the performance of the program.  If you can get past the zlib.h error, see how happy you are with the result.  If you feel it's missing features, you'll need to spend time tracking down the various dependencies and installing the libraries that provide them.  As oldos2er suggests, maybe the developer can give you a list of what's required.  (You might hint that he should look into [autoconf/automake]("http://developers.sun.com/solaris/articles/gnu.html") as well.)
+
+---
+
+### Post by 3rdalbum on 2010-12-01
+Compiling software is, at the best of times, not something for a beginner. You're trying to compile software that's VERY bleeding-edge and probably barely-tested, really.
+
+Maybe wait for someone to create some Kinect packages and a PPA?
+
+---
+
+### Post by 3rdalbum on 2010-12-01
+(sorry, double-posted)
+
+---
+
+### Post by SmorlFox on 2010-12-01
+Alrighty, Thanks for your help - you were right, and i have installed [B]zlibg1-dev package 
+
+So now when i run make i get the following...
+
+
+[/B]paul@ubuntu:~/src/Vrui-2.0-002$ make
+---- Configured Vrui options: ----
+Installation directory: /home/paul/Vrui-2.0-002
+Run-time library search paths enabled
+Realtime library uses timers
+Multithreaded rendering disabled
+PNG image file format disabled
+JPG image file format disabled
+TIFF image file format disabled
+ALSA sound device support disabled
+SPEEX speech compression support disabled
+Spatial sound using OpenAL disabled
+Video4Linux2 video device support disabled
+FireWire DC1394 video device support disabled
+Theora video codec support disabled
+Swapgroup support for Vrui windows disabled
+Vrui will save screenshots in PPM format
+Support for spatial audio disabled
+Support to save screen captures in Ogg/Theora format disabled
+Event device support (for joysticks and USB devices) disabled
+Bluetooth support (for Nintendo Wii controller) disabled
+---- End of Vrui configuration options ----
+Linking /home/paul/src/Vrui-2.0-002/lib/libGLWrappers.g++-3.so.2.0...
+/usr/bin/ld: cannot find -lGL
+collect2: ld returned 1 exit status
+make: *** [/home/paul/src/Vrui-2.0-002/lib/libGLWrappers.g++-3.so.2.0] Error 1
+paul@ubuntu:~/src/Vrui-2.0-002$ 
+
+
+Any ideas whats next? :)
+
+---
+
+### Post by neo unplugged on 2011-03-06
+In my case, all I had to do was install the following debians for my Ubuntu 10.10
+speex_1.2~rc1-1ubuntu1_i386.deb
+ libspeex-dev_1.2~rc1-1ubuntu1_i386.deb
+and everything works perfectly
+
+---
+

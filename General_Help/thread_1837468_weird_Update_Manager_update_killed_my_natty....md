@@ -1,0 +1,29 @@
+---
+title: "weird Update Manager update killed my natty..."
+date: 2011-09-01
+forum: General Help
+---
+
+### Post by bgrau2000 on 2011-09-01
+A very strange partial upgrade proposal by Update Manager led to my /boot folder kernel files to be deleted, and removed them from the grub boot lists...
+
+What was really weird is the update was for over 1200 files, and over 1.5 Gig of space!
+
+Trustingly I allowed it, but then started complaints about dependencies broken and it stopped updating...
+
+I knew if I rebooted it will not allow me back in, so I opened Synaptics, and it seemed genuine as all the files in the upgrade list were newer versions...
+
+So I tried Synaptics and removed packages that created break in dependencies as it progressed...
+
+ultimately, the whole thing crashed and rebooted, at reboot there was no mention of any kernel version...
+
+It took me to reboot to another OS to put back a kernel in and repair grub.cfg manually with an editor, this created a kernel panic, but at least I knew the whole file system was not all gone (as in a virus attack)...
+
+I then re-installed natty over the old installation, and it kept some of my old settings, which is good...
+
+But I am at a loss about what allowed this to happen... the system was working fine before, and updates usually are smooth and safe...
+
+anyone got that, was it malicious at the Repositories / PPA front... worth checking by sysops maintainers...
+
+---
+

@@ -1,0 +1,451 @@
+---
+title: "printer problem"
+date: 2009-12-23
+forum: General Help
+---
+
+### Post by 2roombas on 2009-12-23
+My HP printer was printing just fine up until last night in fact. Today I downloaded and played a little with Chrome Beta for Linux, then went back to my "fits like a shoe" Firefox. 
+
+I recently tried to print something out and received an error, which is the first one for this printer.  I followed to "Diagnostic wizard" and in conclusion he said he couldn't fix it either, then spewed out this below as if I'd understand it?!   Can someone tell me what happened to my once-trusty printer?  It's not even a year old yet.
+
+Oh, btw, II already re-installed my 9.04 thinking that would do it... no.  I unplugged the printer cable and electric plug on it, thinking that would reset it... nope.  Please hepl, ugh! 
+
+Page 1 (Scheduler not running?
+{'cups_connection_failure': False}
+Page 2 (Choose printer):
+{'cups_dest': <cups.Dest Photosmart-C4400-series (default)>,
+ 'cups_instance': None,
+ 'cups_queue': 'Photosmart-C4400-series',
+ 'cups_queue_listed': True}
+Page 3 (Check printer sanity):
+{'cups_device_uri_scheme': u'hp',
+ 'cups_printer_dict': {'device-uri': u'hp:/usb/Photosmart_C4400_series?serial=CN8AMHY2QQ05BN',
+                       'printer-info': u'HP Photosmart C4400 series',
+                       'printer-is-shared': True,
+                       'printer-location': u'me-desktop',
+                       'printer-make-and-model': u'HP Photosmart c4400 Series hpijs, 3.9.2',
+                       'printer-state': 4,
+                       'printer-state-message': u'',
+                       'printer-state-reasons': [u'none'],
+                       'printer-type': 167964,
+                       'printer-uri-supported': u'ipp://localhost:631/printers/Photosmart-C4400-series'},
+ 'cups_printer_remote': False,
+ 'hplip_output': (['',
+                   '\x1b[01mHP Linux Imaging and Printing System (ver. 3.9.2)\x1b[0m',
+                   '\x1b[01mSystem Tray Status Service ver. 2.0\x1b[0m',
+                   '',
+                   'Copyright (c) 2001-9 Hewlett-Packard Development Company, LP',
+                   'This software comes with ABSOLUTELY NO WARRANTY.',
+                   'This is free software, and you are welcome to distribute it',
+                   'under certain conditions. See COPYING file for more details.',
+                   '',
+                   '',
+                   '\x1b[01mHP Linux Imaging and Printing System (ver. 3.9.2)\x1b[0m',
+                   '\x1b[01mDevice Information Utility ver. 5.2\x1b[0m',
+                   '',
+                   'Copyright (c) 2001-9 Hewlett-Packard Development Company, LP',
+                   'This software comes with ABSOLUTELY NO WARRANTY.',
+                   'This is free software, and you are welcome to distribute it',
+                   'under certain conditions. See COPYING file for more details.',
+                   '',
+                   '',
+                   '\x1b[01mhp:/usb/Photosmart_C4400_series?serial=CN8AMHY2QQ05BN\x1b[0m',
+                   '',
+                   '\x1b[01mDevice Parameters (dynamic data):\x1b[0m',
+                   '\x1b[01m  Parameter                     Value(s)                                                  \x1b[0m',
+                   '  ----------------------------  ----------------------------------------------------------',
+                   '  agent1-ack                    False                                                     ',
+                   '  agent1-desc                   Tri-color cartridge                                       ',
+                   '  agent1-dvc                    0                                                         ',
+                   '  agent1-health                 0                                                         ',
+                   '  agent1-health-desc            Good/OK                                                   ',
+                   '  agent1-hp-ink                 False                                                     ',
+                   '  agent1-id                     0                                                         ',
+                   '  agent1-kind                   3                                                         ',
+                   '  agent1-known                  False                                                     ',
+                   '  agent1-level                  60                                                        ',
+                   '  agent1-level-trigger          0                                                         ',
+                   '  agent1-sku                    75/75XL                                                   ',
+                   '  agent1-type                   2                                                         ',
+                   '  agent1-virgin                 False                                                     ',
+                   '  back-end                      hp                                                        ',
+                   '  cups-printer                  Photosmart-C4400-series                                   ',
+                   '  cups-uri                      hp:/usb/Photosmart_C4400_series?serial=CN8AMHY2QQ05BN     ',
+                   '  dev-file                                                                                ',
+                   '  device-state                  1                                                         ',
+                   '  device-uri                    hp:/usb/Photosmart_C4400_series?serial=CN8AMHY2QQ05BN     ',
+                   '  deviceid                      MFG:HP;MDL:Photosmart C4400                               ',
+                   '                                series;CMD:MLC,PCL,PML,DW-PCL,DESKJET,DYN;1284.4DL:4d,4e,1',
+                   '                                ;CLS:PRINTER;DES:Q8388A;SN:CN8AMHY2QQ05BN;S:039000C4840F10',
+                   '                                21082fff8c000c288003c;J:                                  ',
+                   '                                ;Z:0102,05000000014dc9,0600,0c0,0e00000000,0f00000000,1000',
+                   '                                0000000000,12000,140,150;                                 ',
+                   '  duplexer                      0                                                         ',
+                   '  error-state                   100                                                       ',
+                   '  host                                                                                    ',
+                   '  in-tray1                      True                                                      ',
+                   '  in-tray2                      False                                                     ',
+                   '  is-hp                         True                                                      ',
+                   '  media-path                    3                                                         ',
+                   '  panel                         0                                                         ',
+                   '  panel-line1                                                                             ',
+                   '  panel-line2                                                                             ',
+                   '  photo-tray                    0                                                         ',
+                   '  port                          1                                                         ',
+                   '  r                             0                                                         ',
+                   '  revision                      3                                                         ',
+                   '  rg                            000                                                       ',
+                   '  rr                            000000                                                    ',
+                   '  rs                            000000000                                                 ',
+                   '  scan-uri                      hpaio:/usb/Photosmart_C4400_series?serial=CN8AMHY2QQ05BN  ',
+                   '  serial                        CN8AMHY2QQ05BN                                            ',
+                   '  status-code                   1008                                                      ',
+                   '  status-desc                   Pen change                                                ',
+                   '  supply-door                   0                                                         ',
+                   '  top-door                      0                                                         ',
+                   '\x1b[01m',
+                   'Model Parameters (static data):\x1b[0m',
+                   '\x1b[01m  Parameter                     Value(s)                                                  \x1b[0m',
+                   '  ----------------------------  ----------------------------------------------------------',
+                   '  align-type                    1                                                         ',
+                   '  clean-type                    1                                                         ',
+                   '  color-cal-type                3                                                         ',
+                   '  copy-type                     0                                                         ',
+                   '  embedded-server-type          0                                                         ',
+                   '  fax-type                      0                                                         ',
+                   '  fw-download                   False                                                     ',
+                   '  icon                          Photosmart_C4100.png                                      ',
+                   '  io-mfp-mode                   3                                                         ',
+                   '  io-mode                       1                                                         ',
+                   '  io-support                    2                                                         ',
+                   '  job-storage                   0                                                         ',
+                   '  linefeed-cal-type             0                                                         ',
+                   '  model                         Photosmart_C4400_series                                   ',
+                   '  model-ui                      HP Photosmart c4400 Series                                ',
+                   '  model1                        HP Photosmart C4410 All-in-One Printer                    ',
+                   '  model10                       HP Photosmart C4483 All-in-One Printer                    ',
+                   '  model11                       HP Photosmart C4485 All-in-One Printer                    ',
+                   '  model12                       HP Photosmart C4486 All-in-One Printer                    ',
+                   '  model13                       HP Photosmart C4488 All-in-One Printer                    ',
+                   '  model14                       HP Photosmart C4490 All-in-One Printer                    ',
+                   '  model15                       HP Photosmart C4493 All-in-One Printer                    ',
+                   '  model16                       HP Photosmart C4494 All-in-One Printer                    ',
+                   '  model2                        HP Photosmart C4424 All-in-One Printer                    ',
+                   '  model3                        HP Photosmart C4435 All-in-One Printer                    ',
+                   '  model4                        HP Photosmart C4440 All-in-One Printer                    ',
+                   '  model5                        HP Photosmart C4450 All-in-One Printer                    ',
+                   '  model6                        HP Photosmart C4470 All-in-One Printer                    ',
+                   '  model7                        HP Photosmart C4472 All-in-One Printer                    ',
+                   '  model8                        HP Photosmart C4473 All-in-One Printer                    ',
+                   '  model9                        HP Photosmart C4480 All-in-One Printer                    ',
+                   '  monitor-type                  0                                                         ',
+                   '  panel-check-type              0                                                         ',
+                   '  pcard-type                    2                                                         ',
+                   '  plugin                        0                                                         ',
+                   '  plugin-reason                 0                                                         ',
+                   '  power-settings                0                                                         ',
+                   '  pq-diag-type                  0                                                         ',
+                   '  r-type                        1                                                         ',
+                   '  r0-agent1-kind                3                                                         ',
+                   '  r0-agent1-sku                 74/74XL                                                   ',
+                   '  r0-agent1-type                1                                                         ',
+                   '  r0-agent2-kind                3                                                         ',
+                   '  r0-agent2-sku                 75/75XL                                                   ',
+                   '  r0-agent2-type                2                                                         ',
+                   '  r0-agent3-kind                3                                                         ',
+                   '  r0-agent3-sku                 99                                                        ',
+                   '  r0-agent3-type                3                                                         ',
+                   '  r10-agent1-kind               3                                                         ',
+                   '  r10-agent1-sku                860/860XL                                                 ',
+                   '  r10-agent1-type               1                                                         ',
+                   '  r10-agent2-kind               3                                                         ',
+                   '  r10-agent2-sku                861/861XL                                                 ',
+                   '  r10-agent2-type               2                                                         ',
+                   '  r10-agent3-kind               3                                                         ',
+                   '  r10-agent3-sku                858                                                       ',
+                   '  r10-agent3-type               3                                                         ',
+                   '  r18-agent1-kind               3                                                         ',
+                   '  r18-agent1-sku                92/98                                                     ',
+                   '  r18-agent1-type               1                                                         ',
+                   '  r18-agent2-kind               3                                                         ',
+                   '  r18-agent2-sku                93/95                                                     ',
+                   '  r18-agent2-type               2                                                         ',
+                   '  r18-agent3-kind               3                                                         ',
+                   '  r18-agent3-sku                99                                                        ',
+                   '  r18-agent3-type               3                                                         ',
+                   '  r2-agent1-kind                3                                                         ',
+                   '  r2-agent1-sku                 74/74XL                                                   ',
+                   '  r2-agent1-type                1                                                         ',
+                   '  r2-agent2-kind                3                                                         ',
+                   '  r2-agent2-sku                 75/75XL                                                   ',
+                   '  r2-agent2-type                2                                                         ',
+                   '  r2-agent3-kind                3                                                         ',
+                   '  r2-agent3-sku                 99                                                        ',
+                   '  r2-agent3-type                3                                                         ',
+                   '  r4-agent1-kind                3                                                         ',
+                   '  r4-agent1-sku                 350/350XL                                                 ',
+                   '  r4-agent1-type                1                                                         ',
+                   '  r4-agent2-kind                3                                                         ',
+                   '  r4-agent2-sku                 351/351XL                                                 ',
+                   '  r4-agent2-type                2                                                         ',
+                   '  r4-agent3-kind                3                                                         ',
+                   '  r4-agent3-sku                 348                                                       ',
+                   '  r4-agent3-type                3                                                         ',
+                   '  r8-agent1-kind                3                                                         ',
+                   '  r8-agent1-sku                 140/140XL                                                 ',
+                   '  r8-agent1-type                1                                                         ',
+                   '  r8-agent2-kind                3                                                         ',
+                   '  r8-agent2-sku                 141/141XL                                                 ',
+                   '  r8-agent2-type                2                                                         ',
+                   '  r8-agent3-kind                3                                                         ',
+                   '  r8-agent3-sku                 138                                                       ',
+                   '  r8-agent3-type                3                                                         ',
+                   '  scan-style                    1                                                         ',
+                   '  scan-type                     1                                                         ',
+                   '  status-battery-check          0                                                         ',
+                   '  status-dynamic-counters       1                                                         ',
+                   '  status-type                   2                                                         ',
+                   '  support-released              True                                                      ',
+                   '  support-subtype               15340                                                     ',
+                   '  support-type                  2                                                         ',
+                   '  support-ver                   2.8.5                                                     ',
+                   "  tech-class                    ['DJGenericVIP']                                          ",
+                   "  tech-subclass                 ['Normal']                                                ",
+                   '  tech-type                     2                                                         ',
+                   '  usb-pid                       27665                                                     ',
+                   '  usb-vid                       1008                                                      ',
+                   '',
+                   'Done.',
+                   ''],
+                  ['\x1b[35;01mwarning: No display found.\x1b[0m',
+                   '\x1b[31;01merror: hp-info -u/--gui requires Qt4 GUI support. Entering interactive mode.\x1b[0m',
+                   '\x1b[35;01mwarning: No display found.\x1b[0m',
+                   '\x1b[31;01merror: hp-systray requires Qt4 GUI and DBus support. Exiting.\x1b[0m',
+                   '\x1b[35;01mwarning: Unable to connect to dbus. Is hp-systray running?\x1b[0m',
+                   ''],
+                  0),
+ 'is_cups_class': False}
+Page 4 (Check PPD sanity):
+{'cups_printer_ppd_defaults': {u'General': {u'DryTime': u'Zero',
+                                            u'Duplex': u'None',
+                                            u'InputSlot': u'Default',
+                                            u'PageRegion': u'Letter',
+                                            u'PageSize': u'Letter',
+                                            u'PrintoutMode': u'Normal'},
+                               u'PrintoutMode': {u'Quality': u'FromPrintoutMode'}},
+ 'cups_printer_ppd_valid': True,
+ 'missing_pkgs_and_exes': ([], [])}
+Page 5 (Local or remote?):
+{'printer_is_remote': False}
+Page 6 (Choose device):
+{'cups_device_dict': {'device-class': u'direct',
+                      'device-id': u'MFG:HP;MDL:Photosmart C4400 series;CLS:PRINTER;DES:Photosmart C4400 series;SN:CN8AMHY2QQ05BN;',
+                      'device-info': u'HP Photosmart C4400 series USB CN8AMHY2QQ05BN HPLIP',
+                      'device-make-and-model': u'HP Photosmart C4400 series'}}
+Page 7 (Error log checkpoint):
+{'cups_server_settings': {'DefaultAuthType': 'Basic',
+                          'SystemGroup': 'lpadmin',
+                          '_debug_logging': '0',
+                          '_remote_admin': '0',
+                          '_remote_any': '0',
+                          '_remote_printers': '0',
+                          '_share_printers': '0',
+                          '_user_cancel_any': '0'},
+ 'error_log_checkpoint': 2059L,
+ 'error_log_debug_logging_set': True}
+Page 8 (Print test page):
+{'test_page_attempted': '23/Dec/2009:19:34:46 +0000',
+ 'test_page_job_id': [5],
+ 'test_page_job_status': [(False,
+                           2,
+                           'Photosmart-C4400-series',
+                           'Unsaved Document 1',
+                           'Processing',
+                           None),
+                          (False,
+                           3,
+                           'Photosmart-C4400-series',
+                           'Unsaved Document 1',
+                           'Pending',
+                           None),
+                          (False,
+                           4,
+                           'Photosmart-C4400-series',
+                           'Test Page',
+                           'Pending',
+                           None),
+                          (True,
+                           5,
+                           'Photosmart-C4400-series',
+                           'Test Page',
+                           'Pending',
+                           {'attributes-charset': u'utf-8',
+                            'attributes-natural-language': u'en-us',
+                            'document-format': u'application/postscript',
+                            'job-hold-until': u'no-hold',
+                            'job-id': 5,
+                            'job-k-octets': 17,
+                            'job-media-sheets-completed': 0,
+                            'job-more-info': u'ipp://localhost:631/jobs/5',
+                            'job-name': u'Test Page',
+                            'job-originating-host-name': u'localhost',
+                            'job-originating-user-name': u'me',
+                            'job-printer-up-time': 1261625716,
+                            'job-printer-uri': u'ipp://me-desktop:631/printers/Photosmart-C4400-series',
+                            'job-priority': 50,
+                            'job-sheets': [u'none', u'none'],
+                            'job-state': 3,
+                            'job-state-reasons': u'none',
+                            'job-uri': u'ipp://localhost:631/jobs/5',
+                            'job-uuid': u'urn:uuid:deeec2cc-ab3e-3e16-7e24-8cf096adae41',
+                            'printer-uri': u'ipp://localhost/printers/Photosmart-C4400-series',
+                            'time-at-completed': None,
+                            'time-at-creation': 1261625686,
+                            'time-at-processing': None})],
+ 'test_page_successful': False}
+Page 9 (Error log fetch):
+{'error_log': ['D [23/Dec/2009:19:34:41 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:41 -0800] Get-Jobs ipp://localhost/printers/',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:41 -0800] Get-Jobs ipp://localhost/printers/',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:41 -0800] Create-Printer-Subscription /',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdCreateSubscription(con=0xb9c98ef8(8), uri="/")',
+               'D [23/Dec/2009:19:34:41 -0800] pullmethod="ippget"',
+               'D [23/Dec/2009:19:34:41 -0800] notify-lease-duration=86400',
+               'D [23/Dec/2009:19:34:41 -0800] notify-time-interval=0',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdAddSubscription(mask=17800, dest=(nil)(), job=(nil)(0), uri="(null)")',
+               'D [23/Dec/2009:19:34:41 -0800] Added subscription 8 for server',
+               'I [23/Dec/2009:19:34:41 -0800] Saving subscriptions.conf...',
+               'D [23/Dec/2009:19:34:41 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:42 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:42 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:42 -0800] Get-Notifications /',
+               'D [23/Dec/2009:19:34:42 -0800] cupsdIsAuthorized: requesting-user-name="me"',
+               'D [23/Dec/2009:19:34:42 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAcceptClient: 9 from localhost (Domain)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 9 POST /printers/Photosmart-C4400-series HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Print-Job ipp://localhost/printers/Photosmart-C4400-series',
+               'D [23/Dec/2009:19:34:46 -0800] [Job ???] Auto-typing file...',
+               'I [23/Dec/2009:19:34:46 -0800] [Job ???] Request file type is application/postscript.',
+               'D [23/Dec/2009:19:34:46 -0800] add_job: requesting-user-name="me"',
+               'D [23/Dec/2009:19:34:46 -0800] Adding default job-sheets values "none,none"...',
+               'I [23/Dec/2009:19:34:46 -0800] [Job 5] Adding start banner page "none".',
+               'I [23/Dec/2009:19:34:46 -0800] Saving subscriptions.conf...',
+               'I [23/Dec/2009:19:34:46 -0800] [Job 5] Adding end banner page "none".',
+               'I [23/Dec/2009:19:34:46 -0800] [Job 5] File of type application/postscript queued by "me".',
+               'D [23/Dec/2009:19:34:46 -0800] [Job 5] hold_until=0',
+               'I [23/Dec/2009:19:34:46 -0800] [Job 5] Queued on "Photosmart-C4400-series" by "me".',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 9 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAcceptClient: 12 from localhost (Domain)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 12 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Get-Jobs ipp://localhost/printers/',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 12 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdCloseClient: 12',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAcceptClient: 12 from localhost (Domain)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 12 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Get-Notifications /',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdIsAuthorized: requesting-user-name="me"',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 12 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 12 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Get-Job-Attributes ipp://localhost/jobs/5',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 12 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdCloseClient: 12',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAcceptClient: 12 from localhost (Domain)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 12 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Get-Notifications /',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdIsAuthorized: requesting-user-name="me"',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 12 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdCloseClient: 12',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:34:46 -0800] Get-Notifications /',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdIsAuthorized: requesting-user-name="me"',
+               'D [23/Dec/2009:19:34:46 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:35:16 -0800] Get-Job-Attributes ipp://localhost/jobs/5',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdReadClient: 8 POST / HTTP/1.1',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdAuthorize: No authentication data provided.',
+               'D [23/Dec/2009:19:35:16 -0800] Cancel-Subscription /',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdIsAuthorized: requesting-user-name="me"',
+               'I [23/Dec/2009:19:35:16 -0800] Saving subscriptions.conf...',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdProcessIPPRequest: 8 status_code=0 (successful-ok)',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdAcceptClient: 12 from localhost (Domain)',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdCloseClient: 9',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdReadClient: 12 GET /admin/log/error_log HTTP/1.1',
+               'D [23/Dec/2009:19:35:16 -0800] cupsdAuthorize: No authentication data provided.'],
+ 'error_log_debug_logging_unset': True}
+Page 10 (Locale issues):
+{'printer_page_size': u'Letter',
+ 'system_locale_lang': None,
+ 'user_locale_ctype': 'en_US',
+ 'user_locale_messages': 'en_US'}
+
+---
+
+### Post by labinnsw on 2009-12-24
+Is the printer working otherwise?
+Are you in a position to try the printer on another OS to be sure it has not developed a fault? You might be looking at a warranty issue.
+
+---
+
+### Post by 2roombas on 2009-12-25
+> **labinnsw said:**
+> Is the printer working otherwise?
+Are you in a position to try the printer on another OS to be sure it has not developed a fault? You might be looking at a warranty issue.
+
+Yes, it turns on. Its the little status window on the front that displays that "incompatible cartridge(s)" message.  And I do not have any other OS, only Linux. I ditched Windows months ago and have never looked back. 
+
+This really upsets me because I bought this printer "only because" when I moved to Ubuntu my old trusty Lexemark would not work with it. I loved that nice all-in-one too, so I was >< (this close) to staying with Windows because of it.  But I really prefered using Ubuntu alot more often then I ever used Windows (when I was still dual-booting), so I caved in and bought this printer.  Now this.:confused:
+
+---
+
+### Post by thodges999 on 2010-01-07
+I'm afraid your diagnostic doesn't mean much to me but I get intermittent problems on my USB connection which appears to occur when the usb connection doesn't react quickly enough.
+
+What do you get if you run lsusb and dmesg | grep -i usb?
+
+Does your printer appear in the printer list(I don't have Edubuntu so can only assume you have similar operation) If so check its 'Properties' and see what the Printer State is.
+
+---
+
+### Post by khelben1979 on 2010-01-07
+I think an Ubuntu update might have broken something in your system. If I were you, I would try to find the correct driver for your printer and install it by searching [this page]("http://hplipopensource.com/hplip-web/index.html") for information.
+
+Also, you can try to reinstall [CUPS]("http://en.wikipedia.org/wiki/CUPS") which handles the printing system in Ubuntu. Use [Synaptic Package Manager]("http://en.wikipedia.org/wiki/Synaptic_package_manager") to search for it.
+
+---
+
+### Post by labinnsw on 2010-01-08
+> **2roombas said:**
+> Its the little status window on the front that displays that "incompatible cartridge(s)" message.
+
+Doesn't this suggest the problem is with the printer rather than with the OS?
+
+---
+
+### Post by labinnsw on 2010-01-08
+One more thing, I believe most people would agree with me that having a second OS, whether it be Windows, FreeBSD, another Ubuntu or Linux distro, is always a good idea. It gives you the opportunity to check issues to make sure that it is or is not the default OS that is acting up.
+
+When you do not have access to another computer, dual booting is a good option.
+
+---
+
+### Post by robertm43 on 2010-06-22
+I have found that this printer does work with Ubuntu 9.10 both wirelessly to windows share and when connected via USB port. I forgot to enable the printer to all users in Windows and when this was done it connected wirelessly! I have dowloaded HPLip but have not evaluated it as yet.
+
+---
+

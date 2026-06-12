@@ -1,0 +1,241 @@
+---
+title: "My display needs to be set everytime i switch on my computer"
+date: 2009-08-31
+forum: General Help
+---
+
+### Post by onetwothreecool on 2009-08-31
+hi..
+i would like to receive help regarding this matter... My ubuntu is being set to 800 x 600 display mode.. Though i change and everytime i switch on my computer and log in, it is not permanently being saved...
+
+thanks in advance
+
+---
+
+### Post by TeoBigusGeekus on 2009-08-31
+Could you give us some hardware specifications?
+How do you set the resolution?
+
+---
+
+### Post by onetwothreecool on 2009-09-02
+i go to system->Preferences->Display and then set it to the recommended mode.. as soon as i log in a display "Not recommended mode Recommended mode : 1280x1024" sets in..
+
+---
+
+### Post by wojox on 2009-09-02
+What are you using for a graphics card?
+
+---
+
+### Post by onetwothreecool on 2009-09-03
+Nvidia
+
+---
+
+### Post by vedek on 2009-09-03
+have you installed the correct drivers? This can be a problem if the drivers aren't setup right
+
+---
+
+### Post by onetwothreecool on 2009-09-03
+I am not aware of that.. But I also get the following error when I go to System->Preferences->Display
+"It appears that your graphics driver does not support the necessary extensions to use this tool. Do you want to use your graphics driver vendor's tool instead"
+I click yes and proceed to set the configuration to 1200x1024, 60Hz
+
+---
+
+### Post by Vishnu V on 2009-09-03
+Goto system->administration->Nvidia Xserver
+Set Xserver Display configuration and click on save to X configuration file and save it.
+
+---
+
+### Post by onetwothreecool on 2009-09-03
+i get an error..
+/etc/X11/xorg.conf this is the path that was auto generated... and it displays the error. "Unable to create new X config backup file '/etc/X11/xorg.conf.backup'"
+
+---
+
+### Post by Vishnu V on 2009-09-03
+open terminal 
+and change permission by
+sudo chmod 777 /etc/X11/*
+or try open the nvidia Xserver settings by
+sudo /usr/bin/nvidia-settings from terminal
+and try to save
+
+---
+
+### Post by vedek on 2009-09-03
+> **onetwothreecool said:**
+> i get an error..
+/etc/X11/xorg.conf this is the path that was auto generated... and it displays the error. "Unable to create new X config backup file '/etc/X11/xorg.conf.backup'"
+ 
+what does your xorg.conf say?
+ 
+open it by typing ```
+gedit /etc/x11/xorg.conf
+```
+ 
+You wont be able to edit it but you should be able to copy and paste what it says.
+
+---
+
+### Post by howlingmadhowie on 2009-09-03
+> **onetwothreecool said:**
+> i get an error..
+/etc/X11/xorg.conf this is the path that was auto generated... and it displays the error. "Unable to create new X config backup file '/etc/X11/xorg.conf.backup'"
+
+yeah, there's a problem with permissions there.  basically the linux (ubuntu) way is to say that a standard user doesn't have the right to change system-wide configuration files.  usually this is a pain, but it does catch the few times when you would otherwise seriously break things.
+
+either you change the rights to /etc/X11 to allow your standard user to create files in that directory, or you run the tool as root as described above.
+
+you could also edit (as root) /etc/X11/xorg.conf by hand, but that's not something for the faint-hearted.
+
+---
+
+### Post by damis648 on 2009-09-03
+> **Vishnu V said:**
+> open terminal 
+and change permission by
+sudo chmod 777 /etc/X11/*
+or try open the nvidia Xserver settings by
+sudo /usr/bin/nvidia-settings from terminal
+and try to save
+
+Do NOT do this. Don't randomly go about changing permissions. To do this properly, press Alt+F2 and type in
+```
+gksudo nvidia-settings
+```
+and then make your adjustments and then 'Save to X Config File'.
+
+---
+
+### Post by abelian jeff on 2009-09-03
+I'm having the same problem on my Toshiba Satellite L305. My computer always boots into a 4:3 display, and I have to reset it to a 16:10 display manually. Not a big deal, but sort of annoying. Any help will be greatly appreciated!
+
+---
+
+### Post by enaction on 2009-09-03
+I just developed the same problem today - no clue why.  I tried reinstalling drivers but no luck.  Then I went into filesystem/etc/X11 and saw the "xorg.conf.backup" was missing.  I created a blank txt fike with a text editor naming it "xorg.conf.backup" and re-saved my xorg.conf with the setting I wanted. That solved the problem for me.
+
+---
+
+### Post by onetwothreecool on 2009-09-04
+Hi.. thank u very much for having helped me.. My gratitude is extended towards Vishnu V, Vedek,  Howlingmadhowie, and Damis648.. I followed the steps as instructed and it got saved.. Will post again after rebooting my computer and checking if the error occurs again.. :)
+
+---
+
+### Post by onetwothreecool on 2009-09-04
+I had changed the permissions.. and I restarted my computer to see if it worked.. unfortunately, it did not..
+
+---
+
+### Post by onetwothreecool on 2009-09-04
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildd@crested)  Sun Feb  1 20:25:37 UTC 2009
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# Note that some configuration settings that could be done previously
+# in this file, now are automatically configured by the server and settings
+# here are ignored.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+    Identifier     "Default Layout"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Module"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "Monitor"
+    Identifier     "Configured Monitor"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Samsung SyncMaster"
+    HorizSync       30.0 - 81.0
+    VertRefresh     56.0 - 75.0
+EndSection
+
+Section "Device"
+    Identifier     "Configured Video Device"
+    Driver         "nvidia"
+    Option         "NoLogo" "True"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 6100 nForce 405"
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "TwinViewXineramaInfoOrder" "CRT-0"
+    Option         "metamodes" "1280x1024_60 +0+0; nvidia-auto-select +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+---
+
+### Post by onetwothreecool on 2009-09-04
+the above was what was there in my xorg.conf
+
+---
+

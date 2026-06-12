@@ -1,0 +1,638 @@
+---
+title: "Ubuntu 10.04 won't boot as of last night after updating"
+date: 2010-11-24
+forum: General Help
+---
+
+### Post by DaSilva_Ireland on 2010-11-24
+Last night, I did a check for updates and it found some Linux image results. I update them but did not restart. I got distracted and left the laptop running on battery and closed the lid. This morning I discover it is still on, open it up and notice I have not rebooted yet (The shutdown button is red) so I do a restart. On next restart, after the Windows boot loader lets me choose Ubuntu, the grub boot list never shows up and it just restarts the computer. Every time I choose Ubuntu at boot, from the windows menu, the pc just reboots a few seconds later. Windows 7 however, boots fine.
+
+I was following advice in this post [http://ubuntuforums.org/showpost.php?p=9913761&postcount=8](http://ubuntuforums.org/showpost.php?p=9913761&postcount=8)
+However I am stuck on the update-grub part
+
+```
+root@ubuntu:/boot/grub# update-grub
+Generating grub.cfg ...
+/usr/sbin/grub-probe: error: cannot stat `/media/win/ubuntu/disks/root.disk'.
+```I checked out the folder /boot/grub, and noticed there is a grub.cfg.new with a timestamp from this morning. I guess that is the new grub.cfg that update-grub has created, is it safe to copy this over the old grub.cfg?
+```
+root@ubuntu:/boot/grub# ls grub.cfg* -la
+-r--r--r-- 1 root root 4316 2010-11-23 22:52 grub.cfg
+-r-------- 1 root root  677 2010-11-24 10:14 grub.cfg.new
+```Some info on my pc:
+Dual booting Windows 7 and Ubuntu 10.04. Ubuntu 10.04 installed with WUBI
+
+Boot Info Script
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Windows is installed in the MBR of /dev/sda
+
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Dell Utility: Fat16
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /COMMAND.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /Windows/System32/winload.exe /wubildr.mbr 
+                       /ubuntu/winboot/wubildr.mbr /wubildr 
+                       /ubuntu/winboot/wubildr /ubuntu/disks/root.disk 
+                       /ubuntu/disks/swap.disk
+
+sda3/Wubi: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63        80,324        80,262  de Dell Utility
+/dev/sda2    *         81,920    30,801,919    30,720,000   7 HPFS/NTFS
+/dev/sda3          30,801,920   625,140,399   594,338,480   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/loop1       a2c46182-970c-40f2-9f2d-14382593b99a   ext4                                     
+/dev/sda1        3030-3030                              vfat       DellUtility                   
+/dev/sda2        E84C22EA4C22B36C                       ntfs       RECOVERY                      
+/dev/sda3        8E7424C97424B5BD                       ntfs       OS                            
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+
+
+======================== sda3/Wubi/boot/grub/grub.cfg: ========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ntfs
+set root='(hd0,3)'
+search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+loopback loop0 /ubuntu/disks/root.disk
+set root=(loop0)
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ntfs
+set root='(hd0,3)'
+search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+loopback loop0 /ubuntu/disks/root.disk
+set root=(loop0)
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+menuentry "Ubuntu, Linux 2.6.32-26-generic" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-26-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.32-26-generic
+}
+menuentry "Ubuntu, Linux 2.6.32-26-generic (recovery mode)" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-26-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.32-26-generic
+}
+menuentry "Ubuntu, Linux 2.6.32-25-generic" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-25-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.32-25-generic
+}
+menuentry "Ubuntu, Linux 2.6.32-25-generic (recovery mode)" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-25-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.32-25-generic
+}
+menuentry "Ubuntu, Linux 2.6.32-24-generic" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-24-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.32-24-generic
+}
+menuentry "Ubuntu, Linux 2.6.32-24-generic (recovery mode)" {
+    insmod ntfs
+    set root='(hd0,3)'
+    search --no-floppy --fs-uuid --set 8e7424c97424b5bd
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.32-24-generic root=/dev/sda3 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.32-24-generic
+}
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set e84c22ea4c22b36c
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+============================= sda3/Wubi/etc/fstab: =============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/host/ubuntu/disks/root.disk /               ext4    loop,errors=remount-ro 0       1
+/host/ubuntu/disks/swap.disk none            swap    loop,sw         0       0
+
+================= sda3/Wubi: Location of files loaded by Grub: =================
+
+
+  13.5GB: boot/grub/grub.cfg
+  13.4GB: boot/initrd.img-2.6.32-24-generic
+  13.5GB: boot/initrd.img-2.6.32-25-generic
+  23.2GB: boot/initrd.img-2.6.32-26-generic
+  13.4GB: boot/vmlinuz-2.6.32-24-generic
+  14.7GB: boot/vmlinuz-2.6.32-25-generic
+  13.8GB: boot/vmlinuz-2.6.32-26-generic
+  23.2GB: initrd.img
+  13.5GB: initrd.img.old
+  13.8GB: vmlinuz
+  14.7GB: vmlinuz.old
+```Thanks for any help.
+
+---
+
+### Post by garvinrick4 on 2010-11-24
+#Put WUBI in Title so you get some good WUBI people involved:
+#I have a good WUBI link here:
+[WubiGuide - Ubuntu Wiki]("https://wiki.ubuntu.com/WubiGuide#How%20do%20I%20resize%20the%20virtual%20disks?")
+
+---
+
+### Post by DaSilva_Ireland on 2010-11-24
+I managed to get update-grub to run, however there was no change on reboot.
+
+So again I am back at the point where Linux wont boot, infact I never even see the GRUB screen or any error messages I just get thrown back to the bios.
+
+I backed up my root and swap images, uninstalled WUBI, reinstalled it, copied the images back but the same thing occurs.
+
+Any ideas?
+
+---
+
+### Post by bcbc on 2010-11-24
+First try copying the c:\ubuntu\winboot\wubildr file over c:\wubildr (back it before overwriting)
+
+If that doesn't work go back to loop mount the root.disk, and manually edit the grub.cfg.
+
+Remove all lines up to not including the first menuentry. Save and reboot.
+
+sudo mount /dev/sda3 /media/win
+sudo mount -o loop /media/win/ubuntu/disks/root.disk /mnt
+# take off readonly flag if set
+sudo chmod +w /mnt/boot/grub/grub.cfg
+# backup
+sudo cp /mnt/boot/grub/grub.cfg /mnt/boot/grub/grub.cfg.backup
+# open for edit
+gksu gedit /mnt/boot/grub/grub.cfg
+
+
+PS apologies for those other instructions, but running update-grub in a chroot for wubi installs doesn't work. I'll update that link.
+
+---
+
+### Post by tmcmulli on 2010-11-25
+Just had the same thing happen to me last night... looking forward to a resolution to this...
+
+---
+
+### Post by fordguydude on 2010-11-25
+I'm running into the same problem. Before I can select kernel on boot it reboots.
+
+---
+
+### Post by colmeweb on 2010-11-29
+Having the same problem as of this morning. Has anybody made any progress in the last few days? I am stuck using Vista, and I switched over to get away from it.
+
+---
+
+### Post by benjw90 on 2010-11-30
+I have the same problem on my dual boot windows 7 machine. I have managed to get the grub shell to boot to a BusyBox shell but I cant get anywhere from there. the commands i am using to get from the grub shell to the busybox shell are:
+```
+insmod ntfs
+set root=(hd0,msdos3) //this is just the location of the partition wubi is on for me it could be different for you
+loopback loop0 /ubuntu/disk/root.disk
+set root=(loop0)
+linux /boot/vmlinuz //this is where the vmlinuz kernal goes you can just hit tab for it to list available choices
+set root=(loop0)
+initrd /boot/initrd/initrd.img //this is where the initrd file goes do the same as before and use the same version number 
+boot
+
+```Like i said though anything i do from busybox causes a kernal panic. Any help would be much appreciated.
+
+---
+
+### Post by wilee-nilee on 2010-11-30
+Posts 5, 6, 7, 8 start your own thread it will much easier to help. Also so from a booted live Ubuntu cd or thumbdrive lets see the bootscript read out; in my signature just click on it and follow the instructions. Come back to the thread and click on the # in the reply panel this makes code tags  paste all the text in between.
+
+The script will really give the info needed, let this original poster get their problem fixed as we would want you to in your own thread.;)
+
+---
+
+### Post by bcbc on 2010-11-30
+> **benjw90 said:**
+> I have the same problem on my dual boot windows 7 machine. I have managed to get the grub shell to boot to a BusyBox shell but I cant get anywhere from there. the commands i am using to get from the grub shell to the busybox shell are:
+```
+insmod ntfs
+set root=(hd0,msdos3) //this is just the location of the partition wubi is on for me it could be different for you
+loopback loop0 /ubuntu/disk/root.disk
+set root=(loop0)
+linux /boot/vmlinuz //this is where the vmlinuz kernal goes you can just hit tab for it to list available choices
+set root=(loop0)
+initrd /boot/initrd/initrd.img //this is where the initrd file goes do the same as before and use the same version number 
+boot
+
+```Like i said though anything i do from busybox causes a kernal panic. Any help would be much appreciated.
+try
+```
+insmod ntfs
+set root=(hd0,msdos3)
+loopback loop0 /ubuntu/disk/root.disk
+set root=(loop0)
+linux /vmlinuz root=/dev/sda3 loop=/ubuntu/disks/root.disk ro quiet splash
+initrd /initrd.img 
+boot
+```
+
+/vmlinuz and /initrd.img are links to the latest kernel and initramfs.
+
+---
+
+### Post by bcbc on 2010-11-30
+I'm doing some experiments with a fresh wubi install and a grub-pc update. Just by reinstalling the existing grub-pc version it adds a whole bunch of stuff to the grub.cfg that wasn't there before. This is likely the cause of all the problems.
+
+The workaound in the meantime is to manually edit grub.cfg to remove all unnecessary bumph as described in an earlier post in this thread.
+
+---
+
+### Post by bcbc on 2010-11-30
+Just an update, I've managed to break and repair a 10.10 install. First reinstalling the package grub-pc (the same version that was already installed) and tracking what changed, and then removing those changes.
+I am running the same test on 10.04.1 but suspect it is the same problem. 
+Unfortunately the only way to repair this is to boot from a live CD and first patch the grub.cfg to boot the wubi install as described earlier in this thread. Then you have to reboot into the wubi install to do the permanent fix.
+If you're lucky enough to be left at a proper grub prompt (not the rescue prompt) you can boot your wubi manually as shown above. But for most it seems the system either hangs or reboots so a live CD is required.
+
+---
+
+### Post by bcbc on 2010-11-30
+The permanent fix to 10.04.1 grub update problem is to get it booting by the workaround described [above]("http://ubuntuforums.org/showpost.php?p=10157697&postcount=4") and then:
+
+Back up /boot/grub
+```
+ sudo cp -r /boot/grub /boot/grubbackup
+```Then delete all the stuff in /boot/grub that isn't supposed to be there (everything added after fresh wubi install) - NOTE rm command and rm -rf should be used with care.
+```
+cd /boot/grub
+sudo rm *.mod
+sudo rm *.img
+sudo rm *.lst
+sudo rm *.o
+sudo rm *.pf2
+sudo rm -rf locale
+```This leaves 2 files:
+```
+bcbc@ubuntu:/boot/grub$ ls
+grub.cfg  grubenv
+
+```Update the grub.cfg automatically:
+```
+ sudo update-grub
+```FIXED!
+
+Not done yet - prevent grub updates from breaking it again:
+Go to Synatpic, select packages grub-pc and grub-common, click on Package, Lock Version
+
+---
+
+### Post by drewVeidt on 2010-11-30
+Thanks.
+
+I'm assuming this is not the long term solution, right?  This is until somebody figures out this is happening and fixes it?
+
+I haven't rebooted my box yet but I am anticipating the same problem because i am hanging in the middle of the update during the "configure" phase of linux-image-2.6.32-26-generic (2.6.32-26.48 ), where dpkg configure stalls at "Generating grub.cfg".
+
+---
+
+### Post by willie2000 on 2010-11-30
+> **wilee-nilee said:**
+> Posts 5, 6, 7, 8 start your own thread it will much easier to help... 
+
+Done [that]("http://ubuntuforums.org/showthread.php?t=1634237") bit ;)
+
+---
+
+### Post by benjw90 on 2010-11-30
+thank you very much bcbc i did your trick changing the config file on my windows partition and it works. I immediately updated grub and it is running fine. A weird side effect is that, at least for me, the ubuntu icon and all the options at the bottom of the logon screen are disfigured but that is the only case thing that seams to have changed.
+
+---
+
+### Post by bcbc on 2010-11-30
+> **drewVeidt said:**
+> Thanks.
+
+I'm assuming this is not the long term solution, right?  This is until somebody figures out this is happening and fixes it?
+
+I haven't rebooted my box yet but I am anticipating the same problem because i am hanging in the middle of the update during the "configure" phase of linux-image-2.6.32-26-generic (2.6.32-26.48 ), where dpkg configure stalls at "Generating grub.cfg".
+
+The proper fix is a developer changing the install procedures on grub-pc to stop these files being put in the wrong place for wubi installs. I can't speculate how long it will take them to do this, but I doubt it will be anytime soon.
+
+---
+
+### Post by bcbc on 2010-11-30
+> **benjw90 said:**
+> thank you very much bcbc i did your trick changing the config file on my windows partition and it works. I immediately updated grub and it is running fine. A weird side effect is that, at least for me, the ubuntu icon and all the options at the bottom of the logon screen are disfigured but that is the only case thing that seams to have changed.
+
+That is a temporary fix. I think it is just a matter of time before it breaks again - and possibly in a way that will require the live CD to fix. So I recommend the 'permanent manual' fix I posted.
+
+---
+
+### Post by drs305 on 2010-11-30
+I did some playing with the wubi problem this morning.
+
+For instances where selecting Ubuntu from the menu display results in an immediate reboot as soon as it is selected (not an immediate reboot when selecting Windows, which is a different issue):
+
+Removing the entire grub.cfg contents above the first menuentry solves the problem. The exact portion (if you aren't using themes) if you want to be more precise in what you remove, is this section (but see later for an even easier solution):
+> 
+if loadfont /boot/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+
+
+When I comment this section out and reboot I can successfully boot Wubi. Note my testing was only for an immediate reboot upon selecting Wubi (not when selecting Windows).
+
+It's probably just easier to remove everything above the first menuentry (but see later for easier), but I thought I'd detail specifically which lines were causing the problem (at least on my install). This also preserves the "saved" entry if used and the 'recordfail' protection.
+
+So, the easier method:
+Since for this issue I am removing a conditional involving either unicode.pf2 or ascii.pf2, **it's easier to leave the conditional intact and just rename the *unicode.pf2*file** with the following command. You can then leave grub.cfg alone and even run update-grub without problem.
+
+Once you are within the Wubi file structure rename the Wubi /usr/share/grub unicode.pf2 file to something else so the conditional isn't met.
+
+
+It's been documented elsewhere, but for those in this thread that want to edit Wubi's /boot/grub/grub.cfg (with Windows on sda1) here's how I do it:
+
+```
+sudo mkdir /mnt/windows /mnt/wubi
+sudo mount /dev/sda1 /mnt/windows
+sudo mount /mnt/windows/ubuntu/disks/root.disk /mnt/wubi
+*then either rename the file or edit grub.cfg*
+sudo mv /mnt/wubi/boot/grub/unicode.pf2 /mnt/wubi/boot/grub/unicode.pf2.orig
+*or*
+gksu gedit /mnt/wubi/boot/grub/grub.cfg
+
+```
+
+---
+
+### Post by bcbc on 2010-11-30
+> **drs305 said:**
+> I did some playing with the wubi problem this morning.
+
+For instances where selecting Ubuntu from the menu display results in an immediate reboot as soon as it is selected (not an immediate reboot when selecting Windows, which is a different issue):
+
+Removing the entire grub.cfg contents above the first menuentry solves the problem. The exact portion (if you aren't using themes) if you want to be more precise in what you remove, is this section (but see later for an even easier solution):
+
+
+When I comment this section out and reboot I can successfully boot Wubi. Note my testing was only for an immediate reboot upon selecting Wubi (not when selecting Windows).
+
+It's probably just easier to remove everything above the first menuentry (but see later for easier), but I thought I'd detail specifically which lines were causing the problem (at least on my install). This also preserves the "saved" entry if used and the 'recordfail' protection.
+
+So, the easier method:
+Since for this issue I am removing a conditional involving either unicode.pf2 or ascii.pf2, **it's easier to leave the conditional intact and just rename those two files** with the following command. You can then leave grub.cfg alone and even run update-grub without problem.
+
+Once you are within the Wubi file structure rename the Wubi unicode.pf2 file in both /usr/share/grub and /boot/grub to something else so the conditional isn't met.
+
+
+It's been documented elsewhere, but for those in this thread that want to edit Wubi's /boot/grub/grub.cfg (with Windows on sda1) here's how I do it:
+
+```
+sudo mkdir /mnt/windows /mnt/wubi
+sudo mount /dev/sda1 /mnt/windows
+sudo mount /mnt/windows/ubuntu/disks/root.disk /mnt/wubi
+*then either rename the two files or edit grub.cfg*
+sudo mv /mnt/wubi/boot/grub/unicode.pf2 /mnt/wubi/boot/grub/unicode.pf2.orig && sudo mv /mnt/wubi/usr/share/grub/unicode.pf2 /mnt/wubi/usr/share/grub/unicode.pf2.orig
+*or*
+gksu gedit /mnt/wubi/boot/grub/grub.cfg
+
+```
+
+That's interesting. Your fix is certainly easier than mine. :) I based mine on the differences between a fresh wubi install and simply reinstalling the same version of grub-pc already on the system. (See here [https://bugs.launchpad.net/wubi/+bug/653134](https://bugs.launchpad.net/wubi/+bug/653134)).
+
+---
+
+### Post by drs305 on 2010-11-30
+> **bcbc said:**
+> That's interesting. Your fix is certainly easier than mine. :) I based mine on the differences between a fresh wubi install and simply reinstalling the same version of grub-pc already on the system. (See here [https://bugs.launchpad.net/wubi/+bug/653134](https://bugs.launchpad.net/wubi/+bug/653134)).
+
+Stand by for a couple of edits. Some of the paths in the previous post may not be correct. The "loadfont" line either has been udpated or I was copying it from a real install (which is more likely).
+
+I also don't know which failures this fixes. It does seem to work for the Wubi immediate reboot at the least.
+
+EDIT:
+Ok, the paths in the previous post are cleaned up. *bcbc's* solution works, but perhaps it's only necessary to remove the "unicode.pf2" file (or rename it).
+
+Since I have only my own tests to confirm what I've done, if someone else would like to try renaming unicode.pf2 and seeing if that solves the problem I'd be interested.
+
+I don't think the 'immediate reboot on selecting wubi' is the one that is being reported this week, so if it does or doesn't work for other Wubi boot failures I'd like to know. Thanks.
+
+---
+
+### Post by dugongsplash on 2010-11-30
+I have the same problem as OP and now I'm running Windows Vista. I don't really know sudo even in Ubuntu, and I'm completely puzzled as to how you're running sudo on cmd ... halp please.
+
+---
+
+### Post by bcbc on 2010-11-30
+> **drs305 said:**
+> Stand by for a couple of edits. Some of the paths in the previous post may not be correct. The "loadfont" line either has been udpated or I was copying it from a real install (which is more likely).
+
+I also don't know which failures this fixes. It does seem to work for the Wubi immediate reboot at the least.
+
+OK my fix restores the Wubi /boot/grub menu to what it is on a fresh install. All those modules are actually present in /usr/lib/grub/... so aren't required in /boot/grub as well.
+I've tested it on 10.10 and 10.04.1. 
+
+I've yet to do the upgrade from 10.04.1 to 10.10 but the interesting bit is this: on a fresh wubi install there is no loadfont section. By applying my fix it removes all these extraneous bits. I think this is the reason why the wubildr is failing because there's a mismatch between what it expects to find in grub.cfg
+(Based on my limited understanding - but since the developers have indicated that they have no idea, and remain engaged elsewhere, there's not really much choice other than to figure this out ourselves)
+
+---
+
+### Post by drs305 on 2010-11-30
+I've found out some things as well. On an older wubi install, I thought I was getting the paths of my real and wubi installs confused. But what is actually happening on my install is that if it can't find the unicode.pf2 file in /boot/grub, it changes the loadfont command's path to /usr/share/grub to find the file. So I'd have to change the unicode.pf2 file in both places.  This is so confusing. ](*,)
+
+---
+
+### Post by bcbc on 2010-11-30
+> **drs305 said:**
+> I've found out some things as well. On an older wubi install, I thought I was getting the paths of my real and wubi installs confused. But what is actually happening on my install is that if it can't find the unicode.pf2 file in /boot/grub, it changes the loadfont command's path to /usr/share/grub to find the file. So I'd have to change the unicode.pf2 file in both places.  This is so confusing. ](*,)
+Part of the issue is that eventually - we may need to unlock grub-pc and grub-common - perhaps if a user decides (as they do) to upgrade to 11.04 and assuming that grub-pc is patched by then :p. In that case, we need to make sure that the solution won't require another complicated undo step.
+
+Anyway - as I said - have a look at the bug report. The way I came up with the fix was to backup a fresh 10.10 install, reinstall the same grub-pc package that was already on it, and diff the entire root.disk. The only relevant changes I found were those extra modules and other files within /boot/grub. Also removing them fixes the problem and restores the grub.cfg back to the same as it is on the fresh install. None of that new loadfont section exists on a default install.
+I will test the upgrade from 10.04.1 to 10.10 later today, but am confident it will be the same fix.
+
+---
+
+### Post by drs305 on 2010-11-30
+> **bcbc said:**
+> I've yet to do the upgrade from 10.04.1 to 10.10 but **the interesting bit is this: on a fresh wubi install there is no loadfont section**. By applying my fix it removes all these extraneous bits. I think this is the reason why the wubildr is failing because there's a mismatch between what it expects to find in grub.cfg
+
+
+We're on the right (and same) track. I believe the reason you don't find a loadfont section in a fresh install is because that section isn't generated unless it finds the unicode.pf2 file in /boot/grub. If you look at 00_header you will still find a section which would create the loadfont section if unicode.pf2 exists. And my guess is that there wouldn't be one in /boot/grub in a new install, as from what I remember there are only a couple of files in that folder.
+
+And my sincerest apologies to *DaSilva_Ireland* for turning your post into a chat channel!
+
+---
+
+### Post by bcbc on 2010-11-30
+> **drs305 said:**
+> 
+And my sincerest apologies to *DaSilva_Ireland* for turning your post into a chat channel!
+Me too :). Rubi1200 has suggested a single 'wubi grub solution' thread for this ([http://ubuntuforums.org/showpost.php?p=10181772&postcount=81](http://ubuntuforums.org/showpost.php?p=10181772&postcount=81)), since it's all over the place right now. 
+
+I think that's a good idea.
+
+---
+
+### Post by drs305 on 2010-12-01
+Here's a different way to accomplish Post 13 without using "sudo rm" and moving all filetypes in /boot/grub:
+
+```
+sudo mkdir /boot/grubbackup
+cd /boot/grub
+sudo mv locale /boot/grubbackup/
+ls * | egrep -v '(grub.cfg|grubenv)' | xargs -I{} sudo mv {} /boot/grubbackup/
+sudo update-grub
+```
+
+---
+

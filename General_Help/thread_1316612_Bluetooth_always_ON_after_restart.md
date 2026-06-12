@@ -1,0 +1,39 @@
+---
+title: "Bluetooth always ON after restart"
+date: 2009-11-06
+forum: General Help
+---
+
+### Post by ^_Pepe_^ on 2009-11-06
+[I've posted this in DELL specific forum, but I guess it has no quorum enough...Sorry!]
+     ****************************************************************************
+
+
+Hi!
+
+I recently installed 9.10 in my Dell E4200 laptop, and it was, surprisingly, like a charm.
+
+Everything is working out-of-the box, but I have a problem I’d like to solve here.
+
+Bluetooth is working fine, even after suspension, but I have to switch off bluetooth every time I restart. I don’t know if it’s the right behaviour or is a bug. In Windows sistems, when I switch off bluetooth through software, that state is preserved after reboot.
+
+Since BT drains battery, and I use it sporadically, I’d like it to remain off after restart.
+
+I have no separate HW buttons for WiFi & BT.
+
+Basically I'd like to know if it's the right behaviour and if there's a script or workaround to avoid it. 
+
+Thanks for your ideas.
+^_Pepe_^
+
+---
+
+### Post by ^_Pepe_^ on 2009-11-10
+Hi!.
+
+Solved here [http://ubuntuforums.org/showpost.php?p=8278220&postcount=8](http://ubuntuforums.org/showpost.php?p=8278220&postcount=8)
+
+Thanks to all!
+
+---
+

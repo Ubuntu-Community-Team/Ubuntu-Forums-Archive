@@ -1,0 +1,677 @@
+---
+title: "Now seeing Grub Menu at Startup, doesn't &quot;auto&quot; boot"
+date: 2009-12-21
+forum: General Help
+---
+
+### Post by subsynth on 2009-12-21
+Hello all,
+
+I'm new to the community (and Ubuntu) and this forum has been very helpful.
+
+I installed Ubuntu 9.10 to an old Dell Inspiron 6000.
+
+Clean install, completely wiped everything away, all I'm running (and need or want to run on this machine) is Ubuntu.
+
+It's worked like a charm so far. I've regularly downloaded updates through the Update Manager,etc
+
+Yesterday I started my computer and there was a GRUB menu I haven't seen before listing the available kernels (4 of them 2.6.31-16generic and down..)
+
+I have never seen this menu before and it does not auto select one. (If I leave it on this screen it just stays there)
+
+I have ubuntu tweak and startup manager configured how I assume they should be to also auto select a default and boot without asking me.
+
+Still it waits for me to select one before it boots. And I never saw this screen before, wha happened?
+
+Thoughts? 
+
+grub cfg in post below:
+
+---
+
+### Post by Bucky Ball on 2009-12-22
+Open a terminal and:
+
+```
+nano /boot/grub/menu.lst
+```Look for this section:
+
+```
+## timeout sec
+# Set a timeout, in SEC seconds, before automatically booting the default entry
+# (normally the first entry defined).
+timeout         10
+
+```Change it to this:
+
+```
+## timeout sec
+# Set a timeout, in SEC seconds, before automatically booting the default entry
+# (normally the first entry defined).
+**# timeout **        10
+```
+
+---
+
+### Post by subsynth on 2009-12-22
+There is no menu.list in my boot/grub dir.
+
+There is the grub.cfg which i posted in the first post, but there is no line about timeout=sec like you posted.
+
+Furthermore boot seems to be much slower now.
+
+Should I somehow rollback my kernel?
+
+---
+
+### Post by egalvan on 2009-12-22
+A clean install of 9.10 uses GRUB2, not GRUB Legacy.
+There is no menu.lst file.
+
+StartUpManager for GRUB2 is a work-in-progress, still not fully functional.
+
+I don't use UbuntuTweak so have no comments.
+
+Editing GRUB2 files is very different than Legacy...
+
+As the header for grub.cfg states...
+
+DO NOT EDIT THAT FILE!
+
+Here is a link to one how-to: (there are others)
+
+[http://ubuntuforums.org/showthread.php?t=1195275](http://ubuntuforums.org/showthread.php?t=1195275)
+
+---
+
+### Post by Kraust on 2009-12-22
+Edit etc/default/grub
+```
+ sudo gedit etc/default/grub/ 
+```
+
+```
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+
+GRUB_DEFAULT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT="3"
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entrys
+#GRUB_DISABLE_LINUX_RECOVERY="true"
+```
+
+Mine makes it wait 3 seconds before booting into Ubuntu. That is controlled by the GRUB_TIMEOUT="3" command. You can change that to any number of seconds you want Grub to wait for you to chose an option. I think the default was 8 seconds. At any time if you hit a key the timer will stop.
+
+Update Grub with sudo update-grub
+
+```
+ sudo update-grub 
+```
+
+---
+
+### Post by subsynth on 2009-12-22
+Well I've reinstalled the .14 kernel, I still get the grub menu every time i start up and it will not auto select, but at least I'm back on what I feel is the faster and more stable kernel for my system.
+
+As i said before, this is a clean install so it's grub2.
+
+there is no menu.lst and here is  etc/default/grub
+```
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+
+GRUB_DEFAULT=2
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=" quiet"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entrys
+#GRUB_DISABLE_LINUX_RECOVERY="true"
+```
+
+There is just the boot/grub/grub.cfg which I posted in the first post.
+
+Actually now that I have two kernels again here it is updated...
+
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="2"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=0
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-16-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	set quiet=1
+	insmod ext2
+	set root=(hd0,1)
+	search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+	linux	/boot/vmlinuz-2.6.31-16-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro  quiet  quiet splash
+	initrd	/boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-16-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	insmod ext2
+	set root=(hd0,1)
+	search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+	linux	/boot/vmlinuz-2.6.31-16-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro single  quiet
+	initrd	/boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	set quiet=1
+	insmod ext2
+	set root=(hd0,1)
+	search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro  quiet  quiet splash
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	insmod ext2
+	set root=(hd0,1)
+	search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro single  quiet
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+```
+
+---
+
+### Post by Bucky Ball on 2009-12-22
+Please put code in code boxes. Much easier to read. ;)
+
+---
+
+### Post by subsynth on 2009-12-22
+Still learning the ropes, my bad. I fixed my previous post.
+
+---
+
+### Post by Bucky Ball on 2009-12-22
+No probs. Enjoy the curve! I am observing this thread with interest from a distance as I am running 8.04 and the grub is totally different. Hope you get a fix soon. :)
+
+---
+
+### Post by sgeoxd on 2009-12-23
+I have the same problem with 3 different PC's, all after recent kernel upgrades.  Finally found a solution [here]("http://ubuntuforums.org/showthread.php?t=1346305") which is a short term fix on the one PC tested so far.  Basically:
+```
+sudo nano /boot/grub/grub.cfg
+```
+
+Change the first timeout:
+```
+if [ ${recordfail} = 1 ]; then
+set timeout=-1
+else
+set timeout=5
+```
+
+To this:
+```
+if [ ${recordfail} = 1 ]; then
+set timeout=5
+else
+set timeout=5
+```
+
+Save then exit nano (CTRL-O followed by CTRL-X).  This should work until update-grub is run again.
+
+---
+
+### Post by bender1234 on 2009-12-30
+When I do an update-grub after editing that file, it's changed back to it's original form.
+
+I had the same issue as you, and followed the directions, but I really don't think it helped ;) I have a server box which hasn't got a display nor input devices. Each time it fails I have to carry an old big fat crt screen over to it! I altered the script as you did then booted, and it went well. However I don't know if it will stop at the grub menu the next time an error occurs, or if it will boot directly.
+
+It says that you shouldn't alter this script, but instead use the /etc/default/grub file. Do you know if there is any param there, that doesn't force you to enter a selection when errors occur? This is a particular annoying when I'm away and the server goes down due to power failure forinstance(as it does in this building due to old "wiring"). I can easily get a non-computer person to press the powerbutton, but its a bit harder to get her to get that big nasty screen and start it for me.
+
+Still merry x-mas and a happy new year!
+Bender
+
+---
+
+### Post by meierfra. on 2009-12-30
+You need to edit the file /etc/grub.d/00_header.
+
+
+```
+gksudo gedit /etc/grub.d/00_header
+```
+
+Scroll  to the very end of the file. Change
+
+```
+cat << EOF
+if [ \${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=${GRUB_TIMEOUT}
+fi
+EOF
+
+```
+
+to 
+
+```
+cat << EOF
+[COLOR="Red"]# [/COLOR]if [ \${recordfail} = 1 ]; then
+[COLOR="Red"]#[/COLOR]  set timeout=-1
+[COLOR="Red"]# [/COLOR]else
+  set timeout=${GRUB_TIMEOUT}
+[COLOR="Red"]#[/COLOR] fi
+EOF
+```
+
+Save the file. Then
+
+```
+sudo update-grub
+```
+to generate a new grub.cfg
+
+---
+
+### Post by nuffy on 2010-02-13
+Thanks meierfra!!!
+
+I have been searching for days for a solution and your fix solves my problem!! :P
+
+---
+
+### Post by subsynth on 2010-02-14
+I think i did something wrong, I followed meierfra's instructions, and now it auto boots into memtest and I can't do anything else.
+
+Solutions?
+
+How can I generate a new grub.cfg from a live cd?
+
+---
+
+### Post by meierfra. on 2010-02-14
+I would suggest to first  boot into Ubuntu, and then reinstall Grub from Ubuntu.
+
+You should be able to boot into Ubuntu  with either of the following methods.
+
+1)    Hold down  the "shift" key  during boot up  (or press "esc" during the count down) to get to the Grub Menu.  
+
+If you have an entry for Ubuntu on the Grub menu,  use it.
+
+If you don't have  an entry for Ubuntu, press "c" to get to the grub shell. Type:
+
+```
+insmod ext2
+search -f --set /vmlinuz
+probe -u --set=uuid $root
+linux /vmlinuz root=UUID=$uuid ro
+initrd /initrd.img
+boot
+```
+
+
+
+2)  Boot from the Live CD. Open a terminal and type
+
+```
+sudo mount [COLOR="Red"]/dev/sda1 [/COLOR]/mnt 
+```
+Here /dev/sda1 needs to be replaced by the device name of  the Ubuntu partition.If you don't know the device name you can usually figure it out via "sudo fdisk -lu"
+
+```
+cd /mnt/boot/grub
+sudo mv grub.cfg grub.cfg.old
+gksudo gedit  grub.cfg
+```
+This will open a blank file.
+
+Type this into the file
+
+```
+default=0
+menuentry "Ubuntu" {
+insmod ext2
+search -f --set /vmlinuz
+probe -u --set=uuid $root
+linux /vmlinuz root=UUID=$uuid ro
+initrd /initrd.img
+}
+
+```
+
+Save the file. Reboot. You should get a Grub menu with just one entry and you should be able to boot into Ubuntu.
+
+
+Once you booted into Ubuntu, you could try to undo your changes, or you can just  reinstall Grub from scratch:
+
+
+```
+sudo apt-get purge grub-pc grub-common
+sudo apt-get install grub-pc grub-common
+sudo update-grub
+```
+
+---
+
+### Post by rob1408 on 2010-02-16
+Cheers meierfra,  I was having the same thing happen, and while not a show stopper it was kind of annoying.  The fix you posted worked perfectly, I now boot straight into my desktop using my default kernel.
+
+Once again, thanks.
+
+---
+
+### Post by krzysztofikus on 2010-04-24
+Worked for me too. Thank you meierfra.!
+
+---
+
+### Post by jmail524 on 2011-05-01
+I know this thread is a year old, but I wanted to give a big thanks to **meierfra** for the fix.
+
+This GRUB problem started plaguing me only a few days after installing Ubuntu 11.04.  Since I'm running it on a keyboard-less machine, it was a real PITA.  This information helped get be back in operating order.
+
+Thanks.
+Brian
+
+---
+
+### Post by NessDan on 2011-06-14
+I know this thread is old, but I was having this problem on an Ubuntu Server 11.04 and I solved it by following meierfra instructions *and* running these two commands afterwards:
+
+```
+
+sudo update-grub
+sudo update-grub2
+
+```
+
+---
+
+### Post by MonsterDuc on 2011-10-26
+Old thread, but worked well for me!
+
+Running Linux Mint and came across the same problem.  Adjusted my 00_header file to this instead as it didn't have the GRUB_TIMEOUT variable:
+```
+    cat << EOF
+#if [ "\${recordfail}" = 1 ]; then
+#  set timeout=-1
+#else
+  set timeout=3
+  #set timeout=${2}
+#fi
+EOF
+
+```
+
+First reboot didn't work, but once I ran "update-grub" and "update-grub2" as the previous user suggested it worked fine.
+
+Many thanks!
+
+---
+
+### Post by corbinsor on 2012-07-16
+> **subsynth said:**
+> Well I've reinstalled the .14 kernel, I still get the grub menu every time i start up and it will not auto select, but at least I'm back on what I feel is the faster and more stable kernel for my system.
+
+As i said before, this is a clean install so it's grub2.
+
+there is no menu.lst and here is  etc/default/grub
+```
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+
+GRUB_DEFAULT=2
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=" quiet"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entrys
+#GRUB_DISABLE_LINUX_RECOVERY="true"
+```There is just the boot/grub/grub.cfg which I posted in the first post.
+
+Actually now that I have two kernels again here it is updated...
+
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="2"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=0
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-16-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+    linux    /boot/vmlinuz-2.6.31-16-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro  quiet  quiet splash
+    initrd    /boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-16-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+    linux    /boot/vmlinuz-2.6.31-16-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro single  quiet
+    initrd    /boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro  quiet  quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 707f8600-bf80-4712-8887-3091d6cff57f
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=707f8600-bf80-4712-8887-3091d6cff57f ro single  quiet
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+```
+
+Actually, If you want to make it seem like it's gone altogether, you can make the timeout 0 instead of 5. I did that and I got no boot screen. But I have to thank you for showing me how to edit the timeout :)
+
+---
+

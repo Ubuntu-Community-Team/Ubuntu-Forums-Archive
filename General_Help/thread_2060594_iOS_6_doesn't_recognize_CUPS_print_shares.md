@@ -1,0 +1,1471 @@
+---
+title: "iOS 6 doesn't recognize CUPS print shares"
+date: 2012-09-20
+forum: General Help
+---
+
+### Post by gfunkdave on 2012-09-20
+I upgraded my iPhone 4S to iOS 6 yesterday, and just noticed that the phone no longer shows the printer I shared in Ubuntu.
+
+An iPad on our network that still runs iOS 5.1.1 shows the printer just fine.
+
+Does anyone know what's going on? Any fixes?
+
+Thanks!
+
+---
+
+### Post by f8l_0e on 2012-09-20
+This thread [http://forums.macrumors.com/showthread.php?t=1396875]("http://forums.macrumors.com/showthread.php?t=1396875") mentions needing to turn wifi off and then back on, on the iPhone.  Knowing Apple, they probably started forcing a certificate check or something else because they probably get a kickback on sales of AirPrint enabled printers and don't want old printers having that functionality for free.  You should see if Avahi has a log and check its contents for messages regarding your printer.
+
+---
+
+### Post by gfunkdave on 2012-09-20
+I suspect you're right that Apple has been mucking about. I killed the avahi-daemon and let init respawn it. It happily logs that it is starting up and all's well. No errors are in the log when I try to connect via my iOS 6 iPhone, even after restarting Wifi on the iPhone. The iOS 6 just doesn't see any printers.
+
+iOS 5.1.1 devices work fine still.
+
+Apple has broken it. I knew I should have stuck with Android...
+
+---
+
+### Post by BrianBlaze on 2012-09-20
+Don't touch IOS6 until it's jailbroken... that's my motto... if there isn't a jailbreak for it I am not interested... F U APPLE!
+
+---
+
+### Post by f8l_0e on 2012-09-20
+> **gfunkdave said:**
+> Apple has broken it. I knew I should have stuck with Android...
+
+To paraphrase Morpheus: "No one can be told how bad Apple will screw you, you must experience it for yourself."
+
+---
+
+### Post by Alevins5 on 2012-09-20
+I am having this problem as well. 
+
+It's interesting, though. When I try to print something from say, the notes app, the Ipad will show my printer (a Canon) and display it's name, but then when I try to print nothing happens. So it's recognizing that it exists at least, just not communicating. Furthermore, when I try to search for new printers it will say no air printers found, but when I click back the printer will still be there and it will give me the option to print. But again, clicking print results in nothing.
+
+Other printing apps from the app store, such as PrintDirect, still work fine and will print their demo pages without issue and just like it used to be with iOS 5. Not sure what's going on, but it's all pretty sketchy to me. 
+
+Following the instructions in that other thread post (restarting everything and trying again) did nothing to improve my situation. Maybe it will help others though. I am running 12.04 desktop edition with a cups server and iOS 6 on my iPad 3, for what it's worth. I haven't restarted my router yet though. Maybe that will do something. Maybe. But probably not. I'll try it though.
+
+If anyone finds anything out on this, please let me know! I loved that functionality and I'm sad to see it go. I have doubts about Apple doing anything to fix it, and would be disappointed if I'm restricted to third party printing apps. :(
+
+---
+
+### Post by Alevins5 on 2012-09-20
+I looked around on the apple support community. Doesn't seem like there's much info, but it is explicitly stated that AirPrint will not function without a certified AirPrint printer. 
+
+That sucks.
+
+I think our best option is to wait and pray that avahi and all those other programs (it's been awhile since I set it all up) comes up with an update that makes it compatible with our non-official devices. We'll have to wait and see if a solution emerges.
+
+---
+
+### Post by James Elliott on 2012-09-21
+Hopefully this is resolved soon.. I've tinkered with it had an awesome setup with avahi-daemon and PaperCut MF where I work. Hate my users to be stuck with iOS5 or not have printing on their iPad. If any of you hear of a fix then please reply here if possible.
+
+---
+
+### Post by Sven Verhaegen on 2012-09-21
+Same problem It is however something that was fixed for MAC OSX AirPrint activator [http://netputing.com/airprintactivator/airprint-activator-v3-0/](http://netputing.com/airprintactivator/airprint-activator-v3-0/). I quickly tried it on my mac and the problem disappears.
+I however would like it fixed on my unbuntu server :-( guess,  avahi needs an update ...
+
+---
+
+### Post by f8l_0e on 2012-09-21
+> **Sven Verhaegen said:**
+> Same problem It is however something that was fixed for MAC OSX AirPrint activator [http://netputing.com/airprintactivator/airprint-activator-v3-0/](http://netputing.com/airprintactivator/airprint-activator-v3-0/). I quickly tried it on my mac and the problem disappears.
+I however would like it fixed on my unbuntu server :-( guess,  avahi needs an update ...
+
+Would you be willing see if there is an XML file generated by airprint-activator similar to the one located at ```
+/etc/avahi/services/{printername}.service
+```.  If airprint-activator generates an XML file, can you post both here so we can compare and contact the author of airprint-generate.py?
+
+---
+
+### Post by Kyle2123 on 2012-09-21
+Could not find an XML file for AirPrint Activator, but was able to view what it is sending out using Bonjour Browser.  AirPrint Activator includes image/urf in the pdl but my avahi service file does not.  If I add image/urf to the end of the pdl entry in my service file, I can see the printer on my device again, but when I print to it nothing ever comes out of the printer.
+
+---
+
+### Post by Kyle2123 on 2012-09-21
+It looks like up until iOS6, print jobs were being sent over as PDF, but now they are being sent in URF, which from what I can tell is some undocumented Apple format.  There are some details here:
+
+[http://www.finnie.org/2010/11/13/airprint-and-linux/]("http://www.finnie.org/2010/11/13/airprint-and-linux/")
+
+Maybe someone that knows more about this can help - I have no idea where to go next.
+
+---
+
+### Post by Sven Verhaegen on 2012-09-21
+org.cups.printers.plist
+got changed with AirPrint
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>printer-name</key>
+		<string>Officejet_Pro_L7500__ED0E12_</string>
+		<key>printer-info</key>
+		<string>Officejet Pro L7500</string>
+		<key>printer-is-accepting-jobs</key>
+		<true/>
+		<key>printer-location</key>
+		<string></string>
+		<key>printer-make-and-model</key>
+		<string>HP Officejet Pro L7500 series</string>
+		<key>printer-state</key>
+		<integer>3</integer>
+		<key>printer-state-reasons</key>
+		<array>
+			<string>marker-supply-low-report</string>
+			<string>com.hp.m.1.15.2-report</string>
+		</array>
+		<key>printer-type</key>
+		<integer>75534364</integer>
+		<key>device-uri</key>
+		<string>dnssd://Officejet%20Pro%20L7500%20%5BED0E12%5D._pdl-datastream._tcp.local./?bidi</string>
+	</dict>
+</array>
+</plist>
+
+
+
+
+
+Don't see anything except The printer type in my case
+<key>printer-type</key> 	<integer>75534364</integer>
+avahi is using : printer-type=0x2900c
+
+Maybe I'll try later using 0x480901c and see what happens, I'm afraid it will not be that simple though .....
+
+---
+
+### Post by Sven Verhaegen on 2012-09-21
+Can't find any other discussion on this (and therefore no possible solution)
+
+---
+
+### Post by peedeegee on 2012-09-21
+Hi everyone.
+
+Sorry, I don't run ubuntu, but CentOS servers instead.
+
+I just wanted to say I'm experiencing the exact same problem as you guys on here. All the 'i' devices at my company that had upgraded to iOS 6 can no longer find our '(non)Airprint' printers provided by avahi and CUPS. The one device I could get hold of which was on 5.1.1 was still able to find and print to them though. This seems to confirm it's definitely been introduced with iOS 6 as you suspect.
+
+I wasted several hours today because I thought I'd done something wrong as I've spent the last couple of weeks having a major sort out of our CUPS system. I'm reporting it on here hopefully so others may find this thread like I did and save them time. I hope you don't mind, seeing as we're both in the 'Linux' camp.
+
+I did have a quick play with the /etc/avahi/services/printerxxx.service file to see if I could get the iDevices to see it, but to no avail. If I get some more time I'll have another and let you know any findings.
+
+One thing that's suspect is that the iDevices still see a 'genuine' Airprint printer. We have some canon inkjets that when their bonjour service is turned on will be found by the iDevice. Any avahi printer running through the Linux servers however is not! Make what you will of that!
+
+Hopefully something will turn up about this soon!
+
+---
+
+### Post by kloostec on 2012-09-21
+I've made a little bit of progress on this at work, where we're running Debian 6 with CUPS and Avahi-daemon.
+
+1) Apple changed the format of their airprint printing from PDF to URF with iOS 6.
+2) URF is a unirast format file.  This appears to be an apple-specific format
+3) Printers that natively support Airprint have support for URF, so they continue working
+4) CUPS does not natively support unirast, and so the avahi configuration files I generated do not mention that they support URF.  Therefore, the Airprint printers do not show up in iOS 6.
+5) Some guy wrote a very basic URF to PDF converter and published it in 2010 when iOS 4.2 came out, because apparently it was necessary then as well.  [https://github.com/superna9999/urftopdf](https://github.com/superna9999/urftopdf)
+6) I've installed this on airprintstaff following these instuctions [https://github.com/superna9999/urftopdf/wiki/Install-and-Usage](https://github.com/superna9999/urftopdf/wiki/Install-and-Usage) and re-ran airprint-generate.py which now mentions URF support
+7) The printers show up under iOS 6 now.  The URF format decoding is not complete, though, so the print job must be set to "duplex off" when airprinting.  This preference is ignored when the file is converted to PDF anyway (duplex is turned on).
+
+It looks like URFtoPDF isn't fully developed at this point, but there's definitely a starting point.
+
+Edit: thanks to previous posters in this thread for assistance in getting this far!
+
+---
+
+### Post by RShapiro on 2012-09-21
+Thanks, kloostec! This worked for me (10.4) although I used Software Update to install the packages.
+
+---
+
+### Post by Sven Verhaegen on 2012-09-22
+apt-get can't find the package (first guess is that I'm running 64 bits) 
+
+
+but been looking further on my mac ..... maybe this gives some ideas ....
+
+
+seems I have a new or altered filter (maybe airprint activator?)
+-rwxr-xr-x   1 root  wheel  140864 19 sep 04:15 cgpdftoraster
+
+
+mime type for airpint 
+# AirPrint type
+image/urf                       urf string(0,UNIRAST<00>)
+
+
+convs file:
+
+application/pdf                 application/postscript          25      cgpdftops
+application/pdf                 application/vnd.cups-raster     100     cgpdftoraster
+
+# AirPrint
+application/vnd.cups-raster     image/urf                       100     rastertourf
+application/pdf                         image/urf                       100 cgpdftoraster
+application/vnd.apple-postscript image/urf      250     pstocupsraster
+application/vnd.cups-postscript image/urf       250     pstocupsraster
+
+# IPP Everywhere
+application/pdf                 image/pwg-raster                100     cgpdftoraster
+
+
+
+on ubuntu there's no cgpdftoraster but pdftoraster as filter ....
+
+---
+
+### Post by Sven Verhaegen on 2012-09-22
+======= found it ===========
+
+== updated instructions added more details ==
+== and only added the really needed lines ==
+
+it's easy
+
+you need to create 2 files under 
+/usr/share/cups/mime
+
+<> File 1 airprint.types with content below 
+more airprint.types
+#
+# "$Id: $"
+#
+# AirPrint type
+image/urf urf string(0,UNIRAST<00>)
+#
+# End of "$Id: $".
+#
+
+
+<> file2
+ more airprint.convs
+#
+# "$Id: $"
+#
+# AirPrint
+# Updated list with minimal set 25 Sept
+image/urf application/pdf 100 pdftoraster
+#
+# End of "$Id: $".
+#
+
+
+
+<> restart cups 
+sudo service cups restart
+
+<> optionally get airprint-generate.py 
+#=See here for more info on the script [https://github.com/tjfontaine/airprint-generate](https://github.com/tjfontaine/airprint-generate) (I downloaded the script on my home dir)
+#== depending on your system you might need to change the first line to 
+#!/usr/bin/env python2
+#== in order to run it
+cd
+wget [https://raw.github.com/tjfontaine/airprint-generate/master/airprint-generate.py](https://raw.github.com/tjfontaine/airprint-generate/master/airprint-generate.py)
+
+<> regenerate the file services file
+cd 
+python airprint-generate.py
+
+<> copy the files to /etc/avahi/services
+sudo cp *services /etc/avahi/services
+
+<> restart avahi (not sure this is needed)
+sudo service avahi-daemon restart
+
+if you implemented the urftopdf you might want to roll that back
+make sure 
+urftopdf.types
+urftopdf.convs
+are gone in /usr/share/cups/mime after the remove .... (didn't install it just looked at the code)
+
+A good night !
+
+oh yeah ..........
+can someone make sure this is included in the 12.04 CUPS ?
+
+---
+
+### Post by jdawgvh on 2012-09-22
+This solution worked for me:
+
+[http://atxconsulting.com/posts/Automatically_generate_AirPrint_Avahi_service_files_for_CUPS_printers/]("http://atxconsulting.com/posts/Automatically_generate_AirPrint_Avahi_service_files_for_CUPS_printers/")
+
+---
+
+### Post by Sven Verhaegen on 2012-09-23
+> **jdawgvh said:**
+> This solution worked for me:
+
+[http://atxconsulting.com/posts/Automatically_generate_AirPrint_Avahi_service_files_for_CUPS_printers/]("http://atxconsulting.com/posts/Automatically_generate_AirPrint_Avahi_service_files_for_CUPS_printers/")
+
+
+Seems similar from what I did, except urf is sent to pdftops
+
+---
+
+### Post by threeb on 2012-09-23
+Sven, you  r o c k !!! :-)
+Thanks so much for the fix!
+
+---
+
+### Post by James Elliott on 2012-09-24
+> **Sven Verhaegen said:**
+> ======= found it ===========
+
+it's easy
+
+you need to create 2 files under 
+/usr/share/cups/mime
+
+<> File 1 airprint.types with content below 
+more airprint.types
+#
+# "$Id: $"
+#
+# AirPrint type
+image/urf urf string(0,UNIRAST<00>)
+#
+# End of "$Id: $".
+#
+
+
+<> file2
+ more airprint.convs
+#
+# "$Id: $"
+#
+# AirPrint
+#leave it to others to fine tune this list 
+# not sure of all these are needed and 100 as priority might conflict with others
+#
+application/vnd.cups-raster image/urf 100 rastertourf
+application/pdf image/urf 100 pdftoraster
+# next line is need for generate.py and might be the only one needed
+# will try later maybe myself
+image/urf application/pdf 100 pdftoraster
+application/vnd.apple-postscript image/urf 250 pstocupsraster
+application/vnd.cups-postscript image/urf 250 pstocupsraster
+#
+# End of "$Id: $".
+#
+
+<> restart cups 
+
+<> regenerate the file services file
+copy it to /etc/avahi/services
+
+<> restart avahi (not sure this is needed)
+
+if you implemented the urftopdf you might want to roll that back
+make sure 
+urftopdf.types
+urftopdf.convs
+are gone in /usr/share/cups/mime after the remove .... (didn't install it just looked at the code)
+
+A good night !
+
+oh yeah ..........
+can someone make sure this is included in the 12.04 CUPS ?
+
+Didn't work for me although it looks good.  Running Ubuntu 12.04 with the basic CUPS and Avahi config. Used the airprint-generate.py script to make the service file (hopefully there's support for AirPrint without this as a requirement soon). Here are my config files:
+
+- /usr/share/cups/mime/airprint.convs
+```
+#
+# "$Id: $"
+#
+# AirPrint
+#leave it to others to fine tune this list
+# not sure of all these are needed and 100 as priority might conflict with others
+#
+application/vnd.cups-raster image/urf 100 rastertourf
+application/pdf image/urf 100 pdftoraster
+# next line is need for generate.py and might be the only one needed
+# will try later maybe myself
+image/urf application/pdf 100 pdftoraster
+application/vnd.apple-postscript image/urf 250 pstocupsraster
+application/vnd.cups-postscript image/urf 250 pstocupsraster
+#
+# End of "$Id: $".
+#
+```- /usr/share/cups/mime/airprint.types
+```
+#
+# "$Id: $"
+#
+# AirPrint type
+image/urf urf string(0,UNIRAST<00>)
+#
+# End of "$Id: $".
+#
+```- /etc/avahi/services/AirPrint-Test.service
+```
+<?xml version="1.0" ?>
+<!DOCTYPE service-group  SYSTEM 'avahi-service.dtd'>
+<service-group>
+<name replace-wildcards="yes">AirPrint HP_LaserJet_P2035n @ %h</name>
+<service>
+<type>_ipp._tcp</type>
+<subtype>_universal._sub._ipp._tcp</subtype>
+<port>631</port>
+<txt-record>txtvers=1</txt-record>
+<txt-record>qtotal=1</txt-record>
+<txt-record>Transparent=T</txt-record>
+<txt-record>URF=none</txt-record>
+<txt-record>rp=printers/HP_LaserJet_P2035n</txt-record>
+<txt-record>note=AirPrint Test</txt-record>
+<txt-record>product=(GPL Ghostscript)</txt-record>
+<txt-record>printer-state=3</txt-record>
+<txt-record>printer-type=0x80901c</txt-record>
+<txt-record>pdl=application/octet-stream,application/pdf,application/postscript,image/gif,image/jpeg,image/png,image/tiff,image/urf,text/html,text/plain,application/vnd.adobe-reader-postscript,application/vnd.cups-command,application/vnd.cups-pdf</txt-record>
+</service>
+</service-group>
+```
+Edit:
+
+I noted a line on there mentioning URF=none which I've deleted but it doesn't fix it:
+
+```
+<?xml version="1.0" ?>
+<!DOCTYPE service-group  SYSTEM 'avahi-service.dtd'>
+<service-group>
+<name replace-wildcards="yes">AirPrint HP_LaserJet_P2035n @ %h</name>
+<service>
+<type>_ipp._tcp</type>
+<subtype>_universal._sub._ipp._tcp</subtype>
+<port>631</port>
+<txt-record>txtvers=1</txt-record>
+<txt-record>qtotal=1</txt-record>
+<txt-record>Transparent=T</txt-record>
+<txt-record>rp=printers/HP_LaserJet_P2035n</txt-record>
+<txt-record>note=AirPrint Test</txt-record>
+<txt-record>product=(GPL Ghostscript)</txt-record>
+<txt-record>printer-state=3</txt-record>
+<txt-record>printer-type=0x80901c</txt-record>
+<txt-record>pdl=application/octet-stream,application/pdf,application/postscript,image/gif,image/jpeg,image/png,image/tiff,image/urf,text/html,text/plain,application/vnd.adobe-reader-postscript,application/vnd.cups-command,application/vnd.cups-pdf</txt-record>
+</service>
+</service-group>
+```
+
+
+I also noted the errors in (I'm new to CUPS filters) /var/log/cups/error_log:
+
+```
+E [24/Sep/2012:15:35:08 +1000] Filter "rastertourf" not found.
+E [24/Sep/2012:15:35:08 +1000] Filter "pstocupsraster" not found.
+E [24/Sep/2012:15:35:08 +1000] Filter "pstocupsraster" not found.
+```
+
+---
+
+### Post by tgwilt on 2012-09-24
+I've tried the airprint-generate.py script. Keep in mind that I'm not really too good at this stuff:
+
+sudo /usr/bin/python /home/tgwilt/Downloads/airprint-generate.py
+
+The result is:
+
+File "airprint-generate.py", line 1
+    <!DOCTYPE html>
+    ^
+SyntaxError: invalid syntax
+
+I presume this would be an easy fix, if you know how. Unfortunately for me, I don't <grin>.
+
+---
+
+### Post by tgwilt on 2012-09-24
+Never mind. Every time I post, I find the answer almost immediately.
+
+I've got the printer visible on my iPhone 4S, and will try printing now.
+
+---
+
+### Post by tgwilt on 2012-09-24
+Thanks a lot to Sven!!!
+
+Everything is working with my iOS 6 devices now. I can print to my OKI 300 printer. YAY!
+
+---
+
+### Post by tgwilt on 2012-09-24
+AARRGGHH!!
+
+I had to boot back into windows for a bit. When I rebooted into Ubuntu 12.04LTS, the airprint-daemon just wouldn't start.
+
+I tried restarting the cups daemon, and the airprint-deamon.
+
+I have attached the /var/crash file (it's in to sections since the text file was too large to upload in one grand upchuck).
+
+Any ideas as to why this isn't working and what I can do to fix it. What really gets me is I had it working before I rebooted.
+
+Thanks in advance,
+
+Tom
+
+Edit 3:50 am EDT
+
+Actually, this is the exact same problem noted by James Elliott
+
+---
+
+### Post by tgwilt on 2012-09-24
+After playing around with this all night, I went back to trying to get the ppa repository for urftopdf.
+
+After repeated failures, I received the following message from the maintainer:
+
+open the file :
+/etc/apt/sources.list.d/superna-ppa-precise.list
+(or similar)
+and change the line from :
+deb [http://ppa.launchpad.net/superna/urftopdf/ubuntu](http://ppa.launchpad.net/superna/urftopdf/ubuntu) precise main
+to
+deb [http://ppa.launchpad.net/superna/urftopdf/ubuntu](http://ppa.launchpad.net/superna/urftopdf/ubuntu) lucid main
+
+I also had to do the same to the deb-src line.
+
+Then removed the  /usr/share/cups/mime/airprint* files, restarted cups, and restarted the airprint-daemon. The printer now shows up again. It's getting late for screwing around with this. Tomorrow I'll reboot and see if it carries through.
+
+Tom
+
+---
+
+### Post by kloostec on 2012-09-24
+OK, I'm back.  I've done a lot more research today.
+
+iOS 6 requires URF to be mentioned in the Avahi service file, otherwise it won't work.  However, with tShark, I've verified that it's actually still sending a PDF file.  This is why a whole bunch of different methods of getting image/urf support will result in the printer working.  I'm not sure what the best one is, but I'm using this one for now:
+
+```
+
+echo "image/urf urf string(0,UNIRAST<00>)" | sudo tee /usr/share/cups/mime/airprint.types
+echo "image/urf application/pdf 100 pstopdf" | sudo tee /usr/share/cups/mime/airprint.convs
+sudo /etc/init.d/cups restart
+
+wget https://raw.github.com/tjfontaine/airprint-generate/master/airprint-generate.py
+python airprint-generate.py
+sudo mv *.service /etc/avahi/services/
+
+```
+
+This probably won't work if Apple does actually switch over to sending files as image/urf, because I don't think pstopdf is the correct URF filter.  The urftopdf filter has a better chance of working properly, but I'm still not sure it will work 100%.
+
+I've got one outstanding issue that is difficult to resolve:
+
+Duplex won't work.  If I set up my device with a duplexer, the two sided option comes up in airprint just fine, but if I turn two sided printing on, the job doesn't print.  I've watched the packets in tshark, and it looks like the iOS device just doesn't try to print at all.  I'm pretty sure this is an issue with iOS because it never sends any packets to the CUPS server indicating it wants to print, but we may be able to work around it somehow by setting different options in the avahi service file or something.
+
+---
+
+### Post by bennettg on 2012-09-24
+> **Sven Verhaegen said:**
+> ======= found it ===========
+
+it's easy
+
+you need to create 2 files under 
+/usr/share/cups/mime
+
+<> File 1 airprint.types with content below 
+more airprint.types
+#
+# "$Id: $"
+#
+# AirPrint type
+image/urf urf string(0,UNIRAST<00>)
+#
+# End of "$Id: $".
+#
+
+
+<> file2
+ more airprint.convs
+#
+# "$Id: $"
+#
+# AirPrint
+#leave it to others to fine tune this list 
+# not sure of all these are needed and 100 as priority might conflict with others
+#
+application/vnd.cups-raster image/urf 100 rastertourf
+application/pdf image/urf 100 pdftoraster
+# next line is need for generate.py and might be the only one needed
+# will try later maybe myself
+image/urf application/pdf 100 pdftoraster
+application/vnd.apple-postscript image/urf 250 pstocupsraster
+application/vnd.cups-postscript image/urf 250 pstocupsraster
+#
+# End of "$Id: $".
+#
+
+<> restart cups 
+
+<> regenerate the file services file
+copy it to /etc/avahi/services
+
+<> restart avahi (not sure this is needed)
+
+if you implemented the urftopdf you might want to roll that back
+make sure 
+urftopdf.types
+urftopdf.convs
+are gone in /usr/share/cups/mime after the remove .... (didn't install it just looked at the code)
+
+A good night !
+
+oh yeah ..........
+can someone make sure this is included in the 12.04 CUPS ?
+
+can you help a frustrated noob?
+
+i would love to see a step by step with the command line code, but know that will take a lot of time.   i created the two files you describe above but do not know how to:
+
+1. restart cups 
+2.  regenerate the file services file
+3.  restart avahi 
+
+any help is greatly appreciated.
+
+thanks in advance.
+
+---
+
+### Post by tgwilt on 2012-09-25
+This is driving me to drink!
+
+I simply cannot get the airprint-daemon to start. The crash report says:
+
+Trace (most recent call last):
+
+File "/usr/sbin/airprint-daemon",line 301,in<module> avahi_handler=ZeroConfManagezar(printer_handler)
+
+File "/usr/sbin/airprint-daemon",line 237,in_init_self.start_service(printer)
+
+File "/usr/sbin/airprint-daemon",line 242,in start_service service.publish()
+
+File "/usr/sbin/airprint-daemon",line 282, in publish group.AddService(avahi.IF_UNSPEC, avahi.PROTO_UNSPEC,dbus.UInt32(0), self.name, self.stype, self.domain, self.host, dbus.UInt16(self.port), self.text)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 70,in_call_return self._proxy_method(*args,**keywords)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 145, in_call_**keywords)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 651,in call_blocking message, timeout)
+
+DBusException:org.freedesktop.Avahi.CollisionError:Local name collision
+
+I can see where it says that there was a Local name collision. Can this be fixed?
+
+Using the airprint service isn't really that high on my list, since I can easily copy pics and other things that one would normally print from the iPhone to the computer and print that way. I just *want* to be able to use the airprint function.
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **bennettg said:**
+> can you help a frustrated noob?
+
+i would love to see a step by step with the command line code, but know that will take a lot of time.   i created the two files you describe above but do not know how to:
+
+1. restart cups 
+2.  regenerate the file services file
+3.  restart avahi 
+
+any help is greatly appreciated.
+
+thanks in advance.
+
+
+#restart service cups: 
+sudo service cups restart
+#check status
+sudo service cups status
+
+
+
+#= when you run (which you should already have done in the past) airprint-generate.py new --config_files are created in the directory where you are 
+#=See here for more info on the script [https://github.com/tjfontaine/airprint-generate](https://github.com/tjfontaine/airprint-generate) (I downloaded the script on my home dir)
+#== depending on your system you might need to change the first line to 
+#!/usr/bin/env python2
+#== in order to run it
+
+./airprint-generate.py
+
+#these files 
+ls AirPrint*.service
+#need to copied to /etc/avahi/services
+sudo cp AirPrint*.service /etc/avahi/services
+
+#restart avahi
+sudo service avahi-daemon restart
+sudo service avahi-daemon status
+
+
+
+#This should conclude it ......
+#the service files only difference should be the additional "image/urf" looks like this "image/tiff,image/urf,text/html"
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **tgwilt said:**
+> This is driving me to drink!
+
+I simply cannot get the airprint-daemon to start. The crash report says:
+
+Trace (most recent call last):
+
+File "/usr/sbin/airprint-daemon",line 301,in<module> avahi_handler=ZeroConfManagezar(printer_handler)
+
+File "/usr/sbin/airprint-daemon",line 237,in_init_self.start_service(printer)
+
+File "/usr/sbin/airprint-daemon",line 242,in start_service service.publish()
+
+File "/usr/sbin/airprint-daemon",line 282, in publish group.AddService(avahi.IF_UNSPEC, avahi.PROTO_UNSPEC,dbus.UInt32(0), self.name, self.stype, self.domain, self.host, dbus.UInt16(self.port), self.text)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 70,in_call_return self._proxy_method(*args,**keywords)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 145, in_call_**keywords)
+
+File "usr/lib./python2.7/dist-packages/dbus/proxies.py",line 651,in call_blocking message, timeout)
+
+DBusException:org.freedesktop.Avahi.CollisionError:Local name collision
+
+I can see where it says that there was a Local name collision. Can this be fixed?
+
+Using the airprint service isn't really that high on my list, since I can easily copy pics and other things that one would normally print from the iPhone to the computer and print that way. I just *want* to be able to use the airprint function.
+
+I removed the AirPrint-deamon, also had issues sometimes that it didn't run. creating/generating the service files with the python script is as easy (not that you add printers daily) :-)
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **James Elliott said:**
+> Didn't work for me although it looks good.  Running Ubuntu 12.04 with the basic CUPS and Avahi config. Used the airprint-generate.py script to make the service file (hopefully there's support for AirPrint without this as a requirement soon). Here are my config files:
+
+- /usr/share/cups/mime/airprint.convs
+```
+#
+# "$Id: $"
+#
+# AirPrint
+#leave it to others to fine tune this list
+# not sure of all these are needed and 100 as priority might conflict with others
+#
+application/vnd.cups-raster image/urf 100 rastertourf
+application/pdf image/urf 100 pdftoraster
+# next line is need for generate.py and might be the only one needed
+# will try later maybe myself
+image/urf application/pdf 100 pdftoraster
+application/vnd.apple-postscript image/urf 250 pstocupsraster
+application/vnd.cups-postscript image/urf 250 pstocupsraster
+#
+# End of "$Id: $".
+#
+```- /usr/share/cups/mime/airprint.types
+```
+#
+# "$Id: $"
+#
+# AirPrint type
+image/urf urf string(0,UNIRAST<00>)
+#
+# End of "$Id: $".
+#
+```- /etc/avahi/services/AirPrint-Test.service
+```
+<?xml version="1.0" ?>
+<!DOCTYPE service-group  SYSTEM 'avahi-service.dtd'>
+<service-group>
+<name replace-wildcards="yes">AirPrint HP_LaserJet_P2035n @ %h</name>
+<service>
+<type>_ipp._tcp</type>
+<subtype>_universal._sub._ipp._tcp</subtype>
+<port>631</port>
+<txt-record>txtvers=1</txt-record>
+<txt-record>qtotal=1</txt-record>
+<txt-record>Transparent=T</txt-record>
+<txt-record>URF=none</txt-record>
+<txt-record>rp=printers/HP_LaserJet_P2035n</txt-record>
+<txt-record>note=AirPrint Test</txt-record>
+<txt-record>product=(GPL Ghostscript)</txt-record>
+<txt-record>printer-state=3</txt-record>
+<txt-record>printer-type=0x80901c</txt-record>
+<txt-record>pdl=application/octet-stream,application/pdf,application/postscript,image/gif,image/jpeg,image/png,image/tiff,image/urf,text/html,text/plain,application/vnd.adobe-reader-postscript,application/vnd.cups-command,application/vnd.cups-pdf</txt-record>
+</service>
+</service-group>
+```
+Edit:
+
+I noted a line on there mentioning URF=none which I've deleted but it doesn't fix it:
+
+```
+<?xml version="1.0" ?>
+<!DOCTYPE service-group  SYSTEM 'avahi-service.dtd'>
+<service-group>
+<name replace-wildcards="yes">AirPrint HP_LaserJet_P2035n @ %h</name>
+<service>
+<type>_ipp._tcp</type>
+<subtype>_universal._sub._ipp._tcp</subtype>
+<port>631</port>
+<txt-record>txtvers=1</txt-record>
+<txt-record>qtotal=1</txt-record>
+<txt-record>Transparent=T</txt-record>
+<txt-record>rp=printers/HP_LaserJet_P2035n</txt-record>
+<txt-record>note=AirPrint Test</txt-record>
+<txt-record>product=(GPL Ghostscript)</txt-record>
+<txt-record>printer-state=3</txt-record>
+<txt-record>printer-type=0x80901c</txt-record>
+<txt-record>pdl=application/octet-stream,application/pdf,application/postscript,image/gif,image/jpeg,image/png,image/tiff,image/urf,text/html,text/plain,application/vnd.adobe-reader-postscript,application/vnd.cups-command,application/vnd.cups-pdf</txt-record>
+</service>
+</service-group>
+```
+
+
+I also noted the errors in (I'm new to CUPS filters) /var/log/cups/error_log:
+
+```
+E [24/Sep/2012:15:35:08 +1000] Filter "rastertourf" not found.
+E [24/Sep/2012:15:35:08 +1000] Filter "pstocupsraster" not found.
+E [24/Sep/2012:15:35:08 +1000] Filter "pstocupsraster" not found.
+```
+
+
+
+I updated the conv file only the image/urf application/pdf 100 pdftoraster is really required. That should remove the 3 errors in the log (but that's not a real issue)
+
+the airprint service file contains image/urf so that's looks good also. (URF=none is ok)
+
+Where you able to AirPrint before or is this a fresh install? did you restart avahi-daemon? is the printer shared? 
+use cupsctl to check the options [http://www.cups.org/documentation.php/doc-1.5/sharing.html](http://www.cups.org/documentation.php/doc-1.5/sharing.html)
+What is need is:
+sudo cupsctl --share-printers
+sudo cupsctl 'BrowseLocalProtocols="cups dnssd"'
+
+---
+
+### Post by tgwilt on 2012-09-25
+> **Sven Verhaegen said:**
+> I removed the AirPrint-deamon, also had issues sometimes that it didn't run. creating/generating the service files with the python script is as easy (not that you add printers daily) :-)
+
+Thanks Sven...I removed the airprint-daemon and the unnecessary urf types, restarted cups and avahi and I can see the printer now. 
+
+I used to manage mail servers, dns servers, etc. for an ISP before I retired. I'm 60 years old and sometimes forget things. 
+
+Just in case nobody else thinks to do this, thanks for being so nice and helpful to the new users who often need a certain amount of hand holding. I know it can be tiresome to have do this, but it is really nice of you to do so. =D>
+
+Tom
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **tgwilt said:**
+> Thanks Sven...I removed the airprint-daemon and the unnecessary urf types, restarted cups and avahi and I can see the printer now. 
+
+I used to manage mail servers, dns servers, etc. for an ISP before I retired. I'm 60 years old and sometimes forget things. 
+
+Just in case nobody else thinks to do this, thanks for being so nice and helpful to the new users who often need a certain amount of hand holding. I know it can be tiresome to have do this, but it is really nice of you to do so. =D>
+
+Tom
+
+LOL, I only installed ubuntu 2 weeks ago, build a multi media NAS (with plex media server on it), so who's the new user?
+No problem helping out where I can, when I'm stuck I also appreciate people helping.
+Glad it's working for you also now :-) I hope that someone takes this up in the next release.. CUPS 1.6 includes bonjour advertisement but if the mime types are not included we will not be able to print :-)
+
+---
+
+### Post by Morbius1 on 2012-09-25
+It would appear that a fix is maybe kinda hopefully on the way as it has been fixed in Ubuntu 12.10: [https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495](https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495)
+
+> [Till Kamppeter (till-kamppeter)]("https://launchpad.net/%7Etill-kamppeter")             wrote             on 2012-09-23:                                                            [ #2]("https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495/comments/2")
+
+It is not so bad,  iOS 6 sstill sends the print jobs in PDF and JPG as before, but it  requires CUPS at least to pretend that it supports image/urf and the  "URF" text record field of the broadcasted Bonjour service cannot be  "none" any more. I have updated the AirPrint support patch for CUPS to  take this into account. The fix will appear in the next Quantal package  of CUPS.
+ I will also look into an SRU for Precise.
+
+              
+                                             
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **Morbius1 said:**
+> It would appear that a fix is maybe kinda hopefully on the way as it has been fixed in Ubuntu 12.10: [https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495](https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495)
+
+ok. thanks, that means that using the pdftopdf as a filter should also work ...
+Only strange that urf:none works here ....
+
+---
+
+### Post by fpetzold on 2012-09-25
+In my ubuntu installations (12.04) there is no need at all for *.service files in the /etc/avahi/services directory. CUPSd is publishing the printers itself. Unfortunately iOS6 does not recognize these. Everything worked fine until the iOS6 upgrade.
+
+Is there a way to tell cupsd to change the published service?
+
+/etc/avahi/services is the wrong place if cupsd can do it IMHO.
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+> **fpetzold said:**
+> In my ubuntu installations (12.04) there is no need at all for *.service files in the /etc/avahi/services directory. CUPSd is publishing the printers itself. Unfortunately iOS6 does not recognize these. Everything worked fine until the iOS6 upgrade.
+
+Is there a way to tell cupsd to change the published service?
+
+/etc/avahi/services is the wrong place if cupsd can do it IMHO.
+
+
+I guess you use airprint-deamon? which publishes the printers to avahi dynamically.
+my 2 cents ......
+
+If the daemon is still working just add the 2 mime files and restart cups and avahi (and restart the airprint daemon or the system) .But there's no problem adding the service files even when using you use the airprint deamon, you will see the printer twice ones with Airprint label and a second time with the default printer name .....
+
+---
+
+### Post by Sven Verhaegen on 2012-09-25
+ok I've mailed Till who has provided a fix for 12.10
+
+Here his reply:
+[INDENT]Note that the iOS devices do not actually send files in URF format but CUPS has to pretend that it supports URF format so that the printers get accepted by iOS 6, therefore the bogus conversion rule
+
+image/urf  application/pdf  100  -
+
+which means that URF gets turned into PDF without filter.
+
+In addition, the text record URF=none is not accepted, but the printer gets accepted when it has URF=DM3 instead.
+
+  Till[/INDENT]
+
+I tried changing the convs to no filter but that creates a delay when printing (it works but takes ... preparing ......), if indeed you change the urf from none to DM3 it's print directly. 
+
+So .... the final fix is the combination of the 2, which will require a small fix in the generate py script 
+
+advanced users can manually edit the service file and change the filter to the bogus filter
+others can you use what has been posted before and use the pdftoraster which seems not to require the urf=DM3 iso urf=none 
+
+I can't test anymore what happens when you use urf=DM3 when using a ios lower than 6 .......
+
+I also asked him if the work around we are implementing will break his fix on 12.04 (he didn't answer yet)
+
+---
+
+### Post by Alevins5 on 2012-09-25
+> **Sven Verhaegen said:**
+> #restart service cups: 
+sudo service cups restart
+#check status
+sudo service cups status
+
+
+
+#= when you run (which you should already have done in the past) airprint-generate.py new --config_files are created in the directory where you are 
+#=See here for more info on the script [https://github.com/tjfontaine/airprint-generate](https://github.com/tjfontaine/airprint-generate) (I downloaded the script on my home dir)
+#== depending on your system you might need to change the first line to 
+#!/usr/bin/env python2
+#== in order to run it
+
+./airprint-generate.py
+
+#these files 
+ls AirPrint*.service
+#need to copied to /etc/avahi/services
+sudo cp AirPrint*.service /etc/avahi/services
+
+#restart avahi
+sudo service avahi-daemon restart
+sudo service avahi-daemon status
+
+
+
+#This should conclude it ......
+#the service files only difference should be the additional "image/urf" looks like this "image/tiff,image/urf,text/html"
+
+Awesome! This (and the info on your previous post) worked for me! You are great, and this community is great.
+
+---
+
+### Post by James Elliott on 2012-09-26
+> **Sven Verhaegen said:**
+> I updated the conv file only the image/urf application/pdf 100 pdftoraster is really required. That should remove the 3 errors in the log (but that's not a real issue)
+
+the airprint service file contains image/urf so that's looks good also. (URF=none is ok)
+
+Where you able to AirPrint before or is this a fresh install? did you restart avahi-daemon? is the printer shared? 
+use cupsctl to check the options [http://www.cups.org/documentation.php/doc-1.5/sharing.html](http://www.cups.org/documentation.php/doc-1.5/sharing.html)
+What is need is:
+sudo cupsctl --share-printers
+sudo cupsctl 'BrowseLocalProtocols="cups dnssd"'
+
+[COLOR=Red]**EDIT 1:**[/COLOR] Working. Just out of the blue. I did nothing between two tests.. thinking maybe it was the iPad not refreshing the list correctly. Last thing I wish I could do is not have to generate service files for each printer - has anyone come that far yet? Additional note I've got this working with PaperCut MF (running a primary install on a windows server with a provider relay / secondary installation on the linux server).
+
+[COLOR=Red]**EDIT 2:**[/COLOR] Using the generate python script causes the following issue on iOS5; the printer appears twice.
+
+[COLOR=Red]**EDIT 3:**[/COLOR] Solution seems to be to do the following: Leave the printer SHARED in cups. Use "BrowseLocalProtocols cups" not "BrowseLocalProtocols cups dnssd". Make sure shareing is still enabled. Avahi will advertise it to both iOS5 and iOS6 using the service files.
+
+Hi Sven,
+
+Thanks for your reply. Yes it's a fresh installation of Ubuntu 12.04 LTS Server. I previously had CUPS and Avahi working together nicely out of the box advertising the printers (never had to generate a service file). They continue to do so with just the standard cups configuration. I have both an iOS5 and iOS6 iPad - so if you need any testing done. I literally just got it all running when iOS6 came out and some of my users ninja updated as they do. 
+
+I've ran both of those cupsctl maintainance commands and restarted cups and avahi-daemon. Still nothing. Also rebooted a number of times.
+
+/etc/avahi/avahi-daemon.conf:
+```
+[server]
+use-ipv4=yes
+use-ipv6=no
+allow-interfaces=eth1
+deny-interfaces=eth0
+ratelimit-interval-usec=1000000
+ratelimit-burst=1000
+
+[wide-area]
+enable-wide-area=yes
+
+[publish]
+#all commented
+
+[reflector]
+#all commented
+
+[rlimits]
+rlimit-core=0
+rlimit-data=4194304
+rlimit-fsize=0
+rlimit-nofile=768
+rlimit-stack=4194304
+rlimit-nproc=3
+
+```/etc/cups/cupsd.conf:
+```
+LogLevel warn
+MaxLogSize 1m
+SystemGroup lpadmin
+# Allow remote access
+Port 631
+Listen /var/run/cups/cups.sock
+Browsing On
+BrowseOrder allow,deny
+BrowseRemoteProtocols
+BrowseAddress @LOCAL
+BrowseLocalProtocols cups dnssd
+DefaultAuthType Basic
+WebInterface Yes
+<Location />
+  # Allow remote access...
+  Order allow,deny
+  Allow all
+</Location>
+<Location /admin>
+</Location>
+<Location /admin/conf>
+  AuthType Default
+  Require user @SYSTEM
+</Location>
+<Policy default>
+  JobPrivateAccess default
+  JobPrivateValues default
+  SubscriptionPrivateAccess default
+  SubscriptionPrivateValues default
+  <Limit Create-Job Print-Job Print-URI Validate-Job>
+    Order deny,allow
+  </Limit>
+  <Limit Send-Document Send-URI Hold-Job Release-Job Restart-Job Purge-Jobs Set-Job-Attributes Create-Job-Subscription Renew-Subscription Cancel-Subscription Get-Notifications Reprocess-Job Cancel-Current-Job Suspend-Current-Job Resume-Job Cancel-My-Jobs Close-Job CUPS-Move-Job CUPS-Get-Document>
+    Require user @OWNER @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit CUPS-Add-Modify-Printer CUPS-Delete-Printer CUPS-Add-Modify-Class CUPS-Delete-Class CUPS-Set-Default CUPS-Get-Devices>
+    AuthType Default
+    Require user @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit Pause-Printer Resume-Printer Enable-Printer Disable-Printer Pause-Printer-After-Current-Job Hold-New-Jobs Release-Held-New-Jobs Deactivate-Printer Activate-Printer Restart-Printer Shutdown-Printer Startup-Printer Promote-Job Schedule-Job-After Cancel-Jobs CUPS-Accept-Jobs CUPS-Reject-Jobs>
+    AuthType Default
+    Require user @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit Cancel-Job CUPS-Authenticate-Job>
+    Require user @OWNER @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit All>
+    Order deny,allow
+  </Limit>
+</Policy>
+<Policy authenticated>
+  JobPrivateAccess default
+  JobPrivateValues default
+  SubscriptionPrivateAccess default
+  SubscriptionPrivateValues default
+  <Limit Create-Job Print-Job Print-URI Validate-Job>
+    AuthType Default
+    Order deny,allow
+  </Limit>
+  <Limit Send-Document Send-URI Hold-Job Release-Job Restart-Job Purge-Jobs Set-Job-Attributes Create-Job-Subscription Renew-Subscription Cancel-Subscription Get-Notifications Reprocess-Job Cancel-Current-Job Suspend-Current-Job Resume-Job Cancel-My-Jobs Close-Job CUPS-Move-Job CUPS-Get-Document>
+    AuthType Default
+    Require user @OWNER @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit CUPS-Add-Modify-Printer CUPS-Delete-Printer CUPS-Add-Modify-Class CUPS-Delete-Class CUPS-Set-Default>
+    AuthType Default
+    Require user @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit Pause-Printer Resume-Printer Enable-Printer Disable-Printer Pause-Printer-After-Current-Job Hold-New-Jobs Release-Held-New-Jobs Deactivate-Printer Activate-Printer Restart-Printer Shutdown-Printer Startup-Printer Promote-Job Schedule-Job-After Cancel-Jobs CUPS-Accept-Jobs CUPS-Reject-Jobs>
+    AuthType Default
+    Require user @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit Cancel-Job CUPS-Authenticate-Job>
+    AuthType Default
+    Require user @OWNER @SYSTEM
+    Order deny,allow
+  </Limit>
+  <Limit All>
+    Order deny,allow
+  </Limit>
+</Policy>
+```
+
+---
+
+### Post by fpetzold on 2012-09-26
+> **Sven Verhaegen said:**
+> I guess you use airprint-deamon? which publishes the printers to avahi dynamically.
+my 2 cents ......
+
+If the daemon is still working just add the 2 mime files and restart cups and avahi (and restart the airprint daemon or the system) .But there's no problem adding the service files even when using you use the airprint deamon, you will see the printer twice ones with Airprint label and a second time with the default printer name .....
+No, I do not have AirPrint-daemon installed. As I said, CUPS publishes the printers. There is no need at all for generating .services files anymore.
+
+Except maybe to get it all running for iOS6...
+
+---
+
+### Post by Sven Verhaegen on 2012-09-26
+> **fpetzold said:**
+> No, I do not have AirPrint-daemon installed. As I said, CUPS publishes the printers. There is no need at all for generating .services files anymore.
+
+Except maybe to get it all running for iOS6...
+
+#Now i start to understand post 43, where he saw the printers twice on ios5 
+sudo cupsctl 
+#most likely shows both cups and dnssd as protocols I don't have an ios5 dev anymore so I can't test anymore:
+<>  BrowseLocalProtocols=cups dnssd
+
+#Well to get it to work with ios6 you will need to add the mime files(for sure) and create the service files .....
+
+---
+
+### Post by Sven Verhaegen on 2012-09-26
+I found a away of confirming that cups advertises without services file without having an ios5 left :-)
+
+avahi-browse -a -c | grep IPv4 
+
+with both BrowseLocalProtocols=cups dnssd 
++   eth0 IPv4 Officejet_Pro_L7500 @ nassven                 Internet Printer     local
++   eth0 IPv4 Officejet_Pro_L7500_fax @ nassven             Internet Printer     local
++   eth0 IPv4 AirPrint Officejet_Pro_L7500 @ nassven        Internet Printer     local
+
+with only cups
++   eth0 IPv4 AirPrint Officejet_Pro_L7500 @ nassven        Internet Printer     local
+
+this confirms that indeed printers are available with cups 1.5x for AirPrint with dnssd (when not on ios6)
+
+I indeed didn't copy the fax file over :-) to the services ....
+
+Note that I have a service file for ios6 in place !
+
+---
+
+### Post by Paul S on 2012-09-27
+Sorry, I'm a late addition to this thread and there are several methods listed. I'm running ubuntu 12.04. What thead post number do you recommend?
+
+---
+
+### Post by Morbius1 on 2012-09-27
+I personally would wait for the official fix unless you have a pressing need to print from your iPad: [https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495](https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495)
+
+I've monitored about 20 bugs in my time with Ubuntu and this is the fastest I've ever seen a bug fix - 2 days. Problem is that the bug reporter issued the bug for 12.04 but it was fixed for 12.10. As the developer stated in the bug report:
+> The fix will appear in the next Quantal package of CUPS. I will also look into an SRU for Precise.I think he is committed to release one for 12.04.
+
+---
+
+### Post by gfunkdave on 2012-09-27
+Thanks, **Sven**! I came back to the thread and was pleasantly surprised to find several pages of replies. I never got the subscription reply notifications...
+
+In any case, I did what Sven said and can now print from my phone again. Thanks!!
+
+---
+
+### Post by Sven Verhaegen on 2012-09-27
+> **Paul S said:**
+> Sorry, I'm a late addition to this thread and there are several methods listed. I'm running ubuntu 12.04. What thead post number do you recommend?
+
+[http://ubuntuforums.org/showpost.php?p=12254866&postcount=19](http://ubuntuforums.org/showpost.php?p=12254866&postcount=19)
+
+if you know what you're doing 
+
+[http://ubuntuforums.org/showpost.php?p=12260809&postcount=41](http://ubuntuforums.org/showpost.php?p=12260809&postcount=41) and change the convs to the bogus filter and change the service file with DM3
+
+I'm now looking on how to get cups to advertise them correctly without the service files .... EDIT I will stop looking, we have a workaround which works well and a final fix is due ...
+
+---
+
+### Post by Sven Verhaegen on 2012-09-27
+> **Morbius1 said:**
+> I personally would wait for the official fix unless you have a pressing need to print from your iPad: [https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495](https://bugs.launchpad.net/ubuntu/+source/cups/+bug/1054495)
+
+I've monitored about 20 bugs in my time with Ubuntu and this is the fastest I've ever seen a bug fix - 2 days. Problem is that the bug reporter issued the bug for 12.04 but it was fixed for 12.10. As the developer stated in the bug report:
+I think he is committed to release one for 12.04.
+
+He is <quote>"I am thinking about issuing a new SRU for Precise, with this fix and the newest exception rules for incompatible USB printers." </quote>
+
+---
+
+### Post by Paul S on 2012-09-27
+> **Sven Verhaegen said:**
+> [http://ubuntuforums.org/showpost.php?p=12254866&postcount=19](http://ubuntuforums.org/showpost.php?p=12254866&postcount=19)
+
+if you know what you're doing 
+
+[http://ubuntuforums.org/showpost.php?p=12260809&postcount=41](http://ubuntuforums.org/showpost.php?p=12260809&postcount=41) and change the convs to the bogus filter and change the service file with DM3
+
+I'm now looking on how to get cups to advertise them correctly without the service files .... EDIT I will stop looking, we have a workaround which works well and a final fix is due ...
+
+I can't figure out what file you're talking about editing on post #41, so I had to do both parts of post #19. The *.service files were necessary here.
+
+Anyway, I'm back to being able to print again!
+
+Thanks
+
+---
+
+### Post by Sven Verhaegen on 2012-09-28
+> **Paul S said:**
+> I can't figure out what file you're talking about editing on post #41, so I had to do both parts of post #19. The *.service files were necessary here.
+
+Anyway, I'm back to being able to print again!
+
+Thanks
+
+re post#41 You need to edit the printer(s) Airprint service file under /etc/avahi/services and change URF=none to URF=DM3 and change in airprint.convs the filter "pdftoraster" to "-"
+
+---
+
+### Post by olivermk on 2012-09-28
+Hi All,
+
+I find this forum quite useful.
+Can anyone share some details about the URF format DM3 ... i.e. what is the difference with other URF formats and what do they mean? 
+
+Thanks,
+Oliver
+
+---
+
+### Post by Sven Verhaegen on 2012-09-28
+> **olivermk said:**
+> Hi All,
+
+I find this forum quite useful.
+Can anyone share some details about the URF format DM3 ... i.e. what is the difference with other URF formats and what do they mean? 
+
+Thanks,
+Oliver
+
+Can't find much back, besides this was originally introduced with iOS 4.2 and somehow got change in 5 and is now back in iOS 6 
+
+[http://www.rho.cc/index.php/linux2/48-misc/104-printing-from-ipad-airprint-via-cups](http://www.rho.cc/index.php/linux2/48-misc/104-printing-from-ipad-airprint-via-cups)
+
+interestingly enough the article is using W8 iso DM3. I tested and URF=W8 has the same delayed printing (long time preparing) before it's send to the printer as when you use none with the bogus filter.
+
+---
+
+### Post by Paul S on 2012-09-28
+I run ubuntu within virtualbox on a mac os x iMac and use ubuntu to access my printers from the iPhone / iPad airprint menu.
+
+I use ubuntu because apple has failed to fix this over the year and a half I've used them. It's disappointing to say the least. It ought to be possible to fix them within os x.
+
+I notice that os x includes cups and I guess it's part of their printing system. It shows as running. I wonder if there's an easy fix that would work on os x cups, like the the printer.service fix that works on linux.
+
+Any of you guys os x experts to know?
+
+---
+
+### Post by Sven Verhaegen on 2012-09-29
+> **Paul S said:**
+> I run ubuntu within virtualbox on a mac os x iMac and use ubuntu to access my printers from the iPhone / iPad airprint menu.
+
+I use ubuntu because apple has failed to fix this over the year and a half I've used them. It's disappointing to say the least. It ought to be possible to fix them within os x.
+
+I notice that os x includes cups and I guess it's part of their printing system. It shows as running. I wonder if there's an easy fix that would work on os x cups, like the the printer.service fix that works on linux.
+
+Any of you guys os x experts to know?
+
+There must be but, there wasn't a reason to look for one as there was the free airprint activator (rename of airprint hacktivator). But they turned there "free" tool in a forced donate 14 days trial license(and only allow the gansters of paypall to settle the donation). Already out of principle, I will not use their tool anymore :-)
+If I find a way I will let you know ...
+
+---
+
+### Post by Paul S on 2012-10-01
+> **Sven Verhaegen said:**
+> There must be If I find a way I will let you know ...
+
+On OS X, assuming it's possible to build it on mac, "urftopdf" could be added to /usr/libexec/cups/filter/
+
+"image/urf application/pdf 100 pdftoraster" could be added to /usr/share/cups/mime/apple.convs
+
+"image/urf urf string(0,UNIRAST<00>)" already appears in /usr/share/cups/mime/apple.types
+
+but, where could the *.service files go? It's bonjour instead of avahi.
+
+---
+
+### Post by zamadatix on 2012-10-01
+Slightly different but similar problem. My company was doing this off of a Mac Mini running CUPS 1.4.7 and BIND for dns-sd. The printer(s) show on all iOS devices but only the original iPad (updated to iOS 6 with everything else) actually manages to print, everything else thinks it did but no errors come up in the CUPS log, no job was made, no file was sent, and nothing prints. Any ideas?
+
+---
+
+### Post by Paul S on 2012-10-01
+> **zamadatix said:**
+> Slightly different but similar problem. My company was doing this off of a Mac Mini running CUPS 1.4.7 and BIND for dns-sd. The printer(s) show on all iOS devices but only the original iPad (updated to iOS 6 with everything else) actually manages to print, everything else thinks it did but no errors come up in the CUPS log, no job was made, no file was sent, and nothing prints. Any ideas?
+
+If you're running Ubuntu 12.04 on your Mac, then post 19 should work.
+
+---
+
+### Post by olivermk on 2012-10-04
+Hi All,
+
+When choosing one copy of a PDF job, the device sends a PDF. But when choosing 2 copies, the print job is URF format. 
+Is there any way to disable this URF, to always receive PDF print jobs?
+
+Thanks,
+Oliver
+
+---
+
+### Post by lindend on 2012-10-16
+> **Sven Verhaegen said:**
+> 
+can someone make sure this is included in the 12.04 CUPS ?
+
+Running iOS 6 on my iPad3.  This technique works perfectly with 10.04 (Lucid).  Thanks.
+
+One problem though. If/when the WiFi connection drops and then reconnects, the iPad can't find the printer and I have to restart cups in order to print again.  Anyone else run into this issue. 
+
+I saw a link to this discussion earlier in the thread
+
+[http://forums.macrumors.com/showthread.php?t=1396875](http://forums.macrumors.com/showthread.php?t=1396875)
+
+but that seems to indicate that enabling/disabling WiFi solves the problem, but that isn't true in my case.  Restarting cups seems to be my only solution right now and that isn't ideal.
+
+---
+
+### Post by crud302 on 2012-11-03
+I ran airprint-generate on my Ubuntu 12.04 64-bit machine.  That, along with the cups config files from James Elliot in Post #43 nearly had everything working for iPhone 4 with either iOS 5.0.1 or iOS 6.0.1.  I did have to change the avahi .service files generated  as follows
+
+```
+                                                                                   -  <txt-record>URF=none</txt-record>
++  <txt-record>URF=DM3</txt-record>
+                                                    
+```
+
+once I did that, airprint works from both iOS 5 and 6. (iPhone 4).  Haven't tested other iStuff.
+
+That all was kind of a pain, so I put it all together in a fork of tjfontaine's airprint-generate. It includes the appropriate fix in the python script.  The github repo also includes the cups files.  I have a pull request in with the main airprint-generate repo.  Until that time, you can get code with these latest commits at:
+
+[https://github.com/cainscou/airprint-generate](https://github.com/cainscou/airprint-generate)
+
+hope this is useful to someone.
+
+---
+
+### Post by Sven Verhaegen on 2012-12-21
+New CUPS version is released (for 12.04) 
+
+
+An update to cups-bsd from 1.5.3-0ubuntu5.1 to 1.5.3-0ubuntu6 is available.
+An update to cups-client from 1.5.3-0ubuntu5.1 to 1.5.3-0ubuntu6 is available.
+An update to cups-common from 1.5.3-0ubuntu5.1 to 1.5.3-0ubuntu6 is available.
+An update to cups-ppdc from 1.5.3-0ubuntu5.1 to 1.5.3-0ubuntu6 is available.
+
+
+The printers are by default exported and working without the work-around ...... just tested it
+You off-course need to have DNSSD enabled on CUPS otherwise the printers are not shown up [ sudo cupsctl 'BrowseLocalProtocols="cups dnssd"' ]
+
+I now have the printers twice, will see if the "rollback" is simply deleting the 2 mime files and the avahi service files (i guess that should be it, nothing more or less)
+
+---
+
+### Post by mjcross on 2013-04-07
+Hello all - for the record I've found that although using a TXT record of 'URF=none' can work OK for printing from most applications (mail, pages, safari), I couldn't get anything to print from iBooks or keynote. With 'URF=DM3' they seem to work too. Hooray!
+
+Incidentally, while multicast DNS-SD is really cool to have in cups, I personally created the relevant SRV and TXT records in the name server of my WLAN subnet - this is a bit more useful if your print server, like mine, is on a different (wired) subnet. I got the idea from [http://www.dns-sd.org/ServerSetup.html](http://www.dns-sd.org/ServerSetup.html) :D
+
+Many thanks for sharing all the so-useful information.
+Martin
+
+---
+
+### Post by mgmiller on 2013-05-19
+I just had a similar problem.  My wife has an iPad 3 and she wanted to print to a shared printer on our network that is hanging off a 64 bit Ubuntu 12.04 server.  I found the following info that worked with minimal fuss.  No config files to mess with, just some simple point and click GUI stuff (other then running one command in terminal, and if I just logged off and on after adding the startup application info, that would not have been necessary). 
+
+The author says this fix was broken by iOS 6, but with a current 64 bit version of 12.04.2  and iOS 6.1.3 it works perfectly from an iPad.
+
+The following is exactly what I found....
+
+[https://plus.google.com/101074687909580910590/posts/jRfoeKfwHxM](https://plus.google.com/101074687909580910590/posts/jRfoeKfwHxM)
+   [h=3][Keith Weinberg]("https://plus.google.com/101074687909580910590")[/h] Shared publicly  -  [May 28, 2012]("https://plus.google.com/101074687909580910590/posts/jRfoeKfwHxM")
+ Airprint from all your existing Linux printers. (for free obviously -- no need to buy a new printer to print from an Ipad)
+
+
+The solution for precise (ubuntu 12.04)
+1) Download the latest deb from [http://ppa.launchpad.net/hughescih/ppa/ubuntu/pool/main/a/airprint-daemon/](http://ppa.launchpad.net/hughescih/ppa/ubuntu/pool/main/a/airprint-daemon/)
+2) find the file and double-click, choose "Install"
+3) open Printers and, in the "top bar", choose Server Settings
+4) follow instruction and image at: 
+[http://www.azsoftwaredownload.com/linux/apple-airprint-support-ubuntu](http://www.azsoftwaredownload.com/linux/apple-airprint-support-ubuntu)
+
+It worked for me. . . printing from the ipad on an old (but still good) printer.
+ [Index of /hughescih/ppa/ubuntu/pool/main/a/airprint-daemon]("http://ppa.launchpad.net/hughescih/ppa/ubuntu/pool/main/a/airprint-daemon/")
+ [ppa.launchpad.net]("http://ppa.launchpad.net/hughescih/ppa/ubuntu/pool/main/a/airprint-daemon/")
+ 
+
+ 
+
+ Here is what I did...
+
+ Fairly simple.   I down loaded the deb, clicked to install it.   
+ I opened a terminal and ran the command...
+ airprint-daemon
+ 
+
+ Then I closed the terminal.  Nothing showed up in running processes.
+ Open the printer settings.  In top panel click on Server and make sure the boxes to share the printer and print from internet are checked.
+ 
+
+ Close the dialog.
+ 
+
+ To make it permanent, I added to the startup applications,
+ 
+
+ Airport-Daemon
+ /usr/sbin/airprint-daemon
+ Airprint support for iOS devices
+ 
+
+ All my printers showed up in the ipad right away.  It would not print until I selected to turn off 2 sided printing on the iPad print dialog.
+
+---
+

@@ -1,0 +1,172 @@
+---
+title: "Can't log in.  Please Help!"
+date: 2009-02-16
+forum: General Help
+---
+
+### Post by Rogbert on 2009-02-16
+Hi,
+
+I can't log in on my ubuntu 8.10 machine.  When I enter my name and password the screen goes black for just a second and then goes straight back to the username screen.  I really need to get back into my system!  Any help really appreciated.
+
+---
+
+### Post by Phlee on 2009-02-16
+Can you alt+f2 and get into a cli with the username and password?
+
+---
+
+### Post by Rogbert on 2009-02-16
+alt-f2 from the login screen?
+
+---
+
+### Post by Phlee on 2009-02-16
+Yeap
+
+---
+
+### Post by Rogbert on 2009-02-16
+alt-f2 doesn't seem to do anything.  I can get into the cli from the grub menu (recovery mode), but then what?
+
+---
+
+### Post by Phlee on 2009-02-16
+Check your logfiles inside /var/log.  Check syslog and see if you can see anything that might gleem the issue.
+
+---
+
+### Post by Rogbert on 2009-02-16
+how do I check those (never needed that before).  Gedit /var/log?
+
+---
+
+### Post by Phlee on 2009-02-16
+"cat /var/log/syslog | more" that should get you started.
+
+---
+
+### Post by Rogbert on 2009-02-16
+oops, hang on...I'm getting:
+my name-desktop --MARK-- /USR/SBIN/CRON[7494]: (root) CMD (   dc / && run-parts --report /etc/cron.hourly)
+
+Also: my name-desktop kernel: [311638.160.265] sudo[7939]: segfault at 0 ip b7bd1b0b sp bf806d10 error 4 in pam_smbpass.so[b7b75000+12a000]
+
+Mean anything to you?
+
+---
+
+### Post by Phlee on 2009-02-16
+> **Rogbert said:**
+> cat var/log/syslog | more
+No such file or directory.  I can access the file system through the live cd.  Should I try that?
+
+
+It really shouldn't matter a that point.  But it looks like you've missed you leading '/'
+
+"cat /var/log/syslog | more"
+
+---
+
+### Post by Phlee on 2009-02-16
+Another thing you might want to do is change the password for the user.  Let's say you've created a user of "Jim"
+
+sudo -s
+passwd jim
+<new password>
+
+By no means are these thing probally helpful just tools of the trade;)
+
+---
+
+### Post by Rogbert on 2009-02-16
+and also:
+myname-desktop bonobo-activation-server (myname-12485): could not associate with desktop session: Failed to connect to socket /tmp/dbus-Xkh591yi1U: Connection refused
+
+---
+
+### Post by Phlee on 2009-02-16
+Not a clue could be an actualy harddrive corruption.  What happends if you run fsck?
+
+---
+
+### Post by Phlee on 2009-02-16
+Interesting,  I'm by no means an expert.  But is you Xwindows running?  I would check the conf.  You could have set a resolution your video card/Ubuntu dosen't like and it won't kick over the xserver.
+
+---
+
+### Post by Rogbert on 2009-02-16
+comes back as no problems but when I try Repair broken packages I get:
+cannot remove '/var/lib/apt/lists/partial/*;: No such file or directory
+cannot remove '/var/cache/apt/archives/partial/*;: No such file or directory
+Hard drive seems ok.  As I said I can access with live cd.
+
+---
+
+### Post by Phlee on 2009-02-16
+> **Rogbert said:**
+> comes back as no problems but when I try Repair broken packages I get:
+cannot remove '/var/lib/apt/lists/partial/*;: No such file or directory
+cannot remove '/var/cache/apt/archives/partial/*;: No such file or directory
+Hard drive seems ok.  As I said I can access with live cd.
+I'm an oldskool hack:P
+
+Okie just for giggles.  What if you:
+
+```
+apt-get purge || apt-get autoclean
+```
+
+If that doesn't work what if you:
+```
+mkdir /var/lib/apt/lists/partial/
+```
+```
+mkdir /var/cache/apt/archives/partial/
+```
+
+than try to repair?
+
+---
+
+### Post by Rogbert on 2009-02-16
+Thanks for trying by the way.  The first one runs but doesn't change my situation any, the next two return "file exists".  When I try to repair broken packages I get a whole bunch of "failed to fetch...could not resolve" messages and it tells me it failed to download some index files and I may want to run run apt-get update to correct these.  When I try that it gives me the same failed to get...run apt-get update again.
+
+---
+
+### Post by Phlee on 2009-02-16
+Well I've ran into some failed to fetch error with apt when I can't resolve DNS or don't have a valid internet connection.
+
+Do you have:
+```
+nameserver ip.of.dns.server
+```
+inside your /etc/resolv.conf?
+
+Can you nslookup google.com?
+get queries etc?  Sorry man, gotta go get food with the girl.  I'll check back when we get back.  Lates.
+
+P
+
+---
+
+### Post by Rogbert on 2009-02-16
+not too sure how to do those things.  nslookup google.com gives:
+connection timed out; no servers could be reached.  However, if I boot that computer to windows firefox works just fine.
+
+---
+
+### Post by Phlee on 2009-02-16
+Just did a quick search don't have long enuff to try to explain.  See if this will help you.
+
+[http://theos.in/desktop-linux/resolve-conf-linux-example/](http://theos.in/desktop-linux/resolve-conf-linux-example/)
+
+---
+
+### Post by Rogbert on 2009-02-16
+when I do: # cat /etc/resolv.conf 
+I get back "Generated by NetworkManager"
+This is also the only thing in the /etc/resolv.conf folder.
+
+---
+

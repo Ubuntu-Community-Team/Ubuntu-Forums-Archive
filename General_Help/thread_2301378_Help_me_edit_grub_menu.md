@@ -1,0 +1,196 @@
+---
+title: "Help me edit grub menu"
+date: 2015-11-02
+forum: General Help
+---
+
+### Post by aiglesh on 2015-11-02
+I want to edit this grub menu in a way that first option will boot automatically after 5 or 10 seconds without any key board input.
+
+
+```
+if loadfont /boot/grub/font.pf2 ; then
+    set gfxmode=auto
+    insmod efi_gop
+    insmod efi_uga
+    insmod gfxterm
+    terminal_output gfxterm
+ fi
+
+ set menu_color_normal=white/black
+ set menu_color_highlight=black/light-gray
+
+ menuentry "Try Ubuntu without installing" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed boot=casper quiet splash ---
+    initrd    /casper/initrd.lz
+ }
+ menuentry "Install Ubuntu" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed boot=casper only-ubiquity quiet splash ---
+    initrd    /casper/initrd.lz
+ }
+ menuentry "OEM install (for manufacturers)" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed boot=casper only-ubiquity quiet splash oem-config/enable=true ---
+    initrd    /casper/initrd.lz
+ }
+ menuentry "Check disc for defects" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  boot=casper integrity-check quiet splash ---
+    initrd    /casper/initrd.lz
+ } 
+```
+
+Another one:
+
+
+```
+menuentry 'Android-x86 4.4-r3 Live' --class android-x86 {
+    search --file --no-floppy --set=root /system.sfs
+    linuxefi /kernel root=/dev/ram0 androidboot.hardware=android_x86 quiet DATA=
+    initrdefi /initrd.img
+ }
+
+ menuentry 'Android-x86 4.4-r3 DEBUG mode' --class android-x86 {
+    search --file --no-floppy --set=root /system.sfs
+    linuxefi /kernel root=/dev/ram0 androidboot.hardware=android_x86 DATA= DEBUG=2
+    initrdefi /initrd.img
+ }
+
+ menuentry 'Android-x86 4.4-r3 Installation' --class android-x86 {
+    search --file --no-floppy --set=root /system.sfs
+    linuxefi /kernel root=/dev/ram0 androidboot.hardware=android_x86 DEBUG= INSTALL=1
+    initrdefi /initrd.img
+ }
+
+ menuentry 'Windows 8' {
+    search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
+    chainloader (${root})/EFI/Microsoft/Boot/bootmgfw.efi
+ }
+```
+Thanks for the help.
+
+---
+
+### Post by mikodo on 2015-11-02
+I have no idea how to that. Does my Xubuntu's  /etc/default/grub give you any clues:
+
+```
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+#GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+```
+
+---
+
+### Post by aiglesh on 2015-11-02
+Unfortunately I can't get any idea. However I do think that it must be easy for any expert user here. Thanks any way.
+
+---
+
+### Post by ajgreeny on 2015-11-02
+Where are those grub configuration files from; they are certainly not standard grub.cfg from an installed OS but look more like the configuration you get if you have installed grub on a USB drive and are booting from that.
+
+Tell us more; what are you doing and where have you got to with it so far.
+
+---
+
+### Post by Bucky Ball on 2015-11-02
+As above, unsure where that file is, but you should be editing '/etc/default/grub', not /grub.cfg,  then running 'sudo update-grub' after saving the changes and closing the file.
+
+Looks like you are trying to edit the ISO boot file or something as you have the lines for the options 'Try Ubuntu' and 'Install Ubuntu' there. Confused. :-k
+
+---
+
+### Post by grahammechanical on 2015-11-02
+The line to edit in /etc/default/grub is
+
+> GRUB_TIMEOUT=10
+
+Taken from my /etc/default/grub. Compare the same line in Mikodo's grub.cfg
+
+> GRUB_TIMEOUT=5
+
+Note: the comment at the top of the /etc/default/grub file
+
+> # If you change this file, run 'update-grub' afterwards to update 
+# /boot/grub/grub.cfg.
+
+Compare it with the comment at the top of grub.cfg
+
+> # DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+
+
+update-grub is a script that runs grub-mkconfig.
+
+Regards.
+
+---
+
+### Post by aiglesh on 2015-11-02
+Sorry for the confusion guys. 
+
+First one is the ubuntu 15.10 64 bit iso installed on a bootable USB via rufus tool as GPT partition and UEFi boot.
+
+Second one is Android iso installed on a bootable USB, via rufus tool as GPT partition and UEFi boot.
+
+[https://forums.lenovo.com/t5/Windows-based-Tablets/Lenovo-MIIX2-8-Android-x86-4-4-r3-Bootable-USB/td-p/2134211](https://forums.lenovo.com/t5/Windows-based-Tablets/Lenovo-MIIX2-8-Android-x86-4-4-r3-Bootable-USB/td-p/2134211)
+
+I am trying to boot these on a touch screen tablet so I don't have a keybaord. The USB boots fine in each case but I am stuck at grub as it needs me to ENTER the first option, Live boot. Touch is not working at grub screen and there is not physical keyboard attached. So I want to edit the grub menu so that it will automatically boot first option( live boot) after few seconds.
+
+---
+
+### Post by yancek on 2015-11-02
+Rufus is used to create a bootable usb installation medium for windows/Linux and with Linux, a Live CD which you can use to test it.  They are read-only filesystems and you cannot change them.  If you were able to change anything, the changes would be lost on reboot.  You would need to have software which can create a bootable usb with persistence which I don't believe you can do with Rufus.
+
+---
+
+### Post by aiglesh on 2015-11-02
+Hmmm.... are you sure? I think the only way to confirm this will be to edit it and then try and see.
+
+---
+
+### Post by yancek on 2015-11-02
+>  			 			Hmmm.... are you sure? I think the only way to confirm this will be to edit it and then try and see. 		
+
+Try it and see.  Take a look at the Rufus site, a link to it's FAQ below, the section under planned features where the question "Do you plan to add persistent data support".  The answer is no.  It's a Live CD on a flash drive.  Some software allows you to create persistence on some systems.  I looked through the Rufus site and didn't see any mention of it except the quote above from the link below.  iso filesystems are always read-only.
+
+[https://github.com/pbatard/rufus/wiki/FAQ](https://github.com/pbatard/rufus/wiki/FAQ)
+
+---
+

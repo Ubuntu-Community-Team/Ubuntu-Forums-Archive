@@ -1,0 +1,130 @@
+---
+title: "cygwin and SSH problems"
+date: 2011-05-21
+forum: General Help
+---
+
+### Post by Nanyak on 2011-05-21
+Hi all,
+
+Having some problems ssh'ing my ubuntu machine through cygwin. I can ssh through putty (piece of cake), but have been stuck below!
+
+Any help is appreciated!
+
+Here is what I did in cygwin to start things off:
+```
+ssh-host-config
+```
+> Overwrite existing /etc/ssh_config file <yes/no> **yes**
+Overwrite existing /etc/ssh**d**_config file <yes/no> **yes**
+Should privilege separation be used? <yes/no> **yes**
+and then I set the variable to ntsec tty
+
+```
+ssh-keygen -t rsa -b 2048
+```
+
+I then add the key in the /home/nanyak/.ssh/id_rsa.pub to the authorized keys folder in my ubuntu server (which also has the public key used by putty). I make sure that I chmod 600 the authorized_keys file.
+
+```
+net start ssh**d**
+```
+
+then when I use the command ssh nanyak@192.168.1.2, I cannot ssh into my sever. It says
+> ssh: connect to host 192.168.1.2 port 22: Connection timed out
+
+Here is the config file (/etc/ssh_config) for cygwin
+> #	$OpenBSD: ssh_config,v 1.26 2010/01/11 01:39:46 dtucker Exp $
+
+
+# This is the ssh client system-wide configuration file.  See
+
+# ssh_config(5) for more information.  This file provides defaults for
+
+# users, and the values can be changed in per-user configuration files
+
+# or on the command line.
+
+
+# Configuration data is parsed as follows:
+
+#  1. command line options
+
+#  2. user-specific file
+
+#  3. system-wide file
+# Any configuration value is only changed the first time it is set.
+
+# Thus, host-specific definitions should be at the beginning of the
+
+# configuration file, and defaults at the end.
+
+# Site-wide defaults for some commonly used options.  For a comprehensive
+# list of available options, their meanings and defaults, please see the
+
+# ssh_config(5) man page.
+
+
+# Host *
+
+#   ForwardAgent no
+
+#   ForwardX11 no
+
+#   RhostsRSAAuthentication no
+
+#   RSAAuthentication yes
+
+#   PasswordAuthentication yes
+
+#   HostbasedAuthentication no
+
+#   GSSAPIAuthentication no
+
+#   GSSAPIDelegateCredentials no
+
+#   BatchMode no
+
+#   CheckHostIP yes
+
+#   AddressFamily any
+
+#   ConnectTimeout 0
+
+#   StrictHostKeyChecking ask
+
+#   IdentityFile ~/.ssh/identity
+
+   IdentityFile ~/.ssh/id_rsa
+
+#   IdentityFile ~/.ssh/id_dsa
+
+#   Port 22
+#   Protocol 2,1
+
+#   Cipher 3des
+
+#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
+
+#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+
+#   EscapeChar ~
+
+#   Tunnel no
+
+#   TunnelDevice any:any
+
+#   PermitLocalCommand no
+
+#   VisualHostKey no
+
+#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+
+
+---
+
+### Post by wgarcia on 2011-05-22
+Can you ping to 192.168.1.2?
+
+---
+

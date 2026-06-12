@@ -1,0 +1,483 @@
+---
+title: "Grub2 errors: Can't read file and need to load kernel first"
+date: 2011-05-19
+forum: General Help
+---
+
+### Post by pwaring on 2011-05-19
+I've got a Lucid system (normal Ubuntu, not any of the derivative distros) which has been throwing up the following error message this morning when trying to boot:
+
+```
+
+error: couldn't read file.
+error: you need to load the kernel first.
+Press any key to continue...
+```
+
+Sometimes the error message also includes:
+
+```
+Failed to boot both default and fallback entries
+```
+
+Rebooting doesn't seem to solve the problem, and I get the same error if I try loading any of the other menu options (e.g. an earlier kernel).
+
+I've tried following the instructions from this page:
+
+[https://help.ubuntu.com/community/Grub2#Command%20Line%20Mode](https://help.ubuntu.com/community/Grub2#Command%20Line%20Mode)
+
+Specifically:
+
+```
+
+set root=(hdX,Y)
+linux /vmlinuz root=/dev/sdXY ro
+initrd /initrd.img
+boot
+```
+
+However, when I get to enter the linux line I get the following error message:
+
+```
+
+linux /vmlinuz root=/dev/sda3 ro
+error: couldn't read file
+```
+
+Is there anything else I can try? From searching the forums it seems that some people have suggested re-installing grub, but that's a bit difficult when I can't even boot the kernel. :)
+
+---
+
+### Post by lmarmisa on 2011-05-19
+Boot into a Ubuntu Live CD/USB, open Firefox and go the the page
+
+[http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/)
+
+Try to run the Boot Info Script following the instructions and post here the results.
+
+---
+
+### Post by pwaring on 2011-05-19
+Is there anything I can try other than a LiveCD? I don't think I have any blank CDs and my machine won't boot off USB.
+
+---
+
+### Post by lmarmisa on 2011-05-19
+Do you have a USB flash drive?. 
+
+[COLOR="Blue"]Sorry, I did not read your machine is unable to boot from USB.[/COLOR]
+
+---
+
+### Post by pwaring on 2011-05-19
+Yes, but as I mentioned, my machine won't boot off USB.
+
+---
+
+### Post by pwaring on 2011-05-19
+I managed to find my Lucid install CD which doubles up as a LiveCD, results from bootinfo script are:
+
+```
+
+                  Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 3 for /boot/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda2: __________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files:        
+
+sda3: __________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.2 LTS
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1               2,048     7,999,487     7,997,440  82 Linux swap / Solaris
+/dev/sda2         195,428,352   488,396,799   292,968,448  83 Linux
+/dev/sda3    *      7,999,488   195,426,303   187,426,816  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        4b75537e-eeaa-4725-b66d-6ad173fc5f1c   swap       
+/dev/sda2        e55ba19d-6954-4b1e-8e9a-64300c4b727b   ext3       
+/dev/sda3        b0176ba7-a62b-41f9-b3e2-8cf861d08984   ext3       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda2        /media/e55ba19d-6954-4b1e-8e9a-64300c4b727b ext3       (rw,nosuid,nodev,uhelper=udisks)
+/dev/sda3        /media/b0176ba7-a62b-41f9-b3e2-8cf861d08984 ext3       (rw,nosuid,nodev,uhelper=udisks)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+=========================== sda3/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,3)'
+search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,3)'
+search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-31-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-31-generic ...'
+	linux	/boot/vmlinuz-2.6.32-31-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-30-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-30-generic ...'
+	linux	/boot/vmlinuz-2.6.32-30-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-29-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-29-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-29-generic ...'
+	linux	/boot/vmlinuz-2.6.32-29-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-29-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-28-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-28-generic ...'
+	linux	/boot/vmlinuz-2.6.32-28-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-27-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-27-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-27-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-27-generic ...'
+	linux	/boot/vmlinuz-2.6.32-27-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux	/boot/vmlinuz-2.6.32-24-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	echo	'Loading Linux 2.6.32-24-generic ...'
+	linux	/boot/vmlinuz-2.6.32-24-generic root=UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,3)'
+	search --no-floppy --fs-uuid --set b0176ba7-a62b-41f9-b3e2-8cf861d08984
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda3/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda3 during installation
+UUID=b0176ba7-a62b-41f9-b3e2-8cf861d08984 /               ext3    errors=remount-ro 0       1
+# /home was on /dev/sda2 during installation
+UUID=e55ba19d-6954-4b1e-8e9a-64300c4b727b /home           ext3    defaults        0       2
+/dev/sda1       none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sda3: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+  73.736434937 = 79.173894144   boot/grub/core.img                             1
+  73.736442566 = 79.173902336   boot/grub/grub.cfg                             1
+  73.744197845 = 79.182229504   boot/initrd.img-2.6.32-24-generic              5
+  73.712963104 = 79.148691456   boot/initrd.img-2.6.32-27-generic              5
+  73.796398163 = 79.238279168   boot/initrd.img-2.6.32-28-generic              6
+  73.804264069 = 79.246725120   boot/initrd.img-2.6.32-29-generic              4
+  73.765468597 = 79.205068800   boot/initrd.img-2.6.32-30-generic              6
+  73.775421143 = 79.215755264   boot/initrd.img-2.6.32-31-generic              3
+  73.787075043 = 79.228268544   boot/vmlinuz-2.6.32-24-generic                 2
+  73.793670654 = 79.235350528   boot/vmlinuz-2.6.32-27-generic                 4
+  73.748027802 = 79.186341888   boot/vmlinuz-2.6.32-28-generic                 4
+  73.696022034 = 79.130501120   boot/vmlinuz-2.6.32-29-generic                 2
+  73.754722595 = 79.193530368   boot/vmlinuz-2.6.32-30-generic                 6
+  73.808345795 = 79.251107840   boot/vmlinuz-2.6.32-31-generic                 6
+  73.775421143 = 79.215755264   initrd.img                                     3
+  73.765468597 = 79.205068800   initrd.img.old                                 6
+  73.808345795 = 79.251107840   vmlinuz                                        6
+  73.754722595 = 79.193530368   vmlinuz.old                                    6
+
+
+```
+
+---
+
+### Post by lmarmisa on 2011-05-19
+Try to reinstall GRUB. I recommend to follow this method based on the command chroot:
+
+[https://help.ubuntu.com/community/Gr...3%20-%20CHROOT](https://help.ubuntu.com/community/Gr...3%20-%20CHROOT)
+
+Please, boot into a Ubuntu Live CD, open a terminal and type these commands:
+
+```
+
+sudo mount /dev/sda3 /mnt
+sudo mount --bind /dev  /mnt/dev
+sudo mount --bind /dev/pts  /mnt/dev/pts
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys  /mnt/sys
+sudo chroot /mnt
+update-grub
+grub-install /dev/sda
+grub-install --recheck /dev/sda
+exit
+sudo umount /mnt/dev/pts
+sudo umount /mnt/dev
+sudo umount /mnt/proc
+sudo umount /mnt/sys
+sudo umount /mnt
+sudo reboot
+
+```
+
+Abort the procedure if you get some error.
+
+---
+
+### Post by pwaring on 2011-05-19
+That went through without any errors, however I now get:
+
+```
+Verifying DMI Pool Data .......
+Boot from CD : 
+error: hd0,3 out of disk.
+grub rescue>
+
+```
+
+---
+
+### Post by lmarmisa on 2011-05-19
+Maybe this error is due to your BIOS. Enter the BIOS menu and check if your hard drive is detected and if the boot order is correct. Try to reset the BIOS to default settings:
+
+[http://www.computerhope.com/issues/ch000474.htm](http://www.computerhope.com/issues/ch000474.htm)
+
+If the problem persists, run again Boot Info Script.
+
+Anyway, I believe your current problem is related to BIOS.
+
+---
+
+### Post by pwaring on 2011-05-19
+The hard drive is detected, and if I force the BIOS to boot from the hard drive first I get to the grub menu. I can't see how the problem is with the BIOS if it can load the grub menu, given that Grub's configuration is saved on disk. I have also not changed the BIOS settings since purchasing this machine - they are already at the default settings.
+
+However, I still get the "error: couldn't read file" message when I try booting through grub. Given that I have a backup of all my data (although not my VMs, which I'll have to rebuild from scratch), I am just going to put a fresh install of the latest Ubuntu on the machine and see if that fixes that problem - past experience suggests it does.
+
+---
+
+### Post by lmarmisa on 2011-05-19
+> **pwaring said:**
+> The hard drive is detected, and if I force the BIOS to boot from the hard drive first I get to the grub menu. I can't see how the problem is with the BIOS if it can load the grub menu, given that Grub's configuration is saved on disk. I have also not changed the BIOS settings since purchasing this machine - they are already at the default settings.
+
+However, I still get the "error: couldn't read file" message when I try booting through grub. Given that I have a backup of all my data (although not my VMs, which I'll have to rebuild from scratch), I am just going to put a fresh install of the latest Ubuntu on the machine and see if that fixes that problem - past experience suggests it does.
+
+I do not know if a fresh install will fix your problem. Anyway, if your VMs are defined in the home partition /dev/sda2, you can maintain those files while you install the new Ubuntu version. Use manual selection of partitions, define /dev/sda3 for root and mark it for formating, and define /dev/sda2 for /home, but in this case, do not mark the partition for formating. If you follw this procedure, the VMs files (mainly virtual disks) will be preserved during the new installation.
+
+---
+
+### Post by pwaring on 2011-05-22
+I tried a reinstall and moving the partitions around (the /boot partition wasn't the first on the disk), now I get the errors:
+
+```
+
+Boot from CD...
+error: hd0 out of disk
+error: no suitable mode found
+error: no video mode activated
+
+```
+
+I'm going to try and install XP to see whether it's definitely a problem with Ubuntu or not.
+
+---
+

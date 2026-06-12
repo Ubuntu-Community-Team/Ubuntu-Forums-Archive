@@ -1,0 +1,215 @@
+---
+title: "xorg issues new to ubuntu please help!"
+date: 2009-03-18
+forum: General Help
+---
+
+### Post by rhwallac on 2009-03-18
+Hey guys,
+
+so im pretty new to ubuntu and have been using it for about 3 months now and i havent had any problems until now. i am running ubuntu 8.04 on a sony vaio vgn-nr498e. i love ubuntu its great but it can be very frustrating. anywho on to the good stuff. . .
+
+so i recently bought a vga-vga cable so i would be able to watch movies on my tv and it has now been a continuous nightmare. i was able to watch the movies great and it worked fine until i tried to watch movies just on my laptop.
+
+whenever i open a movie it works fine, however if i try to resize it to a bigger size, the screen goes blank! moreover when i try to watch movies in VLC the movie automatically goes to fullscreen and is just an annoying BLUE SCREEN. I can still here the sound and my laptop seems to be functioning, however the screen is inactive. the only way to resolve this issue is shutting off my laptop and turning it back on.
+
+so in pursuit of trying to fix the error i messed around with the xorg file. i run "sudo dpkg-reconfigure xserver-xorg" and now my super and alt key dont work correctly.
+
+to try and resolve that i try and delete xorg hoping it will regenerate itself by runnig "sudo rm /etc/X11/xorg.conf" problem solved keys work correctly, but now my MOUSE SCROLLING doesnt work.
+
+after all this the video issues still persist and i cannot successfully watch a movie when its resized bigger.
+
+i am annoyed i am frustrated i need help!
+if anybody can help me it would be greatly appreciated. thanks!
+
+---
+
+### Post by LowSky on 2009-03-18
+plase post the contants of this file i'm about to make you open
+
+```
+sudo gedit /etc/X11/xorg.conf
+```
+
+---
+
+### Post by D3ath on 2009-03-18
+i know with my nvidia card i had to manually edit the xorg file or anything to work right. but thats was only because nvidia couldn't edit the xorg file running it as the local user. there should be a graphics program in the admin drop down to select.  then edit the resolution and click on apply.  then below you should be able to click on a button that says save to xorg.conf.  when you click it it won't let you save the file thats fine.  Click on the view this file or something along those lines and copy that output into the xorg.conf file.  That should help but its only another thing to try. It worked for me. :D
+
+---
+
+### Post by rhwallac on 2009-03-18
+hey sorry i got back too you so late, but when i type in that command it opens up the contents, which unfortunately is nothing. the screen loads the xorg.conf file and it is blank =(
+
+---
+
+### Post by Therion on 2009-03-18
+I think Low' meant:
+
+```
+sudo nano /etc/X11/xorg.conf
+```
+
+To confuse you further, it's not that your xorg.conf is blank, you just opened a blank file.  
+
+Don't worry about it.  Just use the command I gave you.
+
+---
+
+### Post by rhwallac on 2009-03-18
+ok so when i run that command my terminal says GNU nano 2.0.7 at the top.
+has new file on the bottom with all these commands and I am able to write into this "file". it almost seems as I am modifying/editing a file?
+
+---
+
+### Post by MaindotC on 2009-03-18
+> **LowSky said:**
+> plase post the contants of this file i'm about to make you open
+
+```
+sudo gedit /etc/X11/xorg.conf
+```
+There's nothing wrong with LowSky's command - you should be able to execute this and it should display the contents of the xorg.conf file which you should copy and paste into this thread.  If you do that and the file is blank, you don't have a xorg.conf file (bad) or you deleted it (bad) or you didn't execute the command properly.  Were you prompted for the password?
+
+---
+
+### Post by rhwallac on 2009-03-18
+yes yess i think i deleted it using a "sudo rm" command i posted in my first thread. i read somewhere that the xorg.conf file regenerates itsel on default.
+
+i feel like this problem can be easily fixed if i knew exactly what to put in my xorg.conf file or if i could manually create one. is this even possible?
+
+---
+
+### Post by MaindotC on 2009-03-18
+What sudo rm command ?!?! Who told you to do that????
+
+---
+
+### Post by rhwallac on 2009-03-18
+sudo rm /etc/X11/xorg.conf
+
+that one!
+
+and i read it on these ubuntu forums somewhere. usually where i solve all my problems
+
+---
+
+### Post by MaindotC on 2009-03-19
+Well that's not good.  I'm not qualified to advise you on how to build your own xorg.conf file, but I'll post mine so perhaps it will give you an idea of what you need and the parts that need to be present.  Be sure to match what is in my xorg.conf with my hardware listed in my signature before you attempt any changes yourself.  You could learn X11 yourself but it's a ton of documentation and I doubt you (I certainly don't) have the time for it.  Maybe someone else will be able to help you :(  Good luck!
+```
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+	Identifier     "Default Layout"
+	Screen      0  "aticonfig-Screen[0]-0" 0 0
+	InputDevice    "Synaptics Touchpad"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "Module"
+	Load  "GLcore"
+	Load  "glx"
+	Load  "dbe"
+	Load  "v4l"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Generic Keyboard"
+	Driver      "kbd"
+	Option	    "XkbRules" "xorg"
+	Option	    "XkbModel" "pc105"
+	Option	    "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Configured Mouse"
+	Driver      "mouse"
+	Option	    "CorePointer"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Synaptics Touchpad"
+	Driver      "synaptics"
+	Option	    "SendCoreEvents" "true"
+	Option	    "Device" "/dev/psaux"
+	Option	    "Protocol" "auto-dev"
+	Option	    "HorizEdgeScroll" "0"
+EndSection
+
+Section "Monitor"
+	Identifier   "aticonfig-Monitor[0]-0"
+	Option	    "VendorName" "ATI Proprietary Driver"
+	Option	    "ModelName" "Generic Autodetecting Monitor"
+	Option	    "DPMS" "true"
+EndSection
+
+Section "Device"
+	Identifier  "aticonfig-Device[0]-0"
+	Driver      "fglrx"
+	BusID       "PCI:1:0:0"
+EndSection
+
+Section "Screen"
+	Identifier "aticonfig-Screen[0]-0"
+	Device     "aticonfig-Device[0]-0"
+	Monitor    "aticonfig-Monitor[0]-0"
+	DefaultDepth     24
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
+```
+
+---
+
+### Post by D3ath on 2009-03-19
+If you looked at an earlier post of mine I tried to show you how to render the xorg.conf. You should be able to pull some settings in the Admin. If need be ill make some screenshots for you but let me know...
+
+---
+
+### Post by rhwallac on 2009-03-19
+That sounds great! You guys are very helpful so thank you very much. Also I am on spring break so I have plenty of time on my hands! Thanks Guys!
+
+---
+
+### Post by rhwallac on 2009-03-19
+OK so now my mouse scrolling and windows key works properly! yay.
+
+However, the video issues with VLC still persist. I just tried to open a video with VLC, the video went to automatic fullscreen and it was a blank inactive screen. I couldn't do anything but I could still hear the video. I had to shutdown my computer and start it back up again in order to do anything. I don't know what else to do here! Please help! Thanks again =)
+
+---
+
+### Post by MaindotC on 2009-03-19
+You may need to change the settings in VLC.  For example, in VLC I go to Settings -> Preferences -> Video -> Output Modules, click the "Advanced Options" box and choose a video output module.  I have to have mine set to X11 otherwise I'll get the same issues that you described.
+
+---
+
+### Post by rhwallac on 2009-03-20
+omg you are a genius! now I feel retarded cause I actually did look through these video settings and didn't know what to do. It works perfectly! I cant thank you enough man. Thanks a million! :D
+
+---
+
+### Post by MaindotC on 2009-03-20
+Np - all this information is in the documentation but vlc has pages and pages of documentation and most of it I don't really understand.
+
+---
+

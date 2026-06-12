@@ -1,0 +1,141 @@
+---
+title: "Epson 3490  Perfection Scanner under Ubuntu"
+date: 2008-03-26
+forum: General Help
+---
+
+### Post by pedro1hayling on 2008-03-26
+Hi - Hope I've come to the right section.
+My Problem is trying to get this scanner running under Ubuntu 7.10 (Gnome).
+This is what I've done to date - edited snapscan.conf to point to:
+
+usr/share/sane/snapscan/esfw52.bin
+
+I have put the driver in this location but it's not recognising it at all -  lsusb tells me it's there with
+
+Bus 005 Device 004: ID 04b8:0122 Seiko Epson Corp.
+
+I have exactly this set up on mepis 6.5 (Kde)  xsane and kooka both work - any ideas on how to get this peice of software to fire up my dead scanner would be much appreciated under ubuntu 
+
+Thanks for any ideas!  :(
+
+here is the snapscan.conf file:-
+
+#------------------------------ General -----------------------------------
+
+# Change to the fully qualified filename of your firmware file, if
+# firmware upload is needed by the scanner
+firmware /usr/share/sane/snapscan/esfw52.bin
+
+# If not automatically found you may manually specify a device name.
+
+# For USB scanners also specify bus=usb, e.g.
+# /dev/usb/scanner0 bus=usb
+
+# For SCSI scanners specify the generic device, e.g. /dev/sg0 on Linux.
+# /dev/sg0
+
+#---------------------------------------------------------------------------
+# No changes should be necessary below this line
+#---------------------------------------------------------------------------
+
+#-------------------------- SCSI scanners ----------------------------------
+# These SCSI devices will be probed automatically
+scsi AGFA * Scanner
+scsi COLOR * Scanner
+scsi Color * Scanner
+scsi ACERPERI * Scanner
+
+#--------------------------- USB scanners -----------------------------------
+# These USB devices will be probed automatically
+# (This will currently work only on Linux)
+
+# Benq/Acer/Vuego 310U
+#usb 0x04a5 0x1a20
+#usb 0x04a5 0x1a26
+
+# Benq/Acer/Vuego 320U
+#usb 0x04a5 0x2022
+
+# Benq/Acer/Vuego 620U / 620UT
+#usb 0x04a5 0x1a2a
+#usb 0x04a5 0x2040
+
+# Benq/Acer/Vuego 640U
+#usb 0x04a5 0x2060
+
+# Benq/Acer/Vuego 640BU
+#usb 0x04a5 0x207e
+
+# Benq/Acer/Vuego 640BT
+#usb 0x04a5 0x20be
+
+# Benq/Acer/Vuego 1240U
+#usb 0x04a5 0x20c0
+
+# Benq/Acer/Vuego 3300 / 4300
+#usb 0x04a5 0x20b0
+
+# Benq/Acer/Vuego 4300
+#usb 0x04a5 0x20de
+
+# Benq 5000E / 5000U
+#usb 0x04a5 0x20f8
+
+# Benq 5000
+#usb 0x04a5 0x20fc
+
+# Benq/Acer 5300
+#usb 0x04a5 0x20fe
+
+# Benq 5250C
+#usb 0x04a5 0x2137
+
+# Agfa 1236U
+#usb 0x06bd 0x0002
+
+# Agfa 1212U
+#usb 0x06bd 0x0001
+#usb 0x06bd 0x2061
+
+# Agfa Snapscan e10
+#usb 0x06bd 0x2093
+
+# Agfa Snapscan e20
+#usb 0x06bd 0x2091
+
+# Agfa Snapscan e25
+#usb 0x06bd 0x2095
+
+# Agfa Snapscan e26
+#usb 0x06bd 0x2097
+
+# Agfa Snapscan e40
+#usb 0x06bd 0x208d
+
+# Agfa Snapscan e42
+#usb 0x06bd 0x20ff
+
+# Agfa Snapscan e50
+#usb 0x06bd 0x208f
+
+# Agfa Snapscan e52
+#usb 0x06bd 0x20fd
+
+# Epson Perfection 660
+#usb 0x04b8 0x0114
+
+# Epson Perfection 1670
+#usb 0x04b8 0x011f
+
+# Epson Perfection 2480
+#usb 0x04b8 0x0121
+
+# Epson Perfection 3490
+usb 0x04b8 0x0122
+
+# Epson Stylus CX-1500
+#usb 0x04b8 0x080c
+
+---
+

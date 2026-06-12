@@ -1,0 +1,80 @@
+---
+title: "3D Graphics nonexistant after update"
+date: 2010-12-28
+forum: General Help
+---
+
+### Post by Lolpanda on 2010-12-28
+Alright so last night I re-installed Ubuntu 10.10 after a short, and unsuccessful bout with Fedora. The installation went flawlessly. Came to the desktop, installed the FGLRX drivers from the ubuntu swat x ppa (newer stable releases, not bleeding edge) installed wine(ppa), and played WoW for a few hours. Everything's going great. I didn't however install the updates as I really just wanted to play WoW with my friends from college.
+
+Below is the update log from when I went to sleep (dist-upgrade, ran through the night. Rebooted in the morning)
+
+```
+Start-Date: 2010-12-28  03:45:53
+Commandline: apt-get dist-upgrade
+Install: linux-headers-2.6.35-24:i386 (2.6.35-24.42, automatic), cups-ppdc:i386 (1.4.4-6ubuntu2.2, automatic), linux-headers-2.6.35-24-generic-pae:i386 (2.6.35-24.42, automatic), linux-image-2.6.35-24-generic-pae:i386 (2.6.35-24.42)
+Upgrade: gnome-keyring:i386 (2.92.92.is.2.31.91-0ubuntu4, 2.92.92.is.2.31.91-0ubuntu4.1), libkrb5-3:i386 (1.8.1+dfsg-5ubuntu0.1, 1.8.1+dfsg-5ubuntu0.2), libpurple0:i386 (2.7.3-1ubuntu3, 2.7.3-1ubuntu3.2), libpam0g:i386 (1.1.1-4ubuntu1, 1.1.1-4ubuntu2), libc-bin:i386 (2.12.1-0ubuntu6, 2.12.1-0ubuntu10), gwibber-service:i386 (2.32.0.1-0ubuntu1, 2.32.2-0ubuntu2), language-pack-zh-hans:i386 (10.10+20100930, 10.10+20101204), libkrb5support0:i386 (1.8.1+dfsg-5ubuntu0.1, 1.8.1+dfsg-5ubuntu0.2), gcalctool:i386 (5.32.0-0ubuntu1, 5.32.0-0ubuntu4), libutouch-grail1:i386 (1.0.14-0ubuntu1, 1.0.16-0ubuntu1), nautilus:i386 (2.32.0-0ubuntu1, 2.32.0-0ubuntu1.1), bind9-host:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), xulrunner-1.9.2:i386 (1.9.2.10+build1+nobinonly-0ubuntu1, 1.9.2.13+build3+nobinonly-0ubuntu0.10.10.1), libpam-modules:i386 (1.1.1-4ubuntu1, 1.1.1-4ubuntu2), libapparmor1:i386 (2.5.1~rc1-0ubuntu2, 2.5.1-0ubuntu0.10.10.2), libcupscgi1:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), xserver-xorg-video-ati:i386 (6.13.1-1ubuntu5, 6.13.2-0ubuntu1~xup1), gnome-settings-daemon:i386 (2.32.0-0ubuntu2, 2.32.0-0ubuntu3.1), hplip-cups:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1), sun-java6-plugin:i386 (6.20dlj-1ubuntu3, 6.22-0ubuntu1~10.10), fglrx:i386 (8.780-0ubuntu2, 8.801-0ubuntu1~xup~maverick), pulseaudio:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), dnsutils:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), python-aptdaemon-gtk:i386 (0.31+bzr506-0ubuntu2, 0.31+bzr506-0ubuntu4), update-manager-core:i386 (0.142.19, 0.142.20), python-aptdaemon:i386 (0.31+bzr506-0ubuntu2, 0.31+bzr506-0ubuntu4), libapparmor-perl:i386 (2.5.1~rc1-0ubuntu2, 2.5.1-0ubuntu0.10.10.2), libqt4-dbus:i386 (4.7.0-0ubuntu4, 4.7.0-0ubuntu4.2), thunderbird:i386 (3.1.4+build2+nobinonly-0ubuntu3, 3.1.7+build3+nobinonly-0ubuntu0.10.10.1), rhythmbox:i386 (0.13.1-0ubuntu5, 0.13.1-0ubuntu6), ubuntu-sso-client:i386 (1.0.3-0ubuntu1, 1.0.7-0ubuntu1), libpam-runtime:i386 (1.1.1-4ubuntu1, 1.1.1-4ubuntu2), language-pack-gnome-zh-hans:i386 (10.10+20100930, 10.10+20101204), system-config-printer-gnome:i386 (1.2.3+20100723-0ubuntu8, 1.2.3+20100723-0ubuntu8.1), python-libxml2:i386 (2.7.7.dfsg-4, 2.7.7.dfsg-4ubuntu0.1), libdecoration0:i386 (0.8.6-0ubuntu9, 0.8.6-0ubuntu9.1), libgexiv2-0:i386 (0.2.0-0ubuntu2, 0.2.0-0ubuntu2.1), hpijs:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1), libpam-gnome-keyring:i386 (2.92.92.is.2.31.91-0ubuntu4, 2.92.92.is.2.31.91-0ubuntu4.1), cups-client:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), linux-image-generic-pae:i386 (2.6.35.22.23, 2.6.35.24.28), libcupsmime1:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), libc-dev-bin:i386 (2.12.1-0ubuntu6, 2.12.1-0ubuntu10), libwebkit-1.0-2:i386 (1.2.4-1ubuntu1, 1.2.5-0ubuntu0.10.10.1), libdns66:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), libdrm-intel1:i386 (2.4.21-1ubuntu2, 2.4.22-2ubuntu1), hplip:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1), libcamel1.2-14:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), gconf2:i386 (2.31.91-0ubuntu3, 2.31.91-0ubuntu3.1), linux-headers-2.6.35-22:i386 (2.6.35-22.33, 2.6.35-22.35), system-config-printer-udev:i386 (1.2.3+20100723-0ubuntu8, 1.2.3+20100723-0ubuntu8.1), libcairo2:i386 (1.10.0-1ubuntu2, 1.10.0-1ubuntu3), libpulse-mainloop-glib0:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libedata-cal1.2-7:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libgvfscommon0:i386 (1.6.4-0ubuntu1, 1.6.4-0ubuntu1.1), linux-libc-dev:i386 (2.6.35-1022.33, 2.6.35-1024.42), nautilus-data:i386 (2.32.0-0ubuntu1, 2.32.0-0ubuntu1.1), libgpod4:i386 (0.7.94-0ubuntu2, 0.7.95-1), pidgin-data:i386 (2.7.3-1ubuntu3, 2.7.3-1ubuntu3.2), python-minimal:i386 (2.6.6-2ubuntu1, 2.6.6-2ubuntu2), libsmbclient:i386 (3.5.4~dfsg-1ubuntu8, 3.5.4~dfsg-1ubuntu8.1), libisccc60:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), libk5crypto3:i386 (1.8.1+dfsg-5ubuntu0.1, 1.8.1+dfsg-5ubuntu0.2), sun-java6-bin:i386 (6.20dlj-1ubuntu3, 6.22-0ubuntu1~10.10), gconf-defaults-service:i386 (2.31.91-0ubuntu3, 2.31.91-0ubuntu3.1), libevolution:i386 (2.30.3-1ubuntu6, 2.30.3-1ubuntu7.1), jockey-common:i386 (0.5.10-0ubuntu5, 0.5.10-0ubuntu5.1), libx264-98:i386 (0.98.1653+git88b90d9-3, 0.98.1653+git88b90d9-3ubuntu1), compiz-plugins:i386 (0.8.6-0ubuntu9, 0.8.6-0ubuntu9.1), libgconf2-4:i386 (2.31.91-0ubuntu3, 2.31.91-0ubuntu3.1), libvlc5:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), simple-scan:i386 (2.32.0-0ubuntu1, 2.32.0-0ubuntu4), libcupsppdc1:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), udev:i386 (162-2, 162-2.2), firefox:i386 (3.6.10+build1+nobinonly-0ubuntu3, 3.6.13+build3+nobinonly-0ubuntu0.10.10.1), samba-common-bin:i386 (3.5.4~dfsg-1ubuntu8, 3.5.4~dfsg-1ubuntu8.1), libdrm2:i386 (2.4.21-1ubuntu2, 2.4.22-2ubuntu1), libgp11-0:i386 (2.92.92.is.2.31.91-0ubuntu4, 2.92.92.is.2.31.91-0ubuntu4.1), cups-common:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), libgcr0:i386 (2.92.92.is.2.31.91-0ubuntu4, 2.92.92.is.2.31.91-0ubuntu4.1), rhythmbox-plugin-cdrecorder:i386 (0.13.1-0ubuntu5, 0.13.1-0ubuntu6), telepathy-haze:i386 (0.4.0-1, 0.4.0-1ubuntu0.1), libhpmud0:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1), liblwres60:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), libcups2:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), vlc-nox:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), gdb:i386 (7.2-1ubuntu2, 7.2-1ubuntu3), sun-java6-jre:i386 (6.20dlj-1ubuntu3, 6.22-0ubuntu1~10.10), libqtcore4:i386 (4.7.0-0ubuntu4, 4.7.0-0ubuntu4.2), python:i386 (2.6.6-2ubuntu1, 2.6.6-2ubuntu2), libegroupwise1.2-13:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libvpx0:i386 (0.9.2-1build1, 0.9.2-1ubuntu0.1), pulseaudio-module-bluetooth:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), python-vte:i386 (0.26.0-0ubuntu1, 0.26.0-0ubuntu2), libvte9:i386 (0.26.0-0ubuntu1, 0.26.0-0ubuntu2), alsa-utils:i386 (1.0.23-2ubuntu3, 1.0.23-2ubuntu3.4), mintupdate:i386 (4.1.7, 4.2.0), fglrx-amdcccle:i386 (8.780-0ubuntu2, 8.801-0ubuntu1~xup~maverick), tzdata-java:i386 (2010m-0ubuntu0.10.10, 2010o-0ubuntu0.10.10), libecal1.2-7:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), app-install-data-partner:i386 (12.10.10.2, 12.10.10.3), update-inetd:i386 (4.36, 4.36ubuntu0.1), libpoppler7:i386 (0.14.3-0ubuntu1, 0.14.3-0ubuntu1.1), pulseaudio-module-x11:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libgdata1.2-1:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libedataserver1.2-13:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), vino:i386 (2.32.0-0ubuntu1, 2.32.0-0ubuntu1.1), aptdaemon:i386 (0.31+bzr506-0ubuntu2, 0.31+bzr506-0ubuntu4), system-config-printer-common:i386 (1.2.3+20100723-0ubuntu8, 1.2.3+20100723-0ubuntu8.1), libxml2:i386 (2.7.7.dfsg-4, 2.7.7.dfsg-4ubuntu0.1), libbind9-60:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), firefox-gnome-support:i386 (3.6.10+build1+nobinonly-0ubuntu3, 3.6.13+build3+nobinonly-0ubuntu0.10.10.1), cups:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), libgudev-1.0-0:i386 (162-2, 162-2.2), libdrm-nouveau1:i386 (2.4.21-1ubuntu2, 2.4.22-2ubuntu1), libgdata-google1.2-1:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libcupsdriver1:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), pulseaudio-utils:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libasound2:i386 (1.0.23-1ubuntu2, 1.0.23-1ubuntu2.1), fglrx-modaliases:i386 (8.780-0ubuntu2, 8.801-0ubuntu1~xup~maverick), xdg-utils:i386 (1.0.2+cvs20100307-1, 1.0.2+cvs20100307-1ubuntu0.1), libebook1.2-9:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libmagickcore3:i386 (6.6.2.6-1ubuntu1, 6.6.2.6-1ubuntu1.1), nvidia-current-modaliases:i386 (260.19.06-0ubuntu1, 260.19.29-0ubuntu1~xup~maverick3), libedataserverui1.2-8:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), nautilus-share:i386 (0.7.2-13, 0.7.2-13.1), libgpod-common:i386 (0.7.94-0ubuntu2, 0.7.95-1), libedata-book1.2-2:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), libqt4-xml:i386 (4.7.0-0ubuntu4, 4.7.0-0ubuntu4.2), evolution-data-server:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), rhythmbox-plugins:i386 (0.13.1-0ubuntu5, 0.13.1-0ubuntu6), libdrm-radeon1:i386 (2.4.21-1ubuntu2, 2.4.22-2ubuntu1), gconf2-common:i386 (2.31.91-0ubuntu3, 2.31.91-0ubuntu3.1), gimp:i386 (2.6.10-1ubuntu3, 2.6.10-1ubuntu3.1), cups-bsd:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), vlc:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), libgimp2.0:i386 (2.6.10-1ubuntu3, 2.6.10-1ubuntu3.1), pulseaudio-module-zeroconf:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libudev0:i386 (162-2, 162-2.2), sysvinit-utils:i386 (2.87dsf-4ubuntu18, 2.87dsf-4ubuntu19), vlc-plugin-notify:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), libmagickwand3:i386 (6.6.2.6-1ubuntu1, 6.6.2.6-1ubuntu1.1), libldap-2.4-2:i386 (2.4.23-0ubuntu3, 2.4.23-0ubuntu3.4), libfreetype6:i386 (2.4.2-2, 2.4.2-2ubuntu0.1), libisccfg60:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), libmagickcore3-extra:i386 (6.6.2.6-1ubuntu1, 6.6.2.6-1ubuntu1.1), libc6-dev:i386 (2.12.1-0ubuntu6, 2.12.1-0ubuntu10), linux-generic-pae:i386 (2.6.35.22.23, 2.6.35.24.28), libqtgui4:i386 (4.7.0-0ubuntu4, 4.7.0-0ubuntu4.2), libpurple-bin:i386 (2.7.3-1ubuntu3, 2.7.3-1ubuntu3.2), tzdata:i386 (2010m-0ubuntu0.10.10, 2010o-0ubuntu0.10.10), libcupsimage2:i386 (1.4.4-6ubuntu2, 1.4.4-6ubuntu2.2), pulseaudio-module-gconf:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libsane-hpaio:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1), pidgin:i386 (2.7.3-1ubuntu3, 2.7.3-1ubuntu3.2), poppler-utils:i386 (0.14.3-0ubuntu1, 0.14.3-0ubuntu1.1), libssl0.9.8:i386 (0.9.8o-1ubuntu4.1, 0.9.8o-1ubuntu4.3), jockey-gtk:i386 (0.5.10-0ubuntu5, 0.5.10-0ubuntu5.1), indicator-sound:i386 (0.4.7-0ubuntu2, 0.5.0.1-0ubuntu1), vlc-plugin-pulse:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), imagemagick:i386 (6.6.2.6-1ubuntu1, 6.6.2.6-1ubuntu1.1), vlc-data:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), openssl:i386 (0.9.8o-1ubuntu4.1, 0.9.8o-1ubuntu4.3), libpulse0:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libebackend1.2-0:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), firefox-branding:i386 (3.6.10+build1+nobinonly-0ubuntu3, 3.6.13+build3+nobinonly-0ubuntu0.10.10.1), compiz:i386 (0.8.6-0ubuntu9, 0.8.6-0ubuntu9.1), libxml2-utils:i386 (2.7.7.dfsg-4, 2.7.7.dfsg-4ubuntu0.1), libpulse-browse0:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), libgssapi-krb5-2:i386 (1.8.1+dfsg-5ubuntu0.1, 1.8.1+dfsg-5ubuntu0.2), language-pack-en:i386 (10.10+20100930, 10.10+20101204), gwibber:i386 (2.32.0.1-0ubuntu1, 2.32.2-0ubuntu2), python-papyon:i386 (0.5.1-0ubuntu1, 0.5.1-0ubuntu2), sysv-rc:i386 (2.87dsf-4ubuntu18, 2.87dsf-4ubuntu19), libisc60:i386 (9.7.1.dfsg.P2-2, 9.7.1.dfsg.P2-2ubuntu0.1), intel-gpu-tools:i386 (1.0.2+git20100324-0ubuntu1, 1.0.2+git20100830+c935c60-0ubuntu0sarvatt), compiz-core:i386 (0.8.6-0ubuntu9, 0.8.6-0ubuntu9.1), linux-headers-generic-pae:i386 (2.6.35.22.23, 2.6.35.24.28), libnautilus-extension1:i386 (2.32.0-0ubuntu1, 2.32.0-0ubuntu1.1), libc6:i386 (2.12.1-0ubuntu6, 2.12.1-0ubuntu10), python-cupshelpers:i386 (1.2.3+20100723-0ubuntu8, 1.2.3+20100723-0ubuntu8.1), evolution-data-server-common:i386 (2.30.3-2ubuntu1, 2.30.3-2ubuntu2), gimp-data:i386 (2.6.10-1ubuntu3, 2.6.10-1ubuntu3.1), libvlccore4:i386 (1.1.4-1ubuntu1, 1.1.4-1ubuntu1.1), libwebkit-1.0-common:i386 (1.2.4-1ubuntu1, 1.2.5-0ubuntu0.10.10.1), libvte-common:i386 (0.26.0-0ubuntu1, 0.26.0-0ubuntu2), initscripts:i386 (2.87dsf-4ubuntu18, 2.87dsf-4ubuntu19), gdm-guest-session:i386 (0.16, 0.17), libnss3-1d:i386 (3.12.7-0ubuntu1, 3.12.8-0ubuntu0.10.10.1), language-pack-gnome-en:i386 (10.10+20100930, 10.10+20101204), xserver-xorg-video-radeon:i386 (6.13.1-1ubuntu5, 6.13.2-0ubuntu1~xup1), pulseaudio-esound-compat:i386 (0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21, 0.9.22~0.9.21+stable-queue-32-g8478-0ubuntu21.1), compiz-gnome:i386 (0.8.6-0ubuntu9, 0.8.6-0ubuntu9.1), libpoppler-glib5:i386 (0.14.3-0ubuntu1, 0.14.3-0ubuntu1.1), xserver-xorg-video-intel:i386 (2.12.0-1ubuntu5, 2.13.901-2ubuntu2~xup~maverick), hplip-data:i386 (3.10.6-1ubuntu10, 3.10.6-1ubuntu10.1)
+End-Date: 2010-12-28  03:53:58
+```
+
+In that whole mess: X, Fglrx, and the kernel all got updates. I rebooted in the morning, went to play WoW and to my surprise...everything is polygons. At first I figured it was wine, until I noticed that glxgears, and some 3D screensavers, ALSO were showing polygons. I figured it was the X updates. So, I snagged ppa-purge. Ran it for the X repo (log file below):
+
+```
+start-Date: 2010-12-28  11:37:30
+Commandline: /usr/sbin/synaptic
+Install: ppa-purge:i386 (0.2.7.1+bzr53-1mint1)
+End-Date: 2010-12-28  11:37:36
+
+Start-Date: 2010-12-28  11:38:24
+Commandline: apt-get install fglrx/maverick fglrx-amdcccle/maverick fglrx-modaliases/maverick intel-gpu-tools/maverick libdrm2/maverick libdrm-intel1/maverick libdrm-nouveau1/maverick libdrm-radeon1/maverick nvidia-current-modaliases/maverick xserver-xorg-video-ati/maverick xserver-xorg-video-intel/maverick xserver-xorg-video-nouveau/maverick xserver-xorg-video-radeon/maverick
+Downgrade: xserver-xorg-video-ati:i386 (6.13.2-0ubuntu1~xup1, 6.13.1-1ubuntu5), fglrx:i386 (8.801-0ubuntu1~xup~maverick, 8.780-0ubuntu2), libdrm-intel1:i386 (2.4.22-2ubuntu1, 2.4.21-1ubuntu2.1), libdrm2:i386 (2.4.22-2ubuntu1, 2.4.21-1ubuntu2.1), fglrx-amdcccle:i386 (8.801-0ubuntu1~xup~maverick, 8.780-0ubuntu2), libdrm-nouveau1:i386 (2.4.22-2ubuntu1, 2.4.21-1ubuntu2.1), fglrx-modaliases:i386 (8.801-0ubuntu1~xup~maverick, 8.780-0ubuntu2), nvidia-current-modaliases:i386 (260.19.29-0ubuntu1~xup~maverick3, 260.19.06-0ubuntu1), libdrm-radeon1:i386 (2.4.22-2ubuntu1, 2.4.21-1ubuntu2.1), intel-gpu-tools:i386 (1.0.2+git20100830+c935c60-0ubuntu0sarvatt, 1.0.2+git20100324-0ubuntu1), xserver-xorg-video-radeon:i386 (6.13.2-0ubuntu1~xup1, 6.13.1-1ubuntu5), xserver-xorg-video-intel:i386 (2.13.901-2ubuntu2~xup~maverick, 2.12.0-1ubuntu5.1)
+End-Date: 2010-12-28  11:39:43
+```
+
+
+It ran successfully, no problems. One more reboot to start the downgraded X and fglrx. Still polygons... Next step: aticonfig --initial to reset the xorg.conf to something workable..nope, still polygons.
+
+Xorg:
+
+
+```
+Section "ServerLayout"
+	Identifier     "aticonfig Layout"
+	Screen      0  "aticonfig-Screen[0]-0" 0 0
+EndSection
+
+Section "Module"
+	Load  "glx"
+EndSection
+
+Section "Monitor"
+	Identifier   "aticonfig-Monitor[0]-0"
+	Option	    "VendorName" "ATI Proprietary Driver"
+	Option	    "ModelName" "Generic Autodetecting Monitor"
+	Option	    "DPMS" "true"
+EndSection
+
+Section "Device"
+	Identifier  "aticonfig-Device[0]-0"
+	Driver      "fglrx"
+	BusID       "PCI:1:5:0"
+EndSection
+
+Section "Screen"
+	Identifier "aticonfig-Screen[0]-0"
+	Device     "aticonfig-Device[0]-0"
+	Monitor    "aticonfig-Monitor[0]-0"
+	DefaultDepth     24
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
+```
+
+
+It looks okay to me, but I'm at the end of my ropes on what the problem could be.
+
+---
+

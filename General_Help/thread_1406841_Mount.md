@@ -1,0 +1,16 @@
+---
+title: "Mount"
+date: 2010-02-14
+forum: General Help
+---
+
+### Post by robbie2685 on 2010-02-14
+Hi there...
+New to Ubuntu 9.10...
+I have a usb cd drive...
+I was doing something and it was taking lot of time to open up...So i directly removed the drive frm my netbuk..
+This is wat i get when i try to unmount:-mount disagrees with the fstab....
+Need help...
+
+---
+

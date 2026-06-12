@@ -1,0 +1,11 @@
+---
+title: "RuneScape Help!"
+date: 2010-11-30
+forum: General Help
+---
+
+### Post by Dusty2711 on 2010-11-30
+**Hey every one! I have a problem here. I downloaded RuneScape and I ran it through wine all worked fine. But when I got to join a server it all freezes. I installed all the Java plugins all and I have the latest version of wine. But still it freezes. Any ideas?Thanks. :)**
+
+---
+

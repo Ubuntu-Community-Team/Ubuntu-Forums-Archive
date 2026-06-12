@@ -1,0 +1,1058 @@
+---
+title: "GRUB on dual noot problem."
+date: 2012-07-11
+forum: General Help
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+Hi all,
+
+I installed Ubuntu 12.04 alongside my Xubuntu 11.10 installation. After the install, I can't figure out how to get back to my Xubuntu installation.
+
+I assumed the grub screen would allow me to boot to either the older Xubuntu or the new Ubuntu. 
+
+I booted several times, looking at the grub screen pretty closely, but could not see any option to boot to the Xubuntu system.
+
+What do I have to do to get back to the Xubuntu system??
+
+The new installation of Ubuntu works fine, I'm using it to send this message.
+
+I'm a bit lost in the Ubuntu install, I tried to run gparted to see what the hard drive looked like, but I couldn't load it. I haven't checked the software center yet, so it's probably a matter of installing it.
+
+What do I have to do to get back to my primary (Xubuntu) installation?
+
+TY.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-11
+What output comes from
+
+```
+sudo update-grub
+```
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+> **goodbye-windows(tm) said:**
+> 
+
+What do I have to do to get back to my primary (Xubuntu) installation?
+
+
+
+Just a quick note, I downloaded gparted andlooked at my harddrive. It shows sda1, which is my Xubuntu installation. 
+
+The partition called sda5 is the new partition, it previously was unallocated. This partition contains the new Ubuntu system.
+
+The last small partition is a small partition just for saving miscellaneous files in. 
+
+Here's the screenshot showing my harddrive in the gparted program.
+
+TIA.
+
+Art
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+Here;s the output:
+
+> Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-3.2.0-26-generic
+Found initrd image: /boot/initrd.img-3.2.0-26-generic
+Found linux image: /boot/vmlinuz-3.0.0-22-generic
+Found initrd image: /boot/initrd.img-3.0.0-22-generic
+Found linux image: /boot/vmlinuz-2.6.38-8-generic
+Found initrd image: /boot/initrd.img-2.6.38-8-generic
+Found memtest86+ image: /boot/memtest86+.bin
+Found Ubuntu 11.10 (11.10) on /dev/sda1
+done
+
+
+TY.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-11
+So are you not seeing a boot menu
+or is it that xubuntu is missing
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+I see a grub menu, but the only option listed is to boot into the new Ubuntu, the Xubuntu system seems to have gone away...at least as far as Grub is concerned.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-11
+I'm not sure what the problem is then.
+Please wait until some more experienced comes along. Shouldn't be long.
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+If I access the home folder of my Xubuntu partition, I can see all my users home folders associated with the Xubuntu system. So, I know the new Ubuntu did not overwrite the old Xubuntu installation.
+
+The problem is I don't know how to point Grub so that it includes the Xubuntu installation as an option when I boot.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-11
+You might check
+[https://help.ubuntu.com/community/Grub2](https://help.ubuntu.com/community/Grub2)
+
+---
+
+### Post by oldfred on 2012-07-11
+This is your install in sda1:
+
+Found Ubuntu 11.10 (11.10) on /dev/sda1
+
+The os-prober does not know which flavor of Ubuntu you have as the kernels are the same. If you want it to say Xubuntu then you can edit the entry or use Grub Customizer.
+
+HOWTO: Grub Customizer Updated for grub 1.99
+[http://ubuntuforums.org/showthread.php?t=1664134](http://ubuntuforums.org/showthread.php?t=1664134)
+[http://www.ubuntugeek.com/grub-customizer-2-2-released-and-installation-instructions-included.html](http://www.ubuntugeek.com/grub-customizer-2-2-released-and-installation-instructions-included.html)
+The Grub 2 Guide - drs305 also link to grub customizer
+[http://ubuntuforums.org/showthread.php?t=1195275](http://ubuntuforums.org/showthread.php?t=1195275)
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+Thanks Carl,
+
+> You might check
+[https://help.ubuntu.com/community/Grub2](https://help.ubuntu.com/community/Grub2)
+
+I looked at the following:
+
+[https://help.ubuntu.com/community/Grub2](https://help.ubuntu.com/community/Grub2)
+
+[https://help.ubuntu.com/community/Grub2/Setup](https://help.ubuntu.com/community/Grub2/Setup)
+
+[https://help.ubuntu.com/community/Grub2/Troubleshooting](https://help.ubuntu.com/community/Grub2/Troubleshooting)
+
+I'm definitely not knowledgeable
+enough to understand most of the technical writing that is contained there.
+
+But, it seems that the answer must lie somewhere in the grub.cfg file (of the new Ubuntu system). There is also a grub.cfg file in the old Xubuntu system, but I can't access it as I am not the owner. 
+
+But, in the old Xubuntu partition, I can see the home folder, and each of the 5 users there has a folder, so I know the Xubuntu system did not get overwritten.
+
+Here is the contents of the grub.cfg file;
+
+> 
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  insmod part_msdos
+  insmod ext2
+  set root='(hd0,msdos5)'
+  search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+  set locale_dir=($root)/boot/grub/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "${linux_gfx_mode}" != "text" ]; then load_video; fi
+menuentry 'Ubuntu, with Linux 3.2.0-26-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    linux    /boot/vmlinuz-3.2.0-26-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.2.0-26-generic
+}
+menuentry 'Ubuntu, with Linux 3.2.0-26-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    echo    'Loading Linux 3.2.0-26-generic ...'
+    linux    /boot/vmlinuz-3.2.0-26-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro recovery nomodeset 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-3.2.0-26-generic
+}
+submenu "Previous Linux versions" {
+menuentry 'Ubuntu, with Linux 3.0.0-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    linux    /boot/vmlinuz-3.0.0-22-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.0.0-22-generic
+}
+menuentry 'Ubuntu, with Linux 3.0.0-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    echo    'Loading Linux 3.0.0-22-generic ...'
+    linux    /boot/vmlinuz-3.0.0-22-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro recovery nomodeset 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-3.0.0-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    linux    /boot/vmlinuz-2.6.38-8-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-2.6.38-8-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    echo    'Loading Linux 2.6.38-8-generic ...'
+    linux    /boot/vmlinuz-2.6.38-8-generic root=UUID=69883e3a-e2a7-42da-946d-96d3557760cf ro recovery nomodeset 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.38-8-generic
+}
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set=root 69883e3a-e2a7-42da-946d-96d3557760cf
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Ubuntu, with Linux 3.0.0-22-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-22-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-22-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-22-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-22-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-22-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-21-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-21-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-21-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-21-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-21-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-21-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-20-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-20-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-20-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-20-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-20-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-20-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-19-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-19-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-19-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-19-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-19-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-19-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-17-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-17-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-17-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-17-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-17-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-17-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-16-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-16-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-16-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-16-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-16-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-16-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-15-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-15-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-15-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-15-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-15-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-15-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-14-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-14-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-14-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-14-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-14-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-14-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-13-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-13-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-13-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-13-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-13-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-13-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-12-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-12-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-12-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-12-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-12-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-12-generic
+}
+menuentry "Ubuntu, with Linux 2.6.38-11-generic (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-2.6.38-11-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-2.6.38-11-generic
+}
+menuentry "Ubuntu, with Linux 2.6.38-11-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-2.6.38-11-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-2.6.38-11-generic
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+
+At this time, the first option (line) listed in Grub is the current Ubuntu system.
+The second option (line) listed is 'previous systems', but when I select the second line, it just takes me to the Ubuntu system, not to my Xubuntu system.
+
+What sort of edit do I need to do in order for grub to list the old Xubuntu system as an option when I boot?
+
+TY.
+
+Art
+
+---
+
+### Post by dino99 on 2012-07-11
+you might be able to select the ubuntu/xubuntu into the grub menu: 
+
+one is giving the /dev/sdxx (the system not active )
+the other dont give a partition path (the one active)
+
+sudo dpkg-reconfigure grub-pc
+
+answer the question and set it on /dev/sda for booting
+
+then you can have a custom boot entry, with ubuntu/xubuntu, using grub-customizer
+
+[https://launchpad.net/~danielrichter2007/+archive/grub-customizer](https://launchpad.net/~danielrichter2007/+archive/grub-customizer)
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+> **dino99 said:**
+> 
+
+sudo dpkg-reconfigure grub-pc
+
+answer the question and set it on /dev/sda for booting
+
+
+OK, when I entered the command, it showed that sda was already selected I think). 
+
+Here's the output:
+
+> 
+
+[*] /dev/sda (250059 MB; WDC_WD2500JB-57GVC0)   &#9474;             
+[ ] - /dev/sda5 (79065 MB; /)
+
+
+
+I can post an updated .cfg file if necessary.
+
+So, now do I need to go do a custom boot file as explained at the link you gave?
+
+TY.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-11
+Here is why I am confused
+
+> menuentry "**Ubuntu, with Linux 3.0.0-12-generic** ([COLOR=DarkRed]**on /dev/sda1**[/COLOR])" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-12-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-3.0.0-12-generic
+}
+menuentry "Ubuntu, with Linux 3.0.0-12-generic (recovery mode) (on /dev/sda1)" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-3.0.0-12-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro recovery nomodeset
+    initrd /boot/initrd.img-3.0.0-12-generic
+}
+menuentry "**Ubuntu, with Linux 2.6.38-11-generic** ([COLOR=DarkRed]**on /dev/sda1**[/COLOR])" --class gnu-linux --class gnu --class os {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set=root 58eb7d81-90b2-441a-8289-fa22dbc6a440
+    linux /boot/vmlinuz-2.6.38-11-generic root=UUID=58eb7d81-90b2-441a-8289-fa22dbc6a440 ro quiet splash vt.handoff=7
+    initrd /boot/initrd.img-2.6.38-11-generic
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+> **carl4926 said:**
+> Here is why I am confused
+
+Yes, I realized that too, but I'm a newbie and wasn't sure if it was an issue or not.
+
+I searched the entire .cfg file for sda5, and got no hits. SO, it looks like grub thinks my Ubuntu 12.04 is on sda1.
+
+But, clearly it is not. in this case, sda1 is the Xubuntu partition. And the sda1 partition has not been over written, its size is unchanged. Before the 12.04 install, the area of the harddrive that now contains sda5 was previously unused. So, clearly sda5 was created as a result of the Ubuntu 12.04 install (just as it should have been).
+
+And, oldfred pointed this out (above).  [B]Fred, what sort of editing can I do to the ,cfg file to make both Xubuntu and Ubuntu available at boot up?
+[/B]
+When I installed Ubuntu 12.04, I started with my old Ubuntu 11.04 live cd. After 11.04 was installed, there were updates to do, but I didn't do them because I was going to immediately upgrade to 11.10.  After I installed 11.10, I immediately upgraded to 12.04. Is it possible the bypassing of the updates for the original 11.04 install created a grub anomaly?
+
+[B]If I delete the partition sda5, will that restore my access to sad1 and my old Xubuntu installation?
+
+If I edit the .cfg and change all the current sda1 entries to sda5, then add another section pointing to sda1, will that work???
+
+Is it possible that the kernels were copied into the existing sda1 partition, but that the installation of the rest of the Ubuntu was installed on sda5?
+
+CAN I MANUALLY FORCE XUBUNTU CURRENTLY INSTALLED IN SDA1 TO RUN??
+[/B]
+TIA.
+
+Art
+
+---
+
+### Post by oldfred on 2012-07-11
+From grub menu can you not just scroll down to the entry at the bottom and boot sda1?
+
+If you have lots of entries the grub menu box may not show all, but you still can scroll down. Tiny arrow (real tiny) on right bottom will show you that it is not showing all entries in menu box.
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+Well, now I've done it!!!
+
+The last entry on the grub entry was showing and I scrolled down to it and hit enter. It immediately brought up a terminal like prompt, that says 'grub rescue>'.
+
+Nothing I enter does anything, other than to tell me the command is unknown.
+
+I'm sending this on a borrowed computer, as my system won't let me do anything until I can fix it, or atleast get it to boot into my old xubuntu.
+
+How do I get out of the grub rescue prompt and back to a gui??
+
+Can I boot from a live cd and have it delete the sda5 partition?
+
+TY.
+
+Art
+
+---
+
+### Post by oldfred on 2012-07-11
+I would think the entry for sda1 should boot. Did it have issues before you installed 12.04? Or did your install of 12.04 change something like the UUIDs which it would not normally do.
+
+From liveCD download and run the BootInfo report and post link it creates:
+
+Boot Repair -Also handles LVM, GPT and separate /boot.:
+[https://help.ubuntu.com/community/Boot-Repair](https://help.ubuntu.com/community/Boot-Repair)
+You can repair many boot issues with this or 'Create BootInfo' report (Other Options) & post the link it creates, so we can see your exact configuration.
+
+You may be able to change the install of grub in the MBR to your install in sda1, but if it is giving grub rescue it may still give that as there is some issue. Grub rescue only has a limited number of commands.
+
+Grub Rescue Prompt Megathread - drs305
+[http://ubuntuforums.org/showthread.php?t=1594052](http://ubuntuforums.org/showthread.php?t=1594052)
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-11
+Hi Fred,
+
+My live cd is an old version of ubuntu, so I'm downloading ubuntu 12.04 now, and will see if my computer will downfrom a usb memory stick.
+
+If not, I'll burn a cd with 12.04 on it.
+
+My primary computer, the one that's acting up....always ran like a champ!!! Of course, there was no grub until I tried to add a second partition with 12.04 ubuntu on it.
+
+I'll post the response from the commands you gave in your last message as soon as I can.
+
+Regards,
+
+Art
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+Hi Fred et al,
+
+ok, the plot thickens..........
+
+I just got my 12.04 Ubuntu live cd burned and it booted up just fine.
+
+I opened gparted, and looked at the harddrive. It is showing that partition sda5 filetype is unknown.
+
+So, something about the scrolling to the bottom of the grub screen and selecting the last item on the screen scrambled something. 
+
+Since I don't need grub anymore (because I won't have a second operating system in a different partition), can I just uninstall grub and do whatever I have to do to restore access to my old xubuntu system?
+
+I have attached a screenshot of the latest gparted, you can compare this screenshot to the one I posted earlier.
+
+I don't need the Ubuntu partition, there is no critical data in it (sda5). If having it reformatted makes the repair simpler, then I will delete that partition and reformat it. I did want to try ubuntu as I've always used xubuntu, so saving or NOT saving the Ubuntu 12.04 system is ok either way.
+
+I downloaded and installed boot-repair, per the instructions in the link you gave ( [https://help.ubuntu.com/community/Boot-Repair](https://help.ubuntu.com/community/Boot-Repair) ). It worked like a champ.
+
+Here's the summary url:
+
+[http://paste.ubuntu.com/1087342/](http://paste.ubuntu.com/1087342/)
+
+What do I do next?
+
+TIA.
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-12
+To me this is looking like a complete 8alls up.
+Try and grab any data you need from sda1 (which is where you previously had 11.10) as it seems you have both systems installed there. (How, I'll never know)
+A live CD/USB will let you get to the files, you then need something to write them to, or use sda5 to store the files, you can format it with gparted and backup you data there. Then re-install Ubuntu to sda1
+Or other options are obviously available
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+Hi Carl,
+
+> **carl4926 said:**
+> A live CD/USB will let you get to the files, you then need something to write them to, or use sda5 to store the files, you can format it with gparted and backup you data there. Then re-install Ubuntu to sda1
+
+But, sda5 sure looked like it held the new ubuntu os, at least it did right up until just a few hours ago that is.
+
+I'm not sure how to copy the home folder in the original xubuntu, I tried to access them before and they had an 'x' on the icons representing the various users that were password protected. Thankfully there were no encrypted data for any of the users in the xubuntu (sda1) partition.
+
+**Is there any harm in letting boot-repair do an automated repair before trying to extract data from the xubuntu partition??**
+
+I have plenty of places to store data, so saving the data is not an issue.
+
+Regards,
+
+Art
+
+---
+
+### Post by carl4926 on 2012-07-12
+First thing I would do is Backup
+Without booting a live cd and trying to move files myself, I can't be sure about Ubuntu permissions on this. I know distros vary. I'm pretty sure Fedora is even stricter and Mint even less so. If you use Parted Magic, you should have no issue at all.
+
+Once you have stuff backed up. Then decide how you want to proceed. On all my machines I have the HD split for 2 side by side installs. One in use, and one for testing and then the next release.
+Copying data between the systems in far easier and quicker than in a live system. And I have /home on a separate partition for each.
+
+Here is an example
+```
+/dev/sda1              63     8193149     4096543+  82  Linux swap / Solaris
+/dev/sda2         8193150    59392304    25599577+  83  Linux
+/dev/sda3   *    59392305   100358054    20482875   83  Linux
+/dev/sda4       100358055   488392064   194017005    5  Extended
+/dev/sda5       100358118   305154674   102398278+  83  Linux
+/dev/sda6       305154738   488392064    91618663+  83  Linux
+
+```
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+I can drag and drop 3 of the 5 users folders in the home directory, none of them had password protection enabled. 
+
+The other 2 users have passwords, and the permissions are all set to 'root'. I don't know how to copy these files when running from the live cd. 
+
+I think I an use a chown command, but I need to copy the files safely to other media, then use the chown command. This leaves the original files in sda1 still intact.
+
+This is all new to me-
+
+Art
+
+---
+
+### Post by YannBuntu on 2012-07-12
+Hello
+> **goodbye-windows(tm) said:**
+> I'm not sure how to copy the home folder in the original xubuntu, I tried to access them before and they had an 'x' on the icons representing the various users that were password protected. Thankfully there were no encrypted data for any of the users in the xubuntu (sda1) partition.
+
+First try to open the partitions via a normal file browser (Nautilus), this will mount them.
+Then open a superuser file browser (via the "gksudo nautilus" command) and see if it helps.
+
+
+> **goodbye-windows(tm) said:**
+> **Is there any harm in letting boot-repair do an automated repair before trying to extract data from the xubuntu partition??**
+
+No (it will just reinstall GRUB in the MBR, so no risk for data), but basic safety rules say that backups should always be performed before any operation.
+
+---
+
+### Post by oldfred on 2012-07-12
+Backups are always important.
+
+You can try this on sda5. I think Boot-Repair does fsck which is really the same.
+
+#From liveCD so everything is unmounted,swap off if necessary, change example shown with partition sda5 to your partition(s)
+#e2fsck is used to check the ext2/ext3/ext4 family of file systems.
+sudo e2fsck -C0 -p -f -v /dev/sda5
+#if errors:
+sudo e2fsck -f -y -v /dev/sda5
+
+If you boot into sda1, and you only run the e2fsck on sda5 and it is unmounted you can run it from your install in sda1. Otherwise use liveCD.
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+Hi all,
+
+I am trying to make a second backup of my xubuntu partition on a usb drive. In the root directory of that drive is where I created a folder called 'backups'. So, I want to copy everything in /dev/sda5 to the folder backups in the root directory of dev/sdc1.
+
+I'm using the command:
+
+```
+sudo cp -R /dev/sda5 /dev/sdc1/backups
+```
+
+Heres the results of the mount command:
+
+```
+ubuntu@ubuntu:~$ mount
+/cow on / type overlayfs (rw)
+proc on /proc type proc (rw,noexec,nosuid,nodev)
+sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+udev on /dev type devtmpfs (rw,mode=0755)
+devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+/dev/sr0 on /cdrom type iso9660 (ro,noatime)
+/dev/loop0 on /rofs type squashfs (ro,noatime)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev)
+none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+none on /run/shm type tmpfs (rw,nosuid,nodev)
+gvfs-fuse-daemon on /home/ubuntu/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=ubuntu)
+/dev/sdb1 on /media/TRAVELDRIVE type vfat (rw,nosuid,nodev,uid=999,gid=999,shortname=mixed,dmask=0077,utf8=1,showexec,flush,uhelper=udisks)
+/dev/sda1 on /media/arts_xubuntu type ext4 (rw,nosuid,nodev,uhelper=udisks)
+/dev/sda5 on /media/backup type ext4 (rw,nosuid,nodev,uhelper=udisks)
+/dev/sdc1 on /media/Seagate USB Drive Master 250 G type fuseblk (rw,nosuid,nodev,allow_other,default_permissions,blksize=4096
+
+```So, both the partitions are mounted.
+
+The error I get is as follows:
+
+```
+ubuntu@ubuntu:~$ sudo cp -R /dev/sda5 /dev/sdc1/backups
+cp: accessing `/dev/sdc1/backups': Not a directory
+ubuntu@ubuntu:~$ 
+
+```
+
+What am I doing wrong?
+
+TY.
+
+Art
+
+---
+
+### Post by oldfred on 2012-07-12
+You do not have sda5 (as sda5) mounted but /media/backup and sdc1 is mounted as media/Seagate.
+
+So I think it is this, but I always have to experiment myself. I also get very confused on trailing slash.
+
+sudo cp -R /media/backup /media/Seagate/backups
+
+
+I use rsync more than cp since I use it for backups and then it only copies changes:
+
+man rsync has explanation of trailing /. these are the same, trailing / copies contents:
+ rsync -av /src/foo /dest
+ rsync -av /src/foo/ /dest/foo
+
+Synchronizing UNIX files - Using cp, tar, and rsync
+[http://www.ibm.com/developerworks/aix/library/au-filesync/index.html?ca=dgr-lnxw07UNIX-File-Sync&S_TACT=105AGX59&S_CMP=grsitelnxw07](http://www.ibm.com/developerworks/aix/library/au-filesync/index.html?ca=dgr-lnxw07UNIX-File-Sync&S_TACT=105AGX59&S_CMP=grsitelnxw07)
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+OK, ty Fred. 
+
+I got my second backup copied, without errors I believe.
+
+I have one copy on my usb drive and another copy on my harddrive in the punchbox.
+
+I need to change owner for all the files in sda5. I tried to do a:
+
+```
+
+ubuntu@ubuntu:~$ sudo chown -R artie:artie /media/backup
+
+```
+
+and was promptly rewarded with the following error:
+
+```
+
+chown: invalid user: `artie:artie'
+
+```
+
+Right now, all the files on sda5 are owned by root.
+
+So, I think I need to change owner, then change the permissions.
+
+If I do the chown command as sudo, should it really matter what name I choose to own the files as long as it isn't 'root'???
+
+TY again.
+
+Art
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-12
+I'm bummed............
+
+I do have access to the folders in my backup now. For some reason, changing the permissions was enough to give me access, and the fact that the owner is root doesn't make any difference.
+
+But, when I looked in my backup copy of the old ubuntu partition, there was no software folders in the home directory!!! Not sure why the hidden folders didn't copy, maybe theres a switch that needs to be set in order to have hidden files copied.
+
+I'll check the help files for the cp command.
+
+Tnx to all who helped me out, I really appreciate all the info.
+
+Regards,
+
+Art
+
+---
+
+### Post by oldfred on 2012-07-12
+I know when I copy to DVD's if asks if I want to copy hidden files also.
+
+If your external is not Linux formated it will not support ownership and permissions. You will not easily be able to copy anything system related back as the owership & permissions are vital. For user data it does not matter and is ok. I use NTFS for some data but not for any system related backups. If just /home you can reset ownership & permissions, but system files vary and cannot be reset manually. Anytime a user resets ownership of the system partitions they have to reinstall to straighten it out. (You just cannot change everything back to root.)
+
+I use rsync but certain parameters control the copy of ownership & permissions, but then it still has to be to a linux partition. Another way is to compress data and then the ownership is preserved. That is the old fashioned tar command.
+
+discussion of alternatives/strategy backups
+[https://help.ubuntu.com/community/BackupYourSystem](https://help.ubuntu.com/community/BackupYourSystem)
+Tar backup script:
+[https://help.ubuntu.com/11.04/serverguide/C/backup-shellscripts.html](https://help.ubuntu.com/11.04/serverguide/C/backup-shellscripts.html)
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-13
+I just ran boot-repair, except this time I had it do the automated fix.
+
+I'm going to reboot now......for better or for worse.
+
+Info at:
+
+[http://paste.ubuntu.com/1089210/](http://paste.ubuntu.com/1089210/)
+
+Here we go..............
+
+Art
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-13
+I rebooted after running boot-repair.
+
+It did boot, giving one error message, saying that the bluetooth might not work, permissions issue.
+
+I was happy to see it boot, I'm using it to send this message from my good ole xubuntu punchbox.
+
+But, it appears to me there is a problem.........When the grub screen came up, all the various kernals available were listed, and they were all on sda5!!!! Also, grub said 'Ubuntu', I'm 99 percent sure it always said 'Xubuntu' in the past.
+
+So, It looks like I'm booting off my backup partition, which was created with the cp command and that has permissions modified. It's probably NOT a good idea to run with permissions modified from the original setup.
+
+So, I ran a mount command........It looks to me like sda5 is mounted, it's the only partition that is mounted. Output of mount command is:
+
+```
+artie@art-desktop:~$ mount
+/dev/sda5 on / type ext4 (rw,errors=remount-ro,commit=0)
+proc on /proc type proc (rw,noexec,nosuid,nodev)
+sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+fusectl on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+udev on /dev type devtmpfs (rw,mode=0755)
+devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+none on /run/shm type tmpfs (rw,nosuid,nodev)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+artie@art-desktop:~$ 
+
+```I'm going to shut down now, after making a third copy of the backup, which will enable me to delete the sda5 partition and then run boot repair again.
+
+Here we go......
+
+Art
+
+---
+
+### Post by YannBuntu on 2012-07-13
+Hi
+I think recent versions of Ubuntu variants (Xubuntu, Kubuntu, Edubuntu..) are all shown "Ubuntu", so what you observe is normal.
+
+---
+
+### Post by goodbye-windows(tm) on 2012-07-13
+I guess this thread should be marked as 'solved', although the problem isn't resolved.
+
+So, this is an epilogue ::>
+
+In the last 24 hours, I uninstalled the newer ubuntu by deleting it's partition (leaving the xubuntu system installed, but unaccsible due to a grub error). This left me with a grub problem, the dreaded grub rescue prompt and no booting to the xubuntu system. I then booted from a live cd, loaded-boot repair and let it do it's thing. It corrected the boot /grub issue, and full access to my xubuntu system was restored, with no errors, and xubuntu ran like a champ.
+
+But, I wanted to try the xubuntu install again, because I'd really like to play with ubuntu, so a dual boot system is desirable until I decide whether to keep xubuntu or ubuntu. Well, the same exact thing happened, despite the live cd's insistence that grub would allow me to choose which system to use at boot up time. And, I resolved the issue in the same manner as it I did previously. 
+
+So, there is some incompatibility in grub that will not allow it to dual boot between ubuntu 12.04 and xubuntu 11.10. To the best of my knowledge, grub will not allow a ubuntu/xubuntu dual boot system. 
+
+I'll mark this one solved. And ty to all who helped me in the forum. I learned a bunch.
+
+Regards,
+
+Art
+
+---
+
+### Post by oldfred on 2012-07-14
+I have a bunch of Ubuntus on several drives at least one is Lubuntu. And grub2's os-prober finds them all. So much so that I turn off the prober and add manual entries for just the one's I still want. Most of my installs are just 25GB / (root) partitions of old versions that I did not delete as I still had room for a new 25GB install. I am just about the the point of housecleaning or maybe a new drive. :)
+
+But the all come up as Ubuntu as grub only finds kernels not the gui. You have to manually edit if you want to change title of menu entry or use grub customizer to change boot entries.
+
+---
+

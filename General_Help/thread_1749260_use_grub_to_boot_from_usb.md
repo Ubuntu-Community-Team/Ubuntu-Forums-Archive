@@ -1,0 +1,861 @@
+---
+title: "use grub to boot from usb"
+date: 2011-05-04
+forum: General Help
+---
+
+### Post by not_the_geekiest on 2011-05-04
+I was reading this article: [https://help.ubuntu.com/community/BootFromUSB](https://help.ubuntu.com/community/BootFromUSB) on how to boot from a usb. I started up my computer and went to the command line. From there I typed "root (hd0,0)" just like the manual said. Then grub responded by stating that it does not recognize the command root. What am I doing wrong?
+
+---
+
+### Post by pqwoerituytrueiwoq on 2011-05-04
+if you are trying to make a boot-able USB for Ubuntu
+system->administration->startup disk creator
+you can also use unetbootin
+to boot the raw iso using grub2 read this
+[http://ubuntuforums.org/showthread.php?t=1288604](http://ubuntuforums.org/showthread.php?t=1288604)
+
+---
+
+### Post by not_the_geekiest on 2011-05-04
+That is not what I am trying to do.
+
+My bios is unable to boot from a usb. So, I wanted to use grub to boot from a usb.
+
+---
+
+### Post by mhgsys on 2011-05-04
+have a look @ plop boot manager
+[http://www.plop.at/en/bootmanager.html](http://www.plop.at/en/bootmanager.html)
+(hint: check the section 6: Harddisk install /using GRUB / grub4dos)
+
+---
+
+### Post by pqwoerituytrueiwoq on 2011-05-04
+if your bios does not support usb boot you cant boot with a usb
+bios->bootloader->Operating system
+
+---
+
+### Post by mhgsys on 2011-05-04
+@pqwoerituytrueiwoq
+
+well sir, that's what's plop is for.. 
+It's for machines without the usb booting option in BIOS.
+
+I use it myself on one of my machines which doesn't have a usb boot option in BIOS
+
+so; using the grub bootloader on harddisk to boot into plop, and use plop to boot from usb .
+
+---
+
+### Post by not_the_geekiest on 2011-05-04
+Thank you mhgsys . 
+
+Can you just check to make sure that this is correct and tell me what I should add?
+
+I copy plpinstc.com to /boot and then I edit the /boot/grub/grub.cfg file by adding this : ```
+menuentry "USB" { USB ([COLOR="Red"]something[/COLOR])
+	insmod part_msdos
+	insmod ntfs
+	set root='(hd1,[COLOR="Red"]what goes here[/COLOR])'
+	search --no-floppy --fs-uuid --set=root [COLOR="Red"]what number goes here?[/COLOR]
+	chainloader +1
+}
+```
+
+Thank you.
+
+
+
+
+ps. What can't I just use grub and follow the instructions here: [https://help.ubuntu.com/community/BootFromUSB](https://help.ubuntu.com/community/BootFromUSB) ?
+
+---
+
+### Post by mhgsys on 2011-05-04
+well actually a little different.. 
+(you followed the one for grub not for grub2.. so you need the bin file..)
+copy the **plpbt.bin (**found in the extracted **plpbt-5.0.13 > pcmcia **folder to /boot
+f.e
+```
+sudo cp /home/mhg/Desktop/plpbt-5.0.13/pcmcia/plpbt.bin /boot
+```
+
+[http://download.plop.at/files/bootmngr/plpbt-5.0.13.zip](http://download.plop.at/files/bootmngr/plpbt-5.0.13.zip) (for the files)
+
+
+then you edit /etc/grub.d/40_custom 
+```
+sudo nano /etc/grub.d/40_custom
+```
+and add ```
+menuentry "Plop Boot Manager Install"{
+set root='(hd0,1)'
+linux16 /boot/plpbt.bin
+}
+``` to the **bottom** of the file (don't forget to safe / WriteOut the file)(ctrl+o in nano> enter>ctrl+x)
+
+(where '(hd0,1)' is the first partition on the first harddrive.. you see.. where /boot is)
+
+then you ```
+sudo update-grub2
+``` , reboot.. hold down left shift so grub comes on.. and select plop
+
+I'm on ubuntu 10.04 over here btw.
+ps: about the grub thing.. probably you could.. I just know this method
+
+---
+
+### Post by not_the_geekiest on 2011-05-08
+I followed your instructions but then another problem arose. When ever I chose an os I get the error "Error: No Argument Specified". I followed the direction given here: [http://ubuntuforums.org/showthread.php?t=1195275](http://ubuntuforums.org/showthread.php?t=1195275) , and I added =root to all of the options in /etc/grub.d/40_custom , however I still get the same error.
+
+ps. I edited the names of the OSes a while ago and I had that error before. After doing what I explained I was able to fix it. This time I can't seem to fix it.
+
+---
+
+### Post by not_the_geekiest on 2011-05-08
+Also, I followed your instructions however when booting to a usb I received the error "File not found: press any key to continue". After pressing any key i am returned to my grub menu.
+
+---
+
+### Post by mhgsys on 2011-05-08
+I followed up my own instructions and got my plop working, and booting usb..
+
+I guess you made an error somewhere in your grub file., like missing a } or something like that..
+
+> I followed your instructions however when booting to a usb I received the error "File not found: press any key to continue". After pressing any key i am returned to my grub menu.
+
+are you stating you were able to select plop, and in plop when choosing usb it says file not found?
+(you should make a bootable usb with startup disk creator and should be able to boot it via plop)
+
+here's my /boot/grub/grub.cfg so you can compare;
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	linux	/boot/vmlinuz-2.6.32-31-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	echo	'Loading Linux 2.6.32-31-generic ...'
+	linux	/boot/vmlinuz-2.6.32-31-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	linux	/boot/vmlinuz-2.6.32-30-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	echo	'Loading Linux 2.6.32-30-generic ...'
+	linux	/boot/vmlinuz-2.6.32-30-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	linux	/boot/vmlinuz-2.6.32-28-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	echo	'Loading Linux 2.6.32-28-generic ...'
+	linux	/boot/vmlinuz-2.6.32-28-generic root=UUID=a143e96f-ca60-43dd-aa81-6793c3b79635 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-28-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set a143e96f-ca60-43dd-aa81-6793c3b79635
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+menuentry "Plop Boot Manager Install"{
+set root='(hd0,1)'
+linux16 /boot/plpbt.bin
+}
+### END /etc/grub.d/40_custom ###
+```
+
+---
+
+### Post by not_the_geekiest on 2011-05-09
+I fixed the "Error: No Argument Specified" by adding =root after --set in the /boot/grub/grub.cfg file.
+
+Here is my grub.cfg menu
+
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos5)'
+search --no-floppy --fs-uuid --set=root 8d97a2fe-4af6-4509-bc3d-5ecafcdfc276
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos5)'
+search --no-floppy --fs-uuid --set=root 8d97a2fe-4af6-4509-bc3d-5ecafcdfc276
+set locale_dir=($root)/boot/grub/locale
+set lang=en_US
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/40_custom ###
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos5)'
+	search --no-floppy --fs-uuid --set=root 8d97a2fe-4af6-4509-bc3d-5ecafcdfc276
+	linux	/vmlinuz root=UUID=8d97a2fe-4af6-4509-bc3d-5ecafcdfc276 ro   quiet splash
+	initrd	/initrd.img
+}
+
+menuentry 'Ubuntu (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos5)'
+	search --no-floppy --fs-uuid --set=root 8d97a2fe-4af6-4509-bc3d-5ecafcdfc276
+	echo	'Loading Linux 2.6.35-23-generic-pae ...'
+	linux	/vmlinuz root=UUID=8d97a2fe-4af6-4509-bc3d-5ecafcdfc276 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/initrd.img
+}
+
+
+menuentry "Windows 7" {
+	insmod part_msdos
+	insmod ntfs
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 527a7e207a7e0151
+	chainloader +1
+}
+#menuentry "Windows 7 (sda2)" {
+#	insmod part_msdos
+#	insmod ntfs
+#	set root='(hd0,msdos2)'
+#	search --no-floppy --fs-uuid --set=root 8c80c01180c00424
+#	chainloader +1
+#}
+menuentry "Windows 7 (recovery mode)" { #Windows Vista (sda3)
+	insmod part_msdos
+	insmod ntfs
+	set root='(hd0,msdos3)'
+	search --no-floppy --fs-uuid --set=root 1202101c0210077f
+	chainloader +1
+}
+menuentry "Plop Boot Manager Install"{
+	set root='(hd0,1)'
+	linux16 /boot/plpbt.bin
+}
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+```
+
+
+I don't know what details are important to you. I also double checked that plpbt.bin is in the boot directory.
+
+---
+
+### Post by not_the_geekiest on 2011-05-10
+Okay, I found out my mistake. I had to change (or it worked when I changed) ```
+set root='(hd0,1)'
+``` to ```
+set root='(hd0,msdos4)'
+```
+
+Now that all of my problems are solved can you explain to me why there are differences between are grub.cfg menu? For example you have (hd0,1) while I have (hd0,msdos5) and I had to add =root after --set while you didn't.
+
+Thank you for all your help.
+
+---
+
+### Post by mhgsys on 2011-05-10
+Good you have it working
+
+Seems to me the big difference is that your ubuntu is installed on a different partition then mine.
+Plop is installed in your ubuntu partition on /boot so it's correct you point grub to that partition
+
+Also, I guess; 
+```
+set root='(hd0,5)'
+```
+should work the same as;
+```
+set root='(hd0,msdos5)'
+```
+
+edit:  yes, according to your grub.cfg '(hd0,5)'
+[B]
+You posted '(hd0,4)' !![/B]
+
+EDIT: A little note btw; you shouldn't actually edit the grub.cfg file, because of these kinda mistakes..thats why I explained how to edit /etc/grub.d/40_custom and update grub2
+
+---
+
+### Post by not_the_geekiest on 2011-05-10
+Sorry, I meant ```
+set root='(hd0,msdos5)'
+```
+
+Okay, so I got plop to run (I see the starry space travel background) however when I select boot from usb I receive the error > boot error
+no bootable device -- insert boot disk and press any key
+
+After pressing any key I am returned to the grub menu. I used unitbootin and installed Damm small linux on my usb to test it.
+
+---
+
+### Post by mhgsys on 2011-05-10
+You could go into the plop settings... 
+(it's in the starry menu somewhere)
+edit: Setup > Bootmanager > force usb 1.1 
+
+and try selecting a different mode for usb
+
+however; you cannot boot a usb2 device on a usb1 port
+
+edit: this is what happens when I try to boot a usb with no usb attached
+> loading ehci driver
+searching on host
+host1
+host2 
+host3
+host4
+driver removed
+Boot error, no boot device found, please retry it
+
+
+however when I press escape instaid of enter I get > boot disk  failure -- insert system disk and press enter
+
+So long story short,... you should check your way of trying to boot this device
+
+---
+
+### Post by not_the_geekiest on 2011-05-10
+I followed what you wrote and if I change it to mode 1 then it gives me something like this: > loading ehci driver
+searching on host
+host1
+host2
+host3
+host4
+driver removed
+Boot error, no boot device found, please retry it 
+
+If I select mode 2 or the default one then I get this: > boot error
+no bootable device -- insert boot disk and press any key 
+
+I didn't understand what the second thing that you wrote was. What do you mean typing enter vs esc? Enter selects it and esc doesn't.
+
+It might be a problem with usb 1 vs 2. I found out that my computer has usb2 but I don't know if the usb is usb2 or 1.1. How can I find that out?
+
+---
+
+### Post by mhgsys on 2011-05-10
+what I ment was that if I did not press enter but pressed escape instaid I got kinda the same error...
+
+anyway;
+
+I do not know why it's not booting your damnsmalllinux, perhaps you should try a regular distro... sure your plop works....we know that for sure
+
+dsl seems to have it's own way on howto boot from usb, so I cannot really help you out with that
+
+(I googled it)
+
+---
+
+### Post by not_the_geekiest on 2011-05-10
+I tried to boot with Ubuntu and when I choose mode 1 for booting with usb1.1 it acted as if I didn't have a usb inserted, and when i choose the default mode or mode 2 it boots to unetboots boot manager. Then when I choose "try out ubuntu" it doesn't respond. When I choose "default" or "help" it says it can not find the image. It might be a problem with the usb or with unetboot.
+
+---
+
+### Post by mhgsys on 2011-05-10
+try instaling the usb with startup disk creator
+
+(I just switched this machine to debian....so my plop is gone atm)
+
+---
+
+### Post by not_the_geekiest on 2011-05-10
+I did that and I got even further (but still not to the end). I selected what language I wanted to use and then I received a menu of what I wanted to do with Ubuntu (live usb, install allongside, etc.) I chose live usb and then I got this: [http://i54.tinypic.com/a57u46.jpg](http://i54.tinypic.com/a57u46.jpg) I had to restart after this.
+
+---
+
+### Post by mhgsys on 2011-05-12
+So was the usb device faulty ?, or the usb port you've been using?
+
+---
+
+### Post by not_the_geekiest on 2011-05-12
+It ends up that my usb was faulty so I switched it and then got Ubuntu to run from a live usb.
+
+---
+
+### Post by mhgsys on 2011-05-12
+Thnx for giving this info, 
+
+Good it's all working like it suppose to do, plop sure is handy in these cases
+
+---
+
+### Post by lesnik on 2011-07-09
+Hello, I have a problem regarding the "file not found" error. /dev/sdb1 is mounted on / and I have no separate partition for /boot, where I placed plpbt.bin. I figured my "set root" line should look like this:
+```
+set root=(hd1,1)
+```
+Do you know what am I doing wrong?
+
+---
+
+### Post by mhgsys on 2011-08-09
+@ lesnik
+--------
+**you forgot the ' in set root='(hd1,1)' **
+
+some info;
+where /boot is can variate..depending on how and where you've installed..
+
+you can see where your /boot is ,f.e by looking at /boot/grub/grub.cfg 
+
+
+f.e my /boot/grub/grub.cfg has the line;
+```
+insmod ext2
+set root='(hd0,1)'
+```
+
+ so for me set root='(hd0,1)' works fine..
+
+
+as you can see in post 12 in this thread: not_the_geekiest has 
+```
+insmod ext2
+set root='(/dev/sda,msdos5)'
+```
+
+in his /boot/grub.cfg
+
+so he had to: set root='(hd0,5)' in his /etc/grub.d/40_custom file
+
+also; for people reading this and go like: /etc/grub.d/40_custom file??
+do not intent to edit grub.cfg manually..please have a look at post 8 in this thread
+[http://ubuntuforums.org/showpost.php?p=10769333&postcount=8](http://ubuntuforums.org/showpost.php?p=10769333&postcount=8)
+
+---
+
+### Post by lesnik on 2011-08-10
+> **mhgsys said:**
+> @ lesnik
+--------
+**you forgot the ' in set root='(hd1,1)' **
+
+
+Wow, that is so typical... At least it doesn't happen too often :)
+Thanks.
+
+---
+
+### Post by mhgsys on 2011-08-10
+lesnik> 
+
+no problem,. you have it working now?
+
+---
+
+### Post by lesnik on 2011-08-16
+Hey, sorry for the delay. I was away at the time and then I completely forgot. I'm still getting the same message - "file not found". My grub.cfg looks like this:
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd1,1)'
+search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd1,1)'
+search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/06_mint_theme ###
+insmod ext2
+set root='(hd1,1)'
+search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+insmod png
+if background_image /boot/grub/linuxmint.png ; then
+  set color_normal=white/black
+  set color_highlight=white/light-gray
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=white/light-gray
+fi
+### END /etc/grub.d/06_mint_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Linux Mint 9, 2.6.32-21-generic (/dev/sdb1)" --class linuxmint --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd1,1)'
+	search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=5888ab1c-01c3-4214-a408-fa0c64f49f9a ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+menuentry "Linux Mint 9, 2.6.32-21-generic (/dev/sdb1) -- recovery mode" --class linuxmint --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd1,1)'
+	search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+	echo	'Loading Linux 2.6.32-21-generic ...'
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=5888ab1c-01c3-4214-a408-fa0c64f49f9a ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd1,1)'
+	search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd1,1)'
+	search --no-floppy --fs-uuid --set 5888ab1c-01c3-4214-a408-fa0c64f49f9a
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+	insmod ntfs
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 6e70f72470f6f1a7
+	drivemap -s (hd0) ${root}
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/50_plop ###
+
+menuentry "Plop Boot Manager" {
+    set root='(hd1,1)'
+    linux16 /boot/plpbt.bin
+}
+### END /etc/grub.d/50_plop ###
+
+```
+
+I have noticed that the location of the memory test is the same - (hd1,1) and plpbt.bin is in the same directory. I didn't edit grub.cfg manually. Also, when I run update-grub2 it doesn't print anything on my plop entry, just:
+```
+Generating grub.cfg ...
+Found Debian background: linuxmint.png
+Found linux image: /boot/vmlinuz-2.6.32-21-generic
+Found initrd image: /boot/initrd.img-2.6.32-21-generic
+Found memtest86+ image: /boot/memtest86+.bin
+Found Microsoft Windows XP Professional on /dev/sda1
+done
+```
+
+I have a custom file in the /etc/grub.d directory called "50_plop" which goes like this:
+```
+#!/bin/sh
+exec tail -n +3 $0
+
+menuentry "Plop Boot Manager" {
+    set root='(hd1,1)'
+    linux16 /boot/plpbt.bin
+}
+```
+
+I have no ideas left. I forgot to mention that I'm on mint linux, but I figured it's almost the same and I've had no problems using the troubleshooting information from ubuntu forums so far...
+
+---
+
+### Post by mhgsys on 2011-08-21
+@lesnik
+I recreated your setup,
+
+And installed grub onto both disk (sda and sdb) and found out something nice.
+
+when BIOS is booting from primary disk (IDE-0 / sda /(hd0,1) (where Xp is installed) all works fine,. the set root'(hd1,1)' is correct for plop..
+
+When BIOS is booting from secondary disk (IDE-1 /sdb /(hd1,1) plop gives me te file not found error,.. ..correct though , because BIOS is pointed to hd1 as boot disk...making it seem like first disk for the moment
+
+So..
+When BIOS is booting from secondary sdb (hd1,1) change
+```
+set root='(hd1,1)'
+```
+to 
+```
+set root='(hd0,1)'
+```
+
+and plop will work..
+
+---
+
+### Post by lesnik on 2011-10-24
+First of all, sorry for such a late reply. I don't know how, but I got the impression that there was no reply and just gave it up. I got no email notification even though I logged in checked back on this page so that I get one. I'll have to look into that in more detail...
+
+And the second thing: it works! Thank you so much for your patience and devotion, you're awesome!
+
+---
+
+### Post by mhgsys on 2011-10-24
+Hi lesnik,
+Better a late reply then no reply at all...
+
+:p
+
+Nice.
+
+---
+

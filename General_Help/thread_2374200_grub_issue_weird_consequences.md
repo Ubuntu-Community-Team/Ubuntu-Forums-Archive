@@ -1,0 +1,1305 @@
+---
+title: "grub issue weird consequences"
+date: 2017-10-13
+forum: General Help
+---
+
+### Post by webdevel-fr on 2017-10-13
+Hi everybody,
+I did a recent install of ubuntu 16.04. Nothing fancy since it is my mother's computer. Everything was A-ok until yesterday when the mouse disappeared completely. I tried to boot with another kernel but no grub menu at boot with shift pressing. Modified /etc/default/grub many ways (and update-grub) but the menu only appears less than one second and start default. After many tries, I found a way to access grub-menu by pressing ctrl-shift and press up-arrow and start an older kernel and everything was working perfectly. So I decided to make it the default kernel but it doesn't work if it is default start, I mean with the same kernel. Thinking it was a grub install issue, I used boot-repair to make a grub complete fresh install ( with the same grub at first and after with an apt purge and latest 17.10 grub + kernel update), none of the solutions worked. I am still forced to select manually the same kernel as the default for it to work.
+Can someone help me please?
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+Here is the first boot-repair log:
+
+```
+Boot Info Script 8f991e4 + Boot-Repair extra info      [Boot-Info 11oct2017]
+
+
+============================= Boot Info Summary: ===============================
+
+ => No boot loader is installed in the MBR of /dev/sda.
+
+sda1: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  FAT32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /EFI/ubuntu/grub.cfg /EFI/Boot/bootx64.efi 
+                       /EFI/ubuntu/fwupx64.efi /EFI/ubuntu/grubx64.efi 
+                       /EFI/ubuntu/mmx64.efi /EFI/ubuntu/shimx64.efi
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 17.04
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1                   1   976,773,167   976,773,167  ee GPT
+
+
+GUID Partition Table detected.
+
+Partition  Attrs   Start Sector    End Sector  # of Sectors System
+/dev/sda1                 2,048     1,050,623     1,048,576 EFI System partition
+/dev/sda2             1,050,624   976,771,071   975,720,448 Data partition (Linux)
+
+Attributes: R=Required, N=No Block IO, B=Legacy BIOS Bootable, +=More bits set
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        5ABD-009C                              vfat       
+/dev/sda2        a55cdec2-5d55-4b87-934e-62b809f97199   ext4       
+
+========================= "ls -l /dev/disk/by-id" output: ======================
+
+total 0
+lrwxrwxrwx 1 root root  9 Oct 13 12:54 ata-TOSHIBA_MQ01ABD050_92EFS82PS -> ../../sda
+lrwxrwxrwx 1 root root 10 Oct 13 12:54 ata-TOSHIBA_MQ01ABD050_92EFS82PS-part1 -> ../../sda1
+lrwxrwxrwx 1 root root 10 Oct 13 12:54 ata-TOSHIBA_MQ01ABD050_92EFS82PS-part2 -> ../../sda2
+lrwxrwxrwx 1 root root  9 Oct 13 12:42 ata-hp_DVD-RAM_UJ8D1_SMC3827049 -> ../../sr0
+lrwxrwxrwx 1 root root  9 Oct 13 12:54 wwn-0x5000039445d0550f -> ../../sda
+lrwxrwxrwx 1 root root 10 Oct 13 12:54 wwn-0x5000039445d0550f-part1 -> ../../sda1
+lrwxrwxrwx 1 root root 10 Oct 13 12:54 wwn-0x5000039445d0550f-part2 -> ../../sda2
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /boot/efi                vfat       (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+/dev/sda2        /                        ext4       (rw,relatime,errors=remount-ro,data=ordered)
+
+
+========================== sda1/EFI/ubuntu/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+search.fs_uuid a55cdec2-5d55-4b87-934e-62b809f97199 root hd0,gpt2 
+set prefix=($root)'/boot/grub'
+configfile $prefix/grub.cfg
+--------------------------------------------------------------------------------
+
+=========================== sda2/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="2"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_gpt
+insmod ext2
+set root='hd0,gpt2'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+else
+  search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=fr_FR
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=10
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=menu
+    set timeout=10
+  # Fallback normal timeout code in case the timeout_style feature is
+  # unavailable.
+  else
+    set timeout=10
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30,0; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-a55cdec2-5d55-4b87-934e-62b809f97199' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+    insmod part_gpt
+    insmod ext2
+    set root='hd0,gpt2'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+    else
+      search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+    fi
+        linux    /boot/vmlinuz-4.10.0-37-generic root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro  quiet
+    initrd    /boot/initrd.img-4.10.0-37-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-a55cdec2-5d55-4b87-934e-62b809f97199' {
+    menuentry 'Ubuntu, with Linux 4.10.0-37-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-37-generic-advanced-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-37-generic ...'
+            linux    /boot/vmlinuz-4.10.0-37-generic root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro  quiet
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-37-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.10.0-37-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-37-generic-init-upstart-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-37-generic ...'
+            linux    /boot/vmlinuz-4.10.0-37-generic root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro  quiet init=/sbin/upstart
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-37-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.10.0-37-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-37-generic-recovery-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-37-generic ...'
+            linux    /boot/vmlinuz-4.10.0-37-generic root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-37-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.10.0-33-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-33-generic-advanced-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-33-generic ...'
+        linux    /boot/vmlinuz-4.10.0-33-generic.efi.signed root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro  quiet
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-33-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.10.0-33-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-33-generic-init-upstart-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-33-generic ...'
+        linux    /boot/vmlinuz-4.10.0-33-generic.efi.signed root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro  quiet init=/sbin/upstart
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-33-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.10.0-33-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.10.0-33-generic-recovery-a55cdec2-5d55-4b87-934e-62b809f97199' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root='hd0,gpt2'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  a55cdec2-5d55-4b87-934e-62b809f97199
+        else
+          search --no-floppy --fs-uuid --set=root a55cdec2-5d55-4b87-934e-62b809f97199
+        fi
+        echo    'Loading Linux 4.10.0-33-generic ...'
+        linux    /boot/vmlinuz-4.10.0-33-generic.efi.signed root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.10.0-33-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/25_custom ###
+
+menuentry "EFI/ubuntu/fwupx64.efi" {
+search --fs-uuid --no-floppy --set=root 5ABD-009C
+chainloader (${root})/EFI/ubuntu/fwupx64.efi
+}
+
+menuentry "EFI/ubuntu/mmx64.efi" {
+search --fs-uuid --no-floppy --set=root 5ABD-009C
+chainloader (${root})/EFI/ubuntu/mmx64.efi
+}
+### END /etc/grub.d/25_custom ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+menuentry 'System setup' $menuentry_id_option 'uefi-firmware' {
+    fwsetup
+}
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during installation
+UUID=a55cdec2-5d55-4b87-934e-62b809f97199 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/sda1 during installation
+#UUID=5ABD-009C  /boot/efi       vfat    umask=0077      0       1
+/swapfile                                 none            swap    sw              0       0
+UUID=5ABD-009C    /boot/efi    vfat    defaults    0    1
+--------------------------------------------------------------------------------
+
+=================== sda2: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+ 106.626461029 = 114.489290752  boot/grub/grub.cfg                             1
+   4.586326599 = 4.924530688    boot/vmlinuz-4.10.0-33-generic                 1
+ 105.551006317 = 113.334530048  boot/vmlinuz-4.10.0-33-generic.efi.signed      2
+   4.146224976 = 4.451975168    boot/vmlinuz-4.10.0-37-generic                 1
+   4.146224976 = 4.451975168    vmlinuz                                        1
+   4.586326599 = 4.924530688    vmlinuz.old                                    1
+ 426.629199982 = 458.089615360  boot/initrd.img-4.10.0-33-generic              4
+ 286.638206482 = 307.775430656  boot/initrd.img-4.10.0-37-generic              3
+ 286.638206482 = 307.775430656  initrd.img                                     3
+ 426.629199982 = 458.089615360  initrd.img.old                                 4
+
+
+ADDITIONAL INFORMATION :
+=================== log of boot-repair 20171013_1254 ===================
+boot-repair version : 4ppa57
+boot-sav version : 4ppa57
+boot-sav-extra version : 4ppa57
+glade2script version : 3.2.3~ppa3
+boot-repair is executed in installed-session (Ubuntu 17.04, zesty, Ubuntu, x86_64)
+CPU op-mode(s):        32-bit, 64-bit
+BOOT_IMAGE=/boot/vmlinuz-4.10.0-33-generic.efi.signed root=UUID=a55cdec2-5d55-4b87-934e-62b809f97199 ro quiet
+
+=================== os-prober:
+/dev/sda2:L'OS actuellement utilisÃ© - Ubuntu 17.04 CurrentSession:linux
+
+=================== blkid:
+/dev/sda1: UUID="5ABD-009C" TYPE="vfat" PARTLABEL="EFI System Partition" PARTUUID="9f3bdc68-ff8b-475b-9653-c56c34a0911c"
+/dev/sda2: UUID="a55cdec2-5d55-4b87-934e-62b809f97199" TYPE="ext4" PARTUUID="2e8bafb2-147e-467c-a4c7-cee2052fde1c"
+
+
+1 disks with OS, 1 OS : 1 Linux, 0 MacOS, 0 Windows, 0 unknown type OS.
+
+
+=================== /etc/grub.d/ :
+drwxr-xr-x  2 root root     4096 aoÃ»t  12 10:10 grub.d
+total 80
+-rwxr-xr-x 1 root root  9783 mars  30  2017 00_header
+-rwxr-xr-x 1 root root  6258 nov.   1  2016 05_debian_theme
+-rwxr-xr-x 1 root root 12676 mars  30  2017 10_linux
+-rwxr-xr-x 1 root root 11281 mars  30  2017 20_linux_xen
+-rwxr-xr-x 1 root root  1992 janv. 28  2016 20_memtest86+
+-rwxr-xr-x 1 root root 12059 mars  30  2017 30_os-prober
+-rwxr-xr-x 1 root root  1418 mars  30  2017 30_uefi-firmware
+-rwxr-xr-x 1 root root   214 mars  30  2017 40_custom
+-rwxr-xr-x 1 root root   216 mars  30  2017 41_custom
+-rw-r--r-- 1 root root   483 mars  30  2017 README
+
+
+
+
+=================== /etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=2
+#GRUB_HIDDEN_TIMEOUT=5
+#GRUB_HIDDEN_TIMEOUT_QUIET=false
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+/boot/efi detected in the fstab of sda2: UUID=5ABD-009C   (sda1)
+/usr/share/boot-sav/bs-cmd_terminal.sh: ligne 179: avertissement : command substitution: ignored null byte in input
+
+=================== efibootmgr -v
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 3000,3001,2001,2002,2003
+Boot0000* ubuntu    HD(1,GPT,9f3bdc68-ff8b-475b-9653-c56c34a0911c,0x800,0x100000)/File(EFIubuntushimx64.efi)
+Boot0001* Ubuntu    HD(1,GPT,9f3bdc68-ff8b-475b-9653-c56c34a0911c,0x800,0x100000)/File(EFIubuntugrubx64.efi)RC
+Boot2001* USB Drive (UEFI)    RC
+Boot2002* Internal CD/DVD ROM Drive (UEFI)    RC
+Boot3000* Internal Hard Disk    RC
+Boot3001* Internal Hard Disk    RC
+
+=================== UEFI/Legacy mode:
+BIOS is EFI-compatible, and is setup in EFI-mode for this installed-session.
+SecureBoot disabled. (maybe sec-boot, Veuillez indiquer ce message Ã  [EMAIL="boot.repair@gmail.com"]boot.repair@gmail.com[/EMAIL])
+
+
+=================== PARTITIONS & DISKS:
+sda2    : sda,    not-sepboot,    grubenv-ok    grub2,    signed grub-efi ,    update-grub,    64,    with-boot,    is-os,    not--efi--part,    fstab-without-boot,    fstab-has-goodEFI,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    notwinboot,    apt-get,    grub-install,    with--usr,    fstab-without-usr,    not-sep-usr,    standard,    farbios,    notbiosboot, .
+sda1    : sda,    not-sepboot,    no-grubenv    nogrub,    no-docgrub,    no-update-grub,    32,    no-boot,    no-os,    is-correct-EFI,    part-has-no-fstab,    part-has-no-fstab,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    notwinboot,    nopakmgr,    nogrubinstall,    no---usr,    part-has-no-fstab,    not-sep-usr,    standard,    not-far,    notbiosboot, /boot/efi.
+
+sda    : GPT,    no-BIOS_boot,    has-correctEFI,     not-usb,    not-mmc, has-os,    2048 sectors * 512 bytes
+
+
+=================== parted -lm:
+
+BYT;
+/dev/sda:500GB:scsi:512:4096:gpt:ATA TOSHIBA MQ01ABD0:;
+1:1049kB:538MB:537MB:fat32:EFI System Partition:boot, esp;
+2:538MB:500GB:500GB:ext4::;
+
+=================== lsblk:
+KNAME TYPE FSTYPE   SIZE LABEL
+sda   disk        465,8G
+sda1  part vfat     512M
+sda2  part ext4   465,3G
+sr0   rom          1024M
+
+KNAME ROTA RO RM STATE   MOUNTPOINT
+sda      1  0  0 running
+sda1     1  0  0         /boot/efi
+sda2     1  0  0         /
+sr0      1  0  1 running
+
+
+=================== mount:
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,nosuid,relatime,size=1942912k,nr_inodes=485728,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=393148k,mode=755)
+/dev/sda2 on / type ext4 (rw,relatime,errors=remount-ro,data=ordered)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/lib/systemd/systemd-cgroups-agent,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+efivarfs on /sys/firmware/efi/efivars type efivarfs (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=25,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=12755)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+mqueue on /dev/mqueue type mqueue (rw,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,relatime)
+/dev/sda1 on /boot/efi type vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=393144k,mode=700,uid=1000,gid=1000)
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+tmpfs on /run/user/0 type tmpfs (rw,nosuid,nodev,relatime,size=393144k,mode=700)
+gvfsd-fuse on /run/user/0/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=0,group_id=0)
+
+
+=================== ls:
+/sys/block/sda (filtered):  alignment_offset badblocks bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight integrity power queue range removable ro sda1 sda2 size slaves stat subsystem trace uevent
+/sys/block/sr0 (filtered):  alignment_offset badblocks bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight integrity power queue range removable ro size slaves stat subsystem trace uevent
+/dev (filtered):  autofs block bsg btrfs-control bus cdrom cdrw char console core cpu cpu_dma_latency cuse disk dri drm_dp_aux0 dvd dvdrw ecryptfs fb0 fd freefall full fuse hpet hugepages hwrng i2c-0 i2c-1 i2c-2 i2c-3 i2c-4 i2c-5 i2c-6 initctl input kmsg lightnvm log mapper mcelog media0 mei0 mem memory_bandwidth mqueue net network_latency network_throughput null port ppp psaux ptmx pts random rfkill rtc rtc0 sda sda1 sda2 sg0 sg1 shm snapshot snd sr0 stderr stdin stdout uhid uinput urandom userio v4l vfio vga_arbiter vhci vhost-net video0 zero
+ls /dev/mapper:  control
+
+=================== hexdump -n512 -C /dev/sda1
+00000000  eb 58 90 6d 6b 66 73 2e  66 61 74 00 02 08 20 00  |.X.mkfs.fat... .|
+00000010  02 00 00 00 00 f8 00 00  3f 00 ff 00 00 08 00 00  |........?.......|
+00000020  00 00 10 00 00 04 00 00  00 00 00 00 02 00 00 00  |................|
+00000030  01 00 06 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000040  80 01 29 9c 00 bd 5a 4e  4f 20 4e 41 4d 45 20 20  |..)...ZNO NAME  |
+00000050  20 20 46 41 54 33 32 20  20 20 0e 1f be 77 7c ac  |  FAT32   ...w|.|
+00000060  22 c0 74 0b 56 b4 0e bb  07 00 cd 10 5e eb f0 32  |".t.V.......^..2|
+00000070  e4 cd 16 cd 19 eb fe 54  68 69 73 20 69 73 20 6e  |.......This is n|
+00000080  6f 74 20 61 20 62 6f 6f  74 61 62 6c 65 20 64 69  |ot a bootable di|
+00000090  73 6b 2e 20 20 50 6c 65  61 73 65 20 69 6e 73 65  |sk.  Please inse|
+000000a0  72 74 20 61 20 62 6f 6f  74 61 62 6c 65 20 66 6c  |rt a bootable fl|
+000000b0  6f 70 70 79 20 61 6e 64  0d 0a 70 72 65 73 73 20  |oppy and..press |
+000000c0  61 6e 79 20 6b 65 79 20  74 6f 20 74 72 79 20 61  |any key to try a|
+000000d0  67 61 69 6e 20 2e 2e 2e  20 0d 0a 00 00 00 00 00  |gain ... .......|
+000000e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+=================== df -Th:
+
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  1.9G     0  1.9G   0% /dev
+tmpfs          tmpfs     384M  6.4M  378M   2% /run
+/dev/sda2      ext4      457G  7.6G  427G   2% /
+tmpfs          tmpfs     1.9G   30M  1.9G   2% /dev/shm
+tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+tmpfs          tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/sda1      vfat      511M  3.4M  508M   1% /boot/efi
+tmpfs          tmpfs     384M  136K  384M   1% /run/user/1000
+tmpfs          tmpfs     384M  4.0K  384M   1% /run/user/0
+
+=================== fdisk -l:
+Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: 3A4C194D-17BD-4252-8667-9FFDB87ABA5D
+
+Device       Start       End   Sectors   Size Type
+/dev/sda1     2048   1050623   1048576   512M EFI System
+/dev/sda2  1050624 976771071 975720448 465.3G Linux filesystem
+
+
+
+
+=================== Default settings of Boot Repair
+The default repair of the Boot-Repair utility would reinstall the grub-efi-amd64-signed of sda2, using the following options:        sda1/boot/efi,
+Additional repair would be performed: unhide-bootmenu-10s    use-standard-efi-file
+
+
+=================== User settings
+The settings chosen by the user will reinstall the grub-efi-amd64-signed of sda2, using the following options:        sda1/boot/efi,
+Additional repair will be performed: unhide-bootmenu-10s    use-standard-efi-file
+
+
+/boot/efi added in sda2/fstab
+sda2/boot/efi not empty
+
+*******lspci -nnk | grep -iA3 vga
+00:02.0 VGA compatible controller [0300]: Intel Corporation 2nd Generation Core Processor Family Integrated Graphics Controller [8086:0106] (rev 09)
+DeviceName: Intel(R) Graphics
+Subsystem: Hewlett-Packard Company 2nd Generation Core Processor Family Integrated Graphics Controller [103c:1845]
+Kernel driver in use: i915
+*******
+
+grub-install --version
+grub-install (GRUB) 2.02~beta3-4ubuntu2.2,grub-install (GRUB) 2.
+
+efibootmgr -v
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 3000,3001,2001,2002,2003
+Boot0000* ubuntu    HD(1,GPT,9f3bdc68-ff8b-475b-9653-c56c34a0911c,0x800,0x100000)/File(EFIubuntushimx64.efi)
+Boot0001* Ubuntu    HD(1,GPT,9f3bdc68-ff8b-475b-9653-c56c34a0911c,0x800,0x100000)/File(EFIubuntugrubx64.efi)RC
+Boot2001* USB Drive (UEFI)    RC
+Boot2002* Internal CD/DVD ROM Drive (UEFI)    RC
+Boot3000* Internal Hard Disk    RC
+Boot3001* Internal Hard Disk    RC
+
+uname -r
+Kernel: 4.10.0-33-generic
+
+Reinstall the grub-efi-amd64-signed of sda2
+Installing for x86_64-efi platform.
+Installation finished. No error reported.
+grub-install --efi-directory=/boot/efi --target=x86_64-efi --uefi-secure-boot : exit code of grub-install :0
+ls sda1/efi: /ubuntu/shimx64.efi /ubuntu/mmx64.efi /ubuntu/grubx64.efi /ubuntu/grub.cfg /ubuntu/fwupx64.efi /ubuntu/fw
+df /dev/sda1
+cp /boot/efi/EFI/ubuntu/shimx64.efi /boot/efi/EFI/Boot/bootx64.efi (& .grb)
+ls sda1/efi: /ubuntu/shimx64.efi /ubuntu/mmx64.efi /ubuntu/grubx64.efi /ubuntu/grub.cfg /ubuntu/fwupx64.efi /ubuntu/fw /Boot/bootx64.efi.grb /Boot/bootx64.efi
+Add /boot/efi efi entries in /etc/grub.d/25_custom
+Adding custom /boot/efi/EFI/ubuntu/fwupx64.efi
+Adding custom /boot/efi/EFI/ubuntu/mmx64.efi
+
+efibootmgr -v
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 0000,3000,3001,2001,2002,2003
+Boot0000* ubuntu    HD(1,GPT,9f3bdc68-ff8b-475b-9653-c56c34a0911c,0x800,0x100000)/File(EFIubuntushimx64.efi)
+Boot2001* USB Drive (UEFI)    RC
+Boot2002* Internal CD/DVD ROM Drive (UEFI)    RC
+Boot3000* Internal Hard Disk    RC
+Boot3001* Internal Hard Disk    RC
+
+update-grub
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-4.10.0-37-generic
+Found initrd image: /boot/initrd.img-4.10.0-37-generic
+Found linux image: /boot/vmlinuz-4.10.0-33-generic
+Found initrd image: /boot/initrd.img-4.10.0-33-generic
+Adding boot menu entry for EFI firmware configuration
+Unhide GRUB boot menu in sda2/boot/grub/grub.cfg
+```
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+Here the second boot-repair log when I updated grub and kernel :
+
+[http://paste.ubuntu.com/25732547/](http://paste.ubuntu.com/25732547/)
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+To resume. For the same kernel, same boot options, so the "GRUB_DEFAULT=0"  everything works well if I select it manually at boot time but not if I let grub default start !!!!
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+here the default grub:
+
+```
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+GRUB_DISABLE_SUBMENU=y
+```
+
+---
+
+### Post by oldfred on 2017-10-13
+First boot repair summary was normal report & showed 17.04 installed in UEFI boot mode.
+Second link is the log from Boot-Repair, not the report.
+
+With UEFI, you press Escape Key right after Vendor logo. If UEFI fast start up is on, then you may not have time to press any key.
+
+What brand/model system?
+I see HP video so HP?
+
+HP's typically have not been UEFI dual boot friendly, but that is getting ubuntu entry to boot, not issues once started to boot with grub.
+
+Some with HP and only Ubuntu have to do this, note that description is Windows but actual boot file is Ubuntu.
+
+ 
+ **d1**:  If Description has to be Windows then change UEFI description. Assumes ESP is sda1. 
+ 	sudo efibootmgr -c -L "Windows Boot Manager" -l "\EFI\ubuntu\shimx64.efi"
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+First of all, thank you to take time helping me.
+For the brand, it is an HP. Here is dmidecode output:
+```
+
+# dmidecode 3.0
+Getting SMBIOS data from sysfs.
+SMBIOS 2.7 present.
+34 structures occupying 1883 bytes.
+Table at 0xAAEBC000.
+
+Handle 0x0000, DMI type 16, 23 bytes
+Physical Memory Array
+    Location: System Board Or Motherboard
+    Use: System Memory
+    Error Correction Type: None
+    Maximum Capacity: 16 GB
+    Error Information Handle: Not Provided
+    Number Of Devices: 2
+
+Handle 0x0001, DMI type 17, 34 bytes
+Memory Device
+    Array Handle: 0x0000
+    Error Information Handle: Not Provided
+    Total Width: 64 bits
+    Data Width: 64 bits
+    Size: 4096 MB
+    Form Factor: SODIMM
+    Set: None
+    Locator: Bottom-Slot 1(top)
+    Bank Locator: BANK 0
+    Type: DDR3
+    Type Detail: Synchronous
+    Speed: 1333 MHz
+    Manufacturer: Hynix
+    Serial Number: 0A702C69
+    Asset Tag: Unknown
+    Part Number: HMT351S6CFR8C-PB  
+    Rank: 2
+    Configured Clock Speed: 1333 MHz
+
+Handle 0x0003, DMI type 20, 35 bytes
+Memory Device Mapped Address
+    Starting Address: 0x00000000000
+    Ending Address: 0x000FFFFFFFF
+    Range Size: 4 GB
+    Physical Device Handle: 0x0001
+    Memory Array Mapped Address Handle: 0x0006
+    Partition Row Position: 1
+    Interleave Position: 1
+    Interleaved Data Depth: 1
+
+Handle 0x0004, DMI type 17, 34 bytes
+Memory Device
+    Array Handle: 0x0000
+    Error Information Handle: Not Provided
+    Total Width: Unknown
+    Data Width: Unknown
+    Size: No Module Installed
+    Form Factor: DIMM
+    Set: None
+    Locator: Bottom-Slot 2(under)
+    Bank Locator: BANK 1
+    Type: Unknown
+    Type Detail: Unknown
+    Speed: Unknown
+    Manufacturer: Empty
+    Serial Number: Empty
+    Asset Tag: Unknown
+    Part Number: Empty
+    Rank: Unknown
+    Configured Clock Speed: Unknown
+
+Handle 0x0006, DMI type 19, 31 bytes
+Memory Array Mapped Address
+    Starting Address: 0x00000000000
+    Ending Address: 0x000FFFFFFFF
+    Range Size: 4 GB
+    Physical Array Handle: 0x0000
+    Partition Width: 2
+
+Handle 0x0008, DMI type 0, 24 bytes
+BIOS Information
+    Vendor: Insyde
+    Version: F.14
+    Release Date: 09/20/2012
+    Address: 0xE0000
+    Runtime Size: 128 kB
+    ROM Size: 2560 kB
+    Characteristics:
+        PCI is supported
+        BIOS is upgradeable
+        BIOS shadowing is allowed
+        Boot from CD is supported
+        Selectable boot is supported
+        EDD is supported
+        Japanese floppy for NEC 9800 1.2 MB is supported (int 13h)
+        Japanese floppy for Toshiba 1.2 MB is supported (int 13h)
+        5.25"/360 kB floppy services are supported (int 13h)
+        5.25"/1.2 MB floppy services are supported (int 13h)
+        3.5"/720 kB floppy services are supported (int 13h)
+        3.5"/2.88 MB floppy services are supported (int 13h)
+        8042 keyboard services are supported (int 9h)
+        CGA/mono video services are supported (int 10h)
+        ACPI is supported
+        USB legacy is supported
+        BIOS boot specification is supported
+        Targeted content distribution is supported
+        UEFI is supported
+    BIOS Revision: 15.20
+    Firmware Revision: 56.44
+
+Handle 0x0009, DMI type 1, 27 bytes
+System Information
+    Manufacturer: Hewlett-Packard
+    Product Name: HP Pavilion g7 Notebook PC
+    Version: 0883110000385910000620100
+    Serial Number: 5CD2420WJN
+    UUID: 32444335-3234-5730-4A4E-84349777D375
+    Wake-up Type: Power Switch
+    SKU Number: C5T39EA#ABF
+    Family: 103C_5335KV G=N L=CON B=HP S=PAV X=Null 
+
+Handle 0x000A, DMI type 2, 16 bytes
+Base Board Information
+    Manufacturer: Hewlett-Packard
+    Product Name: 1845
+    Version: 56.2C
+    Serial Number: PCSGC022C2GJD5
+    Asset Tag: Type2 - Board Asset Tag
+    Features:
+        Board is a hosting board
+        Board is replaceable
+    Location In Chassis: Type2 - Board Chassis Location
+    Chassis Handle: 0x000B
+    Type: Motherboard
+    Contained Object Handles: 0
+
+Handle 0x000B, DMI type 3, 23 bytes
+Chassis Information
+    Manufacturer: Hewlett-Packard
+    Type: Notebook
+    Lock: Not Present
+    Version: Chassis Version
+    Serial Number: Chassis Serial Number
+    Asset Tag: Not Specified
+    Boot-up State: Safe
+    Power Supply State: Safe
+    Thermal State: Safe
+    Security Status: None
+    OEM Information: 0x00000959
+    Height: Unspecified
+    Number Of Power Cords: 1
+    Contained Elements: 0
+    SKU Number: Not Specified
+
+Handle 0x000C, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN3002
+    Internal Connector Type: None
+    External Reference Designator: USB
+    External Connector Type: Access Bus (USB)
+    Port Type: USB
+
+Handle 0x000D, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN3003
+    Internal Connector Type: None
+    External Reference Designator: USB
+    External Connector Type: Access Bus (USB)
+    Port Type: USB
+
+Handle 0x000E, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN3004
+    Internal Connector Type: None
+    External Reference Designator: USB
+    External Connector Type: Access Bus (USB)
+    Port Type: USB
+
+Handle 0x000F, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN4000
+    Internal Connector Type: None
+    External Reference Designator: Network
+    External Connector Type: RJ-45
+    Port Type: Network Port
+
+Handle 0x0010, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN5003
+    Internal Connector Type: None
+    External Reference Designator: HDMI
+    External Connector Type: Other
+    Port Type: Video Port
+
+Handle 0x0011, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN5001
+    Internal Connector Type: None
+    External Reference Designator: CRT
+    External Connector Type: DB-15 female
+    Port Type: Video Port
+
+Handle 0x0012, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN3005
+    Internal Connector Type: None
+    External Reference Designator: Microphone In
+    External Connector Type: Mini Jack (headphones)
+    Port Type: Audio Port
+
+Handle 0x0013, DMI type 8, 9 bytes
+Port Connector Information
+    Internal Reference Designator: CN3000
+    Internal Connector Type: None
+    External Reference Designator: Speaker Out
+    External Connector Type: Mini Jack (headphones)
+    Port Type: Audio Port
+
+Handle 0x0014, DMI type 9, 17 bytes
+System Slot Information
+    Designation: PCI Express Slot 1
+    Type: x16 PCI Express x16
+    Current Usage: Available
+    Length: Other
+    ID: 1
+    Characteristics:
+        PME signal is supported
+        Hot-plug devices are supported
+    Bus Address: 0000:00:01.0
+
+Handle 0x0015, DMI type 9, 17 bytes
+System Slot Information
+    Designation: PCI Express Slot 2
+    Type: x1 PCI Express x1
+    Current Usage: Available
+    Length: Other
+    ID: 1
+    Characteristics:
+        5.0 V is provided
+        3.3 V is provided
+        PME signal is supported
+    Bus Address: 0000:00:1c.0
+
+Handle 0x0016, DMI type 9, 17 bytes
+System Slot Information
+    Designation: PCI Express Slot 3
+    Type: x1 PCI Express x1
+    Current Usage: Available
+    Length: Other
+    ID: 2
+    Characteristics:
+        5.0 V is provided
+        3.3 V is provided
+    Bus Address: 0000:00:1c.1
+
+Handle 0x0017, DMI type 11, 5 bytes
+OEM Strings
+    String 1: $HP$
+    String 2: LOC#ABF
+    String 3: ABS 70/71 78 79 7A 7B
+    String 4: CNB1 0883110000385910000620100
+    String 5: HP_Mute_LED_0_A
+    String 6: String6 for Original Equipment Manufacturer
+    String 7: String7 for Original Equipment Manufacturer
+    String 8: String8 for Original Equipment Manufacturer
+
+Handle 0x0018, DMI type 13, 22 bytes
+BIOS Language Information
+    Language Description Format: Long
+    Installable Languages: 4
+        en|US|iso8859-1
+        fr|CA|iso8859-1
+        es|ES|iso8859-1
+        zh|TW|unicode
+    Currently Installed Language: fr|CA|iso8859-1
+
+Handle 0x0019, DMI type 22, 26 bytes
+Portable Battery
+    Location: Primary
+    Manufacturer: 13-25
+    Name: MU06047
+    Chemistry: Lithium Ion
+    Design Capacity: 47520 mWh
+    Design Voltage: 10800 mV
+    SBDS Version: 1.1
+    Maximum Error: 1%
+    SBDS Serial Number: 4311
+    SBDS Manufacture Date: 2012-07-05
+    OEM-specific Information: 0x0000FFFF
+
+Handle 0x001A, DMI type 32, 20 bytes
+System Boot Information
+    Status: No errors detected
+
+Handle 0x001B, DMI type 41, 11 bytes
+Onboard Device
+    Reference Designation: Intel(R) Graphics
+    Type: Video
+    Status: Enabled
+    Type Instance: 1
+    Bus Address: 0000:00:02.0
+
+Handle 0x001C, DMI type 131, 64 bytes
+OEM-specific Type
+    Header and Data:
+        83 40 1C 00 00 00 00 00 00 00 00 00 00 00 00 00
+        F8 00 59 1E FF FF FF FF 01 20 00 00 01 00 08 00
+        E0 04 00 00 00 00 00 00 C8 00 FF FF 00 00 00 00
+        00 FF 00 00 66 00 00 00 76 50 72 6F 00 00 00 00
+
+Handle 0x001D, DMI type 41, 11 bytes
+Onboard Device
+    Reference Designation: Ralink RT5390R 802.11bgn 1x1 Wi-Fi Adapter
+    Type: Other
+    Status: Enabled
+    Type Instance: 1
+    Bus Address: 0000:01:00.0
+
+Handle 0x001E, DMI type 41, 11 bytes
+Onboard Device
+    Reference Designation: Realtek PCIe FE Family Controller
+    Type: Ethernet
+    Status: Enabled
+    Type Instance: 1
+    Bus Address: 0000:02:00.0
+
+Handle 0x001F, DMI type 4, 42 bytes
+Processor Information
+    Socket Designation: U3E1
+    Type: Central Processor
+    Family: Pentium
+    Manufacturer: Intel(R) Corporation
+    ID: A7 06 02 00 FF FB EB BF
+    Signature: Type 0, Family 6, Model 42, Stepping 7
+    Flags:
+        FPU (Floating-point unit on-chip)
+        VME (Virtual mode extension)
+        DE (Debugging extension)
+        PSE (Page size extension)
+        TSC (Time stamp counter)
+        MSR (Model specific registers)
+        PAE (Physical address extension)
+        MCE (Machine check exception)
+        CX8 (CMPXCHG8 instruction supported)
+        APIC (On-chip APIC hardware supported)
+        SEP (Fast system call)
+        MTRR (Memory type range registers)
+        PGE (Page global enable)
+        MCA (Machine check architecture)
+        CMOV (Conditional move instruction supported)
+        PAT (Page attribute table)
+        PSE-36 (36-bit page size extension)
+        CLFSH (CLFLUSH instruction supported)
+        DS (Debug store)
+        ACPI (ACPI supported)
+        MMX (MMX technology supported)
+        FXSR (FXSAVE and FXSTOR instructions supported)
+        SSE (Streaming SIMD extensions)
+        SSE2 (Streaming SIMD extensions 2)
+        SS (Self-snoop)
+        HTT (Multi-threading)
+        TM (Thermal monitor supported)
+        PBE (Pending break enabled)
+    Version: Intel(R) Pentium(R) CPU B950 @ 2.10GHz
+    Voltage: 1.1 V
+    External Clock: 100 MHz
+    Max Speed: 4000 MHz
+    Current Speed: 2100 MHz
+    Status: Populated, Enabled
+    Upgrade: Socket rPGA988B
+    L1 Cache Handle: 0x0021
+    L2 Cache Handle: 0x0022
+    L3 Cache Handle: 0x0023
+    Serial Number: To Be Filled By O.E.M.
+    Asset Tag: To Be Filled By O.E.M.
+    Part Number: To Be Filled By O.E.M.
+    Core Count: 2
+    Core Enabled: 2
+    Thread Count: 2
+    Characteristics:
+        64-bit capable
+        Multi-Core
+        Execute Protection
+        Power/Performance Control
+
+Handle 0x0020, DMI type 7, 19 bytes
+Cache Information
+    Socket Designation: L1 Cache
+    Configuration: Enabled, Not Socketed, Level 1
+    Operational Mode: Write Through
+    Location: Internal
+    Installed Size: 32 kB
+    Maximum Size: 32 kB
+    Supported SRAM Types:
+        Unknown
+    Installed SRAM Type: Unknown
+    Speed: Unknown
+    Error Correction Type: Parity
+    System Type: Data
+    Associativity: 8-way Set-associative
+
+Handle 0x0021, DMI type 7, 19 bytes
+Cache Information
+    Socket Designation: L1 Cache
+    Configuration: Enabled, Not Socketed, Level 1
+    Operational Mode: Write Through
+    Location: Internal
+    Installed Size: 32 kB
+    Maximum Size: 32 kB
+    Supported SRAM Types:
+        Unknown
+    Installed SRAM Type: Unknown
+    Speed: Unknown
+    Error Correction Type: Parity
+    System Type: Instruction
+    Associativity: 8-way Set-associative
+
+Handle 0x0022, DMI type 7, 19 bytes
+Cache Information
+    Socket Designation: L2 Cache
+    Configuration: Enabled, Not Socketed, Level 2
+    Operational Mode: Write Through
+    Location: Internal
+    Installed Size: 256 kB
+    Maximum Size: 256 kB
+    Supported SRAM Types:
+        Unknown
+    Installed SRAM Type: Unknown
+    Speed: Unknown
+    Error Correction Type: Multi-bit ECC
+    System Type: Unified
+    Associativity: 8-way Set-associative
+
+Handle 0x0023, DMI type 7, 19 bytes
+Cache Information
+    Socket Designation: L3 Cache
+    Configuration: Enabled, Not Socketed, Level 3
+    Operational Mode: Write Back
+    Location: Internal
+    Installed Size: 2048 kB
+    Maximum Size: 2048 kB
+    Supported SRAM Types:
+        Unknown
+    Installed SRAM Type: Unknown
+    Speed: Unknown
+    Error Correction Type: Multi-bit ECC
+    System Type: Unified
+    Associativity: 8-way Set-associative
+
+Handle 0x0024, DMI type 127, 4 bytes
+End Of Table
+```
+
+In my case, it is a single boot ubuntu and, unfortunately, I cannot remove UEFI boot since I lost BIOS password.
+
+I'll try to find the report in var/log and I post it. But first of all, try to execute the command line you gave me.
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+So I tried the command efibootmgr... And it didn't work out. I tried to use escape and nothing at all.
+I have no clue what to do.
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+I have new things to say since I tried to access F9 option at boot. It permits to change boot order through bios (surely UEFI but I don't remember) and, as the the grub menu, it appears one second and disappear. It is like if my kb was constantly pressing "enter" during boot!
+I tested my keyboard with logkeys and nothing's wrong....
+
+---
+
+### Post by oldfred on 2017-10-13
+Have you updated UEFI/BIOS from HP? 
+Early UEFI implementations from vendors usually need updates to work well.
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+I did not update my bios because I lost the password .
+Right now, I think I'll wait for the new release of ubuntu and make a fresh install. If it doesn't work, my last chance is to force update the bios.
+
+---
+
+### Post by oldfred on 2017-10-13
+Systems have a way to totally reset UEFI/BIOS.
+With desktops you have either a jumper or two pins you short out.
+Some tablets have a pin hole reset button.
+And laptops are somewhere in middle, you may need to check manual.
+
+---
+
+### Post by webdevel-fr on 2017-10-13
+Ok. I will check that but not tonight cause I don't have the laptop with me. 
+Anyway thanks for the help.
+
+---
+

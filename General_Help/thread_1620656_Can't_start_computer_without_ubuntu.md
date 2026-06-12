@@ -1,0 +1,369 @@
+---
+title: "Can't start computer without ubuntu"
+date: 2010-11-13
+forum: General Help
+---
+
+### Post by 0xParse on 2010-11-13
+I installed ubuntu onto a removable HD.  It works fine and everything, but when I try turning on my computer with out the hard drive in windows doesn't run.  I get some kind of GRUB error (don't remember what it is).
+I have windows on my main HD inside my computer and I want that to run when no other OS is attached (HD/CD).
+
+How can I fix this?
+
+Thanks
+Frankie
+
+Some other info:
+Ubuntu 10.10
+Windows Vista Home Premium
+And I can unplug the removable HDD once I am past GRUB.
+
+---
+
+### Post by Rubi1200 on 2010-11-13
+Hi and welcome to the forums :)
+
+See here for an explanation of the problem and solutions:
+[http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Computer_does_not_boot_without_external_drive](http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Computer_does_not_boot_without_external_drive)
+
+If you would prefer that we take a closer look BEFORE you do this, then post the results of the boot info script linked at the bottom of my post.
+
+---
+
+### Post by 0xParse on 2010-11-13
+Thanks for the reply!
+
+Here is the output of your script:
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => No boot loader is installed in the MBR of /dev/sda
+ => Grub 2 is installed in the MBR of /dev/sdb and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /boot/bcd /Windows/System32/winload.exe
+
+sdb2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1               2,048   468,520,959   468,518,912  83 Linux
+/dev/sda2         468,523,006   488,396,799    19,873,794   5 Extended
+/dev/sda5         468,523,008   488,396,799    19,873,792  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1    *             63   947,296,255   947,296,193   7 HPFS/NTFS
+/dev/sdb2         947,296,256   976,766,975    29,470,720   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        051db189-dca4-49f1-b434-861f821feb66   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        711bb8a5-6d02-4c38-ad2c-35483217476e   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        C80E7DDA0E7DC24C                       ntfs                                     
+/dev/sdb2        D03659B736599EF2                       ntfs       RECOVERY                      
+/dev/sdb: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro,commit=0)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd1,msdos1)'
+search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd1,msdos1)'
+search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd1,msdos1)'
+	search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+	linux	/boot/vmlinuz-2.6.35-22-generic-pae root=UUID=051db189-dca4-49f1-b434-861f821feb66 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.35-22-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd1,msdos1)'
+	search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+	echo	'Loading Linux 2.6.35-22-generic-pae ...'
+	linux	/boot/vmlinuz-2.6.35-22-generic-pae root=UUID=051db189-dca4-49f1-b434-861f821feb66 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.35-22-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd1,msdos1)'
+	search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd1,msdos1)'
+	search --no-floppy --fs-uuid --set 051db189-dca4-49f1-b434-861f821feb66
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+	insmod part_msdos
+	insmod ntfs
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set c80e7dda0e7dc24c
+	chainloader +1
+}
+menuentry "Windows Vista (loader) (on /dev/sda2)" {
+	insmod part_msdos
+	insmod ntfs
+	set root='(hd0,msdos2)'
+	search --no-floppy --fs-uuid --set d03659b736599ef2
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sdb1       /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdb5 during installation
+UUID=711bb8a5-6d02-4c38-ad2c-35483217476e none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+  30.2GB: boot/grub/core.img
+ 120.5GB: boot/grub/grub.cfg
+    .6GB: boot/initrd.img-2.6.35-22-generic-pae
+  30.2GB: boot/vmlinuz-2.6.35-22-generic-pae
+    .6GB: initrd.img
+  30.2GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  b7 b9 ac 2e 4e be d9 5e  6d 7e 1c 98 4d 76 78 52  |....N..^m~..MvxR|
+00000010  d3 f9 c8 60 4a 4b 45 2a  f7 cc ef 66 18 a1 ef b3  |...`JKE*...f....|
+00000020  d4 84 03 17 1a 84 b1 dd  34 ab f3 c2 95 35 70 b8  |........4....5p.|
+00000030  e6 47 ed 10 89 83 e8 f8  d8 59 39 db 19 11 91 64  |.G.......Y9....d|
+00000040  fa 39 29 ea 49 ff f5 24  0e 10 70 df 04 53 8f 60  |.9).I..$..p..S.`|
+00000050  a5 87 dc 20 b8 eb 61 01  bf 1e 94 60 d6 ad e1 1e  |... ..a....`....|
+00000060  bf 41 6f dd 5b 94 96 e2  35 be 58 fc a3 8a f3 cd  |.Ao.[...5.X.....|
+00000070  b5 6d af 6a 71 4e ed e9  49 11 27 7d 10 93 93 2e  |.m.jqN..I.'}....|
+00000080  fc df 04 9f 6e 6d 07 c5  ea 13 06 de 00 3b 09 4b  |....nm.......;.K|
+00000090  59 9b ff 7d 42 14 0e 3a  2c 2c 55 01 b4 a2 66 45  |Y..}B..:,,U...fE|
+000000a0  5c f7 a5 e2 83 6e 7e 93  6f a0 07 31 06 fd 35 c3  |\....n~.o..1..5.|
+000000b0  4e a2 74 04 a4 fb c9 f4  16 6f 89 ac 5b b0 86 56  |N.t......o..[..V|
+000000c0  bf ac 3f cd b2 dd 6c 89  fe 68 0a 74 47 c4 35 f0  |..?...l..h.tG.5.|
+000000d0  63 88 40 d1 1c 40 f3 74  74 37 81 16 9e c6 33 41  |c.@..@.tt7....3A|
+000000e0  de de 12 1f f7 58 3b 55  e5 db 35 1b 3e 78 fe 50  |.....X;U..5.>x.P|
+000000f0  6b 45 a0 06 18 a2 0d e4  57 88 d8 4a bf f6 a4 c8  |kE......W..J....|
+00000100  65 9a d6 d0 65 da bb 98  e3 d3 87 02 ec cf d1 ff  |e...e...........|
+00000110  b8 dc fd cc 30 d9 ae a2  fb cf 25 2d 67 e6 6d be  |....0.....%-g.m.|
+00000120  a0 9e 07 30 e4 77 bd 08  c6 a1 b8 e6 a1 aa 38 4e  |...0.w........8N|
+00000130  9f 55 ac bd 99 3d a3 cf  35 6b 93 30 24 75 1d de  |.U...=..5k.0$u..|
+00000140  03 19 42 92 06 df 9e de  6f 50 9e 11 a1 1f ec 7a  |..B.....oP.....z|
+00000150  9b ea c9 c4 49 bc 47 a7  ff 0e 83 bc e8 dd 95 cf  |....I.G.........|
+00000160  b9 e4 97 0e ef f3 bf 3e  2c 29 c0 11 c2 d7 99 17  |.......>,)......|
+00000170  c6 8a e9 9c 49 ce 72 43  06 d1 f7 3a 34 da de cb  |....I.rC...:4...|
+00000180  5c 01 7d bd 97 93 da c0  8b 3f 76 e4 95 9e d6 63  |\.}......?v....c|
+00000190  e1 9d ff 1a 16 ca f4 15  cf aa db df b1 c4 e3 c3  |................|
+000001a0  ef d9 d1 c1 05 e6 90 b7  4f e8 88 29 c5 ad b0 a6  |........O..)....|
+000001b0  3c 42 d5 0f ac fd df 26  5a dd 75 4f 97 d4 00 fe  |<B.....&Z.uO....|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 40 2f 01 00 00  |...........@/...|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+```
+Note: In-case it helps, Ubuntu is installed on the smaller hard drive (~250GB) and Windows on the larger (~500GB).
+
+---
+
+### Post by Rubi1200 on 2010-11-13
+Can I assume that the external HD was plugged in when you ran the script?
+
+---
+
+### Post by marin123 on 2010-11-13
+did you maybe overwrite windows bootloader with grub? try fixing the windows mbr...
+if you have ubuntu installed on external hd, then grub should be there, not on the main drive.
+
+---
+
+### Post by Rubi1200 on 2010-11-13
+I think you need to read and follow the instructions in the link I posted earlier. 
+
+The boot script looks basically fine.
+
+Let us know if you have any more questions.
+
+---
+
+### Post by 0xParse on 2010-11-13
+Thanks, I got it all working now.  After I followed the instructions I just had to change the BIOS settings to put USB above internal.
+
+---
+
+### Post by Rubi1200 on 2010-11-14
+I am glad you got it sorted out :)
+
+Please mark this thread Solved using the Thread Tools near the top of the page.
+
+---
+

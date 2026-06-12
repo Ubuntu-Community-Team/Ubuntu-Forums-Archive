@@ -1,0 +1,93 @@
+---
+title: "Installing Veil Evasion on 16.04"
+date: 2016-07-09
+forum: General Help
+---
+
+### Post by OutCell on 2016-07-09
+I have been trying to install Veil Evasion on Ubuntu 16.04 (MATE) but i get the below error. Any help would be appreciated. My steps are:
+```
+apt-get -y install git
+git clone https://github.com/Veil-Framework/Veil-Evasion.git
+cd Veil-Evasion/
+cd setup
+setup.sh -c
+```
+
+The result as below:
+```
+als@desktop:~/Veil-Evasion/setup$ sudo bash ./setup.sh -c
+[sudo] password for als: 
+id: &#8216;als\nals&#8217;: no such user
+==========================================================================
+ Veil-Evasion (Setup Script) | [Updated]: 2016-02-23
+==========================================================================
+ [Web]: https://www.veil-framework.com/ | [Twitter]: @VeilFramework
+==========================================================================
+
+
+ [I] Ubuntu 16 x86_64 Detected...
+
+
+
+ [*] Initializing Package Installation
+
+ [*] Adding x86 Architecture To x86_64 System for Wine
+W: GPG error: http://ppa.launchpad.net/wine/wine-builds/ubuntu xenial InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY E61A24DF77C899CB
+W: The repository 'http://ppa.launchpad.net/wine/wine-builds/ubuntu xenial InRelease' is not signed.
+W: The repository 'http://ppa.launchpad.net/fkrull/deadsnakes-python2.7/ubuntu xenial Release' does not have a Release file.
+W: The repository 'http://ppa.launchpad.net/tiheum/equinox/ubuntu xenial Release' does not have a Release file.
+E: Failed to fetch http://ppa.launchpad.net/fkrull/deadsnakes-python2.7/ubuntu/dists/xenial/main/binary-amd64/Packages  404  Not Found
+E: Failed to fetch http://ppa.launchpad.net/tiheum/equinox/ubuntu/dists/xenial/main/binary-amd64/Packages  404  Not Found
+E: Some index files failed to download. They have been ignored, or old ones used instead.
+ [*] Installing Wine 32bit and 64bit Binaries
+(Reading database ... 266040 files and directories currently installed.)
+Removing winehq-devel (1.9.13~ubuntu16.04.1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Processing triggers for bamfdaemon (0.5.3~bzr0+16.04.20160523-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for desktop-file-utils (0.22-1ubuntu5) ...
+Processing triggers for mime-support (3.59ubuntu1) ...
+Selecting previously unselected package wine1.6-amd64.
+(Reading database ... 265979 files and directories currently installed.)
+Preparing to unpack .../wine1.6-amd64_1%3a1.6.2-0ubuntu14_amd64.deb ...
+Unpacking wine1.6-amd64 (1:1.6.2-0ubuntu14) ...
+Selecting previously unselected package wine1.6-i386:i386.
+Preparing to unpack .../wine1.6-i386_1%3a1.6.2-0ubuntu14_i386.deb ...
+Unpacking wine1.6-i386:i386 (1:1.6.2-0ubuntu14) ...
+Selecting previously unselected package wine1.6.
+Preparing to unpack .../wine1.6_1%3a1.6.2-0ubuntu14_amd64.deb ...
+Unpacking wine1.6 (1:1.6.2-0ubuntu14) ...
+Selecting previously unselected package wine.
+Preparing to unpack .../wine_1%3a1.8.0-0ubuntu1~ubuntu15.10.1~ppa1_amd64.deb ...
+Unpacking wine (1:1.8.0-0ubuntu1~ubuntu15.10.1~ppa1) ...
+Processing triggers for libc-bin (2.23-0ubuntu3) ...
+Processing triggers for mime-support (3.59ubuntu1) ...
+Processing triggers for bamfdaemon (0.5.3~bzr0+16.04.20160523-0ubuntu1) ...
+Rebuilding /usr/share/applications/bamf-2.index...
+Processing triggers for desktop-file-utils (0.22-1ubuntu5) ...
+Processing triggers for hicolor-icon-theme (0.15-0ubuntu1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up wine1.6-amd64 (1:1.6.2-0ubuntu14) ...
+Setting up wine1.6-i386:i386 (1:1.6.2-0ubuntu14) ...
+Setting up wine1.6 (1:1.6.2-0ubuntu14) ...
+Setting up wine (1:1.8.0-0ubuntu1~ubuntu15.10.1~ppa1) ...
+Processing triggers for libc-bin (2.23-0ubuntu3) ...
+ [*] Creating new Veil Wine environment in /home/als als/.config/wine/veil 
+ [*] Initializing Veil's Wine environment...
+sudo: als: command not found
+sudo: als: command not found
+ [ERROR] Veil Wine environment could not be found!
+
+         Check for existence of /home/als als/.config/wine/veil/drive_c
+```
+
+---
+
+### Post by DuckHook on 2016-07-10
+We do not support any form of cracking tools on these forums.
+
+Thread closed.
+
+---
+

@@ -1,0 +1,313 @@
+---
+title: "Startup errors"
+date: 2010-05-22
+forum: General Help
+---
+
+### Post by mpgarate on 2010-05-22
+I am getting some startup errors from Plymouth. The first few times the boot failed, but now it proceeds text-only mode. Here are the mentions of plymouth from my kern.log
+
+> May 22 09:50:47 mike-laptop kernel: [    5.373320] Out of memory: kill process 432 (plymouthd) score 38 or a child
+May 22 09:50:47 mike-laptop kernel: [    5.373321] Killed process 432 (plymouthd)
+
+
+edit: when it is actually booting up, I get this error. I typed from a photo, and I left out the number of files and blocks on the disk.
+
+```
+init: plymouth main process (451) killed by KILL signal
+init: unreadahead main process (450) killed by Kill signal
+fsck from util-linux-ng 2.17.2
+/dev/sda5 clean, xxxxx/xxxxxx files, xxxxxxx/xxxxxx blocks
+init: plymouth-log main process (872) terminated with status 1
+```
+
+edit2: in case any of this is useful
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048     2,459,647     2,457,600   7 HPFS/NTFS
+/dev/sda2           2,459,648   506,775,631   504,315,984   7 HPFS/NTFS
+/dev/sda3         604,659,712   625,139,711    20,480,000   7 HPFS/NTFS
+/dev/sda4         506,777,598   604,659,711    97,882,114   5 Extended
+/dev/sda5         506,777,600   600,563,711    93,786,112  83 Linux
+/dev/sda6         600,565,760   604,659,711     4,093,952  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/mmcblk0p1   3337-3866                              vfat       NIKON D60                     
+/dev/sda1        14D4D2F7D4D2DA56                       ntfs       SYSTEM_DRV                    
+/dev/sda2        4A3CD4DD3CD4C4DB                       ntfs       Windows7_OS                   
+/dev/sda3        5E38D78538D75A9B                       ntfs       Lenovo                        
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        fc16218d-7c28-4d0f-a3f4-895270f60df5   ext4                                     
+/dev/sda6        6949dfab-6026-48e8-91d1-a3b560facb86   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+/dev/mmcblk0p1   /media/NIKON D60         vfat       (rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,shortname=mixed,dmask=0077,utf8=1,flush)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	linux	/boot/vmlinuz-2.6.32-22-generic root=UUID=fc16218d-7c28-4d0f-a3f4-895270f60df5 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	echo	'Loading Linux 2.6.32-22-generic ...'
+	linux	/boot/vmlinuz-2.6.32-22-generic root=UUID=fc16218d-7c28-4d0f-a3f4-895270f60df5 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=fc16218d-7c28-4d0f-a3f4-895270f60df5 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	echo	'Loading Linux 2.6.32-21-generic ...'
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=fc16218d-7c28-4d0f-a3f4-895270f60df5 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set fc16218d-7c28-4d0f-a3f4-895270f60df5
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sda1)" {
+	insmod ntfs
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 14d4d2f7d4d2da56
+	chainloader +1
+}
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+	insmod ntfs
+	set root='(hd0,2)'
+	search --no-floppy --fs-uuid --set 4a3cd4dd3cd4c4db
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=fc16218d-7c28-4d0f-a3f4-895270f60df5 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=6949dfab-6026-48e8-91d1-a3b560facb86 none            swap    sw              0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 296.1GB: boot/grub/core.img
+ 285.4GB: boot/grub/grub.cfg
+ 296.1GB: boot/initrd.img-2.6.32-21-generic
+ 296.1GB: boot/initrd.img-2.6.32-22-generic
+ 296.1GB: boot/vmlinuz-2.6.32-21-generic
+ 296.1GB: boot/vmlinuz-2.6.32-22-generic
+ 296.1GB: initrd.img
+ 296.1GB: initrd.img.old
+ 296.1GB: vmlinuz
+ 296.1GB: vmlinuz.old
+```
+
+---
+
+### Post by mpgarate on 2010-05-25
+*bump*
+
+I also just got a ton of IO errors. Not sure if it is related.
+
+---
+
+### Post by przemo_li on 2010-07-15
+The same problem :(
+
+ATI Catalyst 10.6
+
+przemoli@przemoli-laptop:~$ dmesg | grep plymouth
+[    9.383544] Out of memory: kill process 509 (plymouthd) score 38 or a child
+[    9.383546] Killed process 509 (plymouthd)
+
+
+Sometimes netbook do not start (blinking cursor only), sometimes (rarly) this message show up and ubuntu continue to start
+
+---
+
+### Post by matzipan on 2010-07-17
+Have the same problem on an Ubuntu 10.04 Server downloaded last night. Installed it twice in a VM. Grub boots fine.
+
+---
+

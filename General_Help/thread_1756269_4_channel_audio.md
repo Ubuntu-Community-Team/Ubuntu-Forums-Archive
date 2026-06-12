@@ -1,0 +1,33 @@
+---
+title: "4 channel audio"
+date: 2011-05-12
+forum: General Help
+---
+
+### Post by zobayer1 on 2011-05-12
+I use a 4 channel audio system [ os: ubuntu-11.04 ], and I have a built in sound controller in my motherboard which supports up to 8 channel. However, when I try to change hardware profile from sound preference [ sound preference -> Hardware -> Profile ], I get several options, for example:
+
+[I]Off
+....
+....
+Analog Surround 4.0 Output
+....
+....
+Analog Surround 4.0 Output + Analog Stereo Input
+....
+....
+Analog Surround 4.1 Output
+....
+....
+Analog Surround 4.1 Output + Analog Stereo Input
+....
+....
+Analog Stereo Output
+Analog Stereo Duplex[/I]
+
+Which one should I select? Well, for normal 2 channel the last two works fine, but when I try to activate all 4 channels, I tried with "Analog Surround 4.0 Output", but here is the problem. It can activate all 4 channels but the volume level is abnormal, the rear is going too high than the front speakers.
+
+How can I control the volume level for rear and front speakers? [ I don't have that options in my home-made speakers, so I need it from the inside :( ] Is there any option in ubuntu or any 3rd party software available?
+
+---
+

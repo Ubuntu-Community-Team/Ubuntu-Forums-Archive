@@ -1,0 +1,12 @@
+---
+title: "TV CARD HELP ON Ubnutu 8.10?"
+date: 2008-11-25
+forum: General Help
+---
+
+### Post by ravindukelum on 2008-11-25
+Anybody please help me on this issue never get proper answer..
+I have ASUS U3000 Hybrid USB TV card that having DVB,analog TV and FM radio features but I can't get working on Ubuntu 8.10 (It don't recognize at all ) Please help to get it worked on my ubuntu 8.10 .Please
+
+---
+

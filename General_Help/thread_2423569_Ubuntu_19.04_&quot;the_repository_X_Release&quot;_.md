@@ -1,0 +1,99 @@
+---
+title: "Ubuntu 19.04: &quot;the repository X Release&quot; does not have a Release file"
+date: 2019-07-25
+forum: General Help
+---
+
+### Post by jafshredder on 2019-07-25
+Hello, whenever I open the Appstore I get this message  "the repository [http://ppa.launchpad.net/gnome-shell-extensions/ppa/ubuntu](http://ppa.launchpad.net/gnome-shell-extensions/ppa/ubuntu) disco Release does not have a release file". This is 
+
+ [IMG]https://ibb.co/T4P8HYQ[/IMG]My sources.list contains this
+
+```
+# deb cdrom:[Ubuntu 18.04 LTS _Bionic Beaver_ - Release amd64 (20180426)]/ bionic main restricted
+
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://ro-mirrors.evowise.com/ubuntu/ disco main restricted
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic main restricted
+
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-updates main restricted
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic-updates main restricted
+
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://ro-mirrors.evowise.com/ubuntu/ disco universe
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic universe
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-updates universe
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic-updates universe
+
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to 
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://ro-mirrors.evowise.com/ubuntu/ disco multiverse
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic multiverse
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-updates multiverse
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic-updates multiverse
+
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+# deb-src http://ci.archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu bionic partner
+# deb-src http://archive.canonical.com/ubuntu bionic partner
+
+
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu bionic-security main restricted
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-security universe
+# deb-src http://security.ubuntu.com/ubuntu bionic-security universe
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
+# deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable # disabled on upgrade to cosmic
+# deb-src [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+deb http://ro-mirrors.evowise.com/ubuntu/ disco-backports restricted multiverse main universe
+
+```
+
+How can I solve this? Thanks in advance
+
+---
+
+### Post by deadflowr on 2019-07-25
+PPAs are listed separately in the /etc/apt/sources.list.d/ directory.
+There should be an individual file for it.
+
+That said, just open Software and Updates go to Other software and locate and remove/uncheck that particular entry.
+
+---
+
+### Post by jafshredder on 2019-07-26
+wouldn't that leave me out of date since the ppa is from the newest ubuntu release 19.04??
+
+---
+
+### Post by deadflowr on 2019-07-26
+It would if the ppa supported 19.04.
+it doesn't.
+it only has archives up to 18.10.
+
+---
+

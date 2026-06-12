@@ -1,0 +1,2816 @@
+---
+title: "Boot failure: &quot;general error mounting filesystems&quot;."
+date: 2012-06-21
+forum: General Help
+---
+
+### Post by l07 on 2012-06-21
+I recently installed the latest e2fsprogs and ntfs-3g from source (sudo make install) to update the existing versions on ubuntu 10.10. However, upon restart the computer produced errors which can be seen in the picture attached; they basically say that partitions couldn't be found.
+
+My update of e2fsprogs was likely the problem, so I tried to uninstall the new e2fsprogs. I chroot'ed from the live cd and managed to complete the uninstallation. I'm not sure whether I did so properly: only later did I read that I was supposed to also mount --bind /dev/{proc,sys,...}. I extracted e2fsprogs to a dir in my home folder, which is on a separate partition (sda3) from the main installation (sda2). So I just mounted those two partitions.
+
+Upon restarting, it produced a new error - "general error mounting filesystems".  The recovery grub option results in the same error and doesn't really get any further, just being more explicit. I tried in various ways to alter the grub commands, changing the root=.... values and other things but nothing worked.
+
+I then booted using a live cd and ran fsck on all partitions, so they should be in order. The file systems appear to be fine, as I can browse them using a live cd.
+
+I then reinstalled the older, default e2fsprogs - this completed properly.
+I thought that perhaps the kernel image became corrupted, so I also tried to reinstall it using the live cd, but was unable to. aptitude said that the image isn't installed, so I had to install it, not reinstall. But the install also failed. If necessary (I'm currrently booted into the live cd), I can try installing the kernel again and post the log. Or I could post whatever output would be helpful to you.
+
+I also ran the Boot Info Script and its results are below.
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 1 for (,msdos1)/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Operating System:  Ubuntu 10.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda3: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048     2,099,199     2,097,152  83 Linux
+/dev/sda2           2,101,248    41,170,943    39,069,696  83 Linux
+/dev/sda3          43,266,048    85,207,039    41,940,992  83 Linux
+/dev/sda4          87,304,192   619,784,191   532,480,000  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/ramzswap0                                          swap       
+/dev/sda1        adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf   ext4       boot
+/dev/sda2        c586946d-5781-478d-bef6-f08b997d281f   ext4       ubuntu
+/dev/sda3        20750408-b2e2-4299-9562-97c4fd53cd6e   ext4       h
+/dev/sda4        7039a01e-e4a2-40ee-8934-257b1cabeb0f   ext4       files
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1600x1200
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+set locale_dir=($root)/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+insmod png
+if background_image /grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-30-generic ...'
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-30-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.132724762 = 0.142512128    grub/core.img                                  1
+   0.133800507 = 0.143667200    grub/grub.cfg                                  1
+   0.180664062 = 0.193986560    initrd.img-2.6.35-30-generic                   2
+   0.141395569 = 0.151822336    vmlinuz-2.6.35-30-generic                      1
+
+=========================== sda2/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="Ubuntu, with Linux 2.6.35-25-generic"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1280x1024
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+insmod png
+if background_image /boot/grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-24-generic ...'
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'vol_id --uuid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=c586946d-5781-478d-bef6-f08b997d281f /               ext4    relatime,errors=remount-ro 0       1
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+UUID=20750408-b2e2-4299-9562-97c4fd53cd6e  /home    ext4          nodev,nosuid       0       2
+UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf /boot ext4 defaults,exec 0 1
+UUID="7039a01e-e4a2-40ee-8934-257b1cabeb0f" /media/files ext4 defaults 0       2
+/mnt/1024Mb.swap  none  swap  sw  0 0
+--------------------------------------------------------------------------------
+
+=================== sda2: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   8.322437286 = 8.936148992    boot/grub/core.img                             1
+  12.207038879 = 13.107208192   boot/grub/grub.cfg                             1
+   8.363365173 = 8.980094976    boot/initrd.img-2.6.35-24-generic              6
+   8.347942352 = 8.963534848    boot/initrd.img-2.6.35-25-generic              4
+   3.730735779 = 4.005847040    boot/initrd.img-2.6.35-28-generic              2
+   8.326950073 = 8.940994560    boot/vmlinuz-2.6.35-24-generic                 3
+   8.264038086 = 8.873443328    boot/vmlinuz-2.6.35-25-generic                 5
+   9.287292480 = 9.972154368    boot/vmlinuz-2.6.35-28-generic                 1
+  12.757575989 = 13.698342912   boot/vmlinuz-2.6.35-32-generic                 6
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  a4 81 00 00 99 01 00 00  35 a4 7a 4d 13 aa 7b 4d  |........5.zM..{M|
+00000010  4f a4 7a 4d 00 00 00 00  00 00 01 00 08 00 00 00  |O.zM............|
+00000020  00 00 00 00 00 00 00 00  87 92 29 00 00 00 00 00  |..........).....|
+00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000060  00 00 00 00 23 6d bf dd  00 00 00 00 00 00 00 00  |....#m..........|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000080  04 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000100  80 81 00 00 dc 24 00 00  d2 46 f6 4c ea fa 86 4e  |.....$...F.L...N|
+00000110  fc ba 1e 4d 00 00 00 00  00 00 01 00 18 00 00 00  |...M............|
+00000120  00 00 00 00 00 00 00 00  24 8e 29 00 3f 8e 29 00  |........$.).?.).|
+00000130  d5 98 29 00 00 00 00 00  00 00 00 00 00 00 00 00  |..).............|
+00000140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000160  00 00 00 00 55 f6 42 64  00 00 00 00 00 00 00 00  |....U.Bd........|
+00000170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000180  1c 00 00 00 f4 45 c8 14  00 00 00 00 78 a3 29 5a  |.....E......x.)Z|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000200
+
+```I think it would make the most sense if it was indeed the upgrade to untested software versions (performed without having a deep understanding of the underlying mechanisms) that altered something so as to cause the boot process to fail.
+I would really appreciate it, if someone could help me resolve this.
+
+---
+
+### Post by wilee-nilee on 2012-06-21
+So sda1 is missing its own fstab sda2 has one, lets see if giving sda2 grub control gets you booted. This is a chroot as well follow the commands.
+
+```
+sudo mount /dev/sda2 /mnt
+``` 
+```
+for i in /dev /dev/pts /proc /sys; do sudo mount -B $i /mnt$i; done
+``` 
+```
+sudo chroot /mnt
+``` 
+```
+grub-install /dev/sda
+``` 
+```
+grub-install --recheck /dev/sda
+``` 
+```
+update-grub
+``` 
+```
+Exit chroot: CTRL-D on keyboard
+``` 
+```
+sudo reboot
+```
+
+The sda2 partition should be at the top of the grub menu now, if it shows, you may need to tap the shift key from powering on, to see the grub menu, hard to say.
+
+---
+
+### Post by l07 on 2012-06-21
+Thank you for such a fast response. The commands completed without errors. Before I restart, I thought I'd run the Boot Info Script again and post the results:
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 2 for (,msdos2)/boot/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Operating System:  Ubuntu 10.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda3: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048     2,099,199     2,097,152  83 Linux
+/dev/sda2           2,101,248    41,170,943    39,069,696  83 Linux
+/dev/sda3          43,266,048    85,207,039    41,940,992  83 Linux
+/dev/sda4          87,304,192   619,784,191   532,480,000  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/ramzswap0                                          swap       
+/dev/sda1        adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf   ext4       boot
+/dev/sda2        c586946d-5781-478d-bef6-f08b997d281f   ext4       ubuntu
+/dev/sda3        20750408-b2e2-4299-9562-97c4fd53cd6e   ext4       h
+/dev/sda4        7039a01e-e4a2-40ee-8934-257b1cabeb0f   ext4       files
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev             /mnt/dev                 none       (rw,bind)
+/dev/pts         /mnt/dev/pts             none       (rw,bind)
+/dev/sda2        /mnt                     ext4       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1600x1200
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+set locale_dir=($root)/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+insmod png
+if background_image /grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-30-generic ...'
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-30-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.132724762 = 0.142512128    grub/core.img                                  1
+   0.133800507 = 0.143667200    grub/grub.cfg                                  1
+   0.180664062 = 0.193986560    initrd.img-2.6.35-30-generic                   2
+   0.141395569 = 0.151822336    vmlinuz-2.6.35-30-generic                      1
+
+=========================== sda2/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1600x1200
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+insmod png
+if background_image /boot/grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-32-generic root=/dev/sda2 ro   quiet nomodeset
+}
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-32-generic ...'
+    linux    /boot/vmlinuz-2.6.35-32-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    echo    'Loading Linux 2.6.35-24-generic ...'
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'vol_id --uuid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=c586946d-5781-478d-bef6-f08b997d281f /               ext4    relatime,errors=remount-ro 0       1
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+UUID=20750408-b2e2-4299-9562-97c4fd53cd6e  /home    ext4          nodev,nosuid       0       2
+UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf /boot ext4 defaults,exec 0 1
+UUID="7039a01e-e4a2-40ee-8934-257b1cabeb0f" /media/files ext4 defaults 0       2
+/mnt/1024Mb.swap  none  swap  sw  0 0
+--------------------------------------------------------------------------------
+
+=================== sda2: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   8.253936768 = 8.862597120    boot/grub/core.img                             1
+  12.226593018 = 13.128204288   boot/grub/grub.cfg                             1
+   8.363365173 = 8.980094976    boot/initrd.img-2.6.35-24-generic              6
+   8.347942352 = 8.963534848    boot/initrd.img-2.6.35-25-generic              4
+   3.730735779 = 4.005847040    boot/initrd.img-2.6.35-28-generic              2
+   8.326950073 = 8.940994560    boot/vmlinuz-2.6.35-24-generic                 3
+   8.264038086 = 8.873443328    boot/vmlinuz-2.6.35-25-generic                 5
+   9.287292480 = 9.972154368    boot/vmlinuz-2.6.35-28-generic                 1
+  12.757575989 = 13.698342912   boot/vmlinuz-2.6.35-32-generic                 6
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  a4 81 00 00 99 01 00 00  35 a4 7a 4d 13 aa 7b 4d  |........5.zM..{M|
+00000010  4f a4 7a 4d 00 00 00 00  00 00 01 00 08 00 00 00  |O.zM............|
+00000020  00 00 00 00 00 00 00 00  87 92 29 00 00 00 00 00  |..........).....|
+00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000060  00 00 00 00 23 6d bf dd  00 00 00 00 00 00 00 00  |....#m..........|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000080  04 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000100  80 81 00 00 dc 24 00 00  d2 46 f6 4c ea fa 86 4e  |.....$...F.L...N|
+00000110  fc ba 1e 4d 00 00 00 00  00 00 01 00 18 00 00 00  |...M............|
+00000120  00 00 00 00 00 00 00 00  24 8e 29 00 3f 8e 29 00  |........$.).?.).|
+00000130  d5 98 29 00 00 00 00 00  00 00 00 00 00 00 00 00  |..).............|
+00000140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000160  00 00 00 00 55 f6 42 64  00 00 00 00 00 00 00 00  |....U.Bd........|
+00000170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000180  1c 00 00 00 f4 45 c8 14  00 00 00 00 78 a3 29 5a  |.....E......x.)Z|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000200
+
+```
+
+---
+
+### Post by wilee-nilee on 2012-06-21
+Basically you will have to reboot to see what’s up.
+
+---
+
+### Post by l07 on 2012-06-21
+Upon restart it didn't show the grub menu, however the boot process seems to have failed: I waited about a minute but it didn't get anywhere, save for a few lines with errors; e.g.,  something about plymouth killed by SEGV. So I switched to tty 1, and saw some mountall errors printed, which also mentioned plymouth.
+
+When I tried to reboot, I did so from tty1 and there SysRq keys (REISUB) didn't work at all, and neither did the Ctrl-D, so I had do it by depressing the power button. Because at the time I didn't realise that the above key combinations were only not working in tty1 for some reason, and could work had I switched back to tty7, if I remember correctly.
+
+Next restart resulted in the grub menu, maybe because I held shift. I suddenly saw about five pairs of different kernels - previously only one was listed. I tried selecting several of them (in subsequent restarts), beginning from the top, but none really worked.
+
+---
+
+### Post by l07 on 2012-06-22
+It appears that the change in the number of kernels displayed was due to my not mounting /boot in the above process, while doing so was necessary since I have a separate boot partition. I concluded this after going through the procedure again, including the command mounting /boot, and seeing upon reboot only one kernel listed.
+
+```
+sudo mount /dev/sda2 /mnt
+sudo mount /dev/sda1 /mnt/boot
+sudo mount /dev/sda3 /mnt/home
+for i in /dev /dev/pts /proc /sys; do sudo mount -B $i /mnt$i; done
+sudo chroot /mnt
+
+grub-install /dev/sda
+grub-install --recheck /dev/sda
+update-grub2
+
+#Exit chroot: CTRL-D on keyboard
+for i in /dev /dev/pts /proc /sys /boot /home /; do sudo umount /mnt$i; done
+``` And attempts to fix this by installing a kernel failed again and logs are included below.
+
+```
+
+root@ubuntu:/# sudo aptitude full-upgrade
+The following partially installed packages will be configured:
+  linux-image-2.6.35-32-generic linux-image-generic 
+No packages will be installed, upgraded, or removed.
+0 packages upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 0B of archives. After unpacking 0B will be used.
+Setting up linux-image-2.6.35-32-generic (2.6.35-32.67) ...
+Internal Error: Could not find image (/boot/vmlinuz-2.6.35-32-generic)
+dpkg: error processing linux-image-2.6.35-32-generic (--configure):
+ subprocess installed post-installation script returned error exit status 2
+dpkg: dependency problems prevent configuration of linux-image-generic:
+ linux-image-generic depends on linux-image-2.6.35-32-generic; however:
+  Package linux-image-2.6.35-32-generic is not configured yet.
+dpkg: error processing linux-image-generic (--configure):
+ dependency problems - leaving unconfigured
+No apport report written because the error message indicates its a followup error from a previous failure.
+                                                                                                          Errors were encountered while processing:
+ linux-image-2.6.35-32-generic
+ linux-image-generic
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+A package failed to install.  Trying to recover:
+Setting up linux-image-2.6.35-32-generic (2.6.35-32.67) ...
+Internal Error: Could not find image (/boot/vmlinuz-2.6.35-32-generic)
+dpkg: error processing linux-image-2.6.35-32-generic (--configure):
+ subprocess installed post-installation script returned error exit status 2
+dpkg: dependency problems prevent configuration of linux-image-generic:
+ linux-image-generic depends on linux-image-2.6.35-32-generic; however:
+  Package linux-image-2.6.35-32-generic is not configured yet.
+dpkg: error processing linux-image-generic (--configure):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ linux-image-2.6.35-32-generic
+ linux-image-generic
+
+root@ubuntu:/# ls -l /boot
+total 17716
+-rw-r--r-- 1 root root   706300 2011-10-11 14:53 abi-2.6.35-30-generic
+-rw-r--r-- 1 root root   128644 2011-10-11 14:53 config-2.6.35-30-generic
+drwxr-xr-x 3 root root     4096 2012-06-22 23:09 grub
+-rw-r--r-- 1 root root 10804335 2012-02-26 19:52 initrd.img-2.6.35-30-generic
+drwx------ 2 root root    16384 2011-05-15 14:09 lost+found
+-rw-r--r-- 1 root root   165084 2010-09-24 13:14 memtest86+.bin
+-rw-r--r-- 1 root root   167264 2010-09-24 13:14 memtest86+_multiboot.bin
+-rw-r--r-- 1 root root  1833031 2011-10-11 14:53 System.map-2.6.35-30-generic
+-rw-r--r-- 1 root root     1192 2011-10-11 14:54 vmcoreinfo-2.6.35-30-generic
+-rw-r--r-- 1 root root  4298288 2011-10-11 14:53 vmlinuz-2.6.35-30-generic
+root@ubuntu:/# ls -l /
+total 120
+drwxr-xr-x   2 root root  4096 2012-05-27 07:13 bin
+drwxr-xr-x   4 root root  4096 2012-02-26 19:52 boot
+lrwxrwxrwx   1 root root    11 2010-02-19 02:25 cdrom -> media/cdrom
+drwxr-xr-x  18 root root  4200 2012-06-22 22:44 dev
+drwxr-xr-x 183 root root 12288 2012-06-22 23:09 etc
+drwxr-xr-x   5 root root  4096 2012-06-22 02:10 home
+drwxr-xr-x  19 root root 16384 2012-05-27 07:13 lib
+drwx------  49 root root 16384 2010-02-19 02:25 lost+found
+drwxr-xr-x   5 root root  4096 2012-05-25 22:34 media
+drwxr-xr-x   2 root root  4096 2011-05-29 12:12 mnt
+drwxr-xr-x   2 root root  4096 2011-05-16 16:28 newboot
+dr-xr-xr-x 157 root root     0 2012-06-22 13:24 proc
+drwx------  22 root root  4096 2012-05-26 03:24 root
+drwxr-xr-x   2 root root 12288 2012-06-21 13:31 sbin
+drwxr-xr-x   2 root root  4096 2009-03-06 11:21 selinux
+drwxr-xr-x   3 root root  4096 2010-11-09 12:53 srv
+drwxr-xr-x  12 root root     0 2012-06-22 13:24 sys
+drwxr-xr-x   2 root root  4096 2011-03-26 00:40 temp
+drwxrwxrwx  21 root root 12288 2012-06-22 23:19 tmp
+drwxr-xr-x  12 root root  4096 2011-07-04 13:47 usr
+drwxr-xr-x  14 root root  4096 2010-11-11 23:36 var
+-rw-r--r--   1 root root  2195 2012-01-29 12:51 xorg.conf.new
+```
+
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 1 for (,msdos1)/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Operating System:  Ubuntu 10.10
+    Boot files:        /etc/fstab
+
+sda3: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048     2,099,199     2,097,152  83 Linux
+/dev/sda2           2,101,248    41,170,943    39,069,696  83 Linux
+/dev/sda3          43,266,048    85,207,039    41,940,992  83 Linux
+/dev/sda4          87,304,192   619,784,191   532,480,000  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf   ext4       boot
+/dev/sda2        c586946d-5781-478d-bef6-f08b997d281f   ext4       ubuntu
+/dev/sda3        20750408-b2e2-4299-9562-97c4fd53cd6e   ext4       h
+/dev/sda4        7039a01e-e4a2-40ee-8934-257b1cabeb0f   ext4       files
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /initrd/pup_ro2          squashfs   (ro,noatime)
+/dev/sda3        /mnt/sda3                ext4       (rw,relatime,user_xattr,barrier=1,data=ordered)
+/dev/sr0         /initrd/mnt/dev_ro2      iso9660    (ro,relatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1600x1200
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+set locale_dir=($root)/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+insmod png
+if background_image /grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-32-generic root=/dev/sda2 ro   quiet nomodeset
+}
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-32-generic ...'
+    linux    /vmlinuz-2.6.35-32-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-30-generic root=/dev/sda2 ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-30-generic ...'
+    linux    /vmlinuz-2.6.35-30-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-28-generic root=/dev/sda2 ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /vmlinuz-2.6.35-28-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-25-generic root=/dev/sda2 ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /vmlinuz-2.6.35-25-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-24-generic root=/dev/sda2 ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-24-generic ...'
+    linux    /vmlinuz-2.6.35-24-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.126247406 = 0.135557120    grub/core.img                                  1
+   0.168975830 = 0.181436416    grub/grub.cfg                                  1
+   0.165039062 = 0.177209344    initrd.img-2.6.35-24-generic                   2
+   0.204101562 = 0.219152384    initrd.img-2.6.35-25-generic                   2
+   0.211914062 = 0.227540992    initrd.img-2.6.35-28-generic                   2
+   0.180664062 = 0.193986560    initrd.img-2.6.35-30-generic                   2
+   0.262989044 = 0.282382336    vmlinuz-2.6.35-24-generic                      1
+   0.196289062 = 0.210763776    vmlinuz-2.6.35-25-generic                      3
+   0.254978180 = 0.273780736    vmlinuz-2.6.35-28-generic                      1
+   0.141395569 = 0.151822336    vmlinuz-2.6.35-30-generic                      1
+   0.258987427 = 0.278085632    vmlinuz-2.6.35-32-generic                      1
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'vol_id --uuid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=c586946d-5781-478d-bef6-f08b997d281f /               ext4    relatime,errors=remount-ro 0       1
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+UUID=20750408-b2e2-4299-9562-97c4fd53cd6e  /home    ext4          nodev,nosuid       0       2
+UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf /boot ext4 defaults,exec 0 1
+UUID="7039a01e-e4a2-40ee-8934-257b1cabeb0f" /media/files ext4 defaults 0       2
+/mnt/1024Mb.swap  none  swap  sw  0 0
+--------------------------------------------------------------------------------
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  a4 81 00 00 99 01 00 00  35 a4 7a 4d 13 aa 7b 4d  |........5.zM..{M|
+00000010  4f a4 7a 4d 00 00 00 00  00 00 01 00 08 00 00 00  |O.zM............|
+00000020  00 00 00 00 00 00 00 00  87 92 29 00 00 00 00 00  |..........).....|
+00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000060  00 00 00 00 23 6d bf dd  00 00 00 00 00 00 00 00  |....#m..........|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000080  04 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000100  80 81 00 00 dc 24 00 00  d2 46 f6 4c ea fa 86 4e  |.....$...F.L...N|
+00000110  fc ba 1e 4d 00 00 00 00  00 00 01 00 18 00 00 00  |...M............|
+00000120  00 00 00 00 00 00 00 00  24 8e 29 00 3f 8e 29 00  |........$.).?.).|
+00000130  d5 98 29 00 00 00 00 00  00 00 00 00 00 00 00 00  |..).............|
+00000140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000160  00 00 00 00 55 f6 42 64  00 00 00 00 00 00 00 00  |....U.Bd........|
+00000170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000180  1c 00 00 00 f4 45 c8 14  00 00 00 00 78 a3 29 5a  |.....E......x.)Z|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000200
+
+
+========= Devices which don't seem to have a corresponding hard drive: =========
+
+hda hdb hdc hdd sdc sdd sde sdf sdg sdh sdi 
+
+
+
+```
+
+---
+
+### Post by l07 on 2012-07-01
+```
+                Boot Info Script 0.61-git      [15 June 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 1 for (,msdos1)/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Operating System:  Ubuntu 10.10
+    Boot files:        /etc/fstab
+
+sda3: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048     2,099,199     2,097,152  83 Linux
+/dev/sda2           2,101,248    41,170,943    39,069,696  83 Linux
+/dev/sda3          43,266,048    85,207,039    41,940,992  83 Linux
+/dev/sda4          87,304,192   619,784,191   532,480,000  83 Linux
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/ramzswap0                                          swap       
+/dev/sda1        adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf   ext4       boot
+/dev/sda2        c586946d-5781-478d-bef6-f08b997d281f   ext4       ubuntu
+/dev/sda3        20750408-b2e2-4299-9562-97c4fd53cd6e   ext4       h
+/dev/sda4        7039a01e-e4a2-40ee-8934-257b1cabeb0f   ext4       files
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set c586946d-5781-478d-bef6-f08b997d281f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=1600x1200
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+set locale_dir=($root)/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+insmod png
+if background_image /grub/moreblue-orbit-grub.png ; then
+  set color_normal=black/black
+  set color_highlight=magenta/black
+else
+  set menu_color_normal=white/black
+  set menu_color_highlight=black/light-gray
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-32-generic root=/dev/sda2 ro   quiet nomodeset
+}
+menuentry 'Ubuntu, with Linux 2.6.35-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-32-generic ...'
+    linux    /vmlinuz-2.6.35-32-generic root=/dev/sda2 ro single 
+    echo    'Loading initial ramdisk ...'
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-30-generic ...'
+    linux    /vmlinuz-2.6.35-30-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /vmlinuz-2.6.35-28-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /vmlinuz-2.6.35-25-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux    /vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro   quiet nomodeset
+    initrd    /initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    echo    'Loading Linux 2.6.35-24-generic ...'
+    linux    /vmlinuz-2.6.35-24-generic root=UUID=c586946d-5781-478d-bef6-f08b997d281f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.35-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.128231049 = 0.137687040    grub/core.img                                  1
+   0.170906067 = 0.183508992    grub/grub.cfg                                  1
+   0.165039062 = 0.177209344    initrd.img-2.6.35-24-generic                   2
+   0.204101562 = 0.219152384    initrd.img-2.6.35-25-generic                   2
+   0.211914062 = 0.227540992    initrd.img-2.6.35-28-generic                   2
+   0.180664062 = 0.193986560    initrd.img-2.6.35-30-generic                   2
+   0.262989044 = 0.282382336    vmlinuz-2.6.35-24-generic                      1
+   0.196289062 = 0.210763776    vmlinuz-2.6.35-25-generic                      3
+   0.254978180 = 0.273780736    vmlinuz-2.6.35-28-generic                      1
+   0.141395569 = 0.151822336    vmlinuz-2.6.35-30-generic                      1
+   0.258987427 = 0.278085632    vmlinuz-2.6.35-32-generic                      1
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'vol_id --uuid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=c586946d-5781-478d-bef6-f08b997d281f /               ext4    relatime,errors=remount-ro 0       1
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+UUID=20750408-b2e2-4299-9562-97c4fd53cd6e  /home    ext4          nodev,nosuid       0       2
+#UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf /boot ext4 defaults,exec 0 1
+UUID="7039a01e-e4a2-40ee-8934-257b1cabeb0f" /media/files ext4 defaults 0       2
+/mnt/1024Mb.swap  none  swap  sw  0 0
+UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf    /boot    ext4    defaults    1    2
+--------------------------------------------------------------------------------
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  a4 81 00 00 99 01 00 00  35 a4 7a 4d 13 aa 7b 4d  |........5.zM..{M|
+00000010  4f a4 7a 4d 00 00 00 00  00 00 01 00 08 00 00 00  |O.zM............|
+00000020  00 00 00 00 00 00 00 00  87 92 29 00 00 00 00 00  |..........).....|
+00000030  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000060  00 00 00 00 23 6d bf dd  00 00 00 00 00 00 00 00  |....#m..........|
+00000070  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000080  04 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000100  80 81 00 00 dc 24 00 00  d2 46 f6 4c ea fa 86 4e  |.....$...F.L...N|
+00000110  fc ba 1e 4d 00 00 00 00  00 00 01 00 18 00 00 00  |...M............|
+00000120  00 00 00 00 00 00 00 00  24 8e 29 00 3f 8e 29 00  |........$.).?.).|
+00000130  d5 98 29 00 00 00 00 00  00 00 00 00 00 00 00 00  |..).............|
+00000140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000160  00 00 00 00 55 f6 42 64  00 00 00 00 00 00 00 00  |....U.Bd........|
+00000170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000180  1c 00 00 00 f4 45 c8 14  00 00 00 00 78 a3 29 5a  |.....E......x.)Z|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000200
+
+
+
+ADDITIONAL INFORMATION :
+=================== log of boot-repair 2012-07-02__01h58 ===================
+boot-repair version : 3.18-0ppa34~lucid
+boot-sav version : 3.19-0ppa77~lucid
+glade2script-gtk2 version : 0.0.1-0ppa4~lucid
+boot-sav-nonfree version : 3.18-0ppa14~lucid
+boot-repair is executed in live-session (Ubuntu 10.10 , maverick , Ubuntu , i686)
+CPU op-mode(s):        32-bit
+
+=================== os-prober:
+/dev/sda2:Ubuntu 10.10 (10.10):Ubuntu:linux
+
+=================== blkid:
+/dev/loop0: TYPE="squashfs"
+/dev/sda1: LABEL="boot" UUID="adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf" TYPE="ext4"
+/dev/sda2: LABEL="ubuntu" UUID="c586946d-5781-478d-bef6-f08b997d281f" TYPE="ext4"
+/dev/sda3: LABEL="h" UUID="20750408-b2e2-4299-9562-97c4fd53cd6e" TYPE="ext4"
+/dev/sda4: LABEL="files" UUID="7039a01e-e4a2-40ee-8934-257b1cabeb0f" TYPE="ext4"
+/dev/ramzswap0: TYPE="swap"
+
+
+1 disks with OS, 1 OS : 1 Linux, 0 MacOS, 0 Windows, 0 unknown type OS.
+
+
+=================== sda1recordfail=1/grub/grubenv :
+recordfail=1
+
+
+
+
+
+=================== sda2/etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+
+#GRUB_DEFAULT='Ubuntu, with Linux 2.6.35-25-generic'
+GRUB_DEFAULT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet nomodeset"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+#GRUB_GFXMODE=1024x768
+GRUB_GFXMODE=1600x1200
+#http://ubuntuforums.org/showthread.php?t=1673551
+#GRUB_GFXPAYLOAD_LINUX=keep
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_LINUX_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+
+
+=================== sda2/etc/grub.d/ :
+drwxr-xr-x  2 root root       4096 2011-06-18 04:54 grub.d
+total 52
+-rwxr-xr-x 1 root root 6831 2010-10-06 12:23 00_header
+-rwxr-xr-x 1 root root 1481 2010-10-06 12:05 05_debian_theme
+-rwxr-xr-x 1 root root 4757 2010-10-06 12:23 10_linux
+-rwxr-xr-x 1 root root 5028 2010-10-06 12:23 20_linux_xen
+-rwxr-xr-x 1 root root 1588 2010-09-24 17:14 20_memtest86+
+-rwxr-xr-x 1 root root 6933 2010-10-06 12:23 30_os-prober
+-rwxr-xr-x 1 root root  214 2010-10-06 12:23 40_custom
+-rwxr-xr-x 1 root root   95 2010-10-06 12:23 41_custom
+-rw-r--r-- 1 root root  483 2010-10-06 12:23 README
+
+
+
+/mnt/boot-sav/sda2/usr/lib64: libfakeroot
+/boot detected in the fstab of sda2: UUID=adef9a8b-8e42-4eb9-b4ec-3d2f452c0edf (sda1)
+
+=================== PARTITIONS & DISKS:
+sda1    : sda,    is-sepboot,    grubenv-ng    nogrub,    no-docgrub,    no-update-grub,    32,    no-boot,    no-os,    not--efi--part,    part-has-no-fstab,    part-has-no-fstab,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    no-grldr,    no-b-bcd,    nopakmgr,    nogrubinstall,    no---usr,    part-has-no-fstab,    not-sep-usr,    /mnt/boot-sav/sda1.
+sda2    : sda,    not-sepboot,    no-grubenv    grub2,    grub-pc,    update-grub,    32,    no-kernel,    is-os,    not--efi--part,    fstab-has-goodBOOT,    fstab-without-efi,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    no-grldr,    no-b-bcd,    apt-get,    grub-install,    with--usr,    fstab-without-usr,    not-sep-usr,    /mnt/boot-sav/sda2.
+sda3    : sda,    maybesepboot,    no-grubenv    nogrub,    no-docgrub,    no-update-grub,    32,    no-boot,    no-os,    not--efi--part,    part-has-no-fstab,    part-has-no-fstab,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    no-grldr,    no-b-bcd,    nopakmgr,    nogrubinstall,    no---usr,    part-has-no-fstab,    not-sep-usr,    /media/h.
+sda4    : sda,    maybesepboot,    no-grubenv    nogrub,    no-docgrub,    no-update-grub,    32,    no-boot,    no-os,    not--efi--part,    part-has-no-fstab,    part-has-no-fstab,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    no-grldr,    no-b-bcd,    nopakmgr,    nogrubinstall,    no---usr,    part-has-no-fstab,    not-sep-usr,    /mnt/boot-sav/sda4.
+
+sda    : MSDos,    not-GPT,    BIOSboot-not-needed,    has-no-EFIpart,     not-usb,    2048 sectors * 512 bytes
+
+=================== parted -l:
+
+Model: ATA WDC WD3200AAJB-0 (scsi)
+Disk /dev/sda: 320GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start   End     Size    Type     File system  Flags
+1      1049kB  1075MB  1074MB  primary  ext4         boot
+2      1076MB  21.1GB  20.0GB  primary  ext4
+3      22.2GB  43.6GB  21.5GB  primary  ext4
+4      44.7GB  317GB   273GB   primary  ext4
+
+
+
+                                                                          
+Error: /dev/sr0: unrecognised disk label
+
+
+=================== mount:
+aufs on / type aufs (rw)
+none on /proc type proc (rw,noexec,nosuid,nodev)
+none on /sys type sysfs (rw,noexec,nosuid,nodev)
+fusectl on /sys/fs/fuse/connections type fusectl (rw)
+none on /dev type devtmpfs (rw,mode=0755)
+none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+/dev/sr0 on /cdrom type iso9660 (ro,noatime)
+/dev/loop0 on /rofs type squashfs (ro,noatime)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+none on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev)
+none on /var/run type tmpfs (rw,nosuid,mode=0755)
+none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/ubuntu/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=ubuntu)
+/dev/sda3 on /media/h type ext4 (rw,nosuid,nodev,uhelper=udisks)
+/dev/sda1 on /mnt/boot-sav/sda1 type ext4 (rw)
+/dev/sda2 on /mnt/boot-sav/sda2 type ext4 (rw)
+/dev/sda4 on /mnt/boot-sav/sda4 type ext4 (rw)
+
+
+/sys/block/fd0:  alignment_offset bdi capability dev device discard_alignment ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/sda:  alignment_offset bdi capability dev device discard_alignment ext_range holders inflight power queue range removable ro sda1 sda2 sda3 sda4 size slaves stat subsystem trace uevent
+/sys/block/sr0:  alignment_offset bdi capability dev device discard_alignment ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/sr1:  alignment_offset bdi capability dev device discard_alignment ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/dev:  agpgart autofs block bsg btrfs-control bus cdrom cdrom1 cdrw char console core cpu cpu_dma_latency disk dri dvd dvdrw ecryptfs fb0 fd fd0 fd0u1040 fd0u1120 fd0u1440 fd0u1600 fd0u1680 fd0u1722 fd0u1743 fd0u1760 fd0u1840 fd0u1920 fd0u360 fd0u720 fd0u800 fd0u820 fd0u830 full fuse fw0 hidraw0 hidraw1 hidraw2 hpet input kmsg log lp0 mapper mcelog mem net network_latency network_throughput null oldmem parport0 pktcdvd port ppp psaux ptmx pts random rfkill rtc rtc0 scd0 scd1 sda sda1 sda2 sda3 sda4 sg0 sg1 sg2 shm snapshot snd sr0 sr1 stderr stdin stdout uinput urandom usbmon0 usbmon1 usbmon2 usbmon3 usbmon4 vga_arbiter zero
+/dev/mapper:  control
+
+=================== df -Th:
+
+Filesystem    Type    Size  Used Avail Use% Mounted on
+aufs          aufs    249M  101M  148M  41% /
+none      devtmpfs    243M  244K  243M   1% /dev
+/dev/sr0   iso9660    694M  694M     0 100% /cdrom
+/dev/loop0
+squashfs    661M  661M     0 100% /rofs
+none         tmpfs    249M  332K  248M   1% /dev/shm
+tmpfs        tmpfs    249M   16K  249M   1% /tmp
+none         tmpfs    249M   92K  249M   1% /var/run
+none         tmpfs    249M     0  249M   0% /var/lock
+/dev/sda3     ext4     20G   18G  1.1G  95% /media/h
+/dev/sda1     ext4   1008M  113M  845M  12% /mnt/boot-sav/sda1
+/dev/sda2     ext4     19G   16G  1.8G  90% /mnt/boot-sav/sda2
+/dev/sda4     ext4    250G  238G  108M 100% /mnt/boot-sav/sda4
+
+=================== fdisk -l:
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x84b01726
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1         131     1048576   83  Linux
+Partition 1 does not end on cylinder boundary.
+/dev/sda2             131        2563    19534848   83  Linux
+/dev/sda3            2694        5304    20970496   83  Linux
+/dev/sda4            5435       38580   266240000   83  Linux
+
+
+/boot detected. Please check the options.
+adding: log/ (stored 0%)
+adding: log/log/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda4/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda/partition_table.dmp (deflated 44%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda/current_mbr.img (deflated 96%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda1/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda1/grubenv (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda3/ (stored 0%)
+adding: log/log/2012-07-02__01h58boot-repair03/2012-07-02__01h58.boot-repair.log (deflated 78%)
+adding: log/log/2012-07-02__01h58boot-repair03/sda2/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdc1/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda4/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda/partition_table.dmp (deflated 44%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda/current_mbr.img (deflated 96%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdc/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdc/partition_table.dmp (deflated 57%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdc/current_mbr.img (deflated 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdb1/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda1/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda1/grubenv (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdb/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdb/partition_table.dmp (deflated 56%)
+adding: log/log/2012-07-02__00h57boot-repair12/sdb/current_mbr.img (deflated 16%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda3/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/2012-07-02__00h57.boot-repair.log (deflated 86%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda2/ (stored 0%)
+adding: log/log/2012-07-02__00h57boot-repair12/sda2/grubenv (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdc1/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda4/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda/partition_table.dmp (deflated 44%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda/current_mbr.imgSET@_progressbar1.pulse()
+(deflated 96%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdc/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdc/partition_table.dmp (deflated 57%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdc/current_mbr.img (deflated 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdb1/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda1/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda1/grubenv (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdb/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdb/partition_table.dmp (deflated 56%)
+adding: log/log/2012-07-02__01h23boot-repair57/sdb/current_mbr.img (deflated 16%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda3/ (stored 0%)
+adding: log/log/2012-07-02__01h23boot-repair57/2012-07-02__01h23.boot-repair.log (deflated 81%)
+adding: log/log/2012-07-02__01h23boot-repair57/sda2/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda4/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda3/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda2/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda1/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda1/grubenv (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda/ (stored 0%)
+adding: log/2012-07-02__01h58boot-repair03/sda/partition_table.dmp (deflated 44%)
+adding: log/2012-07-02__01h58boot-repair03/sda/current_mbr.img (deflated 96%)
+adding: log/2012-07-02__01h58boot-repair03/2012-07-02__01h58.boot-repair.log (deflated 82%)
+
+=================== Default settings
+recommendedrepair
+This setting would reinstall the grub2 of sda2 into the MBR of sda, using the following options:       sda1/boot,
+Additional repair would be performed: unhide-bootmenu
+
+=================== Settings chosen by the user
+customrepair
+This setting will reinstall the grub2 of sda2 into the MBR of sda, using the following options:     --disk-module=ata   sda1/boot,
+
+
+sda2/fstab changed for /boot
+Already mounted /dev/sda2 on /mnt/boot-sav/sda2
+sda1/boot not empty
+Mounted /dev/sda1 on /mnt/boot-sav/sda2/boot
+Reinstall the GRUB of sda2 into the MBR of sda
+chroot /mnt/boot-sav/sda2 update-grub
+Generating grub.cfg ...
+Found background image: moreblue-orbit-grub.png
+Found linux image: /boot/vmlinuz-2.6.35-32-generic
+Found linux image: /boot/vmlinuz-2.6.35-30-generic
+Found initrd image: /boot/initrd.img-2.6.35-30-generic
+Found linux image: /boot/vmlinuz-2.6.35-28-generic
+Found initrd image: /boot/initrd.img-2.6.35-28-generic
+Found linux image: /boot/vmlinuz-2.6.35-25-generic
+Found initrd image: /boot/initrd.img-2.6.35-25-generic
+Found linux image: /boot/vmlinuz-2.6.35-24-generic
+Found initrd image: /boot/initrd.img-2.6.35-24-generic
+Found memtest86+ image: /memtest86+.bin
+grub-install (GRUB) 1.98+20100804-5ubuntu3.3
+grub-install --recheck --disk-module=ata /dev/sda: Installation finished. No error reported.
+exit code of grub-install /dev/sda:0
+
+Boot successfully repaired.
+
+You can now reboot your computer.
+
+
+```
+
+---
+
+### Post by drs305 on 2012-07-02
+One thing I notice is that you are missing the initrd image for the latest (-32) kernel on your machine.
+
+If you are able to boot into the OS, you might try purging/reinstalling 'linux-image-generic'. If not, you could try recreating the image with:
+```
+sudo update-initramfs -v -u -k all
+```
+
+Chances are there are more problems than just the above, but it's something to try.
+
+None of the other Grub options work?
+
+---
+
+### Post by l07 on 2012-07-04
+I tried several kernels, but not all, because in those I tried, after it says maintenance shell will be started, two other lines appear and I couldn't reboot via keyboard even by using SysRq. So I performed chroot and as below: ```
+
+# sudo update-initramfs -v -u -k all
+Available versions: 2.6.35-30-generic
+Execute: /usr/sbin/update-initramfs -u -k "2.6.35-30-generic" -b /boot -v -t
+Keeping /boot/initrd.img-2.6.35-30-generic.dpkg-bak
+update-initramfs: Generating /boot/initrd.img-2.6.35-30-generic
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/usbhid/usbhid.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/host/xhci-hcd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-apple.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-microsoft.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-a4tech.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-belkin.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-cherry.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-chicony.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-cypress.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-ezkey.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-gyration.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/input/ff-memless.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-logitech.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-monterey.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-petalynx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-pl.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-samsung.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-sony.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-sunplus.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-tmff.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/hid/hid-zpff.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/lib/libcrc32c.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/lib/zlib_deflate/zlib_deflate.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/btrfs/btrfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/isofs/isofs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/jfs/jfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/net/sunrpc/sunrpc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/net/sunrpc/auth_gss/auth_rpcgss.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/nfs_common/nfs_acl.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/fscache/fscache.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/lockd/lockd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/nfs/nfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/reiserfs/reiserfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/lib/crc-itu-t.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/udf/udf.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/exportfs/exportfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/xfs/xfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/fat/fat.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/fat/vfat.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/nls/nls_cp437.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/nls/nls_iso8859-1.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/virtio/virtio.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/virtio/virtio_ring.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/virtio/virtio_pci.ko
+Copying module directory kernel/drivers/net
+(excluding appletalk arcnet bonding can hamradio irda pcmcia tokenring usb wan wimax wireless bnx2.ko)
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/mii.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/starfire.ko
+Adding binary /lib/firmware/2.6.35-30-generic/adaptec/starfire_tx.bin
+Adding firmware adaptec/starfire_tx.bin
+Adding binary /lib/firmware/2.6.35-30-generic/adaptec/starfire_rx.bin
+Adding firmware adaptec/starfire_rx.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/virtio_net.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/slip.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/rrunner.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/macvlan.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c515.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/mdio.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/bnx2x.ko
+Adding binary /lib/firmware/2.6.35-30-generic/bnx2x-e1h-5.2.13.0.fw
+Adding firmware bnx2x-e1h-5.2.13.0.fw
+Adding binary /lib/firmware/2.6.35-30-generic/bnx2x-e1-5.2.13.0.fw
+Adding firmware bnx2x-e1-5.2.13.0.fw
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/depca.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/epic100.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/8390p.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ne.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/lib/crc-ccitt.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ppp_async.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/benet/be2net.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ks8851_mll.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/dca/dca.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/myri10ge/myri10ge.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/cs89x0.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ni52.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sungem_phy.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sungem.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/jme.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/seeq8005.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/s2io.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c503.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/defxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/amd8111e.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/cxgb4/cxgb4.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/de600.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/8139too.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/pcnet32.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ewrk3.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/hp-plus.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tg3.ko
+Adding binary /lib/firmware/2.6.35-30-generic/tigon/tg3_tso5.bin
+Adding firmware tigon/tg3_tso5.bin
+Adding binary /lib/firmware/2.6.35-30-generic/tigon/tg3_tso.bin
+Adding firmware tigon/tg3_tso.bin
+Adding binary /lib/firmware/2.6.35-30-generic/tigon/tg3.bin
+Adding firmware tigon/tg3.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/caif/caif_serial.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/cassini.ko
+Adding binary /lib/firmware/2.6.35-30-generic/sun/cassini.bin
+Adding firmware sun/cassini.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/8390.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/es3210.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sis900.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/smc-ultra32.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/vmxnet3/vmxnet3.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/8139cp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ssb/ssb.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/b44.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sc92031.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ppp_synctty.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/vxge/vxge.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ibmlana.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/lance.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ne3210.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/fealnx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/lp486e.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ethoc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/qlge/qlge.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ks8842.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/82596.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/atp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/hamachi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/e2100.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/hp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sb1000.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/r8169.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/veth.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/qla3xxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sundance.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/e1000/e1000.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/niu.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/atlx/atl1.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/atlx/atl2.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/enic/enic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sis190.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/de620.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/phy/micrel.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/igb/igb.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c527.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ks8851.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/eql.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/skfp/skfp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/at1700.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/yellowfin.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/eexpress.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/dnet.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ixgbe/ixgbe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/smc-mca.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mtd/mtd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/i2c/algos/i2c-algo-bit.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sfc/sfc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/typhoon.ko
+Adding binary /lib/firmware/2.6.35-30-generic/3com/typhoon.bin
+Adding firmware 3com/typhoon.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/igbvf/igbvf.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/smc-ultra.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/atl1c/atl1c.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c507.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/wd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/de2104x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/tulip.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/xircom_cb.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/winbond-840.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/dmfe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/de4x5.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tulip/uli526x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tlan.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ne2k-pci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/tehuti.ko
+Adding binary /lib/firmware/2.6.35-30-generic/tehuti/bdx.bin
+Adding firmware tehuti/bdx.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/bsd_comp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/uio/uio.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/cnic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c501.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/cxgb3/cxgb3.ko
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/ael2020_twx_edc.bin
+Adding firmware cxgb3/ael2020_twx_edc.bin
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/ael2005_twx_edc.bin
+Adding firmware cxgb3/ael2005_twx_edc.bin
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/ael2005_opt_edc.bin
+Adding firmware cxgb3/ael2005_opt_edc.bin
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/t3c_psram-1.1.0.bin
+Adding firmware cxgb3/t3c_psram-1.1.0.bin
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/t3b_psram-1.1.0.bin
+Adding firmware cxgb3/t3b_psram-1.1.0.bin
+Adding binary /lib/firmware/2.6.35-30-generic/cxgb3/t3fw-7.4.0.bin
+Adding firmware cxgb3/t3fw-7.4.0.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ni65.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c505.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ixgbevf/ixgbevf.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/qlcnic/qlcnic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/pppox.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c523.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ppp_deflate.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ksz884x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/atl1e/atl1e.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/e100.ko
+Adding binary /lib/firmware/2.6.35-30-generic/e100/d102e_ucode.bin
+Adding firmware e100/d102e_ucode.bin
+Adding binary /lib/firmware/2.6.35-30-generic/e100/d101s_ucode.bin
+Adding firmware e100/d101s_ucode.bin
+Adding binary /lib/firmware/2.6.35-30-generic/e100/d101m_ucode.bin
+Adding firmware e100/d101m_ucode.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ac3200.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/e1000e/e1000e.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c509.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/hp100.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/forcedeth.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sky2.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ns83820.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/natsemi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/lne390.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/skge.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/znet.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ne2.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ppp_mppe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/via-velocity.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/fs/configfs/configfs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/netconsole.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/mlx4/mlx4_core.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/mlx4/mlx4_en.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/pppoe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/smc9194.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/acenic.ko
+Adding binary /lib/firmware/2.6.35-30-generic/acenic/tg2.bin
+Adding firmware acenic/tg2.bin
+Adding binary /lib/firmware/2.6.35-30-generic/acenic/tg1.bin
+Adding firmware acenic/tg1.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/eth16i.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ixgb/ixgb.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/dummy.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/via-rhine.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ipg.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/3c59x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/eepro.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/netxen/netxen_nic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/smsc9420.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/parport/parport.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/plip.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/ifb.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/sunhme.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/net/chelsio/cxgb.ko
+Copying module directory kernel/drivers/scsi
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_tgt.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_transport_fc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/bfa/bfa.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/wd7000.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/3w-xxxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/atp870u.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_transport_spi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aic7xxx/aic79xx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aic7xxx/aic7xxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/fd_mcs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/NCR53c406a.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/libfc/libfc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/in2000.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/qlogicfas408.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/qlogicfas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/pcmcia/pcmcia_core.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/pcmcia/pcmcia.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pcmcia/sym53c500_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pcmcia/nsp_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pcmcia/aha152x_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pcmcia/qlogic_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pcmcia/fdomain_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_transport_sas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/libsas/libsas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pm8001/pm8001.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/sym53c416.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ipr.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/g_NCR5380.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ibmmca.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/BusLogic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_transport_iscsi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/libiscsi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/be2iscsi/be2iscsi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pas16.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/pmcraid.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/t128.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/53c700.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/NCR_D700.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_wait_scan.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/qla4xxx/qla4xxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/gdth.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/arcmsr/arcmsr.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/mvsas/mvsas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/fcoe/libfcoe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/fcoe/fcoe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/fnic/fnic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/u14-34f.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/libsrp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/a100u2w.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/dtc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/g_NCR5380_mmio.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_debug.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/qla1280.ko
+Adding binary /lib/firmware/2.6.35-30-generic/qlogic/12160.bin
+Adding firmware qlogic/12160.bin
+Adding binary /lib/firmware/2.6.35-30-generic/qlogic/1280.bin
+Adding firmware qlogic/1280.bin
+Adding binary /lib/firmware/2.6.35-30-generic/qlogic/1040.bin
+Adding firmware qlogic/1040.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/dpt_i2o.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ppa.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/bnx2i/bnx2i.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/initio.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/nsp32.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ultrastor.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aha1542.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ch.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/raid_class.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aha152x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/stex.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/fdomain.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/st.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/imm.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/dmx3191d.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/3w-9xxx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/advansys.ko
+Adding binary /lib/firmware/2.6.35-30-generic/advansys/38C1600.bin
+Adding firmware advansys/38C1600.bin
+Adding binary /lib/firmware/2.6.35-30-generic/advansys/38C0800.bin
+Adding firmware advansys/38C0800.bin
+Adding binary /lib/firmware/2.6.35-30-generic/advansys/3550.bin
+Adding firmware advansys/3550.bin
+Adding binary /lib/firmware/2.6.35-30-generic/advansys/mcode.bin
+Adding firmware advansys/mcode.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aacraid/aacraid.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/misc/enclosure.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ses.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/qla2xxx/qla2xxx.ko
+Adding binary /lib/firmware/ql2500_fw.bin
+Adding firmware ql2500_fw.bin
+Adding binary /lib/firmware/ql2400_fw.bin
+Adding firmware ql2400_fw.bin
+Adding binary /lib/firmware/ql2322_fw.bin
+Adding firmware ql2322_fw.bin
+Adding binary /lib/firmware/ql2300_fw.bin
+Adding firmware ql2300_fw.bin
+Adding binary /lib/firmware/ql2200_fw.bin
+Adding firmware ql2200_fw.bin
+Adding binary /lib/firmware/ql2100_fw.bin
+Adding firmware ql2100_fw.bin
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/megaraid.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/libiscsi_tcp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/sym53c8xx_2/sym53c8xx.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/lpfc/lpfc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/device_handler/scsi_dh_hp_sw.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/device_handler/scsi_dh_rdac.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/device_handler/scsi_dh_alua.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/device_handler/scsi_dh_emc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/cxgb3i/cxgb3i.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/eata.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/scsi_transport_srp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aha1740.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/3w-sas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/megaraid/megaraid_sas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/megaraid/megaraid_mm.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/megaraid/megaraid_mbox.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/tmscsim.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/vmw_pvscsi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/osst.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/aic94xx/aic94xx.ko
+Adding binary /lib/firmware/aic94xx-seq.fw
+Adding firmware aic94xx-seq.fw
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/ips.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/NCR_Q720_mod.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/hpsa.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/iscsi_tcp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/sim710.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/mpt2sas/mpt2sas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/hptiop.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/osd/libosd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/osd/osd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/scsi/dc395x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/fusion/mptbase.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/fusion/mptscsih.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/fusion/mptfc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/fusion/mptsas.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/fusion/mptspi.ko
+Copying module directory kernel/drivers/block
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/sx8.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/osdblk.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/umem.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/aoe/aoe.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/floppy.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/DAC960.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/nbd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/lib/lru_cache.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/drbd/drbd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/paride.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/pd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/bpck.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/comm.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/epia.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/pt.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/frpw.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/ktti.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/on26.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/pf.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/aten.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/dstr.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/epat.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/kbic.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/pg.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/on20.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/fit2.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/fit3.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/pcd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/bpck6.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/paride/friq.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/cciss.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/virtio_blk.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/cpqarray.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/block/cryptoloop.ko
+Copying module directory kernel/drivers/ata
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cs5535.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_amd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_svw.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_sc1200.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_qdi.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_promise.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/libahci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_isapnp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cs5536.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_artop.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/ahci_platform.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_efar.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_ns87415.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_rz1000.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_it821x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_mpiix.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_hpt3x3.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_sis.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_pdc2027x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_inic162x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_mv.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_sil680.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cmd64x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_winbond.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_ninja32.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_netcell.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/ahci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_serverworks.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_sil24.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_ns87410.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_nv.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_marvell.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_atiixp.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_ali.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_oldpiix.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_radisys.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_qstor.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_hpt37x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_sl82c105.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cypress.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_uli.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_sil.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_via.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_vsc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_via.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_pcmcia.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_hpt3x2n.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_legacy.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cs5530.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_triflex.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_opti.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_rdc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_hpt366.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_optidma.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_jmicron.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/sata_sx4.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_pdc202xx_old.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cs5520.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_cmd640.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_it8213.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_sch.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ata/pata_atp867x.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/i2o/i2o_core.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/message/i2o/i2o_block.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ieee1394/ieee1394.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ieee1394/ohci1394.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/ieee1394/sbp2.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/firewire/firewire-core.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/firewire/firewire-ohci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/firewire/firewire-sbp2.ko
+Copying module directory kernel/drivers/mmc
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/card/sdio_uart.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/card/mmc_block.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/misc/tifm_core.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/tifm_sd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/sdricoh_cs.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/misc/cb710/cb710.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/cb710-mmc.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/leds/led-class.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/sdhci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/sdhci-pltfm.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/sdhci-pci.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/wbsd.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/mmc/host/via-sdmmc.ko
+Copying module directory kernel/drivers/usb/storage
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/usb-storage.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-sddr55.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-karma.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-datafab.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-isd200.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-sddr09.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-alauda.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-jumpshot.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-freecom.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-usbat.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-cypress.ko
+Adding module /lib/modules/2.6.35-30-generic/kernel/drivers/usb/storage/ums-onetouch.ko
+Adding binary /usr/lib/initramfs-tools/bin/wait-for-root
+Adding library /lib/libudev.so.0
+Adding library /lib/libc.so.6
+Adding library /lib/ld-linux.so.2
+Adding binary /sbin/modprobe
+Adding binary /sbin/rmmod
+Calling hook compcache
+Calling hook fixrtc
+Adding binary /bin/date
+Adding library /lib/librt.so.1
+Adding library /lib/libpthread.so.0
+Adding binary /sbin/hwclock
+Adding binary /sbin/dumpe2fs
+Adding library /lib/libext2fs.so.2
+Adding library /lib/libcom_err.so.2
+Adding library /lib/libe2p.so.2
+Adding library /lib/libuuid.so.1
+Calling hook fuse_utils
+Adding binary /sbin/mount.fuse
+Calling hook klibc
+Calling hook thermal
+Calling hook udev
+Adding binary /usr/bin/pkill
+Adding library /lib/libproc-3.2.8.so
+Adding binary /sbin/udevd
+Adding library /lib/libselinux.so.1
+Adding library /lib/libdl.so.2
+Adding binary /sbin/udevadm
+Adding binary /lib/udev/firmware
+Adding binary /lib/udev/ata_id
+Adding binary /lib/udev/usb_id
+E: /usr/share/initramfs-tools/hooks/udev failed with return 1.
+Removing /boot/initrd.img-2.6.35-30-generic.dpkg-bak
+update-initramfs: failed for /boot/initrd.img-2.6.35-30-generic
+```
+
+Currently, it just gets to kernel selection and then the keyboard doesn't work, but I am able to work on it using a live cd.
+
+---
+
+### Post by drs305 on 2012-07-15
+I realize it's now been a week since you last posted and still don't have a solution. 
+
+I'll 'bump' the thread.
+
+If you don't get a response, and since you can access the files via the LiveCD, you could always copy your data files and reinstall after reformatting the partition.
+
+If you can see the files via the LiveCD, you might also be able to use a backup app, reformat the partition, and then reinstall from the backup. That might work if the filesystem and not the files themselves are the problem.
+
+You can install an app like fsarchiver and run a simple command to make a backup, and then another command to restore to the new partition. The partitions don't even have to be the same size, just large enough to contain all the files.
+
+---
+
+### Post by l07 on 2012-07-18
+I finally solved this: it seems the package util-linux became broken and needed to be reinstalled; I also removed linux-image-2.6.35-32-generic and linux-image-generic.
+
+---
+

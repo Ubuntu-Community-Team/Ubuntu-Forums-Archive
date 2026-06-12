@@ -1,0 +1,428 @@
+---
+title: "Grub Rescue Help for T91"
+date: 2010-12-24
+forum: General Help
+---
+
+### Post by rickc51832 on 2010-12-24
+Hello, I'm new here and newbie in ubuntu. I have asus eee pc t91, I installed and totally 100% partition my 16gb ssd ubuntu 10.10 after I install and reboot I received and error message saying Grub Rescue, I run bootinfoscript below is the info:
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+ => No boot loader is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  -
+    Boot sector info:  
+    Mounting failed:
+mount: wrong fs type, bad option, bad superblock on /dev/sda1,
+       missing codepage or helper program, or other error
+       In some cases useful info is found in syslog - try
+       dmesg | tail  or so
+
+
+sda2: _________________________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info:  
+    Mounting failed:
+mount: wrong fs type, bad option, bad superblock on /dev/sda1,
+       missing codepage or helper program, or other error
+       In some cases useful info is found in syslog - try
+       dmesg | tail  or so
+
+mount: unknown filesystem type ''
+
+sdb1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sdb2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdc: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Fat32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 16.1 GB, 16139681792 bytes
+255 heads, 63 sectors/track, 1962 cylinders, total 31522816 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63    30,475,304    30,475,242  83 Linux
+/dev/sda2          30,475,305    31,519,529     1,044,225  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 15.5 GB, 15525216256 bytes
+255 heads, 63 sectors/track, 1887 cylinders, total 30322688 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1    *          2,048    28,954,623    28,952,576  83 Linux
+/dev/sdb2          28,956,670    30,320,639     1,363,970   5 Extended
+/dev/sdb5          28,956,672    30,320,639     1,363,968  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        8f439086-68ef-4550-beb5-af0ff8e0b46b   ext3       /                             
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        422c8ac6-79c3-4aa2-9630-8b5180ee43cf   ext4                                     
+/dev/sdb2: PTTYPE="dos" 
+/dev/sdb5        9dc87293-624d-4ca2-82cb-e0ec46a9f696   swap                                     
+/dev/sdb: PTTYPE="dos" 
+/dev/sdc         2CB5-D192                              vfat       UBUNTUUNE                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sdc         /cdrom                   vfat       (ro,noatime,fmask=0022,dmask=0022,codepage=cp437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sdb1        /media/422c8ac6-79c3-4aa2-9630-8b5180ee43cf ext4       (rw,nosuid,nodev,uhelper=udisks,commit=0)
+
+
+=========================== sdb1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd2,msdos1)'
+search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd2,msdos1)'
+search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd2,msdos1)'
+    search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=422c8ac6-79c3-4aa2-9630-8b5180ee43cf ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd2,msdos1)'
+    search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=422c8ac6-79c3-4aa2-9630-8b5180ee43cf ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd2,msdos1)'
+    search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd2,msdos1)'
+    search --no-floppy --fs-uuid --set 422c8ac6-79c3-4aa2-9630-8b5180ee43cf
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sdb1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sdc1       /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdc5 during installation
+UUID=9dc87293-624d-4ca2-82cb-e0ec46a9f696 none            swap    sw              0       0
+
+=================== sdb1: Location of files loaded by Grub: ===================
+
+
+  11.0GB: boot/grub/core.img
+  10.9GB: boot/grub/grub.cfg
+    .5GB: boot/initrd.img-2.6.35-22-generic
+  11.0GB: boot/vmlinuz-2.6.35-22-generic
+    .5GB: initrd.img
+  11.0GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  bc 84 fb 85 c5 88 70 8d  01 90 6d 90 97 93 1c 97  |......p...m.....|
+00000010  12 9a cf 50 97 58 8e 61  d3 81 35 85 08 8d 20 90  |...P.X.a..5... .|
+00000020  c3 4f 74 50 47 52 73 53  6f 60 49 63 5f 67 2c 6e  |.OtPGRsSo`Ic_g,n|
+00000030  b3 8d 1f 90 d7 4f 5e 5c  ca 8c cf 65 9a 7d 52 53  |.....O^\...e.}RS|
+00000040  96 88 76 51 c3 63 58 5b  6b 5b 0a 5c 0d 64 51 67  |..vQ.cX[k[.\.dQg|
+00000050  5c 90 d6 4e 1a 59 2a 59  70 6c 51 8a 3e 55 15 58  |\..N.Y*YplQ.>U.X|
+00000060  a5 59 f0 60 53 62 c1 67  35 82 55 69 40 96 c4 99  |.Y.`Sb.g5.Ui@...|
+00000070  28 9a 53 4f 06 58 fe 5b  10 80 b1 5c 2f 5e 85 5f  |(.SO.X.[...\/^._|
+00000080  20 60 4b 61 34 62 ff 66  f0 6c de 6e ce 80 7f 81  | `Ka4b.f.l.n....|
+00000090  d4 82 8b 88 b8 8c 00 90  2e 90 8a 96 db 9e db 9b  |................|
+000000a0  e3 4e f0 53 27 59 2c 7b  8d 91 4c 98 f9 9d dd 6e  |.N.S'Y,{..L....n|
+000000b0  27 70 53 53 44 55 85 5b  58 62 9e 62 d3 62 a2 6c  |'pSSDU.[Xb.b.b.l|
+000000c0  ef 6f 22 74 17 8a 38 94  c1 6f fe 8a 38 83 e7 51  |.o"t..8..o..8..Q|
+000000d0  f8 86 ea 53 e9 53 46 4f  54 90 b0 8f 6a 59 31 81  |...S.SFOT...jY1.|
+000000e0  fd 5d ea 7a bf 8f da 68  37 8c f8 72 48 9c 3d 6a  |.].z...h7..rH.=j|
+000000f0  b0 8a 39 4e 58 53 06 56  66 57 c5 62 a2 63 e6 65  |..9NXS.VfW.b.c.e|
+00000100  4e 6b e1 6d 5b 6e ad 70  ed 77 ef 7a aa 7b bb 7d  |Nk.m[n.p.w.z.{.}|
+00000110  3d 80 c6 80 cb 86 95 8a  5b 93 e3 56 c7 58 3e 5f  |=.......[..V.X>_|
+00000120  ad 65 96 66 80 6a b5 6b  37 75 c7 8a 24 50 e5 77  |.e.f.j.k7u..$P.w|
+00000130  30 57 1b 5f 65 60 7a 66  60 6c f4 75 1a 7a 6e 7f  |0W._e`zf`l.u.zn.|
+00000140  f4 81 18 87 45 90 b3 99  c9 7b 5c 75 f9 7a 51 7b  |....E....{\u.zQ{|
+00000150  c4 84 10 90 e9 79 92 7a  36 83 e1 5a 40 77 2d 4e  |.....y.z6..Z@w-N|
+00000160  f2 4e 99 5b e0 5f bd 62  3c 66 f1 67 e8 6c 6b 86  |.N.[._.b<f.g.lk.|
+00000170  77 88 3b 8a 4e 91 f3 92  d0 99 17 6a 26 70 2a 73  |w.;.N......j&p*s|
+00000180  e7 82 57 84 af 8c 01 4e  46 51 cb 51 8b 55 f5 5b  |..W....NFQ.Q.U.[|
+00000190  16 5e 33 5e 81 5e 14 5f  35 5f 6b 5f b4 5f f2 61  |.^3^.^._5_k_._.a|
+000001a0  11 63 a2 66 1d 67 6e 6f  52 72 3a 75 3a 77 74 80  |.c.f.gnoRr:u:wt.|
+000001b0  39 81 78 81 76 87 bf 8a  dc 8a 85 8d f3 8d 9a 92  |9.x.v...........|
+000001c0  77 95 02 98 e5 9c c5 52  57 63 f4 76 15 67 88 6c  |w......RWc.v.g.l|
+000001d0  cd 73 c3 8c ae 93 73 96  25 6d 9c 58 0e 69 cc 69  |.s....s.%m.X.i.i|
+000001e0  fd 8f 9a 93 db 75 1a 90  5a 58 02 68 b4 63 fb 69  |.....u..ZX.h.c.i|
+000001f0  43 4f 2c 6f d8 67 bb 8f  26 85 b4 7d 54 93 3f 69  |CO,o.g..&..}T.?i|
+00000200
+
+Any help is greatly appreciated. Thanks in advance. :)
+
+---
+
+### Post by mikewhatever on 2010-12-24
+There seems to be two Linux installations, one on /dev/sda and the other on /dev/sdb, or, at least, there are two swap partitions. 
+
+> => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in
+partition #1 for (,msdos1)/boot/grub.
+=> No boot loader is installed in the MBR of /dev/sdb
+
+According to the above quote, Grub is looking for boot files in the wrong place (/dev/sda), when it should be looking on /dev/sdb. You should reinstall Grub, while running from the live cd/usb and point it to /dev/sdb.
+
+- Boot Ubuntu from cd/usb.
+- Run the commands below:
+
+sudo mount /dev/sdb1 /mnt
+sudo grub-install --root-directory=/mnt/ /dev/sdb
+
+---
+
+### Post by rickc51832 on 2010-12-24
+Hello! thanks for the quick reply, I did what you said to do:
+
+sudo mount /dev/sdb1 /mnt
+sudo grub-install --root-directory=/mnt/ /dev/sdb
+
+And below is what showed after:
+
+ubuntu@ubuntu:~$ sudo mount /dev/sdb1 /mnt
+ubuntu@ubuntu:~$ sudo grub-install --root-directory=/mnt//dev/sdb
+install_device not specified.
+Usage: grub-install [OPTION] install_device
+Install GRUB on your drive.
+
+  -h, --help              print this message and exit
+  -v, --version           print the version information and exit
+  --modules=MODULES       pre-load specified modules MODULES
+  --root-directory=DIR    install GRUB images under the directory DIR
+                          instead of the root directory
+  --grub-setup=FILE       use FILE as grub-setup
+  --grub-mkimage=FILE     use FILE as grub-mkimage
+  --grub-probe=FILE       use FILE as grub-probe
+  --no-floppy             do not probe any floppy drive
+  --recheck               probe a device map even if it already exists
+  --force                 install even if problems are detected
+  --disk-module=MODULE    disk module to use
+
+INSTALL_DEVICE can be a GRUB device name or a system device filename.
+
+grub-install copies GRUB images into /boot/grub (or /grub on NetBSD and
+OpenBSD), and uses grub-setup to install grub into the boot sector.
+
+If the --root-directory option is used, then grub-install will copy
+images into the operating system installation rooted at that directory.
+
+Report bugs to <bug-grub@gnu.org>.
+ubuntu@ubuntu:~$ sudo grub-install --root-directory=/mnt//dev/sdb
+
+
+I reboot and still show :
+
+error no file found.
+grub rescue> _
+
+Did I do something wrong?:confused:
+
+Thanks in advance!
+
+---
+
+### Post by mikewhatever on 2010-12-24
+There is a space between /mnt/ and /dev/sdb. Perhaps posting it in code tags will have a better formatting.
+
+```
+sudo mount /dev/sdb1 /mnt
+sudo grub-install --root-directory=/mnt/ /dev/sdb
+```
+
+---
+
+### Post by rickc51832 on 2010-12-28
+Sorry I wasnt able to run the command per your advise asap.
+
+I run the command today please check below: 
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+ubuntu@ubuntu:~$ sudo mount /dev/sdb1 /mnt
+ubuntu@ubuntu:~$ sudo grub-install --root-directory=/mnt/ /dev/sdb
+Installation finished. No error reported.
+ubuntu@ubuntu:~$ 
+
+After installation I rebooted and below is what still showed up:
+
+error: file not found.
+grub rescue> _
+
+Please advise.
+
+TY
+
+---
+

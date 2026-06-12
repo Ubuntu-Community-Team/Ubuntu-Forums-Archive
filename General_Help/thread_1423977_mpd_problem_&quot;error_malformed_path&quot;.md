@@ -1,0 +1,579 @@
+---
+title: "mpd problem: &quot;error: malformed path&quot; ?"
+date: 2010-03-07
+forum: General Help
+---
+
+### Post by Jheric on 2010-03-07
+I wanted to give GMPC a go since, from the screenshots, it looked like a pretty awesome audio manager.
+
+ Unfortunatley though, I can't get mpd/mpc to work. I've followed two different guides, start to finish and I always get the same error when I try to "mpc update".
+
+```
+justaleaf@justaleaf-macbook:~$ mpc update
+error: Malformed path
+
+```
+
+At first I attempted to change the music directory manually to my music folder, and change ownership of the folder to MPD, since that was the first guide I followed. That didn't work, so I reverted everything, uninstalled and started over with a different guide.
+
+This one had me:
+```
+sudo ln -s /home/justaleaf/Music /var/lib/mpd/music
+```
+
+Rather than change mpd's directory. Still, after restarting everything, when I update, I get the same error.
+
+Obviously, GMPC gives me the same error when I try to update using it, as well.
+
+Any ideas??
+
+---
+
+### Post by kaivalagi on 2010-03-07
+I am not running Ubuntu but this may still help. I think it best if you post your conf file for mpd so we can take a look at all the folder settings etc.
+
+My /etc/mpd.conf file has the following key settings:
+
+```
+music_directory		"/media/storage/Audio/Music"
+playlist_directory	"/var/lib/mpd/playlists"
+db_file			"/var/lib/mpd/mpd.db"
+log_file		"/var/log/mpd/mpd.log"
+pid_file		"/var/run/mpd/mpd.pid"
+state_file		"/var/lib/mpd/mpdstate"
+user 			"mpd"
+```
+
+Note the music folder is where I want it rather than default and simlinked
+
+I set mpd to run as a new user called mpd, this user has all the necessary permissions for all the folder locations above. I think as long as folders and user permissions are good then you're away.
+
+You could equally create a folder structure in your home ~/ folder somewhere and point to the right folders in the conf. If you run mpd as your user account, no further permissions on folders should be needed in theory
+
+Anyway, maybe that will get you there, if not post your conf file so we can see what you've got setup.
+
+---
+
+### Post by Jheric on 2010-03-07
+here's my conf file for mpd
+
+```
+# An example configuration file for MPD
+# See the mpd.conf man page for a more detailed description of each parameter.
+
+
+# Files and directories #######################################################
+#
+# This setting controls the top directory which MPD will search to discover the
+# available audio files and add them to the daemon's online database. This 
+# setting defaults to the XDG directory, otherwise the music directory will be
+# be disabled and audio files will only be accepted over ipc socket (using
+# file:// protocol) or streaming files over an accepted protocol.
+#
+music_directory		"/var/lib/mpd/music"
+#
+# This setting sets the MPD internal playlist directory. The purpose of this
+# directory is storage for playlists created by MPD. The server will use 
+# playlist files not created by the server but only if they are in the MPD
+# format. This setting defaults to playlist saving being disabled.
+#
+playlist_directory		"/var/lib/mpd/playlists"
+#
+# This setting sets the location of the MPD database. This file is used to
+# load the database at server start up and store the database while the 
+# server is not up. This setting defaults to disabled which will allow
+# MPD to accept files over ipc socket (using file:// protocol) or streaming
+# files over an accepted protocol.
+#
+db_file			"/var/lib/mpd/tag_cache"
+# 
+# These settings are the locations for the daemon log files for the daemon.
+# These logs are great for troubleshooting, depending on your log_level
+# settings.
+#
+# The special value "syslog" makes MPD use the local syslog daemon. This
+# setting defaults to logging to syslog, otherwise logging is disabled.
+#
+log_file			"/var/log/mpd/mpd.log"
+#
+# This setting sets the location of the file which stores the process ID
+# for use of mpd --kill and some init scripts. This setting is disabled by
+# default and the pid file will not be stored.
+#
+pid_file			"/var/run/mpd/pid"
+#
+# This setting sets the location of the file which contains information about
+# most variables to get MPD back into the same general shape it was in before
+# it was brought down. This setting is disabled by default and the server 
+# state will be reset on server start up.
+#
+state_file			"/var/lib/mpd/state"
+#
+# The location of the sticker database.  This is a database which
+# manages dynamic information attached to songs.
+#
+sticker_file		"/var/lib/mpd/sticker.sqlite"
+#
+###############################################################################
+
+
+# General music daemon options ################################################
+#
+# This setting specifies the user that MPD will run as. MPD should never run as
+# root and you may use this setting to make MPD change its user ID after
+# initialization. This setting is disabled by default and MPD is run as the
+# current user.
+#
+user				"mpd"
+#
+# This setting specifies the group that MPD will run as. If not specified
+# primary group of user specified with "user" setting will be used (if set).
+# This is useful if MPD needs to be a member of group such as "audio" to
+# have permission to use sound card.
+#
+group				"audio"
+#
+# This setting sets the address for the daemon to listen on. Careful attention
+# should be paid if this is assigned to anything other then the default, any.
+# This setting can deny access to control of the daemon.
+#
+# For network
+bind_to_address		"localhost"
+#
+# And for Unix Socket
+#bind_to_address		"/var/run/mpd/socket"
+#
+# This setting is the TCP port that is desired for the daemon to get assigned
+# to.
+#
+#port				"6600"
+#
+# This setting controls the type of information which is logged. Available 
+# setting arguments are "default", "secure" or "verbose". The "verbose" setting
+# argument is recommended for troubleshooting, though can quickly stretch
+# available resources on limited hardware storage.
+#
+#log_level			"default"
+#
+# If you have a problem with your MP3s ending abruptly it is recommended that 
+# you set this argument to "no" to attempt to fix the problem. If this solves
+# the problem, it is highly recommended to fix the MP3 files with vbrfix
+# (available from <http://www.willwap.co.uk/Programs/vbrfix.php>), at which
+# point gapless MP3 playback can be enabled.
+#
+#gapless_mp3_playback			"yes"
+#
+# This setting enables MPD to create playlists in a format usable by other
+# music players.
+#
+#save_absolute_paths_in_playlists	"no"
+#
+# This setting defines a list of tag types that will be extracted during the 
+# audio file discovery process. Optionally, 'comment' can be added to this
+# list.
+#
+#metadata_to_use	"artist,album,title,track,name,genre,date,composer,performer,disc"
+#
+# This setting enables automatic update of MPD's database when files in 
+# music_directory are changed.
+#
+#auto_update	"yes"
+###############################################################################
+
+
+# Symbolic link behavior ######################################################
+#
+# If this setting is set to "yes", MPD will discover audio files by following 
+# symbolic links outside of the configured music_directory.
+#
+#follow_outside_symlinks	"yes"
+#
+# If this setting is set to "yes", MPD will discover audio files by following
+# symbolic links inside of the configured music_directory.
+#
+#follow_inside_symlinks		"yes"
+#
+###############################################################################
+
+
+# Zeroconf / Avahi Service Discovery ##########################################
+#
+# If this setting is set to "yes", service information will be published with
+# Zeroconf / Avahi.
+#
+#zeroconf_enabled		"yes"
+#
+# The argument to this setting will be the Zeroconf / Avahi unique name for
+# this MPD server on the network.
+#
+#zeroconf_name			"Music Player"
+#
+###############################################################################
+
+
+# Permissions #################################################################
+#
+# If this setting is set, MPD will require password authorization. The password
+# can setting can be specified multiple times for different password profiles.
+#
+#password                        "password@read,add,control,admin"
+#
+# This setting specifies the permissions a user has who has not yet logged in. 
+#
+#default_permissions             "read,add,control,admin"
+#
+###############################################################################
+
+
+# Input #######################################################################
+#
+
+input {
+        plugin "curl"
+#       proxy "proxy.isp.com:8080"
+#       proxy_user "user"
+#       proxy_password "password"
+}
+
+#
+###############################################################################
+
+# Audio Output ################################################################
+#
+# MPD supports various audio output types, as well as playing through multiple 
+# audio outputs at the same time, through multiple audio_output settings 
+# blocks. Setting this block is optional, though the server will only attempt
+# autodetection for one sound card.
+#
+# See <http://mpd.wikia.com/wiki/Configuration#Audio_Outputs> for examples of 
+# other audio outputs.
+#
+# An example of an ALSA output:
+#
+audio_output {
+	type		"alsa"
+	name		"My ALSA Device"
+	device		"hw:0,0"	# optional
+	format		"44100:16:2"	# optional
+	mixer_type      "hardware"	# optional
+	mixer_device	"default"	# optional
+	mixer_control	"PCM"		# optional
+	mixer_index	"0"		# optional
+}
+#
+# An example of an OSS output:
+#
+#audio_output {
+#	type		"oss"
+#	name		"My OSS Device"
+##	device		"/dev/dsp"	# optional
+##	format		"44100:16:2"	# optional
+##	mixer_type      "hardware"	# optional
+##	mixer_device	"/dev/mixer"	# optional
+##	mixer_control	"PCM"		# optional
+#}
+#
+# An example of a shout output (for streaming to Icecast):
+#
+#audio_output {
+#	type		"shout"
+#	encoding	"ogg"			# optional
+#	name		"My Shout Stream"
+#	host		"localhost"
+#	port		"8000"
+#	mount		"/mpd.ogg"
+#	password	"hackme"
+#	quality		"5.0"
+#	bitrate		"128"
+#	format		"44100:16:1"
+##	protocol	"icecast2"		# optional
+##	user		"source"		# optional
+##	description	"My Stream Description"	# optional
+##	genre		"jazz"			# optional
+##	public		"no"			# optional
+##	timeout		"2"			# optional
+##	mixer_type      "software"		# optional
+#}
+#
+# An example of a recorder output:
+#
+#audio_output {
+#	type		"recorder"
+#	name		"My recorder"
+#	encoder		"vorbis"		# optional, vorbis or lame
+#	path		"/var/lib/mpd/recorder/mpd.ogg"
+##	quality		"5.0"			# do not define if bitrate is defined
+#	bitrate		"128"			# do not define if quality is defined
+#	format		"44100:16:1"
+#}
+#
+# An example of a httpd output (built-in HTTP streaming server):
+#
+#audio_output {
+#	type		"httpd"
+#	name		"My HTTP Stream"
+#	encoder		"vorbis"		# optional, vorbis or lame
+#	port		"8000"
+##	quality		"5.0"			# do not define if bitrate is defined
+#	bitrate		"128"			# do not define if quality is defined
+#	format		"44100:16:1"
+#	max_clients	"0"			# optional 0=no limit
+#}
+#
+# An example of a pulseaudio output (streaming to a remote pulseaudio server)
+#
+#audio_output {
+#	type		"pulse"
+#	name		"My Pulse Output"
+##	server		"remote_server"		# optional
+##	sink		"remote_server_sink"	# optional
+#}
+#
+## Example "pipe" output:
+#
+#audio_output {
+#	type		"pipe"
+#	name		"my pipe"
+#	command		"aplay -f cd 2>/dev/null"
+## Or if you're want to use AudioCompress
+#	command		"AudioCompress -m | aplay -f cd 2>/dev/null"
+## Or to send raw PCM stream through PCM:
+#	command		"nc example.org 8765"
+#	format		"44100:16:2"
+#}
+#
+## An example of a null output (for no audio output):
+#
+#audio_output {
+#	type		"null"
+#	name		"My Null Output"
+#	mixer_type      "none"			# optional
+#}
+#
+# This setting will change all decoded audio to be converted to the specified
+# format before being passed to the audio outputs. By default, this setting is
+# disabled.
+#
+#audio_output_format		"44100:16:2"
+#
+# If MPD has been compiled with libsamplerate support, this setting specifies 
+# the sample rate converter to use.  Possible values can be found in the 
+# mpd.conf man page or the libsamplerate documentation. By default, this is
+# setting is disabled.
+#
+#samplerate_converter		"Fastest Sinc Interpolator"
+#
+###############################################################################
+
+
+# Normalization automatic volume adjustments ##################################
+#
+# This setting specifies the type of ReplayGain to use. This setting can have
+# the argument "off", "album" or "track". See <http://www.replaygain.org>
+# for more details. This setting is off by default.
+#
+#replaygain			"album"
+#
+# This setting sets the pre-amp used for files that have ReplayGain tags. By
+# default this setting is disabled.
+#
+#replaygain_preamp		"0"
+#
+# This setting enables on-the-fly normalization volume adjustment. This will
+# result in the volume of all playing audio to be adjusted so the output has 
+# equal "loudness". This setting is disabled by default.
+#
+#volume_normalization		"no"
+#
+###############################################################################
+
+
+# MPD Internal Buffering ######################################################
+#
+# This setting adjusts the size of internal decoded audio buffering. Changing
+# this may have undesired effects. Don't change this if you don't know what you
+# are doing.
+#
+#audio_buffer_size		"2048"
+#
+# This setting controls the percentage of the buffer which is filled before 
+# beginning to play. Increasing this reduces the chance of audio file skipping, 
+# at the cost of increased time prior to audio playback.
+#
+#buffer_before_play		"10%"
+#
+###############################################################################
+
+
+# Resource Limitations ########################################################
+#
+# These settings are various limitations to prevent MPD from using too many
+# resources. Generally, these settings should be minimized to prevent security
+# risks, depending on the operating resources.
+#
+#connection_timeout		"60"
+#max_connections		"10"
+#max_playlist_length		"16384"
+#max_command_list_size		"2048"
+#max_output_buffer_size		"8192"
+#
+###############################################################################
+
+
+# Character Encoding ##########################################################
+#
+# If file or directory names do not display correctly for your locale then you 
+# may need to modify this setting.
+#
+filesystem_charset		"UTF-8"
+#
+# This setting controls the encoding that ID3v1 tags should be converted from.
+#
+id3v1_encoding			"UTF-8"
+#
+###############################################################################
+```
+
+I followed a guide, previously, doing as you suggested (listing my music folder and thing giving mpd permissions for it), but it yielded the same error for me.
+
+Still, keeping it as default and symlinking to another folder... how can this error be justified? All folders and permissions are present... I don't know what I'm missing here...
+
+Thanks for the input!
+
+---
+
+### Post by kaivalagi on 2010-03-07
+> **Jheric said:**
+> I followed a guide, previously, doing as you suggested (listing my music folder and thing giving mpd permissions for it), but it yielded the same error for me.
+
+Still, keeping it as default and symlinking to another folder... how can this error be justified? All folders and permissions are present... I don't know what I'm missing here...
+
+Thanks for the input!
+
+Have a look at the permissions for the other paths, not just music folder, they can cause this issue when trying to create a database file or log I think. e.g. /var/log/mpd/ , /var/run/mpd/ , /var/lib/mpd/
+
+This might help, it's the Arch wiki page for mpd: [http://wiki.archlinux.org/index.php/Mpd](http://wiki.archlinux.org/index.php/Mpd)
+this caught my eye:
+
+```
+chown -R mpd:mpd /var/{lib,run,log}/mpd
+```
+
+---
+
+### Post by Jheric on 2010-03-07
+Thanks... I looked around in the wiki and tried setting things up the way it suggested, and I still got the same results :<.
+
+So, I removed everything, again, and started over. This time... I left everything perfectly the way it was after a vanilla install. I stuck one mp3 in the mpd default music folder with free permissions and ran mpc update... 
+
+```
+justaleaf@justaleaf-macbook:~$ mpc update
+error: Malformed path
+```
+
+It just doesn't make sense @_@. Does it hate ext4, or something?
+
+**EDIT:** And on a sidenote... reading that wiki nearly ruined my day. I LOVE ARCH, but I don't have the time to reformat this computer damnit! :D
+
+---
+
+### Post by kaivalagi on 2010-03-07
+No idea what else it can be...anyone?
+
+---
+
+### Post by Sim &amp; Co. on 2010-03-07
+Why not just change the directory in your configuration file instead of creating a link to it ?
+
+---
+
+### Post by Jheric on 2010-03-07
+> **Sim & Co. said:**
+> Why not just change the directory in your configuration file instead of creating a link to it ?
+
+That was the first thing I did. I don't think it's a permissions issue. I've given specific permissions, changed groups, tried full perm folders... whether it's my music folder, a symlink, or the default folder... it always results in the Malformed path error.
+
+I've consulted google and the mpd wikia as well. I suppose I'll just have to give up on this for now and maybe try again on the next major update of mpd. Unless someone else has a suggestion.
+
+(either that, or maybe I'll let loose and rebuild Arch on my macbook for the experience >:D. I haven't been too thrilled with some of the not-really-ready-for-primetime software that's in the 9.10 release)
+
+---
+
+### Post by kaivalagi on 2010-03-08
+If you have the time upfront to get Arch setup it's worth it, but you will need to configure everything, nothing is done for you.
+
+Have you tried setting up the mpd user to be yourself and put all the paths in ~/ somewhere? If that works you know it's a permission thing...
+
+Other than that I'm stumped right now
+
+---
+
+### Post by dutch_gecko on 2010-03-08
+I've just bumped into this issue after updating my mpd from this ppa: [https://launchpad.net/~gmpc-trunk/+archive/mpd-trunk](https://launchpad.net/~gmpc-trunk/+archive/mpd-trunk)
+
+Downgrading back to the ubuntu repositories fixed everything (that's version 0.15.4). That ppa is using builds straight from the git tree so I suspect there's a bug in there somewhere.
+
+I hope this was the case for you too!
+
+---
+
+### Post by mzuther on 2010-03-12
+Hi!
+
+I'm dealing with the same problem and have found a (new) [bug report]("http://musicpd.org/mantis/view.php?id=2840") regarding the problem.  From this, I have learned that updating subdirectories works.  You just have to remove the leading slash.  Thus,
+
+```
+mpc update test
+```
+
+works, whereas
+
+```
+mpc update /test
+```
+
+does not.
+
+Hope to have helped,
+
+Martin
+
+---
+
+### Post by mzuther on 2010-03-13
+The problem is fixed in the newest PPA - just update your system...
+
+That's why I love Open Source! :D
+
+Martin
+
+---
+
+### Post by Cool Javelin on 2010-07-09
+Jheric, did you get this problem solved?
+
+I went through several installs/removes, and still am not quite there.
+
+I had problems like you described with not being able to access some files or directory's. The error messages are very cryptic, they could do better. For me, it was all related to permissions.
+
+The default setup makes a user called mpd, and makes several dirs in the var dir for logs and music and such.
+
+I had more troubles with that setup then I can tell you.
+
+Finally, I changed all the dirs in mpd.conf to point to dirs in my home dir. 
+
+For example, I made a user (in Linux) called music. Linux made for me /home/music. I added a directory /home/music/mpd.
+
+In etc/mpd.conf, I made the user name 'music'
+
+I put my music in /home/music, and point all other folders and files to home/music/mpd.
+
+mpd (v0.15.4) and mpc seem to be working properly, however, there is no audio, and I haven't figured that out yet.
+
+I am using the alsa audio output and think it is related to that, and the next thing I want to try is oss4.
+
+Mark.
+
+---
+

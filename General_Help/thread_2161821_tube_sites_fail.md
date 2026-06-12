@@ -1,0 +1,99 @@
+---
+title: "tube sites fail"
+date: 2013-07-12
+forum: General Help
+---
+
+### Post by athaiH8e on 2013-07-12
+Either I suck at searching forums, or the search sucks. Whichever, sorry if this is a duplicate or in the wrong place.
+
+My system updated today. No reboot required but I did anyway. Youtube looks/acts different, and all the other tube sites (dailymotion for example) won't play any video.
+
+Ubuntu 12.04 (precise) 64-bit
+GNOME 3.4.2
+
+---
+
+### Post by zero2xiii on 2013-07-12
+Hay,
+
+How did you update your system, via terminal?
+
+Can you please supply us the output of:
+
+```
+cat /var/log/apt/term.log  #This gives the output from the last few apt-get requests, note: more distant logs are archived in same folder
+```
+
+This is so we can see the changes done by the 'update'.
+
+Thanks
+
+---
+
+### Post by athaiH8e on 2013-07-12
+Thanks for answering and helping me out.
+
+I get updates via update manager. I see the log you asked for begins with flashplugin. I KNEW there had to be a log in there somewhere. I'll add that line to my notes. Now comes the question of how to reverse an update.
+
+I also see google talk, and unity. I don't use either one and would LOVE to get them out of my system, but alas, I don't know beans about Ubuntu other than it's free and lets me do most of the things I need to do.
+
+Log started: 2013-07-11  14:49:55
+(Reading database ... 616717 files and directories currently installed.)
+Preparing to replace flashplugin-installer 11.2.202.291ubuntu0.12.04.1 (using .../flashplugin-installer_11.2.202.297ubuntu0.12.04.1_amd64.deb) ...
+Unpacking replacement flashplugin-installer ...
+Preparing to replace google-talkplugin 4.0.3.0-1 (using .../google-talkplugin_4.1.3.0-1_amd64.deb) ...
+Unpacking replacement google-talkplugin ...
+Preparing to replace libraptor2-0 2.0.6-1 (using .../libraptor2-0_2.0.6-1ubuntu0.1_amd64.deb) ...
+Unpacking replacement libraptor2-0 ...
+Preparing to replace unity 5.18.0-0ubuntu2 (using .../unity_5.20.0-0ubuntu2_amd64.deb) ...
+Unpacking replacement unity ...
+Preparing to replace unity-common 5.18.0-0ubuntu2 (using .../unity-common_5.20.0-0ubuntu2_all.deb) ...
+Unpacking replacement unity-common ...
+Preparing to replace libunity-core-5.0-5 5.18.0-0ubuntu2 (using .../libunity-core-5.0-5_5.20.0-0ubuntu2_amd64.deb) ...
+Unpacking replacement libunity-core-5.0-5 ...
+Preparing to replace unity-services 5.18.0-0ubuntu2 (using .../unity-services_5.20.0-0ubuntu2_amd64.deb) ...
+Unpacking replacement unity-services ...
+Preparing to replace unity-lens-files 5.10.0-0ubuntu1 (using .../unity-lens-files_5.10.0-0ubuntu1.1_amd64.deb) ...
+Unpacking replacement unity-lens-files ...
+Processing triggers for update-notifier-common ...
+flashplugin-installer: downloading [http://archive.canonical.com/pool/partner/a/adobe-flashplugin/adobe-flashplugin_11.2.202.297.orig.tar.gz](http://archive.canonical.com/pool/partner/a/adobe-flashplugin/adobe-flashplugin_11.2.202.297.orig.tar.gz)
+Installing from local file /tmp/tmp20pwse.gz
+Flash Plugin installed.
+Processing triggers for man-db ...
+Processing triggers for gconf2 ...
+Processing triggers for libglib2.0-0:i386 ...
+Processing triggers for libglib2.0-0 ...
+Setting up flashplugin-installer (11.2.202.297ubuntu0.12.04.1) ...
+Setting up google-talkplugin (4.1.3.0-1) ...
+Setting up libraptor2-0 (2.0.6-1ubuntu0.1) ...
+Setting up unity-services (5.20.0-0ubuntu2) ...
+Setting up libunity-core-5.0-5 (5.20.0-0ubuntu2) ...
+Setting up unity-common (5.20.0-0ubuntu2) ...
+Setting up unity (5.20.0-0ubuntu2) ...
+Setting up unity-lens-files (5.10.0-0ubuntu1.1) ...
+Processing triggers for libc-bin ...
+ldconfig deferred processing now taking place
+Log ended: 2013-07-11  14:50:51
+
+---
+
+### Post by zero2xiii on 2013-07-16
+Hay,
+
+So sorry for the heavy delay in coming back to you. Had a few days a show I had to do.
+
+Right, so it is definitly flash. You can remove it by running:
+```
+sudo apt-get remove flashpugin-installer
+```
+Although I think that you will then be completely unable to use "tube" sites.
+
+I recommend you switch to google chrome for them. Since flash has stopped support for linux and only the chrome browser (through some hacking from google I assume) will have updates.
+
+So sorry I can not help further, but maybe some one more knowledgeable can assist you in debugging flash, I can't.
+
+Cheers, good luck and sorry about the delay again.
+
+---
+

@@ -1,0 +1,450 @@
+---
+title: "Rapid disk contents analysis (command line)"
+date: 2011-03-11
+forum: General Help
+---
+
+### Post by probole on 2011-03-11
+Hi, 
+
+First I' m sorry for my horrible english, 
+
+Second : I need to have a rapid way to exstract some simple raw informations from any hard disk.
+
+Something like 
+
+ls -latr /*.* |  sort(by extension/type) 
+
+The goal I' m looking for is something like 
+
+
+
+.exe                  1034             last creation date 
+.jpg                   2437             "
+.xxx                  365               "
+ecc....
+
+Anyone can help me?
+
+Thank you.
+
+---
+
+### Post by rubylaser on 2011-03-11
+Here you go...
+```
+sudo find ./ -type f | grep -E ".*\.[a-zA-Z0-9]*$" | sed -e 's/.*\(\.[a-zA-Z0-9]*\)$/\1/' | sort | uniq -c | sort -n
+```
+
+This does not do the last created date, because I'm not sure what value that would be with an aggregated total. The output looks like this...
+```
+
+   1 .1d10
+   1 .3ZczqGw
+   1 .3ds
+   1 .4Xvh1lw
+   1 .5QIqYcn
+   1 .7874105B1541
+   1 .8TzdBFH
+   1 .AeZoICu
+   1 .Blanguages
+   1 .CFUserTextEncoding
+   1 .Chrome
+   1 .DIZ
+   1 .DWCHOPg
+   1 .EXE
+   1 .HvnLR2K
+   1 .Keychain
+   1 .LogTransportAppLock
+   1 .NFO
+   1 .ONYH1pP
+   1 .ORlDzhP
+   1 .OY535yO
+   1 .Oh9OGzM
+   1 .QWiABXa
+   1 .QfOiSEM
+   1 .QuarantineEvents
+   1 .Sj5CyA4
+   1 .TAG
+   1 .To8XFCy
+   1 .U9gzoRA
+   1 .WMV
+   1 .WohHbu
+   1 .Xauthority
+   1 .Xxwnb7C
+   1 .YES
+   1 .aCrpIZ2
+   1 .acrodata
+   1 .adminarchive
+   1 .aete
+   1 .aliases
+   1 .appstate
+   1 .array
+   1 .asf
+   1 .asp
+   1 .au
+   1 .bQnnQ8H
+   1 .backup
+   1 .bat
+   1 .cRlejCV
+   1 .cbz
+   1 .cidb
+   1 .crl
+   1 .csf
+   1 .ctypes
+   1 .darwin8
+   1 .dcO4d3
+   1 .dependency
+   1 .diz
+   1 .dontIndex
+   1 .dotm
+   1 .dropbox
+   1 .dwg
+   1 .fl28245526
+   1 .fl62323D2F
+   1 .fl7E2E6430
+   1 .flA6A9AF81
+   1 .flF3763CF8
+   1 .flF6BFF16C
+   1 .flFA7DD9B9
+   1 .fonts
+   1 .fsck
+   1 .generation
+   1 .header
+   1 .hint
+   1 .hkz5RzI
+   1 .i9R2t7Q
+   1 .iBlynUW
+   1 .icn
+   1 .id
+   1 .immodules
+   1 .index
+   1 .ipspot
+   1 .keychain
+   1 .ko8IoOO
+   1 .lesshst
+   1 .loaders
+   1 .lock
+   1 .mf
+   1 .mkv
+   1 .mode1
+   1 .modules
+   1 .mpg
+   1 .mtl
+   1 .nVUKVLm
+   1 .new
+   1 .nfo
+   1 .numbers
+   1 .nxs
+   1 .obj
+   1 .olk14DBHeader
+   1 .olk14ExAccount
+   1 .olk14ExMoves
+   1 .olk14Note
+   1 .olk14Pref
+   1 .olk14Recent
+   1 .opts
+   1 .orig
+   1 .pak
+   1 .parentlock
+   1 .pbxproj
+   1 .pbxsymbols
+   1 .pixadex
+   1 .pro4
+   1 .pro4Template
+   1 .pto
+   1 .pub
+   1 .pxg
+   1 .pximagepresets
+   1 .q0wXc6
+   1 .qpLCKvQ
+   1 .registration
+   1 .rej
+   1 .rhtml
+   1 .rnd
+   1 .rpm
+   1 .rppv
+   1 .rsa
+   1 .s
+   1 .scale
+   1 .sf
+   1 .sidb
+   1 .sidv
+   1 .signed
+   1 .skp
+   1 .sql
+   1 .stat
+   1 .stats
+   1 .supported
+   1 .svg
+   1 .switchboard
+   1 .syncconflict
+   1 .tFMiGf7
+   1 .ticketstore
+   1 .time
+   1 .tmp2917
+   1 .tnga0GS
+   1 .url
+   1 .version
+   1 .wkGX2xe
+   1 .xbel
+   1 .xcf
+   1 .xmp
+   1 .xspf
+   1 .yc6dntT
+   1 .zDO0KCe
+   1 .zvOUj6h
+   2 .002
+   2 .003
+   2 .004
+   2 .005
+   2 .006
+   2 .007
+   2 .008
+   2 .CSV
+   2 .FolderHash
+   2 .FolderVersionInfo
+   2 .LSOverride
+   2 .aff
+   2 .aum
+   2 .bak
+   2 .clam
+   2 .cpl
+   2 .deb
+   2 .der
+   2 .dfont
+   2 .dic
+   2 .dict
+   2 .dir
+   2 .example
+   2 .favoriteMetadata
+   2 .fl89CB8354
+   2 .hmap
+   2 .i386
+   2 .iPhoto
+   2 .idx
+   2 .indd
+   2 .init
+   2 .iros
+   2 .isr
+   2 .itdb
+   2 .keys
+   2 .lockfile
+   2 .lwp
+   2 .mdb
+   2 .mfasl
+   2 .mod
+   2 .nls
+   2 .olk14Image
+   2 .olk14MailAccount
+   2 .olk14Signature
+   2 .qtch
+   2 .resume
+   2 .sav
+   2 .searchindexcache
+   2 .sig
+   2 .sk
+   2 .sqlitedb
+   2 .tgz
+   2 .xlt
+   3 .1
+   3 .apfolder
+   3 .cfg
+   3 .dot
+   3 .iso
+   3 .itc
+   3 .list
+   3 .mp3
+   3 .mp4
+   3 .mpp
+   3 .olk14Fold
+   3 .olk14UID
+   3 .pid
+   3 .pro4pl
+   3 .qfilter
+   3 .vcf
+   3 .yml
+   4 .GIF
+   4 .LGPL
+   4 .LinkFileList
+   4 .TIF
+   4 .abcds
+   4 .act
+   4 .archive
+   4 .bin
+   4 .dep
+   4 .ds
+   4 .enc
+   4 .ico
+   4 .lockN
+   4 .mode1v3
+   4 .o
+   4 .ocx
+   4 .old
+   4 .olk14Schedule
+   4 .patch
+   4 .pbxuser
+   4 .pem
+   4 .pl
+   4 .sdef
+   4 .sln
+   4 .sqlite3
+   4 .sys
+   4 .textexpander
+   4 .vcproj
+   4 .vsd
+   4 .webarchive
+   4 .xlsx
+   5 .abcdg
+   5 .apdb
+   5 .crash
+   5 .dylib
+   5 .freebsd7
+   5 .olk14MsgAttach
+   5 .ovpn
+   6 .abcdmr
+   6 .apalbum
+   6 .dia
+   6 .dmg
+   6 .gitignore
+   6 .ithmb
+   6 .olk14CalAttach
+   6 .openbsd42
+   6 .pages
+   6 .pln
+   6 .reg
+   6 .tlb
+   6 .vncloc
+   7 .changedb
+   7 .mov
+   7 .pxb
+   7 .rfa
+   7 .rsrc
+   8 .abcddb
+   8 .abcdi
+   8 .collection
+   8 .helpcfg
+   8 .heu
+   8 .htm
+   8 .info
+   8 .olk14Task
+   8 .pbxbtree
+   8 .pptx
+   8 .settings
+   8 .swz
+   8 .torrent
+   9 .p12
+   9 .pps
+  10 .acm
+  10 .cpp
+  10 .lst
+  10 .olk14Category
+  10 .olk14Search
+  10 .sqlite
+  10 .webhistory
+  11 .conf
+  11 .erb
+  11 .ggr
+  11 .psp
+  11 .xpt
+  12 .8
+  12 .pct
+  13 .growlTicket
+  13 .irs
+  13 .tiff
+  14 .PDF
+  14 .jar
+  14 .localized
+  14 .synciddb
+  15 .desktop
+  16 .gpl
+  16 .presets
+  16 .rdf
+  17 .data
+  17 .xul
+  18 .ini
+  19 .icns
+  19 .syncdb
+  20 .vxd
+  21 .ai
+  22 .docx
+  24 .PNG
+  24 .blend
+  24 .cache
+  24 .webbookmark
+  25 .olk14ExSyncMap
+  26 .gbr
+  27 .wmv
+  28 .eps
+  29 .tif
+  33 .bmp
+  34 .eml
+  34 .scpt
+  34 .vbr
+  34 .wflow
+  35 .psd
+  35 .rvt
+  37 .jsm
+  37 .wav
+  38 .h
+  38 .localstorage
+  38 .rtf
+  40 .c
+  40 .drv
+  41 .ppt
+  42 .rb
+  43 .rar
+  43 .sh
+  46 .dtd
+  47 .gz
+  47 .manifest
+  57 .so
+  60 .JPG
+  68 .css
+  72 .olk14Folder
+  76 .gih
+  79 .html
+  88 .db
+ 103 .nib
+ 105 .json
+ 105 .log
+ 112 .dat
+ 115 .gemspec
+ 116 .pxicon
+ 133 .doc
+ 140 .exe
+ 144 .zip
+ 160 .1password
+ 161 .olk14Contact
+ 161 .properties
+ 166 .xls
+ 183 .sol
+ 190 .pyc
+ 191 .ttf
+ 212 .def
+ 216 .ic
+ 225 .mxi
+ 232 .olk14Event
+ 297 .txt
+ 304 .js
+ 319 .jpeg
+ 331 .abcdp
+ 359 .strings
+ 375 .ics
+ 665 .gif
+ 676 .dll
+ 776 .py
+ 833 .pdf
+1119 .plist
+1466 .xml
+1621 .png
+1860 .emlxpart
+2709 .jpg
+5517 .olk14MsgSource
+5519 .olk14Message
+18689 .emlx
+
+```
+
+---
+

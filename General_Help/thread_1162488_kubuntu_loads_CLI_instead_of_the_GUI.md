@@ -1,0 +1,288 @@
+---
+title: "kubuntu loads CLI instead of the GUI"
+date: 2009-05-17
+forum: General Help
+---
+
+### Post by anonymous01 on 2009-05-17
+Everytime I open my kubuntu , command line interface is loaded instead of the graphical user interface. It did not happen before. How can I load back the GUI?
+
+---
+
+### Post by snowpine on 2009-05-17
+startx
+
+---
+
+### Post by anonymous01 on 2009-05-17
+here is the message when I input startx
+[ATTACH]114158[/ATTACH]
+
+here is my bash history
+```
+wine setup.exe
+winecfg
+sudo apt-get  wine
+sudo dpkg -i wine*
+sudo dpkg -i ~/wine*
+wine setup.exe
+sudo chown lester:lester "/media/linux/A/wine"
+wine setup.exe
+sudo apt-get upgrade
+wine setup.exe
+rm ~/.wine
+wine setup.exe
+man ln
+rm .wine
+rm ~/.wine
+rm -r ~/.wine
+ln -sf /media/linux/A/wine ~/.wine
+wine setup.exe
+sudo dpkg -i ~/wine*
+wine setup.exe
+ln -s /media/linux/A/wine ~/.wine
+rm ~/.wine
+rm -r ~/.wine
+ln -s /media/linux/A/wine ~/.wine
+wine setup.exe
+sudo chown lester:lester "/media/linux/A/wine"
+wine setup.exe
+sudo chown lester:lester /media/linux/A/.wine
+ln -sf /media/linux/A/.wine ~/.wine
+wine setup.exe
+ln -f /media/linux/A/.wine ~/.wine
+ln -sn /media/linux/A/.wine ~/.wine
+wine setup.exe
+ln -sn /media/linux/A/wine ~/.wine
+wine setup.exe
+winecfg
+cd /media/windows/C/Program Files/Free Download Manager
+cd "/media/windows/C/Program Files/Free Download Manager"
+wine fdm.exe
+sh ~/winetricks vcrun60
+sh ~/winetricks vcrun6
+wineserver -k
+cd "/media/windows/C/Documents and Settings/Administrator/My Documents/Software"
+wine fmd*
+wine fmdm
+wine fdm*
+wineserver -k
+cd ~/
+wine boost*
+wineserver -k
+sudo fc-cache -f -v
+wineserver -k
+sh ~/winetricks
+wineserver -k
+sudo dpkg-reconfigure fontconfig-config
+nvidia-glx
+sudo apt-get install nvidia-glx
+sudo apt-get install nvidia-glx96
+sudo apt-get install nvidia-glx-96
+nvidiaxconfig
+sudo nvidiaxconfig
+sudo nvidia-xconfig
+.kate /etc/X11/xorg.conf
+kate /etc/X11/xorg.conf
+sudo nvidia-xconfig
+sudo apt-get purge nvidia-glx-96 && sudo apt-get --purge autoremove
+sudo apt-get clean
+glxinfo | grep -i direct
+glx
+for i in *.flv; do ffmpeg -i "$i" ${i%flv}3gp"; done
+for i in *.flv; do ffmpeg -i "$i" "${i%flv}3gp"; done
+for i in *.flv; do ffmpeg -i "$i" "${i%flv}mp4"; done
+cd /tmp
+clear
+wine cmd
+localepurge
+cd ~/My*
+ffmpeg -i R* -ab 128kbps sample.m4a
+faac
+man faad
+man libfaac
+man ffmpeg
+ffmpeg -i R* -ab 128kbps -title Left sample.m4a
+ffmpeg -title Left -i R* -ab 128kbps  sample.m4a
+ffmpeg -album Left -i R* -ab 128kbps  sample.m4a
+ffmpeg -album Left -i R* -ab 128kbps  sample.mp3
+winecfg
+wine wm*
+cd ~
+wine wm*
+/media/linux/A/wine/drive_c/Program Files/WM Converter
+cd "/media/linux/A/wine/drive_c/Program Files/WM Converter"
+wine ffmpeg.exe
+wine mplayer.exe
+wine wmconverter.exe
+wine WMconverter.exe
+wine WM Converter.exe
+wine "WM Converter.exe"
+wine ffmpeg.exe
+wine mplayer.exe
+wine man mplayer.exe
+wine mplayer.exe man
+wine mplayer.exe "~/My Music/Anime"*
+wine mplayer.exe "C:\users\lester\My Music"\*
+wine mplayer.exe "C:\users\lester\My Music"\a.mp3
+wine mplayer.exe "C:\users\lester\My Music\a.mp3"
+wine uninstaller
+cd ~
+sh winetricks
+sudo apt-get install easytag
+easytag
+sudo apt-get purge easytag && sudo apt-get --purge autoremove
+sudo apt-get install kubuntu-restricted-extras
+man apt-get
+sudo aptitude kubuntu-restricted-extras
+sudo aptitude hold gsfonts-x11 java-common libfftw3-3 libofa0 libtunepimp5 libtunepimp5-mp3 odbcinst1debian1 sun-java6-bin sun-java6-jre
+sudo aptitude hold  ttf-mscorefonts-installer unixodbc
+sudo apt-get install kubuntu-restricted-extras
+sudo aptitude install kubuntu-restricted-extras
+sudo apt-get install libxine-main1
+sudo apt-get install libxine1
+sudo apt-get install libxine1-x
+vidia-config
+nvidia-config
+kate /etc/fonts/local.conf
+locale
+sudo dpkg-reconfigure locales
+kate /var/lib/locales/supported.d/local
+sudo apt-get install language-pack-en
+localepurge
+sudo localepurge
+locale
+man ifconfig
+sudo dpkg-reconfigure locales
+locale
+cat /etc/locale.gen
+cat /etc/locale
+/etc/default/locale
+kate /etc/default/locale
+'http://help.ubuntu.com
+http://help.ubuntu.com
+firefox http://help.ubuntu.com
+man ubuntu
+man kubuntu
+man man
+reboot
+sudo reboot
+/etc/default/locale
+sudo dpkg-reconfigure locales
+```
+
+---
+
+### Post by Sub101 on 2009-05-17
+Looks to me like you have removed your nvidia drivers.
+
+```
+sudo apt-get purge nvidia-glx-96 && sudo apt-get --purge autoremove
+```
+
+---
+
+### Post by anonymous01 on 2009-05-17
+If i will reinstall nvidia, will the gui come back?
+
+---
+
+### Post by Sub101 on 2009-05-17
+Id think so. 
+
+What I would do is boot to the recovery mode, by selecting the desired option at Grub, and then select the option to fix X.
+
+After this proceed with a normal boot.
+
+---
+
+### Post by anonymous01 on 2009-05-17
+I did boot to recovery and select fix x but it did not fix it. 
+Here is my /etc/X11/xorg.conf file
+```
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder57)  Sat Jan 24 20:04:42 PST 2009
+
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "Module"
+    Load           "dbe"
+    Load           "extmod"
+    Load           "type1"
+    Load           "freetype"
+    Load           "glx"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+    HorizSync       30.0 - 110.0
+    VertRefresh     50.0 - 150.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    SubSection     "Display"
+        Depth       24
+        Modes      "1600x1200" "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+
+```
+my monitor is hp 1502
+
+---
+
+### Post by Sub101 on 2009-05-18
+Try:
+
+```
+sudo apt-get install nvidia-glx-96
+```
+
+---
+
+### Post by anonymous01 on 2009-05-18
+I solve it! I just copy the /etc/X11/xorg.conf from the live cd to my computer
+
+---
+

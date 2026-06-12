@@ -1,0 +1,436 @@
+---
+title: "ffmpeg help"
+date: 2007-08-15
+forum: General Help
+---
+
+### Post by abuntu-handicapped on 2007-08-15
+I have just installed ffmpeg. how do i use it? I typed ffmpeg but i just get all of this and nothing else happens. Very sorry for the amount of data im showing you guys, but i really dont know how to get this ffmpeg going.
+[B]
+ffneil@neil-desktop:~$ ffmpeg
+FFmpeg version SVN-rUNKNOWN, Copyright (c) 2000-2004 Fabrice Bellard
+  configuration:  --enable-gpl --enable-pp --enable-pthreads --enable-vorbis --enable-libogg --enable-a52 --enable-dts --enable-libgsm --enable-dc1394 --disable-debug --enable-shared --prefix=/usr 
+  libavutil version: 0d.49.0.0
+  libavcodec version: 0d.51.11.0
+  libavformat version: 0d.50.5.0
+  built on Jan 28 2007 22:48:38, gcc: 4.1.2 20070106 (prerelease) (Ubuntu 4.1.1-21ubuntu7)
+usage: ffmpeg [[infile options] -i infile]... {[outfile options] outfile}...
+Hyper fast Audio and Video encoder
+
+Main options:
+-L                  show license
+-h                  show help
+-version            show version
+-formats            show available formats, codecs, protocols, ...
+-f fmt              force format
+-img img_fmt        force image format
+-i filename         input file name
+-y                  overwrite output files
+-t duration         set the recording time
+-fs limit_size      set the limit file size
+-ss time_off        set the start time offset
+-itsoffset time_off  set the input ts offset
+-title string       set the title
+-timestamp time     set the timestamp
+-author string      set the author
+-copyright string   set the copyright
+-comment string     set the comment
+-v verbose          control amount of logging
+-target type        specify target file type ("vcd", "svcd", "dvd", "dv", "dv50", "pal-vcd", "ntsc-svcd", ...)
+-dframes number     set the number of data frames to record
+-scodec codec       force subtitle codec ('copy' to copy stream)
+-newsubtitle        add a new subtitle stream to the current output stream
+-slang code         set the ISO 639 language code (3 letters) of the current subtitle stream
+
+Video options:
+-b bitrate          set video bitrate (in kbit/s)
+-vframes number     set the number of video frames to record
+-r rate             set frame rate (Hz value, fraction or abbreviation)
+-s size             set frame size (WxH or abbreviation)
+-aspect aspect      set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)
+-croptop size       set top crop band size (in pixels)
+-cropbottom size    set bottom crop band size (in pixels)
+-cropleft size      set left crop band size (in pixels)
+-cropright size     set right crop band size (in pixels)
+-padtop size        set top pad band size (in pixels)
+-padbottom size     set bottom pad band size (in pixels)
+-padleft size       set left pad band size (in pixels)
+-padright size      set right pad band size (in pixels)
+-padcolor color     set color of pad bands (Hex 000000 thru FFFFFF)
+-vn                 disable video
+-bt tolerance       set video bitrate tolerance (in kbit/s)
+-maxrate bitrate    set max video bitrate tolerance (in kbit/s)
+-minrate bitrate    set min video bitrate tolerance (in kbit/s)
+-bufsize size       set ratecontrol buffer size (in kByte)
+-vcodec codec       force video codec ('copy' to copy stream)
+-sameq              use same video quality as source (implies VBR)
+-pass n             select the pass number (1 or 2)
+-passlogfile file   select two pass log file name
+-newvideo           add a new video stream to the current output stream
+
+Advanced Video options:
+-pix_fmt format     set pixel format
+-g gop_size         set the group of picture size
+-intra              use only intra frames
+-vdt n              discard threshold
+-qscale q           use fixed video quantiser scale (VBR)
+-qmin q             min video quantiser scale (VBR)
+-qmax q             max video quantiser scale (VBR)
+-lmin lambda        min video lagrange factor (VBR)
+-lmax lambda        max video lagrange factor (VBR)
+-mblmin q           min macroblock quantiser scale (VBR)
+-mblmax q           max macroblock quantiser scale (VBR)
+-qdiff q            max difference between the quantiser scale (VBR)
+-qblur blur         video quantiser scale blur (VBR)
+-qsquish squish     how to keep quantiser between qmin and qmax (0 = clip, 1 = use differentiable function)
+-qcomp compression  video quantiser scale compression (VBR)
+-rc_init_cplx complexity  initial complexity for 1-pass encoding
+-b_qfactor factor   qp factor between p and b frames
+-i_qfactor factor   qp factor between p and i frames
+-b_qoffset offset   qp offset between p and b frames
+-i_qoffset offset   qp offset between p and i frames
+-ibias bias         intra quant bias
+-pbias bias         inter quant bias
+-rc_eq equation     set rate control equation
+-rc_override override  rate control override for specific intervals
+-me method          set motion estimation method
+-me_threshold       motion estimaton threshold
+-mb_threshold       macroblock threshold
+-bf frames          use 'frames' B frames
+-preme              pre motion estimation
+-bug param          workaround not auto detected encoder bugs
+-strict strictness  how strictly to follow the standards
+-deinterlace        deinterlace pictures
+-psnr               calculate PSNR of compressed frames
+-vstats             dump video coding statistics to file
+-vhook module       insert video processing module
+-intra_matrix matrix  specify intra matrix coeffs
+-inter_matrix matrix  specify inter matrix coeffs
+-top                top=1/bottom=0/auto=-1 field first
+-sc_threshold threshold  scene change threshold
+-me_range range     limit motion vectors range (1023 for DivX player)
+-dc precision       intra_dc_precision
+-mepc factor (1.0 = 256)  motion estimation bitrate penalty compensation
+-vtag fourcc/tag    force video tag/fourcc
+-skip_threshold threshold  frame skip threshold
+-skip_factor factor  frame skip factor
+-skip_exp exponent  frame skip exponent
+-genpts             generate pts
+-qphist             show QP histogram
+-vbsf bitstream filter  
+
+Audio options:
+-aframes number     set the number of audio frames to record
+-ab bitrate         set audio bitrate (in kbit/s)
+-aq quality         set audio quality (codec-specific)
+-ar rate            set audio sampling rate (in Hz)
+-ac channels        set number of audio channels
+-an                 disable audio
+-acodec codec       force audio codec ('copy' to copy stream)
+-vol volume         change audio volume (256=normal)
+-newaudio           add a new audio stream to the current output stream
+-alang code         set the ISO 639 language code (3 letters) of the current audio stream
+
+Advanced Audio options:
+-atag fourcc/tag    force audio tag/fourcc
+-absf bitstream filter  
+
+Subtitle options:
+-scodec codec       force subtitle codec ('copy' to copy stream)
+-newsubtitle        add a new subtitle stream to the current output stream
+-slang code         set the ISO 639 language code (3 letters) of the current subtitle stream
+
+Audio/Video grab options:
+-vd device          set video grab device
+-vc channel         set video grab channel (DV1394 only)
+-tvstd standard     set television standard (NTSC, PAL (SECAM))
+-ad device          set audio device
+-grab format        request grabbing using
+-gd device          set grab device
+
+Advanced options:
+-map file:stream[:syncfile:syncstream]  set input stream mapping
+-map_meta_data outfile:infile  set meta data information of outfile from infile
+-benchmark          add timings for benchmarking
+-dump               dump each input packet
+-hex                when dumping packets, also dump the payload
+-re                 read input at native frame rate
+-loop_input         loop (current only works with images)
+-loop_output        number of times to loop output in formats that support looping (0 loops forever)
+-threads count      thread count
+-vsync              video sync method
+-async              audio sync method
+-vglobal            video global header storage type
+-copyts             copy timestamps
+-shortest           finish encoding within shortest input
+-dts_delta_threshold   timestamp discontinuity delta threshold
+-ps size            set packet size in bits
+-error rate         error rate
+-muxrate rate       set mux rate
+-packetsize size    set packet size
+-muxdelay seconds   set the maximum demux-decode delay
+-muxpreload seconds  set the initial demux-decode delay
+AVCodecContext AVOptions:
+-bit_rate          <int>   E.VA.
+-bit_rate_tolerance <int>   E.V..
+-flags             <flags> EDVA.
+-mv4                       E.V.. use four motion vector by macroblock (mpeg4)
+-obmc                      E.V.. use overlapped block motion compensation (h263+)
+-qpel                      E.V.. use 1/4 pel motion compensation
+-loop                      E.V.. use loop filter
+-gmc                       E.V.. use gmc
+-mv0                       E.V.. always try a mb with mv=<0,0>
+-part                      E.V.. use data partitioning
+-gray                      EDV.. only decode/encode grayscale
+-psnr                      E.V.. error[?] variables will be set during encoding
+-naq                       E.V.. normalize adaptive quantization
+-ildct                     E.V.. use interlaced dct
+-low_delay                 .DV.. force low delay
+-alt                       E.V.. enable alternate scantable (mpeg2/mpeg4)
+-trell                     E.V.. use trellis quantization
+-bitexact                  EDVAS use only bitexact stuff (except (i)dct)
+-aic                       E.V.. h263 advanced intra coding / mpeg4 ac prediction
+-umv                       E.V.. use unlimited motion vectors
+-cbp                       E.V.. use rate distortion optimization for cbp
+-qprd                      E.V.. use rate distortion optimization for qp selection
+-aiv                       E.V.. h263 alternative inter vlc
+-slice                     E.V..
+-ilme                      E.V.. interlaced motion estimation
+-scan_offset               E.V.. will reserve space for svcd scan offset user data
+-cgop                      E.V.. closed gop
+-fast                      E.V.. allow non spec compliant speedup tricks
+-sgop                      E.V.. strictly enforce gop size
+-noout                     E.V.. skip bitstream encoding
+-local_header              E.V.. place global headers at every keyframe instead of in extradata
+-me_method         <int>   E.V..
+-gop_size          <int>   E.V..
+-cutoff            <int>   E..A. set cutoff bandwidth
+-frame_size        <int>   E..A.
+-qcompress         <float> E.V..
+-qblur             <float> E.V..
+-qmin              <int>   E.V..
+-qmax              <int>   E.V..
+-max_qdiff         <int>   E.V..
+-max_b_frames      <int>   E.V..
+-b_quant_factor    <float> E.V..
+-rc_strategy       <int>   E.V..
+-b_strategy        <int>   E.V..
+-hurry_up          <int>   .DV..
+-bugs              <int>   .DV..
+-autodetect                .DV..
+-old_msmpeg4               .DV..
+-xvid_ilace                .DV..
+-ump4                      .DV..
+-no_padding                .DV..
+-amv                       .DV..
+-ac_vlc                    .DV..
+-qpel_chroma               .DV..
+-std_qpel                  .DV..
+-qpel_chroma2              .DV..
+-direct_blocksize          .DV..
+-edge                      .DV..
+-hpel_chroma               .DV..
+-dc_clip                   .DV..
+-ms                        .DV..
+-lelim             <int>   E.V.. single coefficient elimination threshold for luminance (negative values also consider dc coefficient)
+-celim             <int>   E.V.. single coefficient elimination threshold for chrominance (negative values also consider dc coefficient)
+-strict            <int>   E.V..
+-very                      E.V..
+-strict                    E.V..
+-normal                    E.V..
+-inofficial                E.V..
+-experimental              E.V..
+-b_quant_offset    <float> E.V..
+-er                <int>   .DV..
+-careful                   .DV..
+-compliant                 .DV..
+-aggressive                .DV..
+-very_aggressive           .DV..
+-mpeg_quant        <int>   E.V..
+-rc_qsquish        <float> E.V..
+-rc_qmod_amp       <float> E.V..
+-rc_qmod_freq      <int>   E.V..
+-rc_eq             <string> E.V..
+-rc_max_rate       <int>   E.V..
+-rc_min_rate       <int>   E.V..
+-rc_buffer_size    <int>   E.V..
+-rc_buf_aggressivity <float> E.V..
+-i_quant_factor    <float> E.V..
+-i_quant_offset    <float> E.V..
+-rc_initial_cplx   <float> E.V..
+-dct               <int>   E.V..
+-auto                      E.V..
+-fastint                   E.V..
+-int                       E.V..
+-mmx                       E.V..
+-mlib                      E.V..
+-altivec                   E.V..
+-faan                      E.V..
+-lumi_mask         <float> E.V.. lumimasking
+-tcplx_mask        <float> E.V.. temporal complexity masking
+-scplx_mask        <float> E.V.. spatial complexity masking
+-p_mask            <float> E.V.. inter masking
+-dark_mask         <float> E.V.. darkness masking
+-idct              <int>   EDV..
+-auto                      EDV..
+-int                       EDV..
+-simple                    EDV..
+-simplemmx                 EDV..
+-libmpeg2mmx               EDV..
+-ps2                       EDV..
+-mlib                      EDV..
+-arm                       EDV..
+-altivec                   EDV..
+-sh4                       EDV..
+-simplearm                 EDV..
+-h264                      EDV..
+-vp3                       EDV..
+-ipp                       EDV..
+-xvidmmx                   EDV..
+-ec                <flags> .DV..
+-guess_mvs                 .DV..
+-deblock                   .DV..
+-pred              <int>   E.V.. prediction method
+-left                      E.V..
+-plane                     E.V..
+-median                    E.V..
+-aspect            <rational> E.V..
+-debug             <flags> EDVAS print specific debug info
+-pict                      .DV..
+-rc                        E.V..
+-bitstream                 .DV..
+-mb_type                   .DV..
+-qp                        .DV..
+-mv                        .DV..
+-dct_coeff                 .DV..
+-skip                      .DV..
+-startcode                 .DV..
+-pts                       .DV..
+-er                        .DV..
+-mmco                      .DV..
+-bugs                      .DV..
+-vis_qp                    .DV..
+-vis_mb_type               .DV..
+-vismv             <int>   .DV.. visualize motion vectors
+-pf                        .DV..
+-bf                        .DV..
+-bb                        .DV..
+-mb_qmin           <int>   E.V..
+-mb_qmax           <int>   E.V..
+-cmp               <int>   E.V.. full pel me compare function
+-subcmp            <int>   E.V.. sub pel me compare function
+-mbcmp             <int>   E.V.. macroblock compare function
+-ildctcmp          <int>   E.V.. interlaced dct compare function
+-dia_size          <int>   E.V..
+-last_pred         <int>   E.V..
+-preme             <int>   E.V..
+-precmp            <int>   E.V.. pre motion estimation compare function
+-sad                       E.V..
+-sse                       E.V..
+-satd                      E.V..
+-dct                       E.V..
+-psnr                      E.V..
+-bit                       E.V..
+-rd                        E.V..
+-zero                      E.V..
+-vsad                      E.V..
+-vsse                      E.V..
+-nsse                      E.V..
+-w53                       E.V..
+-w97                       E.V..
+-dctmax                    E.V..
+-chroma                    E.V..
+-pre_dia_size      <int>   E.V..
+-subq              <int>   E.V.. sub pel motion estimation quality
+-me_range          <int>   E.V..
+-ibias             <int>   E.V..
+-pbias             <int>   E.V..
+-coder             <int>   E.V..
+-vlc                       E.V.. variable length coder / huffman coder
+-ac                        E.V.. arithmetic coder
+-context           <int>   E.V.. context model
+-mbd               <int>   E.V..
+-simple                    E.V..
+-bits                      E.V..
+-rd                        E.V..
+-sc_threshold      <int>   E.V..
+-lmin              <int>   E.V.. min lagrange factor
+-lmax              <int>   E.V.. max lagrange factor
+-nr                <int>   E.V.. noise reduction
+-rc_init_occupancy <int>   E.V..
+-inter_threshold   <int>   E.V..
+-flags2            <flags> EDVA.
+-antialias         <int>   .DV..
+-auto                      .DV..
+-fastint                   .DV..
+-int                       .DV..
+-float                     .DV..
+-qns               <int>   E.V.. quantizer noise shaping
+-thread_count      <int>   EDV..
+-dc                <int>   E.V..
+-nssew             <int>   E.V.. nsse weight
+-skip_top          <int>   .DV..
+-skip_bottom       <int>   .DV..
+-profile           <int>   E.VA.
+-unknown                   E.VA.
+-level             <int>   E.VA.
+-unknown                   E.VA.
+-lowres            <int>   .DV..
+-frame_skip_threshold <int>   E.V..
+-frame_skip_factor <int>   E.V..
+-frame_skip_exp    <int>   E.V..
+-skipcmp           <int>   E.V.. frame skip compare function
+-border_mask       <float> E.V..
+-mb_lmin           <int>   E.V..
+-mb_lmax           <int>   E.V..
+-me_penalty_compensation <int>   E.V..
+-bidir_refine      <int>   E.V..
+-brd_scale         <int>   E.V..
+-crf               <int>   E.V..
+-cqp               <int>   E.V..
+-keyint_min        <int>   E.V..
+-refs              <int>   E.V..
+-chromaoffset      <int>   E.V..
+-bframebias        <int>   E.V..
+-trellis           <int>   E.VA.
+-directpred        <int>   E.V..
+-bpyramid                  E.V..
+-wpred                     E.V..
+-mixed_refs                E.V..
+-8x8dct                    E.V..
+-fastpskip                 E.V..
+-aud                       E.V..
+-brdo                      E.V..
+-complexityblur    <float> E.V..
+-deblockalpha      <int>   E.V..
+-deblockbeta       <int>   E.V..
+-partitions        <flags> E.V..
+-parti4x4                  E.V..
+-parti8x8                  E.V..
+-partp4x4                  E.V..
+-partp8x8                  E.V..
+-partb8x8                  E.V..
+-sc_factor         <int>   E.V..
+-mv0_threshold     <int>   E.V..
+-ivlc                      E.V.. intra vlc table
+-b_sensitivity     <int>   E.V..
+-compression_level <int>   E.VA.
+-use_lpc           <int>   E..A.
+-lpc_coeff_precision <int>   E..A.
+-min_prediction_order <int>   E..A.
+-max_prediction_order <int>   E..A.
+-prediction_order_method <int>   E..A.
+-min_partition_order <int>   E..A.
+-max_partition_order <int>   E..A.
+neil@neil-desktop:~$ A[/B]
+
+Has anyone used this program? Would appreciate some help.
+
+---
+
+### Post by heimo on 2007-08-15
+Maybe this helps to get you started with ffmpeg?
+[http://www.linuxjournal.com/article/8517](http://www.linuxjournal.com/article/8517)
+
+---
+

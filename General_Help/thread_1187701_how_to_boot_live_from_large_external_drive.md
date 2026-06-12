@@ -1,0 +1,752 @@
+---
+title: "how to boot live from large external drive?"
+date: 2009-06-14
+forum: General Help
+---
+
+### Post by wgato on 2009-06-14
+I have an a laptop I'd like to boot with a ubuntu live cd.  But the computer doesnt have a cd drive and I dont have an external one.  I have a 500G external hard drive that I use with my windows computer to store media files and the like.  I'm downloading the ubuntu iso onto this drive now.  
+But how do I boot from that?  I have booted the laptop with another OS that I have on a small thumb drive before, so I know how to do that (F12 and then choose the drive to boot from).  But the thumb drive didnt have anything on it but the OS.  How can I get the laptop to find and boot ubuntu from the 500G drive?
+
+---
+
+### Post by loomsen on 2009-06-14
+Hello.
+
+I've written a small howto with the basic steps for F11
+
+[http://forums.fedoraforum.org/showthread.php?p=1223575#post1223575](http://forums.fedoraforum.org/showthread.php?p=1223575#post1223575)
+
+there.
+
+Or you may mount your live cd iso using -o loop and then copy its content to your external harddrive (don't forget to set the bootable flag)
+
+mount -o loop /path/to/iso
+
+And then copy it's content to your external drive.
+
+Fedora provides a script to install live cds to a usb disk and make it bootable:
+
+```
+
+#!/bin/bash
+# Convert a live CD iso so that it's bootable off of a USB stick
+# Copyright 2007  Red Hat, Inc.
+# Jeremy Katz <katzj@redhat.com>
+#
+# overlay/persistence enhancements by Douglas McClendon <dmc@viros.org>
+# GPT+MBR hybrid enhancements by Stewart Adam <s.adam@diffingo.com>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+
+export PATH=/sbin:/usr/sbin:$PATH
+
+usage() {
+    echo "$0 [--format] [--reset-mbr] [--noverify] [--overlay-size-mb <size>] [--home-size-mb <size>] [--unencrypted-home] [--skipcopy] <isopath> <usbstick device>"
+    exit 1
+}
+
+cleanup() {
+    [ -d "$CDMNT" ] && umount $CDMNT && rmdir $CDMNT
+    [ -d "$USBMNT" ] && umount $USBMNT && rmdir $USBMNT
+}
+
+exitclean() {
+    echo "Cleaning up to exit..."
+    cleanup
+    exit 1
+}
+
+getdisk() {
+    DEV=$1
+
+    if [[ "$DEV" =~ "/dev/loop*" ]]; then
+       device="$DEV"
+       return
+    fi
+
+    p=$(udevadm info -q path -n $DEV)
+    if [ -e /sys/$p/device ]; then
+	device=$(basename /sys/$p)
+    else
+	device=$(basename $(readlink -f /sys/$p/../))
+    fi
+    if [ ! -e /sys/block/$device -o ! -e /dev/$device ]; then
+	echo "Error finding block device of $DEV.  Aborting!"
+	exitclean
+    fi
+
+    device="/dev/$device"
+    # FIXME: weird dev names could mess this up I guess
+    p=/dev/`basename $p`
+    partnum=${p##$device}
+}
+
+resetMBR() {
+    if [[ "$DEV" =~ "/dev/loop*" ]]; then
+       return
+    fi
+    getdisk $1
+    # if efi, we need to use the hybrid MBR
+    if [ -n "$efi" ];then
+      if [ -f /usr/lib/syslinux/gptmbr.bin ]; then
+        gptmbr='/usr/lib/syslinux/gptmbr.bin'
+      elif [ -f /usr/share/syslinux/gptmbr.bin ]; then
+        gptmbr='/usr/share/syslinux/gptmbr.bin'
+      else
+        echo "Could not find gptmbr.bin (syslinux)"
+        exitclean
+      fi
+      # our magic number is LBA-2, offset 16 - (512+512+16)/$bs
+      dd if=$device bs=16 skip=65 count=1 | cat $gptmbr - > $device
+    else
+      if [ -f /usr/lib/syslinux/mbr.bin ]; then
+        cat /usr/lib/syslinux/mbr.bin > $device
+      elif [ -f /usr/share/syslinux/mbr.bin ]; then
+        cat /usr/share/syslinux/mbr.bin > $device
+      else
+        echo "Could not find mbr.bin (syslinux)"
+        exitclean
+      fi
+    fi
+}
+
+checkMBR() {
+    getdisk $1
+
+    bs=$(mktemp /tmp/bs.XXXXXX)
+    dd if=$device of=$bs bs=512 count=1 2>/dev/null || exit 2
+    
+    mbrword=$(hexdump -n 2 $bs |head -n 1|awk {'print $2;'})
+    rm -f $bs
+    if [ "$mbrword" = "0000" ]; then
+	echo "MBR appears to be blank."
+	echo "Do you want to replace the MBR on this device?"
+	echo "Press Enter to continue or ctrl-c to abort"
+	read
+	resetMBR $1
+    fi
+
+    return 0
+}
+
+checkPartActive() {
+    dev=$1
+    getdisk $dev
+    
+    # if we're installing to whole-disk and not a partition, then we 
+    # don't need to worry about being active
+    if [ "$dev" = "$device" ]; then
+	return
+    fi
+    if [[ "$dev" =~ "/dev/loop*" ]]; then
+        return
+    fi
+
+    if [ "$(/sbin/fdisk -l $device 2>/dev/null |grep $dev |awk {'print $2;'})" != "*" ]; then
+	echo "Partition isn't marked bootable!"
+	echo "You can mark the partition as bootable with "
+        echo "    # /sbin/parted $device"
+	echo "    (parted) toggle N boot"
+	echo "    (parted) quit"
+	exitclean
+    fi
+}
+
+createGPTLayout() {
+    dev=$1
+    getdisk $dev
+
+    echo "WARNING: THIS WILL DESTROY ANY DATA ON $device!!!"
+    echo "Press Enter to continue or ctrl-c to abort"
+    read
+    umount ${device}? &> /dev/null
+    /sbin/parted --script $device mklabel gpt
+    partinfo=$(/sbin/parted --script -m $device "unit b print" |grep ^$device:)
+    size=$(echo $partinfo |cut -d : -f 2 |sed -e 's/B$//')
+    /sbin/parted --script $device unit b mkpart '"EFI System Partition"' fat32 17408 $(($size - 17408)) set 1 boot on
+    USBDEV=${device}1
+    # Sometimes automount can be _really_ annoying.
+    echo "Waiting for devices to settle..."
+    /sbin/udevadm settle
+    sleep 5
+    umount $USBDEV &> /dev/null
+    /sbin/mkdosfs -n LIVE $USBDEV
+    USBLABEL="UUID=$(/lib/udev/vol_id -u $USBDEV)"
+}
+
+createMSDOSLayout() {
+    dev=$1
+    getdisk $dev
+
+    echo "WARNING: THIS WILL DESTROY ANY DATA ON $device!!!"
+    echo "Press Enter to continue or ctrl-c to abort"
+    read
+    umount ${device}? &> /dev/null
+    /sbin/parted --script $device mklabel msdos
+    partinfo=$(/sbin/parted --script -m $device "unit b print" |grep ^$device:)
+    size=$(echo $partinfo |cut -d : -f 2 |sed -e 's/B$//')
+    /sbin/parted --script $device unit b mkpart primary fat32 17408 $(($size - 17408)) set 1 boot on
+    USBDEV=${device}1
+    # Sometimes automount can be _really_ annoying.
+    echo "Waiting for devices to settle..."
+    /sbin/udevadm settle
+    sleep 5
+    umount $USBDEV &> /dev/null
+    /sbin/mkdosfs -n LIVE $USBDEV
+    USBLABEL="UUID=$(/lib/udev/vol_id -u $USBDEV)"
+}
+
+checkGPT() {
+    dev=$1
+    getdisk $dev
+
+    if [ "$(/sbin/fdisk -l $device 2>/dev/null |grep -c GPT)" -eq "0" ]; then
+       echo "EFI boot requires a GPT partition table."
+       echo "This can be done manually or you can run with --format"
+       exitclean
+    fi
+
+    partinfo=$(/sbin/parted --script -m $device "print" |grep ^$partnum:)
+    volname=$(echo $partinfo |cut -d : -f 6)
+    flags=$(echo $partinfo |cut -d : -f 7)
+    if [ "$volname" != "EFI System Partition" ]; then
+	echo "Partition name must be 'EFI System Partition'"
+	echo "This can be set in parted or you can run with --reset-mbr"
+	exitclean
+    fi
+    if [ "$(echo $flags |grep -c boot)" = "0" ]; then
+	echo "Partition isn't marked bootable!"
+	echo "You can mark the partition as bootable with "
+        echo "    # /sbin/parted $device"
+	echo "    (parted) toggle N boot"
+	echo "    (parted) quit"
+	exitclean
+    fi
+}
+
+checkFilesystem() {
+    dev=$1
+
+    USBFS=$(/lib/udev/vol_id -t $dev)
+    if [ "$USBFS" != "vfat" -a "$USBFS" != "msdos" -a "$USBFS" != "ext2" -a "$USBFS" != "ext3" ]; then
+	echo "USB filesystem must be vfat or ext[23]"
+	exitclean
+    fi
+
+    USBLABEL=$(/lib/udev/vol_id -u $dev)
+    if [ -n "$USBLABEL" ]; then 
+	USBLABEL="UUID=$USBLABEL" ; 
+    else
+	USBLABEL=$(/lib/udev/vol_id -l $dev)
+	if [ -n "$USBLABEL" ]; then 
+	    USBLABEL="LABEL=$USBLABEL" 
+	else
+	    echo "Need to have a filesystem label or UUID for your USB device"
+	    if [ "$USBFS" = "vfat" -o "$USBFS" = "msdos" ]; then
+		echo "Label can be set with /sbin/dosfslabel"
+	    elif [ "$USBFS" = "ext2" -o "$USBFS" = "ext3" ]; then
+		echo "Label can be set with /sbin/e2label"
+	    fi
+	    exitclean
+	fi
+    fi
+
+    if [ "$USBFS" = "vfat" -o "$USBFS" = "msdos" ]; then
+	mountopts="-o shortname=winnt,umask=0077"
+    fi
+}
+
+checkSyslinuxVersion() {
+    if [ ! -x /usr/bin/syslinux ]; then
+	echo "You need to have syslinux installed to run this script"
+	exit 1
+    fi
+    if ! syslinux 2>&1 | grep -qe -d; then
+	SYSLINUXPATH=""
+    elif [ -n "$multi" ]; then
+	SYSLINUXPATH="$LIVEOS/syslinux"
+    else
+	SYSLINUXPATH="syslinux"
+    fi
+}
+
+checkMounted() {
+    dev=$1
+    if grep -q "^$dev " /proc/mounts ; then
+      echo "$dev is mounted, please unmount for safety"
+      exitclean
+    fi
+    if grep -q "^$dev " /proc/swaps; then
+      echo "$dev is in use as a swap device, please disable swap"
+      exitclean
+    fi
+}
+
+checkint() {
+    if ! test $1 -gt 0 2>/dev/null ; then
+	usage
+    fi
+}
+
+if [ $(id -u) != 0 ]; then 
+    echo "You need to be root to run this script"
+    exit 1
+fi
+
+cryptedhome=1
+keephome=1
+homesizemb=0
+swapsizemb=0
+overlaysizemb=0
+LIVEOS=LiveOS
+
+HOMEFILE="home.img"
+while [ $# -gt 2 ]; do
+    case $1 in
+	--overlay-size-mb)
+	    checkint $2
+	    overlaysizemb=$2
+	    shift
+	    ;;
+	--home-size-mb)
+	    checkint $2
+            homesizemb=$2
+            shift
+	    ;;
+	--swap-size-mb)
+	    checkint $2
+	    swapsizemb=$2
+	    shift
+	    ;;
+        --crypted-home)
+            cryptedhome=1
+	    ;;
+        --unencrypted-home)
+            cryptedhome=""
+            ;;
+        --delete-home)
+            keephome=""
+            ;;
+	--noverify)
+	    noverify=1
+	    ;;
+	--reset-mbr|--resetmbr)
+	    resetmbr=1
+	    ;;
+	--efi|--mactel)
+	    efi=1
+	    ;;
+	--format)
+	    format=1
+	    ;;
+	--skipcopy)
+	    skipcopy=1
+	    ;;
+	--xo)
+	    xo=1
+	    skipcompress=1
+	    ;;
+	--xo-no-home)
+	    xonohome=1
+	    ;;
+	--compress)
+	    skipcompress=""
+	    ;;
+	--skipcompress)
+	    skipcompress=1
+	    ;;
+        --extra-kernel-args)
+            kernelargs=$2
+            shift
+            ;;
+        --force)
+            force=1
+            ;;
+	--livedir)
+	    LIVEOS=$2
+	    shift
+	    ;;
+	--multi)
+	    multi=1
+	    ;;
+	*)
+	    echo "invalid arg -- $1"
+	    usage
+	    ;;
+    esac
+    shift
+done
+
+ISO=$(readlink -f "$1")
+USBDEV=$(readlink -f "$2")
+
+if [ -z "$ISO" ]; then
+    usage
+fi
+
+if [ ! -b "$ISO" -a ! -f "$ISO" ]; then
+    usage
+fi
+
+# FIXME: If --format is given, we shouldn't care and just use /dev/foo1
+if [ -z "$USBDEV" -o ! -b "$USBDEV" ]; then
+    usage
+fi
+
+if [ -z "$noverify" ]; then
+    # verify the image
+    echo "Verifying image..."
+    checkisomd5 --verbose "$ISO"
+    if [ $? -ne 0 ]; then
+	echo "Are you SURE you want to continue?"
+	echo "Press Enter to continue or ctrl-c to abort"
+	read
+    fi
+fi
+
+# do some basic sanity checks.  
+checkMounted $USBDEV
+if [ -n "$format" ];then
+  # checks for a valid filesystem
+  if [ -n "$efi" ];then
+    createGPTLayout $USBDEV
+  else
+    createMSDOSLayout $USBDEV
+  fi
+fi
+checkFilesystem $USBDEV
+if [ -n "$efi" ]; then
+  checkGPT $USBDEV
+fi
+checkSyslinuxVersion
+# Because we can't set boot flag for EFI Protective on msdos partition tables
+[ -z "$efi" ] && checkPartActive $USBDEV
+[ -n "$resetmbr" ] && resetMBR $USBDEV
+checkMBR $USBDEV
+
+
+if [ "$overlaysizemb" -gt 0 -a "$USBFS" = "vfat" ]; then
+  if [ "$overlaysizemb" -gt 2047 ]; then
+    echo "Can't have an overlay of 2048MB or greater on VFAT"
+    exitclean
+  fi
+fi
+
+if [ "$homesizemb" -gt 0 -a "$USBFS" = "vfat" ]; then
+  if [ "$homesizemb" -gt 2047 ]; then
+    echo "Can't have a home overlay greater than 2048MB on VFAT"
+    exitclean
+  fi
+fi
+
+if [ "$swapsizemb" -gt 0 -a "$USBFS" = "vfat" ]; then
+  if [ "$swapsizemb" -gt 2047 ]; then
+    echo "Can't have a swap file greater than 2048MB on VFAT"
+    exitclean
+  fi
+fi
+
+# FIXME: would be better if we had better mountpoints
+CDMNT=$(mktemp -d /media/cdtmp.XXXXXX)
+mount -o loop,ro "$ISO" $CDMNT || exitclean
+USBMNT=$(mktemp -d /media/usbdev.XXXXXX)
+mount $mountopts $USBDEV $USBMNT || exitclean
+
+trap exitclean SIGINT SIGTERM
+
+if [ -f "$USBMNT/$LIVEOS/$HOMEFILE" -a -n "$keephome" -a "$homesizemb" -gt 0 ]; then
+  echo "ERROR: Requested keeping existing /home and specified a size for /home"
+  echo "Please either don't specify a size or specify --delete-home"
+  exitclean
+fi
+
+if [ -n "$efi" -a ! -d $CDMNT/EFI/boot ]; then
+  echo "ERROR: This live image does not support EFI booting"
+  exitclean
+fi
+
+# let's try to make sure there's enough room on the stick
+if [ -d $CDMNT/LiveOS ]; then
+  check=$CDMNT/LiveOS
+else
+  check=$CDMNT
+fi
+if [ -d $USBMNT/$LIVEOS ]; then
+  tbd=$(du -s -B 1M $USBMNT/$LIVEOS | awk {'print $1;'})
+  [ -f $USBMNT/$LIVEOS/$HOMEFILE ] && homesz=$(du -s -B 1M $USBMNT/$LIVEOS/$HOMEFILE | awk {'print $1;'})
+  [ -n "$homesz" -a -n "$keephome" ] && tbd=$(($tbd - $homesz))
+else
+  tbd=0
+fi
+livesize=$(du -s -B 1M $check | awk {'print $1;'})
+if [ -n "$skipcompress" ]; then
+    if [ -e $CDMNT/LiveOS/squashfs.img ]; then
+	if mount -o loop $CDMNT/LiveOS/squashfs.img $CDMNT; then
+	    livesize=$(du -s -B 1M $CDMNT/LiveOS/ext3fs.img | awk {'print $1;'})
+	    umount $CDMNT
+	else
+	    echo "WARNING: --skipcompress or --xo was specified but the currently"
+	    echo "running kernel can not mount the squashfs from the ISO file to extract"
+	    echo "it. The compressed squashfs will be copied to the USB stick."
+	    skipcompress=""
+	fi
+    fi
+fi
+free=$(df  -B1M $USBDEV  |tail -n 1 |awk {'print $4;'})
+
+if [ $(($overlaysizemb + $homesizemb + $livesize + $swapsizemb)) -gt $(($free + $tbd)) ]; then
+  echo "Unable to fit live image + overlay on available space on USB stick"
+  echo "Size of live image: $livesize"
+  [ "$overlaysizemb" -gt 0 ] && echo "Overlay size: $overlaysizemb"
+  [ "$homesizemb" -gt 0 ] && echo "Home overlay size: $homesizemb"
+  [ "$swapsizemb" -gt 0 ] && echo "Home overlay size: $swapsizemb"
+  echo "Available space: $(($free + $tbd))"
+  exitclean
+fi
+
+if [ -z "$skipcopy" ];then
+  if [ -d $USBMNT/$LIVEOS -a -z "$force" ]; then
+      echo "Already set up as live image."  
+      if [ -z "$keephome" -a -e $USBMNT/$LIVEOS/$HOMEFILE ]; then
+        echo "WARNING: Persistent /home will be deleted!!!"
+        echo "Press Enter to continue or ctrl-c to abort"
+        read
+      else
+        echo "Deleting old OS in fifteen seconds..."
+        sleep 15
+
+        [ -e "$USBMNT/$LIVEOS/$HOMEFILE" -a -n "$keephome" ] && mv $USBMNT/$LIVEOS/$HOMEFILE $USBMNT/$HOMEFILE
+      fi
+
+      rm -rf $USBMNT/$LIVEOS
+  fi
+fi
+
+# Bootloader is always reconfigured, so keep these out of the if skipcopy stuff.
+[ ! -d $USBMNT/$SYSLINUXPATH ] && mkdir -p $USBMNT/$SYSLINUXPATH
+[ -n "$efi" -a ! -d $USBMNT/EFI/boot ] && mkdir -p $USBMNT/EFI/boot
+
+if [ -z "$skipcopy" ];then
+  echo "Copying live image to USB stick"
+  [ ! -d $USBMNT/$LIVEOS ] && mkdir $USBMNT/$LIVEOS
+  [ -n "$keephome" -a -f "$USBMNT/$HOMEFILE" ] && mv $USBMNT/$HOMEFILE $USBMNT/$LIVEOS/$HOMEFILE
+  if [ -n "$skipcompress" -a -f $CDMNT/LiveOS/squashfs.img ]; then
+      mount -o loop $CDMNT/LiveOS/squashfs.img $CDMNT || exitclean
+      cp $CDMNT/LiveOS/ext3fs.img $USBMNT/$LIVEOS/ext3fs.img || (umount $CDMNT ; exitclean)
+      umount $CDMNT
+  elif [ -f $CDMNT/LiveOS/squashfs.img ]; then
+      cp $CDMNT/LiveOS/squashfs.img $USBMNT/$LIVEOS/squashfs.img || exitclean
+  elif [ -f $CDMNT/LiveOS/ext3fs.img ]; then
+      cp $CDMNT/LiveOS/ext3fs.img $USBMNT/$LIVEOS/ext3fs.img || exitclean
+  fi
+  if [ -f $CDMNT/LiveOS/osmin.img ]; then
+      cp $CDMNT/LiveOS/osmin.img $USBMNT/$LIVEOS/osmin.img || exitclean
+  fi
+fi
+
+cp $CDMNT/isolinux/* $USBMNT/$SYSLINUXPATH
+BOOTCONFIG=$USBMNT/$SYSLINUXPATH/isolinux.cfg
+# Set this to nothing so sed doesn't care
+BOOTCONFIG_EFI=
+if [ -n "$efi" ];then
+  cp $CDMNT/EFI/boot/* $USBMNT/EFI/boot
+
+  # this is a little ugly, but it gets the "interesting" named config file
+  BOOTCONFIG_EFI=$USBMNT/EFI/boot/boot?*.conf
+  rm -f $USBMNT/EFI/boot/grub.conf
+fi
+
+echo "Updating boot config file"
+# adjust label and fstype
+sed -i -e "s/CDLABEL=[^ ]*/$USBLABEL/" -e "s/rootfstype=[^ ]*/rootfstype=$USBFS/" $BOOTCONFIG  $BOOTCONFIG_EFI
+if [ -n "$kernelargs" ]; then sed -i -e "s/liveimg/liveimg ${kernelargs}/" $BOOTCONFIG $BOOTCONFIG_EFI ; fi
+if [ "$LIVEOS" != "LiveOS" ]; then sed -i -e "s;liveimg;liveimg live_dir=$LIVEOS;" $BOOTCONFIG $BOOTCONFIG_EFI ; fi
+
+if [ "$overlaysizemb" -gt 0 ]; then
+    echo "Initializing persistent overlay file"
+    OVERFILE="overlay-$( /lib/udev/vol_id -l $USBDEV )-$( /lib/udev/vol_id -u $USBDEV )"
+    if [ "$USBFS" = "vfat" ]; then
+	# vfat can't handle sparse files
+	dd if=/dev/zero of=$USBMNT/$LIVEOS/$OVERFILE count=$overlaysizemb bs=1M
+    else
+	dd if=/dev/null of=$USBMNT/$LIVEOS/$OVERFILE count=1 bs=1M seek=$overlaysizemb
+    fi
+    sed -i -e "s/liveimg/liveimg overlay=${USBLABEL}/" $BOOTCONFIG $BOOTCONFIG_EFI
+    sed -i -e "s/\ ro\ /\ rw\ /" $BOOTCONFIG  $BOOTCONFIG_EFI
+fi
+
+if [ "$swapsizemb" -gt 0 ]; then
+    echo "Initializing swap file"
+    dd if=/dev/zero of=$USBMNT/$LIVEOS/swap.img count=$swapsizemb bs=1M
+    mkswap -f $USBMNT/$LIVEOS/swap.img
+fi
+
+if [ "$homesizemb" -gt 0 ]; then
+    echo "Initializing persistent /home"
+    homesource=/dev/zero
+    [ -n "$cryptedhome" ] && homesource=/dev/urandom
+    if [ "$USBFS" = "vfat" ]; then
+	# vfat can't handle sparse files
+	dd if=${homesource} of=$USBMNT/$LIVEOS/$HOMEFILE count=$homesizemb bs=1M
+    else
+	dd if=/dev/null of=$USBMNT/$LIVEOS/$HOMEFILE count=1 bs=1M seek=$homesizemb
+    fi
+    if [ -n "$cryptedhome" ]; then
+	loop=$(losetup -f)
+	losetup $loop $USBMNT/$LIVEOS/$HOMEFILE
+	setupworked=1
+	until [ ${setupworked} == 0 ]; do
+            echo "Encrypting persistent /home"
+            cryptsetup luksFormat -y -q $loop
+	    setupworked=$?
+	done
+	setupworked=1
+	until [ ${setupworked} == 0 ]; do
+            echo "Please enter the password again to unlock the device"
+            cryptsetup luksOpen $loop EncHomeFoo
+	    setupworked=$?
+	done
+        mke2fs -j /dev/mapper/EncHomeFoo
+	tune2fs -c0 -i0 -ouser_xattr,acl /dev/mapper/EncHomeFoo
+        cryptsetup luksClose EncHomeFoo
+        losetup -d $loop
+    else
+        echo "Formatting unencrypted /home"
+	mke2fs -F -j $USBMNT/$LIVEOS/$HOMEFILE
+	tune2fs -c0 -i0 -ouser_xattr,acl $USBMNT/$LIVEOS/$HOMEFILE
+    fi
+fi
+
+# create the forth files for booting on the XO if requested
+# we'd do this unconditionally, but you have to have a kernel that will
+# boot on the XO anyway.
+if [ -n "$xo" ]; then
+    echo "Setting up /boot/olpc.fth file"
+    args=$(egrep "^[ ]*append" $USBMNT/$SYSLINUXPATH/isolinux.cfg |head -n1 |sed -e 's/.*initrd=[^ ]*//')
+    if [ -z "$xonohome" -a ! -f $USBMNT/$LIVEOS/$HOMEFILE ]; then
+	args="$args persistenthome=mtd0"
+    fi
+    args="$args reset_overlay"
+    xosyspath=$(echo $SYSLINUXPATH | sed -e 's;/;\\;')
+    if [ ! -d $USBMNT/boot ]; then mkdir -p $USBMNT/boot ; fi
+    cat > $USBMNT/boot/olpc.fth <<EOF
+\ Boot script for USB boot
+hex  rom-pa fffc7 + 4 \$number drop  h# 2e19 < [if]
+  patch 2drop erase claim-params
+  : high-ramdisk  ( -- )
+     cv-load-ramdisk
+     h# 22c +lp l@ 1+   memory-limit  umin  /ramdisk - ffff.f000 and ( new-ramdisk-adr )
+     ramdisk-adr over  /ramdisk move                    ( new-ramdisk-adr )
+     to ramdisk-adr
+  ;
+  ' high-ramdisk to load-ramdisk
+[then]
+
+: set-bootpath-dev  ( -- )
+   " /chosen" find-package  if                       ( phandle )
+      " bootpath" rot  get-package-property  0=  if  ( propval$ )
+         get-encoded-string                          ( bootpath$ )
+         [char] \ left-parse-string  2nip            ( dn$ )
+         dn-buf place                                ( )
+      then
+   then
+
+   " /sd"  dn-buf  count  sindex  0>=   if
+          " sd:"
+   else
+          " u:"
+   then
+   " BOOTPATHDEV" \$set-macro
+;
+
+set-bootpath-dev
+" $args" to boot-file
+" \${BOOTPATHDEV}$xosyspath\initrd0.img" expand$ to ramdisk
+" \${BOOTPATHDEV}$xosyspath\vmlinuz0" expand$ to boot-device
+unfreeze
+boot
+EOF
+
+fi
+
+if [ -z "$multi" ]; then
+  echo "Installing boot loader"
+  if [ -n "$efi" ]; then
+    # replace the ia32 hack
+    if [ -f "$USBMNT/EFI/boot/boot.conf" ]; then cp -f $USBMNT/EFI/boot/bootia32.conf $USBMNT/EFI/boot/boot.conf ; fi
+  fi
+
+  # this is a bit of a kludge, but syslinux doesn't guarantee the API for its com32 modules :/
+  if [ -f $USBMNT/$SYSLINUXPATH/vesamenu.c32 -a -f /usr/share/syslinux/vesamenu.c32 ]; then
+    cp /usr/share/syslinux/vesamenu.c32 $USBMNT/$SYSLINUXPATH/vesamenu.c32
+  elif [ -f $USBMNT/$SYSLINUXPATH/vesamenu.c32 -a -f /usr/lib/syslinux/vesamenu.c32 ]; then
+    cp /usr/lib/syslinux/vesamenu.c32 $USBMNT/$SYSLINUXPATH/vesamenu.c32
+  elif [ -f $USBMNT/$SYSLINUXPATH/menu.c32 -a -f /usr/share/syslinux/menu.c32 ]; then
+    cp /usr/share/syslinux/menu.c32 $USBMNT/$SYSLINUXPATH/menu.c32
+  elif [ -f $USBMNT/$SYSLINUXPATH/menu.c32 -a -f /usr/lib/syslinux/menu.c32 ]; then
+    cp /usr/lib/syslinux/menu.c32 $USBMNT/$SYSLINUXPATH/menu.c32
+  fi
+
+  if [ "$USBFS" = "vfat" -o "$USBFS" = "msdos" ]; then
+    # syslinux expects the config to be named syslinux.cfg 
+    # and has to run with the file system unmounted
+    mv $USBMNT/$SYSLINUXPATH/isolinux.cfg $USBMNT/$SYSLINUXPATH/syslinux.cfg
+    # deal with mtools complaining about ldlinux.sys
+    if [ -f $USBMNT/$SYSLINUXPATH/ldlinux.sys ] ; then rm -f $USBMNT/$SYSLINUXPATH/ldlinux.sys ; fi
+    cleanup
+    if [ -n "$SYSLINUXPATH" ]; then
+      syslinux -d $SYSLINUXPATH $USBDEV
+    else
+      syslinux $USBDEV
+    fi
+  elif [ "$USBFS" = "ext2" -o "$USBFS" = "ext3" ]; then
+    # extlinux expects the config to be named extlinux.conf
+    # and has to be run with the file system mounted
+    mv $USBMNT/$SYSLINUXPATH/isolinux.cfg $USBMNT/$SYSLINUXPATH/extlinux.conf
+    extlinux -i $USBMNT/$SYSLINUXPATH
+    chattr -i $USBMNT/$SYSLINUXPATH/extlinux.sys
+    cleanup
+  fi
+else
+  # we need to do some more config file tweaks for multi-image mode
+  sed -i -e "s;kernel vm;kernel $LIVEOS/syslinux/vm;" $USBMNT/$SYSLINUXPATH/isolinux.cfg
+  sed -i -e "s;initrd i;initrd $LIVEOS/syslinux/i;" $USBMNT/$SYSLINUXPATH/isolinux.cfg
+  mv $USBMNT/$SYSLINUXPATH/isolinux.cfg $USBMNT/$SYSLINUXPATH/syslinux.cfg
+  cleanup
+fi
+
+echo "USB stick set up as live image!"
+
+```
+
+Save it as livecd-iso-to-disk and follow the instructions provided on your screen when running it.
+
+---
+
+### Post by wgato on 2009-06-14
+sorry, some of this is a bit over my head.
+looking at
+
+[I]Or you may mount your live cd iso using -o loop and then copy its content to your external harddrive (don't forget to set the bootable flag)
+
+mount -o loop /path/to/iso
+
+And then copy it's content to your external drive.[/I]
+
+I've already downloaded the ubuntu iso to the external drive.  How would I run this mount command without having first booted into ubuntu?
+
+---
+

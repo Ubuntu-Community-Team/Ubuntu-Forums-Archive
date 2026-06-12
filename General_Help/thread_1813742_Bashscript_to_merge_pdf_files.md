@@ -1,0 +1,185 @@
+---
+title: "Bashscript to merge pdf files"
+date: 2011-07-28
+forum: General Help
+---
+
+### Post by YouBurntYou on 2011-07-28
+Hi,
+
+Is there any bash script to merge pdf files in a directory and sub-directory and rename it as the directory/sub-directory name?
+
+Like for example using GhostScript/PDFTK/PyPDF etc?
+
+I'm kinda new where it comes to bash scripting.
+
+I found this script on a blog that seems to do what I want, however, the bookmark functionality is not of importance to me (and requires jPDFBookmark - which I can't manage to install)
+
+```
+#!/bin/bash
+#
+# pdfdir-join http://github.com/bronson/pdfdir
+# Scott Bronson
+# 17 Mar 2009
+#
+# This script assembles a bunch of PDFs files into a single pdf with
+# bookmarks to each file.
+#
+# requires: Ghostscript, JPdfBookmarks
+# http://flavianopetrocchi.blogspot.com/2008/07/jpsdbookmarks-download-page.html
+#
+# Your files should be arranged in a hierarchy, somewhat like this:
+# book/01-Introduction.pdf
+# book/02-Engine
+# book/02-Engine/01-Oil.pdf
+# book/02-Engine/01-Freeze Plugs.pdf
+# The "01-", "02-" etc to force ordering will be stripped from the
+# bookmark name.
+#
+# Then just run the script:
+# $ pdfdir-join book
+#
+# TODO: it would not be too hard to preserve existing bookmarks. Just need
+# to read them, offset them, and include them in the new bookmark file.
+
+
+die () {
+echo "$*" >&2
+[ -n "$markfile" ] && rm -f "$markfile"
+exit 1
+}
+
+root="$1"
+[ "x$root" = "x" ] && die "Please specify a directory to operate on"
+outbase="$(basename "$root")"
+[ "x$outbase" = "x." ] && outbase=out
+[ -f "$outbase".pdf ] && die "Will not overwrite $outbase.pdf"
+
+
+# Strips the numbering from file and directory names.
+# http://mywiki.wooledge.org/BashFAQ/073 describes this.
+fix_filename() {
+echo "${1#*-}"
+}
+
+
+# If the previous path and current path contain different directories,
+# this function prints the lines needed to get them back in sync.
+print_differing() {
+while true; do
+echo "$prestr$(fix_filename "${entries[$idir]}")/$curpage,FitWidth,0"
+stack[$idir]="${entries[$idir]}"
+prestr="$prestr"$(echo -en "\t")
+[ $((idir++)) -eq $lastdir ] && break;
+done
+}
+
+# Creates a valid hierarchy for the given path
+process_path() {
+curpage="$2"
+oldifs="$IFS"
+IFS=/ entries=( $1 )
+IFS="$oldifs"
+
+prestr=""
+lastdir=$((${#entries[*]}-2))
+for idir in $(seq 1 $lastdir); do
+if [ "x${stack[$idir]}" != "x${entries[$idir]}" ]; then
+print_differing
+break
+fi
+prestr="$prestr$(echo -en "\t")"
+done
+filename="${entries[$((lastdir+1))]}"
+name="$(fix_filename "$filename")"
+echo "$prestr${name/%\.pdf/}/$curpage,FitWidth,0"
+}
+
+# Turns the output from ghostscript into a bookmark file.
+process_gs_output() {
+pat_filename='--- PDFDIR FILE: (.*)$'
+pat_newfile='Processing pages ([0-9]+) through ([0-9]+)'
+pat_newpage='Page ([0-9]+)'
+outpage=1
+corrupt=start
+while read line; do
+if [[ $line =~ $pat_filename ]]; then
+[ "$corrupt" = "yes" ] && echo -n " CORRUPT!"
+corrupt=yes
+curpath="${BASH_REMATCH[1]}"
+curpathno=$((curpathno + 1))
+[ -z "$curpath" ] && die "Wasn't told filename?"
+echo -e "\nFile $curpathno/$pathcount: $curpath"
+elif [[ $line =~ $pat_newfile ]]; then
+# check to see if ghostscript has lost its mind
+[ "x$totalpages" != "x$inpage" ] && \
+die "Did not match: $inpage vs $totalpages"
+outpage=$((outpage + inpage))
+inpage=1
+totalpages="${BASH_REMATCH[2]}"
+process_path "$curpath" "$outpage" >&6
+echo -n " $totalpages Pages:"
+elif [[ $line =~ $pat_newpage ]]; then
+inpage="${BASH_REMATCH[1]}"
+echo -n " $((inpage+outpage-1))"
+corrupt=no
+fi
+done
+echo
+exec 6>&-
+}
+
+
+# ok lets go
+
+pathfile="$(mktemp)" || exit 1
+pathcount=$(find "$root" -name "*.pdf" -print | sort | tee "$pathfile" | wc -l)
+markfile="$(mktemp)" || exit 1
+exec 6>"$markfile"
+
+while read path; do
+escpath="$(echo "$path" | sed -e 's/\([()\]\)/\\\1/g')"
+  echo "($escpath) dup (--- PDFDIR FILE: ) exch concatstrings = run"
+done < "$pathfile" | gs -sDEVICE=pdfwrite -sOUTPUTFILE="$outbase".nomarks.pdf -dNOPAUSE 2>/dev/null | process_gs_output
+
+if [ -f "$markfile" ]; then
+echo "Applying bookmarks..."
+jpdfbookmarks --apply "$outbase".nomarks.pdf "$markfile" "$outbase".pdf
+rm "$markfile"
+echo "PDF saved to $outbase".pdf
+echo
+fi
+
+rm "$pathfile"
+rm -f "$outbase".nomarks.pdf
+```
+
+Source: [https://github.com/bronson/pdfdir/blob/master/pdfdir-join](https://github.com/bronson/pdfdir/blob/master/pdfdir-join)
+
+Can anyone help please?
+
+Thanks & Regards,
+YBY.
+
+---
+
+### Post by Habitual on 2011-07-28
+What's the question?
+
+---
+
+### Post by YouBurntYou on 2011-07-28
+> **Habitual said:**
+> What's the question?
+
+I need a script that does what I described earlier automatically.
+
+i.e. :
+[LIST]
+[*]Merge all PDF files in a folder into one
+[*]Rename the merged PDF as the folder name
+[*]Process Sub-Folders the same way
+[/LIST]
+
+---
+

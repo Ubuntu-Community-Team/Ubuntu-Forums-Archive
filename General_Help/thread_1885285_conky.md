@@ -1,0 +1,108 @@
+---
+title: "conky"
+date: 2011-11-22
+forum: General Help
+---
+
+### Post by runny6play on 2011-11-22
+I'm having problems with conky...
+I changed the font and size on what was going to be my cpu section and now it keeps "flickering?" it shifts to a slight degree left then back right. I do have double buffer on. I'm wondering what i can do to fix this.
+
+```
+# Conky, a system monitor, based on torsmo
+#
+# Any original torsmo code is licensed under the BSD license
+#
+# All code written since the fork of torsmo is licensed under the GPL
+#
+# Please see COPYING for details
+#
+# Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+# Copyright (c) 2005-2010 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+# All rights reserved.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+text_buffer_size 256
+alignment top_right
+background no
+border_width 1
+cpu_avg_samples 2
+default_color white
+default_outline_color white
+default_shade_color white
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+double_buffer yes
+use_xft yes
+xftfont DejaVu Sans Mono:size=12
+gap_x 60
+gap_y 60
+minimum_size 5 5
+net_avg_samples 2
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+#own_window yes
+#own_window_type normal
+#own_window_type override
+#own_window_transparent yes
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_class Conky
+#own_window_type desktop
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+#---------------------------
+TEXT
+ ${font Umw Gothic:size=20} $alignc Conky
+ 
+${font Umw Gothic:size=14}  System $hr
+#$color Uptime: $uptime           
+
+${font Umw Gothic:size=16} $alignc CPU
+${color blue}Frequency (in MHz):$color $freq
+#${color blue}Frequency (in GHz):$color $freq_g
+#${color blue}RAM Usage:$color $mem/$memmax ${color blue} $memperc% ${membar 4}
+#${color blue}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
+${color blue}CPU Usage:$color $cpu% ${cpubar 4}
+${color blue}Processes:$color $processes  ${color blue}Running:$color $running_processes
+$hr
+${color blue}File systems:
+# / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
+/ $color${fs_used /}/${fs_size /} ${fs_graph /}
+${color blue}Networking:
+Up:$color ${upspeed eth0} ${color blue} - Down:$color ${downspeed eth0}
+$hr
+${color blue}Name              PID   CPU%   MEM%
+${color lightblue} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color lightblue} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${color lightblue} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${color lightblue} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+```
+i added the text buffer size line and shrinked the buffer down. This did help slightly..
+p.s. on openbox
+
+---
+
+### Post by Foxheadz on 2011-11-22
+Try un-commenting all the lines that start with own_window
+
+---
+

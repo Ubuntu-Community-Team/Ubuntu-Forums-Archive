@@ -1,0 +1,81 @@
+---
+title: "Gentlemans, please help me &lt;3"
+date: 2011-06-25
+forum: General Help
+---
+
+### Post by pinkflowers on 2011-06-25
+Please help me to establish wireless connection. My computer is IBM G40 2388. I don't know about ubuntu and cording. I would like to have any kinds of solution posts as many as I can. please post for me <3
+
+ I had reply my last post and a gentleman said to input sudo lshw -C network on my terminal screen. it show like this:
+*-network:0             
+       description: Ethernet interface
+       product: NetXtreme BCM5901 100Base-TX
+       vendor: Broadcom Corporation
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eth0
+       version: 01
+       serial: 00:06:1b:c5:50:29
+       size: 100Mbit/s
+       capacity: 100Mbit/s
+       width: 64 bits
+       clock: 66MHz
+       capabilities: pm vpd msi bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=tg3  driverversion=3.116 duplex=full firmware=5901-v3.09 ip=192.168.0.12  latency=64 link=yes mingnt=64 multicast=yes port=twisted pair  speed=100Mbit/s
+       resources: irq:11 memory:d0200000-d020ffff
+  *-network:1
+       description: Wireless interface
+       product: Prism 2.5 Wavelan chipset
+       vendor: Intersil Corporation
+       physical id: 2
+       bus info: pci@0000:02:02.0
+       logical name: wifi0
+       version: 01
+       serial: 00:20:e0:98:7f:24
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm bus_master cap_list logical wireless ethernet physical
+       configuration: broadcast=yes driver=hostap firmware=1.7.2 latency=64 multicast=yes wireless=IEEE 802.11b
+       resources: irq:11 memory:f8000000-f8000fff
+
+when I put sudo iwconfig, it shows like this:
+
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+wifi0     IEEE 802.11b  ESSID:"g\xC6isQ\xFFJ\xEC)\xCD\xBA\xAB\xF2\xFB\xE3F  |\xC2T\xF8\x1B\xE8\xE7\x8DvZ.c3\x9F\xC9\x9A"  
+          Mode:Managed  Frequency:2.422 GHz  Access Point: None   
+          Bit Rate:2 Mb/s   Sensitivity=1/3  
+          Retry short limit:8   RTS thr off   Fragment thr off
+          Encryption key off
+          Power Management off
+          
+wlan0     IEEE 802.11b  ESSID:"g\xC6isQ\xFFJ\xEC)\xCD\xBA\xAB\xF2\xFB\xE3F  |\xC2T\xF8\x1B\xE8\xE7\x8DvZ.c3\x9F\xC9\x9A"  
+          Mode:Managed  Frequency:2.422 GHz  Access Point: None   
+          Bit Rate:2 Mb/s   Sensitivity=1/3  
+          Retry short limit:8   RTS thr off   Fragment thr off
+          Encryption key off
+          Power Management off
+          Link Quality=0/70  Signal level=-73 dBm  Noise level=-73 dBm
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:1372   Missed beacon:0
+
+My router is linksys  wireless G. I reset password, I did not set password yet.
+
+
+Thank you for looking my post!
+
+---
+
+### Post by mmsmc on 2011-06-25
+[http://ubuntuforums.org/showthread.php?t=1790905](http://ubuntuforums.org/showthread.php?t=1790905)
+
+---
+
+### Post by trizrK on 2011-06-25
+[http://tinyurl.com/6f6nqto](http://tinyurl.com/6f6nqto)
+
+---
+

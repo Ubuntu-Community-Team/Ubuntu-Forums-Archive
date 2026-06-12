@@ -1,0 +1,94 @@
+---
+title: "Can't seem to get my dwa130 USB adapter working, help? ^^,"
+date: 2010-05-25
+forum: General Help
+---
+
+### Post by iMattcotv on 2010-05-25
+Ok so.. I am that thing you call a n00b, only difference is I learn fast.
+
+My problem is i don't understand exactly what to do in order to get my DLink DWA130 USB adapter connecting.
+
+It can scan and see networks, but it cannot connect to them (open or known passwords lol)
+Here are my PC Specs:
+AMD Athlon64 II X 4
+4GB Ram
+Dual booting W7 and Ubuntu 10.04 (the regular 699mb .iso)
+
+I followed the instructions on another forum stating to download and save on the desktop:
+- ndisgtk_0.8.3-1_i386.deb
+- ndiswrapper-common_1.50-1ubuntu1_all.deb
+- ndiswrapper-utils-1.9_1.50-1ubuntu1_i386.deb
+
+and then enter:
+cd ~/Desktop
+sudo .... *.deb (I can't remember that part)
+
+It worked, I then opened ndisgtk through terminal but I have a question here..
+The driver files that I downloaded off their site for my adapter contains all XP, XP2K, Vista32, Vista64 each having their own .cat .inf and .sys file, which one do I install?
+
+I tried entering 1susb, 1susb -v and 1spci -v but I get this:
+No command '1susb' from package 'usbutils' (main)
+1susb: command not found
+
+I also get this after entering iwconfig:
+lo no wireless extensions
+
+eth0 no wireless connections
+
+wlan0 IEEE 802.11bn 
+and a bunch of info for wlan0
+
+nothing else after that.
+
+So what I'm trying to know and figure out is how to get Internet access working and how to install the drivers and stuff, thanks :P
+
+p.s, I am willing to learn, I'm not your average n00b. Oh, and I'm using my iPod touch to type all this so if there are any typos, it's spell correct.
+
+---
+
+### Post by iMattcotv on 2010-05-25
+Sorry if I confuse anyone lol, I tend to change the subject without notice, for example (in the first post)
+"which driver do I install
+
+I tried typing 1susb....."
+
+those 2 are totally different, I didn't try typing 1susb, 1spci etc to install the drivers.. :P
+
+---
+
+### Post by iMattcotv on 2010-05-25
+Sorry for the bump, the sooner the better :)
+
+---
+
+### Post by iMattcotv on 2010-05-25
+Where the heck is everyone?
+
+---
+
+### Post by User10.04 on 2010-05-25
+Hi! I'm just as noobish, but like you - I learn fast! :-) 
+
+The command you are looking for is actually lsusb, l like in L (the 12th letter of the alphabet). It displays your usb ports and it will show if your device is plugged in or not. That is the first step... from there I'm still just as lost.
+
+Good luck
+
+---
+
+### Post by iMattcotv on 2010-05-26
+> **User10.04 said:**
+> Hi! I'm just as noobish, but like you - I learn fast! :-) 
+
+The command you are looking for is actually lsusb, l like in L (the 12th letter of the alphabet). It displays your usb ports and it will show if your device is plugged in or not. That is the first step... from there I'm still just as lost.
+
+Good luck
+
+Thank god you told me that L is the 12th letter in the alphabet! ohmygod I was so confused..
+
+:P
+
+I meant lsusb, i didnt even realize i pressed 1 lol
+
+---
+

@@ -1,0 +1,268 @@
+---
+title: "Dual Boot Vista won't load"
+date: 2009-12-10
+forum: General Help
+---
+
+### Post by mechashiva119 on 2009-12-10
+HELP! I recently installed ubuntu onto my I drive, utilizing vista partitions. I wanted to create a dual-boot system, but the problem is that now I can't boot vista. At first, nothing would boot, and I had to start in recovery mode, and update everything, including grub. Now I'm in a barely functioning Ubuntu (no software center, no functioning video, ect ect.) I really just want my vista drive to boot. I have followed some advice, and created a Results file from boot info script:
+
+```
+============================= Boot Info Summary: ==============================
+
+ => Grub 1.97 is installed in the MBR of /dev/sda and looks for 
+    (UUID=13ae3eaa-1e40-42f2-a668-b698d439e996)/boot/grub.
+ => No boot loader is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /boot.ini /bootmgr /Boot/BCD 
+                       /Windows/System32/winload.exe
+
+sdb1: _________________________________________________________________________
+
+    File system:       
+    Boot sector type:  -
+    Boot sector info:  
+    Mounting failed:
+mount: unknown filesystem type ''
+
+sdb2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sdb3: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb4: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x6e17a0b5
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048   976,771,071   976,769,024   7 HPFS/NTFS
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x00000000
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1                   1 1,953,525,167 1,953,525,167  ee GPT
+
+
+GUID Partition Table detected.
+
+Partition           Start           End          Size System
+/dev/sdb1              34       262,177       262,144 Microsoft Windows
+/dev/sdb2         264,192 1,853,161,471 1,852,897,280 Linux (usually)
+/dev/sdb3   1,853,162,010 1,871,601,655    18,439,646 Linux Swap
+/dev/sdb4   1,871,601,656 1,953,525,134    81,923,479 Linux (usually)
+
+blkid -c /dev/null: ____________________________________________________________
+
+/dev/sda1: UUID="1EA86DB5A86D8BD9" LABEL="Vista64" TYPE="ntfs" 
+/dev/sdb2: UUID="F49E66679E6621FA" LABEL="BadOne" TYPE="ntfs" 
+/dev/sdb3: UUID="37eb250a-8448-41da-9344-7d2d13962ccd" TYPE="swap" 
+/dev/sdb4: UUID="13ae3eaa-1e40-42f2-a668-b698d439e996" TYPE="ext4" 
+
+=============================== "mount" output: ===============================
+
+/dev/sdb4 on / type ext4 (rw,errors=remount-ro)
+proc on /proc type proc (rw)
+none on /sys type sysfs (rw,noexec,nosuid,nodev)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+udev on /dev type tmpfs (rw,mode=0755)
+none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+none on /dev/shm type tmpfs (rw,nosuid,nodev)
+none on /var/run type tmpfs (rw,nosuid,mode=0755)
+none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+none on /lib/init/rw type tmpfs (rw,nosuid,mode=0755)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/mechashiva/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=mechashiva)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader] 
+[operating systems] 
+c:\plop\plpbtldr.bin="PLoP Boot Manager"
+=========================== sdb4/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd1,4)
+search --no-floppy --fs-uuid --set 13ae3eaa-1e40-42f2-a668-b698d439e996
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-16-generic-pae" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd1,4)
+    search --no-floppy --fs-uuid --set 13ae3eaa-1e40-42f2-a668-b698d439e996
+    linux    /boot/vmlinuz-2.6.31-16-generic-pae root=UUID=13ae3eaa-1e40-42f2-a668-b698d439e996 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-16-generic-pae
+}
+menuentry "Ubuntu, Linux 2.6.31-16-generic-pae (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd1,4)
+    search --no-floppy --fs-uuid --set 13ae3eaa-1e40-42f2-a668-b698d439e996
+    linux    /boot/vmlinuz-2.6.31-16-generic-pae root=UUID=13ae3eaa-1e40-42f2-a668-b698d439e996 ro single 
+    initrd    /boot/initrd.img-2.6.31-16-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod ntfs
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 1ea86db5a86d8bd9
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sdb4/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sdb4 during installation
+UUID=13ae3eaa-1e40-42f2-a668-b698d439e996 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdb3 during installation
+UUID=37eb250a-8448-41da-9344-7d2d13962ccd none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+=================== sdb4: Location of files loaded by Grub: ===================
+
+
+ 958.2GB: boot/grub/grub.cfg
+ 958.2GB: boot/initrd.img-2.6.31-16-generic-pae
+ 958.2GB: boot/vmlinuz-2.6.31-16-generic-pae
+ 958.2GB: initrd.img
+ 958.2GB: vmlinuz
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdc sdd sde sdf 
+```HELP I AM FREAKING OUT. I can see that vista is ok on drive C, but I rreeeaaalllyy need to keep it working! Thanks
+
+---
+
+### Post by lmarmisa on 2009-12-10
+If you need to recover the old Vista boot program, read this post:
+
+[http://ubuntuforums.org/showthread.php?t=799895](http://ubuntuforums.org/showthread.php?t=799895)
+
+Best regards,
+
+Luis
+
+---
+
+### Post by mechashiva119 on 2009-12-10
+Thanks for the quick reply, but I really wanted a dual-bootable computer, as I will be getting a nice camera soon, and wanted to take advantage of the professional-level video editing software. Would i be able to use the Vista BSD program to still boot into ubuntu whenever i wanted?
+
+---
+
+### Post by mechashiva119 on 2009-12-10
+I meant to say easy BCD, sorry. Do i have to paste a grub.cfg file into my windows drive or something? Am i just missing a simple step?
+
+---
+
+### Post by Sin@Sin-Sacrifice on 2009-12-10
+Sounds to me like the Ubuntu install didn't go to well if you're having all them problems. Might be well to fix Vista's boot loader then reinstall Ubuntu but you can always fix the boot loader then restore grub and try to resolve the problems from there. You can find how to do all that by Googling it.
+
+---
+

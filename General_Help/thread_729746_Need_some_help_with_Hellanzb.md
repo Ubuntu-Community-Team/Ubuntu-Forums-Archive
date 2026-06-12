@@ -1,0 +1,203 @@
+---
+title: "Need some help with Hellanzb"
+date: 2008-03-20
+forum: General Help
+---
+
+### Post by iamBevan on 2008-03-20
+Just wondering if someone can help me here - I've installed Hellanzb via the repositories, but the folders that you put the nzb's in, i can't find anywhere, nor the folder for the completed files.
+
+When i load Hellanzb up in the terminal it runs as normal saying the following: 
+
+hellanzb v0.13 (config = /etc/hellanzb.conf, C yenc module)
+(changeme) Opening 4 connections...
+hellanzb - Now monitoring queue...
+
+
+Any help would be much appriciated - Thanks.
+
+---
+
+### Post by pietjanjaap on 2008-03-20
+In hellanzb.conf, there you can find where you have to move the nzb to, so hellanzb starts downloading.
+In the same file (hellanzb.conf) is also the map where the downloads are put.
+
+---
+
+### Post by iamBevan on 2008-03-20
+Yeah, the folder is goes in is called nzb/daemon.queue/ - but theres no folder on my computer called that.
+
+Here's a copy of my config - excluding my password
+
+# 
+# hellanzb.conf - sample hellanzb configuration file
+#
+# To quickly get started, change the default defineServer() call and the
+# Hellanzb.PREFIX_DIR directory
+#
+# This is actually interpreted python code: strings must be surrounded by
+# quotes, numbers and the 'None' keyword should not
+# 
+# $Id: hellanzb.conf.sample 726 2006-03-23 18:32:18Z pjenvey $
+
+# Log output to this file, set to None (no single quotes) for no logging
+Hellanzb.LOG_FILE = '/var/tmp/hellanzb.log'
+
+# Uncomment this line to log DEBUG messages to the specified file
+#Hellanzb.DEBUG_MODE = '/var/tmp/hellanzb-debug.log'
+
+# Automatically roll over both log files when they reach LOG_FILE_MAX_BYTES
+# size
+Hellanzb.LOG_FILE_MAX_BYTES = 0
+
+# Save LOG_FILE_BACKUP_COUNT of those rolled over log files
+Hellanzb.LOG_FILE_BACKUP_COUNT = 0
+
+
+# Define server connections. Servers can have multiple hosts, hellanzb will
+# persist the number of connections to each specified server. There may be
+# multiple defineServer lines.
+
+# Set both the username and password to 'None' (without the quotes) if your
+# usenet server does not require authorization
+defineServer(id = 'changeme',
+              hosts = [ 'unlimited.newshosting.com:119' ],
+             #hosts = [ 'news.changeme.com', 'morenews.changeme.com:8000' ],
+
+
+             username = 'iamBevan',
+             password = '',
+             #username = None,           # no auth
+             #password = None,
+
+             connections = 4,
+             antiIdle = 4.5 * 60,        # 4 minutes, 30 seconds
+             #bindTo = '204.31.33.7',    # connect FROM this ip address
+             #enabled = False,           # disable this server
+             #skipGroupCmd = False,      # skip sending nntp GROUP commands
+             )
+
+# Uncomment this line to limit all server connections to the specified KB/s
+# bandwidth
+#Hellanzb.MAX_RATE = 150 # limit to 150kB/s
+
+
+# Important locations
+Hellanzb.PREFIX_DIR = '/ext2/'
+
+# Where to put queued .nzb files
+Hellanzb.QUEUE_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.queue/'
+
+# Where the fully processed archives go
+Hellanzb.DEST_DIR = Hellanzb.PREFIX_DIR + 'usenet/'
+
+# The .nzb currently being downloaded is stored here
+Hellanzb.CURRENT_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.current/'
+
+# The archive currently being downloaded is stored here
+Hellanzb.WORKING_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.working/'
+
+# Archives interrupted in the middle of downloading are stored here temporarily
+Hellanzb.POSTPONED_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.postponed/'
+
+# Archives currently being processed. May contains archive directories, or
+# symbolic links to archive directories
+Hellanzb.PROCESSING_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.processing/'
+
+# Temp storage
+Hellanzb.TEMP_DIR = Hellanzb.PREFIX_DIR + 'nzb/daemon.temp/'
+
+# Filename to store hellanzb state in between CTRL-Cs. The state (includes the
+# order of the queue, and smart par recovery information) is intermittently
+# written out as XML to this file
+Hellanzb.STATE_XML_FILE = Hellanzb.PREFIX_DIR + 'nzb/hellanzbState.xml'
+
+
+# _Sub directory within the nzb archive dir_ to move processed files to
+Hellanzb.PROCESSED_SUBDIR = 'processed'
+
+# Remove the PROCESSED_SUBDIR if the archive was successfully post processed. 
+# Warning: The normal Hellanzb.LOG_FILE should be enabled with this option --
+# for a record of what hellanzb deletes
+Hellanzb.DELETE_PROCESSED = True
+
+# Disable SMART_PAR (download all PAR files)
+#Hellanzb.SMART_PAR = False
+
+# Skip unraring during post processing
+#Hellanzb.SKIP_UNRAR = False
+
+# hellanzb inherits the umask from the current user's environment (unless it's
+# running in daemon mode). The umask can be forced with this option
+#Hellanzb.UMASK = 0022
+
+
+# Supported music types (case insensitive) and optionally their decompression
+# executables
+# and the file type that executable will decompress to (case insensitive). The
+# exes must be in the PATH.
+#
+# <FILE> will be replaced with the name of music file
+# optional <DESTFILE> is <FILE> with the specified extension
+#
+# None means these files don't need to be decompressed
+defineMusicType('wav', None, None)
+defineMusicType('mp3', None, None)
+#defineMusicType('ape', 'mac <FILE> <DESTFILE> -d', 'wav')
+#defineMusicType('flac', 'flac -d -- <FILE>', 'wav')
+#defineMusicType('shn', 'shorten -x < <FILE> > <DESTFILE>', 'wav')
+
+# Max files we should decompress at the same time
+Hellanzb.MAX_DECOMPRESSION_THREADS = 2
+
+
+# Enable Mac OS X Growl notifications
+Hellanzb.GROWL_NOTIFY = False
+
+# The growl notification server, in the format 'hostname'
+Hellanzb.GROWL_SERVER = 'IP'
+
+# The growl password
+Hellanzb.GROWL_PASSWORD = 'password'
+
+
+# Hostname for the XMLRPC client to connect to. By default, localhost
+Hellanzb.XMLRPC_SERVER = 'localhost'
+
+# Port number the XML RPC server will listen on, and the client will connect to.
+# Set to 'None' (without the quotes!) for no XML RPC server
+Hellanzb.XMLRPC_PORT = 8760
+
+# Password for the XML RPC server. You might probably never use this, but the
+# command line XML RPC calls do -- it should definitely be changed from its
+# default value. The XML RPC username is hardcoded as 'hellanzb' -- E.g. URL:
+# [http://hellanzb:changeme@localhost:8760](http://hellanzb:changeme@localhost:8760)
+Hellanzb.XMLRPC_PASSWORD = 'changeme'
+
+
+# Username/Password to [http://www.newzbin.com](http://www.newzbin.com) for automatic NZB downloading
+Hellanzb.NEWZBIN_USERNAME = None
+Hellanzb.NEWZBIN_PASSWORD = None
+
+
+# If any of the following file types are missing from the archive and cannot be
+# repaired, continue processing because they're unimportant (case insensitive)
+Hellanzb.NOT_REQUIRED_FILE_TYPES = [ 'log', 'm3u', 'nfo', 'nzb', 'sfv', 'txt' ]
+
+# Don't get rid of (move into the PROCESSED dir) the following file types when
+# finished post processing (case insensitive)
+#Hellanzb.KEEP_FILE_TYPES = [ 'log', 'm3u', 'nfo', 'nzb', 'sfv', 'txt' ]
+Hellanzb.KEEP_FILE_TYPES = [ 'nfo', 'txt' ]
+
+
+# List of alternative file extensions matched as NZB files in the QUEUE_DIR.
+# The 'nzb' file extension is always matched
+#Hellanzb.OTHER_NZB_FILE_TYPES = [ 'xml' ]
+
+---
+
+### Post by The_Major on 2008-03-21
+According to your config file your nzb queue is /ext2/nzb/daemon.queue and your downloaded files goto /ext2/usenet, you have set ext2 as your prefix directory, you could try changing it to /home/YOUR_USERNAME_GOES_HERE
+
+---
+

@@ -1,0 +1,51 @@
+---
+title: "&quot;Desktop effects could not be enabled&quot;"
+date: 2008-08-06
+forum: General Help
+---
+
+### Post by nnjond on 2008-08-06
+Hi, I was hoping I could switch from "None" to "Normal" in Appearance Prefs, but hit a snag:
+
+"Desktop effects could not be enabled"
+
+
+nick@nick-desktop:~$ uname -r
+2.6.24-19-generic
+
+nick@nick-desktop:~$ lspci
+00:00.0 Host bridge: Silicon Integrated Systems [SiS] 760/M760 Host (rev 03)
+00:01.0 PCI bridge: Silicon Integrated Systems [SiS] SG86C202
+00:02.0 ISA bridge: Silicon Integrated Systems [SiS] SiS964 [MuTIOL Media IO] (rev 36)
+00:02.5 IDE interface: Silicon Integrated Systems [SiS] 5513 [IDE] (rev 01)
+00:02.7 Multimedia audio controller: Silicon Integrated Systems [SiS] AC'97 Sound Controller (rev a0)
+00:03.0 USB Controller: Silicon Integrated Systems [SiS] USB 1.1 Controller (rev 0f)
+00:03.1 USB Controller: Silicon Integrated Systems [SiS] USB 1.1 Controller (rev 0f)
+00:03.2 USB Controller: Silicon Integrated Systems [SiS] USB 1.1 Controller (rev 0f)
+00:03.3 USB Controller: Silicon Integrated Systems [SiS] USB 2.0 Controller
+00:04.0 Ethernet controller: Silicon Integrated Systems [SiS] SiS900 PCI Fast Ethernet (rev 91)
+00:05.0 IDE interface: Silicon Integrated Systems [SiS] RAID bus controller 180 SATA/PATA [SiS] (rev 01)
+00:18.0 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] HyperTransport Technology Configuration
+00:18.1 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Address Map
+00:18.2 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] DRAM Controller
+00:18.3 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Miscellaneous Control
+01:00.0 VGA compatible controller: Silicon Integrated Systems [SiS] 661/741/760 PCI/AGP or 662/761Gx PCIE VGA Display Adapter
+nick@nick-desktop:~$
+
+---
+
+### Post by Moridin333 on 2008-08-06
+is this onboard video or do you have a separate video card.
+
+---
+
+### Post by nnjond on 2008-08-06
+Thanks for your interest. Onboard.
+
+---
+
+### Post by patrik93 on 2008-08-15
+I have that very same problem, I'm pretty sure its that i dont hace the driver for SiS m760, let me know if u fix it, I'll write here if i manage to :)
+
+---
+

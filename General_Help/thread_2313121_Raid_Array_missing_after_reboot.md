@@ -1,0 +1,187 @@
+---
+title: "Raid Array missing after reboot"
+date: 2016-02-09
+forum: General Help
+---
+
+### Post by lars15 on 2016-02-09
+[COLOR=#393939][FONT=arial]I've successfully run an Ubuntu 14.04 Server with a RAID configuration, all of a sudden I got the following error message when upgrading the kernel: [/FONT][/COLOR][COLOR=#393939]
+
+[/COLOR][COLOR=#393939][FONT=fixedsys]update-initramfs: Generating /boot/initrd.img-3.16.0-60-generic
+W: mdadm: the array /dev/md0 with UUID 234ff7a0:e80ad30c:1c0c1bef:eb9852f7
+W: mdadm: is currently active, but it is not listed in mdadm.conf. if
+W: mdadm: it is needed for boot, then YOUR SYSTEM IS NOW UNBOOTABLE!
+W: mdadm: please inspect the output of /usr/share/mdadm/mkconf, compare
+W: mdadm: it to /etc/mdadm/mdadm.conf, and make the necessary changes.
+
+[/FONT][/COLOR][SIZE=2][COLOR=#393939][FONT=arial]The RAID 6 array i assembled with the help aid of the Webmin interface. The array is /dev/md0 and is mounted as an ext4 system on /mnt/NAS/. The 
+[/FONT][/COLOR][/SIZE][COLOR=#393939][FONT=Menlo][SIZE=2][FONT=arial]
+Here is the output of the mkconf:[/FONT][/SIZE]
+
+/usr/share/mdadm/mkconf [/FONT][/COLOR]
+[COLOR=#393939]
+[/COLOR][COLOR=#393939][FONT=Menlo][FONT=fixedsys]# mdadm.conf[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]#[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# Please refer to mdadm.conf(5) for information about this file.[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]#[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# by default (built-in), scan all partitions (/proc/partitions) and all[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# containers for MD superblocks. alternatively, specify devices to scan, using[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# wildcards if desired.[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]#DEVICE /dev/sdd1 /dev/sde1 /dev/sdf1 /dev/sdg1 /dev/sdh1 /dev/sdi1 /dev/sdc1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# auto-create devices with Debian standard permissions[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]CREATE owner=root group=disk mode=0660 auto=yes[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# automatically tag new arrays as belonging to the local system[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]HOMEHOST <system>[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# instruct the monitoring daemon where to send mail alerts[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]MAILADDR root[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]# definitions of existing MD arrays
+
+[FONT=arial]And here is the /etc/mdadm/mdadm.conf :[/FONT][/FONT][/FONT][/COLOR]
+[COLOR=#393939]
+[/COLOR][COLOR=#393939][FONT=fixedsys]# mdadm.conf[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]#[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# Please refer to mdadm.conf(5) for information about this file.[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]#[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# by default (built-in), scan all partitions (/proc/partitions) and all[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# containers for MD superblocks. alternatively, specify devices to scan, using[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# wildcards if desired.[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]#DEVICE partitions containers[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# auto-create devices with Debian standard permissions[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]CREATE owner=root group=disk mode=0660 auto=yes[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# automatically tag new arrays as belonging to the local system[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]HOMEHOST <system>[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# instruct the monitoring daemon where to send mail alerts[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]MAILADDR root[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# definitions of existing MD arrays[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]ARRAY /dev/md/0 metadata=1.2 UUID=3753cfae:e4afcc87:a96fb67b:ea22612f name=adam:0[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# This file was auto-generated on Sun, 08 Mar 2015 12:55:46 +0100[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]# by mkconf $Id$[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]DEVICE /dev/sdd1 /dev/sde1 /dev/sdf1 /dev/sdg1 /dev/sdh1 /dev/sdi1 /dev/sdc1[/FONT][/COLOR]
+[COLOR=#393939][FONT=fixedsys]ARRAY /dev/md0 uuid=234ff7a0:e80ad30c:1c0c1bef:eb9852f7[/FONT][/COLOR]
+[COLOR=#393939]
+[/COLOR]
+[COLOR=#393939][FONT=arial]As you can see there is also an older array in the config file and no array at all when I run the mkconf script
+[/FONT][/COLOR][COLOR=#393939]
+The following commands gives output:
+
+[/COLOR][COLOR=#393939][FONT=Menlo]
+[/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]sudo mdadm --examine /dev/md0[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]mdadm: No md superblock detected on /dev/md0.[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+ sudo mdadm --misc --detail /dev/md0[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]/dev/md0:[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]        Version : 1.2[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]  Creation Time : Fri Feb  5 08:37:09 2016[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]     Raid Level : raid6[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]     Array Size : 11720534016 (11177.57 GiB 12001.83 GB)[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]  Used Dev Size : 2930133504 (2794.39 GiB 3000.46 GB)[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]   Raid Devices : 6[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]  Total Devices : 6[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]    Persistence : Superblock is persistent[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]    Update Time : Tue Feb  9 06:30:16 2016[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]          State : clean [/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys] Active Devices : 6[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]Working Devices : 6[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys] Failed Devices : 0[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]  Spare Devices : 0[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]         Layout : left-symmetric[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]     Chunk Size : 512K[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]           Name : adam:0  (local to host adam)[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]           UUID : 234ff7a0:e80ad30c:1c0c1bef:eb9852f7[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]         Events : 154[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]    Number   Major   Minor   RaidDevice State[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]       0       8        1        0      active sync   /dev/sda1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]       1       8       17        1      active sync   /dev/sdb1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]       2       8       33        2      active sync   /dev/sdc1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]       3       8       49        3      active sync   /dev/sdd1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]       4       8       65        4      active sync   /dev/sde1[/FONT][/FONT][/COLOR]
+[COLOR=#393939][FONT=Menlo][FONT=fixedsys]
+[/FONT][/FONT][/COLOR]
+[FONT=fixedsys][COLOR=#393939]       5       8       81        5      active sync   /dev/sdf1
+
+I've searched the internet for answers but I can't find a solution. Luckily got a backup server and I''ve recently tried to delete the raid and crated a new one, unfortunately the problem is still persistent. What are your suggestions ? The array is running fine as long as I do not reboot the machine.
+
+Regards
+
+Lars[/COLOR][/FONT]
+
+---
+
+### Post by sokolov on 2016-08-08
+What was your solution?
+
+---
+

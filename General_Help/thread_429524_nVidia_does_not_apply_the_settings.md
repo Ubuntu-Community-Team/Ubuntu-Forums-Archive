@@ -1,0 +1,221 @@
+---
+title: "nVidia does not apply the settings"
+date: 2007-05-01
+forum: General Help
+---
+
+### Post by enneth on 2007-05-01
+After I've installed Feisty Fawn I cannot get nvidia-settings to remember the settings I apply. Every time I reboot/restart X the resolution has gone back to a default resolution for blind people.
+As a birthday present from me to me I bought a(nother) flat panel so I now have two monitors aside each other. The problem is now that I want them to run two separate X screens, but since nvidia-settings does not apply anything at all that is not possible. TwinView works till the next reboot/X restart.
+
+By the way I am using the envy installer. Has anyone else had problems like this? It is really annoying me.
+
+---
+
+### Post by treeby on 2007-05-01
+when you opened up nvidia did you type in sudo or gksudo in front of it? you have to do sudo so
+to change settings. dunno if that would help?? i had a similar problem
+
+---
+
+### Post by Yochanan on 2007-05-05
+If TwinView can be applied without admin priveledges, why would it be needed for separate X servers? I'll have to try it later as I'm not booted into Ubuntu right now. I'm having the same problem with  a CRT monitor on VGA, and a TV on S-Video. TwinView works, but separate X screens does not. I'm using the restricted nVIDIA module on Fiesty. It was the same on Edgy with the official 9755 drivers from nVIDIA. Anyone have any other ideas?
+
+---
+
+### Post by Nythain on 2007-05-05
+your gonna need root access to do anything in nvidia-settings and save the changes... reason being, it needs to write the changes to /etc/X11/xorg.conf wich is owned by root.
+
+from terminal just run gksudo nvidia-settings or kdesu nvidia-settings if in kde
+
+or you can edit the link in the menu and add gksudo or kdesu in front of it so you dont have to go into terminal to run the program all the time.
+
+as for why twinview didnt need it... maybe it defaulted to installing a twinview setup when you installed teh drivers and program, at wich point it had root access.
+
+---
+
+### Post by kpel on 2007-05-05
+If you run nvidia-settings from the terminal and then attempt to save the changes to the xorg.conf file without starting it as a super user the terminal will spit back an error about not being able to write (save) the file.  That's how I figured it out.
+
+Just remember to use gksudo for GUI based apps, sudo for terminal-only stuff.
+
+---
+
+### Post by Yochanan on 2007-05-05
+Hooray! That worked. However, I was hoping it would work like Dualview, but it's a separate Clone instead. Twinview is like Horizontal/Vertical Span. Well, it still allows me to watch a video full-screen on my TV, but I can't launch a program on my primary monitor and drag it to my TV. I have to start it on the TV. 
+
+Also, this seems to have broken Beryl, which I did read does not support running a separate X screen. When Beryl or Compiz is loaded, there are no title bars on windows. I have to switch to Metacity to get them back. This still happens after disabling the TV and restarting X. 
+
+Thanks for the help everyone.
+
+---
+
+### Post by kpel on 2007-05-05
+> **Yochanan said:**
+> 
+Also, this seems to have broken Beryl, which I did read does not support running a separate X screen. When Beryl or Compiz is loaded, there are no title bars on windows. I have to switch to Metacity to get them back. This still happens after disabling the TV and restarting X. 
+
+Losing the title bars is a common installation problem with Beryl.  The easy fix is to edit the xorg.conf file.
+
+First, back it up.
+
+```
+sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf_backup
+```
+
+then
+
+```
+sudo nvidia-xconfig --add-argb-glx-visuals
+```
+
+That'll stick the fixed entry in the correct spot without having to hand edit the file.
+
+There's a million posts on the topic, here's one:
+[http://ubuntuforums.org/showthread.php?t=416630](http://ubuntuforums.org/showthread.php?t=416630)
+
+---
+
+### Post by Yochanan on 2007-05-06
+That worked, thanks!
+
+---
+
+### Post by Nythain on 2007-05-06
+can you post your /etc/X11/xorg.conf, because you should be able to have seperate x screens that you can drag windows and apps across.
+
+actually you could just check your xorg.conf for a line that looks like this:
+```
+
+Section "ServerFlags"
+    Option         "Xinerama" "0"
+EndSection
+
+```
+and change it to "1" instead... if you dont have this line in there already, then add it somewhere near teh top, i've seen it placed in a few different places, so it doesnt really matter, just as long as its before the Section "Device" that defines your video card
+
+---
+
+### Post by Yochanan on 2007-05-06
+That's the same as just checking the Xinerama box in nvidia-config. When Xinerama is enabled while my TV is a separate X screen, it's just vertical span and I can't watch video full screen on the TV, it does it on my monitor. I can move windows back and forth, however. 
+
+```
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder3)  Thu Nov  9 17:55:20 PST 2006
+
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildmeister@builder3)  Thu Nov  9 17:56:12 PST 2006
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 600
+    Screen      1  "Screen1" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Files"
+    RgbPath         "/usr/lib/X11/rgb"
+EndSection
+
+Section "Module"
+    Load           "dbe"
+    Load           "extmod"
+    Load           "type1"
+    Load           "freetype"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+
+    # HorizSync source: edid, VertRefresh source: edid
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "ViewSonic P815-3"
+    HorizSync       30.0 - 115.0
+    VertRefresh     50.0 - 160.0
+    Option         "DPMS"
+EndSection
+
+Section "Monitor"
+
+    # HorizSync source: xconfig, VertRefresh source: xconfig
+    Identifier     "Monitor1"
+    VendorName     "Unknown"
+    ModelName      "TV-0"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Videocard0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 6200"
+    BusID          "PCI:1:0:0"
+    Screen          0
+EndSection
+
+Section "Device"
+    Identifier     "Videocard1"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 6200"
+    BusID          "PCI:1:0:0"
+    Screen          1
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Videocard0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "metamodes" "CRT: 1600x1200 +0+0"
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Depth       24
+        Modes      "1600x1200" "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen1"
+    Device         "Videocard1"
+    Monitor        "Monitor1"
+    DefaultDepth    24
+    Option         "metamodes" "TV: 800x600 +0+0"
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Depth       24
+        Modes      "1600x1200" "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+```
+
+---
+

@@ -1,0 +1,233 @@
+---
+title: "Booting to Ubuntu Sometimes Hangs"
+date: 2007-12-20
+forum: General Help
+---
+
+### Post by dlegend on 2007-12-20
+I installed Ubuntu 7.10 on my laptop and the GRUB menu works fine but after I get to the loading screen the progress bar will slowly go up then pause and just stay there indefinitely. Sometimes it finishes the loading bar and will go to a blank screen and just show an underscore blinking "_" and hang there as well.
+
+If I hard boot it off and back on, sometimes Ubuntu will load just fine. My solution is to just boot it off and on until it gets to the login screen where I can run Ubuntu without any problems.
+
+My question is why does this happen and is there any real solution to this problem so Ubuntu will load 100% of the time?
+
+If you need extra information please let me know -- and let me know how I can provide you with that information as well. I don't have all the text outputted to the screen when it's booting so I'd need to know how to activate that if it is needed for any of you to help me.
+
+Thanks.
+
+Edit: Please read my last reply in this thread for updated information on my problem.
+
+---
+
+### Post by dlegend on 2007-12-20
+Update: I found out that it *sometimes* hangs at "Starting Common Unix Printing System: cupsd" -- anyway to prevent cupsd from being initialized at boot time? I don't use printing services anyway.
+
+Edit: Just tried loading again and it got right past the cupsd part and OK'd it but again got the hanging so I'm not sure if it has to do with that...
+
+---
+
+### Post by TeaSwigger on 2007-12-20
+If you haven't done so, try this. At the GRUB screen, select the setup you use. Press e (for Edit). Select the "kernel line" (it's the longest one, should end with "quiet splash"?). Replace "quiet splash" with "nosplash". Press enter to ok it. Press b (for Boot) to start. 
+
+This is a one-time only modification. What this does is disable the usplash, the screen with the progress bar during boot. Instead you'll see miles of text go rolling by for a while until it brings up the login screen. If it boots ok that way, that suggests that there's a graphics driver issue or an issue with usplash and your graphics system. To make this boot permanent, you can edit the '/boot/grub/menu.lst' file with the same exact changes I specified above (only edit that same line and don't change anything else unless you know what you're doing, and as always make a backup before editing) and it'll start without usplash each time. Therefore you could just use the computer like that indefinitely until the issue with the graphics or usplash is worked out.
+
+---
+
+### Post by dlegend on 2007-12-20
+> **TeaSwigger said:**
+> If you haven't done so, try this. At the GRUB screen, select the setup you use. Press e (for Edit). Select the "kernel line" (it's the longest one, should end with "quiet splash"?). Replace "quiet splash" with "nosplash". Press enter to ok it. Press b (for Boot) to start. 
+
+This is a one-time only modification. What this does is disable the usplash, the screen with the progress bar during boot. Instead you'll see miles of text go rolling by for a while until it brings up the login screen. If it boots ok that way, that suggests that there's a graphics driver issue or an issue with usplash and your graphics system. To make this boot permanent, you can edit the '/boot/grub/menu.lst' file with the same exact changes I specified above (only edit that same line and don't change anything else unless you know what you're doing, and as always make a backup before editing) and it'll start without usplash each time. Therefore you could just use the computer like that indefinitely until the issue with the graphics or usplash is worked out.
+
+Mine currently says the following:
+
+> 
+kernel /boot/vmlinuz-2.6.22-14-generic root=UUID=9fa8ff86-5407-4326-ba17-08a7496a5212 ro splash vga=792
+
+
+I edited to say:
+
+> 
+kernel /boot/vmlinuz-2.6.22-14-generic root=UUID=9fa8ff86-5407-4326-ba17-08a7496a5212 nosplash
+
+
+Will let you know if it works.
+
+---
+
+### Post by dlegend on 2007-12-20
+Alright so it worked (this time). I'm going to change it to nosplash in the menu.lst file and try rebooting several more times to confirm that this is a working solution.
+
+---
+
+### Post by TeaSwigger on 2007-12-20
+Might be good to keep the "ro" after those numbers. So, numbers, then ro then nosplash.
+
+If this works, whenever you want to sort it and get usplash back, if you need help include your graphics card and contents of /etc/X11/xorg.conf file in the post.
+
+---
+
+### Post by dlegend on 2007-12-20
+Thanks for the help thus far. I think that did the trick (though the usplash would be nice to have again). I've posted my xorg.conf and graphics card below:
+
+Machine: Dell Latitude D600 Laptop
+Graphics Card: ATI Technologies Inc Radeon R250 [Mobility FireGL 9000] (32mb card)
+
+```
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies Inc Radeon R250 [Mobility FireGL 9000]"
+	Driver		"ati"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies Inc Radeon R250 [Mobility FireGL 9000]"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+```
+
+It's a low spec laptop but good enough to run XP smoothly (dual boot) and to mess around with Linux distros in. I'm trying to have it keep me busy until I upgrade.
+
+Only other issue besides this one is having games work like ZSNES/CS 1.6 while being able to have compiz-fuzion -- I've posted about this in the below threads (sadly, I believe there is no solution to this):
+
+[http://ubuntuforums.org/showthread.php?p=3880983](http://ubuntuforums.org/showthread.php?p=3880983)
+[http://ubuntuforums.org/showthread.php?t=637795](http://ubuntuforums.org/showthread.php?t=637795) (person explained to me why I couldn't run my games + compiz-fuzion at the same time)
+
+---
+
+### Post by dlegend on 2007-12-21
+Sorry I'm going to have to backtrack on this problem -- I still have the nosplash option set but I have had it hang twice on me since then so I don't think it has to do with usplash. Any other tips or suggestions?
+
+---
+
+### Post by dlegend on 2007-12-21
+Hmmm... Interesting...
+
+I just recently had an issue with having multiple wifi cards (built-in and one that I purchased). I'd try getting onto a wireless network via one card then want to switch to the other but had problems with it. (eg. one would turn on by default when I rebooted when I didn't want it to). I turned off the built-in wifi through the bios and somehow managed to get my whole operating system to run WAY more smoothly then ever before.
+
+I think somehow the built-in wifi was conflicting with my system (or perhaps the driver for it anyway). Now my system doesn't lag at all like it used to (when spinning the 3D cube for instance) and I can run a lot more without any noticeable lag. This *hopefully* may be the problem with my system hanging at boot-up as well but I am still not 100% sure.
+
+I'll keep everyone posted for those who are interested or those who may run into this problem in the future =)
+
+PS. I put usplash back on and will be testing to see if my system boots correctly 100% of the time.
+
+---
+
+### Post by mneisen on 2007-12-21
+Hi, I have similar problems since the update I did this morning. It did install a new variant of the current kernel, and since that I cannot boot my laptop (Samsung X20) anymore.
+
+The last message has something to do with the CD/DVD drive.
+
+Does anybody know how I can fix this? What information do I have to provide in order to get help?
+
+Thanks in advance!
+
+---
+
+### Post by mneisen on 2007-12-21
+Hi, I have similar problems since the update I did this morning. It did install a new variant of the current kernel, and since that I cannot boot my laptop (Samsung X20) anymore.
+
+The last message has something to do with the CD/DVD drive.
+
+Does anybody know how I can fix this? What information do I have to provide in order to get help?
+
+Thanks in advance!
+
+---
+

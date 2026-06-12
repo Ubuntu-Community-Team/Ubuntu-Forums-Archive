@@ -1,0 +1,328 @@
+---
+title: "need help replacing mbr and installing grub"
+date: 2010-01-03
+forum: General Help
+---
+
+### Post by aeroboy on 2010-01-03
+i have no idea how to proceed. please help?
+
+i have a flash drive with 9.10 installed, and can't boot into windows without a convoluted workaround involving a repair cd...
+
+on boot i end up at the grub rescue prompt without the 9.10 flash drive installed(good news is if i let it go for 5 minutes or so it makes it into ubuntu).
+
+i have tried fixboot and fixmbr, to no avail.
+
+what i would like ideally is to have the box boot into windows unless i want it to boot from the flash drive.
+
+so what i think i need to do is install grub to the flash drive, and a new mbr to sda1... install-mbr didn't do it apparently. i tried sudo install-mbr -vf /dev/sda1 and the boot info summary below shows no improvement =\
+
+```
+============================= Boot Info Summary: ==============================
+
+ => Grub 1.97 is installed in the MBR of /dev/sda and looks for 
+    (UUID=18f3e5ee-7ef2-4158-8b84-853630827dea)/boot/grub.
+ => No known boot loader is installed in the MBR of /dev/sdb
+ => Syslinux is installed in the MBR of /dev/sdc
+sda1: _________________________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info:  
+    Mounting failed:
+mount: unknown filesystem type ''
+
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sdc1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sdc2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sdc5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 80.0 GB, 80026361856 bytes
+240 heads, 63 sectors/track, 10337 cylinders, total 156301488 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x17251724
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   156,280,319   156,280,257   7 HPFS/NTFS
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 203.9 GB, 203928109056 bytes
+255 heads, 63 sectors/track, 24792 cylinders, total 398297088 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x205221f3
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1                  63   398,283,479   398,283,417   7 HPFS/NTFS
+
+
+Drive: sdc ___________________ _____________________________________________________
+
+Disk /dev/sdc: 4007 MB, 4007657472 bytes
+255 heads, 63 sectors/track, 487 cylinders, total 7827456 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x000d3085
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdc1                  63     7,357,769     7,357,707  83 Linux
+/dev/sdc2           7,357,770     7,823,654       465,885   5 Extended
+/dev/sdc5           7,357,833     7,823,654       465,822  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+sdb1: UUID="E8EC3086EC3050D4" LABEL="Local Disk" TYPE="ntfs" 
+sdc1: UUID="18f3e5ee-7ef2-4158-8b84-853630827dea" TYPE="ext4" 
+sdc5: UUID="e1dc0b22-13d1-41fb-bff2-2535e45ad0f4" TYPE="swap" 
+
+=============================== "mount" output: ===============================
+
+/dev/sdc1 on / type ext4 (rw,errors=remount-ro)
+proc on /proc type proc (rw)
+none on /sys type sysfs (rw,noexec,nosuid,nodev)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+udev on /dev type tmpfs (rw,mode=0755)
+none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+none on /dev/shm type tmpfs (rw,nosuid,nodev)
+none on /var/run type tmpfs (rw,nosuid,mode=0755)
+none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+none on /lib/init/rw type tmpfs (rw,nosuid,mode=0755)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/aeroboy/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=aeroboy)
+
+
+=========================== sdc1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd2,1)
+search --no-floppy --fs-uuid --set 18f3e5ee-7ef2-4158-8b84-853630827dea
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-16-generic-pae" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 18f3e5ee-7ef2-4158-8b84-853630827dea
+    linux    /boot/vmlinuz-2.6.31-16-generic-pae root=UUID=18f3e5ee-7ef2-4158-8b84-853630827dea ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-16-generic-pae
+}
+menuentry "Ubuntu, Linux 2.6.31-16-generic-pae (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 18f3e5ee-7ef2-4158-8b84-853630827dea
+    linux    /boot/vmlinuz-2.6.31-16-generic-pae root=UUID=18f3e5ee-7ef2-4158-8b84-853630827dea ro single 
+    initrd    /boot/initrd.img-2.6.31-16-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sdc1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sdd1 during installation
+UUID=18f3e5ee-7ef2-4158-8b84-853630827dea /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdd5 during installation
+UUID=e1dc0b22-13d1-41fb-bff2-2535e45ad0f4 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+=================== sdc1: Location of files loaded by Grub: ===================
+
+
+    .0GB: boot/grub/core.img
+    .0GB: boot/grub/grub.cfg
+    .0GB: boot/initrd.img-2.6.31-16-generic-pae
+    .0GB: boot/vmlinuz-2.6.31-16-generic-pae
+    .0GB: initrd.img
+    .0GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown MBR on /dev/sdb
+
+00000000  90 e9 7d 01 fa 33 c0 8e  d0 8e c0 8e d8 bc 00 7c  |..}..3.........||
+00000010  8b f4 fb bf 00 06 b9 00  01 f3 a5 bb 20 06 ff e3  |............ ...|
+00000020  90 90 be 7d 07 81 3c aa  55 75 11 e8 58 00 73 0c  |...}..<.Uu..X.s.|
+00000030  e8 65 00 72 07 e8 b1 00  72 3b eb 2c be 7d 07 c7  |.e.r....r;.,.}..|
+00000040  04 00 00 ba 80 00 be be  07 b9 04 00 f6 04 80 75  |...............u|
+00000050  07 83 c6 10 e2 f6 eb 1d  8a 74 01 8b 4c 02 bb 00  |.........t..L...|
+00000060  7c b8 01 02 cd 13 72 0d  81 3e fe 7d 55 aa 75 05  ||.....r..>.}U.u.|
+00000070  ea 00 7c 00 00 be 6a 07  ac 0a c0 74 fe bb 07 00  |..|...j....t....|
+00000080  b4 0e cd 10 eb f2 bb 00  7e c6 07 13 c6 47 01 00  |........~....G..|
+00000090  b2 80 b8 00 e0 cd 13 c3  bf 00 7e ba f0 01 b3 a0  |..........~.....|
+000000a0  e8 84 00 72 0c b1 01 e8  48 00 72 05 e8 19 00 73  |...r....H.r....s|
+000000b0  16 f6 c3 10 75 05 80 cb  10 eb e5 81 fa 70 01 74  |....u........p.t|
+000000c0  05 ba 70 01 eb d8 f9 c3  81 bd fe 01 55 aa 75 17  |..p.........U.u.|
+000000d0  8b 75 02 81 fe be 01 77  0e 03 f7 81 3c aa 55 75  |.u.....w....<.Uu|
+000000e0  06 f6 44 02 01 75 01 f9  c3 bf 00 7c b1 0a e8 01  |..D..u.....|....|
+000000f0  00 c3 52 57 83 c2 02 b0  01 ee 42 8a c1 ee 42 32  |..RW......B...B2|
+00000100  c0 ee 42 ee 42 8a c3 ee  42 b0 20 ee e8 33 00 ec  |..B.B...B. ..3..|
+00000110  24 fd 3c 58 75 0d 83 ea  07 b9 00 01 fa f3 6d fb  |$.<Xu.........m.|
+00000120  f8 eb 01 f9 5f 5a c3 52  83 c2 07 ec a8 80 75 0f  |...._Z.R......u.|
+00000130  4a 8a c3 ee 42 ec 24 d0  3c 50 75 03 f8 eb 01 f9  |J...B.$.<Pu.....|
+00000140  5a c3 51 8b 0e 6c 04 83  c1 12 81 c2 ff 01 ec 8a  |Z.Q..l..........|
+00000150  e0 80 e4 d8 80 fc 58 74  06 3b 0e 6c 04 75 ef 81  |......Xt.;.l.u..|
+00000160  ea ff 01 b9 00 20 e2 fe  59 c3 0d 0a 45 72 72 6f  |..... ..Y...Erro|
+00000170  72 20 4c 6f 61 64 69 6e  67 20 4f 53 00 aa 55 00  |r Loading OS..U.|
+00000180  00 e9 80 fe 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001a0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001b0  00 00 00 00 00 00 00 00  f3 21 52 20 00 00 00 01  |.........!R ....|
+000001c0  01 00 07 fe ff ff 3f 00  00 00 99 52 bd 17 00 00  |......?....R....|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+Unknown BootLoader  on sda1
+
+00000000  fc 31 c0 8e d0 31 e4 8e  d8 8e c0 be 00 7c bf 00  |.1...1.......|..|
+00000010  06 b9 00 01 f3 a5 be ee  07 b0 08 ea 20 06 00 00  |............ ...|
+00000020  80 3e b6 07 ff 75 04 88  16 b6 07 80 3c 00 74 04  |.>...u......<.t.|
+00000030  08 06 b2 07 83 ee 10 d0  e8 73 f0 cd 1a 89 16 00  |.........s......|
+00000040  08 e8 33 01 81 3e b4 07  ff ff 74 46 f6 06 b3 07  |..3..>....tF....|
+00000050  80 74 06 b4 01 cd 16 75  39 f6 06 b3 07 40 74 07  |.t.....u9....@t.|
+00000060  f6 06 17 04 0f 75 2b 31  c0 cd 1a 2b 16 00 08 2b  |.....u+1...+...+|
+00000070  16 b4 07 72 d7 a0 b3 07  24 07 3c 07 75 0b be be  |...r....$.<.u...|
+00000080  07 b0 00 b9 04 00 80 3c  00 75 66 fe c0 83 c6 10  |.......<.uf.....|
+00000090  e2 f4 e8 e2 00 b4 0e be  a0 07 8a 0e b2 07 ac d0  |................|
+000000a0  e9 73 02 cd 10 08 c9 75  f5 b0 3a cd 10 31 c0 cd  |.s.....u..:..1..|
+000000b0  16 3c 00 74 f8 3c 0d 74  bc 3c 61 72 06 3c 7a 77  |.<.t.<.t.<ar.<zw|
+000000c0  02 2c 20 88 c3 be a0 07  8a 0e b2 07 ac d0 e9 73  |., ............s|
+000000d0  04 38 c3 74 06 08 c9 75  f3 eb d2 b8 0d 0e 31 db  |.8.t...u......1.|
+000000e0  cd 10 8d 84 5f 00 3c 07  75 07 b0 1f a2 b2 07 eb  |...._.<.u.......|
+000000f0  a1 e8 83 00 31 d2 b9 01  00 3c 04 74 11 73 f0 30  |....1....<.t.s.0|
+00000100  e4 b1 04 d2 e0 be be 07  01 c6 8a 16 b6 07 bf 05  |................|
+00000110  00 56 f6 c2 80 74 2b b4  41 bb aa 55 52 cd 13 5a  |.V...t+.A..UR..Z|
+00000120  5e 56 72 1e 81 fb 55 aa  75 18 f6 c1 01 74 13 8b  |^Vr...U.u....t..|
+00000130  44 08 8b 5c 0a be 90 07  89 44 08 89 5c 0a b4 42  |D..\.....D..\..B|
+00000140  eb 0c 8a 74 01 8b 4c 02  b8 01 02 bb 00 7c 50 c6  |...t..L......|P.|
+00000150  06 92 07 01 cd 13 58 5e  73 05 4f 75 b4 eb 90 81  |......X^s.Ou....|
+00000160  3e fe 7d 55 aa 75 f6 31  db b8 0d 0e cd 10 b0 0a  |>.}U.u.1........|
+00000170  cd 10 ea 00 7c 00 00 50  b8 0d 0e 31 db cd 10 be  |....|..P...1....|
+00000180  8c 07 b9 04 00 ac cd 10  e2 fb 58 c3 4d 42 52 20  |..........X.MBR |
+00000190  10 00 01 00 00 7c 00 00  00 00 00 00 00 00 00 00  |.....|..........|
+000001a0  31 32 33 34 46 00 00 41  4e 44 54 6d 62 72 00 02  |1234F..ANDTmbr..|
+000001b0  00 02 90 c7 12 00 80 00  00 00 00 00 a8 01 63 6f  |..............co|
+000001c0  6d 70 72 65 73 73 65 64  00 0d 0a 50 72 65 73 73  |mpressed...Press|
+000001d0  20 43 74 72 6c 2b 41 6c  74 2b 44 65 6c 20 74 6f  | Ctrl+Alt+Del to|
+000001e0  20 72 65 73 74 61 72 74  0d 0a 00 00 00 00 00 00  | restart........|
+000001f0  00 00 00 00 00 00 00 00  83 a0 b3 c9 00 00 55 aa  |..............U.|
+00000200
+
+
+
+```
+
+---
+
+### Post by lmarmisa on 2010-01-04
+This command should be able to restore the MBR code area of the XP OS in the /dev/sda hard drive:
+
+```
+
+sudo dd if=/usr/lib/syslinux/mbr.bin of=/dev/sda
+
+```
+
+---
+

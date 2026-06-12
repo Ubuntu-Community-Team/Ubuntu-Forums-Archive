@@ -1,0 +1,117 @@
+---
+title: "sound from both headphones and speakers"
+date: 2012-05-01
+forum: General Help
+---
+
+### Post by ninos_loves_u@hotmail.com on 2012-05-01
+can someone please help me. every time i connect my headphones the sound still comes out the from the main speakers and the headphones, where it should stop soon as i plug in my headphones and only have sound in my headphones
+
+i have an acer aspire 6920g and this is my alsa-base.conf
+
+# autoloader aliases
+install sound-slot-0 /sbin/modprobe snd-card-0
+install sound-slot-1 /sbin/modprobe snd-card-1
+install sound-slot-2 /sbin/modprobe snd-card-2
+install sound-slot-3 /sbin/modprobe snd-card-3
+install sound-slot-4 /sbin/modprobe snd-card-4
+install sound-slot-5 /sbin/modprobe snd-card-5
+install sound-slot-6 /sbin/modprobe snd-card-6
+install sound-slot-7 /sbin/modprobe snd-card-7
+
+
+
+
+# Cause optional modules to be loaded above generic modules
+install snd /sbin/modprobe --ignore-install snd $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-ioctl32 ; /sbin/modprobe --quiet --use-blacklist snd-seq ; }
+#
+# Workaround at bug #499695 (reverted in Ubuntu see LP #319505)
+install snd-pcm /sbin/modprobe --ignore-install snd-pcm $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-pcm-oss ; : ; }
+install snd-mixer /sbin/modprobe --ignore-install snd-mixer $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-mixer-oss ; : ; }
+install snd-seq /sbin/modprobe --ignore-install snd-seq $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq-midi ; /sbin/modprobe --quiet --use-blacklist snd-seq-oss ; : ; }
+#
+install snd-rawmidi /sbin/modprobe --ignore-install snd-rawmidi $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq-midi ; : ; }
+# Cause optional modules to be loaded above sound card driver modules
+install snd-emu10k1 /sbin/modprobe --ignore-install snd-emu10k1 $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-emu10k1-synth ; }
+install snd-via82xx /sbin/modprobe --ignore-install snd-via82xx $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq ; }
+
+# Load saa7134-alsa instead of saa7134 (which gets dragged in by it anyway)
+install saa7134 /sbin/modprobe --ignore-install saa7134 $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist saa7134-alsa ; : ; }
+# Prevent abnormal drivers from grabbing index 0
+options bt87x index=-2
+options cx88_alsa index=-2
+options saa7134-alsa index=-2
+options snd-atiixp-modem index=-2
+options snd-intel8x0m index=-2
+options snd-via82xx-modem index=-2
+options snd-usb-audio index=-2
+options snd-usb-caiaq index=-2
+options snd-usb-ua101 index=-2
+options snd-usb-us122l index=-2
+options snd-usb-usx2y index=-2
+
+# Ubuntu #62691, enable MPU for snd-cmipci
+options snd-cmipci mpu_port=0x330 fm_port=0x388
+# Keep snd-pcsp from being loaded as first soundcard
+options snd-pcsp index=-2
+# Keep snd-usb-audio from beeing loaded as first soundcard
+options snd-usb-audio index=-2
+
+---
+
+### Post by ewz on 2012-05-01
+Hello I have an Acer Aspire 6530, plugging in the headphones seems to work ok for me,  just checked my alsa-base.conf and it seems identical to yours.
+
+I remember when I was using Ubuntu 10.04 I had to change a few settings in the sound prefrences. 
+I'm running 12.04 now. 
+You may have already tried this, install PulseAudio Volume Control from the software center, in PulseAudio Volume Control go to the Configuration tab and make sure your Bult-in Audio Profile is set to Analog Stereo Duplex.
+
+This is my alsa-base.conf if you want to have a look.
+sorry I can't be of more help.
+
+# autoloader aliases
+install sound-slot-0 /sbin/modprobe snd-card-0
+install sound-slot-1 /sbin/modprobe snd-card-1
+install sound-slot-2 /sbin/modprobe snd-card-2
+install sound-slot-3 /sbin/modprobe snd-card-3
+install sound-slot-4 /sbin/modprobe snd-card-4
+install sound-slot-5 /sbin/modprobe snd-card-5
+install sound-slot-6 /sbin/modprobe snd-card-6
+install sound-slot-7 /sbin/modprobe snd-card-7
+
+# Cause optional modules to be loaded above generic modules
+install snd /sbin/modprobe --ignore-install snd $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-ioctl32 ; /sbin/modprobe --quiet --use-blacklist snd-seq ; }
+#
+# Workaround at bug #499695 (reverted in Ubuntu see LP #319505)
+install snd-pcm /sbin/modprobe --ignore-install snd-pcm $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-pcm-oss ; : ; }
+install snd-mixer /sbin/modprobe --ignore-install snd-mixer $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-mixer-oss ; : ; }
+install snd-seq /sbin/modprobe --ignore-install snd-seq $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq-midi ; /sbin/modprobe --quiet --use-blacklist snd-seq-oss ; : ; }
+#
+install snd-rawmidi /sbin/modprobe --ignore-install snd-rawmidi $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq-midi ; : ; }
+# Cause optional modules to be loaded above sound card driver modules
+install snd-emu10k1 /sbin/modprobe --ignore-install snd-emu10k1 $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-emu10k1-synth ; }
+install snd-via82xx /sbin/modprobe --ignore-install snd-via82xx $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist snd-seq ; }
+
+# Load saa7134-alsa instead of saa7134 (which gets dragged in by it anyway)
+install saa7134 /sbin/modprobe --ignore-install saa7134 $CMDLINE_OPTS && { /sbin/modprobe --quiet --use-blacklist saa7134-alsa ; : ; }
+# Prevent abnormal drivers from grabbing index 0
+options bt87x index=-2
+options cx88_alsa index=-2
+options saa7134-alsa index=-2
+options snd-atiixp-modem index=-2
+options snd-intel8x0m index=-2
+options snd-via82xx-modem index=-2
+options snd-usb-audio index=-2
+options snd-usb-caiaq index=-2
+options snd-usb-ua101 index=-2
+options snd-usb-us122l index=-2
+options snd-usb-usx2y index=-2
+# Ubuntu #62691, enable MPU for snd-cmipci
+options snd-cmipci mpu_port=0x330 fm_port=0x388
+# Keep snd-pcsp from being loaded as first soundcard
+options snd-pcsp index=-2
+# Keep snd-usb-audio from beeing loaded as first soundcard
+options snd-usb-audio index=-2
+
+---
+

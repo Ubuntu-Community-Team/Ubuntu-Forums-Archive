@@ -1,0 +1,1078 @@
+---
+title: "How to fix ubuntu 18.04 boot"
+date: 2018-11-24
+forum: General Help
+---
+
+### Post by yoloo-78 on 2018-11-24
+hello,
+I try to have help in forum ubuntu French but no one can help me..
+
+So i try here thanks.
+
+I recently tried to install CUDA (to do programming on my NVIDIA GPU) on my Dell Ubuntu 18.04 (64bits), unfortunately I handled too many packages (removing some and installing others ..) In particular related to CUDA and therefore manipulate the drivers of my Geforce 830M graphics card .. now when my computer starts, it ends up freezer with these two lines:
+
+
+
+Gave up waiting for suspend/resume device
+/dev/sda1 : clean 440644/14589952 files, 24936785/58352896 blocks
+-
+My score sda1 (click once on it to put it in place) :   [[IMG]http://image.noelshack.com/minis/2018/47/3/1542840223-image1-1.png[/IMG]]("http://www.noelshack.com/2018-47-3-1542840223-image1-1.jpg")
+
+
+
+
+
+
+My boot-info :
+
+
+```
+ Boot Info Script 8f991e4 + Boot-Repair extra info      [Boot-Info 25oct2017]
+
+
+
+
+============================= Boot Info Summary: ===============================
+
+
+ => Grub2 (v2.00) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    for (,msdos1)/boot/grub. It also embeds following components:
+    
+    modules
+    ---------------------------------------------------------------------------
+    fshelp ext2 part_msdos biosdisk
+    ---------------------------------------------------------------------------
+ => ISOhybrid (Syslinux 4.05 and higher) is installed in the MBR of /dev/sdb.
+
+
+sda1: __________________________________________________________________________
+
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 18.04.1 LTS
+    Boot files:        /boot/grub/grub.cfg /etc/fstab 
+                       /boot/grub/i386-pc/core.img
+
+
+sdb1: __________________________________________________________________________
+
+
+    File system:       iso9660
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: /mnt/BootInfo/sdb1: /dev/sdb1 already mounted or mount point busy.
+
+
+============================ Drive/Partition Info: =============================
+
+
+Drive: sda _____________________________________________________________________
+Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+
+/dev/sda1    *          2,048   466,825,215   466,823,168  83 Linux
+
+
+
+
+Drive: sdb _____________________________________________________________________
+Disk /dev/sdb: 1.9 GiB, 1992294400 bytes, 3891200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+
+/dev/sdb1    *              0     1,449,983     1,449,984  17 Hidden NTFS / HPFS
+
+
+
+
+"blkid" output: ________________________________________________________________
+
+
+Device           UUID                                   TYPE       LABEL
+
+
+/dev/loop0                                              squashfs   
+/dev/sda1        f9dd3754-10d9-45a5-91d1-a2c0062c73c0   ext4       
+/dev/sdb1        2017-10-29-00-56-18-00                 iso9660    Boot-Repair-Disk 64bit
+/dev/zram0       b3aaf2f4-5ba8-4d0d-8d00-093f5bdea9c6   swap       
+/dev/zram1       9fe8bd7e-53f8-46d3-b602-8967f166036b   swap       
+/dev/zram2       305e7e4d-770b-46d4-9513-2ba47c62da3a   swap       
+/dev/zram3       b4ddd62f-7ae8-4338-8a85-a6c0efd5d371   swap       
+
+
+========================= "ls -l /dev/disk/by-id" output: ======================
+
+
+total 0
+lrwxrwxrwx 1 root root  9 Nov 22 09:39 ata-SanDisk_X300_2.5_7MM_256GB_153720400574 -> ../../sda
+lrwxrwxrwx 1 root root 10 Nov 22 09:39 ata-SanDisk_X300_2.5_7MM_256GB_153720400574-part1 -> ../../sda1
+lrwxrwxrwx 1 root root  9 Nov 22 09:38 usb-Generic_Flash_Disk_7363F50A-0:0 -> ../../sdb
+lrwxrwxrwx 1 root root 10 Nov 22 09:38 usb-Generic_Flash_Disk_7363F50A-0:0-part1 -> ../../sdb1
+lrwxrwxrwx 1 root root  9 Nov 22 09:39 wwn-0x5001b44ed60826be -> ../../sda
+lrwxrwxrwx 1 root root 10 Nov 22 09:39 wwn-0x5001b44ed60826be-part1 -> ../../sda1
+
+
+================================ Mount points: =================================
+
+
+Device           Mount_Point              Type       Options
+
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sdb         /cdrom                   iso9660    (ro,noatime,nojoliet,check=s,map=n,blocksize=2048)
+
+
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+
+export menuentry_id_option
+
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd0,msdos1'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+else
+  search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=fr_FR
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=10
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=10
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 10 ; then
+    set timeout=10
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30,0; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=1
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    else
+      search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    fi
+        linux    /boot/vmlinuz-4.15.0-34-generic root=UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 ro  quiet splash $vt_handoff
+    initrd    /boot/initrd.img-4.15.0-34-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+    menuentry 'Ubuntu, with Linux 4.15.0-34-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.15.0-34-generic-advanced-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        else
+          search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        fi
+        echo    'Loading Linux 4.15.0-34-generic ...'
+            linux    /boot/vmlinuz-4.15.0-34-generic root=UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.15.0-34-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.15.0-34-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.15.0-34-generic-recovery-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        else
+          search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        fi
+        echo    'Loading Linux 4.15.0-34-generic ...'
+            linux    /boot/vmlinuz-4.15.0-34-generic root=UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.15.0-34-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.15.0-29-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.15.0-29-generic-advanced-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        else
+          search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        fi
+        echo    'Loading Linux 4.15.0-29-generic ...'
+            linux    /boot/vmlinuz-4.15.0-29-generic root=UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.15.0-29-generic
+    }
+    menuentry 'Ubuntu, with Linux 4.15.0-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-4.15.0-29-generic-recovery-f9dd3754-10d9-45a5-91d1-a2c0062c73c0' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        else
+          search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+        fi
+        echo    'Loading Linux 4.15.0-29-generic ...'
+            linux    /boot/vmlinuz-4.15.0-29-generic root=UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-4.15.0-29-generic
+    }
+}
+
+
+### END /etc/grub.d/10_linux ###
+
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+
+### END /etc/grub.d/20_linux_xen ###
+
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry 'Memory test (memtest86+)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    else
+      search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    fi
+    knetbsd    /boot/memtest86+.elf
+}
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    else
+      search --no-floppy --fs-uuid --set=root f9dd3754-10d9-45a5-91d1-a2c0062c73c0
+    fi
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+
+=============================== sda1/etc/fstab: ================================
+
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=f9dd3754-10d9-45a5-91d1-a2c0062c73c0 /               ext4    errors=remount-ro 0       1
+
+
+--------------------------------------------------------------------------------
+
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+
+           GiB - GB             File                                 Fragment(s)
+
+
+   8.126499176 = 8.725762048    boot/grub/grub.cfg                             1
+   8.274650574 = 8.884838400    boot/grub/i386-pc/core.img                     1
+  57.375850677 = 61.606850560   boot/vmlinuz-4.15.0-29-generic                 1
+  61.137580872 = 65.645977600   boot/vmlinuz-4.15.0-34-generic                 2
+  61.137580872 = 65.645977600   vmlinuz                                        2
+  57.375850677 = 61.606850560   vmlinuz.old                                    1
+  66.773258209 = 71.697240064   boot/initrd.img-4.15.0-29-generic              3
+  49.747116089 = 53.415559168   boot/initrd.img-4.15.0-34-generic              5
+  49.747116089 = 53.415559168   initrd.img                                     5
+  66.773258209 = 71.697240064   initrd.img.old                                 3
+
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+
+Unknown BootLoader on sdb1
+
+
+00000000  33 ed 90 90 90 90 90 90  90 90 90 90 90 90 90 90  |3...............|
+00000010  90 90 90 90 90 90 90 90  90 90 90 90 90 90 90 90  |................|
+00000020  33 ed fa 8e d5 bc 00 7c  fb fc 66 31 db 66 31 c9  |3......|..f1.f1.|
+00000030  66 53 66 51 06 57 8e dd  8e c5 52 be 00 7c bf 00  |fSfQ.W....R..|..|
+00000040  06 b9 00 01 f3 a5 ea 4b  06 00 00 52 b4 41 bb aa  |.......K...R.A..|
+00000050  55 31 c9 30 f6 f9 cd 13  72 16 81 fb 55 aa 75 10  |U1.0....r...U.u.|
+00000060  83 e1 01 74 0b 66 c7 06  f1 06 b4 42 eb 15 eb 00  |...t.f.....B....|
+00000070  5a 51 b4 08 cd 13 83 e1  3f 5b 51 0f b6 c6 40 50  |ZQ......?[Q...@P|
+00000080  f7 e1 53 52 50 bb 00 7c  b9 04 00 66 a1 b0 07 e8  |..SRP..|...f....|
+00000090  44 00 0f 82 80 00 66 40  80 c7 02 e2 f2 66 81 3e  |D.....f@.....f.>|
+000000a0  40 7c fb c0 78 70 75 09  fa bc ec 7b ea 44 7c 00  |@|..xpu....{.D|.|
+000000b0  00 e8 83 00 69 73 6f 6c  69 6e 75 78 2e 62 69 6e  |....isolinux.bin|
+000000c0  20 6d 69 73 73 69 6e 67  20 6f 72 20 63 6f 72 72  | missing or corr|
+000000d0  75 70 74 2e 0d 0a 66 60  66 31 d2 66 03 06 f8 7b  |upt...f`f1.f...{|
+000000e0  66 13 16 fc 7b 66 52 66  50 06 53 6a 01 6a 10 89  |f...{fRfP.Sj.j..|
+000000f0  e6 66 f7 36 e8 7b c0 e4  06 88 e1 88 c5 92 f6 36  |.f.6.{.........6|
+00000100  ee 7b 88 c6 08 e1 41 b8  01 02 8a 16 f2 7b cd 13  |.{....A......{..|
+00000110  8d 64 10 66 61 c3 e8 1e  00 4f 70 65 72 61 74 69  |.d.fa....Operati|
+00000120  6e 67 20 73 79 73 74 65  6d 20 6c 6f 61 64 20 65  |ng system load e|
+00000130  72 72 6f 72 2e 0d 0a 5e  ac b4 0e 8a 3e 62 04 b3  |rror...^....>b..|
+00000140  07 cd 10 3c 0a 75 f1 cd  18 f4 eb fd 00 00 00 00  |...<.u..........|
+00000150  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001b0  68 03 00 00 00 00 00 00  67 45 8b 6b 00 00 80 00  |h.......gE.k....|
+000001c0  01 00 17 3f a0 c3 00 00  00 00 00 20 16 00 00 00  |...?....... ....|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+
+
+
+
+ADDITIONAL INFORMATION :
+=================== log of boot-repair 20181122_0938 ===================
+boot-repair version : 4ppa62
+boot-sav version : 4ppa62
+boot-sav-extra version : 4ppa62
+glade2script version : 3.2.3~ppa4
+Error: Invalid partition table - recursive partition on /dev/sdb.
+boot-repair is executed in live-session (Boot-Repair-Disk 64bit 1oct2017, zesty, Ubuntu, x86_64)
+CPU op-mode(s):      32-bit, 64-bit
+file=/cdrom/preseed/lubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash -- debian-installer/language=fr keyboard-configuration/layoutcode?=fr keyboard-configuration/variantcode?=oss
+ls: cannot access '/home/usr/.config': No such file or directory
+
+
+=================== os-prober:
+/dev/sda1:Ubuntu 18.04.1 LTS (18.04):Ubuntu:linux
+
+
+=================== blkid:
+/dev/sda1: UUID="f9dd3754-10d9-45a5-91d1-a2c0062c73c0" TYPE="ext4" PARTUUID="7d9c9277-01"
+/dev/loop0: TYPE="squashfs"
+/dev/sdb1: UUID="2017-10-29-00-56-18-00" LABEL="Boot-Repair-Disk 64bit" TYPE="iso9660" PTUUID="6b8b4567" PTTYPE="dos" PARTUUID="6b8b4567-01"
+/dev/zram0: UUID="b3aaf2f4-5ba8-4d0d-8d00-093f5bdea9c6" TYPE="swap"
+/dev/zram1: UUID="9fe8bd7e-53f8-46d3-b602-8967f166036b" TYPE="swap"
+/dev/zram2: UUID="305e7e4d-770b-46d4-9513-2ba47c62da3a" TYPE="swap"
+/dev/zram3: UUID="b4ddd62f-7ae8-4338-8a85-a6c0efd5d371" TYPE="swap"
+
+
+
+
+1 disks with OS, 1 OS : 1 Linux, 0 MacOS, 0 Windows, 0 unknown type OS.
+
+
+
+
+=================== sda1/etc/grub.d/ :
+drwxr-xr-x  2 root root     4096 sept. 19 21:21 grub.d
+total 80
+-rwxr-xr-x 1 root root  9783 mars   5  2018 00_header
+-rwxr-xr-x 1 root root  6258 mars  15  2016 05_debian_theme
+-rwxr-xr-x 1 root root 12693 mars   4  2018 10_linux
+-rwxr-xr-x 1 root root 11298 mars   4  2018 20_linux_xen
+-rwxr-xr-x 1 root root  1992 janv. 28  2016 20_memtest86+
+-rwxr-xr-x 1 root root 12059 mars   5  2018 30_os-prober
+-rwxr-xr-x 1 root root  1418 juin  17  2016 30_uefi-firmware
+-rwxr-xr-x 1 root root   214 juin  17  2016 40_custom
+-rwxr-xr-x 1 root root   216 juin  17  2016 41_custom
+-rw-r--r-- 1 root root   483 juin  17  2016 README
+
+
+
+
+
+
+
+
+=================== sda1/etc/default/grub :
+
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+
+
+
+
+
+=================== UEFI/Legacy mode:
+This live-session is not in EFI-mode.
+EFI in dmesg.
+[    0.000000] ACPI: UEFI 0x00000000C96C9238 000042 (v01                 00000000      00000000)
+SecureBoot maybe enabled.
+
+
+
+
+=================== PARTITIONS & DISKS:
+sda1    : sda,    not-sepboot,    grubenv-ok    grub2,    grub-pc ,    update-grub,    64,    with-boot,    is-os,    not--efi--part,    fstab-without-boot,    fstab-without-efi,    no-nt,    no-winload,    no-recov-nor-hid,    no-bmgr,    notwinboot,    apt-get,    grub-install,    with--usr,    fstab-without-usr,    not-sep-usr,    standard,    farbios,    notbiosboot, /mnt/boot-sav/sda1.
+
+
+sda    : not-GPT,    BIOSboot-not-needed,    has-no-EFIpart,     not-usb,    not-mmc, has-os,    2048 sectors * 512 bytes
+
+
+
+
+=================== parted -lm:
+
+
+BYT;
+/dev/sda:256GB:scsi:512:512:msdos:ATA SanDisk X300 2.5:;
+1:1049kB:239GB:239GB:ext4::boot;
+
+
+BYT;
+/dev/sdb:1992MB:scsi:512:512:unknown:Generic Flash Disk:;
+
+
+BYT;
+/dev/zram3:2086MB:unknown:4096:4096:loop:Unknown:;
+1:0.00B:2086MB:2086MB:linux-swap(v1)::;
+
+
+BYT;
+/dev/zram1:2086MB:unknown:4096:4096:loop:Unknown:;
+1:0.00B:2086MB:2086MB:linux-swap(v1)::;
+
+
+BYT;
+/dev/zram2:2086MB:unknown:4096:4096:loop:Unknown:;
+1:0.00B:2086MB:2086MB:linux-swap(v1)::;
+
+
+BYT;
+/dev/zram0:2086MB:unknown:4096:4096:loop:Unknown:;
+1:0.00B:2086MB:2086MB:linux-swap(v1)::;
+
+
+=================== lsblk:
+KNAME TYPE FSTYPE     SIZE LABEL
+loop0 loop squashfs 629,3M
+sda   disk          238,5G
+sda1  part ext4     222,6G
+sdb   disk iso9660    1,9G Boot-Repair-Disk 64bit
+sdb1  part iso9660    708M Boot-Repair-Disk 64bit
+zram0 disk              2G
+zram1 disk              2G
+zram2 disk              2G
+zram3 disk              2G
+
+
+KNAME ROTA RO RM STATE   MOUNTPOINT
+loop0    1  1  0         /rofs
+sda      0  0  0 running
+sda1     0  0  0         /mnt/boot-sav/sda1
+sdb      1  0  1 running /cdrom
+sdb1     1  0  1
+zram0    0  0  0         [SWAP]
+zram1    0  0  0         [SWAP]
+zram2    0  0  0         [SWAP]
+zram3    0  0  0         [SWAP]
+
+
+
+
+=================== mount:
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,nosuid,relatime,size=8122308k,nr_inodes=2030577,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=1629900k,mode=755)
+/dev/sdb on /cdrom type iso9660 (ro,noatime,nojoliet,check=s,map=n,blocksize=2048)
+/dev/loop0 on /rofs type squashfs (ro,noatime)
+/cow on / type overlay (rw,relatime,lowerdir=//filesystem.squashfs,upperdir=/cow/upper,workdir=/cow/work)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/unified type cgroup2 (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/rdma type cgroup (rw,nosuid,nodev,noexec,relatime,rdma)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=29,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=12113)
+mqueue on /dev/mqueue type mqueue (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=2M)
+configfs on /sys/kernel/config type configfs (rw,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,relatime)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev,relatime)
+tmpfs on /run/user/999 type tmpfs (rw,nosuid,nodev,relatime,size=1629896k,mode=700,uid=999,gid=999)
+gvfsd-fuse on /run/user/999/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=999,group_id=999)
+/dev/sda1 on /mnt/boot-sav/sda1 type ext4 (rw,relatime,data=ordered)
+
+
+
+
+=================== ls:
+/sys/block/sda (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight integrity power queue range removable ro sda1 size slaves stat subsystem trace uevent
+/sys/block/sdb (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight integrity power queue range removable ro sdb1 size slaves stat subsystem trace uevent
+/dev (filtered):  acpi_thermal_rel autofs block bsg btrfs-control bus char console core cpu cpu_dma_latency cuse disk dri drm_dp_aux0 drm_dp_aux1 ecryptfs fb0 fd freefall full fuse hpet hugepages hwrng i2c-0 i2c-1 i2c-2 i2c-3 i2c-4 i2c-5 i2c-6 i2c-7 i2c-8 initctl input kmsg kvm lightnvm log mapper mcelog media0 mei0 mem memory_bandwidth mqueue mtd0 mtd0ro net network_latency network_throughput null port ppp psaux ptmx ptp0 pts random rfkill rtc rtc0 sda sda1 sdb sdb1 sg0 sg1 shm snapshot snd stderr stdin stdout uhid uinput urandom userio v4l vfio vga_arbiter vhci vhost-net vhost-vsock video0 zero
+ls /dev/mapper:  control
+
+
+=================== df -Th:
+
+
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  7.8G     0  7.8G   0% /dev
+tmpfs          tmpfs     1.6G  9.7M  1.6G   1% /run
+/dev/sdb       iso9660   708M  708M     0 100% /cdrom
+/dev/loop0     squashfs  630M  630M     0 100% /rofs
+/cow           overlay   7.8G  7.9M  7.8G   1% /
+tmpfs          tmpfs     7.8G     0  7.8G   0% /dev/shm
+tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+tmpfs          tmpfs     7.8G     0  7.8G   0% /sys/fs/cgroup
+tmpfs          tmpfs     7.8G  4.0K  7.8G   1% /tmp
+tmpfs          tmpfs     1.6G  4.0K  1.6G   1% /run/user/999
+/dev/sda1      ext4      219G   92G  117G  45% /mnt/boot-sav/sda1
+
+
+=================== fdisk -l:
+Disk /dev/loop0: 629.3 MiB, 659873792 bytes, 1288816 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+
+
+Disk /dev/sda: 238.5 GiB, 256060514304 bytes, 500118192 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x7d9c9277
+
+
+Device     Boot Start       End   Sectors   Size Id Type
+/dev/sda1  *     2048 466825215 466823168 222.6G 83 Linux
+
+
+
+
+Disk /dev/sdb: 1.9 GiB, 1992294400 bytes, 3891200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x6b8b4567
+
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/sdb1  *        0 1449983 1449984  708M 17 Hidden HPFS/NTFS
+
+
+
+
+Disk /dev/zram0: 2 GiB, 2086273024 bytes, 509344 sectors
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+
+
+Disk /dev/zram1: 2 GiB, 2086273024 bytes, 509344 sectors
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+
+
+Disk /dev/zram2: 2 GiB, 2086273024 bytes, 509344 sectors
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+
+
+Disk /dev/zram3: 2 GiB, 2086273024 bytes, 509344 sectors
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+
+
+
+
+=================== Recommended repair
+The default repair of the Boot-Repair utility will reinstall the grub2 of sda1 into the MBR of sda.
+Additional repair will be performed: unhide-bootmenu-10s
+
+
+
+
+lspci: Unable to load libkmod resources: error -12
+
+
+*******lspci -nnk | grep -iA3 vga
+00:02.0 VGA compatible controller [0300]: Intel Corporation HD Graphics 5500 [8086:1616] (rev 09)
+Subsystem: Dell HD Graphics 5500 [1028:062b]
+Kernel driver in use: i915
+00:03.0 Audio device [0403]: Intel Corporation Broadwell-U Audio Controller [8086:160c] (rev 09)
+*******
+
+
+grub-install --version
+grub-install (GRUB) 2.02-2ubuntu8.4,grub-install (GRUB) 2.
+
+
+Reinstall the GRUB of sda1 into the MBR of sda
+Installing for i386-pc platform.
+Installation finished. No error reported.
+grub-install /dev/sda: exit code of grub-install /dev/sda:0
+
+
+chroot /mnt/boot-sav/sda1 update-grub
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-4.15.0-34-generic
+Found initrd image: /boot/initrd.img-4.15.0-34-generic
+Found linux image: /boot/vmlinuz-4.15.0-29-generic
+Found initrd image: /boot/initrd.img-4.15.0-29-generic
+Found memtest86+ image: /boot/memtest86+.elf
+Found memtest86+ image: /boot/memtest86+.bin
+Unhide GRUB boot menu in sda1/boot/grub/grub.cfg
+
+
+Le démarrage de l'ordinateur a été correctement réparé.
+
+
+Vous pouvez maintenant redémarrer votre ordinateur.
+
+
+
+
+Les fichiers de démarrage de [Ubuntu 18.04.1 LTS] sont loin du début du disque. Votre BIOS pourrait ne pas les détecter. Vous voudrez peut-être re-essayer après avoir créé une partition /boot (EXT4, >200MB, en début de disque). Cela peut être réalisé via des outils tels que gParted. Puis sélectionnez cette partition via l'option [Partition /boot séparée :] de [Réparateur de démarrage]. (http://doc.ubuntu-fr.org/tutoriel/partition_boot)
+```
+
+
+I tried to fix Boot-Info boot errors by booting it to a LiveUSB but nothing helps ..
+
+
+
+
+(I remember removing the xml2 package too ... if it can help solve the problem)
+
+
+
+
+Thank you in advance, I am a student and I confess that I am very annoyed because there are files that I need including CVs and cover letter.
+
+---
+
+### Post by oldfred on 2018-11-24
+It says it reinstalled grub ok.
+
+It seems like a video driver issue, but I do not know CUDA and what it requires. 
+
+Can you get grub menu, by holding shift key from UEFI/BIOS screen until grub menu appears?
+And then boot with recovery mode, second or third in menu?
+That should give you command line.
+
+I am concerned about what you may have uninstalled. Some uninstall critical system files and then system is difficult to repair by those that know Linux and just about impossible for newer users.
+
+Can you boot live installer and see your sda1 partition to recover your files.
+You always should have good backups of anything you think may be important. Hard drives fail, systems break, users corrupt systems and other issues happen. If you have good backups then they are not the end of the world.
+
+---
+
+### Post by yoloo-78 on 2018-11-24
+I boot my computer with ubuntu Session live but when i mount my sda1 ( my main partition where all my files are) i have a fike who s name is : acces to your private desktop.desktop....
+
+My ssd is crypted... how CAN i do
+
+---
+
+### Post by yoloo-78 on 2018-11-25
+Now i dont want to fix my computer i juste want to get  à Bak up but its impossible too..
+
+---
+
+### Post by oldfred on 2018-11-25
+With encrypted systems, you really have to do regular backups when the system is working.
+Much harder to do afterwards, and if you do not have passphrase then impossible which is what you really want if you want encrypted. No one else should be able to get your data.
+
+       Recover files on encrypted drive
+[https://ubuntuforums.org/showthread.php?t=2382995](https://ubuntuforums.org/showthread.php?t=2382995)
+[https://askubuntu.com/questions/63594/mount-encrypted-volumes-from-command-line](https://askubuntu.com/questions/63594/mount-encrypted-volumes-from-command-line) 
+    
+The first part of this is mounting, then you may be able to run fsck or backup data.
+       How to: Mount & Resize an Encrypted Partition (LUKS) also mount for repairs
+[http://ubuntuforums.org/showthread.php?p=4530641](http://ubuntuforums.org/showthread.php?p=4530641)
+
+---
+
+### Post by yoloo-78 on 2018-11-26
+It's so difficult i dont understand
+
+---
+
+### Post by yoloo-78 on 2018-11-26
+I never choose to crypt my SSD when i installed Ubuntu
+
+---
+
+### Post by oldfred on 2018-11-26
+Ubuntu does not look like it is encrypted. You said SSD was encrypted?
+
+From live installer, can you mount & see data.
+Or what exactly is the error?
+
+You may want to run fsck to see it that repairs file system.
+       To see all the ext4 partitions
+sudo parted -l
+#From liveDVD/Flash so everything is unmounted,swap off if necessary, change example shown with partition sda1 to your partition(s)
+#e2fsck is used to check the ext2/ext3/ext4 family of file systems. -p tries fixes where response not required
+sudo e2fsck -C0 -p -f -v /dev/sda1
+# -y auto answers yes for fixes needing response, also see man e2fsck
+sudo e2fsck -f -y -v /dev/sda1
+
+---
+
+### Post by yoloo-78 on 2018-11-26
+I dont know if my ssd is encrypted or not but one time i went to the folder (on my sda1 boot partition) and i saw in Home/Me/ a file who's name is Active your private desktop.desktop ? 
+It's mean my partition is crypted ? 
+
+How to mount my sda1 and see if there is a key to listen my ssd to do a copy? 
+
+```
+sudo parted -l
+Modèle: ATA SanDisk X300 2.5 (scsi)
+Disque /dev/sda : 256GB
+Taille des secteurs (logiques/physiques): 512B/512B
+Table de partitions : msdos
+Disk Flags: 
+
+Numéro  Début   Fin    Taille  Type     Système de fichiers  Fanions
+ 1      1049kB  239GB  239GB   primary  ext4                 démarrage
+
+
+Avertissement: Le descripteur du pilote indique une taille physique de bloc de
+2048 octets, mais Linux lui indique 512 octets.
+Ignorer/Ignore/Annuler/Cancel? Ignorer                                    
+Modèle: Generic Flash Disk (scsi)
+Disque /dev/sdb : 16,4GB
+Taille des secteurs (logiques/physiques): 2048B/512B
+Table de partitions : mac
+Disk Flags: 
+
+Numéro  Début   Fin     Taille  Système de fichiers  Nom    Fanions
+ 1      2048B   6143B   4096B                        Apple
+ 2      1913MB  1916MB  2392kB                       EFI
+
+
+
+```
+
+---
+
+### Post by dragonfly41 on 2018-11-26
+Possibly use .. [TestDisk]("https://www.cgsecurity.org/wiki/TestDisk_FR") .. to inspect the inner structure and recover any files.
+
+TestDisk is applied to an *unmounted* drive.
+
+---
+
+### Post by yoloo-78 on 2018-11-26
+I dont want copy all my data.. thats why i want choose some files from sda1 /home/rahmoun
+
+---
+
+### Post by yoloo-78 on 2018-11-26
+```
+root@ubuntu:/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/rahmoun# ecryptfs-recover-private 
+INFO: Searching for encrypted private directories (this might take a while)...
+INFO: Found [/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/.ecryptfs/rahmoun/.Private].
+Try to recover this directory? [Y/n]: Y
+INFO: Found your wrapped-passphrase
+Do you know your LOGIN passphrase? [Y/n] n
+INFO: To recover this directory, you MUST have your original MOUNT passphrase.
+INFO: When you first setup your encrypted private directory, you were told to record
+INFO: your MOUNT passphrase.
+INFO: It should be 32 characters long, consisting of [0-9] and [a-f].
+
+Enter your MOUNT passphrase: 
+mount: /tmp/ecryptfs.ZdsyKMHr : échec de l&#8217;appel système mount(2) : Aucun fichier ou dossier de ce type.
+ERROR: Failed to mount private data at [/tmp/ecryptfs.ZdsyKMHr].
+root@ubuntu:/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/rahmoun# ecryptfs-recover-private 
+INFO: Searching for encrypted private directories (this might take a while)...
+INFO: Found [/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/.ecryptfs/rahmoun/.Private].
+Try to recover this directory? [Y/n]: Y
+INFO: Found your wrapped-passphrase
+Do you know your LOGIN passphrase? [Y/n] Y
+INFO: Enter your LOGIN passphrase...
+Passphrase: 
+Inserted auth tok with sig [28a891756f04efa7] into the user session keyring
+mount: /tmp/ecryptfs.QmnuiLa2 : échec de l&#8217;appel système mount(2) : Aucun fichier ou dossier de ce type.
+ERROR: Failed to mount private data at [/tmp/ecryptfs.QmnuiLa2].
+root@ubuntu:/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/rahmoun# ecryptfs-recover-private 
+INFO: Searching for encrypted private directories (this might take a while)...
+INFO: Found [/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/.ecryptfs/rahmoun/.Private].
+Try to recover this directory? [Y/n]: Y
+INFO: Found your wrapped-passphrase
+Do you know your LOGIN passphrase? [Y/n] Y
+INFO: Enter your LOGIN passphrase...
+Passphrase: 
+Error: Unwrapping passphrase and inserting into the user session keyring failed [-5]
+Info: Check the system log for more information from libecryptfs
+root@ubuntu:/media/ubuntu/f9dd3754-10d9-45a5-91d1-a2c0062c73c0/home/rahmoun# 
+
+```
+
+---
+
+### Post by oldfred on 2018-11-26
+Do not know if your passphrase is incorrect or if file system needs repair and will not mount.
+
+But if you do not know correct passphrase then you will not be able to get to data.
+[https://ubuntuforums.org/showthread.php?t=2028865](https://ubuntuforums.org/showthread.php?t=2028865)
+[https://help.ubuntu.com/community/EncryptedPrivateDirectory/#Live_CD_method_of_opening_a_encrypted_home_directory](https://help.ubuntu.com/community/EncryptedPrivateDirectory/#Live_CD_method_of_opening_a_encrypted_home_directory)
+
+New installs do offer the encrypted /home, but only full drive encryption using LVM which erases entire drive.
+Users can always separately encrypt partitions, folders, or files using various tools.
+
+---
+

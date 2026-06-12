@@ -1,0 +1,184 @@
+---
+title: "Proftpd configuration help"
+date: 2007-10-11
+forum: General Help
+---
+
+### Post by IkKan on 2007-10-11
+HI there,
+
+I am a noob at proFTPD,  actually at FTP at all... 
+
+Anyway, I have proFTPD server up and running on CentOS Linux 5, and I am using Webmin version 1.340...  I have to make a few FTP user acounts, and I have no idea how to do this...  My proftpd.conf file look like this:
+
+"
+# This is the ProFTPD configuration file
+# $Id: proftpd.conf,v 1.1 2004/02/26 17:54:30 thias Exp $
+
+ServerName			"ProFTPD server"
+ServerIdent			on "FTP Server ready."
+ServerAdmin			root@localhost
+ServerType			standalone
+#ServerType			inetd
+DefaultServer			on
+AccessGrantMsg			"User %u logged in."
+#DisplayConnect			/etc/ftpissue
+#DisplayLogin			/etc/ftpmotd
+#DisplayGoAway			/etc/ftpgoaway
+DeferWelcome			off
+
+# Use this to excude users from the chroot
+DefaultRoot			~ !adm
+
+# Use pam to authenticate (default) and be authoritative
+AuthPAMConfig			proftpd
+AuthOrder			mod_auth_pam.c* mod_auth_unix.c
+
+# Do not perform ident nor DNS lookups (hangs when the port is filtered)
+IdentLookups			off
+UseReverseDNS			off
+
+# Port 21 is the standard FTP port.
+Port				21
+
+# Umask 022 is a good standard umask to prevent new dirs and files
+# from being group and world writable.
+Umask				022
+
+# Default to show dot files in directory listings
+ListOptions			"-a"
+
+# See Configuration.html for these (here are the default values)
+#MultilineRFC2228		off
+#RootLogin			off
+#LoginPasswordPrompt		on
+#MaxLoginAttempts		3
+#MaxClientsPerHost		none
+#AllowForeignAddress		off	# For FXP
+
+# Allow to resume not only the downloads but the uploads too
+AllowRetrieveRestart		on
+AllowStoreRestart		on
+
+# To prevent DoS attacks, set the maximum number of child processes
+# to 30.  If you need to allow more than 30 concurrent connections
+# at once, simply increase this value.  Note that this ONLY works
+# in standalone mode, in inetd mode you should use an inetd server
+# that allows you to limit maximum number of processes per service
+# (such as xinetd)
+MaxInstances			20
+
+# Set the user and group that the server normally runs at.
+User				nobody
+Group				nobody
+
+# Disable sendfile by default since it breaks displaying the download speeds in
+# ftptop and ftpwho
+UseSendfile			no
+
+# This is where we want to put the pid file
+ScoreboardFile			/var/run/proftpd.score
+
+# Normally, we want users to do a few things.
+<Global>
+  AllowOverwrite		yes
+  <Limit ALL SITE_CHMOD>
+    AllowAll
+  </Limit>
+DefaultRoot ~
+</Global>
+
+# Define the log formats
+LogFormat			default	"%h %l %u %t \"%r\" %s %b"
+LogFormat			auth	"%v [%P] %h %t \"%r\" %s"
+
+# TLS
+# Explained at [http://www.castaglia.org/proftpd/modules/mod_tls.html](http://www.castaglia.org/proftpd/modules/mod_tls.html)
+#TLSEngine			on
+#TLSRequired			on
+#TLSRSACertificateFile		/etc/pki/tls/certs/proftpd.pem
+#TLSRSACertificateKeyFile	/etc/pki/tls/certs/proftpd.pem
+#TLSCipherSuite			ALL:!ADH:!DES
+#TLSOptions			NoCertRequest
+#TLSVerifyClient		off
+##TLSRenegotiate		ctrl 3600 data 512000 required off timeout 300
+#TLSLog				/var/log/proftpd/tls.log
+
+# SQL authentication Dynamic Shared Object (DSO) loading
+# See README.DSO and howto/DSO.html for more details.
+#<IfModule mod_dso.c>
+#   LoadModule mod_sql.c
+#   LoadModule mod_sql_mysql.c
+#   LoadModule mod_sql_postgres.c
+#</IfModule>
+
+# A basic anonymous configuration, with an upload directory.
+#<Anonymous ~ftp>
+#  User				ftp
+#  Group				ftp
+#  AccessGrantMsg		"Anonymous login ok, restrictions apply."
+#
+#  # We want clients to be able to login with "anonymous" as well as "ftp"
+#  UserAlias			anonymous ftp
+#
+#  # Limit the maximum number of anonymous logins
+#  MaxClients			10 "Sorry, max %m users -- try again later"
+#
+#  # Put the user into /pub right after login
+#  #DefaultChdir			/pub
+#
+#  # We want 'welcome.msg' displayed at login, '.message' displayed in
+#  # each newly chdired directory and tell users to read README* files. 
+#  DisplayLogin			/welcome.msg
+#  DisplayFirstChdir		.message
+#  DisplayReadme			README*
+#
+#  # Some more cosmetic and not vital stuff
+#  DirFakeUser			on ftp
+#  DirFakeGroup			on ftp
+#
+#  # Limit WRITE everywhere in the anonymous chroot
+#  <Limit WRITE SITE_CHMOD>
+#    DenyAll
+#  </Limit>
+#
+#  # An upload directory that allows storing files but not retrieving
+#  # or creating directories.
+#  <Directory uploads/*>
+#    AllowOverwrite		no
+#    <Limit READ>
+#      DenyAll
+#    </Limit>
+#
+#    <Limit STOR>
+#      AllowAll
+#    </Limit>
+#  </Directory>
+#
+#  # Don't write anonymous accesses to the system wtmp file (good idea!)
+#  WtmpLog			off
+#
+#  # Logging for the anonymous transfers
+#  ExtendedLog		/var/log/proftpd/access.log WRITE,READ default
+#  ExtendedLog		/var/log/proftpd/auth.log AUTH auth
+#
+#</Anonymous>
+
+"
+That is default conf file, I didn't change a thing... What should I change? Do I have to make a virtual host or what??? And how to do this???
+
+Can someone help me with this???!!! Please...
+
+---
+
+### Post by thirddeep on 2007-10-11
+Not to put too fine a point on it, but this is the Ubuntu forum, not Centos :-)
+
+Proftpd actually has really good docs on the site. 
+
+A quick look at that config, you should be able just to create new system users and they should be able to log in with FTP.
+
+Thd.
+
+---
+
