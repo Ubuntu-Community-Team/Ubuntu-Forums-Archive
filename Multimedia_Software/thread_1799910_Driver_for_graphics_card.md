@@ -1,0 +1,423 @@
+---
+title: "Driver for graphics card?"
+date: 2011-07-08
+forum: Multimedia Software
+---
+
+### Post by evilbrent on 2011-07-08
+I have this graphics card on this computer 
+
+```
+brent@doris:~$ lspci -v | grep VGA
+00:02.0 VGA compatible controller: Intel Corporation 82945G/GZ Integrated Graphics Controller (rev 02) (prog-if 00 [VGA controller])
+
+```
+
+but it doesn't seem to be doing anything. When I install and run > glxgears -info I get about 300 fps where my main computer gets about 6000.
+
+It seems that I have direct rendering, whatever that is, working because glxgears gives
+
+```
+brent@doris:~$ glxinfo | grep direct
+direct rendering: Yes
+```
+
+
+I'd really love to get the graphics card on this computer up and running because I'm using it as a multimedia player for my widescreen telly.
+
+Can anyone help me install the right driver?
+
+I've seen some advice to edit /etc/X11/xorg.conf but I don't have a file of that name in that location.
+
+Any help would be appreciated.
+
+---
+
+### Post by realzippy on 2011-07-08
+Which Ubuntu version do you run?
+
+---
+
+### Post by evilbrent on 2011-07-08
+Sorry - Ubuntu 11.04.
+
+I've just seen from running lspci -vv that there is a 256M graphics card on this computer.
+
+---
+
+### Post by ejimex on 2011-07-08
+Hi... If really have to update or download the lastest driver for graphic card.. You have to know the operating system version.  Visit [http://support.amd.com/us/gpudownload/Pages/index.aspx](http://support.amd.com/us/gpudownload/Pages/index.aspx) for 
+Graphics Driver Help Videos
+ The videos below will guide you step-by-step through identifying your  graphics card, downloading graphics drivers, uninstalling your old  graphics drivers and installing new graphics drivers.
+ 
+for your Intel downloads you can also visit...  [http://downloadcenter.intel.com/](http://downloadcenter.intel.com/)
+
+
+Enjoy....
+
+---
+
+### Post by BicyclerBoy on 2011-07-08
+That is way to hard & not really necessary ..
+
+The intel 82945G chipset graphics (GMA 950) with shared 256MB system memory is barely able to pull the skin off custard so glxgears=300 is probably okay.
+The glxgears is not a real benchmark/metric but a good test that something is working.
+
+I have found the xorg-edgers ppa intel drivers are required to get any graphics performance.
+
+[https://launchpad.net/~xorg-edgers/+archive/ppa?field.series_filter=natty]("https://launchpad.net/%7Exorg-edgers/+archive/ppa?field.series_filter=natty")
+
+change the distro filter if necessary (from natty).
+
+See how that goes before editing your xorg.conf file..
+You may not need to make any changes to xorg.conf so try that first.
+
+You may need to add  "intel" to the driver section & DRI to modules section.
+Option "AccelMethod" "UXA"      to the serverflags or device section.
+
+---
+
+### Post by evilbrent on 2011-07-08
+Hi, thanks.
+
+Ok, I installed the software source and did sudo apt-get update.
+
+Stupid question time:now what?
+
+I rebooted. 
+
+My glxgears is still about 60 fps and I can't get a resolution higher than 1024 x 768.
+
+I'd like to give editing xorg.conf a go, but, like I said, I can't find it.
+
+---
+
+### Post by evilbrent on 2011-07-08
+ok i've had a bit of trouble editing xorg.conf and may have made matters worse.
+
+Firstly, it doesn't exist anymore, and creating it doesn't seem straightforward.
+
+I made something called xorg.conf in the right spot - when I open it read-only it has lots of relevant looking sections, when I open it sudo it's blank and says "file doesn't exist" when I go to save it.
+
+And then suddenly my screen went haywire (only horizontal lines) and I had to reboot.
+
+And now I'm noticing that my performance is even worse: the screen is noticeably flickery and I'm seeing some things missing (weird things like the headers in gmail aren't small and neat they're blocky and texty, and intead of being greeted with an "Auto-login blah blah blah" prompt at login there's just a big blank box.)
+
+Now I just want to undo what I've done.
+
+---
+
+### Post by evilbrent on 2011-07-08
+yerp. borked.
+
+finally figured out how to edit xorg.conf (file path is case sensitive) and added section to the bottom of it as per instructions I found.
+
+Restarted computer.
+
+Ubuntu no screenie.
+
+Now I guess I have to boot from a live-thumbstick and try to undo the damage I did. Bah.
+
+---
+
+### Post by evilbrent on 2011-07-08
+I've [read]("http://www.ubuntugeek.com/intel-graphics-performance-guide-for-ubuntu-904-jaunty-users.html") that I should be adding this to my xorg.conf.
+
+> Section &#8220;Device&#8221;
+Identifier &#8220;Configured Video Device&#8221;
+Driver &#8220;intel&#8221;
+Option &#8220;AccelMethod&#8221; &#8220;UXA&#8221;
+VideoRam 130560
+EndSection
+
+When I added that section the display wasn't recognised. I've just now gone in through the live-usb to remove the above offending lines from xorg.conf.
+
+Below is the current xorg.conf I think autogenerated by doing a Xorg -configure (I forget, i tried a bunch of things). Am I right in thinking that I can delete pretty much the whole thing?
+```
+
+Section "ServerLayout"
+    Identifier     "X.org Configured"
+    Screen      0  "Screen0" 0 0
+    Screen      1  "Screen1" RightOf "Screen0"
+    Screen      2  "Screen2" RightOf "Screen1"
+    InputDevice    "Mouse0" "CorePointer"
+    InputDevice    "Keyboard0" "CoreKeyboard"
+EndSection
+
+Section "Files"
+    ModulePath   "/usr/lib/xorg/modules"
+    FontPath     "/usr/share/fonts/X11/misc"
+    FontPath     "/usr/share/fonts/X11/cyrillic"
+    FontPath     "/usr/share/fonts/X11/100dpi/:unscaled"
+    FontPath     "/usr/share/fonts/X11/75dpi/:unscaled"
+    FontPath     "/usr/share/fonts/X11/Type1"
+    FontPath     "/usr/share/fonts/X11/100dpi"
+    FontPath     "/usr/share/fonts/X11/75dpi"
+    FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+    FontPath     "built-ins"
+EndSection
+
+Section "Module"
+    Load  "dbe"
+    Load  "glx"
+    Load  "dri2"
+    Load  "extmod"
+    Load  "record"
+    Load  "dri"
+EndSection
+
+Section "InputDevice"
+    Identifier  "Keyboard0"
+    Driver      "kbd"
+EndSection
+
+Section "InputDevice"
+    Identifier  "Mouse0"
+    Driver      "mouse"
+    Option        "Protocol" "auto"
+    Option        "Device" "/dev/input/mice"
+    Option        "ZAxisMapping" "4 5 6 7"
+EndSection
+
+Section "Monitor"
+    Identifier   "Monitor0"
+    VendorName   "Monitor Vendor"
+    ModelName    "Monitor Model"
+EndSection
+
+Section "Monitor"
+    Identifier   "Monitor1"
+    VendorName   "Monitor Vendor"
+    ModelName    "Monitor Model"
+EndSection
+
+Section "Monitor"
+    Identifier   "Monitor2"
+    VendorName   "Monitor Vendor"
+    ModelName    "Monitor Model"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz",
+        ### <percent>: "<f>%"
+        ### [arg]: arg optional
+        #Option     "LinearFramebuffer"      # [<bool>]
+        #Option     "Tiling"                 # [<bool>]
+        #Option     "XvPreferOverlay"        # [<bool>]
+        #Option     "ColorKey"               # <i>
+        #Option     "VideoKey"               # <i>
+        #Option     "HotPlug"                # [<bool>]
+        #Option     "Throttle"               # [<bool>]
+        #Option     "UseRelaxedFencing"      # [<bool>]
+        #Option     "UseVmap"                # [<bool>]
+        #Option     "ZaphodHeads"            # <str>
+    Identifier  "Card0"
+    Driver      "intel"
+    BusID       "PCI:0:2:0"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz",
+        ### <percent>: "<f>%"
+        ### [arg]: arg optional
+        #Option     "ShadowFB"               # [<bool>]
+        #Option     "Rotate"                 # <str>
+        #Option     "fbdev"                  # <str>
+        #Option     "debug"                  # [<bool>]
+    Identifier  "Card1"
+    Driver      "fbdev"
+    BusID       "PCI:0:2:0"
+EndSection
+
+Section "Device"
+        ### Available Driver options are:-
+        ### Values: <i>: integer, <f>: float, <bool>: "True"/"False",
+        ### <string>: "String", <freq>: "<f> Hz/kHz/MHz",
+        ### <percent>: "<f>%"
+        ### [arg]: arg optional
+        #Option     "ShadowFB"               # [<bool>]
+        #Option     "DefaultRefresh"         # [<bool>]
+        #Option     "ModeSetClearScreen"     # [<bool>]
+    Identifier  "Card2"
+    Driver      "vesa"
+    BusID       "PCI:0:2:0"
+EndSection
+
+Section "Screen"
+    Identifier "Screen0"
+    Device     "Card0"
+    Monitor    "Monitor0"
+    SubSection "Display"
+        Viewport   0 0
+        Depth     1
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     4
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     8
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     15
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     16
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     24
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier "Screen1"
+    Device     "Card1"
+    Monitor    "Monitor1"
+    SubSection "Display"
+        Viewport   0 0
+        Depth     1
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     4
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     8
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     15
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     16
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     24
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier "Screen2"
+    Device     "Card2"
+    Monitor    "Monitor2"
+    SubSection "Display"
+        Viewport   0 0
+        Depth     1
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     4
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     8
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     15
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     16
+    EndSubSection
+    SubSection "Display"
+        Viewport   0 0
+        Depth     24
+    EndSubSection
+EndSection
+```
+
+---
+
+### Post by BicyclerBoy on 2011-07-08
+Xorg only needs the bare minimum now.
+udev rules etc & auto module loading does away with most of it..
+
+My intel GMA900 945GME has run (very well) 10.10 & 11.04 unity 3d.
+/etc/X11/xorg.conf file:
+```
+
+Section "Module"
+        Load          "dri"
+        Load          "glx"
+EndSection
+
+Section "DRI"
+    Group "video"
+    Mode 0660
+EndSection
+
+Section "Device"
+        Identifier      "Configured Video Device"
+        Driver          "intel"
+        Option          "AccelMethod" "EXA"
+EndSection
+
+Section "Monitor"
+        Identifier      "Configured Monitor"
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Monitor         "Configured Monitor"
+        Device          "Configured Video Device"
+EndSection
+
+```
+Try EXA before trying UXA..
+Be aware that there are HDMI issues with the intel driver at present.
+
+---
+
+### Post by evilbrent on 2011-07-08
+cool, thanks. Linux is an interesting journey.
+
+Can I ask why you haven't put in a line about videoram?
+
+---
+
+### Post by BicyclerBoy on 2011-07-08
+I'm no intel graphics driver expert, the driver only interested me enough to make a netbook work a bit better.
+
+I did not add the videoram entry because:
+- recent examples don't. (lots of out-of-date stuff on web)
+- don't see why it is necessary (RAM reports okay)
+- less is more, I put in the least possible entries.
+- every entry needs to be understood before use. (I don't)
+- xorg.conf is not an all or nothing setup..there are other additional mechanisms & files.
+
+Add any additional entries one by one for debugging/bisecting problems.
+Try "EXA" before "UXA" for the same reason..
+
+
+Note that only the later intel graphics X4500HD GMA500 & iCPUs are capable of even attempting HTPC.
+
+---
+
+### Post by Yellow Pasque on 2011-07-08
+glxgears is not a benchmark, and 60fps = 60Hz = vsync. Also, the driver was installed correctly in the first place. All you've done is made things worse :o
+
+---
+
+### Post by BicyclerBoy on 2011-07-09
+Well originally he had 300fps so no sync-vertical blank..
+And the OP has not done any real harm..& just needs to edit one file to recover.
+The xorg-edgers has done no harm for my intel graphics performance.
+
+The openGL (glxgears) performance is only part/aspect of the video driver support.
+For HTPC the support of other features (if any) are more important especially for weak graphics chips.
+The OP graphics may not any h/w features that have not been exploited but I doubt the driver yet matches the windows driver.
+
+---
+

@@ -1,0 +1,274 @@
+---
+title: "can't burn with brasero"
+date: 2011-04-04
+forum: Multimedia Software
+---
+
+### Post by pollorodighiero on 2011-04-04
+hello, I am new with ubuntu 10.04, and I cannot burn any kind of CD or DVD with brasero
+I saved a log 
+
+Checking session consistency (brasero_burn_check_session_consistency brasero-burn.c:1737)
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode deactivating
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_FUILTV.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 239020399200 / bytes = 0 42163199
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_tag_lookup
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode New pad
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set volume level 0,000000 0,000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /media/458E077004D04153/Documents and Settings/Proprietario/Desktop/litfiba cd 1/Litfiba , Sole Nero.mp3 to /tmp/brasero_tmp_FUILTV.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 42163199 bytes (= 42163199 ns)
+=> padding 1105 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 81 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_6M0ATV.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 242024480720 / bytes = 0 42693119
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_tag_lookup
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode New pad
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set volume level 0,000000 0,000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+....................................................
+
+BraseroTranscode start decoding /media/458E077004D04153/Documents and Settings/Proprietario/Desktop/litfiba cd 1/Litfiba , Ferito-Tex.mp3 to /tmp/brasero_tmp_X1L3SV.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Retrieving tags
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 86588925 bytes (= 86588925 ns)
+=> padding 2307 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 259 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Finished track successfully
+BraseroTranscode stopping
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_current_track
+BraseroAudio2Cue called brasero_job_set_output_size_for_current_track
+BraseroAudio2Cue stopping
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_session_output_size
+BraseroAudio2Cue output set (IMAGE) image = /tmp/brasero_tmp_DYZATV.bin toc = /tmp/brasero_tmp_DYZATV.cue
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue called brasero_job_get_session_output_size
+BraseroAudio2Cue called brasero_job_get_image_output
+BraseroAudio2Cue called brasero_job_set_current_action
+BraseroAudio2Cue called brasero_job_get_fd_in
+BraseroAudio2Cue called brasero_job_get_tracks
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_FUILTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_6M0ATV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_53Y8SV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_8Q2CTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_K2K2SV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_6J26SV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_0GH9SV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_DUCKTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_U8PJTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_C69KTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_II1ETV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_4E0CTV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_P02ITV.cdr
+BraseroAudio2Cue Writing data from /tmp/brasero_tmp_X1L3SV.cdr
+BraseroAudio2Cue called brasero_job_get_audio_title
+BraseroAudio2Cue called brasero_job_get_tracks
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_FUILTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_6M0ATV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_53Y8SV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_8Q2CTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_K2K2SV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_6J26SV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_0GH9SV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_DUCKTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_U8PJTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_C69KTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_II1ETV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_4E0CTV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_P02ITV.cdr"
+BraseroAudio2Cue Writing cue entry for "/tmp/brasero_tmp_X1L3SV.cdr"
+BraseroAudio2Cue called brasero_job_get_session_output_size
+BraseroAudio2Cue called brasero_job_get_image_output
+BraseroAudio2Cue called brasero_job_add_track
+BraseroAudio2Cue called brasero_job_get_action
+BraseroAudio2Cue Finished successfully session
+BraseroAudio2Cue stopping
+BraseroWodim called brasero_job_get_action
+BraseroWodim getting varg
+BraseroWodim called brasero_job_get_action
+BraseroWodim got varg:
+BraseroWodim deactivating
+
+could anyone help me?
+many thanx, pollo rodighiero
+
+---
+

@@ -1,0 +1,252 @@
+---
+title: "Wasted System Resources?!"
+date: 2010-04-29
+forum: Multimedia Software
+---
+
+### Post by dave2001 on 2010-04-29
+So... I have installed RipperX and the Lame MP3 encoder, as well as Oggenc. I noticed that Ripperx plugins are loaded at boot. The thing which concerns me is that there are multiple instances of a plugin witht the same name showing in system monitor( or ps command). There are about 15 processes alone with the name "plugin-Lame." Here's the output of ~$ ps x
+
+```
+
+ 7002 ?        S      0:03 ripperX_plugin-cdparanoia 32 25100
+ 7009 ?        S      0:03 ripperX_plugin-cdparanoia 25132 19058
+ 7013 ?        S      0:00 ripperX_plugin-oggenc 32 25100
+ 7017 ?        S      0:03 ripperX_plugin-cdparanoia 44190 11132
+ 7021 ?        S      0:00 ripperX_plugin-oggenc 25132 19058
+ 7025 ?        S      0:02 ripperX_plugin-cdparanoia 55322 30065
+ 7029 ?        S      0:00 ripperX_plugin-oggenc 44190 11132
+ 7033 ?        S      0:03 ripperX_plugin-cdparanoia 85387 21280
+ 7037 ?        S      0:00 ripperX_plugin-oggenc 55322 30065
+ 7042 ?        S      0:03 ripperX_plugin-cdparanoia 106667 21513
+ 7045 ?        S      0:00 ripperX_plugin-oggenc 85387 21280
+ 7049 ?        S      0:03 ripperX_plugin-cdparanoia 128180 19185
+ 7053 ?        S      0:00 ripperX_plugin-oggenc 106667 21513
+ 7057 ?        S      0:03 ripperX_plugin-cdparanoia 147365 28957
+ 7061 ?        S      0:00 ripperX_plugin-oggenc 128180 19185
+ 7065 ?        S      0:03 ripperX_plugin-cdparanoia 176322 19078
+ 7069 ?        S      0:00 ripperX_plugin-oggenc 147365 28957
+ 7073 ?        S      0:02 ripperX_plugin-cdparanoia 195400 19772
+ 7078 ?        S      0:00 ripperX_plugin-oggenc 176322 19078
+ 7082 ?        S      0:03 ripperX_plugin-cdparanoia 215172 23220
+ 7086 ?        S      0:00 ripperX_plugin-oggenc 195400 19772
+ 7091 ?        S      0:03 ripperX_plugin-cdparanoia 238392 17585
+ 7094 ?        S      0:00 ripperX_plugin-oggenc 215172 23220
+ 7098 ?        S      0:02 ripperX_plugin-cdparanoia 255977 15640
+ 7102 ?        S      0:00 ripperX_plugin-oggenc 238392 17585
+ 7106 ?        S      0:03 ripperX_plugin-cdparanoia 271617 17680
+ 7110 ?        S      0:00 ripperX_plugin-oggenc 255977 15640
+ 7114 ?        S      0:02 ripperX_plugin-cdparanoia 289297 36123
+ 7118 ?        S      0:00 ripperX_plugin-oggenc 271617 17680
+ 7122 ?        S      0:00 ripperX_plugin-oggenc 289297 36123
+ 7213 ?        S      0:03 ripperX_plugin-cdparanoia 0 12339
+ 7221 ?        S      0:03 ripperX_plugin-cdparanoia 12339 6502
+ 7225 ?        S      0:00 ripperX_plugin-oggenc 0 12339
+ 7256 ?        S      0:02 ripperX_plugin-cdparanoia 18841 13995
+ 7260 ?        S      0:00 ripperX_plugin-oggenc 12339 6502
+ 7266 ?        S      0:03 ripperX_plugin-cdparanoia 32836 7479
+ 7270 ?        S      0:00 ripperX_plugin-oggenc 18841 13995
+ 7274 ?        S      0:02 ripperX_plugin-cdparanoia 40315 13750
+ 7279 ?        S      0:00 ripperX_plugin-oggenc 32836 7479
+ 7283 ?        S      0:03 ripperX_plugin-cdparanoia 54065 15979
+ 7287 ?        S      0:00 ripperX_plugin-oggenc 40315 13750
+ 7291 ?        S      0:03 ripperX_plugin-cdparanoia 70044 13717
+ 7295 ?        S      0:00 ripperX_plugin-oggenc 54065 15979
+ 7299 ?        S      0:02 ripperX_plugin-cdparanoia 83761 17975
+ 7303 ?        S      0:00 ripperX_plugin-oggenc 70044 13717
+ 7307 ?        S      0:02 ripperX_plugin-cdparanoia 101736 9939
+ 7311 ?        S      0:00 ripperX_plugin-oggenc 83761 17975
+ 7315 ?        S      0:02 ripperX_plugin-cdparanoia 111675 7392
+ 7319 ?        S      0:00 ripperX_plugin-oggenc 101736 9939
+ 7323 ?        S      0:03 ripperX_plugin-cdparanoia 119067 6920
+ 7333 ?        S      0:03 ripperX_plugin-cdparanoia 125987 10427
+ 7337 ?        S      0:00 ripperX_plugin-oggenc 111675 7392
+ 7342 ?        S      0:00 ripperX_plugin-oggenc 119067 6920
+ 7345 ?        S      0:02 ripperX_plugin-cdparanoia 136414 11062
+ 7349 ?        S      0:00 ripperX_plugin-oggenc 125987 10427
+ 7353 ?        S      0:03 ripperX_plugin-cdparanoia 147476 14579
+ 7357 ?        S      0:00 ripperX_plugin-oggenc 136414 11062
+ 7361 ?        S      0:03 ripperX_plugin-cdparanoia 162055 12200
+ 7365 ?        S      0:00 ripperX_plugin-oggenc 147476 14579
+ 7369 ?        S      0:02 ripperX_plugin-cdparanoia 174255 8929
+ 7373 ?        S      0:00 ripperX_plugin-oggenc 162055 12200
+ 7377 ?        S      0:02 ripperX_plugin-cdparanoia 183184 32275
+ 7381 ?        S      0:00 ripperX_plugin-oggenc 174255 8929
+ 7385 ?        S      0:02 ripperX_plugin-cdparanoia 215459 11364
+ 7389 ?        S      0:00 ripperX_plugin-oggenc 183184 32275
+ 7394 ?        S      0:02 ripperX_plugin-cdparanoia 226823 27163
+ 7399 ?        S      0:00 ripperX_plugin-oggenc 215459 11364
+ 7402 ?        S      0:00 ripperX_plugin-oggenc 226823 27163
+16329 ?        S      0:02 ripperX_plugin-cdparanoia 0 12339
+16339 ?        S      0:02 ripperX_plugin-cdparanoia 12339 6502
+16344 ?        S      0:00 ripperX_plugin-lame 0 12339
+16347 ?        S      0:02 ripperX_plugin-cdparanoia 18841 13995
+16352 ?        S      0:00 ripperX_plugin-lame 12339 6502
+16356 ?        S      0:02 ripperX_plugin-cdparanoia 32836 7479
+16360 ?        S      0:00 ripperX_plugin-lame 18841 13995
+16364 ?        S      0:02 ripperX_plugin-cdparanoia 40315 13750
+16369 ?        S      0:00 ripperX_plugin-lame 32836 7479
+16373 ?        S      0:02 ripperX_plugin-cdparanoia 54065 15979
+16377 ?        S      0:00 ripperX_plugin-lame 40315 13750
+16384 ?        S      0:02 ripperX_plugin-cdparanoia 70044 13717
+16388 ?        S      0:00 ripperX_plugin-lame 54065 15979
+16392 ?        S      0:02 ripperX_plugin-cdparanoia 83761 17975
+16396 ?        S      0:00 ripperX_plugin-lame 70044 13717
+16400 ?        S      0:02 ripperX_plugin-cdparanoia 101736 9939
+16406 ?        S      0:02 ripperX_plugin-cdparanoia 111675 7392
+16410 ?        S      0:00 ripperX_plugin-lame 83761 17975
+16414 ?        S      0:02 ripperX_plugin-cdparanoia 119067 6920
+16418 ?        S      0:02 ripperX_plugin-cdparanoia 125987 10427
+16424 ?        S      0:02 ripperX_plugin-cdparanoia 136414 11062
+16428 ?        S      0:00 ripperX_plugin-lame 101736 9939
+16432 ?        S      0:02 ripperX_plugin-cdparanoia 147476 14579
+16436 ?        S      0:00 ripperX_plugin-lame 111675 7392
+16440 ?        S      0:02 ripperX_plugin-cdparanoia 162055 12200
+16445 ?        S      0:00 ripperX_plugin-lame 119067 6920
+16449 ?        S      0:02 ripperX_plugin-cdparanoia 174255 8929
+16454 ?        S      0:00 ripperX_plugin-lame 125987 10427
+16458 ?        S      0:02 ripperX_plugin-cdparanoia 183184 32275
+16463 ?        S      0:00 ripperX_plugin-lame 136414 11062
+16469 ?        S      0:02 ripperX_plugin-cdparanoia 215459 11364
+16473 ?        S      0:00 ripperX_plugin-lame 147476 14579
+16478 ?        S      0:02 ripperX_plugin-cdparanoia 226823 27163
+16483 ?        S      0:00 ripperX_plugin-lame 162055 12200
+16487 ?        S      0:00 ripperX_plugin-lame 174255 8929
+16491 ?        S      0:00 ripperX_plugin-lame 183184 32275
+16499 ?        S      0:00 ripperX_plugin-lame 215459 11364
+16503 ?        S      0:00 ripperX_plugin-lame 226823 27163
+16616 ?        S      0:02 ripperX_plugin-cdparanoia 0 14860
+16630 ?        S      0:02 ripperX_plugin-cdparanoia 14860 25732
+16634 ?        S      0:00 ripperX_plugin-lame 0 14860
+16650 ?        S      0:02 ripperX_plugin-cdparanoia 40592 13368
+16652 ?        S      0:00 ripperX_plugin-lame 14860 25732
+16666 ?        S      0:02 ripperX_plugin-cdparanoia 53960 9040
+16669 ?        S      0:00 ripperX_plugin-lame 40592 13368
+16675 ?        S      0:02 ripperX_plugin-cdparanoia 63000 19690
+16679 ?        S      0:00 ripperX_plugin-lame 53960 9040
+16689 ?        S      0:02 ripperX_plugin-cdparanoia 82690 11462
+16693 ?        S      0:00 ripperX_plugin-lame 63000 19690
+16700 ?        S      0:02 ripperX_plugin-cdparanoia 94152 15948
+16703 ?        S      0:00 ripperX_plugin-lame 82690 11462
+16712 ?        S      0:02 ripperX_plugin-cdparanoia 110100 11782
+16713 ?        S      0:00 ripperX_plugin-lame 94152 15948
+16717 ?        S      0:01 ripperX_plugin-cdparanoia 121882 12913
+16721 ?        S      0:00 ripperX_plugin-lame 110100 11782
+16725 ?        S      0:02 ripperX_plugin-cdparanoia 134795 15812
+16729 ?        S      0:00 ripperX_plugin-lame 121882 12913
+16741 ?        S      0:02 ripperX_plugin-cdparanoia 150607 9163
+16745 ?        S      0:00 ripperX_plugin-lame 134795 15812
+16754 ?        S      0:02 ripperX_plugin-cdparanoia 159770 11517
+16759 ?        S      0:00 ripperX_plugin-lame 150607 9163
+16764 ?        S      0:02 ripperX_plugin-cdparanoia 171287 9910
+16770 ?        S      0:00 ripperX_plugin-lame 159770 11517
+16774 ?        S      0:02 ripperX_plugin-cdparanoia 181197 11043
+16780 ?        S      0:00 ripperX_plugin-lame 171287 9910
+16784 ?        S      0:02 ripperX_plugin-cdparanoia 192240 12760
+16788 ?        S      0:00 ripperX_plugin-lame 181197 11043
+16795 ?        S      0:02 ripperX_plugin-cdparanoia 205000 11480
+16799 ?        S      0:00 ripperX_plugin-lame 192240 12760
+16809 ?        S      0:02 ripperX_plugin-cdparanoia 216480 11265
+16813 ?        S      0:00 ripperX_plugin-lame 205000 11480
+16820 ?        S      0:02 ripperX_plugin-cdparanoia 227745 13550
+16823 ?        S      0:00 ripperX_plugin-lame 216480 11265
+16827 ?        S      0:02 ripperX_plugin-cdparanoia 241295 12630
+16831 ?        S      0:00 ripperX_plugin-lame 227745 13550
+16837 ?        S      0:02 ripperX_plugin-cdparanoia 253925 13392
+16841 ?        S      0:00 ripperX_plugin-lame 241295 12630
+16848 ?        S      0:02 ripperX_plugin-cdparanoia 267317 10065
+16852 ?        S      0:00 ripperX_plugin-lame 253925 13392
+16857 ?        S      0:00 ripperX_plugin-lame 267317 10065
+16894 ?        S      0:01 ripperX_plugin-cdparanoia 0 6255
+16902 ?        S      0:02 ripperX_plugin-cdparanoia 6255 17357
+16906 ?        S      0:00 ripperX_plugin-lame 0 6255
+16911 ?        S      0:01 ripperX_plugin-cdparanoia 23612 18633
+16915 ?        S      0:00 ripperX_plugin-lame 6255 17357
+16922 ?        S      0:02 ripperX_plugin-cdparanoia 42245 16002
+16926 ?        S      0:00 ripperX_plugin-lame 23612 18633
+16934 ?        S      0:02 ripperX_plugin-cdparanoia 58247 11405
+16937 ?        S      0:00 ripperX_plugin-lame 42245 16002
+16945 ?        S      0:02 ripperX_plugin-cdparanoia 69652 10173
+16953 ?        S      0:02 ripperX_plugin-cdparanoia 79825 19500
+16960 ?        S      0:00 ripperX_plugin-lame 58247 11405
+16964 ?        S      0:02 ripperX_plugin-cdparanoia 99325 11002
+16968 ?        S      0:00 ripperX_plugin-lame 69652 10173
+16973 ?        S      0:02 ripperX_plugin-cdparanoia 110327 11798
+16977 ?        S      0:02 ripperX_plugin-cdparanoia 122125 21692
+16981 ?        S      0:00 ripperX_plugin-lame 79825 19500
+16990 ?        S      0:00 ripperX_plugin-lame 99325 11002
+16993 ?        S      0:02 ripperX_plugin-cdparanoia 143817 18800
+16999 ?        S      0:02 ripperX_plugin-cdparanoia 162617 22783
+17003 ?        S      0:00 ripperX_plugin-lame 110327 11798
+17007 ?        S      0:02 ripperX_plugin-cdparanoia 185400 25510
+17011 ?        S      0:00 ripperX_plugin-lame 122125 21692
+17018 ?        S      0:00 ripperX_plugin-lame 143817 18800
+17021 ?        S      0:00 ripperX_plugin-lame 162617 22783
+17030 ?        S      0:00 ripperX_plugin-lame 185400 25510
+17812 ?        S      0:01 ripperX_plugin-cdparanoia 13595 20952
+17859 ?        S      0:01 ripperX_plugin-cdparanoia 34547 13795
+17863 ?        S      0:00 ripperX_plugin-lame 13595 20952
+17872 ?        S      0:01 ripperX_plugin-cdparanoia 98645 28982
+17876 ?        S      0:00 ripperX_plugin-lame 34547 13795
+17901 ?        S      0:01 ripperX_plugin-cdparanoia 127627 13928
+17902 ?        S      0:00 ripperX_plugin-lame 98645 28982
+17919 ?        S      0:00 ripperX_plugin-lame 127627 13928
+18242 ?        S      0:01 ripperX_plugin-cdparanoia 0 21847
+18252 ?        S      0:01 ripperX_plugin-cdparanoia 21847 23968
+18256 ?        S      0:00 ripperX_plugin-lame 0 21847
+18261 ?        S      0:01 ripperX_plugin-cdparanoia 45815 19467
+18271 ?        S      0:01 ripperX_plugin-cdparanoia 65282 22545
+18279 ?        S      0:01 ripperX_plugin-cdparanoia 87827 12933
+18284 ?        S      0:01 ripperX_plugin-cdparanoia 100760 20102
+18287 ?        S      0:00 ripperX_plugin-lame 21847 23968
+18295 ?        S      0:01 ripperX_plugin-cdparanoia 120862 21580
+18300 ?        S      0:01 ripperX_plugin-cdparanoia 142442 19290
+18305 ?        S      0:01 ripperX_plugin-cdparanoia 161732 7485
+18314 ?        S      0:00 ripperX_plugin-lame 45815 19467
+18320 ?        S      0:00 ripperX_plugin-lame 65282 22545
+18328 ?        S      0:00 ripperX_plugin-lame 87827 12933
+18337 ?        S      0:00 ripperX_plugin-lame 100760 20102
+18343 ?        S      0:00 ripperX_plugin-lame 120862 21580
+18351 ?        S      0:00 ripperX_plugin-lame 142442 19290
+18385 ?        S      0:00 ripperX_plugin-lame 161732 7485
+18547 ?        S      0:01 ripperX_plugin-cdparanoia 0 18777
+18593 ?        S      0:01 ripperX_plugin-cdparanoia 18777 16790
+18594 ?        S      0:00 ripperX_plugin-lame 0 18777
+18606 ?        S      0:01 ripperX_plugin-cdparanoia 35567 15770
+18610 ?        S      0:00 ripperX_plugin-lame 18777 16790
+18618 ?        S      0:01 ripperX_plugin-cdparanoia 51337 6075
+18622 ?        S      0:00 ripperX_plugin-lame 35567 15770
+18630 ?        S      0:01 ripperX_plugin-cdparanoia 57412 17120
+18631 ?        S      0:00 ripperX_plugin-lame 51337 6075
+18639 ?        S      0:01 ripperX_plugin-cdparanoia 74532 16960
+18643 ?        S      0:00 ripperX_plugin-lame 57412 17120
+18649 ?        S      0:01 ripperX_plugin-cdparanoia 91492 16908
+18653 ?        S      0:00 ripperX_plugin-lame 74532 16960
+18659 ?        S      0:01 ripperX_plugin-cdparanoia 108400 15745
+18663 ?        S      0:00 ripperX_plugin-lame 91492 16908
+18671 ?        S      0:01 ripperX_plugin-cdparanoia 124145 13725
+18675 ?        S      0:00 ripperX_plugin-lame 108400 15745
+18682 ?        S      0:01 ripperX_plugin-cdparanoia 137870 19515
+18685 ?        S      0:00 ripperX_plugin-lame 124145 13725
+18691 ?        S      0:01 ripperX_plugin-cdparanoia 157385 17270
+18695 ?        S      0:00 ripperX_plugin-lame 137870 19515
+18701 ?        S      0:01 ripperX_plugin-cdparanoia 174655 22710
+18705 ?        S      0:00 ripperX_plugin-lame 157385 17270
+18713 ?        S      0:01 ripperX_plugin-cdparanoia 197365 20138
+18716 ?        S      0:00 ripperX_plugin-lame 174655 22710
+18722 ?        S      0:01 ripperX_plugin-cdparanoia 217503 17772
+18726 ?        S      0:00 ripperX_plugin-lame 197365 20138
+18732 ?        S      0:01 ripperX_plugin-cdparanoia 235275 21494
+18738 ?        S      0:00 ripperX_plugin-lame 217503 17772
+18744 ?        S      0:00 ripperX_plugin-lame 235275 21494
+
+```Are these actually different? Or do I really have redundant instances running? I'm concerned because I have an old system with limited RAM, and all the plugins together make an impact. If they are all neccessary and needed for RipperX, is there a way to have them load up when RipperX is started, rather than at boot-time? I'm still new to Ubuntu, if I can provide any other helpful info, please let me know.
+Thanks for any input.
+
+---
+
+### Post by dave2001 on 2010-04-29
+bump
+
+---
+

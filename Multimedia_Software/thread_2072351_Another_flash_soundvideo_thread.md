@@ -1,0 +1,33 @@
+---
+title: "Another flash sound/video thread"
+date: 2012-10-17
+forum: Multimedia Software
+---
+
+### Post by idntknw on 2012-10-17
+Hello...
+
+I'm completely new to the Ubuntu scene and so far I really like it...
+
+My issue...I have Ubuntu dual booting with Windows 7, sorry I can't remember the specs but the PC is a couple years old...it runs a AMD processor and from what I can remember plenty of RAM... 
+
+Anyway...the problem is with the sound/video playback with youtube...two issues...
+
+One if I have all three plugins enabled in Chrome the video plays fine but the sound is very "tinny" sounding...if I open up the pulse audio controls while the video is playing the sound gets better for a few seconds then back to the tinny sound...
+
+Now, I can disable two plugins in chrome and leave the bottom one enabled (not sure the name of it) the sound is fine but the video is super choppy...(I have tired all variations of the three plugins turning off and on) 
+
+I have done a lot of searching and found a lot of try this threads but none have worked...
+
+Any ideas?...
+
+btw...the issue is the same in Firefox...mp3's that are on my pc play fine...
+
+And I'm using a Lexicon Alpha usb interface for my sound...
+
+Thanks
+
+Edit: I switched from unity to Ubuntu 2D and the video works correctly but the top bar the fonts have the greenish glow to them?...
+
+---
+

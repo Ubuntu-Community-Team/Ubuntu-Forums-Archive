@@ -1,0 +1,687 @@
+---
+title: "[Debian Stable]  Audacious 2.3 &quot;Song Change&quot; Plugin not working as expected"
+date: 2012-06-24
+forum: Multimedia Software
+---
+
+### Post by Mgiacchetti on 2012-06-24
+Using the 'Song Change' plugin, I'm trying to run a command when the song title changes.  Any command.  I am listening to a network stream so I can't use 'starts a new song' or 'toward the end of a song'.
+
+Anyway. No command will run when the track name changes.
+
+The OSD does work with the network stream.
+
+Help?
+
+---
+
+### Post by Jose Catre-Vandis on 2012-06-24
+Do you mean version 3.2 (not 2.3) ?
+
+In my preference the fourth option is to run a command when the song title changes (not the track) which is designed for network streams. I guess you have tried this one?
+
+Don't use audacious for this type of thing (luddite ;)) so can you give an example feed and I can test here...
+
+---
+
+### Post by Mgiacchetti on 2012-06-24
+> **Jose Catre-Vandis said:**
+> Do you mean version 3.2 (not 2.3) ?
+
+In my preference the fourth option is to run a command when the song title changes (not the track) which is designed for network streams. I guess you have tried this one?
+
+Don't use audacious for this type of thing (luddite ;)) so can you give an example feed and I can test here...
+
+Again, using Debain Squeeze so:
+```
+$ audacious -v
+Audacious 2.3 [Debian package]
+
+```Now, I understand Audacious has a built in (maybe not, I think I added one) Last.FM scrobbler, but it doesn't do 'network streams', so I made one of my own that does.
+
+The stream i'm using:
+[http://87.118.78.17:2410](http://87.118.78.17:2410)   (it's really chill ambient)
+
+The command in the box " to run a command when the song title changes (not the track) which is designed for network streams":
+```
+~/bin/scrobble 
+```And the contents of ~/bin/scrobble:
+```
+
+#!/bin/bash
+#Majorursa Scrobbler
+#
+#Requires lastfmsubmitd
+#This script has been built for scrobbling a specific radio stream to 
+#Last.fm.  
+#
+#Usage: scrobble ["Artist - Track Name"] ["length in milliseconds"]
+#When no argument is passed, it will automatically grab track name from audtool, gather the track length from majorursa.eu, then scrobble.
+#If an argument is passed, it will use that information to determine the track information 
+#from majorursa.eu, then scrobble.
+
+
+if [ ! -x '/usr/lib/lastfmsubmitd/lastfmsubmit' ]; then
+    echo "LastFMSubmitD does not appear to exist on this machine"
+    echo "You can install it using Apt or Yum"
+    exit 1
+fi
+
+temp=/home/$USER/temp/scrob.tmp
+
+#check to see if song name has been passed, and if it hasn't get the info.
+if [ "$#" == 0 ]; then
+  var=`audtool --current-song |cut -d[ -f1`
+  ARTIST=${var%% - *}
+  SONG=${var##* - }
+  LENGTH=`audtool --current-song-length-seconds`
+  if [ "$ARTIST" == "$SONG" ]; then
+    ARTIST=`audtool --current-song-tuple-data artist`
+  fi
+else
+  ARTIST=${1%% - *}
+  SONG=${1##* - }
+fi
+
+#Test if length was passed to script, if not grab from host
+if [ -z $2 ]; then
+  #Grab track length from host
+  if [ $LENGTH == 0 ]; then
+
+    #test the location and see if it's from majorursa    
+    loc=`audtool --current-song-tuple-data file-name |cut -d: -f1`
+    if [ "$loc" == "87.118.78.17" ]; then
+      wget -q -O $temp "http://www.majorursa.eu/"
+      DURATION=`grep -A6 "$ARTIST" $temp |grep '[0-9]:[0-9]' |cut -d">" -f2 |cut -d"<" -f1`
+
+      #remove leading zeroes so it's not treated as an octal
+      lena=`echo $DURATION|cut -d: -f1 | sed -e 's/^0\+//'`
+      lenb=`echo $DURATION|cut -d: -f2 | sed -e 's/^0\+//'`
+
+      #added because of zero length len variables beacuse of sed's magic above
+      if [ -z $lena ]; then
+        lena=0
+      elif [ -z $lenb ]; then
+        lenb=0
+      fi
+    fi
+    #calculate the length finally
+    LENGTH=$((($lena) * 60 + ($lenb)))
+    rm $temp
+  fi
+else
+  #Here is where the passed length (in ms) is calculated
+  LENGTH=$[$2/1000]
+fi
+
+#echo the information to be scrobbled and tell whether or not there will be an error in processing and exit if there is a problem
+echo "ARTIST: $ARTIST"
+echo "SONG: $SONG"
+echo "LENGTH: $LENGTH"
+if [ "$LENGTH" == "0" ]; then
+  echo 'Length is zero, scrobbling will not work'
+  exit 1
+elif [ -z "$ARTIST" ]; then
+  echo 'Artist field is empty, scrobbling will not work'
+  exit 1
+elif [ -z "$SONG" ]; then
+  echo 'Song field empty, scrobbling will not work'
+  exit 1
+fi
+
+#scrobble it
+/usr/lib/lastfmsubmitd/lastfmsubmit --artist "$ARTIST" --title "$SONG" --length "$LENGTH"
+
+```
+
+---
+
+### Post by Jose Catre-Vandis on 2012-06-24
+Doesn't work for me either. I also tried the .pls from the site without luck.
+
+Good sounds though :)
+
+---
+
+### Post by Mgiacchetti on 2012-06-24
+> **Jose Catre-Vandis said:**
+> Doesn't work for me either. I also tried the .pls from the site without luck.
+
+Good sounds though :)
+Yea the OSD plugin works when the track name changes, but it seems that i can't even get it to open a gnome-terminal when the track name changes.   It's like that specific area is broken or something.
+
+---
+
+### Post by Mgiacchetti on 2012-06-25
+[http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678921](http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=678921)
+
+Bug filed
+
+---
+
+### Post by Mgiacchetti on 2012-06-30
+> **Jose Catre-Vandis said:**
+> Do you mean version 3.2 (not 2.3) ?
+
+In my preference the fourth option is to run a command when the song title changes (not the track) which is designed for network streams. I guess you have tried this one?
+
+Don't use audacious for this type of thing (luddite ;)) so can you give an example feed and I can test here...
+Are you running 3.2.3?
+
+---
+
+### Post by Mgiacchetti on 2012-06-30
+Found the issue, apparently sometime along the way, the calls that that specific function makes changed, and no one bothered to look up the new calls (if they exist) (look for "#if 0" and all other #'d lines)
+
+```
+/*
+ * Audacious: A cross-platform multimedia player.
+ * Copyright (c) 2005  Audacious Team
+ */
+#include "config.h"
+
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+
+#include <string.h>
+
+#include <audacious/plugin.h>
+#include <audacious/ui_preferences.h>
+#include <audacious/auddrct.h>
+#include "formatter.h"
+#include <audacious/i18n.h>
+#include <audacious/hook.h>
+#include <audacious/preferences.h>
+
+static PluginPreferences preferences;
+
+static void init(void);
+static void cleanup(void);
+static void songchange_playback_begin(gpointer unused, gpointer unused2);
+static void songchange_playback_end(gpointer unused, gpointer unused2);
+static void songchange_playlist_eof(gpointer unused, gpointer unused2);
+//static void songchange_playback_ttc(gpointer, gpointer);
+
+typedef struct
+{
+  gchar *title;
+  gchar *filename;
+}
+songchange_playback_ttc_prevs_t;
+static songchange_playback_ttc_prevs_t *ttc_prevs = NULL;
+
+static char *cmd_line = NULL;
+static char *cmd_line_after = NULL;
+static char *cmd_line_end = NULL;
+static char *cmd_line_ttc = NULL;
+
+static GtkWidget *cmd_warn_label, *cmd_warn_img;
+
+GeneralPlugin sc_gp =
+{
+    .description = "Song Change " PACKAGE_VERSION,
+    .init = init,
+    .cleanup = cleanup,
+    .settings = &preferences,
+};
+
+GeneralPlugin *songchange_gplist[] = { &sc_gp, NULL };
+SIMPLE_GENERAL_PLUGIN(songchange, songchange_gplist);
+
+static void bury_child(int signal)
+{
+    waitpid(-1, NULL, WNOHANG);
+}
+
+static void execute_command(char *cmd)
+{
+    char *argv[4] = {"/bin/sh", "-c", NULL, NULL};
+    int i;
+    argv[2] = cmd;
+    signal(SIGCHLD, bury_child);
+    if (fork() == 0)
+    {
+        /* We don't want this process to hog the audio device etc */
+        for (i = 3; i < 255; i++)
+            close(i);
+        execv("/bin/sh", argv);
+    }
+}
+
+/* Format codes:
+ *
+ *   F - frequency (in hertz)
+ *   c - number of channels
+ *   f - filename (full path)
+ *   l - length (in milliseconds)
+ *   n - name
+ *   r - rate (in bits per second)
+ *   s - name (since everyone's used to it)
+ *   t - playlist position (%02d)
+ *   p - currently playing (1 or 0)
+ */
+/* do_command(): do @cmd after replacing the format codes
+   @cmd: command to run
+   @current_file: file name of current song
+   @pos: playlist_pos */
+static void
+do_command(char *cmd, const char *current_file, int pos)
+{
+    int length, rate, freq, nch;
+    char *str, *shstring = NULL, *temp, numbuf[32];
+    gboolean playing;
+    Formatter *formatter;
+
+    if (cmd && strlen(cmd) > 0)
+    {
+        formatter = formatter_new();
+        str = audacious_drct_pl_get_title(pos);
+        if (str)
+        {
+            temp = aud_escape_shell_chars(str);
+            formatter_associate(formatter, 's', temp);
+            formatter_associate(formatter, 'n', temp);
+            g_free(str);
+            g_free(temp);
+        }
+        else
+        {
+            formatter_associate(formatter, 's', "");
+            formatter_associate(formatter, 'n', "");
+        }
+
+        if (current_file)
+        {
+            temp = aud_escape_shell_chars(current_file);
+            formatter_associate(formatter, 'f', temp);
+            g_free(temp);
+        }
+        else
+            formatter_associate(formatter, 'f', "");
+        g_snprintf(numbuf, sizeof(numbuf), "%02d", pos + 1);
+        formatter_associate(formatter, 't', numbuf);
+        length = audacious_drct_pl_get_time(pos);
+        if (length != -1)
+        {
+            g_snprintf(numbuf, sizeof(numbuf), "%d", length);
+            formatter_associate(formatter, 'l', numbuf);
+        }
+        else
+            formatter_associate(formatter, 'l', "0");
+        audacious_drct_get_info(&rate, &freq, &nch);
+        g_snprintf(numbuf, sizeof(numbuf), "%d", rate);
+        formatter_associate(formatter, 'r', numbuf);
+        g_snprintf(numbuf, sizeof(numbuf), "%d", freq);
+        formatter_associate(formatter, 'F', numbuf);
+        g_snprintf(numbuf, sizeof(numbuf), "%d", nch);
+        formatter_associate(formatter, 'c', numbuf);
+        playing = audacious_drct_get_playing();
+        g_snprintf(numbuf, sizeof(numbuf), "%d", playing);
+        formatter_associate(formatter, 'p', numbuf);
+        shstring = formatter_format(formatter, cmd);
+        formatter_destroy(formatter);
+
+        if (shstring)
+        {
+            execute_command(shstring);
+            /* FIXME: This can possibly be freed too early */
+            g_free(shstring);
+        }
+    }
+}
+
+static void read_config(void)
+{
+    mcs_handle_t *db;
+
+    db = aud_cfg_db_open();
+    if ( !aud_cfg_db_get_string(db, "song_change", "cmd_line", &cmd_line) )
+        cmd_line = g_strdup("");
+    if ( !aud_cfg_db_get_string(db, "song_change", "cmd_line_after", &cmd_line_after) )
+        cmd_line_after = g_strdup("");
+    if ( !aud_cfg_db_get_string(db, "song_change", "cmd_line_end", &cmd_line_end) )
+        cmd_line_end = g_strdup("");
+    if ( !aud_cfg_db_get_string(db, "song_change", "cmd_line_ttc", &cmd_line_ttc) )
+        cmd_line_ttc = g_strdup("");
+    aud_cfg_db_close(db);
+}
+
+static void cleanup(void)
+{
+    aud_hook_dissociate("playback begin", songchange_playback_begin);
+    aud_hook_dissociate("playback end", songchange_playback_end);
+    aud_hook_dissociate("playlist end reached", songchange_playlist_eof);
+//      aud_hook_dissociate( "playlist set info" , songchange_playback_ttc);
+
+    if ( ttc_prevs != NULL )
+    {
+        if ( ttc_prevs->title != NULL ) g_free( ttc_prevs->title );
+        if ( ttc_prevs->filename != NULL ) g_free( ttc_prevs->filename );
+        g_free( ttc_prevs );
+        ttc_prevs = NULL;
+    }
+
+    g_free(cmd_line);
+    g_free(cmd_line_after);
+    g_free(cmd_line_end);
+    g_free(cmd_line_ttc);
+    cmd_line = NULL;
+    cmd_line_after = NULL;
+    cmd_line_end = NULL;
+    cmd_line_ttc = NULL;
+    signal(SIGCHLD, SIG_DFL);
+}
+
+static void save_and_close(gchar * cmd, gchar * cmd_after, gchar * cmd_end, gchar * cmd_ttc)
+{
+    mcs_handle_t *db;
+
+    db = aud_cfg_db_open();
+    aud_cfg_db_set_string(db, "song_change", "cmd_line", cmd);
+    aud_cfg_db_set_string(db, "song_change", "cmd_line_after", cmd_after);
+    aud_cfg_db_set_string(db, "song_change", "cmd_line_end", cmd_end);
+    aud_cfg_db_set_string(db, "song_change", "cmd_line_ttc", cmd_ttc);
+    aud_cfg_db_close(db);
+
+    if (cmd_line != NULL)
+        g_free(cmd_line);
+
+    cmd_line = g_strdup(cmd);
+
+    if (cmd_line_after != NULL)
+        g_free(cmd_line_after);
+
+    cmd_line_after = g_strdup(cmd_after);
+
+    if (cmd_line_end != NULL)
+        g_free(cmd_line_end);
+
+    cmd_line_end = g_strdup(cmd_end);
+
+    if (cmd_line_ttc != NULL)
+        g_free(cmd_line_ttc);
+
+    cmd_line_ttc = g_strdup(cmd_ttc);
+}
+
+static int check_command(char *command)
+{
+    const char *dangerous = "fns";
+    char *c;
+    int qu = 0;
+
+    for (c = command; *c != '\0'; c++)
+    {
+        if (*c == '"' && (c == command || *(c - 1) != '\\'))
+            qu = !qu;
+        else if (*c == '%' && !qu && strchr(dangerous, *(c + 1)))
+            return -1;
+    }
+    return 0;
+}
+
+static void init(void)
+{
+    read_config();
+
+    aud_hook_associate("playback begin", songchange_playback_begin, NULL);
+    aud_hook_associate("playback end", songchange_playback_end, NULL);
+    aud_hook_associate("playlist end reached", songchange_playlist_eof, NULL);
+
+    ttc_prevs = g_malloc0(sizeof(songchange_playback_ttc_prevs_t));
+    ttc_prevs->title = NULL;
+    ttc_prevs->filename = NULL;
+//    aud_hook_associate( "playlist set info" , songchange_playback_ttc , ttc_prevs );
+}
+
+static void
+songchange_playback_begin(gpointer unused, gpointer unused2)
+{
+    int pos;
+    char *current_file;
+
+    pos = audacious_drct_pl_get_pos();
+    current_file = audacious_drct_pl_get_file(pos);
+
+    do_command(cmd_line, current_file, pos);
+
+    g_free(current_file);
+}
+
+static void
+songchange_playback_end(gpointer unused, gpointer unused2)
+{
+    int pos;
+    char *current_file;
+
+    pos = audacious_drct_pl_get_pos();
+    current_file = audacious_drct_pl_get_file(pos);
+
+    do_command(cmd_line_after, current_file, pos);
+
+    g_free(current_file);
+}
+
+#if 0
+static void
+songchange_playback_ttc(gpointer plentry_gp, gpointer prevs_gp)
+{
+  if ( ( aud_ip_state->playing ) && ( strcmp(cmd_line_ttc,"") ) )
+  {
+    songchange_playback_ttc_prevs_t *prevs = prevs_gp;
+    PlaylistEntry *pl_entry = plentry_gp;
+
+    /* same filename but title changed, useful to detect http stream song changes */
+
+    if ( ( prevs->title != NULL ) && ( prevs->filename != NULL ) )
+    {
+      if ( ( pl_entry->filename != NULL ) && ( !strcmp(pl_entry->filename,prevs->filename) ) )
+      {
+        if ( ( pl_entry->title != NULL ) && ( strcmp(pl_entry->title,prevs->title) ) )
+        {
+          int pos = audacious_drct_pl_get_pos();
+          char *current_file = audacious_drct_pl_get_file(pos);
+          do_command(cmd_line_ttc, current_file, pos);
+          g_free(current_file);
+          g_free(prevs->title);
+          prevs->title = g_strdup(pl_entry->title);
+        }
+      }
+      else
+      {
+        g_free(prevs->filename);
+        prevs->filename = g_strdup(pl_entry->filename);
+        /* if filename changes, reset title as well */
+        if ( prevs->title != NULL )
+          g_free(prevs->title);
+        prevs->title = g_strdup(pl_entry->title);
+      }
+    }
+    else
+    {
+      if ( prevs->title != NULL )
+        g_free(prevs->title);
+      prevs->title = g_strdup(pl_entry->title);
+      if ( prevs->filename != NULL )
+        g_free(prevs->filename);
+      prevs->filename = g_strdup(pl_entry->filename);
+    }
+  }
+}
+#endif
+
+static void
+songchange_playlist_eof(gpointer unused, gpointer unused2)
+{
+    gint pos;
+    gchar *current_file;
+
+    pos = audacious_drct_pl_get_pos();
+    current_file = audacious_drct_pl_get_file(pos);
+
+    do_command(cmd_line_end, current_file, pos);
+
+    g_free(current_file);
+}
+
+typedef struct {
+    gchar * cmd;
+    gchar * cmd_after;
+    gchar * cmd_end;
+    gchar * cmd_ttc;
+} SongChangeConfig;
+
+static SongChangeConfig config = {NULL};
+
+static void configure_ok_cb()
+{
+    char *cmd, *cmd_after, *cmd_end, *cmd_ttc;
+g_message("AAAA");
+    cmd = g_strdup(config.cmd);
+    cmd_after = g_strdup(config.cmd_after);
+    cmd_end = g_strdup(config.cmd_end);
+    cmd_ttc = g_strdup(config.cmd_ttc);
+
+    if (check_command(cmd) < 0 || check_command(cmd_after) < 0 ||
+        check_command(cmd_end) < 0 || check_command(cmd_ttc) < 0)
+    {
+        gtk_widget_show(cmd_warn_img);
+        gtk_widget_show(cmd_warn_label);
+    }
+    else
+    {
+        gtk_widget_hide(cmd_warn_img);
+        gtk_widget_hide(cmd_warn_label);
+        save_and_close(cmd, cmd_after, cmd_end, cmd_ttc);
+    }
+
+    g_free(cmd);
+    g_free(cmd_after);
+    g_free(cmd_end);
+    g_free(cmd_ttc);
+}
+
+static PreferencesWidget elements[] = {
+    {WIDGET_LABEL, N_("Command to run when Audacious starts a new song."), NULL, NULL, NULL, FALSE, {.label = {.single_line = TRUE}}},
+    {WIDGET_ENTRY, N_("Command:"), &config.cmd, configure_ok_cb, NULL, FALSE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_SEPARATOR, NULL, NULL, NULL, NULL, FALSE, {.separator = {TRUE}}},
+
+    {WIDGET_LABEL, N_("Command to run toward the end of a song."), NULL, NULL, NULL, FALSE, {.label = {.single_line = TRUE}}},
+    {WIDGET_ENTRY, N_("Command:"), &config.cmd_after, configure_ok_cb, NULL, FALSE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_SEPARATOR, NULL, NULL, NULL, NULL, FALSE, {.separator = {TRUE}}},
+
+    {WIDGET_LABEL, N_("Command to run when Audacious reaches the end of the playlist."), NULL, NULL, NULL, FALSE, {.label = {.single_line = TRUE}}},
+    {WIDGET_ENTRY, N_("Command:"), &config.cmd_end, configure_ok_cb, NULL, FALSE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_SEPARATOR, NULL, NULL, NULL, NULL, FALSE, {.separator = {TRUE}}},
+
+    {WIDGET_LABEL, N_("Command to run when title changes for a song (i.e. network streams titles)."), NULL, NULL, NULL, FALSE, {.label = {.single_line = TRUE}}},
+    {WIDGET_ENTRY, N_("Command:"), &config.cmd_ttc, configure_ok_cb, NULL, FALSE, {.entry = {FALSE}}, VALUE_STRING},
+    {WIDGET_SEPARATOR, NULL, NULL, NULL, NULL, FALSE, {.separator = {TRUE}}},
+
+    {WIDGET_LABEL, N_("You can use the following format strings which\n"
+                      "will be substituted before calling the command\n"
+                      "(not all are useful for the end-of-playlist command).\n\n"
+                      "%F: Frequency (in hertz)\n"
+                      "%c: Number of channels\n"
+                      "%f: filename (full path)\n"
+                      "%l: length (in milliseconds)\n"
+                      "%n or %s: Song name\n"
+                      "%r: Rate (in bits per second)\n"
+                      "%t: Playlist position (%02d)\n"
+                      "%p: Currently playing (1 or 0)"), NULL, NULL, NULL, FALSE},
+};
+
+static GtkWidget *
+custom_warning(void)
+{
+    GtkWidget *bbox_hbox;
+    gchar * temp;
+
+    bbox_hbox = gtk_hbox_new(FALSE, 6);
+
+    cmd_warn_img = gtk_image_new_from_stock("gtk-dialog-warning", GTK_ICON_SIZE_MENU);
+    gtk_box_pack_start(GTK_BOX(bbox_hbox), cmd_warn_img, FALSE, FALSE, 0);
+
+    temp = g_strdup_printf(_("<span size='small'>Parameters passed to the shell should be encapsulated in quotes. Doing otherwise is a security risk.</span>"));
+    cmd_warn_label = gtk_label_new(temp);
+    gtk_label_set_markup(GTK_LABEL(cmd_warn_label), temp);
+    gtk_label_set_line_wrap(GTK_LABEL(cmd_warn_label), TRUE);
+    gtk_box_pack_start(GTK_BOX(bbox_hbox), cmd_warn_label, FALSE, FALSE, 0);
+    g_free(temp);
+
+    return bbox_hbox;
+}
+
+static PreferencesWidget settings[] = {
+    {WIDGET_BOX, N_("Commands"), NULL, NULL, NULL, FALSE,
+        {.box = {elements, G_N_ELEMENTS(elements),
+                 FALSE, TRUE}}},
+    {WIDGET_CUSTOM, NULL, NULL, NULL, NULL, FALSE, {.populate = custom_warning}},
+/*    {WIDGET_LABEL, N_("<span size='small'>Parameters passed to the shell should be encapsulated in quotes. Doing otherwise is a security risk.</span>"),
+        NULL, NULL, NULL, FALSE, {.label = {"gtk-dialog-warning"}}},*/
+};
+
+static void
+configure_init(void)
+{
+    read_config();
+
+    config.cmd = g_strdup(cmd_line);
+    config.cmd_after = g_strdup(cmd_line_after);
+    config.cmd_end = g_strdup(cmd_line_end);
+    config.cmd_ttc = g_strdup(cmd_line_ttc);
+}
+
+static void
+configure_cleanup(void)
+{
+    g_free(config.cmd);
+    config.cmd = NULL;
+
+    g_free(config.cmd_after);
+    config.cmd_after = NULL;
+
+    g_free(config.cmd_end);
+    config.cmd_end = NULL;
+
+    g_free(config.cmd_ttc);
+    config.cmd_ttc = NULL;
+}
+
+static PluginPreferences preferences = {
+    .title = N_("Song Change"),
+    .imgurl = DATA_DIR "/images/plugins.png",
+    .prefs = settings,
+    .n_prefs = G_N_ELEMENTS(settings),
+    .type = PREFERENCES_PAGE,
+    .init = configure_init,
+    /* TODO: .apply = configure_apply, */
+    .cleanup = configure_cleanup,
+};
+```
+
+---
+
+### Post by andrew.46 on 2012-07-03
+> **Jose Catre-Vandis said:**
+> Do you mean version 3.2 (not 2.3) ?
+
+3.2 is so last week!!
+
+```
+
+andrew@skamandros~$ audacious -v
+Audacious 3.2.4 (x86_64-slackware-linux)
+
+```
+
+:).
+
+---
+

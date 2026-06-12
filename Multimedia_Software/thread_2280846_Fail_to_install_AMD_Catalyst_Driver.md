@@ -1,0 +1,58 @@
+---
+title: "Fail to install AMD Catalyst Driver"
+date: 2015-06-02
+forum: Multimedia Software
+---
+
+### Post by nicolas40 on 2015-06-02
+So, I am having a lot of video tearing in my computer, even when I just drag a window around.
+So I thought I would install a AMD graphics card driver so it would stop, but after uninstalling previous drivers and running the installer I got a message saying that it had a problem while installing and generated the following log:
+
+Supported adapter detected.
+Check if system has the tools required for installation.
+Uninstalling any previously installed drivers.
+
+
+Creating symlink /var/lib/dkms/fglrx/14.20/source ->
+                 /usr/src/fglrx-14.20
+
+
+DKMS: add completed.
+
+
+Kernel preparation unnecessary for this kernel.  Skipping...
+
+
+Building module:
+cleaning build area....
+cd /var/lib/dkms/fglrx/14.20/build; sh make.sh --nohints --uname_r=3.16.0-38-generic --norootcheck......(bad exit status: 1)
+[Error] Kernel Module : Failed to build fglrx-14.20 with DKMS
+[Error] Kernel Module : Removing fglrx-14.20 from DKMS
+
+
+------------------------------
+Deleting module version: 14.20
+completely from the DKMS tree.
+------------------------------
+Done.
+[Reboot] Kernel Module : update-initramfs
+
+
+
+I'm running on a notebook with ElementaryOS(based on Ubuntu)
+Processor: Quad-Core AMD A8-3520M APU with Radeon(tm) HD Graphics
+Graphics Card: Advanced Micro Devices, Inc. [AMD/ATI] BeaverCreek [Radeon HD 6620G]                         Advanced Micro Devices, Inc. [AMD/ATI] Whistler [Radeon HD 6630M/6650M/6750M/7670M/7690M] (rev ff)
+
+I have just started using Linux, and this constant video tearing is very annoying. If someone could help me, it'd be awesome.
+
+---
+
+### Post by papibe on 2015-06-02
+Duplicated thread here: [http://ubuntuforums.org/showthread.php?t=2280845](http://ubuntuforums.org/showthread.php?t=2280845)
+
+Probably created by forum lag. Continue the conversation on the other thread.
+
+This thread is **closed**.
+
+---
+

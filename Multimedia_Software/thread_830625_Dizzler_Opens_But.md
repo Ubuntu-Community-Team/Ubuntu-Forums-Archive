@@ -1,0 +1,15 @@
+---
+title: "Dizzler Opens But"
+date: 2008-06-16
+forum: Multimedia Software
+---
+
+### Post by BugNipplesMale on 2008-06-16
+I USE DIZZLER MEDIA PLAY ON MY DESKTOP,ITS DOWNLOADED AND I OPENED IT AND I CAN SEE THE OUT LINE OF THE PROGRAM BUT CANT SEE TO TURN ON MUSIC  IS THERE A PROGRAM TO USE FOR UBUNTU CAN U HELP ME OUT THANKS
+
+:guitar:
+
+:lolflag:
+
+---
+

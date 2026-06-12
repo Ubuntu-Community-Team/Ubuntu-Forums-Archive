@@ -1,0 +1,14 @@
+---
+title: "Rhythmbox view query"
+date: 2020-03-08
+forum: Multimedia Software
+---
+
+### Post by Philip_Edwards on 2020-03-08
+Hi, is it possible to get Rhythmbox to look like this?
+Phil
+[IMG]https://lh3.googleusercontent.com/m5OCdlZn6E3hWetZm9rEKjvGLjgCKavJ2_MyYFw8AfQDpjR0C_vwC4uFDYeeYbSKrI9qO4HsMzstsPi3WancwGMe4TgIxd_UVU_Y6bdNvuQkH4ENLqtbdAwQJV-R6nYOuC3EZMPCRpTuisNo3mmRePAhzXAP7yFLF3NeurbmVVrFifks_EGa2N23TEswBzLlZ8IIN5Ed_SpXL8ZFZmfuCaooyNwjbSGBVmDBiMpGrYBtVFCkmHVAHy-2VxQOsGn3ZEyAU9QE0kysBEkG-8vuqHeJQjfd3DdM03iNZmcfU_VPlDYFpJSHkVEf4zFohhuf-3Q41N5qNt8tnDc82YBTsX2hDKR1KipLrrehQeRGif1pz0X2xj2zWsTgo5h8Sny0VfjI-Q2ufC-FMlVUTrQ068BKOKtmD7ie64E4YHXfnpWm7orR_U6nGNYkjTRZRgBuZKDCWJN0NHyT7ppANBsZywHrk4zPRtOqm3wRWom_GJqSTB5X7jVdwalyVHouNjcQRKgFY0Zm4DncNJqWd8XfaHr7mi6W-ixz6aI6BChPkuWLY1iJeqlucpSss731Hu9Ieiin2bIFG-9LbxDnI6ABd3uNX-Dnqp2k3px97fGyPc1fgJdYzCf10170lnjmHfJfwpbztaslAlp1tCqT9_KXwPQrn9-5zYTo5Q_2NMjb1tnycWA_m_174oU=w1264-h408-no[/IMG]
+[IMG]https://photos.google.com/search/_tra_/photo/AF1QipNZqSXDqnrbOlU3eblfqqteubXAMhLtVqg-Vl5d[/IMG]
+
+---
+

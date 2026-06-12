@@ -1,0 +1,139 @@
+---
+title: "Can pulseaudio worktogether with KDE41."
+date: 2008-08-06
+forum: Multimedia Software
+---
+
+### Post by kofshower on 2008-08-06
+A few days ago I transfer my desktop environment from gnome to KDE4.1 release.Everything is good for use.But pulseaudio which has been working normally in gnome can not be initialized when KDE starts.
+Here is my default.pa:
+----------------------------------------------------------------------
+#!/usr/bin/pulseaudio -nF
+#
+# This file is part of PulseAudio.
+#
+# PulseAudio is free software; you can redistribute it and/or modify it
+# under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# PulseAudio is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with PulseAudio; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+
+.nofail
+
+### Load something into the sample cache
+#load-sample-lazy x11-bell /usr/share/sounds/gtk-events/activate.wav
+load-sample-lazy pulse-hotplug /usr/share/sounds/startup3.wav
+#load-sample-lazy pulse-coldplug /usr/share/sounds/startup3.wav
+#load-sample-lazy pulse-access /usr/share/sounds/generic.wav
+
+.fail
+
+### Load audio drivers statically (it's probably better to not load
+### these drivers manually, but instead use module-hal-detect --
+### see below -- for doing this automatically)
+#load-module module-alsa-sink
+#load-module module-alsa-sink device=equalized
+load-module module-alsa-sink device=dmix
+#load-module module-alsa-source device=hw:1,0
+#load-module module-oss device="/dev/dsp" sink_name=output source_name=input
+#load-module module-oss-mmap device="/dev/dsp" sink_name=output source_name=input
+#load-module module-null-sink
+#load-module module-pipe-sink
+
+### Automatically load driver modules depending on the hardware available
+.ifexists module-hal-detect.so
+#load-module module-hal-detect
+.else
+### Alternatively use the static hardware detection module (for systems that
+### lack HAL support)
+load-module module-detect
+.endif
+
+### Load several protocols
+.ifexists module-esound-protocol-unix.so
+load-module module-esound-protocol-unix
+.endif
+load-module module-native-protocol-unix
+
+### Network access (may be configured with paprefs, so leave this commented
+### here if you plan to use paprefs)
+#load-module module-esound-protocol-tcp
+#load-module module-native-protocol-tcp
+#load-module module-zeroconf-publish
+
+### Load the RTP reciever module (also configured via paprefs, see above)
+#load-module module-rtp-recv
+
+### Load the RTP sender module (also configured via paprefs, see above)
+#load-module module-null-sink sink_name=rtp format=s16be channels=2 rate=44100 description="RTP Multicast Sink"
+#load-module module-rtp-send source=rtp.monitor
+
+### Automatically restore the volume of playback streams
+load-module module-volume-restore
+
+### Automatically restore the default sink/source when changed by the user during runtime
+load-module module-default-device-restore
+
+### Automatically move streams to the default sink if the sink they are
+### connected to dies, similar for sources
+load-module module-rescue-streams
+
+### Automatically suspend sinks/sources that become idle for too long
+#load-module module-suspend-on-idle
+
+### Load X11 bell module
+#load-module module-x11-bell sample=x11-bell
+
+### Register ourselves in the X11 session manager
+# Deactivated by default, to avoid deadlock when PA is started as esd from gnome-session
+# Instead we load this via /etc/xdg/autostart/ and "pactl load-module" now
+# load-module module-x11-xsmp
+
+### Load additional modules from GConf settings. This can be configured with the paprefs tool.
+### Please keep in mind that the modules configured by paprefs might conflict with manually
+### loaded modules.
+.ifexists module-gconf.so
+.nofail
+load-module module-gconf
+.fail
+.endif
+
+### Publish connection data in the X11 root window
+.ifexists module-x11-publish.so
+.nofail
+load-module module-x11-publish
+.fail
+.endif
+
+### Make some devices default
+#set-default-sink output
+#set-default-source input
+----------------------------------------------------------------------
+My default alsa driver has been set as pulse.
+So when KDE starts , its phonon must iterate my sound drivers to choose what can be used.
+But pulseaudio can not start normally,it is passed by phonon.
+But if I type "pulseaudio -vv" in my terminal,it can be worked normally.
+I notice there are some information about start pulseaudio daemon in KDE4 in wiki.
+quota:
+KDE 4.x
+
+In KDE4, Fedora 9 uses an env script to start PulseAudio Daemon as part of the KDE environment.
+
+I donn't know how I can get it started normally.
+
+Any idea?
+
+Or some information about KDE41 and pulseaudio.
+
+thanks.
+
+---
+

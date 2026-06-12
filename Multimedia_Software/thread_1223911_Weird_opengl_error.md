@@ -1,0 +1,242 @@
+---
+title: "Weird opengl error"
+date: 2009-07-26
+forum: Multimedia Software
+---
+
+### Post by xZachtmx on 2009-07-26
+ok i was trying to disable hardware acceleration by modifying /media/disk/etx/X11/xorg.conf .  Nothing appeared to happen when i put option "NoAccel" "True" so i tried putting it into /etx/x11/xorg.conf but this jsut made my computer mess up badly when i rebooted so i had to reset the file.  i hade a radeon x1300 graphics card so im using the open source driver.  my /media/disk/etx/X11/xorg.conf looks like:
+
+```
+Section "Files"
+    RgbPath    "/usr/X11R6/lib/X11/rgb"
+    FontPath    "/usr/share/fonts/misc/"
+    FontPath    "/usr/share/fonts/75dpi/:unscaled"
+    FontPath    "/usr/share/fonts/100dpi/:unscaled"
+    FontPath    "/usr/share/fonts/Type1/"
+    FontPath    "/usr/share/fonts/TTF/"
+    FontPath    "/usr/share/fonts/75dpi/"
+    FontPath    "/usr/share/fonts/100dpi/"
+
+#    ModulePath    "/usr/X11R6/lib/modules"
+
+EndSection
+
+Section "Module"
+
+# This loads the DBE extension module.
+    Load        "glx"
+    Load    "dbe"
+   
+    SubSection    "extmod"
+    Option    "omit xfree86-dga"
+    EndSubSection
+  
+    Load    "type1"
+    Load    "freetype"
+
+EndSection
+
+Section "ServerFlags"
+
+# Set the basic blanking screen saver timeout.
+
+    Option    "blank time"    "10"    # 10 minutes
+
+# Set the DPMS timeouts.  These are set here because they are global
+# rather than screen-specific.  These settings alone don't enable DPMS.
+# It is enabled per-screen (or per-monitor), and even then only when
+# the driver supports it.
+
+    Option    "standby time"    "20"
+    Option    "suspend time"    "30"
+    Option    "off time"    "60"
+
+EndSection
+
+# **********************************************************************
+# Input devices
+# **********************************************************************
+
+# **********************************************************************
+# Core keyboard's InputDevice section
+# **********************************************************************
+
+Section "InputDevice"
+
+    Identifier    "Keyboard1"
+    Driver    "kbd"
+
+# Set the keyboard auto repeat parameters.  Not all platforms implement
+# this.
+
+    Option    "AutoRepeat"    "1000 50"
+
+# These are the default XKB settings for xorg
+
+    Option    "XkbModel"    "pc104"
+    Option    "XkbLayout"    "us"
+#    Option    "XkbVariant"    ""
+#    Option    "XkbOptions"    ""
+
+EndSection
+
+
+# **********************************************************************
+# Core Pointer's InputDevice section
+# **********************************************************************
+
+Section "InputDevice"
+
+# Identifier and driver
+
+    Identifier    "Mouse1"
+    Driver    "mouse"
+
+    Option    "Protocol"    "IMPS/2"
+    Option      "ZAxisMapping"  "4 5"
+
+EndSection
+
+# **********************************************************************
+# Monitor section
+# **********************************************************************
+
+Section "Monitor"
+
+    Identifier    "Generic Monitor"
+    HorizSync    30 - 85
+    VertRefresh    50 - 160
+    Option    "dpms"
+
+EndSection
+
+# **********************************************************************
+# Graphics device section
+# **********************************************************************
+
+Section "Device"
+         Identifier     "Radeon"
+        Driver          "ati"
+        BusID           "PCI:1:0:0"
+        Option          "XAANoOffscreenPixmaps"
+        Option          "AGPMode"  "8"  
+  
+EndSection
+
+
+# **********************************************************************
+# Screen sections.
+# **********************************************************************
+
+Section "Screen"
+
+# The Identifier, Device and Monitor lines must be present
+
+    Identifier    "Screen 1"
+    Device    "Radeon"
+    Monitor    "Generic Monitor"
+    DefaultDepth 24
+
+    SubSection "Display"
+        Depth        24
+        Modes        "1280x1024" "1024x768" "800x600" "640x480"
+#        ViewPort    0 0
+#        Virtual     800 600
+    EndSubsection
+
+    SubSection "Display"
+    Depth        16
+        Modes        "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+
+    SubSection "Display"
+    Depth        8
+        Modes        "1024x768" "800x600" "640x480"
+    EndSubSection
+
+EndSection
+
+
+# **********************************************************************
+# ServerLayout sections.
+# **********************************************************************
+
+
+Section "ServerLayout"
+    Identifier    "simple layout"
+    Screen    "Screen 1"
+    InputDevice    "Mouse1" "CorePointer"
+    InputDevice "Keyboard1" "CoreKeyboard"
+EndSection
+
+Section "DRI"
+        Mode 0666
+EndSection
+       
+Section "Extensions"
+        Option "Composite" "Enable"
+EndSection
+```
+
+
+and my /etc/X11/xorg.conf now looks like this:
+
+
+```
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# Note that some configuration settings that could be done previously
+# in this file, now are automatically configured by the server and settings
+# here are ignored.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Device"
+    Identifier    "Configured Video Device"
+EndSection
+
+Section "Monitor"
+    Identifier    "Configured Monitor"
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Monitor        "Configured Monitor"
+    Device        "Configured Video Device"
+EndSection
+```
+
+
+now i cant run blender at all and when i try to do glxgears in command prompt it gives me this error:
+
+
+glxgears: main/context.c:941: check_context_limits: Assertion `ctx->Const.MaxTextureCoordUnits <= ctx->Const.MaxTextureImageUnits' failed.
+
+
+i got the same error when running one of my 3d games in python
+
+anyone know what this means:confused:
+
+---
+
+### Post by Yellow Pasque on 2009-07-26
+> ...by modifying /media/disk/etc/X11/xorg.conf
+This is a bit confusing. Do you have multiple Linux distros with one mounted at /media/disk ? Why are you editing its xorg.conf file?
+
+Did you have proprietary drivers (i.e. Catalyst/fglrx) installed at one point? If so, see this: [https://wiki.ubuntu.com/X/Troubleshooting/FglrxInteferesWithRadeonDriver?action=show](https://wiki.ubuntu.com/X/Troubleshooting/FglrxInteferesWithRadeonDriver?action=show)
+
+---
+

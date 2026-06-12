@@ -1,0 +1,15 @@
+---
+title: "Problem playing HD video on youtube."
+date: 2009-10-27
+forum: Multimedia Software
+---
+
+### Post by Cloudeh on 2009-10-27
+I've only just installed ubuntu and I've installed flash player but for some reason youtube HD videos won't work.
+They appear as a black window on my screen if the webpage was set to play the video in HD automatically and appear as a youtube video that just won't load if I click the HD button while watching the video in SD.
+SD videos work fine.
+
+Any ideas?
+
+---
+
