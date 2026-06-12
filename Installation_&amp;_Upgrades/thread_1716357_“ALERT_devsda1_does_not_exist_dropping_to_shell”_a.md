@@ -1,0 +1,452 @@
+---
+title: "“ALERT /dev/sda1 does not exist dropping to shell” after Ubuntu 10.10 install reboot"
+date: 2011-03-28
+forum: Installation &amp; Upgrades
+---
+
+### Post by scott8035 on 2011-03-28
+Hi. I am attempting to install Ubuntu 10.10 desktop on a Dell T7500 with two SAS drives in hardware RAID 0. Running from the CD works fine. The install process works fine. I have configured several different filesystems for /, /usr, /home, etc. The problem is that upon reboot after install, during initrd the system complains "ALERT /dev/sda1 does not exist dropping to shell". From within the initramfs shell I am able to mount all partitions successfully. Can anyone tell me what might be wrong or how to diagnose this?
+
+---
+
+### Post by drs305 on 2011-03-28
+It could have something to do with RAID and Grub2. I don't use RAID and am woefully uninformed about how it integrates with G2, but someone on here will be.
+
+Please go to the following site and download the boot info script and post the contents of RESULTS.txt
+[http://bootinfoscript.sourceforge.net]("http://bootinfoscript.sourceforge.net")
+
+---
+
+### Post by scott8035 on 2011-03-28
+Here's the gory detail from the "try" option on the CD. I've also included it as a text file attachment:
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  Unknown
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda3: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  Unknown
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda6: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 598.9 GB, 598879502336 bytes
+255 heads, 63 sectors/track, 72809 cylinders, total 1169686528 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048     9,764,863     9,762,816  83 Linux
+/dev/sda2           9,764,864    87,889,919    78,125,056  83 Linux
+/dev/sda3          87,889,920   126,951,423    39,061,504  83 Linux
+/dev/sda4         126,953,470 1,169,684,479 1,042,731,010   5 Extended
+/dev/sda5         126,953,472   146,483,199    19,529,728  82 Linux swap / Solaris
+/dev/sda6         146,485,248 1,169,684,479 1,023,199,232  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        2d338824-55a6-45ed-9429-462a0f250411   ext2                                     
+/dev/sda2        065c82c9-8125-4708-b7a8-a93802f10967   ext2                                     
+/dev/sda3        75f83b88-079c-4e46-b697-c92d70108f7d   ext2                                     
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        fdaf92db-4c91-44ef-b764-08d06d9b156e   swap                                     
+/dev/sda6        586988e4-b385-4592-b876-6a80c6e98350   ext2                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda1        /media                   ext2       (rw)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos2)'
+search --no-floppy --fs-uuid --set 065c82c9-8125-4708-b7a8-a93802f10967
+if loadfont /share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 2d338824-55a6-45ed-9429-462a0f250411
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 2d338824-55a6-45ed-9429-462a0f250411
+	linux	/boot/vmlinuz-2.6.35-22-generic root=/dev/sda1 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 2d338824-55a6-45ed-9429-462a0f250411
+	echo	'Loading Linux 2.6.35-22-generic ...'
+	linux	/boot/vmlinuz-2.6.35-22-generic root=/dev/sda1 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 2d338824-55a6-45ed-9429-462a0f250411
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 2d338824-55a6-45ed-9429-462a0f250411
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=2d338824-55a6-45ed-9429-462a0f250411 /               ext2    errors=remount-ro 0       1
+/dev/sda3       /home           ext2    defaults        0       2
+# /usr was on /dev/sda2 during installation
+UUID=065c82c9-8125-4708-b7a8-a93802f10967 /usr            ext2    defaults        0       2
+# /var was on /dev/sda6 during installation
+UUID=586988e4-b385-4592-b876-6a80c6e98350 /var            ext2    defaults        0       2
+/dev/sda5       none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+    .3GB: boot/grub/core.img
+    .3GB: boot/grub/grub.cfg
+    .3GB: boot/initrd.img-2.6.35-22-generic
+    .3GB: boot/vmlinuz-2.6.35-22-generic
+    .3GB: initrd.img
+    .3GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================[/FONT][/SIZE]
+
+Unknown BootLoader  on sda2
+
+00000000  e8 1f 4d 00 00 8b d8 85  c0 79 46 48 8d 4c 24 28  |..M......yFH.L$(|
+00000010  e8 91 9a 1d 00 4c 8d 1d  74 73 f3 ff 4c 89 5c 24  |.....L..ts..L.\$|
+00000020  28 89 5c 24 40 48 83 64  24 48 00 48 83 64 24 50  |(.\$@H.d$H.H.d$P|
+00000030  00 f3 0f 6f 05 47 63 f3  ff f3 0f 7f 44 24 58 48  |...o.Gc.....D$XH|
+00000040  8d 15 82 5d 25 00 48 8d  4c 24 28 e8 ea 9f 1d 00  |...]%.H.L$(.....|
+00000050  cc 48 8b 9c 24 a8 00 00  00 48 89 9c 24 a8 00 00  |.H..$....H..$...|
+00000060  00 48 85 db 74 0a 48 8b  03 48 8b cb ff 50 08 90  |.H..t.H..H...P..|
+00000070  48 89 1f 48 85 db 74 0a  48 8b 03 48 8b cb ff 50  |H..H..t.H..H...P|
+00000080  08 90 48 85 db 74 09 48  8b 03 48 8b cb ff 50 10  |..H..t.H..H...P.|
+00000090  48 85 f6 74 0e 48 8d 4b  08 48 8b d6 e8 27 6b fa  |H..t.H.K.H...'k.|
+000000a0  ff eb 08 48 8b 43 18 66  83 20 00 48 8b c7 48 83  |...H.C.f. .H..H.|
+000000b0  c4 70 5f 5e 5b c3 cc cc  cc cc cc cc cc cc cc cc  |.p_^[...........|
+000000c0  40 55 48 83 ec 20 48 8b  ea 8b 85 a0 00 00 00 83  |@UH.. H.........|
+000000d0  e0 01 85 c0 74 13 83 a5  a0 00 00 00 fe 48 8b 8d  |....t........H..|
+000000e0  90 00 00 00 e8 33 e0 f9  ff 48 83 c4 20 5d c3 cc  |.....3...H.. ]..|
+000000f0  40 55 48 83 ec 20 48 8b  ea 48 8d 8d a8 00 00 00  |@UH.. H..H......|
+00000100  e8 17 e0 f9 ff 48 83 c4  20 5d c3 cc cc cc cc cc  |.....H.. ]......|
+00000110  cc cc cc cc 48 8b c4 48  89 48 08 53 56 57 48 83  |....H..H.H.SVWH.|
+00000120  ec 70 48 c7 44 24 20 fe  ff ff ff 48 8b f2 48 8b  |.pH.D$ ....H..H.|
+00000130  f9 83 60 18 00 48 83 21  00 c7 40 18 01 00 00 00  |..`..H.!..@.....|
+00000140  48 8d 48 20 e8 cf 4f 00  00 8b d8 85 c0 79 46 48  |H.H ..O......yFH|
+00000150  8d 4c 24 28 e8 4d 99 1d  00 4c 8d 1d 30 72 f3 ff  |.L$(.M...L..0r..|
+00000160  4c 89 5c 24 28 89 5c 24  40 48 83 64 24 48 00 48  |L.\$(.\$@H.d$H.H|
+00000170  83 64 24 50 00 f3 0f 6f  05 03 62 f3 ff f3 0f 7f  |.d$P...o..b.....|
+00000180  44 24 58 48 8d 15 3e 5c  25 00 48 8d 4c 24 28 e8  |D$XH..>\%.H.L$(.|
+00000190  a6 9e 1d 00 cc 48 8b 9c  24 a8 00 00 00 48 89 9c  |.....H..$....H..|
+000001a0  24 a8 00 00 00 48 85 db  74 0a 48 8b 03 48 8b cb  |$....H..t.H..H..|
+000001b0  ff 50 08 90 48 89 1f 48  85 db 74 0a 48 8b 03 48  |.P..H..H..t.H..H|
+000001c0  8b cb ff 50 08 90 48 85  db 74 09 48 8b 03 48 8b  |...P..H..t.H..H.|
+000001d0  cb ff 50 10 48 85 f6 74  0e 48 8d 4b 08 48 8b d6  |..P.H..t.H.K.H..|
+000001e0  e8 e3 69 fa ff eb 08 48  8b 43 18 66 83 20 00 48  |..i....H.C.f. .H|
+000001f0  8b c7 48 83 c4 70 5f 5e  5b c3 cc cc cc cc cc cc  |..H..p_^[.......|
+00000200
+
+Unknown BootLoader  on sda3
+
+00000000  01 3e da f2 5a 3e e0 bf  11 5a a7 e0 b7 5a c3 bf  |.>..Z>...Z...Z..|
+00000010  41 fe c4 93 a9 5f d3 3f  3f 4c ed 64 7f 4d cc 3f  |A...._.??L.d.M.?|
+00000020  0f 71 6f 8c 59 34 c0 3f  f5 b3 61 88 e6 b6 ea bf  |.qo.Y4.?..a.....|
+00000030  4f 7f a6 d3 3d 7b e1 bf  04 c2 dd 1a 7a 6a c3 bf  |O...={......zj..|
+00000040  e2 86 83 da 70 b5 d3 [/FONT][/SIZE]3f  31 5e d0 1a 00 88 b9 3f  |....p..?1^.....?|
+00000050  78 99 9c 71 ee 3f b0 bf  a1 83 d0 bc 8f 9a e5 bf  |x..q.?..........|
+00000060  22 72 f9 e2 f1 fe c6 bf  9b bf cc 1a 52 19 81 3f  |"r..........R..?|
+00000070  8a b8 9a 60 a6 f5 01 40  c2 d0 60 24 13 f4 cc 3f  |...`...@..`$...?|
+00000080  34 26 6b 74 06 f4 9e bf  90 71 cb 43 40 8a e5 bf  |4&kt.....q.C@...|
+00000090  50 02 18 9a a1 de 92 3f  61 e3 e4 5f 0e 2d 80 3f  |P......?a.._.-.?|
+000000a0  5e 7c ee 0f 8c 00 02 40  0a 6d de 48 f6 d2 ba 3f  |^|.....@.m.H...?|
+000000b0  60 ce b4 82 fd 38 b7 [/FONT][/SIZE]3f  60 db e0 53 62 1b e3 bf  |`....8.?`..Sb...|
+000000c0  4b 4d 46 ac 18 a1 c8 bf  c1 5a 72 ca 76 35 c3 bf  |KMF......Zr.v5..|
+000000d0  e8 6b 15 38 15 f5 01 40  25 2a 03 5a db e1 cc 3f  |.k.8...@%*.Z...?|
+000000e0  97 c9 d2 eb ab 3c c0 3f  dd 06 84 d3 ce 0d e3 bf  |.....<.?........|
+000000f0  38 5a 1a 3e 76 d5 75 3f  99 55 16 c9 b2 42 c3 bf  |8Z.>v.u?.U...B..|
+00000100  b2 53 2f bf c2 ff 01 40  49 f4 28 cd ee ac ba 3f  |.S/....@I.(....?|
+00000110  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000150  95 14 ae 47 e1 1a e2 3f  95 14 ae 47 e1 1a e2 3f  |...G...?...G...?|
+00000160  7a 14 ae 47 e1 1a e2 3f  7a 14 ae 47 e1 1a e2 3f  |z..G...?z..G...?|
+00000170  89 14 ae 47 e1 1a e2 3f  8a 14 ae 47 e1 1a e2 3f  |...G...?...G...?|
+00000180  6e 14 ae 47 e1 1a e2 3f  71 14 ae 47 e1 1a e2 3f  |n..G...?q..G...?|
+00000190  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001a0  ab 48 b2 d5 38 54 b0 be  a5 f5 03 7f ef 48 bf 3e  |.H..8T.......H.>|
+000001b0  1b 8b 25 52 5c 3d a1 3e  87 1c c8 4c ef 1f 98 be  |..%R\=.>...L....|
+000001c0  b2 c6 19 0e c0 fb a4 be  58 4f 38 11 4b db a2 be  |........XO8.K...|
+000001d0  bc fe 55 f2 fc 97 ab be  d3 7a 3e 52 d1 3b c0 3e  |..U......z>R.;.>|
+000001e0  5e 4f ca e9 9c fa 88 3e  2b 58 24 ab 1c ad 97 be  |^O.....>+X$.....|
+000001f0  b2 cd 10 f2 c2 26 a7 be  33 72 25 74 6e 84 b3 be  |.....&..3r%tn...|
+00000200
+
+Unknown BootLoader  on sda4
+
+00000000  b6 2f aa bd 5b 76 aa 3c  18 0f 7f bf 88 20 03 00  |./..[v.<..... ..|
+00000010  35 8b 91 be 17 e4 15 40  33 30 c9 3f ad 2e 48 3f  |5......@30.?..H?|
+00000020  99 e3 1e 3f 25 dc 6b bd  20 17 07 3f 97 27 89 40  |...?%.k. ..?.'.@|
+00000030  b8 b6 b2 bf 08 9b 3e be  9e 62 50 c0 a7 5c 1e bf  |......>..bP..\..|
+00000040  c4 b8 48 3f f2 8e 4f 3d  5b 6d c7 3d e6 6e 20 3d  |..H?..O=[m.=.n =|
+00000050  81 25 cf 3d 7c e0 9c bd  50 32 83 3b ec 3e 7f bf  |.%.=|...P2.;.>..|
+00000060  89 20 03 00 3c 54 76 be  0b 96 16 40 55 a9 cd 3f  |. ..<Tv....@U..?|
+00000070  3d f8 48 3f 4f fa 1d 3f  6d ab 5c bd fb 45 11 3f  |=.H?O..?m.\..E.?|
+00000080  36 f0 88 40 bc 91 b3 bf  70 3c 40 be f9 44 50 c0  |6..@....p<@..DP.|
+00000090  eb 6a 1d bf 7f 6e 49 3f  c3 3f 57 3d 7b 96 71 bd  |.j...nI?.?W={.q.|
+000000a0  b0 3a 08 3d 72 0b 61 bd  34 3b 99 bd f7 24 05 3c  |.:.=r.a.4;...$.<|
+000000b0  23 46 7f bf 93 20 03 00  bb 88 66 be 1f 60 15 40  |#F... ....f..`.@|
+000000c0  ef 0a c2 3f 0f d3 4c 3f  e3 fd 18 3f 94 8c 54 bd  |...?..L?...?..T.|
+000000d0  2f 5b 25 3f d3 15 8a 40  88 fd cf bf 89 72 3e be  |/[%?...@.....r>.|
+000000e0  7a b6 57 c0 28 71 18 bf  c2 3c 4d 3f 42 b3 53 3d  |z.W.(q...<M?B.S=|
+000000f0  73 a2 b3 bd 77 fd 0e 3d  1d 6c aa bd b4 75 94 bd  |s...w..=.l...u..|
+00000100  dc 3f 2b 3c fe 4f 7f bf  92 20 03 00 c3 fb 88 be  |.?+<.O... ......|
+00000110  a5 ae 14 40 6a 92 bd 3f  17 1a 4c 3f 52 df 19 3f  |...@j..?..L?R..?|
+00000120  9f 3d 63 bd e2 95 1a 3f  73 5e 8a 40 57 0a cf bf  |.=c....?s^.@W...|
+00000130  08 b6 3c be bb b3 57 c0  03 5a 19 bf b5 96 4c 3f  |..<...W..Z....L?|
+00000140  0e 1e 4c 3d 4f 87 96 3d  5e e6 27 3d 89 43 9f 3d  |..L=O..=^.'=.C.=|
+00000150  74 25 98 bd 37 e8 d4 3b  84 49 7f bf 26 c8 27 00  |t%..7..;.I..&.'.|
+00000160  00 00 00 00 47 52 49 44  08 00 00 00 00 00 00 00  |....GRID........|
+00000170  c0 b0 32 3e 02 73 f3 3f  8a 83 cf 3f 61 68 4b 3f  |..2>.s.?...?ahK?|
+00000180  42 dc 1a 3f ff 65 56 bd  44 7c 72 3e ec 26 5d 40  |B..?.eV.D|r>.&]@|
+00000190  c8 2e 64 bf d7 d1 29 be  08 eb 15 c0 da 20 1a bf  |..d...)...... ..|
+000001a0  35 cd 4b 3f d3 a0 7a 3d  95 b2 d2 3b e9 e0 a2 3c  |5.K?..z=...;...<|
+000001b0  3e f6 31 3c 90 25 a1 bd  b2 1d 8c 3c 31 2b 00 fe  |>.1<.%.....<1+..|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 00 2a 01 00 fe  |............*...|
+000001d0  ff ff 05 fe ff ff 02 00  2a 01 00 d0 fc 3c 00 00  |........*....<..|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+```
+
+---
+
+### Post by scott8035 on 2011-03-28
+I think I know what the problem is now...the RAID card needs more time to initialize. On another forum someone said to add "rootdelay=90", but how do I do that the correct way with the new grub?
+
+---
+
+### Post by Rubi1200 on 2011-03-28
+Hold down Shift as the computer starts to bring up the GRUB menu. When the entry for Ubuntu is highlighted press "e" to edit.
+
+Navigate with the arrow keys and find the line that ends with quiet splash.
+
+Add the parameter after it so it looks like this:
+
+> quiet splash rootdelay=90
+
+Then "Ctrl" + "x" to boot.
+
+If this works for you we can make it more permanent. You can also try raising or lowering the delay, say to 60 or 120.
+
+---
+
+### Post by drs305 on 2011-03-28
+"rootdelay" is a kernel option, and kernel options are placed on the "linux" line of the Grub 2 menuentry.
+
+I don't know if this is your solution, but this is how you can try it.
+
+To add this option, when you see the Grub2 menu, press "e" to enter Grub2's editing mode. If you don't see the G2 menu, hold down the SHIFT key during the early stages of the boot until it appears.
+
+When you enter the edit mode, you will see the menuentry, consisting of several lines.
+
+Use the cursor to go to the end of the line which starts with "linux" and probably ends with "quiet splash".  Add **rootdelay=X** to the end of the line and press CTRL-x to boot. Change X to the delay you wish to use.
+
+This change is non-persistent so it won't be retained on the next boot. If it works, you will want to edit your /etc/default/grub file as root to add this to anything that is already within the quotes. 
+> GRUB_CMDLINE_LINUX="**rootdelay=X**"
+
+```
+
+gksu gedit /etc/default/grub
+sudo update-grub
+```
+Run the second command once you have edited/saved /etc/default/grub
+
+Another possibility is that you aren't using RAID but have remnants of old RAID instructions which are still interfering with Grub. There are commands that can remove these remnants but that may concern only old software RAID setups and may not apply in this case. So I'll refrain from posting them for now.
+
+---
+
+### Post by scott8035 on 2011-03-28
+This worked like a charm, thanks for all your help!
+
+---
+
+### Post by Rubi1200 on 2011-03-28
+Excellent! Glad you got things sorted out.
+
+Enjoy :)
+
+---
+

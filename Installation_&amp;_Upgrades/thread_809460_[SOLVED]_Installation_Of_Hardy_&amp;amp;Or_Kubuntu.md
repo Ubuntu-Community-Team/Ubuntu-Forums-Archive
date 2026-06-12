@@ -1,0 +1,13 @@
+---
+title: "[SOLVED] Installation Of Hardy &amp;amp;/Or Kubuntu on New Build Not Working Becuase of Video"
+date: 2008-05-27
+forum: Installation &amp; Upgrades
+---
+
+### Post by theravenproject on 2008-05-27
+I am  trying to install either Ubuntu or Kubuntu (At this point whichever will work first) from their respective Live Cds (Which I sent for through the mail) on my Newly Built Quad Core Gaming Machine....It has an older MSI  Video Card in it an 8400gs I believe and When I select Start/Install at the main screen on the live CD (The Options screen with OEM Install, and Start/Install...Etc Plus the Function Key options) it goes through about four checks and responds ok to each and then my screen does a little flash and then a prompt comes up saying "Ubuntu is in low graphics mode" and I have a choice between-Continue, Shutdown, And Configure...I have tried Configure to no success as well as shutdown-both time I have tried them after clicking on the subsequent selections to configure or clicking on continue my screen reverts to that first "Four Ok checks screen" and stays there until after about 10 minutes I assume we are frozen and I cut off and try again.  That is Ubuntu...Now, here is Kubuntu...I put her in, Boot up, and we get to the main options screen and I select "Start/Install" and it goes through a check screen and then (I cannot remember exactly what it did i order) but where it is supposed to pull up the KDE Desktop or Ubuntu would pull up the Gnome and I would be off to the races; It simply puts me in a command line-Bash I Believe-all without my touching anything.  From the command line (Which I know very little about in Linux...I tried to check out the Man -k pages on install and stuff to no avail...I did figure out though from trying to run an app eventually that it is not connected to Xserver?  Whatever that means and I could not find a way to Connect it to Xserver..if I remember right Xserver is the Graphical Display system isn;t it>  Xorg or something or other?  I have not used Ubuntu since '05 and now three years later it is extremely problematic where then I only had to put it in and click with the mouse until it was set up!  Please Help me get this friggin' thing installed so I can get back to work.  BY THE WAY I AM ALREADY AWARE THAT MY GRAPHICS CARD IS GOING TO HAVE TO BE INSTALLED AS A RESTRICTED DRIVER ONCE I INSTALL BUT I CANNOT GET IT TO WORK FOR THEINSTALL!  Thanks, any and all hel is greatly appreciated and sorry this post is so long but I had to explain it well or so I thought...don't worry my replies are not grossly overweight...  As Ever; TheRavenProject
+
+ALSO_WHAT ARE THE ADVANCED OPTIONS (F6) AT THE MAIN MENU SCREEN?  IS THERE SOMETHING IN THERE I CAN DO TO MAKE THIS WORK?
+
+---
+

@@ -1,0 +1,16 @@
+---
+title: "hadoop installation help"
+date: 2013-06-24
+forum: Installation &amp; Upgrades
+---
+
+### Post by dinoopms on 2013-06-24
+hi all...
+i need help in installing CDH4...
+i followed instructions as in cloudera website and installed jobtracker and name node in master machine ...and task tracker and data node in slaves..i am using 4 machines...configured dns in first machine and that is working fine...
+what i have to do next???
+all tutorials uses /bin/hadoop to start and for other purpose...i cant find such a directory....there is only /etc/hadoop/conf in my installation....
+please direct me....
+
+---
+

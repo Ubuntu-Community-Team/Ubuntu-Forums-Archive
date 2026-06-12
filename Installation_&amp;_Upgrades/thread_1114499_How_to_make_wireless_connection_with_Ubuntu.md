@@ -1,0 +1,34 @@
+---
+title: "How to make wireless connection with Ubuntu?"
+date: 2009-04-02
+forum: Installation &amp; Upgrades
+---
+
+### Post by rahmansadat on 2009-04-02
+Hi, I need help...................
+
+I need to know,how can I connect wireless internet with ubuntu in dell inspiration 2200 (I don't have any access of wired internet access)?
+
+I'm new to Ubuntu. I have installed Ubuntu 8.04 on Dell Inspiron 2200 and it worked well and... I like it too...
+
+However, I am not able to connect with wireless, I don't have any wireaccess too.
+
+I like the Ubuntu application and want to explore more. But if i am not connected to internet, the whole fun will be lost. Please help me. How can I install the device in Ubuntu?
+
+Thanks,
+Sadat
+
+Please note: I think my device is this: Dell Wireless 1370 WLAN Mini-PCI C.
+
+---
+
+### Post by upchucky on 2009-04-02
+you may want to search/post in the dell section here, and the wireless section for you specific pc and wireless specs
+
+---
+
+### Post by rahmansadat on 2009-04-02
+I couldn't find any specific answer? I am just wondering... is the mini-pci card support the Ubuntu????You know... I have, Dell Wireless 1370 WLAN Mini-PCI C.
+
+---
+

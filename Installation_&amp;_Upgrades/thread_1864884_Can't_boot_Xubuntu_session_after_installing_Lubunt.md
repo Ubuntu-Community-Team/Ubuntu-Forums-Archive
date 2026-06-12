@@ -1,0 +1,133 @@
+---
+title: "Can't boot Xubuntu session after installing Lubuntu first and then xubuntu-desktop"
+date: 2011-10-19
+forum: Installation &amp; Upgrades
+---
+
+### Post by freaxtux on 2011-10-19
+Sorry if there's any awkward expression. I'm not a native English speaker.
+
+First, I installed Lubuntu, which uses LXDM. After that, xubuntu-desktop was installed via apt-get with no option. I selected to use LXDM at the time. When I try to log in with Xubuntu Session with LXDM, It just goes back to ID-writing field. There was nothing special in /var/log/lxdm, and I can't find log file from xfce.
+
+After that, I tried to use LightDM, but when I choose LightDM with "sudo dpkg-reconfigure lightdm" and boot with it, the console screen with X.org messages and blank-screen with a mouse cursor switches each other over and over, like blinking. Next is the log file generated when I stop LXDM and run LigntDM with --debug option in console.
+
+```
+[+0.00s] DEBUG: Logging to /var/log/lightdm/lightdm.log
+[+0.00s] DEBUG: Starting Light Display Manager 1.0.1, UID=0 PID=1981
+[+0.00s] DEBUG: Loaded configuration from /etc/lightdm/lightdm.conf
+[+0.00s] DEBUG: Using D-Bus name org.freedesktop.DisplayManager
+[+0.00s] DEBUG: Registered seat module xlocal
+[+0.00s] DEBUG: Registered seat module xremote
+[+0.00s] DEBUG: Adding default seat
+[+0.00s] DEBUG: Starting seat
+```
+
+and then next part appears repeatdly
+
+```
+[+0.00s] DEBUG: Starting new display for greeter
+[+0.00s] DEBUG: Starting local X display
+[+0.00s] DEBUG: Using VT 7
+[+0.01s] DEBUG: Activating VT 7
+[+0.02s] DEBUG: Logging to /var/log/lightdm/x-0.log
+[+0.02s] DEBUG: Writing X server authority to /var/run/lightdm/root/:0
+[+0.02s] DEBUG: Launching X Server
+[+0.02s] DEBUG: Launching process 1986: /usr/bin/X :0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+[+0.03s] DEBUG: Waiting for ready signal from X server :0
+[+0.04s] DEBUG: Acquired bus name
+[+0.04s] DEBUG: Registering seat with bus path /org/freedesktop/DisplayManager/Seat0
+[+1.39s] DEBUG: Got signal 10 from process 1986
+[+1.39s] DEBUG: Got signal from X server :0
+[+1.39s] DEBUG: Connecting to XServer :0
+[+1.40s] DEBUG: Starting greeter session
+[+1.65s] DEBUG: pam_start("lightdm-autologin", "lightdm") -> (0x8c20088, 0)
+[+1.65s] DEBUG: Starting session unity-greeter as user lightdm logging to /var/log/lightdm/x-0-greeter.log
+[+1.66s] DEBUG: pam_authenticate(0x8c20088, 0) -> 0 (Success)
+[+1.66s] DEBUG: pam_acct_mgmt(0x8c20088, 0) -> 0 (Success)
+[+1.66s] DEBUG: Launching session
+[+1.67s] DEBUG: pam_set_item(0x8c20088, 3, ":0") -> 0 (Success)
+[+1.67s] DEBUG: pam_open_session(0x8c20088, 0) -> 0 (Success)
+[+1.70s] DEBUG: Opened ConsoleKit session fafb29370bfd201066616b870000000c-1319041106.899262-1286802672
+[+1.70s] DEBUG: Dropping privileges to uid 107
+[+1.70s] DEBUG: Adding session authority to /var/lib/lightdm/.Xauthority
+[+1.78s] DEBUG: Restoring privileges
+[+1.78s] DEBUG: Launching process 2003: /usr/lib/lightdm/lightdm-greeter-session 'unity-greeter'
+[+1.78s] WARNING: Failed to open log file /var/log/lightdm/x-0-greeter.log: Permission denied
+[+1.78s] DEBUG: pam_setcred(0x8c20088, PAM_ESTABLISH_CRED) -> 0 (Success)
+[+1.78s] DEBUG: PAM returns environment 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games LANG=ko_KR.UTF-8'
+[+1.96s] DEBUG: Read 8 bytes from greeter
+[+1.96s] DEBUG: Read 9 bytes from greeter
+[+1.96s] DEBUG: Greeter connected version=1.0.1
+[+1.96s] DEBUG: Wrote 99 bytes to greeter
+[+1.96s] DEBUG: Greeter connected, display is ready
+[+1.96s] DEBUG: New display ready, switching to it
+[+1.96s] DEBUG: Activating VT 7
+[+1.96s] DEBUG: Process 2003 exited with return value 0
+[+1.96s] DEBUG: pam_close_session(0x8c20088) -> 0 (Success)
+[+1.96s] DEBUG: pam_setcred(0x8c20088, PAM_DELETE_CRED) -> 0 (Success)
+[+1.96s] DEBUG: pam_end(0x8c20088) -> 0
+[+1.96s] DEBUG: Ending ConsoleKit session fafb29370bfd201066616b870000000c-1319041106.899262-1286802672
+[+1.99s] DEBUG: Greeter quit
+[+1.99s] DEBUG: Stopping display
+[+1.99s] DEBUG: Sending signal 15 to process 1986
+[+1.99s] DEBUG: Dropping privileges to uid 107
+[+1.99s] DEBUG: Removing session authority from /var/lib/lightdm/.Xauthority
+[+2.06s] DEBUG: Restoring privileges
+[+2.07s] DEBUG: Process 1986 exited with return value 0
+[+2.07s] DEBUG: X server stopped
+[+2.07s] DEBUG: Removing X server authority /var/run/lightdm/root/:0
+[+2.07s] DEBUG: Releasing VT 7
+[+2.07s] DEBUG: Display server stopped
+[+2.07s] DEBUG: Display stopped
+[+2.07s] DEBUG: Active display stopped, switching to greeter
+[+2.07s] DEBUG: Switching to greeter
+```
+
+Giving "--test-mode" option makes no difference.
+
+There's lines saying 
+```
+[+1.65s] DEBUG: Starting session unity-greeter as user lightdm logging to /var/log/lightdm/x-0-greeter.log
+```
+and
+```
+[+1.78s] WARNING: Failed to open log file /var/log/lightdm/x-0-greeter.log: Permission denied
+```
+in the log but I can't find /var/log/x-0-greeter.log, there's only x-0.log and lightdm.log(which is generated by --debug option) in the folder. Maybe unity-greeter has some problem?
+
+So, For short, these are what I want to ask.
+1) Is it obvious that LXDM can't run Xfce? if not, Could you help me finding the reason why I can't?
+2)Why can't I use LightDM?
+
+Thank you for reading.
+
+---
+
+### Post by onebir on 2011-12-17
+I also have this problem, and posted separately before finding this thread:
+[http://ubuntuforums.org/showthread.php?p=11544334#post11544334](http://ubuntuforums.org/showthread.php?p=11544334#post11544334)
+
+(I don't recall being asked to choose a display manager during lubuntu or xubuntu desktop installation though.)
+
+---
+
+### Post by MAFoElffen on 2011-12-19
+> **onebir said:**
+> I also have this problem, and posted separately before finding this thread:
+[http://ubuntuforums.org/showthread.php?p=11544334#post11544334](http://ubuntuforums.org/showthread.php?p=11544334#post11544334)
+
+(I don't recall being asked to choose a display manager during lubuntu or xubuntu desktop installation though.)
+It is not a desktop problem. It is an Xauthority problem.  I posted a fix for that in this post:
+[[COLOR=Red][SIZE=2][COLOR=Black][SIZE=1][/SIZE][/COLOR][/SIZE][/COLOR]]("http://ubuntuforums.org/showpost.php?p=11548369&postcount=5")[COLOR=Red][SIZE=2][COLOR=Black][SIZE=1]**[Reseting Authorities Profile For Logging into X]("http://ubuntuforums.org/showpost.php?p=11404605&postcount=766")**[/SIZE][/COLOR][/SIZE][/COLOR]
+
+---
+
+### Post by onebir on 2011-12-19
+> **MAFoElffen said:**
+> It is not a desktop problem. It is an Xauthory problem.  I posted a fix for that in this post:
+[[COLOR=Red][SIZE=2][COLOR=Black][SIZE=1]**[URL="http://ubuntuforums.org/showpost.php?p=11404605&postcount=766"]Reseting Authories Profile For Logging into X]("http://ubuntuforums.org/showpost.php?p=11548369&postcount=5")**[/SIZE][/COLOR][/SIZE][/COLOR][/URL]
+Yes - thanks.
+(I just posted here because I appeared to have the exact same problem.)
+
+---
+

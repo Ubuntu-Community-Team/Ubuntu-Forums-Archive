@@ -1,0 +1,450 @@
+---
+title: "XP fail to boot after Karmic Install from Live CD"
+date: 2010-08-25
+forum: Installation &amp; Upgrades
+---
+
+### Post by At sea on 2010-08-25
+I have an older laptop, that suffered a hard drive failure a few months back.  I use this laptop while on the road for work.  
+
+After installing  a single 120 GB replacement drive, I began the re-installation of of the pre-crash software.  .After completing the fresh install of XP and updating all of the drivers and service packs; and then all of my application software, I was back in business.  
+
+A few days later, I began an installation of Ubuntu from the  Karmic Live CD.  This was to be a dual boot installation alongside XP on  the single 120 GB drive. 
+
+ On reboot after the Karmic installation, neither OS would start.  I  could, however still boot from the live CD and Google for potential  fixes.  I was finally able to get the laptop to boot into the Ubuntu  partition, but XP remains non-bootable.  As this is a backup unit, I am  able to get by at work without it while I explore the best course of  action.  I am able to access the data on the XP partition, so I am  reluctant to start making wholesale changes that may overwrite the data.   I continue to use the laptop which I upgraded to Lucid on its release hoping  that would work the kink out.
+
+  I've looked through the forums and can  find somewhat related threads, but these don't mention the ability to  still access the data from ubuntu.  I have downloaded and run the boot_info_script, and the results appear below.
+
+I apologize for this somewhat long winded post and appreciate any help you can provide.  [INDENT]```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+```[/INDENT]```
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 120.0 GB, 120034123776 bytes
+255 heads, 63 sectors/track, 14593 cylinders, total 234441648 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   167,718,599   167,718,537   7 HPFS/NTFS
+/dev/sda2         167,718,600   234,436,544    66,717,945   5 Extended
+/dev/sda5         167,718,663   231,593,039    63,874,377  83 Linux
+/dev/sda6         231,593,103   234,436,544     2,843,442  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        FC2886CC2886857C                       ntfs                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        0c5dddbe-840b-47f0-ab4c-605eb346f150   ext4                                     
+/dev/sda6        bf37166d-848a-49fa-9bdd-d1bd22e21b56   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+/dev/sda1        /media/sda1              fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096,default_permissions)
+/dev/sr0         /media/cdrom0            iso9660    (ro,nosuid,nodev,utf8,user=myname)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader]
+timeout=30
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS
+[operating systems]
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+if loadfont /usr/share/grub/unicode.pf2 ; then
+set gfxmode=1024x768
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=15
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro splash vga=773  quiet splash
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    echo    'Loading Linux 2.6.32-24-generic ...'
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro single splash vga=773
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-23-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux    /boot/vmlinuz-2.6.32-23-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro splash vga=773  quiet splash
+    initrd    /boot/initrd.img-2.6.32-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-23-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    echo    'Loading Linux 2.6.32-23-generic ...'
+    linux    /boot/vmlinuz-2.6.32-23-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro single splash vga=773
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro splash vga=773  quiet splash
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    echo    'Loading Linux 2.6.32-22-generic ...'
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro single splash vga=773
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-21-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux    /boot/vmlinuz-2.6.31-21-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro splash vga=773  quiet splash
+    initrd    /boot/initrd.img-2.6.31-21-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    echo    'Loading Linux 2.6.31-21-generic ...'
+    linux    /boot/vmlinuz-2.6.31-21-generic root=UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 ro single splash vga=773
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.31-21-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 0c5dddbe-840b-47f0-ab4c-605eb346f150
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set fc2886cc2886857c
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+proc /proc proc defaults 0 0
+UUID=0c5dddbe-840b-47f0-ab4c-605eb346f150 / ext4 errors=remount-ro 0 1
+UUID=FC2886CC2886857C /media/sda1 ntfs defaults,nls=utf8,umask=0222 0 0
+UUID=bf37166d-848a-49fa-9bdd-d1bd22e21b56 none swap sw 0 0
+/dev/scd0 /media/cdrom0 udf,iso9660 user,noauto,exec,utf8 0 0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+  86.0GB: boot/grub/core.img
+  93.4GB: boot/grub/grub.cfg
+  89.2GB: boot/initrd.img-2.6.31-21-generic
+  93.8GB: boot/initrd.img-2.6.32-22-generic
+  86.5GB: boot/initrd.img-2.6.32-23-generic
+  96.4GB: boot/initrd.img-2.6.32-24-generic
+  86.9GB: boot/vmlinuz-2.6.31-21-generic
+  86.5GB: boot/vmlinuz-2.6.32-22-generic
+  86.5GB: boot/vmlinuz-2.6.32-23-generic
+  86.9GB: boot/vmlinuz-2.6.32-24-generic
+  96.4GB: initrd.img
+  86.5GB: initrd.img.old
+  86.9GB: vmlinuz
+  86.5GB: vmlinuz.old
+
+```
+
+---
+
+### Post by wilee-nilee on 2010-08-25
+The script looks okay as far as I can tell The UUID are correct and sda5 for boot from grub.
+
+Have you run 
+```
+sudo update-grub
+```
+
+Also I saw another forum member who I know knows what there doing suggest that it is possible for there to be a anomaly in the grub bootloader and to just reload it.
+[https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD](https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD)
+
+---
+
+### Post by At sea on 2010-08-25
+I ran the update from the live cd shortly after installing Karmic, and that was how I am able to boot into Ubuntu.  The problem is with XP.  It shows in the grub menu, but fails to boot.  I am able to access the data from Ubuntu.  I tried running fixmbr some time ago, but this didn't fix the problem.  I figure I will need to fix from the XP recovery tools, but do not want to run one of those tools only to find out it has wiped out the Ubuntu partition.  Some of the posts I've read seem to warn you of bad things happening after the fact.
+
+---
+
+### Post by wilee-nilee on 2010-08-25
+> **At sea said:**
+> I ran the update from the live cd shortly after installing Karmic, and that was how I am able to boot into Ubuntu.  The problem is with XP.  It shows in the grub menu, but fails to boot.  I am able to access the data from Ubuntu.  I tried running fixmbr some time ago, but this didn't fix the problem.  I figure I will need to fix from the XP recovery tools, but do not want to run one of those tools only to find out it has wiped out the Ubuntu partition.  Some of the posts I've read seem to warn you of bad things happening after the fact.
+
+
+I would boot the XP install disc and run a chkdsk /f/r
+[http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx)
+
+If you don't know how to do this or need a link to a legit XP ISO, post this.
+
+---
+
+### Post by At sea on 2010-08-25
+> **wilee-nilee said:**
+> I would boot the XP install disc and run a chkdsk /f/r
+[http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx)
+
+If you don't know how to do this or need a link to a legit XP ISO, post this.
+
+Thanks for your help on this.
+
+I have run chkdsk with, I believe, the /r option from the recovery tools on the XP dvd.  There were no errors found.  Again, I am able to view the contents of the partition by issuing a dir command after booting with the XP disc,; and I have full access to the files while I am in Ubuntu.  I am just not able to boot XP.  I suspect the system is repairable by booting from the XP disc and running the XP recovery console commands BOOTCFG, FIXBOOT and/or FIXMBR in the right order with the right switches set.  I just don't know which commands and with what switches.  I'm hoping not to execute commands to find out that it was the wrong command to use and wil require a complete reinstall of one or both OS's.
+
+I will retry your suggestion regarding chkdsk /f/r again as soon as I send this.
+
+---
+
+### Post by wilee-nilee on 2010-08-25
+You would just need to use fixmbr from the command line on the booted XP disc to set the MS bootloader in the mbr. You might need to run fixboot as well per the link. The script though shows XP to have the correct boot files
+
+Have you run the live cd reinstall of grub2 to see if that works. I kind of assume you have, but I thought I should ask.
+
+Here is a link.
+[http://helpdeskgeek.com/how-to/fix-mbr-xp-vista/](http://helpdeskgeek.com/how-to/fix-mbr-xp-vista/)
+
+---
+
+### Post by At sea on 2010-08-27
+Rebooted with the XP disc, opted for recovery console, ran chkdsk /p /r.  Lengthy process returned with no errors found.  Have been busy with other work so haven't had a chance to try your other suggestion.  Hope to get back to this this evening.  Thanks for your continued help.
+
+---
+
+### Post by At sea on 2010-08-30
+I've booted with the XP recovery tools CD, and run Checkdsk with no sucess.  Also ran Fixboot.  Started to run fixmbr but was scared off by a message warning of uncertain consequences.
+
+Went back through other posts and found one that seemed somewhat related -- [http://ubuntuforums.org/showthread.php?t=1561483](http://ubuntuforums.org/showthread.php?t=1561483)
+
+Downloaded the testdisk script discussed in [http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Boot_Sector](http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Boot_Sector).  
+
+After selecting the appropriate disk on the 2d screen, the following is displayed on the screen--
+> TestDisk 6.11, Data Recovery Utility, April 2009
+Christophe GRENIER <grenier@cgsecurity.org>
+[http://www.cgsecurity.org](http://www.cgsecurity.org)
+
+Disk /dev/sda - 120 GB / 111 GiB - ATA WDC WD1200BEVE-0
+
+Hidden sectors are present.
+
+size       234441648 sectors
+user_max   234441648 sectors
+native_max 16337840 sectors
+dco        234441648 sectors
+Device Configuration Overlay (DCO) present.
+
+[ Continue ]  Continue even if there are hidden data
+
+Step 6 shows other than the hoped for "Backup BS" phrase.    Contents from that screen appear below-- 
+> TestDisk 6.11, Data Recovery Utility, April 2009
+Christophe GRENIER <grenier@cgsecurity.org>
+[http://www.cgsecurity.org](http://www.cgsecurity.org)
+
+Disk /dev/sda - 120 GB / 111 GiB - CHS 14593 255 63
+     Partition                  Start        End    Size in sectors
+ 1 * HPFS - NTFS              0   1  1 10439 254 63  167718537
+
+Boot sector
+Warning: Incorrect number of heads/cylinder 240 (NTFS) != 255 (HD)
+Status: OK
+
+Backup boot sector
+Warning: Incorrect number of heads/cylinder 240 (NTFS) != 255 (HD)
+Status: OK
+
+Sectors are identical.
+
+A valid NTFS Boot sector must be present in order to access
+any data; even if the partition is not bootable.
+
+
+[  Quit  ]  [  List  ]  [Rebuild BS]  [Repair MFT]  [  Dump  ]
+                            Return to Advanced menu
+
+
+
+
+Any and all advice greatly appreciated.  I need the XP partition for work.
+
+Thanks
+
+---
+
+### Post by oldfred on 2010-08-31
+I would have thought that windows fixboot should have fixed that error.
+
+But testdisk has a rebuild bootsector capability. I have not used it.
+
+see post #10
+[http://ubuntuforums.org/showthread.php?t=1241394](http://ubuntuforums.org/showthread.php?t=1241394)
+
+---
+
+### Post by At sea on 2010-08-31
+Thanks Oldfred.  I will rebuild bs via testdisk and reboot.  Will let you know how I make out.
+
+---
+
+### Post by At sea on 2010-09-01
+Thanks Oldfred and Wilee-Nilee,
+
+I am happy to report that the system is repaired.  I used testdisk and selected rebuild BS per Oldfred's refered to post.  After the script rebuilt the boot sector, I q'd back outt, and rebooted.  I'd have post the results sooner, but have been tied up with nagging security updates in XP after the reboot.
+
+Thanks again.
+
+Best regards,
+
+At sea
+
+---
+
+### Post by wilee-nilee on 2010-09-01
+I always smile when it takes open source to fix a MS setup. ;)
+
+---
+

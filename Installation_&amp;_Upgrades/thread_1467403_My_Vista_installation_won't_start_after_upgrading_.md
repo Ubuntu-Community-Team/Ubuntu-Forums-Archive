@@ -1,0 +1,351 @@
+---
+title: "My Vista installation won't start after upgrading from Karmic to Lucid"
+date: 2010-04-30
+forum: Installation &amp; Upgrades
+---
+
+### Post by HazelIced on 2010-04-30
+Hi, can anyone please help me out?
+My Windows Vista installation won't start after upgrading from Karmic to Lucid.
+If I select it on GRUB2, it leaves a blinking cursor on screen.
+And I tried doing the whole test disk thing and the boot info script.
+This is what my Results.txt file says
+
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #6 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda1 and 
+                       looks at sector 300637656 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location. No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /BOOTMGR /BOOT/BCD
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /ubuntu/winboot/wubildr.mbr /ubuntu/winboot/wubildr
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda6: _________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda6 and 
+                       looks at sector 300542216 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location.
+    Operating System:  Ubuntu 10.04 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63    20,980,889    20,980,827  27 Hidden HPFS/NTFS
+/dev/sda2    *     20,981,760   166,782,975   145,801,216   7 HPFS/NTFS
+/dev/sda3         166,786,830   211,399,334    44,612,505   7 HPFS/NTFS
+/dev/sda4         211,399,335   312,576,704   101,177,370   5 Extended
+/dev/sda5         211,399,398   219,785,264     8,385,867  82 Linux swap / Solaris
+/dev/sda6         219,785,328   312,576,704    92,791,377  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        446496D76496CAD6                       ntfs       PQSERVICE                     
+/dev/sda2        C4667CB6667CAAB6                       ntfs       ACER                          
+/dev/sda3        F8361CB1361C72BC                       ntfs       DATA                          
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        67f95be3-f310-4f2c-a4a2-225247772326   swap                                     
+/dev/sda6        3e66f56b-6950-4ee4-993c-e657677fd42f   ext3                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda6        /                        ext3       (rw,errors=remount-ro)
+/dev/sda2        /media/ACER              fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+/dev/sda3        /media/DATA              fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+
+
+=========================== sda6/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+if terminal_input console ; then true ; else
+  # For backward compatibility with versions of terminal.mod that don't
+  # understand terminal_input
+  terminal console
+fi
+if terminal_output console ; then true ; else
+  # For backward compatibility with versions of terminal.mod that don't
+  # understand terminal_output
+  terminal console
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,6)'
+	search --no-floppy --fs-uuid --set 3e66f56b-6950-4ee4-993c-e657677fd42f
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=3e66f56b-6950-4ee4-993c-e657677fd42f ro vga=792 splash  quiet splash
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-20-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,6)'
+	search --no-floppy --fs-uuid --set 3e66f56b-6950-4ee4-993c-e657677fd42f
+	linux	/boot/vmlinuz-2.6.31-20-generic root=UUID=3e66f56b-6950-4ee4-993c-e657677fd42f ro vga=792 splash  quiet splash
+	initrd	/boot/initrd.img-2.6.31-20-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,6)'
+	search --no-floppy --fs-uuid --set 3e66f56b-6950-4ee4-993c-e657677fd42f
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,6)'
+	search --no-floppy --fs-uuid --set 3e66f56b-6950-4ee4-993c-e657677fd42f
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+	insmod ntfs
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 446496d76496cad6
+	chainloader +1
+}
+menuentry "Windows Recovery Environment (loader) (on /dev/sda2)" {
+	insmod ntfs
+	set root='(hd0,2)'
+	search --no-floppy --fs-uuid --set c4667cb6667caab6
+	drivemap -s (hd0) ${root}
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+set gfxmode="640x480"
+set gfxfont="Unifont Regular 16"
+loadfont /boot/grub/themes/fonts/unifont.pf2
+loadfont /boot/grub/themes/fonts/aqui.pf2
+loadfont /boot/grub/themes/fonts/edges.pf2
+loadfont /boot/grub/themes/fonts/lime.pf2
+loadfont /boot/grub/themes/fonts/7x13B.pf2
+loadfont /boot/grub/themes/fonts/smoothansi.pf2
+loadfont /boot/grub/themes/fonts/Helvetica-Bold-14.pf2
+insmod vbe
+insmod png
+insmod coreui
+load_config /boot/burg/themes/ubuntu2/theme.txt
+#./boot/burg/themes/ubuntu2/theme.txt
+### END /etc/grub.d/40_custom ###
+
+=============================== sda6/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc                                       /proc          proc         defaults               0  0  
+# / was on /dev/sda6 during installation
+UUID=3e66f56b-6950-4ee4-993c-e657677fd42f  /              ext3         errors=remount-ro      0  1  
+# swap was on /dev/sda5 during installation
+UUID=67f95be3-f310-4f2c-a4a2-225247772326  none           swap         sw                     0  0  
+/dev/scd0                                  /media/cdrom0  udf,iso9660  user,noauto,exec,utf8  0   0  
+/dev/sda2                                  /media/ACER    ntfs         defaults               0  0  
+/dev/sda3                                  /media/DATA    ntfs         defaults               0  0  
+
+=================== sda6: Location of files loaded by Grub: ===================
+
+
+ 153.8GB: boot/grub/core.img
+ 153.9GB: boot/grub/grub.cfg
+ 153.9GB: boot/initrd.img-2.6.31-20-generic
+ 158.6GB: boot/initrd.img-2.6.32-21-generic
+ 153.9GB: boot/vmlinuz-2.6.31-20-generic
+ 130.5GB: boot/vmlinuz-2.6.32-21-generic
+ 158.6GB: initrd.img
+ 130.5GB: vmlinuz
+
+```
+
+Any help would be appreciated. I kind of REALLY need my Windows installation...
+
+---
+
+### Post by HazelIced on 2010-05-02
+*bump*
+
+---
+
+### Post by dino99 on 2010-05-02
+well, as you can see , here is your error:
+
+ File system:       ntfs
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda1
+
+i'm afraid you have overwrote the windows bootloader :(
+
+try again: sudo grub-mkconfig && update-grub
+
+[http://ubuntuforums.org/showthread.php?t=1467891&page=2](http://ubuntuforums.org/showthread.php?t=1467891&page=2) post 14
+
+[http://ubuntuforums.org/showthread.php?t=1468931](http://ubuntuforums.org/showthread.php?t=1468931) post 4
+
+---
+
+### Post by HazelIced on 2010-05-02
+Dang it, I don't have a Windows Vista CD, my computer came without it and the Windows Restore thing won't run either..... I tried searching for that file and the folder ServicePackFiles but its not there either. I do have a couple of files on my C drive that I didn't have before, and a folder called Boot with some language folders it seems, and I don't think that was there either.
+
+---
+
+### Post by Ethangar on 2010-05-02
+This worked for me. After the update I couldn't get back into XP.
+
+[http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Boot_Sector](http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Boot_Sector)
+
+---
+
+### Post by HazelIced on 2010-05-02
+Yeah, I tried that.
+But my sda1 is not bootable apparently and it doesn't give me the option to eiter Boot or BackupBS...
+
+---
+
+### Post by HazelIced on 2010-05-04
+Ok, so I might need more help than I initially thought.
+I did something wrong with Testdisk and deleted my partition table. Luckily I think I got my disks back, but I can only select 4 at a time to undelete and re write the partition table to....
+I have found with test disk 5 distinct partitions though.
+The first one, PQSERVICE, looks like it should I guess, but since its hidden I don't know if that one should stay "deleted", as I can't put a logical label on it.
+The second one, my ACER one, is like my C disk on Windows, so I guess that one is a primary.
+The third one is my D disk on windows, so I am guessing primary too.
+Fourth one is Linux Swap, should that one be logical?
+I can't find any Extended drive with the size that the results.txt file show. Luckily, that file is helpful for figuring this out I think.
+Fifth partition is my Linux main one, I guess that one should be the Primary Bootable one?
+
+
+Worst thing is I tried loading up and GRUB actually worked, so it was reading something from the Linux one. I tried running Windows but then Windows set itself as Primary Bootable, so it rebooted and then GRUB didn't come back.
+
+I guess I'll try restarting like this and if not try something with the PQService too.
+
+---
+
+### Post by HazelIced on 2010-05-04
+Ok, after doing the last step I was able to try to run Ubuntu again. As I had tried to install Grub before from Puppy Linux, which has GRUB Legacy, it gave me Error 15.
+I checked on Error 15 and it said to install grub on the partition with Linux from a LiveCD.
+After doing that, GRUB2 started as normal on reboot and Ubuntu ran fine, after checking the hard disks for errors.
+Haven't tried running Windows yet. I guess I have to give it a go. I hope Windows won't set itself as root again.
+Maybe if it does I have to try using GParted and something else to find the other partitions and set flags?
+
+---
+
+### Post by HazelIced on 2010-05-05
+Ok.
+Windows hasn't set itself as Root again, so thats good.
+At the same time, I still can't run it.
+Linux runs pretty well, but I had to create a Swap file because my Swap drive was not detected.
+I still have to figure out how to get Windows to work.
+Last time I tried the computer started beeping and the cursor moved to the bottom of the screen and then to the right side.
+Any ideas what could be going on there? This time it didn't even say missing Bootmgr.
+
+---
+

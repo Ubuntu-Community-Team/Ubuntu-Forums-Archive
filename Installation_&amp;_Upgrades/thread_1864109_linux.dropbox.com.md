@@ -1,0 +1,62 @@
+---
+title: "linux.dropbox.com?"
+date: 2011-10-18
+forum: Installation &amp; Upgrades
+---
+
+### Post by arnaldo on 2011-10-18
+I started upgrading to 10.10 via Update Manager.  At the stage of loading Packages files, it fails, with the message:
+
+W:Failed to fetch [http://linux.dropbox.com/ubuntu/dists/oneiric/main/binary-i386/Packages](http://linux.dropbox.com/ubuntu/dists/oneiric/main/binary-i386/Packages)  404  Not Found
+, E:Some index files failed to download. They have been ignored, or old ones used instead.
+
+After that it just stops.
+
+Where does this dropbox address come from?  I tried to set the download server to three different sites, all ended up the same way.
+
+---
+
+### Post by arpanaut on 2011-10-18
+That looks like a 3rd party repository 
+They may not have released an oneiric package yet.
+You may have to go into your /etc/apt/sources.list and comment (#) that source
+or change oneiric to natty for the time being until they release an updated package
+
+---
+
+### Post by arnaldo on 2011-10-18
+That's it.  I was fooled by UM's message that it had disabled 3rd party installations.  I had already checked sources.list, anyway.
+
+Found the culprit in sources.list.d.  Now I am over that particular stumbling block.
+
+Thanks.
+
+---
+
+### Post by subehsharma on 2011-11-10
+Best method to getaway from this problem is to install fix404. You can read about it more here:
+
+Under Ubuntu, the APT package index is a database containing all packages of repositories (PPAs) defined in the /etc/apt/sources.list file. To update this database after adding some repositories, we need to use this command from the Terminal:
+
+sudo apt-get update
+
+Sometimes, when running the command given above, we get error messages (404 Not Found) that are the result of wrong PPAs, which may slow down the update process via the Terminal. In fact, this 404 Not Found error messages are not harmful at all, but you can use Fix404 to detect and remove these PPAs.
+
+To install Fix404 on Ubuntu 11.04, launch the Terminal and run these commands:
+
+sudo apt-add-repository ppa:lkjoel/fix404
+sudo apt-get update
+sudo apt-get install fix404
+
+To install on Ubuntu 10.10/10.04, download this deb package here.
+
+To start using Fix404, run this command (root privileges required):
+
+sudo fix404
+
+Then follow displayed instructions to disable PPAs causing the 404 Not Found Error.
+
+[http://www.upubuntu.com/2011/07/remo...e-404-not.html](http://www.upubuntu.com/2011/07/remo...e-404-not.html)
+
+---
+

@@ -1,0 +1,17369 @@
+---
+title: "Issue installing Ubuntu on Toshiba Satellite C55 laptop."
+date: 2014-04-09
+forum: Installation &amp; Upgrades
+---
+
+### Post by demonic_crow on 2014-04-09
+[h=4]This is my specs:
+AMD Quad-Core A6-5200 Accelerated Processor with AMD Radeon HD 8400 graphics[/h]http://www.bestbuy.com/site/satellite-15-6-laptop-4gb-memory-750gb-hard-drive/4114013.p;jsessionid=B92EB544D5A06887416206B61E9E60D5.bbolsp-app02-136?id=1219095669893&skuId=4114013&st=toshiba%20satellite%20c55&cp=1&lp=6
+
+My laptop came with window 8.1. I want to dual boot it with Ubuntu. I install Ubuntu 12.04 on a live USB drive. When I tried to just test it out it would always show a black screen. So I did some digging around and saw I need to press e before I select to test it out. Then I delete splash and quiet and replace it with nomodeset. I also tried radeon.modeset=0 . Both of those would just bring me to the terminal only. I tried to type starx and it says no screen found. 
+
+I decide to go ahead and install it to see it it may work. I was able to go through the process. I even saw the desktop in the background and was able to set up my wifi and all. While it was installing it said  "The 'grub-efi-amd64-signed' package failed to install into /target/. Without the GRUB boot loader, the installed system will not boot.
+
+---
+
+### Post by oldfred on 2014-04-09
+You need to install in UEFI mode. Boot-Repair can convert an Ubuntu BIOS boot to UEFI boot on a gpt partitioned drive which all Windows 8 pre-installed systems are.
+
+May be much better to use 14.04 as it has many UEFI improvements to grub boot loader, kernel & supporting software.
+
+ Post the link to the Create BootInfo report. Is part of Boot-Repair:
+[https://help.ubuntu.com/community/Boot-Info](https://help.ubuntu.com/community/Boot-Info)
+
+   Boot Repair -Also handles LVM, GPT, separate /boot and UEFI dual boot.:
+[https://help.ubuntu.com/community/Boot-Repair](https://help.ubuntu.com/community/Boot-Repair)
+You can repair many boot issues with this or 'Create BootInfo' report (Other Options) & post the link it creates, so we can see your exact configuration and diagnose advanced problems.
+With UEFI If you run any fixes from Boot-Repair do not say yes to 'buggy' UEFI fix. That is only for systems where UEFI has been modified by vendor to only allow Windows to boot.
+
+
+ The AMD Radeon Performance Is Incredible On Linux 3.12
+[http://www.phoronix.com/scan.php?page=article&item=amd_linux312_major&num=1](http://www.phoronix.com/scan.php?page=article&item=amd_linux312_major&num=1)
+
+---
+
+### Post by demonic_crow on 2014-04-13
+I made a live usb of Ubuntu 14.04 and it booted up great. I was able to see the desktop unlike on 12.04 and 13.10. So I went ahead and install 14.04 cause I just wanted linux on my laptop.  Now I'm unable to boot into my Window 8.1 now. I'm not able to install boot-repair on 14.04. I'm guessing I have to wait till the offical release of it to do so? 
+
+This is the error I get when trying to install it:
+
+  ```
+Simple tool to repair frequent boot problems.
+
+Website: https://launchpad.net/boot-repair
+ More info: https://launchpad.net/~yannubuntu/+archive/boot-repair
+Press [ENTER] to continue or ctrl-c to cancel adding it
+
+gpg: keyring `/tmp/tmp5vevmgzs/secring.gpg' created
+gpg: keyring `/tmp/tmp5vevmgzs/pubring.gpg' created
+gpg: requesting key 60D8DA0B from hkp server keyserver.ubuntu.com
+gpg: /tmp/tmp5vevmgzs/trustdb.gpg: trustdb created
+gpg: key 60D8DA0B: public key "Launchpad PPA for YannUbuntu" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+OK
+Ign http://us.archive.ubuntu.com trusty InRelease
+Ign http://us.archive.ubuntu.com trusty-updates InRelease                      
+Ign http://us.archive.ubuntu.com trusty-backports InRelease                    
+Ign http://extras.ubuntu.com trusty InRelease                                  
+Ign http://ppa.launchpad.net trusty InRelease                                  
+Get:1 http://us.archive.ubuntu.com trusty Release.gpg [933 B]                  
+Hit http://us.archive.ubuntu.com trusty-updates Release.gpg                    
+Get:2 http://extras.ubuntu.com trusty Release.gpg [72 B]                       
+Ign http://ppa.launchpad.net trusty InRelease                                  
+Hit http://us.archive.ubuntu.com trusty-backports Release.gpg                  
+Get:3 http://us.archive.ubuntu.com trusty Release [58.5 kB]                    
+Hit http://extras.ubuntu.com trusty Release                                    
+Ign http://ppa.launchpad.net trusty InRelease                                  
+Hit http://ppa.launchpad.net trusty Release.gpg                                
+Hit http://us.archive.ubuntu.com trusty-updates Release                        
+Hit http://extras.ubuntu.com trusty/main Sources                               
+Hit http://us.archive.ubuntu.com trusty-backports Release                      
+Hit http://ppa.launchpad.net trusty Release.gpg                                
+Get:4 http://us.archive.ubuntu.com trusty/main Sources [1,063 kB]              
+Hit http://extras.ubuntu.com trusty/main amd64 Packages                        
+Ign http://ppa.launchpad.net trusty Release.gpg                                
+Hit http://extras.ubuntu.com trusty/main i386 Packages                         
+Hit http://ppa.launchpad.net trusty Release                                    
+Hit http://ppa.launchpad.net trusty Release                                    
+Ign http://ppa.launchpad.net trusty Release                                    
+Hit http://ppa.launchpad.net trusty/main amd64 Packages                        
+Hit http://ppa.launchpad.net trusty/main i386 Packages                         
+Hit http://ppa.launchpad.net trusty/main amd64 Packages                        
+Ign http://extras.ubuntu.com trusty/main Translation-en_US                     
+Hit http://ppa.launchpad.net trusty/main i386 Packages                         
+Ign http://extras.ubuntu.com trusty/main Translation-en                        
+Ign http://security.ubuntu.com trusty-security InRelease                       
+Hit http://security.ubuntu.com trusty-security Release.gpg                     
+Hit http://security.ubuntu.com trusty-security Release                         
+Hit http://security.ubuntu.com trusty-security/main Sources                    
+Get:5 http://us.archive.ubuntu.com trusty/restricted Sources [5,433 B]         
+Get:6 http://us.archive.ubuntu.com trusty/universe Sources [6,410 kB]          
+Hit http://security.ubuntu.com trusty-security/restricted Sources              
+Hit http://security.ubuntu.com trusty-security/universe Sources                
+Hit http://security.ubuntu.com trusty-security/multiverse Sources              
+Hit http://security.ubuntu.com trusty-security/main amd64 Packages             
+Hit http://security.ubuntu.com trusty-security/restricted amd64 Packages       
+Hit http://security.ubuntu.com trusty-security/universe amd64 Packages         
+Hit http://security.ubuntu.com trusty-security/multiverse amd64 Packages       
+Hit http://security.ubuntu.com trusty-security/main i386 Packages              
+Hit http://security.ubuntu.com trusty-security/restricted i386 Packages        
+Hit http://security.ubuntu.com trusty-security/universe i386 Packages          
+Hit http://security.ubuntu.com trusty-security/multiverse i386 Packages        
+Hit http://security.ubuntu.com trusty-security/main Translation-en             
+Hit http://security.ubuntu.com trusty-security/multiverse Translation-en       
+Hit http://security.ubuntu.com trusty-security/restricted Translation-en       
+Hit http://security.ubuntu.com trusty-security/universe Translation-en         
+Ign http://security.ubuntu.com trusty-security/main Translation-en_US          
+Ign http://security.ubuntu.com trusty-security/multiverse Translation-en_US    
+Ign http://security.ubuntu.com trusty-security/restricted Translation-en_US    
+Ign http://security.ubuntu.com trusty-security/universe Translation-en_US      
+Ign http://ppa.launchpad.net trusty/main Translation-en_US                     
+Ign http://ppa.launchpad.net trusty/main Translation-en                        
+Ign http://ppa.launchpad.net trusty/main Translation-en_US                     
+Ign http://ppa.launchpad.net trusty/main Translation-en                        
+Err http://ppa.launchpad.net trusty/main amd64 Packages                        
+  404  Not Found
+Err http://ppa.launchpad.net trusty/main i386 Packages                         
+  404  Not Found
+Ign http://ppa.launchpad.net trusty/main Translation-en_US                     
+Ign http://ppa.launchpad.net trusty/main Translation-en                        
+Get:7 http://us.archive.ubuntu.com trusty/multiverse Sources [174 kB]          
+Get:8 http://us.archive.ubuntu.com trusty/main amd64 Packages [1,349 kB]       
+Get:9 http://us.archive.ubuntu.com trusty/restricted amd64 Packages [13.0 kB]  
+Get:10 http://us.archive.ubuntu.com trusty/universe amd64 Packages [5,876 kB]  
+Get:11 http://us.archive.ubuntu.com trusty/multiverse amd64 Packages [131 kB]  
+Get:12 http://us.archive.ubuntu.com trusty/main i386 Packages [1,346 kB]       
+Get:13 http://us.archive.ubuntu.com trusty/restricted i386 Packages [13.4 kB]  
+Get:14 http://us.archive.ubuntu.com trusty/universe i386 Packages [5,884 kB]   
+Get:15 http://us.archive.ubuntu.com trusty/multiverse i386 Packages [133 kB]   
+Hit http://us.archive.ubuntu.com trusty/main Translation-en                    
+Hit http://us.archive.ubuntu.com trusty/multiverse Translation-en              
+Hit http://us.archive.ubuntu.com trusty/restricted Translation-en              
+Get:16 http://us.archive.ubuntu.com trusty/universe Translation-en [4,095 kB]  
+Hit http://us.archive.ubuntu.com trusty-updates/main Sources                   
+Hit http://us.archive.ubuntu.com trusty-updates/restricted Sources             
+Hit http://us.archive.ubuntu.com trusty-updates/universe Sources               
+Hit http://us.archive.ubuntu.com trusty-updates/multiverse Sources             
+Hit http://us.archive.ubuntu.com trusty-updates/main amd64 Packages            
+Hit http://us.archive.ubuntu.com trusty-updates/restricted amd64 Packages      
+Hit http://us.archive.ubuntu.com trusty-updates/universe amd64 Packages        
+Hit http://us.archive.ubuntu.com trusty-updates/multiverse amd64 Packages      
+Hit http://us.archive.ubuntu.com trusty-updates/main i386 Packages             
+Hit http://us.archive.ubuntu.com trusty-updates/restricted i386 Packages       
+Hit http://us.archive.ubuntu.com trusty-updates/universe i386 Packages         
+Hit http://us.archive.ubuntu.com trusty-updates/multiverse i386 Packages       
+Hit http://us.archive.ubuntu.com trusty-updates/main Translation-en            
+Hit http://us.archive.ubuntu.com trusty-updates/multiverse Translation-en      
+Hit http://us.archive.ubuntu.com trusty-updates/restricted Translation-en      
+Hit http://us.archive.ubuntu.com trusty-updates/universe Translation-en        
+Hit http://us.archive.ubuntu.com trusty-backports/main Sources                 
+Hit http://us.archive.ubuntu.com trusty-backports/restricted Sources           
+Hit http://us.archive.ubuntu.com trusty-backports/universe Sources             
+Hit http://us.archive.ubuntu.com trusty-backports/multiverse Sources           
+Hit http://us.archive.ubuntu.com trusty-backports/main amd64 Packages          
+Hit http://us.archive.ubuntu.com trusty-backports/restricted amd64 Packages    
+Hit http://us.archive.ubuntu.com trusty-backports/universe amd64 Packages      
+Hit http://us.archive.ubuntu.com trusty-backports/multiverse amd64 Packages    
+Hit http://us.archive.ubuntu.com trusty-backports/main i386 Packages           
+Hit http://us.archive.ubuntu.com trusty-backports/restricted i386 Packages     
+Hit http://us.archive.ubuntu.com trusty-backports/universe i386 Packages       
+Hit http://us.archive.ubuntu.com trusty-backports/multiverse i386 Packages     
+Hit http://us.archive.ubuntu.com trusty-backports/main Translation-en          
+Hit http://us.archive.ubuntu.com trusty-backports/multiverse Translation-en    
+Hit http://us.archive.ubuntu.com trusty-backports/restricted Translation-en    
+Hit http://us.archive.ubuntu.com trusty-backports/universe Translation-en      
+Ign http://us.archive.ubuntu.com trusty/main Translation-en_US                 
+Ign http://us.archive.ubuntu.com trusty/multiverse Translation-en_US           
+Ign http://us.archive.ubuntu.com trusty/restricted Translation-en_US           
+Ign http://us.archive.ubuntu.com trusty/universe Translation-en_US             
+Ign http://us.archive.ubuntu.com trusty-updates/main Translation-en_US         
+Ign http://us.archive.ubuntu.com trusty-updates/multiverse Translation-en_US   
+Ign http://us.archive.ubuntu.com trusty-updates/restricted Translation-en_US   
+Ign http://us.archive.ubuntu.com trusty-updates/universe Translation-en_US     
+Ign http://us.archive.ubuntu.com trusty-backports/main Translation-en_US       
+Ign http://us.archive.ubuntu.com trusty-backports/multiverse Translation-en_US 
+Ign http://us.archive.ubuntu.com trusty-backports/restricted Translation-en_US 
+Ign http://us.archive.ubuntu.com trusty-backports/universe Translation-en_US   
+Fetched 26.6 MB in 1min 41s (262 kB/s)                                         
+W: Failed to fetch http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu/dists/trusty/main/binary-amd64/Packages  404  Not Found
+
+W: Failed to fetch http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu/dists/trusty/main/binary-i386/Packages  404  Not Found
+
+E: Some index files failed to download. They have been ignored, or old ones used instead.
+
+```
+
+---
+
+### Post by oldfred on 2014-04-13
+It seems Boot-Repair does not have a trusty version, but saucy version works, so you have to lie to system.
+I only ran bootinfo report, but expect it all to work.
+
+       This adds a ppa folder with the trusty entry.
+ 25  sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+This gives error that trusty version not available
+   26  sudo apt-get install -y boot-repair
+Open new ppa entry:
+   30  gksudo gedit /etc/apt/sources.list.d/yannubuntu-boot-repair-trusty.list
+Change trusty to saucy - remember sometime in future to change back.
+deb [http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu](http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu) saucy main
+   32  sudo apt-get update
+   33  sudo apt-get install -y boot-repair
+   34  boot-repair
+   36  history
+
+---
+
+### Post by demonic_crow on 2014-04-14
+I manage to get the boot-repair installed thanks to your instructions. I notice it said there was an error but didn't say what. When I restarted the computer it only showed Ubuntu in the Grub and no Windows 8.1. What could be the reason why its not showing?
+
+Here is the report:
+
+```
+[COLOR=#000] [TABLE="class: pastetable"]
+[TR]
+[TD="class: linenos"]   1
+   2
+   3
+   4
+   5
+   6
+   7
+   8
+   9
+  10
+  11
+  12
+  13
+  14
+  15
+  16
+  17
+  18
+  19
+  20
+  21
+  22
+  23
+  24
+  25
+  26
+  27
+  28
+  29
+  30
+  31
+  32
+  33
+  34
+  35
+  36
+  37
+  38
+  39
+  40
+  41
+  42
+  43
+  44
+  45
+  46
+  47
+  48
+  49
+  50
+  51
+  52
+  53
+  54
+  55
+  56
+  57
+  58
+  59
+  60
+  61
+  62
+  63
+  64
+  65
+  66
+  67
+  68
+  69
+  70
+  71
+  72
+  73
+  74
+  75
+  76
+  77
+  78
+  79
+  80
+  81
+  82
+  83
+  84
+  85
+  86
+  87
+  88
+  89
+  90
+  91
+  92
+  93
+  94
+  95
+  96
+  97
+  98
+  99
+ 100
+ 101
+ 102
+ 103
+ 104
+ 105
+ 106
+ 107
+ 108
+ 109
+ 110
+ 111
+ 112
+ 113
+ 114
+ 115
+ 116
+ 117
+ 118
+ 119
+ 120
+ 121
+ 122
+ 123
+ 124
+ 125
+ 126
+ 127
+ 128
+ 129
+ 130
+ 131
+ 132
+ 133
+ 134
+ 135
+ 136
+ 137
+ 138
+ 139
+ 140
+ 141
+ 142
+ 143
+ 144
+ 145
+ 146
+ 147
+ 148
+ 149
+ 150
+ 151
+ 152
+ 153
+ 154
+ 155
+ 156
+ 157
+ 158
+ 159
+ 160
+ 161
+ 162
+ 163
+ 164
+ 165
+ 166
+ 167
+ 168
+ 169
+ 170
+ 171
+ 172
+ 173
+ 174
+ 175
+ 176
+ 177
+ 178
+ 179
+ 180
+ 181
+ 182
+ 183
+ 184
+ 185
+ 186
+ 187
+ 188
+ 189
+ 190
+ 191
+ 192
+ 193
+ 194
+ 195
+ 196
+ 197
+ 198
+ 199
+ 200
+ 201
+ 202
+ 203
+ 204
+ 205
+ 206
+ 207
+ 208
+ 209
+ 210
+ 211
+ 212
+ 213
+ 214
+ 215
+ 216
+ 217
+ 218
+ 219
+ 220
+ 221
+ 222
+ 223
+ 224
+ 225
+ 226
+ 227
+ 228
+ 229
+ 230
+ 231
+ 232
+ 233
+ 234
+ 235
+ 236
+ 237
+ 238
+ 239
+ 240
+ 241
+ 242
+ 243
+ 244
+ 245
+ 246
+ 247
+ 248
+ 249
+ 250
+ 251
+ 252
+ 253
+ 254
+ 255
+ 256
+ 257
+ 258
+ 259
+ 260
+ 261
+ 262
+ 263
+ 264
+ 265
+ 266
+ 267
+ 268
+ 269
+ 270
+ 271
+ 272
+ 273
+ 274
+ 275
+ 276
+ 277
+ 278
+ 279
+ 280
+ 281
+ 282
+ 283
+ 284
+ 285
+ 286
+ 287
+ 288
+ 289
+ 290
+ 291
+ 292
+ 293
+ 294
+ 295
+ 296
+ 297
+ 298
+ 299
+ 300
+ 301
+ 302
+ 303
+ 304
+ 305
+ 306
+ 307
+ 308
+ 309
+ 310
+ 311
+ 312
+ 313
+ 314
+ 315
+ 316
+ 317
+ 318
+ 319
+ 320
+ 321
+ 322
+ 323
+ 324
+ 325
+ 326
+ 327
+ 328
+ 329
+ 330
+ 331
+ 332
+ 333
+ 334
+ 335
+ 336
+ 337
+ 338
+ 339
+ 340
+ 341
+ 342
+ 343
+ 344
+ 345
+ 346
+ 347
+ 348
+ 349
+ 350
+ 351
+ 352
+ 353
+ 354
+ 355
+ 356
+ 357
+ 358
+ 359
+ 360
+ 361
+ 362
+ 363
+ 364
+ 365
+ 366
+ 367
+ 368
+ 369
+ 370
+ 371
+ 372
+ 373
+ 374
+ 375
+ 376
+ 377
+ 378
+ 379
+ 380
+ 381
+ 382
+ 383
+ 384
+ 385
+ 386
+ 387
+ 388
+ 389
+ 390
+ 391
+ 392
+ 393
+ 394
+ 395
+ 396
+ 397
+ 398
+ 399
+ 400
+ 401
+ 402
+ 403
+ 404
+ 405
+ 406
+ 407
+ 408
+ 409
+ 410
+ 411
+ 412
+ 413
+ 414
+ 415
+ 416
+ 417
+ 418
+ 419
+ 420
+ 421
+ 422
+ 423
+ 424
+ 425
+ 426
+ 427
+ 428
+ 429
+ 430
+ 431
+ 432
+ 433
+ 434
+ 435
+ 436
+ 437
+ 438
+ 439
+ 440
+ 441
+ 442
+ 443
+ 444
+ 445
+ 446
+ 447
+ 448
+ 449
+ 450
+ 451
+ 452
+ 453
+ 454
+ 455
+ 456
+ 457
+ 458
+ 459
+ 460
+ 461
+ 462
+ 463
+ 464
+ 465
+ 466
+ 467
+ 468
+ 469
+ 470
+ 471
+ 472
+ 473
+ 474
+ 475
+ 476
+ 477
+ 478
+ 479
+ 480
+ 481
+ 482
+ 483
+ 484
+ 485
+ 486
+ 487
+ 488
+ 489
+ 490
+ 491
+ 492
+ 493
+ 494
+ 495
+ 496
+ 497
+ 498
+ 499
+ 500
+ 501
+ 502
+ 503
+ 504
+ 505
+ 506
+ 507
+ 508
+ 509
+ 510
+ 511
+ 512
+ 513
+ 514
+ 515
+ 516
+ 517
+ 518
+ 519
+ 520
+ 521
+ 522
+ 523
+ 524
+ 525
+ 526
+ 527
+ 528
+ 529
+ 530
+ 531
+ 532
+ 533
+ 534
+ 535
+ 536
+ 537
+ 538
+ 539
+ 540
+ 541
+ 542
+ 543
+ 544
+ 545
+ 546
+ 547
+ 548
+ 549
+ 550
+ 551
+ 552
+ 553
+ 554
+ 555
+ 556
+ 557
+ 558
+ 559
+ 560
+ 561
+ 562
+ 563
+ 564
+ 565
+ 566
+ 567
+ 568
+ 569
+ 570
+ 571
+ 572
+ 573
+ 574
+ 575
+ 576
+ 577
+ 578
+ 579
+ 580
+ 581
+ 582
+ 583
+ 584
+ 585
+ 586
+ 587
+ 588
+ 589
+ 590
+ 591
+ 592
+ 593
+ 594
+ 595
+ 596
+ 597
+ 598
+ 599
+ 600
+ 601
+ 602
+ 603
+ 604
+ 605
+ 606
+ 607
+ 608
+ 609
+ 610
+ 611
+ 612
+ 613
+ 614
+ 615
+ 616
+ 617
+ 618
+ 619
+ 620
+ 621
+ 622
+ 623
+ 624
+ 625
+ 626
+ 627
+ 628
+ 629
+ 630
+ 631
+ 632
+ 633
+ 634
+ 635
+ 636
+ 637
+ 638
+ 639
+ 640
+ 641
+ 642
+ 643
+ 644
+ 645
+ 646
+ 647
+ 648
+ 649
+ 650
+ 651
+ 652
+ 653
+ 654
+ 655
+ 656
+ 657
+ 658
+ 659
+ 660
+ 661
+ 662
+ 663
+ 664
+ 665
+ 666
+ 667
+ 668
+ 669
+ 670
+ 671
+ 672
+ 673
+ 674
+ 675
+ 676
+ 677
+ 678
+ 679
+ 680
+ 681
+ 682
+ 683
+ 684
+ 685
+ 686
+ 687
+ 688
+ 689
+ 690
+ 691
+ 692
+ 693
+ 694
+ 695
+ 696
+ 697
+ 698
+ 699
+ 700
+ 701
+ 702
+ 703
+ 704
+ 705
+ 706
+ 707
+ 708
+ 709
+ 710
+ 711
+ 712
+ 713
+ 714
+ 715
+ 716
+ 717
+ 718
+ 719
+ 720
+ 721
+ 722
+ 723
+ 724
+ 725
+ 726
+ 727
+ 728
+ 729
+ 730
+ 731
+ 732
+ 733
+ 734
+ 735
+ 736
+ 737
+ 738
+ 739
+ 740
+ 741
+ 742
+ 743
+ 744
+ 745
+ 746
+ 747
+ 748
+ 749
+ 750
+ 751
+ 752
+ 753
+ 754
+ 755
+ 756
+ 757
+ 758
+ 759
+ 760
+ 761
+ 762
+ 763
+ 764
+ 765
+ 766
+ 767
+ 768
+ 769
+ 770
+ 771
+ 772
+ 773
+ 774
+ 775
+ 776
+ 777
+ 778
+ 779
+ 780
+ 781
+ 782
+ 783
+ 784
+ 785
+ 786
+ 787
+ 788
+ 789
+ 790
+ 791
+ 792
+ 793
+ 794
+ 795
+ 796
+ 797
+ 798
+ 799
+ 800
+ 801
+ 802
+ 803
+ 804
+ 805
+ 806
+ 807
+ 808
+ 809
+ 810
+ 811
+ 812
+ 813
+ 814
+ 815
+ 816
+ 817
+ 818
+ 819
+ 820
+ 821
+ 822
+ 823
+ 824
+ 825
+ 826
+ 827
+ 828
+ 829
+ 830
+ 831
+ 832
+ 833
+ 834
+ 835
+ 836
+ 837
+ 838
+ 839
+ 840
+ 841
+ 842
+ 843
+ 844
+ 845
+ 846
+ 847
+ 848
+ 849
+ 850
+ 851
+ 852
+ 853
+ 854
+ 855
+ 856
+ 857
+ 858
+ 859
+ 860
+ 861
+ 862
+ 863
+ 864
+ 865
+ 866
+ 867
+ 868
+ 869
+ 870
+ 871
+ 872
+ 873
+ 874
+ 875
+ 876
+ 877
+ 878
+ 879
+ 880
+ 881
+ 882
+ 883
+ 884
+ 885
+ 886
+ 887
+ 888
+ 889
+ 890
+ 891
+ 892
+ 893
+ 894
+ 895
+ 896
+ 897
+ 898
+ 899
+ 900
+ 901
+ 902
+ 903
+ 904
+ 905
+ 906
+ 907
+ 908
+ 909
+ 910
+ 911
+ 912
+ 913
+ 914
+ 915
+ 916
+ 917
+ 918
+ 919
+ 920
+ 921
+ 922
+ 923
+ 924
+ 925
+ 926
+ 927
+ 928
+ 929
+ 930
+ 931
+ 932
+ 933
+ 934
+ 935
+ 936
+ 937
+ 938
+ 939
+ 940
+ 941
+ 942
+ 943
+ 944
+ 945
+ 946
+ 947
+ 948
+ 949
+ 950
+ 951
+ 952
+ 953
+ 954
+ 955
+ 956
+ 957
+ 958
+ 959
+ 960
+ 961
+ 962
+ 963
+ 964
+ 965
+ 966
+ 967
+ 968
+ 969
+ 970
+ 971
+ 972
+ 973
+ 974
+ 975
+ 976
+ 977
+ 978
+ 979
+ 980
+ 981
+ 982
+ 983
+ 984
+ 985
+ 986
+ 987
+ 988
+ 989
+ 990
+ 991
+ 992
+ 993
+ 994
+ 995
+ 996
+ 997
+ 998
+ 999
+1000
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+1010
+1011
+1012
+1013
+1014
+1015
+1016
+1017
+1018
+1019
+1020
+1021
+1022
+1023
+1024
+1025
+1026
+1027
+1028
+1029
+1030
+1031
+1032
+1033
+1034
+1035
+1036
+1037
+1038
+1039
+1040
+1041
+1042
+1043
+1044
+1045
+1046
+1047
+1048
+1049
+1050
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+1062
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074
+1075
+1076
+1077
+1078
+1079
+1080
+1081
+1082
+1083
+1084
+1085
+1086
+1087
+1088
+1089
+1090
+1091
+1092
+1093
+1094
+1095
+1096
+1097
+1098
+1099
+1100
+1101
+1102
+1103
+1104
+1105
+1106
+1107
+1108
+1109
+1110
+1111
+1112
+1113
+1114
+1115
+1116
+1117
+1118
+1119
+1120
+1121
+1122
+1123
+1124
+1125
+1126
+1127
+1128
+1129
+1130
+1131
+1132
+1133
+1134
+1135
+1136
+1137
+1138
+1139
+1140
+1141
+1142
+1143
+1144
+1145
+1146
+1147
+1148
+1149
+1150
+1151
+1152
+1153
+1154
+1155
+1156
+1157
+1158
+1159
+1160
+1161
+1162
+1163
+1164
+1165
+1166
+1167
+1168
+1169
+1170
+1171
+1172
+1173
+1174
+1175
+1176
+1177
+1178
+1179
+1180
+1181
+1182
+1183
+1184
+1185
+1186
+1187
+1188
+1189
+1190
+1191
+1192
+1193
+1194
+1195
+1196
+1197
+1198
+1199
+1200
+1201
+1202
+1203
+1204
+1205
+1206
+1207
+1208
+1209
+1210
+1211
+1212
+1213
+1214
+1215
+1216
+1217
+1218
+1219
+1220
+1221
+1222
+1223
+1224
+1225
+1226
+1227
+1228
+1229
+1230
+1231
+1232
+1233
+1234
+1235
+1236
+1237
+1238
+1239
+1240
+1241
+1242
+1243
+1244
+1245
+1246
+1247
+1248
+1249
+1250
+1251
+1252
+1253
+1254
+1255
+1256
+1257
+1258
+1259
+1260
+1261
+1262
+1263
+1264
+1265
+1266
+1267
+1268
+1269
+1270
+1271
+1272
+1273
+1274
+1275
+1276
+1277
+1278
+1279
+1280
+1281
+1282
+1283
+1284
+1285
+1286
+1287
+1288
+1289
+1290
+1291
+1292
+1293
+1294
+1295
+1296
+1297
+1298
+1299
+1300
+1301
+1302
+1303
+1304
+1305
+1306
+1307
+1308
+1309
+1310
+1311
+1312
+1313
+1314
+1315
+1316
+1317
+1318
+1319
+1320
+1321
+1322
+1323
+1324
+1325
+1326
+1327
+1328
+1329
+1330
+1331
+1332
+1333
+1334
+1335
+1336
+1337
+1338
+1339
+1340
+1341
+1342
+1343
+1344
+1345
+1346
+1347
+1348
+1349
+1350
+1351
+1352
+1353
+1354
+1355
+1356
+1357
+1358
+1359
+1360
+1361
+1362
+1363
+1364
+1365
+1366
+1367
+1368
+1369
+1370
+1371
+1372
+1373
+1374
+1375
+1376
+1377
+1378
+1379
+1380
+1381
+1382
+1383
+1384
+1385
+1386
+1387
+1388
+1389
+1390
+1391
+1392
+1393
+1394
+1395
+1396
+1397
+1398
+1399
+1400
+1401
+1402
+1403
+1404
+1405
+1406
+1407
+1408
+1409
+1410
+1411
+1412
+1413
+1414
+1415
+1416
+1417
+1418
+1419
+1420
+1421
+1422
+1423
+1424
+1425
+1426
+1427
+1428
+1429
+1430
+1431
+1432
+1433
+1434
+1435
+1436
+1437
+1438
+1439
+1440
+1441
+1442
+1443
+1444
+1445
+1446
+1447
+1448
+1449
+1450
+1451
+1452
+1453
+1454
+1455
+1456
+1457
+1458
+1459
+1460
+1461
+1462
+1463
+1464
+1465
+1466
+1467
+1468
+1469
+1470
+1471
+1472
+1473
+1474
+1475
+1476
+1477
+1478
+1479
+1480
+1481
+1482
+1483
+1484
+1485
+1486
+1487
+1488
+1489
+1490
+1491
+1492
+1493
+1494
+1495
+1496
+1497
+1498
+1499
+1500
+1501
+1502
+1503
+1504
+1505
+1506
+1507
+1508
+1509
+1510
+1511
+1512
+1513
+1514
+1515
+1516
+1517
+1518
+1519
+1520
+1521
+1522
+1523
+1524
+1525
+1526
+1527
+1528
+1529
+1530
+1531
+1532
+1533
+1534
+1535
+1536
+1537
+1538
+1539
+1540
+1541
+1542
+1543
+1544
+1545
+1546
+1547
+1548
+1549
+1550
+1551
+1552
+1553
+1554
+1555
+1556
+1557
+1558
+1559
+1560
+1561
+1562
+1563
+1564
+1565
+1566
+1567
+1568
+1569
+1570
+1571
+1572
+1573
+1574
+1575
+1576
+1577
+1578
+1579
+1580
+1581
+1582
+1583
+1584
+1585
+1586
+1587
+1588
+1589
+1590
+1591
+1592
+1593
+1594
+1595
+1596
+1597
+1598
+1599
+1600
+1601
+1602
+1603
+1604
+1605
+1606
+1607
+1608
+1609
+1610
+1611
+1612
+1613
+1614
+1615
+1616
+1617
+1618
+1619
+1620
+1621
+1622
+1623
+1624
+1625
+1626
+1627
+1628
+1629
+1630
+1631
+1632
+1633
+1634
+1635
+1636
+1637
+1638
+1639
+1640
+1641
+1642
+1643
+1644
+1645
+1646
+1647
+1648
+1649
+1650
+1651
+1652
+1653
+1654
+1655
+1656
+1657
+1658
+1659
+1660
+1661
+1662
+1663
+1664
+1665
+1666
+1667
+1668
+1669
+1670
+1671
+1672
+1673
+1674
+1675
+1676
+1677
+1678
+1679
+1680
+1681
+1682
+1683
+1684
+1685
+1686
+1687
+1688
+1689
+1690
+1691
+1692
+1693
+1694
+1695
+1696
+1697
+1698
+1699
+1700
+1701
+1702
+1703
+1704
+1705
+1706
+1707
+1708
+1709
+1710
+1711
+1712
+1713
+1714
+1715
+1716
+1717
+1718
+1719
+1720
+1721
+1722
+1723
+1724
+1725
+1726
+1727
+1728
+1729
+1730
+1731
+1732
+1733
+1734
+1735
+1736
+1737
+1738
+1739
+1740
+1741
+1742
+1743
+1744
+1745
+1746
+1747
+1748
+1749
+1750
+1751
+1752
+1753
+1754
+1755
+1756
+1757
+1758
+1759
+1760
+1761
+1762
+1763
+1764
+1765
+1766
+1767
+1768
+1769
+1770
+1771
+1772
+1773
+1774
+1775
+1776
+1777
+1778
+1779
+1780
+1781
+1782
+1783
+1784
+1785
+1786
+1787
+1788
+1789
+1790
+1791
+1792
+1793
+1794
+1795
+1796
+1797
+1798
+1799
+1800
+1801
+1802
+1803
+1804
+1805
+1806
+1807
+1808
+1809
+1810
+1811
+1812
+1813
+1814
+1815
+1816
+1817
+1818
+1819
+1820
+1821
+1822
+1823
+1824
+1825
+1826
+1827
+1828
+1829
+1830
+1831
+1832
+1833
+1834
+1835
+1836
+1837
+1838
+1839
+1840
+1841
+1842
+1843
+1844
+1845
+1846
+1847
+1848
+1849
+1850
+1851
+1852
+1853
+1854
+1855
+1856
+1857
+1858
+1859
+1860
+1861
+1862
+1863
+1864
+1865
+1866
+1867
+1868
+1869
+1870
+1871
+1872
+1873
+1874
+1875
+1876
+1877
+1878
+1879
+1880
+1881
+1882
+1883
+1884
+1885
+1886
+1887
+1888
+1889
+1890
+1891
+1892
+1893
+1894
+1895
+1896
+1897
+1898
+1899
+1900
+1901
+1902
+1903
+1904
+1905
+1906
+1907
+1908
+1909
+1910
+1911
+1912
+1913
+1914
+1915
+1916
+1917
+1918
+1919
+1920
+1921
+1922
+1923
+1924
+1925
+1926
+1927
+1928
+1929
+1930
+1931
+1932
+1933
+1934
+1935
+1936
+1937
+1938
+1939
+1940
+1941
+1942
+1943
+1944
+1945
+1946
+1947
+1948
+1949
+1950
+1951
+1952
+1953
+1954
+1955
+1956
+1957
+1958
+1959
+1960
+1961
+1962
+1963
+1964
+1965
+1966
+1967
+1968
+1969
+1970
+1971
+1972
+1973
+1974
+1975
+1976
+1977
+1978
+1979
+1980
+1981
+1982
+1983
+1984
+1985
+1986
+1987
+1988
+1989
+1990
+1991
+1992
+1993
+1994
+1995
+1996
+1997
+1998
+1999
+2000
+2001
+2002
+2003
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+2027
+2028
+2029
+2030
+2031
+2032
+2033
+2034
+2035
+2036
+2037
+2038
+2039
+2040
+2041
+2042
+2043
+2044
+2045
+2046
+2047
+2048
+2049
+2050
+2051
+2052
+2053
+2054
+2055
+2056
+2057
+2058
+2059
+2060
+2061
+2062
+2063
+2064
+2065
+2066
+2067
+2068
+2069
+2070
+2071
+2072
+2073
+2074
+2075
+2076
+2077
+2078
+2079
+2080
+2081
+2082
+2083
+2084
+2085
+2086
+2087
+2088
+2089
+2090
+2091
+2092
+2093
+2094
+2095
+2096
+2097
+2098
+2099
+2100
+2101
+2102
+2103
+2104
+2105
+2106
+2107
+2108
+2109
+2110
+2111
+2112
+2113
+2114
+2115
+2116
+2117
+2118
+2119
+2120
+2121
+2122
+2123
+2124
+2125
+2126
+2127
+2128
+2129
+2130
+2131
+2132
+2133
+2134
+2135
+2136
+2137
+2138
+2139
+2140
+2141
+2142
+2143
+2144
+2145
+2146
+2147
+2148
+2149
+2150
+2151
+2152
+2153
+2154
+2155
+2156
+2157
+2158
+2159
+2160
+2161
+2162
+2163
+2164
+2165
+2166
+2167
+2168
+2169
+2170
+2171
+2172
+2173
+2174
+2175
+2176
+2177
+2178
+2179
+2180
+2181
+2182
+2183
+2184
+2185
+2186
+2187
+2188
+2189
+2190
+2191
+2192
+2193
+2194
+2195
+2196
+2197
+2198
+2199
+2200
+2201
+2202
+2203
+2204
+2205
+2206
+2207
+2208
+2209
+2210
+2211
+2212
+2213
+2214
+2215
+2216
+2217
+2218
+2219
+2220
+2221
+2222
+2223
+2224
+2225
+2226
+2227
+2228
+2229
+2230
+2231
+2232
+2233
+2234
+2235
+2236
+2237
+2238
+2239
+2240
+2241
+2242
+2243
+2244
+2245
+2246
+2247
+2248
+2249
+2250
+2251
+2252
+2253
+2254
+2255
+2256
+2257
+2258
+2259
+2260
+2261
+2262
+2263
+2264
+2265
+2266
+2267
+2268
+2269
+2270
+2271
+2272
+2273
+2274
+2275
+2276
+2277
+2278
+2279
+2280
+2281
+2282
+2283
+2284
+2285
+2286
+2287
+2288
+2289
+2290
+2291
+2292
+2293
+2294
+2295
+2296
+2297
+2298
+2299
+2300
+2301
+2302
+2303
+2304
+2305
+2306
+2307
+2308
+2309
+2310
+2311
+2312
+2313
+2314
+2315
+2316
+2317
+2318
+2319
+2320
+2321
+2322
+2323
+2324
+2325
+2326
+2327
+2328
+2329
+2330
+2331
+2332
+2333
+2334
+2335
+2336
+2337
+2338
+2339
+2340
+2341
+2342
+2343
+2344
+2345
+2346
+2347
+2348
+2349
+2350
+2351
+2352
+2353
+2354
+2355
+2356
+2357
+2358
+2359
+2360
+2361
+2362
+2363
+2364
+2365
+2366
+2367
+2368
+2369
+2370
+2371
+2372
+2373
+2374
+2375
+2376
+2377
+2378
+2379
+2380
+2381
+2382
+2383
+2384
+2385
+2386
+2387
+2388
+2389
+2390
+2391
+2392
+2393
+2394
+2395
+2396
+2397
+2398
+2399
+2400
+2401
+2402
+2403
+2404
+2405
+2406
+2407
+2408
+2409
+2410
+2411
+2412
+2413
+2414
+2415
+2416
+2417
+2418
+2419
+2420
+2421
+2422
+2423
+2424
+2425
+2426
+2427
+2428
+2429
+2430
+2431
+2432
+2433
+2434
+2435
+2436
+2437
+2438
+2439
+2440
+2441
+2442
+2443
+2444
+2445
+2446
+2447
+2448
+2449
+2450
+2451
+2452
+2453
+2454
+2455
+2456
+2457
+2458
+2459
+2460
+2461
+2462
+2463
+2464
+2465
+2466
+2467
+2468
+2469
+2470
+2471
+2472
+2473
+2474
+2475
+2476
+2477
+2478
+2479
+2480
+2481
+2482
+2483
+2484
+2485
+2486
+2487
+2488
+2489
+2490
+2491
+2492
+2493
+2494
+2495
+2496
+2497
+2498
+2499
+2500
+2501
+2502
+2503
+2504
+2505
+2506
+2507
+2508
+2509
+2510
+2511
+2512
+2513
+2514
+2515
+2516
+2517
+2518
+2519
+2520
+2521
+2522
+2523
+2524
+2525
+2526
+2527
+2528
+2529
+2530
+2531
+2532
+2533
+2534
+2535
+2536
+2537
+2538
+2539
+2540
+2541
+2542
+2543
+2544
+2545
+2546
+2547
+2548
+2549
+2550
+2551
+2552
+2553
+2554
+2555
+2556
+2557
+2558
+2559
+2560
+2561
+2562
+2563
+2564
+2565
+2566
+2567
+2568
+2569
+2570
+2571
+2572
+2573
+2574
+2575
+2576
+2577
+2578
+2579
+2580
+2581
+2582
+2583
+2584
+2585
+2586
+2587
+2588
+2589
+2590
+2591
+2592
+2593
+2594
+2595
+2596
+2597
+2598
+2599
+2600
+2601
+2602
+2603
+2604
+2605
+2606
+2607
+2608
+2609
+2610
+2611
+2612
+2613
+2614
+2615
+2616
+2617
+2618
+2619
+2620
+2621
+2622
+2623
+2624
+2625
+2626
+2627
+2628
+2629
+2630
+2631
+2632
+2633
+2634
+2635
+2636
+2637
+2638
+2639
+2640
+2641
+2642
+2643
+2644
+2645
+2646
+2647
+2648
+2649
+2650
+2651
+2652
+2653
+2654
+2655
+2656
+2657
+2658
+2659
+2660
+2661
+2662
+2663
+2664
+2665
+2666
+2667
+2668
+2669
+2670
+2671
+2672
+2673
+2674
+2675
+2676
+2677
+2678
+2679
+2680
+2681
+2682
+2683
+2684
+2685
+2686
+2687
+2688
+2689
+2690
+2691
+2692
+2693
+2694
+2695
+2696
+2697
+2698
+2699
+2700
+2701
+2702
+2703
+2704
+2705
+2706
+2707
+2708
+2709
+2710
+2711
+2712
+2713
+2714
+2715
+2716
+2717
+2718
+2719
+2720
+2721
+2722
+2723
+2724
+2725
+2726
+2727
+2728
+2729
+2730
+2731
+2732
+2733
+2734
+2735
+2736
+2737
+2738
+2739
+2740
+2741
+2742
+2743
+2744
+2745
+2746
+2747
+2748
+2749
+2750
+2751
+2752
+2753
+2754
+2755
+2756
+2757
+2758
+2759
+2760
+2761
+2762
+2763
+2764
+2765
+2766
+2767
+2768
+2769
+2770
+2771
+2772
+2773
+2774
+2775
+2776
+2777
+2778
+2779
+2780
+2781
+2782
+2783
+2784
+2785
+2786
+2787
+2788
+2789
+2790
+2791
+2792
+2793
+2794
+2795
+2796
+2797
+2798
+2799
+2800
+2801
+2802
+2803
+2804
+2805
+2806
+2807
+2808
+2809
+2810
+2811
+2812
+2813
+2814
+2815
+2816
+2817
+2818
+2819
+2820
+2821
+2822
+2823
+2824
+2825
+2826
+2827
+2828
+2829
+2830
+2831
+2832
+2833
+2834
+2835
+2836
+2837
+2838
+2839
+2840
+2841
+2842
+2843
+2844
+2845
+2846
+2847
+2848
+2849
+2850
+2851
+2852
+2853
+2854
+2855
+2856
+2857
+2858
+2859
+2860
+2861
+2862
+2863
+2864
+2865
+2866
+2867
+2868
+2869
+2870
+2871
+2872
+2873
+2874
+2875
+2876
+2877
+2878
+2879
+2880
+2881
+2882
+2883
+2884
+2885
+2886
+2887
+2888
+2889
+2890
+2891
+2892
+2893
+2894
+2895
+2896
+2897
+2898
+2899
+2900
+2901
+2902
+2903
+2904
+2905
+2906
+2907
+2908
+2909
+2910
+2911
+2912
+2913
+2914
+2915
+2916
+2917
+2918
+2919
+2920
+2921
+2922
+2923
+2924
+2925
+2926
+2927
+2928
+2929
+2930
+2931
+2932
+2933
+2934
+2935
+2936
+2937
+2938
+2939
+2940
+2941
+2942
+2943
+2944
+2945
+2946
+2947
+2948
+2949
+2950
+2951
+2952
+2953
+2954
+2955
+2956
+2957
+2958
+2959
+2960
+2961
+2962
+2963
+2964
+2965
+2966
+2967
+2968
+2969
+2970
+2971
+2972
+2973
+2974
+2975
+2976
+2977
+2978
+2979
+2980
+2981
+2982
+2983
+2984
+2985
+2986
+2987
+2988
+2989
+2990
+2991
+2992
+2993
+2994
+2995
+2996
+2997
+2998
+2999
+3000
+3001
+3002
+3003
+3004
+3005
+3006
+3007
+3008
+3009
+3010
+3011
+3012
+3013
+3014
+3015
+3016
+3017
+3018
+3019
+3020
+3021
+3022
+3023
+3024
+3025
+3026
+3027
+3028
+3029
+3030
+3031
+3032
+3033
+3034
+3035
+3036
+3037
+3038
+3039
+3040
+3041
+3042
+3043
+3044
+3045
+3046
+3047
+3048
+3049
+3050
+3051
+3052
+3053
+3054
+3055
+3056
+3057
+3058
+3059
+3060
+3061
+3062
+3063
+3064
+3065
+3066
+3067
+3068
+3069
+3070
+3071
+3072
+3073
+3074
+3075
+3076
+3077
+3078
+3079
+3080
+3081
+3082
+3083
+3084
+3085
+3086
+3087
+3088
+3089
+3090
+3091
+3092
+3093
+3094
+3095
+3096
+3097
+3098
+3099
+3100
+3101
+3102
+3103
+3104
+3105
+3106
+3107
+3108
+3109
+3110
+3111
+3112
+3113
+3114
+3115
+3116
+3117
+3118
+3119
+3120
+3121
+3122
+3123
+3124
+3125
+3126
+3127
+3128
+3129
+3130
+3131
+3132
+3133
+3134
+3135
+3136
+3137
+3138
+3139
+3140
+3141
+3142
+3143
+3144
+3145
+3146
+3147
+3148
+3149
+3150
+3151
+3152
+3153
+3154
+3155
+3156
+3157
+3158
+3159
+3160
+3161
+3162
+3163
+3164
+3165
+3166
+3167
+3168
+3169
+3170
+3171
+3172
+3173
+3174
+3175
+3176
+3177
+3178
+3179
+3180
+3181
+3182
+3183
+3184
+3185
+3186
+3187
+3188
+3189
+3190
+3191
+3192
+3193
+3194
+3195
+3196
+3197
+3198
+3199
+3200
+3201
+3202
+3203
+3204
+3205
+3206
+3207
+3208
+3209
+3210
+3211
+3212
+3213
+3214
+3215
+3216
+3217
+3218
+3219
+3220
+3221
+3222
+3223
+3224
+3225
+3226
+3227
+3228
+3229
+3230
+3231
+3232
+3233
+3234
+3235
+3236
+3237
+3238
+3239
+3240
+3241
+3242
+3243
+3244
+3245
+3246
+3247
+3248
+3249
+3250
+3251
+3252
+3253
+3254
+3255
+3256
+3257
+3258
+3259
+3260
+3261
+3262
+3263
+3264
+3265
+3266
+3267
+3268
+3269
+3270
+3271
+3272
+3273
+3274
+3275
+3276
+3277
+3278
+3279
+3280
+3281
+3282
+3283
+3284
+3285
+3286
+3287
+3288
+3289
+3290
+3291
+3292
+3293
+3294
+3295
+3296
+3297
+3298
+3299
+3300
+3301
+3302
+3303
+3304
+3305
+3306
+3307
+3308
+3309
+3310
+3311
+3312
+3313
+3314
+3315
+3316
+3317
+3318
+3319
+3320
+3321
+3322
+3323
+3324
+3325
+3326
+3327
+3328
+3329
+3330
+3331
+3332
+3333
+3334
+3335
+3336
+3337
+3338
+3339
+3340
+3341
+3342
+3343
+3344
+3345
+3346
+3347
+3348
+3349
+3350
+3351
+3352
+3353
+3354
+3355
+3356
+3357
+3358
+3359
+3360
+3361
+3362
+3363
+3364
+3365
+3366
+3367
+3368
+3369
+3370
+3371
+3372
+3373
+3374
+3375
+3376
+3377
+3378
+3379
+3380
+3381
+3382
+3383
+3384
+3385
+3386
+3387
+3388
+3389
+3390
+3391
+3392
+3393
+3394
+3395
+3396
+3397
+3398
+3399
+3400
+3401
+3402
+3403
+3404
+3405
+3406
+3407
+3408
+3409
+3410
+3411
+3412
+3413
+3414
+3415
+3416
+3417
+3418
+3419
+3420
+3421
+3422
+3423
+3424
+3425
+3426
+3427
+3428
+3429
+3430
+3431
+3432
+3433
+3434
+3435
+3436
+3437
+3438
+3439
+3440
+3441
+3442
+3443
+3444
+3445
+3446
+3447
+3448
+3449
+3450
+3451
+3452
+3453
+3454
+3455
+3456
+3457
+3458
+3459
+3460
+3461
+3462
+3463
+3464
+3465
+3466
+3467
+3468
+3469
+3470
+3471
+3472
+3473
+3474
+3475
+3476
+3477
+3478
+3479
+3480
+3481
+3482
+3483
+3484
+3485
+3486
+3487
+3488
+3489
+3490
+3491
+3492
+3493
+3494
+3495
+3496
+3497
+3498
+3499
+3500
+3501
+3502
+3503
+3504
+3505
+3506
+3507
+3508
+3509
+3510
+3511
+3512
+3513
+3514
+3515
+3516
+3517
+3518
+3519
+3520
+3521
+3522
+3523
+3524
+3525
+3526
+3527
+3528
+3529
+3530
+3531
+3532
+3533
+3534
+3535
+3536
+3537
+3538
+3539
+3540
+3541
+3542
+3543
+3544
+3545
+3546
+3547
+3548
+3549
+3550
+3551
+3552
+3553
+3554
+3555
+3556
+3557
+3558
+3559
+3560
+3561
+3562
+3563
+3564
+3565
+3566
+3567
+3568
+3569
+3570
+3571
+3572
+3573
+3574
+3575
+3576
+3577
+3578
+3579
+3580
+3581
+3582
+3583
+3584
+3585
+3586
+3587
+3588
+3589
+3590
+3591
+3592
+3593
+3594
+3595
+3596
+3597
+3598
+3599
+3600
+3601
+3602
+3603
+3604
+3605
+3606
+3607
+3608
+3609
+3610
+3611
+3612
+3613
+3614
+3615
+3616
+3617
+3618
+3619
+3620
+3621
+3622
+3623
+3624
+3625
+3626
+3627
+3628
+3629
+3630
+3631
+3632
+3633
+3634
+3635
+3636
+3637
+3638
+3639
+3640
+3641
+3642
+3643
+3644
+3645
+3646
+3647
+3648
+3649
+3650
+3651
+3652
+3653
+3654
+3655
+3656
+3657
+3658
+3659
+3660
+3661
+3662
+3663
+3664
+3665
+3666
+3667
+3668
+3669
+3670
+3671
+3672
+3673
+3674
+3675
+3676
+3677
+3678
+3679
+3680
+3681
+3682
+3683
+3684
+3685
+3686
+3687
+3688
+3689
+3690
+3691
+3692
+3693
+3694
+3695
+3696
+3697
+3698
+3699
+3700
+3701
+3702
+3703
+3704
+3705
+3706
+3707
+3708
+3709
+3710
+3711
+3712
+3713
+3714
+3715
+3716
+3717
+3718
+3719
+3720
+3721
+3722
+3723
+3724
+3725
+3726
+3727
+3728
+3729
+3730
+3731
+3732
+3733
+3734
+3735
+3736
+3737
+3738
+3739
+3740
+3741
+3742
+3743
+3744
+3745
+3746
+3747
+3748
+3749
+3750
+3751
+3752
+3753
+3754
+3755
+3756
+3757
+3758
+3759
+3760
+3761
+3762
+3763
+3764
+3765
+3766
+3767
+3768
+3769
+3770
+3771
+3772
+3773
+3774
+3775
+3776
+3777
+3778
+3779
+3780
+3781
+3782
+3783
+3784
+3785
+3786
+3787
+3788
+3789
+3790
+3791
+3792
+3793
+3794
+3795
+3796
+3797
+3798
+3799
+3800
+3801
+3802
+3803
+3804
+3805
+3806
+3807
+3808
+3809
+3810
+3811
+3812
+3813
+3814
+3815
+3816
+3817
+3818
+3819
+3820
+3821
+3822
+3823
+3824
+3825
+3826
+3827
+3828
+3829
+3830
+3831
+3832
+3833
+3834
+3835
+3836
+3837
+3838
+3839
+3840
+3841
+3842
+3843
+3844
+3845
+3846
+3847
+3848
+3849
+3850
+3851
+3852
+3853
+3854
+3855
+3856
+3857
+3858
+3859
+3860
+3861
+3862
+3863
+3864
+3865
+3866
+3867
+3868
+3869
+3870
+3871
+3872
+3873
+3874
+3875
+3876
+3877
+3878
+3879
+3880
+3881
+3882
+3883
+3884
+3885
+3886
+3887
+3888
+3889
+3890
+3891
+3892
+3893
+3894
+3895
+3896
+3897
+3898
+3899
+3900
+3901
+3902
+3903
+3904
+3905
+3906
+3907
+3908
+3909
+3910
+3911
+3912
+3913
+3914
+3915
+3916
+3917
+3918
+3919
+3920
+3921
+3922
+3923
+3924
+3925
+3926
+3927
+3928
+3929
+3930
+3931
+3932
+3933
+3934
+3935
+3936
+3937
+3938
+3939
+3940
+3941
+3942
+3943
+3944
+3945
+3946
+3947
+3948
+3949
+3950
+3951
+3952
+3953
+3954
+3955
+3956
+3957
+3958
+3959
+3960
+3961
+3962
+3963
+3964
+3965
+3966
+3967
+3968
+3969
+3970
+3971
+3972
+3973
+3974
+3975
+3976
+3977
+3978
+3979
+3980
+3981
+3982
+3983
+3984
+3985
+3986
+3987
+3988
+3989
+3990
+3991
+3992
+3993
+3994
+3995
+3996
+3997
+3998
+3999
+4000
+4001
+4002
+4003
+4004
+4005
+4006
+4007
+4008
+4009
+4010
+4011
+4012
+4013
+4014
+4015
+4016
+4017
+4018
+4019
+4020
+4021
+4022
+4023
+4024
+4025
+4026
+4027
+4028
+4029
+4030
+4031
+4032
+4033
+4034
+4035
+4036
+4037
+4038
+4039
+4040
+4041
+4042
+4043
+4044
+4045
+4046
+4047
+4048
+4049
+4050
+4051
+4052
+4053
+4054
+4055
+4056
+4057
+4058
+4059
+4060
+4061
+4062
+4063
+4064
+4065
+4066
+4067
+4068
+4069
+4070
+4071
+4072
+4073
+4074
+4075
+4076
+4077
+4078
+4079
+4080
+4081
+4082
+4083
+4084
+4085
+4086
+4087
+4088
+4089
+4090
+4091
+4092
+4093
+4094
+4095
+4096
+4097
+4098
+4099
+4100
+4101
+4102
+4103
+4104
+4105
+4106
+4107
+4108
+4109
+4110
+4111
+4112
+4113
+4114
+4115
+4116
+4117
+4118
+4119
+4120
+4121
+4122
+4123
+4124
+4125
+4126
+4127
+4128
+4129
+4130
+4131
+4132
+4133
+4134
+4135
+4136
+4137
+4138
+4139
+4140
+4141
+4142
+4143
+4144
+4145
+4146
+4147
+4148
+4149
+4150
+4151
+4152
+4153
+4154
+4155
+4156
+4157
+4158
+4159
+4160
+4161
+4162
+4163
+4164
+4165
+4166
+4167
+4168
+4169
+4170
+4171
+4172
+4173
+4174
+4175
+4176
+4177
+4178
+4179
+4180
+4181
+4182
+4183
+4184
+4185
+4186
+4187
+4188
+4189
+4190
+4191
+4192
+4193
+4194
+4195
+4196
+4197
+4198
+4199
+4200
+4201
+4202
+4203
+4204
+4205
+4206
+4207
+4208
+4209
+4210
+4211
+4212
+4213
+4214
+4215
+4216
+4217
+4218
+4219
+4220
+4221
+4222
+4223
+4224
+4225
+4226
+4227
+4228
+4229
+4230
+4231
+4232
+4233
+4234
+4235
+4236
+4237
+4238
+4239
+4240
+4241
+4242
+4243
+4244
+4245
+4246
+4247
+4248
+4249
+4250
+4251
+4252
+4253
+4254
+4255
+4256
+4257
+4258
+4259
+4260
+4261
+4262
+4263
+4264
+4265
+4266
+4267
+4268
+4269
+4270
+4271
+4272
+4273
+4274
+4275
+4276
+4277
+4278
+4279
+4280
+4281
+4282
+4283
+4284
+4285
+4286
+4287
+4288
+4289
+4290
+4291
+4292
+4293
+4294
+4295
+4296
+4297
+4298
+4299
+4300
+4301
+4302
+4303
+4304
+4305
+4306
+4307
+4308
+4309
+4310
+4311
+4312
+4313
+4314
+4315
+4316
+4317
+4318
+4319
+4320
+4321
+4322
+4323
+4324
+4325
+4326
+4327
+4328
+4329
+4330
+4331
+4332
+4333
+4334
+4335
+4336
+4337
+4338
+4339
+4340
+4341
+4342
+4343
+4344
+4345
+4346
+4347
+4348
+4349
+4350
+4351
+4352
+4353
+4354
+4355
+4356
+4357
+4358
+4359
+4360
+4361
+4362
+4363
+4364
+4365
+4366
+4367
+4368
+4369
+4370
+4371
+4372
+4373
+4374
+4375
+4376
+4377
+4378
+4379
+4380
+4381
+4382
+4383
+4384
+4385
+4386
+4387
+4388
+4389
+4390
+4391
+4392
+4393
+4394
+4395
+4396
+4397
+4398
+4399
+4400
+4401
+4402
+4403
+4404
+4405
+4406
+4407
+4408
+4409
+4410
+4411
+4412
+4413
+4414
+4415
+4416
+4417
+4418
+4419
+4420
+4421
+4422
+4423
+4424
+4425
+4426
+4427
+4428
+4429
+4430
+4431
+4432
+4433
+4434
+4435
+4436
+4437
+4438
+4439
+4440
+4441
+4442
+4443
+4444
+4445
+4446
+4447
+4448
+4449
+4450
+4451
+4452
+4453
+4454
+4455
+4456
+4457
+4458
+4459
+4460
+4461
+4462
+4463
+4464
+4465
+4466
+4467
+4468
+4469
+4470
+4471
+4472
+4473
+4474
+4475
+4476
+4477
+4478
+4479
+4480
+4481
+4482
+4483
+4484
+4485
+4486
+4487
+4488
+4489
+4490
+4491
+4492
+4493
+4494
+4495
+4496
+4497
+4498
+4499
+4500
+4501
+4502
+4503
+4504
+4505
+4506
+4507
+4508
+4509
+4510
+4511
+4512
+4513
+4514
+4515
+4516
+4517
+4518
+4519
+4520
+4521
+4522
+4523
+4524
+4525
+4526
+4527
+4528
+4529
+4530
+4531
+4532
+4533
+4534
+4535
+4536
+4537
+4538
+4539
+4540
+4541
+4542
+4543
+4544
+4545
+4546
+4547
+4548
+4549
+4550
+4551
+4552
+4553
+4554
+4555
+4556
+4557
+4558
+4559
+4560
+4561
+4562
+4563
+4564
+4565
+4566
+4567
+4568
+4569
+4570
+4571
+4572
+4573
+4574
+4575
+4576
+4577
+4578
+4579
+4580
+4581
+4582
+4583
+4584
+4585
+4586
+4587
+4588
+4589
+4590
+4591
+4592
+4593
+4594
+4595
+4596
+4597
+4598
+4599
+4600
+4601
+4602
+4603
+4604
+4605
+4606
+4607
+4608
+4609
+4610
+4611
+4612
+4613
+4614
+4615
+4616
+4617
+4618
+4619
+4620
+4621
+4622
+4623
+4624
+4625
+4626
+4627
+4628
+4629
+4630
+4631
+4632
+4633
+4634
+4635
+4636
+4637
+4638
+4639
+4640
+4641
+4642
+4643
+4644
+4645
+4646
+4647
+4648
+4649
+4650
+4651
+4652
+4653
+4654
+4655
+4656
+4657
+4658
+4659
+4660
+4661
+4662
+4663
+4664
+4665
+4666
+4667
+4668
+4669
+4670
+4671
+4672
+4673
+4674
+4675
+4676
+4677
+4678
+4679
+4680
+4681
+4682
+4683
+4684
+4685
+4686
+4687
+4688
+4689
+4690
+4691
+4692
+4693
+4694
+4695
+4696
+4697
+4698
+4699
+4700
+4701
+4702
+4703
+4704
+4705
+4706
+4707
+4708
+4709
+4710
+4711
+4712
+4713
+4714
+4715
+4716
+4717
+4718
+4719
+4720
+4721
+4722
+4723
+4724
+4725
+4726
+4727
+4728
+4729
+4730
+4731
+4732
+4733
+4734
+4735
+4736
+4737
+4738
+4739
+4740
+4741
+4742
+4743
+4744
+4745
+4746
+4747
+4748
+4749
+4750
+4751
+4752
+4753
+4754
+4755
+4756
+4757
+4758
+4759
+4760
+4761
+4762
+4763
+4764
+4765
+4766
+4767
+4768
+4769
+4770
+4771
+4772
+4773
+4774
+4775
+4776
+4777
+4778
+4779
+4780
+4781
+4782
+4783
+4784
+4785
+4786
+4787
+4788
+4789
+4790
+4791
+4792
+4793
+4794
+4795
+4796
+4797
+4798
+4799
+4800
+4801
+4802
+4803
+4804
+4805
+4806
+4807
+4808
+4809
+4810
+4811
+4812
+4813
+4814
+4815
+4816
+4817
+4818
+4819
+4820
+4821
+4822
+4823
+4824
+4825
+4826
+4827
+4828
+4829
+4830
+4831
+4832
+4833
+4834
+4835
+4836
+4837
+4838
+4839
+4840
+4841
+4842
+4843
+4844
+4845
+4846
+4847
+4848
+4849
+4850
+4851
+4852
+4853
+4854
+4855
+4856
+4857
+4858
+4859
+4860
+4861
+4862
+4863
+4864
+4865
+4866
+4867
+4868
+4869
+4870
+4871
+4872
+4873
+4874
+4875
+4876
+4877
+4878
+4879
+4880
+4881
+4882
+4883
+4884
+4885
+4886
+4887
+4888
+4889
+4890
+4891
+4892
+4893
+4894
+4895
+4896
+4897
+4898
+4899
+4900
+4901
+4902
+4903
+4904
+4905
+4906
+4907
+4908
+4909
+4910
+4911
+4912
+4913
+4914
+4915
+4916
+4917
+4918
+4919
+4920
+4921
+4922
+4923
+4924
+4925
+4926
+4927
+4928
+4929
+4930
+4931
+4932
+4933
+4934
+4935
+4936
+4937
+4938
+4939
+4940
+4941
+4942
+4943
+4944
+4945
+4946
+4947
+4948
+4949
+4950
+4951
+4952
+4953
+4954
+4955
+4956
+4957
+4958
+4959
+4960
+4961
+4962
+4963
+4964
+4965
+4966
+4967
+4968
+4969
+4970
+4971
+4972
+4973
+4974
+4975
+4976
+4977
+4978
+4979
+4980
+4981
+4982
+4983
+4984
+4985
+4986
+4987
+4988
+4989
+4990
+4991
+4992
+4993
+4994
+4995
+4996
+4997
+4998
+4999
+5000
+5001
+5002
+5003
+5004
+5005
+5006
+5007
+5008
+5009
+5010
+5011
+5012
+5013
+5014
+5015
+5016
+5017
+5018
+5019
+5020
+5021
+5022
+5023
+5024
+5025
+5026
+5027
+5028
+5029
+5030
+5031
+5032
+5033
+5034
+5035
+5036
+5037
+5038
+5039
+5040
+5041
+5042
+5043
+5044
+5045
+5046
+5047
+5048
+5049
+5050
+5051
+5052
+5053
+5054
+5055
+5056
+5057
+5058
+5059
+5060
+5061
+5062
+5063
+5064
+5065
+5066
+5067
+5068
+5069
+5070
+5071
+5072
+5073
+5074
+5075
+5076
+5077
+5078
+5079
+5080
+5081
+5082
+5083
+5084
+5085
+5086
+5087
+5088
+5089
+5090
+5091
+5092
+5093
+5094
+5095
+5096
+5097
+5098
+5099
+5100
+5101
+5102
+5103
+5104
+5105
+5106
+5107
+5108
+5109
+5110
+5111
+5112
+5113
+5114
+5115
+5116
+5117
+5118
+5119
+5120
+5121
+5122
+5123
+5124
+5125
+5126
+5127
+5128
+5129
+5130
+5131
+5132
+5133
+5134
+5135
+5136
+5137
+5138
+5139
+5140
+5141
+5142
+5143
+5144
+5145
+5146
+5147
+5148
+5149
+5150
+5151
+5152
+5153
+5154
+5155
+5156
+5157
+5158
+5159
+5160
+5161
+5162
+5163
+5164
+5165
+5166
+5167
+5168
+5169
+5170
+5171
+5172
+5173
+5174
+5175
+5176
+5177
+5178
+5179
+5180
+5181
+5182
+5183
+5184
+5185
+5186
+5187
+5188
+5189
+5190
+5191
+5192
+5193
+5194
+5195
+5196
+5197
+5198
+5199
+5200
+5201
+5202
+5203
+5204
+5205
+5206
+5207
+5208
+5209
+5210
+5211
+5212
+5213
+5214
+5215
+5216
+5217
+5218
+5219
+5220
+5221
+5222
+5223
+5224
+5225
+5226
+5227
+5228
+5229
+5230
+5231
+5232
+5233
+5234
+5235
+5236
+5237
+5238
+5239
+5240
+5241
+5242
+5243
+5244
+5245
+5246
+5247
+5248
+5249
+5250
+5251
+5252
+5253
+5254
+5255
+5256
+5257
+5258
+5259
+5260
+5261
+5262
+5263
+5264
+5265
+5266
+5267
+5268
+5269
+5270
+5271
+5272
+5273
+5274
+5275
+5276
+5277
+5278
+5279
+5280
+5281
+5282
+5283
+5284
+5285
+5286
+5287
+5288
+5289
+5290
+5291
+5292
+5293
+5294
+5295
+5296
+5297
+5298
+5299
+5300
+5301
+5302
+5303
+5304
+5305
+5306
+5307
+5308
+5309
+5310
+5311
+5312
+5313
+5314
+5315
+5316
+5317
+5318
+5319
+5320
+5321
+5322
+5323
+5324
+5325
+5326
+5327
+5328
+5329
+5330
+5331
+5332
+5333
+5334
+5335
+5336
+5337
+5338
+5339
+5340
+5341
+5342
+5343
+5344
+5345
+5346
+5347
+5348
+5349
+5350
+5351
+5352
+5353
+5354
+5355
+5356
+5357
+5358
+5359
+5360
+5361
+5362
+5363
+5364
+5365
+5366
+5367
+5368
+5369
+5370
+5371
+5372
+5373
+5374
+5375
+5376
+5377
+5378
+5379
+5380
+5381
+5382
+5383
+5384
+5385
+5386
+5387
+5388
+5389
+5390
+5391
+5392
+5393
+5394
+5395
+5396
+5397
+5398
+5399
+5400
+5401
+5402
+5403
+5404
+5405
+5406
+5407
+5408
+5409
+5410
+5411
+5412
+5413
+5414
+5415
+5416
+5417
+5418
+5419
+5420
+5421
+5422
+5423
+5424
+5425
+5426
+5427
+5428
+5429
+5430
+5431
+5432
+5433
+5434
+5435
+5436
+5437
+5438
+5439
+5440
+5441
+5442
+5443
+5444
+5445
+5446
+5447
+5448
+5449
+5450
+5451
+5452
+5453
+5454
+5455
+5456
+5457
+5458
+5459
+5460
+5461
+5462
+5463
+5464
+5465
+5466
+5467
+5468
+5469
+5470
+5471
+5472
+5473
+5474
+5475
+5476
+5477
+5478
+5479
+5480
+5481
+5482
+5483
+5484
+5485
+5486
+5487
+5488
+5489
+5490
+5491
+5492
+5493
+5494
+5495
+5496
+5497
+5498
+5499
+5500
+5501
+5502
+5503
+5504
+5505
+5506
+5507
+5508
+5509
+5510
+5511
+5512
+5513
+5514
+5515
+5516
+5517
+5518
+5519
+5520
+5521
+5522
+5523
+5524
+5525
+5526
+5527
+5528
+5529
+5530
+5531
+5532
+5533
+5534
+5535
+5536
+5537
+5538
+5539
+5540
+5541
+5542
+5543
+5544
+5545
+5546
+5547
+5548
+5549
+5550
+5551
+5552
+5553
+5554
+5555
+5556
+5557
+5558
+5559
+5560
+5561
+5562
+5563
+5564
+5565
+5566
+5567
+5568
+5569
+5570
+5571
+5572
+5573
+5574
+5575
+5576
+5577
+5578
+5579
+5580
+5581
+5582
+5583
+5584
+5585
+5586
+5587
+5588
+5589
+5590
+5591
+5592
+5593
+5594
+5595
+5596
+5597
+5598
+5599
+5600
+5601
+5602
+5603
+5604
+5605
+5606
+5607
+5608
+5609
+5610
+5611
+5612
+5613
+5614
+5615
+5616
+5617
+5618
+5619
+5620
+5621
+5622
+5623
+5624
+5625
+5626
+5627
+5628
+5629
+5630
+5631
+5632
+5633
+5634
+5635
+5636
+5637
+5638
+5639
+5640
+5641
+5642
+5643
+5644
+5645
+5646
+5647
+5648
+5649
+5650
+5651
+5652
+5653
+5654
+5655
+5656
+5657
+5658
+5659
+5660
+5661
+5662
+5663
+5664
+5665
+5666
+5667
+5668
+5669
+5670
+5671
+5672
+5673
+5674
+5675
+5676
+5677
+5678
+5679
+5680
+5681
+5682
+5683
+5684
+5685
+5686
+5687
+5688
+5689
+5690
+5691
+5692
+5693
+5694
+5695
+5696
+5697
+5698
+5699
+5700
+5701
+5702
+5703
+5704
+5705
+5706
+5707
+5708
+5709
+5710
+5711
+5712
+5713
+5714
+5715
+5716
+5717
+5718
+5719
+5720
+5721
+5722
+5723
+5724
+5725
+5726
+5727
+5728
+5729
+5730
+5731
+5732
+5733
+5734
+5735
+5736
+5737
+5738
+5739
+5740
+5741
+5742
+5743
+5744
+5745
+5746
+5747
+5748
+5749
+5750
+5751
+5752
+5753
+5754
+5755
+5756
+5757
+5758
+5759
+5760
+5761
+5762
+5763
+5764
+5765
+5766
+5767
+5768
+5769
+5770
+5771
+5772
+5773
+5774
+5775
+5776
+5777
+5778
+5779
+5780
+5781
+5782
+5783
+5784
+5785
+5786
+5787
+5788
+5789
+5790
+5791
+5792
+5793
+5794
+5795
+5796
+5797
+5798
+5799
+5800
+5801
+5802
+5803
+5804
+5805
+5806
+5807
+5808
+5809
+5810
+5811
+5812
+5813
+5814
+5815
+5816
+5817
+5818
+5819
+5820
+5821
+5822
+5823
+5824
+5825
+5826
+5827
+5828
+5829
+5830
+5831
+5832
+5833
+5834
+5835
+5836
+5837
+5838
+5839
+5840
+5841
+5842
+5843
+5844
+5845
+5846
+5847
+5848
+5849
+5850
+5851
+5852
+5853
+5854
+5855
+5856
+5857
+5858
+5859
+5860
+5861
+5862
+5863
+5864
+5865
+5866
+5867
+5868
+5869
+5870
+5871
+5872
+5873
+5874
+5875
+5876
+5877
+5878
+5879
+5880
+5881
+5882
+5883
+5884
+5885
+5886
+5887
+5888
+5889
+5890
+5891
+5892
+5893
+5894
+5895
+5896
+5897
+5898
+5899
+5900
+5901
+5902
+5903
+5904
+5905
+5906
+5907
+5908
+5909
+5910
+5911
+5912
+5913
+5914
+5915
+5916
+5917
+5918
+5919
+5920
+5921
+5922
+5923
+5924
+5925
+5926
+5927
+5928
+5929
+5930
+5931
+5932
+5933
+5934
+5935
+5936
+5937
+5938
+5939
+5940
+5941
+5942
+5943
+5944
+5945
+5946
+5947
+5948
+5949
+5950
+5951
+5952
+5953
+5954
+5955
+5956
+5957
+5958
+5959
+5960
+5961
+5962
+5963
+5964
+5965
+5966
+5967
+5968
+5969
+5970
+5971
+5972
+5973
+5974
+5975
+5976
+5977
+5978
+5979
+5980
+5981
+5982
+5983
+5984
+5985
+5986
+5987
+5988
+5989
+5990
+5991
+5992
+5993
+5994
+5995
+5996
+5997
+5998
+5999
+6000
+6001
+6002
+6003
+6004
+6005
+6006
+6007
+6008
+6009
+6010
+6011
+6012
+6013
+6014
+6015
+6016
+6017
+6018
+6019
+6020
+6021
+6022
+6023
+6024
+6025
+6026
+6027
+6028
+6029
+6030
+6031
+6032
+6033
+6034
+6035
+6036
+6037
+6038
+6039
+6040
+6041
+6042
+6043
+6044
+6045
+6046
+6047
+6048
+6049
+6050
+6051
+6052
+6053
+6054
+6055
+6056
+6057
+6058
+6059
+6060
+6061
+6062
+6063
+6064
+6065
+6066
+6067
+6068
+6069
+6070
+6071
+6072
+6073
+6074
+6075
+6076
+6077
+6078
+6079
+6080
+6081
+6082
+6083
+6084
+6085
+6086
+6087
+6088
+6089
+6090
+6091
+6092
+6093
+6094
+6095
+6096
+6097
+6098
+6099
+6100
+6101
+6102
+6103
+6104
+6105
+6106
+6107
+6108
+6109
+6110
+6111
+6112
+6113
+6114
+6115
+6116
+6117
+6118
+6119
+6120
+6121
+6122
+6123
+6124
+6125
+6126
+6127
+6128
+6129
+6130
+6131
+6132
+6133
+6134
+6135
+6136
+6137
+6138
+6139
+6140
+6141
+6142
+6143
+6144
+6145
+6146
+6147
+6148
+6149
+6150
+6151
+6152
+6153
+6154
+6155
+6156
+6157
+6158
+6159
+6160
+6161
+6162
+6163
+6164
+6165
+6166
+6167
+6168
+6169
+6170
+6171
+6172
+6173
+6174
+6175
+6176
+6177
+6178
+6179
+6180
+6181
+6182
+6183
+6184
+6185
+6186
+6187
+6188
+6189
+6190
+6191
+6192
+6193
+6194
+6195
+6196
+6197
+6198
+6199
+6200
+6201
+6202
+6203
+6204
+6205
+6206
+6207
+6208
+6209
+6210
+6211
+6212
+6213
+6214
+6215
+6216
+6217
+6218
+6219
+6220
+6221
+6222
+6223
+6224
+6225
+6226
+6227
+6228
+6229
+6230
+6231
+6232
+6233
+6234
+6235
+6236
+6237
+6238
+6239
+6240
+6241
+6242
+6243
+6244
+6245
+6246
+6247
+6248
+6249
+6250
+6251
+6252
+6253
+6254
+6255
+6256
+6257
+6258
+6259
+6260
+6261
+6262
+6263
+6264
+6265
+6266
+6267
+6268
+6269
+6270
+6271
+6272
+6273
+6274
+6275
+6276
+6277
+6278
+6279
+6280
+6281
+6282
+6283
+6284
+6285
+6286
+6287
+6288
+6289
+6290
+6291
+6292
+6293
+6294
+6295
+6296
+6297
+6298
+6299
+6300
+6301
+6302
+6303
+6304
+6305
+6306
+6307
+6308
+6309
+6310
+6311
+6312
+6313
+6314
+6315
+6316
+6317
+6318
+6319
+6320
+6321
+6322
+6323
+6324
+6325
+6326
+6327
+6328
+6329
+6330
+6331
+6332
+6333
+6334
+6335
+6336
+6337
+6338
+6339
+6340
+6341
+6342
+6343
+6344
+6345
+6346
+6347
+6348
+6349
+6350
+6351
+6352
+6353
+6354
+6355
+6356
+6357
+6358
+6359
+6360
+6361
+6362
+6363
+6364
+6365
+6366
+6367
+6368
+6369
+6370
+6371
+6372
+6373
+6374
+6375
+6376
+6377
+6378
+6379
+6380
+6381
+6382
+6383
+6384
+6385
+6386
+6387
+6388
+6389
+6390
+6391
+6392
+6393
+6394
+6395
+6396
+6397
+6398
+6399
+6400
+6401
+6402
+6403
+6404
+6405
+6406
+6407
+6408
+6409
+6410
+6411
+6412
+6413
+6414
+6415
+6416
+6417
+6418
+6419
+6420
+6421
+6422
+6423
+6424
+6425
+6426
+6427
+6428
+6429
+6430
+6431
+6432
+6433
+6434
+6435
+6436
+6437
+6438
+6439
+6440
+6441
+6442
+6443
+6444
+6445
+6446
+6447
+6448
+6449
+6450
+6451
+6452
+6453
+6454
+6455
+6456
+6457
+6458
+6459
+6460
+6461
+6462
+6463
+6464
+6465
+6466
+6467
+6468
+6469
+6470
+6471
+6472
+6473
+6474
+6475
+6476
+6477
+6478
+6479
+6480
+6481
+6482
+6483
+6484
+6485
+6486
+6487
+6488
+6489
+6490
+6491
+6492
+6493
+6494
+6495
+6496
+6497
+6498
+6499
+6500
+6501
+6502
+6503
+6504
+6505
+6506
+6507
+6508
+6509
+6510
+6511
+6512
+6513
+6514
+6515
+6516
+6517
+6518
+6519
+6520
+6521
+6522
+6523
+6524
+6525
+6526
+6527
+6528
+6529
+6530
+6531
+6532
+6533
+6534
+6535
+6536
+6537
+6538
+6539
+6540
+6541
+6542
+6543
+6544
+6545
+6546
+6547
+6548
+6549
+6550
+6551
+6552
+6553
+6554
+6555
+6556
+6557
+6558
+6559
+6560
+6561
+6562
+6563
+6564
+6565
+6566
+6567
+6568
+6569
+6570
+6571
+6572
+6573
+6574
+6575
+6576
+6577
+6578
+6579
+6580
+6581
+6582
+6583
+6584
+6585
+6586
+6587
+6588
+6589
+6590
+6591
+6592
+6593
+6594
+6595
+6596
+6597
+6598
+6599
+6600
+6601
+6602
+6603
+6604
+6605
+6606
+6607
+6608
+6609
+6610
+6611
+6612
+6613
+6614
+6615
+6616
+6617
+6618
+6619
+6620
+6621
+6622
+6623
+6624
+6625
+6626
+6627
+6628
+6629
+6630
+6631
+6632
+6633
+6634
+6635
+6636
+6637
+6638
+6639
+6640
+6641
+6642
+6643
+6644
+6645
+6646
+6647
+6648
+6649
+6650
+6651
+6652
+6653
+6654
+6655
+6656
+6657
+6658
+6659
+6660
+6661
+6662
+6663
+6664
+6665
+6666
+6667
+6668
+6669
+6670
+6671
+6672
+6673
+6674
+6675
+6676
+6677
+6678
+6679
+6680
+6681
+6682
+6683
+6684
+6685
+6686
+6687
+6688
+6689
+6690
+6691
+6692
+6693
+6694
+6695
+6696
+6697
+6698
+6699
+6700
+6701
+6702
+6703
+6704
+6705
+6706
+6707
+6708
+6709
+6710
+6711
+6712
+6713
+6714
+6715
+6716
+6717
+6718
+6719
+6720
+6721
+6722
+6723
+6724
+6725
+6726
+6727
+6728
+6729
+6730
+6731
+6732
+6733
+6734
+6735
+6736
+6737
+6738
+6739
+6740
+6741
+6742
+6743
+6744
+6745
+6746
+6747
+6748
+6749
+6750
+6751
+6752
+6753
+6754
+6755
+6756
+6757
+6758
+6759
+6760
+6761
+6762
+6763
+6764
+6765
+6766
+6767
+6768
+6769
+6770
+6771
+6772
+6773
+6774
+6775
+6776
+6777
+6778
+6779
+6780
+6781
+6782
+6783
+6784
+6785
+6786
+6787
+6788
+6789
+6790
+6791
+6792
+6793
+6794
+6795
+6796
+6797
+6798
+6799
+6800
+6801
+6802
+6803
+6804
+6805
+6806
+6807
+6808
+6809
+6810
+6811
+6812
+6813
+6814
+6815
+6816
+6817
+6818
+6819
+6820
+6821
+6822
+6823
+6824
+6825
+6826
+6827
+6828
+6829
+6830
+6831
+6832
+6833
+6834
+6835
+6836
+6837
+6838
+6839
+6840
+6841
+6842
+6843
+6844
+6845
+6846
+6847
+6848
+6849
+6850
+6851
+6852
+6853
+6854
+6855
+6856
+6857
+6858
+6859
+6860
+6861
+6862
+6863
+6864
+6865
+6866
+6867
+6868
+6869
+6870
+6871
+6872
+6873
+6874
+6875
+6876
+6877
+6878
+6879
+6880
+6881
+6882
+6883
+6884
+6885
+6886
+6887
+6888
+6889
+6890
+6891
+6892
+6893
+6894
+6895
+6896
+6897
+6898
+6899
+6900
+6901
+6902
+6903
+6904
+6905
+6906
+6907
+6908
+6909
+6910
+6911
+6912
+6913
+6914
+6915
+6916
+6917
+6918
+6919
+6920
+6921
+6922
+6923
+6924
+6925
+6926
+6927
+6928
+6929
+6930
+6931
+6932
+6933
+6934
+6935
+6936
+6937
+6938
+6939
+6940
+6941
+6942
+6943
+6944
+6945
+6946
+6947
+6948
+6949
+6950
+6951
+6952
+6953
+6954
+6955
+6956
+6957
+6958
+6959
+6960
+6961
+6962
+6963
+6964
+6965
+6966
+6967
+6968
+6969
+6970
+6971
+6972
+6973
+6974
+6975
+6976
+6977
+6978
+6979
+6980
+6981
+6982
+6983
+6984
+6985
+6986
+6987
+6988
+6989
+6990
+6991
+6992
+6993
+6994
+6995
+6996
+6997
+6998
+6999
+7000
+7001
+7002
+7003
+7004
+7005
+7006
+7007
+7008
+7009
+7010
+7011
+7012
+7013
+7014
+7015
+7016
+7017
+7018
+7019
+7020
+7021
+7022
+7023
+7024
+7025
+7026
+7027
+7028
+7029
+7030
+7031
+7032
+7033
+7034
+7035
+7036
+7037
+7038
+7039
+7040
+7041
+7042
+7043
+7044
+7045
+7046
+7047
+7048
+7049
+7050
+7051
+7052
+7053
+7054
+7055
+7056
+7057
+7058
+7059
+7060
+7061
+7062
+7063
+7064
+7065
+7066
+7067
+7068
+7069
+7070
+7071
+7072
+7073
+7074
+7075
+7076
+7077
+7078
+7079
+7080
+7081
+7082
+7083
+7084
+7085
+7086
+7087
+7088
+7089
+7090
+7091
+7092
+7093
+7094
+7095
+7096
+7097
+7098
+7099
+7100
+7101
+7102
+7103
+7104
+7105
+7106
+7107
+7108
+7109
+7110
+7111
+7112
+7113
+7114
+7115
+7116
+7117
+7118
+7119
+7120
+7121
+7122
+7123
+7124
+7125
+7126
+7127
+7128
+7129
+7130
+7131
+7132
+7133
+7134
+7135
+7136
+7137
+7138
+7139
+7140
+7141
+7142
+7143
+7144
+7145
+7146
+7147
+7148
+7149
+7150
+7151
+7152
+7153
+7154
+7155
+7156
+7157
+7158
+7159
+7160
+7161
+7162
+7163
+7164
+7165
+7166
+7167
+7168
+7169
+7170
+7171
+7172
+7173
+7174
+7175
+7176
+7177
+7178
+7179
+7180
+7181
+7182
+7183
+7184
+7185
+7186
+7187
+7188
+7189
+7190
+7191
+7192
+7193
+7194
+7195
+7196
+7197
+7198
+7199
+7200
+7201
+7202
+7203
+7204
+7205
+7206
+7207
+7208
+7209
+7210
+7211
+7212
+7213
+7214
+7215
+7216
+7217
+7218
+7219
+7220
+7221
+7222
+7223
+7224
+7225
+7226
+7227
+7228
+7229
+7230
+7231
+7232
+7233
+7234
+7235
+7236
+7237
+7238
+7239
+7240
+7241
+7242
+7243
+7244
+7245
+7246
+7247
+7248
+7249
+7250
+7251
+7252
+7253
+7254
+7255
+7256
+7257
+7258
+7259
+7260
+7261
+7262
+7263
+7264
+7265
+7266
+7267
+7268
+7269
+7270
+7271
+7272
+7273
+7274
+7275
+7276
+7277
+7278
+7279
+7280
+7281
+7282
+7283
+7284
+7285
+7286
+7287
+7288
+7289
+7290
+7291
+7292
+7293
+7294
+7295
+7296
+7297
+7298
+7299
+7300
+7301
+7302
+7303
+7304
+7305
+7306
+7307
+7308
+7309
+7310
+7311
+7312
+7313
+7314
+7315
+7316
+7317
+7318
+7319
+7320
+7321
+7322
+7323
+7324
+7325
+7326
+7327
+7328
+7329
+7330
+7331
+7332
+7333
+7334
+7335
+7336
+7337
+7338
+7339
+7340
+7341
+7342
+7343
+7344
+7345
+7346
+7347
+7348
+7349
+7350
+7351
+7352
+7353
+7354
+7355
+7356
+7357
+7358
+7359
+7360
+7361
+7362
+7363
+7364
+7365
+7366
+7367
+7368
+7369
+7370
+7371
+7372
+7373
+7374
+7375
+7376
+7377
+7378
+7379
+7380
+7381
+7382
+7383
+7384
+7385
+7386
+7387
+7388
+7389
+7390
+7391
+7392
+7393
+7394
+7395
+7396
+7397
+7398
+7399
+7400
+7401
+7402
+7403
+7404
+7405
+7406
+7407
+7408
+7409
+7410
+7411
+7412
+7413
+7414
+7415
+7416
+7417
+7418
+7419
+7420
+7421
+7422
+7423
+7424
+7425
+7426
+7427
+7428
+7429
+7430
+7431
+7432
+7433
+7434
+7435
+7436
+7437
+7438
+7439
+7440
+7441
+7442
+7443
+7444
+7445
+7446
+7447
+7448
+7449
+7450
+7451
+7452
+7453
+7454
+7455
+7456
+7457
+7458
+7459
+7460
+7461
+7462
+7463
+7464
+7465
+7466
+7467
+7468
+7469
+7470
+7471
+7472
+7473
+7474
+7475
+7476
+7477
+7478
+7479
+7480
+7481
+7482
+7483
+7484
+7485
+7486
+7487
+7488
+7489
+7490
+7491
+7492
+7493
+7494
+7495
+7496
+7497
+7498
+7499
+7500
+7501
+7502
+7503
+7504
+7505
+7506
+7507
+7508
+7509
+7510
+7511
+7512
+7513
+7514
+7515
+7516
+7517
+7518
+7519
+7520
+7521
+7522
+7523
+7524
+7525
+7526
+7527
+7528
+7529
+7530
+7531
+7532
+7533
+7534
+7535
+7536
+7537
+7538
+7539
+7540
+7541
+7542
+7543
+7544
+7545
+7546
+7547
+7548
+7549
+7550
+7551
+7552
+7553
+7554
+7555
+7556
+7557
+7558
+7559
+7560
+7561
+7562
+7563
+7564
+7565
+7566
+7567
+7568
+7569
+7570
+7571
+7572
+7573
+7574
+7575
+7576
+7577
+7578
+7579
+7580
+7581
+7582
+7583
+7584
+7585
+7586
+7587
+7588
+7589
+7590
+7591
+7592
+7593
+7594
+7595
+7596
+7597
+7598
+7599
+7600
+7601
+7602
+7603
+7604
+7605
+7606
+7607
+7608
+7609
+7610
+7611
+7612
+7613
+7614
+7615
+7616
+7617
+7618
+7619
+7620
+7621
+7622
+7623
+7624
+7625
+7626
+7627
+7628
+7629
+7630
+7631
+7632
+7633
+7634
+7635
+7636
+7637
+7638
+7639
+7640
+7641
+7642
+7643
+7644
+7645
+7646
+7647
+7648
+7649
+7650
+7651
+7652
+7653
+7654
+7655
+7656
+7657
+7658
+7659
+7660
+7661
+7662
+7663
+7664
+7665
+7666
+7667
+7668
+7669
+7670
+7671
+7672
+7673
+7674
+7675
+7676
+7677
+7678
+7679
+7680
+7681
+7682
+7683
+7684
+7685
+7686
+7687
+7688
+7689
+7690
+7691
+7692
+7693
+7694
+7695
+7696
+7697
+7698
+7699
+7700
+7701
+7702
+7703
+7704
+7705
+7706
+7707
+7708
+7709
+7710
+7711
+7712
+7713
+7714
+7715
+7716
+7717
+7718
+7719
+7720
+7721
+7722
+7723
+7724
+7725
+7726
+7727
+7728
+7729
+7730
+7731
+7732
+7733
+7734
+7735
+7736
+7737
+7738
+7739
+7740
+7741
+7742
+7743
+7744
+7745
+7746
+7747
+7748
+7749
+7750
+7751
+7752
+7753
+7754
+7755
+7756
+7757
+7758
+7759
+7760
+7761
+7762
+7763
+7764
+7765
+7766
+7767
+7768
+7769
+7770
+7771
+7772
+7773
+7774
+7775
+7776
+7777
+7778
+7779
+7780
+7781
+7782
+7783
+7784
+7785
+7786
+7787
+7788
+7789
+7790
+7791
+7792
+7793
+7794
+7795
+7796
+7797
+7798
+7799
+7800
+7801
+7802
+7803
+7804
+7805
+7806
+7807
+7808
+7809
+7810
+7811
+7812
+7813
+7814
+7815
+7816
+7817
+7818
+7819
+7820
+7821
+7822
+7823
+7824
+7825
+7826
+7827
+7828
+7829
+7830
+7831
+7832
+7833
+7834
+7835
+7836
+7837
+7838
+7839
+7840
+7841
+7842
+7843
+7844
+7845
+7846
+7847
+7848
+7849
+7850
+7851
+7852
+7853
+7854
+7855
+7856
+7857
+7858
+7859
+7860
+7861
+7862
+7863
+7864
+7865
+7866
+7867
+7868
+7869
+7870
+7871
+7872
+7873
+7874
+7875
+7876
+7877
+7878
+7879
+7880
+7881
+7882
+7883
+7884
+7885
+7886
+7887
+7888
+7889
+7890
+7891
+7892
+7893
+7894
+7895
+7896
+7897
+7898
+7899
+7900
+7901
+7902
+7903
+7904
+7905
+7906
+7907
+7908
+7909
+7910
+7911
+7912
+7913
+7914
+7915
+7916
+7917
+7918
+7919
+7920
+7921
+7922
+7923
+7924
+7925
+7926
+7927
+7928
+7929
+7930
+7931
+7932
+7933
+7934
+7935
+7936
+7937
+7938
+7939
+7940
+7941
+7942
+7943
+7944
+7945
+7946
+7947
+7948
+7949
+7950
+7951
+7952
+7953
+7954
+7955
+7956
+7957
+7958
+7959
+7960
+7961
+7962
+7963
+7964
+7965
+7966
+7967
+7968
+7969
+7970
+7971
+7972
+7973
+7974
+7975
+7976
+7977
+7978
+7979
+7980
+7981
+7982
+7983
+7984
+7985
+7986
+7987
+7988
+7989
+7990
+7991
+7992
+7993
+7994
+7995
+7996
+7997
+7998
+7999
+8000
+8001
+8002
+8003
+8004
+8005
+8006
+8007
+8008
+8009
+8010
+8011
+8012
+8013
+8014
+8015
+8016
+8017
+8018
+8019
+8020
+8021
+8022
+8023
+8024
+8025
+8026
+8027
+8028
+8029
+8030
+8031
+8032
+8033
+8034
+8035
+8036
+8037
+8038
+8039
+8040
+8041
+8042
+8043
+8044
+8045
+8046
+8047
+8048
+8049
+8050
+8051
+8052
+8053
+8054
+8055
+8056
+8057
+8058
+8059
+8060
+8061
+8062
+8063
+8064
+8065
+8066
+8067
+8068
+8069
+8070
+8071
+8072
+8073
+8074
+8075
+8076
+8077
+8078
+8079
+8080
+8081
+8082
+8083
+8084
+8085
+8086
+8087
+8088
+8089
+8090
+8091
+8092
+8093
+8094
+8095
+8096
+8097
+8098
+8099
+8100
+8101
+8102
+8103
+8104
+8105
+8106
+8107
+8108
+8109
+8110
+8111
+8112
+8113
+8114
+8115
+8116
+8117
+8118
+8119
+8120
+8121
+8122
+8123
+8124
+8125
+8126
+8127
+8128
+8129
+8130
+8131
+8132
+8133
+8134
+8135
+8136
+8137
+8138
+8139
+8140
+8141
+8142
+8143
+8144
+8145
+8146
+8147
+8148
+8149
+8150
+8151
+8152
+8153
+8154
+8155
+8156
+8157
+8158
+8159
+8160
+8161
+8162
+8163
+8164
+8165
+8166
+8167
+8168
+8169
+8170
+8171
+8172
+8173
+8174
+8175
+8176
+8177
+8178
+8179
+8180
+8181
+8182
+8183
+8184
+8185
+8186
+8187
+8188
+8189
+8190
+8191
+8192
+8193
+8194
+8195
+8196
+8197
+8198
+8199
+8200
+8201
+8202
+8203
+8204
+8205
+8206
+8207
+8208
+8209
+8210
+8211
+8212
+8213
+8214
+8215
+8216
+8217
+8218
+8219
+8220
+8221
+8222
+8223
+8224
+8225
+8226
+8227
+8228
+8229
+8230
+8231
+8232
+8233
+8234
+8235
+8236
+8237
+8238
+8239
+8240
+8241
+8242
+8243
+8244
+8245
+8246
+8247
+8248
+8249
+8250
+8251
+8252
+8253
+8254
+8255
+8256
+8257
+8258
+8259
+8260
+8261
+8262
+8263
+8264
+8265
+8266
+8267
+8268
+8269
+8270
+8271
+8272
+8273
+8274
+8275
+8276
+8277
+8278
+8279
+8280
+8281
+8282
+8283
+8284
+8285
+8286
+8287
+8288
+8289
+8290
+8291
+8292
+8293
+8294
+8295
+8296
+8297
+8298
+8299
+8300
+8301
+8302
+8303
+8304
+8305
+8306
+8307
+8308
+8309
+8310
+8311
+8312
+8313
+8314
+8315
+8316
+8317
+8318
+8319
+8320
+8321
+8322
+8323
+8324
+8325
+8326
+8327
+8328
+8329
+8330
+8331
+8332
+8333
+8334
+8335
+8336
+8337
+8338
+8339
+8340
+8341
+8342
+8343
+8344
+8345
+8346
+8347
+8348
+8349
+8350
+8351
+8352
+8353
+8354
+8355
+8356
+8357
+8358
+8359
+8360
+8361
+8362
+8363
+8364
+8365
+8366
+8367
+8368
+8369
+8370
+8371
+8372
+8373
+8374
+8375
+8376
+8377
+8378
+8379
+8380
+8381
+8382
+8383
+8384
+8385
+8386
+8387
+8388
+8389
+8390
+8391
+8392
+8393
+8394
+8395
+8396
+8397
+8398
+8399
+8400
+8401
+8402
+8403
+8404
+8405
+8406
+8407
+8408
+8409
+8410
+8411
+8412
+8413
+8414
+8415
+8416
+8417
+8418
+8419
+8420
+8421
+8422
+8423
+8424
+8425
+8426
+8427
+8428
+8429
+8430
+8431
+8432
+8433
+8434
+8435
+8436
+8437
+8438
+8439
+8440
+8441
+8442
+8443
+8444
+8445
+8446
+8447
+8448
+8449
+8450
+8451
+8452
+8453
+8454
+8455
+8456
+8457
+8458
+8459
+8460
+8461
+8462
+8463
+8464
+8465
+8466
+8467
+8468
+8469
+8470
+8471
+8472
+8473
+8474
+8475
+8476
+8477
+8478
+8479
+8480
+8481
+8482
+8483
+8484
+8485
+8486
+8487
+8488
+8489
+8490
+8491
+8492
+8493
+8494
+8495
+8496
+8497
+8498
+8499
+8500
+8501
+8502
+8503
+8504
+8505
+8506
+8507
+8508
+8509
+8510
+8511
+8512
+8513
+8514
+8515
+8516
+8517
+8518
+8519
+8520
+8521
+8522
+8523
+8524
+8525
+8526
+8527
+8528
+8529
+8530
+8531
+8532
+8533
+8534
+8535
+8536
+8537
+8538
+8539
+8540
+8541
+[/TD]
+[TD="class: code"] Boot Info Script e7fc706 + Boot-Repair extra info      [Boot-Info 23Dec2013]
+
+
+============================= Boot Info Summary: ===============================
+
+ => No boot loader is installed in the MBR of /dev/sda.
+
+sda1: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  FAT32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /EFI/ubuntu/MokManager.efi /EFI/ubuntu/grubx64.efi 
+                       /EFI/ubuntu/shimx64.efi
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 14.04 LTS 
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sda3: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info: 
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 750.2 GB, 750156374016 bytes
+255 heads, 63 sectors/track, 91201 cylinders, total 1465149168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1                   1 1,465,149,167 1,465,149,167  ee GPT
+
+
+GUID Partition Table detected.
+
+Partition    Start Sector    End Sector  # of Sectors System
+/dev/sda1           2,048       999,423       997,376 EFI System partition
+/dev/sda2         999,424 1,457,911,807 1,456,912,384 Data partition (Linux)
+/dev/sda3   1,457,911,808 1,465,147,391     7,235,584 Swap partition (Linux)
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        8B40-CCE1                              vfat       
+/dev/sda2        d35ef82c-33cc-4449-a322-01a6aefea4c9   ext4       
+/dev/sda3        228fbccf-92c8-4eb4-8738-2d8b8d846ab2   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /boot/efi                vfat       (rw)
+/dev/sda2        /                        ext4       (rw,errors=remount-ro)
+
+
+=========================== sda2/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_gpt
+insmod ext2
+set root='hd0,gpt2'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+else
+  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=10
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=menu
+    set timeout=10
+  # Fallback normal timeout code in case the timeout_style feature is
+  # unavailable.
+  else
+    set timeout=10
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+	set gfxpayload="${1}"
+	if [ "${1}" = "keep" ]; then
+		set vt_handoff=vt.handoff=7
+	else
+		set vt_handoff=
+	fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+	recordfail
+	load_video
+	gfxmode $linux_gfx_mode
+	insmod gzio
+	insmod part_gpt
+	insmod ext2
+	set root='hd0,gpt2'
+	if [ x$feature_platform_search_hint = xy ]; then
+	  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+	else
+	  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+	fi
+	linux	/boot/vmlinuz-3.13.0-24-generic.efi.signed root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro  quiet splash $vt_handoff
+	initrd	/boot/initrd.img-3.13.0-24-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+	menuentry 'Ubuntu, with Linux 3.13.0-24-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-24-generic-advanced-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		gfxmode $linux_gfx_mode
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-24-generic ...'
+		linux	/boot/vmlinuz-3.13.0-24-generic.efi.signed root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro  quiet splash $vt_handoff
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-24-generic
+	}
+	menuentry 'Ubuntu, with Linux 3.13.0-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-24-generic-recovery-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-24-generic ...'
+		linux	/boot/vmlinuz-3.13.0-24-generic.efi.signed root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro recovery nomodeset 
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-24-generic
+	}
+	menuentry 'Ubuntu, with Linux 3.13.0-23-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-23-generic-advanced-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		gfxmode $linux_gfx_mode
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-23-generic ...'
+		linux	/boot/vmlinuz-3.13.0-23-generic root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro  quiet splash $vt_handoff
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-23-generic
+	}
+	menuentry 'Ubuntu, with Linux 3.13.0-23-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-23-generic-recovery-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-23-generic ...'
+		linux	/boot/vmlinuz-3.13.0-23-generic root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro recovery nomodeset 
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-23-generic
+	}
+	menuentry 'Ubuntu, with Linux 3.13.0-19-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-19-generic-advanced-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		gfxmode $linux_gfx_mode
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-19-generic ...'
+		linux	/boot/vmlinuz-3.13.0-19-generic root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro  quiet splash $vt_handoff
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-19-generic
+	}
+	menuentry 'Ubuntu, with Linux 3.13.0-19-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-19-generic-recovery-d35ef82c-33cc-4449-a322-01a6aefea4c9' {
+		recordfail
+		load_video
+		insmod gzio
+		insmod part_gpt
+		insmod ext2
+		set root='hd0,gpt2'
+		if [ x$feature_platform_search_hint = xy ]; then
+		  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  d35ef82c-33cc-4449-a322-01a6aefea4c9
+		else
+		  search --no-floppy --fs-uuid --set=root d35ef82c-33cc-4449-a322-01a6aefea4c9
+		fi
+		echo	'Loading Linux 3.13.0-19-generic ...'
+		linux	/boot/vmlinuz-3.13.0-19-generic root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro recovery nomodeset 
+		echo	'Loading initial ramdisk ...'
+		initrd	/boot/initrd.img-3.13.0-19-generic
+	}
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+menuentry 'System setup' $menuentry_id_option 'uefi-firmware' {
+	fwsetup
+}
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda2/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during installation
+UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/sda1 during installation
+#UUID=8B40-CCE1  /boot/efi       vfat    defaults        0       1
+# swap was on /dev/sda3 during installation
+UUID=228fbccf-92c8-4eb4-8738-2d8b8d846ab2 none            swap    sw              0       0
+UUID=8B40-CCE1	/boot/efi	vfat	defaults	0	1
+--------------------------------------------------------------------------------
+
+=================== sda2: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+
+========= Devices which don't seem to have a corresponding hard drive: =========
+
+sdb 
+
+=============================== StdErr Messages: ===============================
+
+cat: /tmp/BootInfo-15zXQMHI/Tmp_Log: No such file or directory
+
+ADDITIONAL INFORMATION :
+=================== log of boot-repair 2014-04-13__18h01 ===================
+boot-repair version : 3.199~ppa40~saucy
+boot-sav version : 3.199~ppa40~saucy
+glade2script version : 3.2.2~ppa47~saucy
+boot-sav-extra version : 3.199~ppa40~saucy
+boot-repair is executed in installed-session (Ubuntu 14.04 LTS, trusty, Ubuntu, x86_64)
+CPU op-mode(s):        32-bit, 64-bit
+BOOT_IMAGE=/boot/vmlinuz-3.13.0-24-generic.efi.signed root=UUID=d35ef82c-33cc-4449-a322-01a6aefea4c9 ro quiet splash vt.handoff=7
+
+WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.
+
+
+=================== os-prober:
+/dev/sda2:The OS now in use - Ubuntu 14.04 LTS CurrentSession:linux
+
+=================== blkid:
+/dev/sda1: UUID="8B40-CCE1" TYPE="vfat"
+/dev/sda2: UUID="d35ef82c-33cc-4449-a322-01a6aefea4c9" TYPE="ext4"
+/dev/sda3: UUID="228fbccf-92c8-4eb4-8738-2d8b8d846ab2" TYPE="swap"
+
+
+1 disks with OS, 1 OS : 1 Linux, 0 MacOS, 0 Windows, 0 unknown type OS.
+
+
+WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util sfdisk doesn't support GPT. Use GNU Parted.
+
+
+WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.
+
+
+=================== /etc/grub.d/ :
+drwxr-xr-x  2 root root      4096 Apr 11 10:50 grub.d
+total 76
+-rwxr-xr-x 1 root root  9424 Mar 11 05:51 00_header
+-rwxr-xr-x 1 root root  6058 Mar 31 09:35 05_debian_theme
+-rwxr-xr-x 1 root root 11608 Mar 11 05:51 10_linux
+-rwxr-xr-x 1 root root 10412 Mar 11 05:51 20_linux_xen
+-rwxr-xr-x 1 root root  1992 Mar 12 07:31 20_memtest86+
+-rwxr-xr-x 1 root root 11692 Apr 11 05:51 30_os-prober
+-rwxr-xr-x 1 root root  1416 Mar 11 05:51 30_uefi-firmware
+-rwxr-xr-x 1 root root   214 Mar 11 05:51 40_custom
+-rwxr-xr-x 1 root root   216 Mar 11 05:51 41_custom
+-rw-r--r-- 1 root root   483 Mar 11 05:51 README
+
+
+
+
+=================== /etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+/boot/efi detected in the fstab of sda2: UUID=8B40-CCE1   (sda1)
+
+efibootmgr -v
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 0000,0001,2003,2001,2002
+Boot0000* ubuntu	HD(1,800,f3800,addce175-35e4-4134-95db-97e9521ee90a)File(EFIubuntushimx64.efi)
+Boot0001* Ubuntu	HD(1,800,f3800,addce175-35e4-4134-95db-97e9521ee90a)File(EFIubuntugrubx64.efi)RC
+Boot0002* EFI Network 0 for IPv4 (00-8C-FA-AA-04-D4) 	ACPI(a0341d0,0)PCI(2,2)PCI(0,0)MAC(008cfaaa04d4,0)IPv4(0.0.0.0:0<->0.0.0.0:0,0, 0RC
+Boot0003* EFI Network 0 for IPv6 (00-8C-FA-AA-04-D4) 	ACPI(a0341d0,0)PCI(2,2)PCI(0,0)MAC(008cfaaa04d4,0)030d3c000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000RC
+Boot2001* EFI USB Device	RC
+Boot2002* EFI DVD/CDROM	RC
+Boot2003* EFI Network	RC
+=================== UEFI/Legacy mode:
+Unusual EFI: Please report this message to boot.repair@gmail.com
+BIOS is EFI-compatible, and is setup in EFI-mode for this installed-session.
+SecureBoot disabled. (maybe sec-boot, Please report this message to boot.repair@gmail.com)
+
+
+=================== PARTITIONS & DISKS:
+sda2	: sda,	not-sepboot,	grubenv-ok	grub2,	signed grub-efi ,	update-grub,	64,	with-boot,	is-os,	not--efi--part,	fstab-without-boot,	fstab-has-goodEFI,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot,	apt-get,	grub-install,	with--usr,	fstab-without-usr,	not-sep-usr,	standard,	farbios,	.
+sda1	: sda,	not-sepboot,	no-grubenv	nogrub,	no-docgrub,	no-update-grub,	32,	no-boot,	no-os,	is-correct-EFI,	part-has-no-fstab,	part-has-no-fstab,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot,	nopakmgr,	nogrubinstall,	no---usr,	part-has-no-fstab,	not-sep-usr,	standard,	not-far,	/boot/efi.
+
+sda	: GPT,	no-BIOS_boot,	has-correctEFI, 	not-usb,	has-os,	2048 sectors * 512 bytes
+
+
+=================== parted -l:
+
+Model: ATA TOSHIBA MQ01ABD0 (scsi)
+Disk /dev/sda: 750GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+
+Number  Start   End    Size    File system     Name  Flags
+1      1049kB  512MB  511MB   fat32                 boot
+2      512MB   746GB  746GB   ext4
+3      746GB   750GB  3705MB  linux-swap(v1)
+
+=================== parted -lm:
+
+BYT;
+/dev/sda:750GB:scsi:512:512:gpt:ATA TOSHIBA MQ01ABD0;
+1:1049kB:512MB:511MB:fat32::boot;
+2:512MB:746GB:746GB:ext4::;
+3:746GB:750GB:3705MB:linux-swap(v1)::;
+
+
+=================== mount:
+/dev/sda2 on / type ext4 (rw,errors=remount-ro)
+proc on /proc type proc (rw,noexec,nosuid,nodev)
+sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+none on /sys/fs/cgroup type tmpfs (rw)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+none on /sys/firmware/efi/efivars type efivarfs (rw)
+udev on /dev type devtmpfs (rw,mode=0755)
+devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+none on /run/shm type tmpfs (rw,nosuid,nodev)
+none on /run/user type tmpfs (rw,noexec,nosuid,nodev,size=104857600,mode=0755)
+none on /sys/fs/pstore type pstore (rw)
+/dev/sda1 on /boot/efi type vfat (rw)
+systemd on /sys/fs/cgroup/systemd type cgroup (rw,noexec,nosuid,nodev,none,name=systemd)
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,user=demonic_crow)
+gvfsd-fuse on /root/.gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev)
+
+
+=================== ls:
+/sys/block/sda (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight power queue range removable ro sda1 sda2 sda3 size slaves stat subsystem trace uevent
+/sys/block/sdb (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/sr0 (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/dev (filtered):  autofs block bsg btrfs-control bus cdrom char console core cpu cpu_dma_latency cuse disk dri ecryptfs fb0 fd full fuse hpet input kmsg kvm log mapper mcelog mem net network_latency network_throughput null port ppp psaux ptmx pts random rfkill rtc rtc0 rts51x0 sda sda1 sda2 sda3 sdb sg0 sg1 sg2 shm snapshot snd sr0 stderr stdin stdout uhid uinput urandom v4l vga_arbiter vhost-net video0 zero
+ls /dev/mapper:  control
+ls /boot/efi/1:
+
+=================== hexdump -n512 -C /dev/sda1
+00000000  eb 58 90 6d 6b 66 73 2e  66 61 74 00 02 08 20 00  |.X.mkfs.fat... .|
+00000010  02 00 00 00 00 f8 00 00  3f 00 ff 00 00 08 00 00  |........?.......|
+00000020  00 38 0f 00 cd 03 00 00  00 00 00 00 02 00 00 00  |.8..............|
+00000030  01 00 06 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000040  80 01 29 e1 cc 40 8b 4e  4f 20 4e 41 4d 45 20 20  |..)..@.NO NAME  |
+00000050  20 20 46 41 54 33 32 20  20 20 0e 1f be 77 7c ac  |  FAT32   ...w|.|
+00000060  22 c0 74 0b 56 b4 0e bb  07 00 cd 10 5e eb f0 32  |".t.V.......^..2|
+00000070  e4 cd 16 cd 19 eb fe 54  68 69 73 20 69 73 20 6e  |.......This is n|
+00000080  6f 74 20 61 20 62 6f 6f  74 61 62 6c 65 20 64 69  |ot a bootable di|
+00000090  73 6b 2e 20 20 50 6c 65  61 73 65 20 69 6e 73 65  |sk.  Please inse|
+000000a0  72 74 20 61 20 62 6f 6f  74 61 62 6c 65 20 66 6c  |rt a bootable fl|
+000000b0  6f 70 70 79 20 61 6e 64  0d 0a 70 72 65 73 73 20  |oppy and..press |
+000000c0  61 6e 79 20 6b 65 79 20  74 6f 20 74 72 79 20 61  |any key to try a|
+000000d0  67 61 69 6e 20 2e 2e 2e  20 0d 0a 00 00 00 00 00  |gain ... .......|
+000000e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+WARNING: GPT (GUID Partition Table) detected on '/dev/sda'! The util fdisk doesn't support GPT. Use GNU Parted.
+
+
+=================== df -Th:
+
+Filesystem     Type      Size  Used Avail Use% Mounted on
+/dev/sda2      ext4      684G   26G  624G   4% /
+none           tmpfs     4.0K     0  4.0K   0% /sys/fs/cgroup
+udev           devtmpfs  1.7G   12K  1.7G   1% /dev
+tmpfs          tmpfs     334M  1.1M  333M   1% /run
+none           tmpfs     5.0M     0  5.0M   0% /run/lock
+none           tmpfs     1.7G  4.7M  1.7G   1% /run/shm
+none           tmpfs     100M   64K  100M   1% /run/user
+/dev/sda1      vfat      487M  3.4M  483M   1% /boot/efi
+
+=================== fdisk -l:
+
+Disk /dev/sda: 750.2 GB, 750156374016 bytes
+255 heads, 63 sectors/track, 91201 cylinders, total 1465149168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sda1               1  1465149167   732574583+  ee  GPT
+
+
+EFI detected. Please check the options.
+
+=================== Recommended repair
+Recommended-Repair
+This setting will purge (in order to sign-grub upgrade version) and reinstall the grub-efi-amd64-signed of sda2, using the following options: upgrade-grub       sda1/boot/efi,
+Additional repair will be performed: unhide-bootmenu-10s
+
+
+/boot/efi added in sda2/fstab
+sda2/boot/efi not empty
+apt-get -y --force-yes update
+Purge the GRUB of sda2
+Install last GRUB version in /etc/apt/sources.list
+apt-get -y --force-yes update
+grub-efi-amd64-signed available
+
+0 upgraded, 0 newly installed, 1 reinstalled, 0 to remove and 1 not upgraded.
+DEBCHECK debOK, grub-efi-amd64-signed
+DEBCHECK debOK
+shim-signed available
+linux-signed-generic available
+Please type: sudo dpkg --configure -ansudo apt-get install -fynsudo apt-get purge -y --force-yes grub* shim-signed linux-signed*
+
+=================== /etc/grub.d/ :
+drwxr-xr-x  2 root root      4096 Apr 13 18:05 grub.d
+total 4
+-rwxr-xr-x 1 root root 1992 Mar 12 07:31 20_memtest86+
+
+
+/boot/efi detected in the fstab of sda2: UUID=8B40-CCE1	 (sda1)
+shim-signed available
+linux-signed-generic available
+Then type: sudo apt-get install -y --force-yes grub-efi-amd64-signed shim-signed linux-signed-generic
+
+=================== /etc/grub.d/ :
+drwxr-xr-x  2 root root      4096 Apr 13 18:05 grub.d
+drwxr-xr-x  2 root root      4096 Apr 13 18:05 grub.d.bak
+total 72
+-rwxr-xr-x 1 root root  9424 Apr 11 05:51 00_header
+-rwxr-xr-x 1 root root  6058 Apr 10 10:58 05_debian_theme
+-rwxr-xr-x 1 root root 11608 Apr 11 05:51 10_linux
+-rwxr-xr-x 1 root root 10412 Apr 11 05:51 20_linux_xen
+-rwxr-xr-x 1 root root 11692 Apr 11 05:51 30_os-prober
+-rwxr-xr-x 1 root root  1416 Apr 11 05:51 30_uefi-firmware
+-rwxr-xr-x 1 root root   214 Apr 11 05:51 40_custom
+-rwxr-xr-x 1 root root   216 Apr 11 05:51 41_custom
+-rw-r--r-- 1 root root   483 Apr 11 05:51 README
+
+
+
+
+=================== /etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+/boot/efi detected in the fstab of sda2: UUID=8B40-CCE1	 (sda1)
+Unhide GRUB boot menu in sda2/etc/default/grub
+
+=================== /etc/grub.d/ :
+drwxr-xr-x  2 root root      4096 Apr 13 18:05 grub.d
+drwxr-xr-x  2 root root      4096 Apr 13 18:05 grub.d.bak
+total 72
+-rwxr-xr-x 1 root root  9424 Apr 11 05:51 00_header
+-rwxr-xr-x 1 root root  6058 Apr 10 10:58 05_debian_theme
+-rwxr-xr-x 1 root root 11608 Apr 11 05:51 10_linux
+-rwxr-xr-x 1 root root 10412 Apr 11 05:51 20_linux_xen
+-rwxr-xr-x 1 root root 11692 Apr 11 05:51 30_os-prober
+-rwxr-xr-x 1 root root  1416 Apr 11 05:51 30_uefi-firmware
+-rwxr-xr-x 1 root root   214 Apr 11 05:51 40_custom
+-rwxr-xr-x 1 root root   216 Apr 11 05:51 41_custom
+-rw-r--r-- 1 root root   483 Apr 11 05:51 README
+
+
+
+
+=================== /etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+/boot/efi detected in the fstab of sda2: UUID=8B40-CCE1	 (sda1)
+
+*******lspci -nnk | grep -iA3 vga
+00:01.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Kabini [Radeon HD 8400] [1002:9830]
+Subsystem: Toshiba America Info Systems Device [1179:fa26]
+Kernel driver in use: radeon
+00:01.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Device [1002:9840]
+*******
+
+grub-install: info: executing modprobe efivars 2>/dev/null.
+grub-install: info: Looking for /sys/firmware/efi ...
+grub-install: info: ...found.
+Installing for x86_64-efi platform.
+grub-install: info: cannot open `/boot/grub/device.map': No such file or directory.
+grub-install: info: /dev/sda1 is not present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: /dev/sda1 is present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: /dev/sda1 is present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/nilfs2.mod' -> `/boot/grub/x86_64-efi/nilfs2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/spkmodem.mod' -> `/boot/grub/x86_64-efi/spkmodem.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/png.mod' -> `/boot/grub/x86_64-efi/png.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/bfs.mod' -> `/boot/grub/x86_64-efi/bfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/macho.mod' -> `/boot/grub/x86_64-efi/macho.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/adler32.mod' -> `/boot/grub/x86_64-efi/adler32.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/font.mod' -> `/boot/grub/x86_64-efi/font.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/dm_nv.mod' -> `/boot/grub/x86_64-efi/dm_nv.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/raid5rec.mod' -> `/boot/grub/x86_64-efi/raid5rec.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/regexp.mod' -> `/boot/grub/x86_64-efi/regexp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/exfctest.mod' -> `/boot/grub/x86_64-efi/exfctest.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/at_keyboard.mod' -> `/boot/grub/x86_64-efi/at_keyboard.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/offsetio.mod' -> `/boot/grub/x86_64-efi/offsetio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/jpeg.mod' -> `/boot/grub/x86_64-efi/jpeg.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lsefisystab.mod' -> `/boot/grub/x86_64-efi/lsefisystab.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hfs.mod' -> `/boot/grub/x86_64-efi/hfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/signature_test.mod' -> `/boot/grub/x86_64-efi/signature_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/uhci.mod' -> `/boot/grub/x86_64-efi/uhci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_dsa.mod' -> `/boot/grub/x86_64-efi/gcry_dsa.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gfxmenu.mod' -> `/boot/grub/x86_64-efi/gfxmenu.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbserial_common.mod' -> `/boot/grub/x86_64-efi/usbserial_common.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hello.mod' -> `/boot/grub/x86_64-efi/hello.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gfxterm.mod' -> `/boot/grub/x86_64-efi/gfxterm.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_sha512.mod' -> `/boot/grub/x86_64-efi/gcry_sha512.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/btrfs.mod' -> `/boot/grub/x86_64-efi/btrfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ufs2.mod' -> `/boot/grub/x86_64-efi/ufs2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_dfly.mod' -> `/boot/grub/x86_64-efi/part_dfly.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/udf.mod' -> `/boot/grub/x86_64-efi/udf.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_gpt.mod' -> `/boot/grub/x86_64-efi/part_gpt.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/sleep_test.mod' -> `/boot/grub/x86_64-efi/sleep_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/pbkdf2.mod' -> `/boot/grub/x86_64-efi/pbkdf2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/http.mod' -> `/boot/grub/x86_64-efi/http.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/trig.mod' -> `/boot/grub/x86_64-efi/trig.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/multiboot.mod' -> `/boot/grub/x86_64-efi/multiboot.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cmdline_cat_test.mod' -> `/boot/grub/x86_64-efi/cmdline_cat_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_arcfour.mod' -> `/boot/grub/x86_64-efi/gcry_arcfour.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/fat.mod' -> `/boot/grub/x86_64-efi/fat.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_seed.mod' -> `/boot/grub/x86_64-efi/gcry_seed.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/linuxefi.mod' -> `/boot/grub/x86_64-efi/linuxefi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/bitmap.mod' -> `/boot/grub/x86_64-efi/bitmap.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/acpi.mod' -> `/boot/grub/x86_64-efi/acpi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/nativedisk.mod' -> `/boot/grub/x86_64-efi/nativedisk.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_acorn.mod' -> `/boot/grub/x86_64-efi/part_acorn.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/verify.mod' -> `/boot/grub/x86_64-efi/verify.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/fixvideo.mod' -> `/boot/grub/x86_64-efi/fixvideo.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lssal.mod' -> `/boot/grub/x86_64-efi/lssal.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_des.mod' -> `/boot/grub/x86_64-efi/gcry_des.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/mmap.mod' -> `/boot/grub/x86_64-efi/mmap.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_sha1.mod' -> `/boot/grub/x86_64-efi/gcry_sha1.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/backtrace.mod' -> `/boot/grub/x86_64-efi/backtrace.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_crc.mod' -> `/boot/grub/x86_64-efi/gcry_crc.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lsacpi.mod' -> `/boot/grub/x86_64-efi/lsacpi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/test.mod' -> `/boot/grub/x86_64-efi/test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efi_uga.mod' -> `/boot/grub/x86_64-efi/efi_uga.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/password.mod' -> `/boot/grub/x86_64-efi/password.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/parttool.mod' -> `/boot/grub/x86_64-efi/parttool.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/chain.mod' -> `/boot/grub/x86_64-efi/chain.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_sunpc.mod' -> `/boot/grub/x86_64-efi/part_sunpc.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/serial.mod' -> `/boot/grub/x86_64-efi/serial.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ntfscomp.mod' -> `/boot/grub/x86_64-efi/ntfscomp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/xnu.mod' -> `/boot/grub/x86_64-efi/xnu.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/zfsinfo.mod' -> `/boot/grub/x86_64-efi/zfsinfo.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/procfs.mod' -> `/boot/grub/x86_64-efi/procfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/morse.mod' -> `/boot/grub/x86_64-efi/morse.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/pbkdf2_test.mod' -> `/boot/grub/x86_64-efi/pbkdf2_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/videoinfo.mod' -> `/boot/grub/x86_64-efi/videoinfo.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/xfs.mod' -> `/boot/grub/x86_64-efi/xfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ntfs.mod' -> `/boot/grub/x86_64-efi/ntfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video_bochs.mod' -> `/boot/grub/x86_64-efi/video_bochs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ldm.mod' -> `/boot/grub/x86_64-efi/ldm.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/romfs.mod' -> `/boot/grub/x86_64-efi/romfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/bufio.mod' -> `/boot/grub/x86_64-efi/bufio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efinet.mod' -> `/boot/grub/x86_64-efi/efinet.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix3.mod' -> `/boot/grub/x86_64-efi/minix3.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/all_video.mod' -> `/boot/grub/x86_64-efi/all_video.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gettext.mod' -> `/boot/grub/x86_64-efi/gettext.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lsmmap.mod' -> `/boot/grub/x86_64-efi/lsmmap.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_plan.mod' -> `/boot/grub/x86_64-efi/part_plan.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/xzio.mod' -> `/boot/grub/x86_64-efi/xzio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/macbless.mod' -> `/boot/grub/x86_64-efi/macbless.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbtest.mod' -> `/boot/grub/x86_64-efi/usbtest.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/eval.mod' -> `/boot/grub/x86_64-efi/eval.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_rijndael.mod' -> `/boot/grub/x86_64-efi/gcry_rijndael.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/extcmd.mod' -> `/boot/grub/x86_64-efi/extcmd.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/reboot.mod' -> `/boot/grub/x86_64-efi/reboot.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lzopio.mod' -> `/boot/grub/x86_64-efi/lzopio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cryptodisk.mod' -> `/boot/grub/x86_64-efi/cryptodisk.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_rsa.mod' -> `/boot/grub/x86_64-efi/gcry_rsa.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/mdraid09.mod' -> `/boot/grub/x86_64-efi/mdraid09.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cpio.mod' -> `/boot/grub/x86_64-efi/cpio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hexdump.mod' -> `/boot/grub/x86_64-efi/hexdump.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/help.mod' -> `/boot/grub/x86_64-efi/help.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/setjmp.mod' -> `/boot/grub/x86_64-efi/setjmp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gfxterm_menu.mod' -> `/boot/grub/x86_64-efi/gfxterm_menu.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cbtable.mod' -> `/boot/grub/x86_64-efi/cbtable.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/exfat.mod' -> `/boot/grub/x86_64-efi/exfat.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/mdraid1x.mod' -> `/boot/grub/x86_64-efi/mdraid1x.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efi_gop.mod' -> `/boot/grub/x86_64-efi/efi_gop.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_apple.mod' -> `/boot/grub/x86_64-efi/part_apple.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/archelp.mod' -> `/boot/grub/x86_64-efi/archelp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cbtime.mod' -> `/boot/grub/x86_64-efi/cbtime.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hfsplus.mod' -> `/boot/grub/x86_64-efi/hfsplus.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/loopback.mod' -> `/boot/grub/x86_64-efi/loopback.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cpio_be.mod' -> `/boot/grub/x86_64-efi/cpio_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/legacy_password_test.mod' -> `/boot/grub/x86_64-efi/legacy_password_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cs5536.mod' -> `/boot/grub/x86_64-efi/cs5536.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix3_be.mod' -> `/boot/grub/x86_64-efi/minix3_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/search.mod' -> `/boot/grub/x86_64-efi/search.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_tiger.mod' -> `/boot/grub/x86_64-efi/gcry_tiger.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lsefi.mod' -> `/boot/grub/x86_64-efi/lsefi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/zfs.mod' -> `/boot/grub/x86_64-efi/zfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/keylayouts.mod' -> `/boot/grub/x86_64-efi/keylayouts.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/fshelp.mod' -> `/boot/grub/x86_64-efi/fshelp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix_be.mod' -> `/boot/grub/x86_64-efi/minix_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/diskfilter.mod' -> `/boot/grub/x86_64-efi/diskfilter.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_blowfish.mod' -> `/boot/grub/x86_64-efi/gcry_blowfish.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/legacycfg.mod' -> `/boot/grub/x86_64-efi/legacycfg.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_camellia.mod' -> `/boot/grub/x86_64-efi/gcry_camellia.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/terminfo.mod' -> `/boot/grub/x86_64-efi/terminfo.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_md5.mod' -> `/boot/grub/x86_64-efi/gcry_md5.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/memrw.mod' -> `/boot/grub/x86_64-efi/memrw.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/probe.mod' -> `/boot/grub/x86_64-efi/probe.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_cast5.mod' -> `/boot/grub/x86_64-efi/gcry_cast5.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/sleep.mod' -> `/boot/grub/x86_64-efi/sleep.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/pata.mod' -> `/boot/grub/x86_64-efi/pata.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_rmd160.mod' -> `/boot/grub/x86_64-efi/gcry_rmd160.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cbmemc.mod' -> `/boot/grub/x86_64-efi/cbmemc.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_amiga.mod' -> `/boot/grub/x86_64-efi/part_amiga.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cpuid.mod' -> `/boot/grub/x86_64-efi/cpuid.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/testspeed.mod' -> `/boot/grub/x86_64-efi/testspeed.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ext2.mod' -> `/boot/grub/x86_64-efi/ext2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/jfs.mod' -> `/boot/grub/x86_64-efi/jfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix2_be.mod' -> `/boot/grub/x86_64-efi/minix2_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/mpi.mod' -> `/boot/grub/x86_64-efi/mpi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usb_keyboard.mod' -> `/boot/grub/x86_64-efi/usb_keyboard.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/linux.mod' -> `/boot/grub/x86_64-efi/linux.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video_colors.mod' -> `/boot/grub/x86_64-efi/video_colors.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/scsi.mod' -> `/boot/grub/x86_64-efi/scsi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/search_label.mod' -> `/boot/grub/x86_64-efi/search_label.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/testload.mod' -> `/boot/grub/x86_64-efi/testload.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/syslinuxcfg.mod' -> `/boot/grub/x86_64-efi/syslinuxcfg.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/iorw.mod' -> `/boot/grub/x86_64-efi/iorw.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ehci.mod' -> `/boot/grub/x86_64-efi/ehci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_rfc2268.mod' -> `/boot/grub/x86_64-efi/gcry_rfc2268.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/luks.mod' -> `/boot/grub/x86_64-efi/luks.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_md4.mod' -> `/boot/grub/x86_64-efi/gcry_md4.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/boot.mod' -> `/boot/grub/x86_64-efi/boot.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lvm.mod' -> `/boot/grub/x86_64-efi/lvm.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/configfile.mod' -> `/boot/grub/x86_64-efi/configfile.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/iso9660.mod' -> `/boot/grub/x86_64-efi/iso9660.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/setjmp_test.mod' -> `/boot/grub/x86_64-efi/setjmp_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efifwsetup.mod' -> `/boot/grub/x86_64-efi/efifwsetup.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/keystatus.mod' -> `/boot/grub/x86_64-efi/keystatus.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cbfs.mod' -> `/boot/grub/x86_64-efi/cbfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/tar.mod' -> `/boot/grub/x86_64-efi/tar.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_sun.mod' -> `/boot/grub/x86_64-efi/part_sun.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hdparm.mod' -> `/boot/grub/x86_64-efi/hdparm.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ufs1_be.mod' -> `/boot/grub/x86_64-efi/ufs1_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/newc.mod' -> `/boot/grub/x86_64-efi/newc.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_msdos.mod' -> `/boot/grub/x86_64-efi/part_msdos.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_twofish.mod' -> `/boot/grub/x86_64-efi/gcry_twofish.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/afs.mod' -> `/boot/grub/x86_64-efi/afs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/squash4.mod' -> `/boot/grub/x86_64-efi/squash4.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/loadbios.mod' -> `/boot/grub/x86_64-efi/loadbios.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/functional_test.mod' -> `/boot/grub/x86_64-efi/functional_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ohci.mod' -> `/boot/grub/x86_64-efi/ohci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/xnu_uuid.mod' -> `/boot/grub/x86_64-efi/xnu_uuid.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix.mod' -> `/boot/grub/x86_64-efi/minix.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/progress.mod' -> `/boot/grub/x86_64-efi/progress.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/tr.mod' -> `/boot/grub/x86_64-efi/tr.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/time.mod' -> `/boot/grub/x86_64-efi/time.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/file.mod' -> `/boot/grub/x86_64-efi/file.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ufs1.mod' -> `/boot/grub/x86_64-efi/ufs1.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gzio.mod' -> `/boot/grub/x86_64-efi/gzio.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/videotest.mod' -> `/boot/grub/x86_64-efi/videotest.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/msdospart.mod' -> `/boot/grub/x86_64-efi/msdospart.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_dvh.mod' -> `/boot/grub/x86_64-efi/part_dvh.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lspci.mod' -> `/boot/grub/x86_64-efi/lspci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/elf.mod' -> `/boot/grub/x86_64-efi/elf.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/relocator.mod' -> `/boot/grub/x86_64-efi/relocator.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/setpci.mod' -> `/boot/grub/x86_64-efi/setpci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/crc64.mod' -> `/boot/grub/x86_64-efi/crc64.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/password_pbkdf2.mod' -> `/boot/grub/x86_64-efi/password_pbkdf2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_serpent.mod' -> `/boot/grub/x86_64-efi/gcry_serpent.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/part_bsd.mod' -> `/boot/grub/x86_64-efi/part_bsd.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/priority_queue.mod' -> `/boot/grub/x86_64-efi/priority_queue.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/sfs.mod' -> `/boot/grub/x86_64-efi/sfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbms.mod' -> `/boot/grub/x86_64-efi/usbms.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cmp.mod' -> `/boot/grub/x86_64-efi/cmp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/pcidump.mod' -> `/boot/grub/x86_64-efi/pcidump.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gptsync.mod' -> `/boot/grub/x86_64-efi/gptsync.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbserial_usbdebug.mod' -> `/boot/grub/x86_64-efi/usbserial_usbdebug.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/test_blockarg.mod' -> `/boot/grub/x86_64-efi/test_blockarg.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/xnu_uuid_test.mod' -> `/boot/grub/x86_64-efi/xnu_uuid_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/echo.mod' -> `/boot/grub/x86_64-efi/echo.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/memdisk.mod' -> `/boot/grub/x86_64-efi/memdisk.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/search_fs_file.mod' -> `/boot/grub/x86_64-efi/search_fs_file.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cbls.mod' -> `/boot/grub/x86_64-efi/cbls.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ata.mod' -> `/boot/grub/x86_64-efi/ata.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/halt.mod' -> `/boot/grub/x86_64-efi/halt.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/linux16.mod' -> `/boot/grub/x86_64-efi/linux16.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hfspluscomp.mod' -> `/boot/grub/x86_64-efi/hfspluscomp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/videotest_checksum.mod' -> `/boot/grub/x86_64-efi/videotest_checksum.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/net.mod' -> `/boot/grub/x86_64-efi/net.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/geli.mod' -> `/boot/grub/x86_64-efi/geli.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/multiboot2.mod' -> `/boot/grub/x86_64-efi/multiboot2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/lsefimmap.mod' -> `/boot/grub/x86_64-efi/lsefimmap.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ls.mod' -> `/boot/grub/x86_64-efi/ls.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/reiserfs.mod' -> `/boot/grub/x86_64-efi/reiserfs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/hashsum.mod' -> `/boot/grub/x86_64-efi/hashsum.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/normal.mod' -> `/boot/grub/x86_64-efi/normal.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/terminal.mod' -> `/boot/grub/x86_64-efi/terminal.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/disk.mod' -> `/boot/grub/x86_64-efi/disk.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_idea.mod' -> `/boot/grub/x86_64-efi/gcry_idea.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_whirlpool.mod' -> `/boot/grub/x86_64-efi/gcry_whirlpool.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/datehook.mod' -> `/boot/grub/x86_64-efi/datehook.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/play.mod' -> `/boot/grub/x86_64-efi/play.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/loadenv.mod' -> `/boot/grub/x86_64-efi/loadenv.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gcry_sha256.mod' -> `/boot/grub/x86_64-efi/gcry_sha256.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minicmd.mod' -> `/boot/grub/x86_64-efi/minicmd.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/ahci.mod' -> `/boot/grub/x86_64-efi/ahci.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usb.mod' -> `/boot/grub/x86_64-efi/usb.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/minix2.mod' -> `/boot/grub/x86_64-efi/minix2.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/tftp.mod' -> `/boot/grub/x86_64-efi/tftp.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/read.mod' -> `/boot/grub/x86_64-efi/read.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video_cirrus.mod' -> `/boot/grub/x86_64-efi/video_cirrus.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video_fb.mod' -> `/boot/grub/x86_64-efi/video_fb.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/crypto.mod' -> `/boot/grub/x86_64-efi/crypto.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/gfxterm_background.mod' -> `/boot/grub/x86_64-efi/gfxterm_background.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/bsd.mod' -> `/boot/grub/x86_64-efi/bsd.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/blocklist.mod' -> `/boot/grub/x86_64-efi/blocklist.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/raid6rec.mod' -> `/boot/grub/x86_64-efi/raid6rec.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/search_fs_uuid.mod' -> `/boot/grub/x86_64-efi/search_fs_uuid.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/affs.mod' -> `/boot/grub/x86_64-efi/affs.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/div_test.mod' -> `/boot/grub/x86_64-efi/div_test.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video.mod' -> `/boot/grub/x86_64-efi/video.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/appleldr.mod' -> `/boot/grub/x86_64-efi/appleldr.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/true.mod' -> `/boot/grub/x86_64-efi/true.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbserial_pl2303.mod' -> `/boot/grub/x86_64-efi/usbserial_pl2303.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/datetime.mod' -> `/boot/grub/x86_64-efi/datetime.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/mdraid09_be.mod' -> `/boot/grub/x86_64-efi/mdraid09_be.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/cat.mod' -> `/boot/grub/x86_64-efi/cat.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/aout.mod' -> `/boot/grub/x86_64-efi/aout.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/zfscrypt.mod' -> `/boot/grub/x86_64-efi/zfscrypt.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/tga.mod' -> `/boot/grub/x86_64-efi/tga.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/usbserial_ftdi.mod' -> `/boot/grub/x86_64-efi/usbserial_ftdi.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/date.mod' -> `/boot/grub/x86_64-efi/date.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/odc.mod' -> `/boot/grub/x86_64-efi/odc.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/bitmap_scale.mod' -> `/boot/grub/x86_64-efi/bitmap_scale.mod'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efiemu32.o' -> `/boot/grub/x86_64-efi/efiemu32.o'.
+grub-install: info: cannot open `/usr/lib/grub/x86_64-efi/efiemu32.o': No such file or directory.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/efiemu64.o' -> `/boot/grub/x86_64-efi/efiemu64.o'.
+grub-install: info: cannot open `/usr/lib/grub/x86_64-efi/efiemu64.o': No such file or directory.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/moddep.lst' -> `/boot/grub/x86_64-efi/moddep.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/command.lst' -> `/boot/grub/x86_64-efi/command.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/fs.lst' -> `/boot/grub/x86_64-efi/fs.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/partmap.lst' -> `/boot/grub/x86_64-efi/partmap.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/parttool.lst' -> `/boot/grub/x86_64-efi/parttool.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/video.lst' -> `/boot/grub/x86_64-efi/video.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/crypto.lst' -> `/boot/grub/x86_64-efi/crypto.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/terminal.lst' -> `/boot/grub/x86_64-efi/terminal.lst'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi/modinfo.sh' -> `/boot/grub/x86_64-efi/modinfo.sh'.
+grub-install: info: copying `/usr/share/locale/ro/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ro.mo'.
+grub-install: info: cannot open `/usr/share/locale/ro/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sco/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sco.mo'.
+grub-install: info: cannot open `/usr/share/locale/sco/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sl.mo'.
+grub-install: info: cannot open `/usr/share/locale/sl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/dv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/dv.mo'.
+grub-install: info: cannot open `/usr/share/locale/dv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/id/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/id.mo'.
+grub-install: info: cannot open `/usr/share/locale/id/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/crh/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/crh.mo'.
+grub-install: info: cannot open `/usr/share/locale/crh/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/is/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/is.mo'.
+grub-install: info: cannot open `/usr/share/locale/is/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/zh_N/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/zh_N.mo'.
+grub-install: info: cannot open `/usr/share/locale/zh_N/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/af/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/af.mo'.
+grub-install: info: cannot open `/usr/share/locale/af/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/nb/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/nb.mo'.
+grub-install: info: cannot open `/usr/share/locale/nb/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ml/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ml.mo'.
+grub-install: info: cannot open `/usr/share/locale/ml/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tl.mo'.
+grub-install: info: cannot open `/usr/share/locale/tl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/frp/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/frp.mo'.
+grub-install: info: cannot open `/usr/share/locale/frp/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ace/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ace.mo'.
+grub-install: info: cannot open `/usr/share/locale/ace/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/so/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/so.mo'.
+grub-install: info: cannot open `/usr/share/locale/so/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en_CA/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_CA.mo'.
+grub-install: info: cannot open `/usr/share/locale/en_CA/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/wo/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/wo.mo'.
+grub-install: info: cannot open `/usr/share/locale/wo/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fil/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fil.mo'.
+grub-install: info: cannot open `/usr/share/locale/fil/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/nso/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/nso.mo'.
+grub-install: info: cannot open `/usr/share/locale/nso/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ary/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ary.mo'.
+grub-install: info: cannot open `/usr/share/locale/ary/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ach/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ach.mo'.
+grub-install: info: cannot open `/usr/share/locale/ach/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/hr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/hr.mo'.
+grub-install: info: cannot open `/usr/share/locale/hr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en@quot/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en@quot.mo'.
+grub-install: info: cannot open `/usr/share/locale/en@quot/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bem/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bem.mo'.
+grub-install: info: cannot open `/usr/share/locale/bem/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/nds/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/nds.mo'.
+grub-install: info: cannot open `/usr/share/locale/nds/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ne/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ne.mo'.
+grub-install: info: cannot open `/usr/share/locale/ne/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ca@valencia/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ca@valencia.mo'.
+grub-install: info: cannot open `/usr/share/locale/ca@valencia/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/uz/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/uz.mo'.
+grub-install: info: cannot open `/usr/share/locale/uz/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fy/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fy.mo'.
+grub-install: info: cannot open `/usr/share/locale/fy/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ar/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ar.mo'.
+grub-install: info: cannot open `/usr/share/locale/ar/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/jv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/jv.mo'.
+grub-install: info: cannot open `/usr/share/locale/jv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/zh_CN/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/zh_CN.mo'.
+grub-install: info: cannot open `/usr/share/locale/zh_CN/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sr@latin/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sr@latin.mo'.
+grub-install: info: cannot open `/usr/share/locale/sr@latin/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ga/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ga.mo'.
+grub-install: info: cannot open `/usr/share/locale/ga/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sd/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sd.mo'.
+grub-install: info: cannot open `/usr/share/locale/sd/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sk/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sk.mo'.
+grub-install: info: cannot open `/usr/share/locale/sk/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ko/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ko.mo'.
+grub-install: info: cannot open `/usr/share/locale/ko/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/zh_TW/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/zh_TW.mo'.
+grub-install: info: cannot open `/usr/share/locale/zh_TW/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bg/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bg.mo'.
+grub-install: info: cannot open `/usr/share/locale/bg/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/be@latin/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/be@latin.mo'.
+grub-install: info: cannot open `/usr/share/locale/be@latin/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/eu/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/eu.mo'.
+grub-install: info: cannot open `/usr/share/locale/eu/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ur/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ur.mo'.
+grub-install: info: cannot open `/usr/share/locale/ur/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/lb/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/lb.mo'.
+grub-install: info: cannot open `/usr/share/locale/lb/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mt/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mt.mo'.
+grub-install: info: cannot open `/usr/share/locale/mt/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/locale.alias/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/locale.alias.mo'.
+grub-install: info: cannot open `/usr/share/locale/locale.alias/LC_MESSAGES/grub.mo': Not a directory.
+grub-install: info: copying `/usr/share/locale/or/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/or.mo'.
+grub-install: info: cannot open `/usr/share/locale/or/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/chr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/chr.mo'.
+grub-install: info: cannot open `/usr/share/locale/chr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/wae/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/wae.mo'.
+grub-install: info: cannot open `/usr/share/locale/wae/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/qu/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/qu.mo'.
+grub-install: info: cannot open `/usr/share/locale/qu/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/da/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/da.mo'.
+grub-install: info: cannot open `/usr/share/locale/da/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/rw/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/rw.mo'.
+grub-install: info: cannot open `/usr/share/locale/rw/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/hu/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/hu.mo'.
+grub-install: info: cannot open `/usr/share/locale/hu/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/te/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/te.mo'.
+grub-install: info: cannot open `/usr/share/locale/te/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/dz/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/dz.mo'.
+grub-install: info: cannot open `/usr/share/locale/dz/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pam/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pam.mo'.
+grub-install: info: cannot open `/usr/share/locale/pam/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fr_CA/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fr_CA.mo'.
+grub-install: info: cannot open `/usr/share/locale/fr_CA/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ru/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ru.mo'.
+grub-install: info: cannot open `/usr/share/locale/ru/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/wa/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/wa.mo'.
+grub-install: info: cannot open `/usr/share/locale/wa/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/csb/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/csb.mo'.
+grub-install: info: cannot open `/usr/share/locale/csb/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/th/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/th.mo'.
+grub-install: info: cannot open `/usr/share/locale/th/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fi/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fi.mo'.
+grub-install: info: cannot open `/usr/share/locale/fi/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en_US/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_US.mo'.
+grub-install: info: cannot open `/usr/share/locale/en_US/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/lg/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/lg.mo'.
+grub-install: info: cannot open `/usr/share/locale/lg/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/gez/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/gez.mo'.
+grub-install: info: cannot open `/usr/share/locale/gez/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/kk/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/kk.mo'.
+grub-install: info: cannot open `/usr/share/locale/kk/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/si/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/si.mo'.
+grub-install: info: cannot open `/usr/share/locale/si/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pt/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pt.mo'.
+grub-install: info: cannot open `/usr/share/locale/pt/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/oc/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/oc.mo'.
+grub-install: info: cannot open `/usr/share/locale/oc/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ckb/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ckb.mo'.
+grub-install: info: cannot open `/usr/share/locale/ckb/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/hy/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/hy.mo'.
+grub-install: info: cannot open `/usr/share/locale/hy/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ti/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ti.mo'.
+grub-install: info: cannot open `/usr/share/locale/ti/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bn_IN/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bn_IN.mo'.
+grub-install: info: cannot open `/usr/share/locale/bn_IN/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/am/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/am.mo'.
+grub-install: info: cannot open `/usr/share/locale/am/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/kw/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/kw.mo'.
+grub-install: info: cannot open `/usr/share/locale/kw/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/kn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/kn.mo'.
+grub-install: info: cannot open `/usr/share/locale/kn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sq/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sq.mo'.
+grub-install: info: cannot open `/usr/share/locale/sq/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/br/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/br.mo'.
+grub-install: info: cannot open `/usr/share/locale/br/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/kok/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/kok.mo'.
+grub-install: info: cannot open `/usr/share/locale/kok/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en_GB/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_GB.mo'.
+grub-install: info: cannot open `/usr/share/locale/en_GB/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en_AU/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_AU.mo'.
+grub-install: info: cannot open `/usr/share/locale/en_AU/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/lv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/lv.mo'.
+grub-install: info: cannot open `/usr/share/locale/lv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ka/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ka.mo'.
+grub-install: info: cannot open `/usr/share/locale/ka/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/gd/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/gd.mo'.
+grub-install: info: cannot open `/usr/share/locale/gd/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fa/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fa.mo'.
+grub-install: info: cannot open `/usr/share/locale/fa/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tr.mo'.
+grub-install: info: cannot open `/usr/share/locale/tr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en@boldquot/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en@boldquot.mo'.
+grub-install: info: cannot open `/usr/share/locale/en@boldquot/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/st/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/st.mo'.
+grub-install: info: cannot open `/usr/share/locale/st/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/om/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/om.mo'.
+grub-install: info: cannot open `/usr/share/locale/om/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/et/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/et.mo'.
+grub-install: info: cannot open `/usr/share/locale/et/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ve/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ve.mo'.
+grub-install: info: cannot open `/usr/share/locale/ve/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ku/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ku.mo'.
+grub-install: info: cannot open `/usr/share/locale/ku/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/gv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/gv.mo'.
+grub-install: info: cannot open `/usr/share/locale/gv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sw/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sw.mo'.
+grub-install: info: cannot open `/usr/share/locale/sw/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mn.mo'.
+grub-install: info: cannot open `/usr/share/locale/mn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/az/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/az.mo'.
+grub-install: info: cannot open `/usr/share/locale/az/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tt/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tt.mo'.
+grub-install: info: cannot open `/usr/share/locale/tt/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/as/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/as.mo'.
+grub-install: info: cannot open `/usr/share/locale/as/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bn.mo'.
+grub-install: info: cannot open `/usr/share/locale/bn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sml/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sml.mo'.
+grub-install: info: cannot open `/usr/share/locale/sml/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/kl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/kl.mo'.
+grub-install: info: cannot open `/usr/share/locale/kl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bo/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bo.mo'.
+grub-install: info: cannot open `/usr/share/locale/bo/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/de/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/de.mo'.
+grub-install: info: cannot open `/usr/share/locale/de/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/bs/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/bs.mo'.
+grub-install: info: cannot open `/usr/share/locale/bs/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tk/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tk.mo'.
+grub-install: info: cannot open `/usr/share/locale/tk/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/os/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/os.mo'.
+grub-install: info: cannot open `/usr/share/locale/os/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ug/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ug.mo'.
+grub-install: info: cannot open `/usr/share/locale/ug/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sr@Latn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sr@Latn.mo'.
+grub-install: info: cannot open `/usr/share/locale/sr@Latn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/gl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/gl.mo'.
+grub-install: info: cannot open `/usr/share/locale/gl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/gu/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/gu.mo'.
+grub-install: info: cannot open `/usr/share/locale/gu/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ca/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ca.mo'.
+grub-install: info: cannot open `/usr/share/locale/ca/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ta_LK/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ta_LK.mo'.
+grub-install: info: cannot open `/usr/share/locale/ta_LK/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/wal/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/wal.mo'.
+grub-install: info: cannot open `/usr/share/locale/wal/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ky/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ky.mo'.
+grub-install: info: cannot open `/usr/share/locale/ky/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pa/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pa.mo'.
+grub-install: info: cannot open `/usr/share/locale/pa/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tg/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tg.mo'.
+grub-install: info: cannot open `/usr/share/locale/tg/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fur/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fur.mo'.
+grub-install: info: cannot open `/usr/share/locale/fur/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fo/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fo.mo'.
+grub-install: info: cannot open `/usr/share/locale/fo/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tt@iqtelif/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tt@iqtelif.mo'.
+grub-install: info: cannot open `/usr/share/locale/tt@iqtelif/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/uk/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/uk.mo'.
+grub-install: info: cannot open `/usr/share/locale/uk/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/de_DE/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/de_DE.mo'.
+grub-install: info: cannot open `/usr/share/locale/de_DE/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/cy/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/cy.mo'.
+grub-install: info: cannot open `/usr/share/locale/cy/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/zu/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/zu.mo'.
+grub-install: info: cannot open `/usr/share/locale/zu/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sn.mo'.
+grub-install: info: cannot open `/usr/share/locale/sn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/an/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/an.mo'.
+grub-install: info: cannot open `/usr/share/locale/an/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/shn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/shn.mo'.
+grub-install: info: cannot open `/usr/share/locale/shn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/cv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/cv.mo'.
+grub-install: info: cannot open `/usr/share/locale/cv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fr.mo'.
+grub-install: info: cannot open `/usr/share/locale/fr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/lt/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/lt.mo'.
+grub-install: info: cannot open `/usr/share/locale/lt/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/cs/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/cs.mo'.
+grub-install: info: cannot open `/usr/share/locale/cs/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mhr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mhr.mo'.
+grub-install: info: cannot open `/usr/share/locale/mhr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/xh/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/xh.mo'.
+grub-install: info: cannot open `/usr/share/locale/xh/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/szl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/szl.mo'.
+grub-install: info: cannot open `/usr/share/locale/szl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/co/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/co.mo'.
+grub-install: info: cannot open `/usr/share/locale/co/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/nl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/nl.mo'.
+grub-install: info: cannot open `/usr/share/locale/nl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/haw/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/haw.mo'.
+grub-install: info: cannot open `/usr/share/locale/haw/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sr.mo'.
+grub-install: info: cannot open `/usr/share/locale/sr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mr/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mr.mo'.
+grub-install: info: cannot open `/usr/share/locale/mr/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/el/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/el.mo'.
+grub-install: info: cannot open `/usr/share/locale/el/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/hi/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/hi.mo'.
+grub-install: info: cannot open `/usr/share/locale/hi/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/fa_AF/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/fa_AF.mo'.
+grub-install: info: cannot open `/usr/share/locale/fa_AF/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/it/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/it.mo'.
+grub-install: info: cannot open `/usr/share/locale/it/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pt_BR/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pt_BR.mo'.
+grub-install: info: cannot open `/usr/share/locale/pt_BR/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sc/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sc.mo'.
+grub-install: info: cannot open `/usr/share/locale/sc/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ms/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ms.mo'.
+grub-install: info: cannot open `/usr/share/locale/ms/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/yi/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/yi.mo'.
+grub-install: info: cannot open `/usr/share/locale/yi/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/be/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/be.mo'.
+grub-install: info: cannot open `/usr/share/locale/be/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/byn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/byn.mo'.
+grub-install: info: cannot open `/usr/share/locale/byn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/en/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en.mo'.
+grub-install: info: cannot open `/usr/share/locale/en/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mi/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mi.mo'.
+grub-install: info: cannot open `/usr/share/locale/mi/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/es/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/es.mo'.
+grub-install: info: cannot open `/usr/share/locale/es/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/cgg/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/cgg.mo'.
+grub-install: info: cannot open `/usr/share/locale/cgg/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ps/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ps.mo'.
+grub-install: info: cannot open `/usr/share/locale/ps/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/lo/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/lo.mo'.
+grub-install: info: cannot open `/usr/share/locale/lo/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mg/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mg.mo'.
+grub-install: info: cannot open `/usr/share/locale/mg/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tig/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tig.mo'.
+grub-install: info: cannot open `/usr/share/locale/tig/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/my/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/my.mo'.
+grub-install: info: cannot open `/usr/share/locale/my/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/tet/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/tet.mo'.
+grub-install: info: cannot open `/usr/share/locale/tet/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ia/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ia.mo'.
+grub-install: info: cannot open `/usr/share/locale/ia/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/aa/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/aa.mo'.
+grub-install: info: cannot open `/usr/share/locale/aa/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/mk/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/mk.mo'.
+grub-install: info: cannot open `/usr/share/locale/mk/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ff/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ff.mo'.
+grub-install: info: cannot open `/usr/share/locale/ff/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pl/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pl.mo'.
+grub-install: info: cannot open `/usr/share/locale/pl/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ht/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ht.mo'.
+grub-install: info: cannot open `/usr/share/locale/ht/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/km/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/km.mo'.
+grub-install: info: cannot open `/usr/share/locale/km/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/he/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/he.mo'.
+grub-install: info: cannot open `/usr/share/locale/he/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ja/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ja.mo'.
+grub-install: info: cannot open `/usr/share/locale/ja/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/nn/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/nn.mo'.
+grub-install: info: cannot open `/usr/share/locale/nn/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/se/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/se.mo'.
+grub-install: info: cannot open `/usr/share/locale/se/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/pt_PT/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/pt_PT.mo'.
+grub-install: info: cannot open `/usr/share/locale/pt_PT/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/vi/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/vi.mo'.
+grub-install: info: cannot open `/usr/share/locale/vi/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/eo/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/eo.mo'.
+grub-install: info: cannot open `/usr/share/locale/eo/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ln/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ln.mo'.
+grub-install: info: cannot open `/usr/share/locale/ln/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ta/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ta.mo'.
+grub-install: info: cannot open `/usr/share/locale/ta/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/trv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/trv.mo'.
+grub-install: info: cannot open `/usr/share/locale/trv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/zh_HK/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/zh_HK.mo'.
+grub-install: info: cannot open `/usr/share/locale/zh_HK/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/sv/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/sv.mo'.
+grub-install: info: cannot open `/usr/share/locale/sv/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/vec/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/vec.mo'.
+grub-install: info: cannot open `/usr/share/locale/vec/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale/ast/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/ast.mo'.
+grub-install: info: cannot open `/usr/share/locale/ast/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en_US@piglatin/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_US@piglatin.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en_US@piglatin/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en_CA/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_CA.mo'.
+grub-install: info: copying `/usr/share/locale-langpack/en@quot/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en@quot.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en@quot/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en_US/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_US.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en_US/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en_GB/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_GB.mo'.
+grub-install: info: copying `/usr/share/locale-langpack/en_AU/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_AU.mo'.
+grub-install: info: copying `/usr/share/locale-langpack/en@boldquot/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en@boldquot.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en@boldquot/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en_NZ/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en_NZ.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en_NZ/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/locale-langpack/en@shaw/LC_MESSAGES/grub.mo' -> `/boot/grub/locale/en@shaw.mo'.
+grub-install: info: cannot open `/usr/share/locale-langpack/en@shaw/LC_MESSAGES/grub.mo': No such file or directory.
+grub-install: info: copying `/usr/share/grub/unicode.pf2' -> `/boot/grub/fonts/unicode.pf2'.
+grub-install: info: /dev/sda2 is present.
+grub-install: info: Looking for /dev/sda2.
+grub-install: info: /dev/sda is a parent of /dev/sda2.
+grub-install: info: /dev/sda2 starts from 999424.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: Partition 1 starts from 999424.
+grub-install: info: /dev/sda2 is present.
+grub-install: info: Looking for /dev/sda2.
+grub-install: info: /dev/sda is a parent of /dev/sda2.
+grub-install: info: /dev/sda2 starts from 999424.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: Partition 1 starts from 999424.
+grub-install: info: /dev/sda2 is present.
+grub-install: info: Looking for /dev/sda2.
+grub-install: info: /dev/sda is a parent of /dev/sda2.
+grub-install: info: /dev/sda2 starts from 999424.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: Partition 1 starts from 999424.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: /dev/sda1 is present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: /dev/sda1 is present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: /dev/sda1 is present.
+grub-install: info: Looking for /dev/sda1.
+grub-install: info: /dev/sda is a parent of /dev/sda1.
+grub-install: info: /dev/sda1 starts from 2048.
+grub-install: info: opening the device hostdisk//dev/sda.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: drive = 0.
+grub-install: info: the size of hostdisk//dev/sda is 1465149168.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Scanning for DISKFILTER devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid1x devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09_be devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for mdraid09 devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for dmraid_nv devices on disk hostdisk//dev/sda.
+grub-install: info: Scanning for ldm devices on disk hostdisk//dev/sda.
+grub-install: info: scanning hostdisk//dev/sda for LDM.
+grub-install: info: no LDM signature found.
+grub-install: info: Scanning for lvm devices on disk hostdisk//dev/sda.
+grub-install: info: no LVM signature found.
+grub-install: info: Partition 0 starts from 2048.
+grub-install: info: grub-mkimage --directory '/usr/lib/grub/x86_64-efi' --prefix '/boot/grub' --output '/boot/grub/x86_64-efi/core.efi' --format 'x86_64-efi' --compression 'auto'  --config '/boot/grub/x86_64-efi/load.cfg' 'ext2' 'part_gpt' 'search_fs_uuid'
+.
+grub-install: info: the size of config file is 0x68.
+grub-install: info: the total module size is 0x51c8.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/kernel.img.
+grub-install: info: locating the section .text at 0x0.
+grub-install: info: locating the section .rodata at 0x9600.
+grub-install: info: locating the section .rodata.str1.1 at 0x9798.
+grub-install: info: locating the section .data at 0xb0e0.
+grub-install: info: locating the section .module_license at 0xc278.
+grub-install: info: locating the section .bss at 0xc290.
+grub-install: info: locating  at 0x400 (0x400).
+grub-install: info: locating  at 0x9a00 (0x9a00).
+grub-install: info: locating  at 0x9b98 (0x9b98).
+grub-install: info: locating  at 0xb4e0 (0xb4e0).
+grub-install: info: locating  at 0xc690 (0xc690).
+grub-install: info: locating  at 0xc678 (0xc678).
+grub-install: info: locating  at 0x400 (0x400).
+grub-install: info: locating grub_strlen at 0x7c25 (0x400).
+grub-install: info: locating grub_net_poll_cards_idle at 0xe3d0 (0xc690).
+grub-install: info: locating grub_efi_finish_boot_services at 0x2f18 (0x400).
+grub-install: info: locating grub_disk_get_size at 0x55c0 (0x400).
+grub-install: info: locating grub_file_progress_hook at 0x184e0 (0xc690).
+grub-install: info: locating grub_efidisk_fini at 0xe51 (0x400).
+grub-install: info: locating grub_puts_ at 0x79d3 (0x400).
+grub-install: info: locating grub_millisleep at 0x4195 (0x400).
+grub-install: info: locating grub_fs_autoload_hook at 0xe1b0 (0xc690).
+grub-install: info: locating efi_wrap_10 at 0x4cc (0x400).
+grub-install: info: locating grub_efi_allocate_pages_max at 0x2d32 (0x400).
+grub-install: info: locating grub_fs_blocklist at 0xb640 (0xb4e0).
+grub-install: info: locating grub_errmsg at 0x183d0 (0xc690).
+grub-install: info: locating efi_wrap_5 at 0x463 (0x400).
+grub-install: info: locating grub_strncmp at 0x7a4d (0x400).
+grub-install: info: locating grub_strtoull at 0x7d3d (0x400).
+grub-install: info: locating grub_dma_get_virt at 0x5a5 (0x400).
+grub-install: info: locating grub_efi_system_table at 0xe3e0 (0xc690).
+grub-install: info: locating memmove at 0x797a (0x400).
+grub-install: info: locating efi_wrap_4 at 0x44f (0x400).
+grub-install: info: locating grub_disk_open at 0x4f8a (0x400).
+grub-install: info: locating grub_efi_locate_protocol at 0x1c16 (0x400).
+grub-install: info: locating grub_env_update_get_sorted at 0x669c (0x400).
+grub-install: info: locating grub_strcpy at 0x79c0 (0x400).
+grub-install: info: locating grub_partition_probe at 0x8fd0 (0x400).
+grub-install: info: locating grub_strrchr at 0x7a99 (0x400).
+grub-install: info: locating grub_partition_get_name at 0x91d0 (0x400).
+grub-install: info: locating grub_dl_load at 0x631d (0x400).
+grub-install: info: locating grub_efi_stall at 0x1e3f (0x400).
+grub-install: info: locating grub_efi_get_filename at 0x2289 (0x400).
+grub-install: info: locating grub_env_export at 0x6788 (0x400).
+grub-install: info: locating grub_xvasprintf at 0x89b2 (0x400).
+grub-install: info: locating grub_error_push at 0x684a (0x400).
+grub-install: info: locating grub_rescue_run at 0x9750 (0x400).
+grub-install: info: locating grub_xasprintf at 0x8a4d (0x400).
+grub-install: info: locating grub_realloc at 0x40bf (0x400).
+grub-install: info: locating grub_exit at 0x1e7e (0x400).
+grub-install: info: locating memcpy at 0x797a (0x400).
+grub-install: info: locating grub_memmove at 0x797a (0x400).
+grub-install: info: locating grub_device_open at 0x47bb (0x400).
+grub-install: info: locating grub_register_exported_symbols at 0x993e (0x400).
+grub-install: info: locating grub_strdup at 0x7c8f (0x400).
+grub-install: info: locating grub_disk_firmware_is_tainted at 0xe420 (0xc690).
+grub-install: info: locating grub_divmod64 at 0x7cd7 (0x400).
+grub-install: info: locating grub_file_get_device_name at 0x69dd (0x400).
+grub-install: info: locating grub_efi_print_device_path at 0x2370 (0x400).
+grub-install: info: locating grub_partition_iterate at 0x9164 (0x400).
+grub-install: info: locating grub_dma_free at 0x599 (0x400).
+grub-install: info: locating grub_vsnprintf at 0x88fd (0x400).
+grub-install: info: locating grub_partition_map_list at 0x18530 (0xc690).
+grub-install: info: locating efi_wrap_1 at 0x422 (0x400).
+grub-install: info: locating grub_command_list at 0xe410 (0xc690).
+grub-install: info: locating grub_machine_fini at 0x534 (0x400).
+grub-install: info: locating grub_tsc_rate at 0xe400 (0xc690).
+grub-install: info: locating grub_rescue_parse_line at 0x94ce (0x400).
+grub-install: info: locating grub_efi_get_variable at 0x1ff7 (0x400).
+grub-install: info: locating grub_snprintf at 0x896d (0x400).
+grub-install: info: locating grub_register_core_commands at 0x4632 (0x400).
+grub-install: info: locating grub_disk_dev_register at 0x4ea0 (0x400).
+grub-install: info: locating grub_console_init at 0x3927 (0x400).
+grub-install: info: locating grub_disk_write_weak at 0xe428 (0xc690).
+grub-install: info: locating grub_dl_add at 0x5696 (0x400).
+grub-install: info: locating grub_disk_read at 0x5270 (0x400).
+grub-install: info: locating grub_term_highlight_color at 0xb7e8 (0xb4e0).
+grub-install: info: locating grub_parser_execute at 0x8f62 (0x400).
+grub-install: info: locating grub_xputs at 0xb7e0 (0xb4e0).
+grub-install: info: locating grub_console_fini at 0x3a28 (0x400).
+grub-install: info: locating grub_fatal at 0x8a9c (0x400).
+grub-install: info: locating grub_dl_ref at 0x5792 (0x400).
+grub-install: info: locating grub_file_seek at 0x6d22 (0x400).
+grub-install: info: locating grub_pci_find_capability at 0x6a2 (0x400).
+grub-install: info: locating grub_efi_get_loaded_image at 0x1e63 (0x400).
+grub-install: info: locating grub_errno at 0x184d0 (0xc690).
+grub-install: info: locating grub_parser_cmdline_state at 0x8c1a (0x400).
+grub-install: info: locating grub_memset at 0x7baf (0x400).
+grub-install: info: locating grub_getkey at 0x991f (0x400).
+grub-install: info: locating grub_term_outputs_disabled at 0x18538 (0xc690).
+grub-install: info: locating grub_grubnet_fini at 0x184e8 (0xc690).
+grub-install: info: locating grub_register_variable_hook at 0x6728 (0x400).
+grub-install: info: locating grub_efi_image_handle at 0xe3e8 (0xc690).
+grub-install: info: locating grub_vprintf at 0x8666 (0x400).
+grub-install: info: locating grub_net_open at 0xc6e8 (0xc690).
+grub-install: info: locating grub_register_command_prio at 0x41be (0x400).
+grub-install: info: locating grub_efi_compare_device_paths at 0x29f5 (0x400).
+grub-install: info: locating grub_file_filters_all at 0x184f0 (0xc690).
+grub-install: info: locating grub_install_get_time_ms at 0x4187 (0x400).
+grub-install: info: locating _start at 0x400 (0x400).
+grub-install: info: locating grub_term_inputs at 0x18540 (0xc690).
+grub-install: info: locating grub_parser_split_cmdline at 0x8cd3 (0x400).
+grub-install: info: locating grub_disk_firmware_fini at 0xe430 (0xc690).
+grub-install: info: locating grub_disk_close at 0x4ee6 (0x400).
+grub-install: info: locating grub_dl_unload at 0x580c (0x400).
+grub-install: info: locating grub_efi_set_variable at 0x1f1d (0x400).
+grub-install: info: locating grub_printf at 0x87d3 (0x400).
+grub-install: info: locating grub_efi_secure_boot at 0x2117 (0x400).
+grub-install: info: locating grub_unregister_command at 0x42af (0x400).
+grub-install: info: locating grub_fs_list at 0xe1b8 (0xc690).
+grub-install: info: locating grub_efidisk_get_device_handle at 0x1581 (0x400).
+grub-install: info: locating grub_main at 0x731f (0x400).
+grub-install: info: locating grub_file_read at 0x6a68 (0x400).
+grub-install: info: locating grub_dl_unload_unneeded at 0x641a (0x400).
+grub-install: info: locating grub_pci_make_address at 0x5ac (0x400).
+grub-install: info: locating memcmp at 0x7a0c (0x400).
+grub-install: info: locating grub_term_normal_color at 0xb7e9 (0xb4e0).
+grub-install: info: locating grub_disk_dev_list at 0xe438 (0xc690).
+grub-install: info: locating grub_machine_init at 0x51a (0x400).
+grub-install: info: locating efi_wrap_0 at 0x417 (0x400).
+grub-install: info: locating grub_efi_locate_handle at 0x1c5f (0x400).
+grub-install: info: locating grub_term_outputs at 0x18548 (0xc690).
+grub-install: info: locating grub_modbase at 0xe3f0 (0xc690).
+grub-install: info: locating grub_term_inputs_disabled at 0x18550 (0xc690).
+grub-install: info: locating grub_efi_net_config at 0xe3f8 (0xc690).
+grub-install: info: locating grub_efi_set_virtual_address_map at 0x1ec2 (0x400).
+grub-install: info: locating grub_print_error at 0x6944 (0x400).
+grub-install: info: locating grub_efi_mm_init at 0x31e7 (0x400).
+grub-install: info: locating memset at 0x7baf (0x400).
+grub-install: info: locating grub_zalloc at 0x3e36 (0x400).
+grub-install: info: locating grub_strcmp at 0x7a2e (0x400).
+grub-install: info: locating grub_tsc_init at 0x3aa7 (0x400).
+grub-install: info: locating grub_efi_allocate_pages at 0x2c6e (0x400).
+grub-install: info: locating grub_strchr at 0x7a83 (0x400).
+grub-install: info: locating grub_refresh at 0x98f7 (0x400).
+grub-install: info: locating grub_malloc at 0x3e25 (0x400).
+grub-install: info: locating grub_efi_get_memory_map at 0x2de4 (0x400).
+grub-install: info: locating grub_efidisk_get_device_name at 0x16cc (0x400).
+grub-install: info: locating grub_get_time_ms at 0x417b (0x400).
+grub-install: info: locating grub_file_close at 0x6b05 (0x400).
+grub-install: info: locating grub_file_open at 0x6b50 (0x400).
+grub-install: info: locating grub_isspace at 0x7aae (0x400).
+grub-install: info: locating grub_efi_open_protocol at 0x1d5a (0x400).
+grub-install: info: locating grub_real_dprintf at 0x8822 (0x400).
+grub-install: info: locating efi_wrap_3 at 0x43e (0x400).
+grub-install: info: locating grub_dl_load_core_noinit at 0x5926 (0x400).
+grub-install: info: locating grub_dl_load_file at 0x621a (0x400).
+grub-install: info: locating grub_env_unset at 0x6618 (0x400).
+grub-install: info: locating grub_device_close at 0x4899 (0x400).
+grub-install: info: locating efi_wrap_6 at 0x47c (0x400).
+grub-install: info: locating grub_dl_head at 0xc700 (0xc690).
+grub-install: info: locating grub_fs_probe at 0x7033 (0x400).
+grub-install: info: locating grub_mm_base at 0xe408 (0xc690).
+grub-install: info: locating grub_term_poll_usb at 0xe3d8 (0xc690).
+grub-install: info: locating grub_file_filters_enabled at 0x18510 (0xc690).
+grub-install: info: locating grub_strword at 0x7b0e (0x400).
+grub-install: info: locating grub_machine_get_bootlocation at 0x2aeb (0x400).
+grub-install: info: locating grub_efi_fini at 0x2b82 (0x400).
+grub-install: info: locating grub_err_printed_errors at 0x184d4 (0xc690).
+grub-install: info: locating grub_error at 0x67ce (0x400).
+grub-install: info: locating grub_current_context at 0xb630 (0xb4e0).
+grub-install: info: locating efi_codes at 0x9ae0 (0x9a00).
+grub-install: info: locating grub_dl_register_symbol at 0x56d3 (0x400).
+grub-install: info: locating grub_efi_is_finished at 0xc6a8 (0xc690).
+grub-install: info: locating grub_list_remove at 0x7290 (0x400).
+grub-install: info: locating grub_pci_iterate at 0x5d3 (0x400).
+grub-install: info: locating grub_modules_get_end at 0x7303 (0x400).
+grub-install: info: locating grub_free at 0x3e70 (0x400).
+grub-install: info: locating grub_strndup at 0x7c36 (0x400).
+grub-install: info: locating efi_wrap_7 at 0x49f (0x400).
+grub-install: info: locating grub_named_list_find at 0x7242 (0x400).
+grub-install: info: locating grub_dl_unref at 0x57cf (0x400).
+grub-install: info: locating grub_efidisk_init at 0x134a (0x400).
+grub-install: info: locating grub_disk_dev_unregister at 0x4eb5 (0x400).
+grub-install: info: locating grub_efi_init at 0x2a85 (0x400).
+grub-install: info: locating grub_arch_dl_check_header at 0x744 (0x400).
+grub-install: info: locating grub_arch_dl_relocate_symbols at 0x773 (0x400).
+grub-install: info: locating grub_efi_free_pages at 0x2c44 (0x400).
+grub-install: info: locating grub_printf_ at 0x8775 (0x400).
+grub-install: info: locating grub_efi_get_device_path at 0x2355 (0x400).
+grub-install: info: locating start at 0x400 (0x400).
+grub-install: info: locating grub_efi_modules_addr at 0x21ea (0x400).
+grub-install: info: locating grub_error_pop at 0x68d6 (0x400).
+grub-install: info: locating grub_device_iterate at 0x49da (0x400).
+grub-install: info: locating grub_getkey_noblock at 0x98ad (0x400).
+grub-install: info: locating grub_memalign_dma32 at 0x547 (0x400).
+grub-install: info: locating grub_list_push at 0x7276 (0x400).
+grub-install: info: locating grub_efi_set_text_mode at 0x1db8 (0x400).
+grub-install: info: locating grub_err_printf at 0x87d3 (0x400).
+grub-install: info: locating grub_disk_cache_invalidate_all at 0x4e56 (0x400).
+grub-install: info: locating grub_env_set at 0x64bc (0x400).
+grub-install: info: locating grub_dl_load_core at 0x61d4 (0x400).
+grub-install: info: locating grub_gettext at 0xb690 (0xb4e0).
+grub-install: info: locating grub_memcmp at 0x7a0c (0x400).
+grub-install: info: locating grub_env_get at 0x65ea (0x400).
+grub-install: info: locating efi_wrap_2 at 0x430 (0x400).
+grub-install: info: locating grub_strtoul at 0x81c5 (0x400).
+grub-install: info: locating grub_dma_get_phys at 0x5a9 (0x400).
+grub-install: info: locating grub_mm_init_region at 0x3f86 (0x400).
+grub-install: info: locating grub_disk_cache_table at 0xe440 (0xc690).
+grub-install: info: locating grub_memalign at 0x3c27 (0x400).
+grub-install: info: dealing with the relocation section .rela.text for .text.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0xdfe1 at the offset 0x3.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0xdfd2 at the offset 0xa.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0x6f08 at the offset 0x13.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2a85 at the offset 0x11d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3aa7 at the offset 0x12a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b82 at the offset 0x13c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x165.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b98 at the offset 0x17a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x18b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x19b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x1e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x2af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bb8 at the offset 0x355.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x366.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bd9 at the offset 0x38f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bfc at the offset 0x410.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x422.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c14 at the offset 0x474.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x485.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x527.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x545.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x57a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x5ac.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x5cd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c3b at the offset 0x5fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0x60c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x638.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c9 at the offset 0x642.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x66d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x694.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb520 at the offset 0x6c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c5f at the offset 0x6cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x6fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x722.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb520 at the offset 0x73b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x749.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x767.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x780.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c3f at the offset 0x7eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x7f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x804.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x810.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c66 at the offset 0x824.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x82e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x838.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x84a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x880.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x88f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c72 at the offset 0x8a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x8b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x8ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x8fb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x90a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8da at the offset 0x917.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c80 at the offset 0x933.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x944.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c8f at the offset 0x958.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x965.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x977.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x981.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cbb at the offset 0x9d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x9e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cd2 at the offset 0xa18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xa22.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xa31.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xa3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0xa55.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xa61.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0xa6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0xa77.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4e0 at the offset 0xaa4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4eb5 at the offset 0xab6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xaea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ce8 at the offset 0xaff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xb13.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xb25.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xb2f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xb3e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xb48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0xb77.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cfb at the offset 0xb8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xbb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xbbc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xbcb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xbd5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0xc00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d00 at the offset 0xc15.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xc29.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xc3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xc45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xc54.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xc5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xca5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d05 at the offset 0xcb1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xcbe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xcdb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0xd09.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d39 at the offset 0xd24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0xd3d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0xd7f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0xd9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0xdb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0xdd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0xde2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0xe20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0xe7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xe9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d61 at the offset 0xea9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xeb6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xed3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0xf01.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d93 at the offset 0xf1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0xf35.
+grub-install: info: SET@_progressbar1.pulse()
+relocating an R_X86_64_64 entry to 0xe51 at the offset 0xf4e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe430 at the offset 0xf62.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaba at the offset 0xf6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x11ae at the offset 0xf87.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xfee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91b at the offset 0xff8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x1004.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x109d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x11ae at the offset 0x10b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x1106.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x1115.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91b at the offset 0x111f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0x113b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4e0 at the offset 0x1147.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ea0 at the offset 0x1151.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x116a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaba at the offset 0x11cd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0x11d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x1204.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x1225.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1238.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0x12ac.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x12d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x12f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0x132c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa34 at the offset 0x1383.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1396.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x13ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x13c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55c0 at the offset 0x13f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x140a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1239 at the offset 0x141d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0x142a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x1443.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9db9 at the offset 0x1457.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x1461.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1479.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x1492.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa34 at the offset 0x14ad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x14c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x15ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9dbf at the offset 0x1645.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e00 at the offset 0x1664.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x1670.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e02 at the offset 0x1684.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x181f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x1832.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1868.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x18a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x18c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x18ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x192d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1963.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1981.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47c at the offset 0x1999.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c16 at the offset 0x19bf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb530 at the offset 0x19c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x19f9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x1a24.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1a41.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x1a59.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb540 at the offset 0x1a6a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x1a74.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b82 at the offset 0x1a81.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1a8d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1aa9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x1ab6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1ac7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x1aec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e08 at the offset 0x1afe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x1b0f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x1b24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1b4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x1b59.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1a98 at the offset 0x1b78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1b8a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x1bad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e27 at the offset 0x1bc9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x1be1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x1bfb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1c05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1a98 at the offset 0x1c5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x1c66.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1c78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1cb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1ce4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e47 at the offset 0x1d1b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ff7 at the offset 0x1d27.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e52 at the offset 0x1da0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1dcf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1dee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x1e01.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x1e1f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e5c at the offset 0x1e3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1ed3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18dd at the offset 0x1eea.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb550 at the offset 0x1f5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x1f66.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x1f7b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e61 at the offset 0x1fd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e6d at the offset 0x1fe2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e77 at the offset 0x1ff5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9a00 at the offset 0x200e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e88 at the offset 0x2023.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e94 at the offset 0x2036.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ea0 at the offset 0x204d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eb4 at the offset 0x2062.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ebd at the offset 0x2074.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ec7 at the offset 0x2083.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9efa at the offset 0x209c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ed6 at the offset 0x20b4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ee3 at the offset 0x20c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eea at the offset 0x20de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eee at the offset 0x20f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x2104.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eea at the offset 0x211e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eee at the offset 0x2134.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x2147.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ef2 at the offset 0x2176.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ef6 at the offset 0x21a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9a28 at the offset 0x21be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f0b at the offset 0x21d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f1c at the offset 0x21ee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f29 at the offset 0x2205.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f42 at the offset 0x221c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f4e at the offset 0x2237.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f5a at the offset 0x224e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f74 at the offset 0x2272.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f7d at the offset 0x2289.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9fa8 at the offset 0x22be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9fd3 at the offset 0x230c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa016 at the offset 0x2388.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa035 at the offset 0x23ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa04a at the offset 0x23cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa05a at the offset 0x23e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa064 at the offset 0x23f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ab8 at the offset 0x2415.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa07a at the offset 0x242b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0b3 at the offset 0x247e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0c5 at the offset 0x2497.
+grub-install: info: relocating an R_X86_64_64 entry to 0x19e8 at the offset 0x24a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x24b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18dd at the offset 0x24e3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x24f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0cb at the offset 0x2502.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2513.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0d5 at the offset 0x252c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa111 at the offset 0x256b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa133 at the offset 0x257b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa123 at the offset 0x2593.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa144 at the offset 0x25b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x25c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x260e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x21ea at the offset 0x2688.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x2694.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3927 at the offset 0x269e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x31e7 at the offset 0x26aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x26b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x26d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x134a at the offset 0x26e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x26ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x2704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x16cc at the offset 0x271c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2289 at the offset 0x272c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f8 at the offset 0x2747.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0x276b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe51 at the offset 0x2785.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3a28 at the offset 0x2792.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x27bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a2 at the offset 0x27e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2849.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x285c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x28a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x28c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x2913.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2957.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x2976.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x29c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x29e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2a16.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2a25.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2a32.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2a45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2a52.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2a63.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2a76.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2a88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2a9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2ac0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x2ae2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x2b1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2b46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x2b7c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2b8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2b96.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2ba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2baa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2bb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2bd2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa176 at the offset 0x2be5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x2bf6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2c07.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x2c14.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2c23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x2c2e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2c3d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2c47.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2c51.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2c5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2c6f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2c79.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa159 at the offset 0x2c88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2c97.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2cac.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x2cb9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x2cc6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2ce4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2cee.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa195 at the offset 0x2cff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1b5 at the offset 0x2d10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x2d1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x2d34.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2d40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2d53.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2d63.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2d70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2d81.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2d93.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2da5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b9c at the offset 0x2dc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5d3 at the offset 0x2dcb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x2df9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1dd at the offset 0x2e12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x2e3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x2e54.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1f4 at the offset 0x2ea5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x2eb1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2f17.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x3052.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa20a at the offset 0x306e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3078.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3f86 at the offset 0x308a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa23f at the offset 0x30aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x30c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x30dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x30f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x323a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x3252.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3269.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3278.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x3298.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x32a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x32b7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x32ed.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3311.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3323.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3343.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3352.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x336a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x337a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x3388.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x339c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x33b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x33c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x33d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e9 at the offset 0x33ff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e8 at the offset 0x340a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x341e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x342c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3441.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x3454.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ae0 at the offset 0x34af.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x34c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x34d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x34e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x3509.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x352f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa251 at the offset 0x3540.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x354f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x355b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x356b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18550 at the offset 0x3575.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb578 at the offset 0x3581.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3590.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x359a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0x35a4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x35b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x35c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x35d2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18538 at the offset 0x35dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5b8 at the offset 0x35e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x35f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x3601.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0x360c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x3618.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0x362b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3635.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3641.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x364d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x365c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d8 at the offset 0x3679.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x3686.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d8 at the offset 0x36ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x3730.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x3749.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3a67 at the offset 0x3753.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4187 at the offset 0x375d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa26e at the offset 0x3769.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3775.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa27b at the offset 0x378b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x379a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa290 at the offset 0x37c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x37d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2a2 at the offset 0x37ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x37f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2c3 at the offset 0x3805.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x382b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3870.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2db at the offset 0x38b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x38c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2ec at the offset 0x38de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x38ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4e56 at the offset 0x39e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa30d at the offset 0x3a00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x3a11.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x3a2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x3a3f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x3a5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3b7f at the offset 0x3a7f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2ec at the offset 0x3ace.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3ada.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3bb4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3bc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3c22.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3c8b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x3cd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3cf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3b7f at the offset 0x3d05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x3d30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x3d52.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3d65.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e0 at the offset 0x3d7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e0 at the offset 0x3d8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x3d9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x3dc2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31b at the offset 0x3e0a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x3e23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x3e3e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0x3ecd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3edc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31e at the offset 0x3eed.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31c at the offset 0x3ef7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x3f04.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31f at the offset 0x3f0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x3f28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa325 at the offset 0x3f32.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4322 at the offset 0x3f51.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49da at the offset 0x3f5b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa333 at the offset 0x3f67.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x3f71.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x3f7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0x3f94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x3fa3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x3fb9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0x3fd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x3fec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa335 at the offset 0x400f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4020.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4031.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4041.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa32b at the offset 0x4057.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa346 at the offset 0x4064.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x4070.
+grub-install: info: relocating an R_X86_64_64 entry to 0x42e7 at the offset 0x4085.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa333 at the offset 0x4097.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x40a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x40ad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x40be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x40c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x40d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa35f at the offset 0x40f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4103.
+grub-install: info: relocating an R_X86_64_64 entry to 0x621a at the offset 0x4121.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x412d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x4141.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa35f at the offset 0x4155.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4166.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6618 at the offset 0x4173.
+grub-install: info: relocating an R_X86_64_64 entry to 0x669c at the offset 0x418d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x4197.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa375 at the offset 0x41b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x41bf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x41de.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa37c at the offset 0x41f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4209.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x421f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa38e at the offset 0x4238.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3ab at the offset 0x4242.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4584 at the offset 0x424c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3ba at the offset 0x4256.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0x4260.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0x4278.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3be at the offset 0x4285.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3de at the offset 0x428f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x454f at the offset 0x4299.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3e5 at the offset 0x42a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3eb at the offset 0x42b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa402 at the offset 0x42bc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4342 at the offset 0x42c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa408 at the offset 0x42d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa40b at the offset 0x42e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa41c at the offset 0x42ed.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44ec at the offset 0x42f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa423 at the offset 0x4301.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4313.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0x433a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4351.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa42a at the offset 0x4366.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x4372.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4385.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa430 at the offset 0x43c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x43d2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa430 at the offset 0x43eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa435 at the offset 0x43f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4406.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x441b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x443a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e8 at the offset 0x444e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4460.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4488.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x44a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x44c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x44d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x44e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x4514.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x452c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x470c at the offset 0x4546.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0x4558.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4565.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x4574.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4585.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x45c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x45f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x48ed at the offset 0x461c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4675.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x46d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4744.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4776.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x478a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x47a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4a48 at the offset 0x47f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x480d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4aa6 at the offset 0x4827.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x483d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x48a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4afd at the offset 0x48c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x48d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x48e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4903.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4951.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x499d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x49a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa44d at the offset 0x49b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x49c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x49d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x49de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x49ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x4a08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4a5a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183c8 at the offset 0x4a65.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4a70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4aa2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4ab7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4ac1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa46e at the offset 0x4aec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4af6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4b05.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4b17.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x4b3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4b45.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4b51.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4b6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa47d at the offset 0x4b93.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4b9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4bae.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4bbf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x4bd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4c2d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x4c55.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x4c6a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x4c7e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4c9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4ca7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4cd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa48e at the offset 0x4cf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4d03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fd0 at the offset 0x4d24.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4bc at the offset 0x4d39.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4d48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x4d56.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4d62.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4e56 at the offset 0x4d80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4d91.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4da8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4db4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x4dc7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4ce at the offset 0x4dd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4de0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4def.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4df9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x4e08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x4e17.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4e4 at the offset 0x4e2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4e3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4f8 at the offset 0x4ebc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4ecd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa526 at the offset 0x4f1b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4f2c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x4f3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x4f4a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa554 at the offset 0x4f57.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4f61.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4f70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4f7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x4f87.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4bc1 at the offset 0x4fc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4a48 at the offset 0x5008.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x505d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4aa6 at the offset 0x507c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4afd at the offset 0x50c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5189.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4bc1 at the offset 0x51a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x51ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x51f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x522a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55e8 at the offset 0x5299.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa57c at the offset 0x52b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x52c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x52d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x530c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5324.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x532f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x5372.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x53a4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x57cf at the offset 0x53e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5436.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5440.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x546a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x547b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x54cc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x54e6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x54fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa593 at the offset 0x5532.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x553c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5548.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5563.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5bf at the offset 0x5578.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5e0 at the offset 0x55a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x55b7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x744 at the offset 0x55c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa603 at the offset 0x55e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa62a at the offset 0x5608.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5619.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x562f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa644 at the offset 0x5651.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x565d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x566c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5676.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa656 at the offset 0x5683.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x5690.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa666 at the offset 0x56a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x56b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa67b at the offset 0x56d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x56db.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa689 at the offset 0x56f4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa698 at the offset 0x570d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6a7 at the offset 0x571e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x572b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6b0 at the offset 0x573c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x574b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x5760.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6c5 at the offset 0x5775.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x5782.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x579b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x57ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x57e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x57f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5802.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x5820.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x588d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x58d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x58e3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x592d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x5940.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6ce at the offset 0x59c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x59d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b40 at the offset 0x5a4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5a8f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x5aa2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x5b37.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x5b85.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5b94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5ba3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6de at the offset 0x5bad.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6ec at the offset 0x5bd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6fa at the offset 0x5c22.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5c33.
+grub-install: info: relocating an R_X86_64_64 entry to 0x773 at the offset 0x5c5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x5cbc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5ce7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa713 at the offset 0x5cf5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5cff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa72f at the offset 0x5d20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5d2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d39.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa740 at the offset 0x5d4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5d55.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5696 at the offset 0x5d73.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa753 at the offset 0x5d8b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5d9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5926 at the offset 0x5dda.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5e03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2117 at the offset 0x5e1e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa769 at the offset 0x5e41.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5e52.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b50 at the offset 0x5e60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x5e7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x5e94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a68 at the offset 0x5eab.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x5ec0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5ed1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x61d4 at the offset 0x5ee9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5efd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x5f21.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa794 at the offset 0x5f30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55e8 at the offset 0x5f45.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa794 at the offset 0x5f62.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa79b at the offset 0x5f6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5f7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7b3 at the offset 0x5f96.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x5fa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x621a at the offset 0x5fb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5fc9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5fe1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7c8 at the offset 0x5ff4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6005.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x601d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x6027.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x6041.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x6081.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x608d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x60c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x60f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6119.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x612f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x614b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x616f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x61c7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x61dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x61ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x621e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x6247.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x6251.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x627a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x62a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x62bd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x6335.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x634b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x6358.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6367.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x638b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x63a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x63ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x63db.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x6415.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x642e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x6438.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x644b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd780 at the offset 0x645c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x6473.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x647f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x648f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x649a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x64b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x64c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x64cc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd780 at the offset 0x64e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64f1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x6509.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x651b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6525.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6539.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6547.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7da at the offset 0x6556.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x6560.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x656c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x6579.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x6586.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x6591.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x659b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x65ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7e6 at the offset 0x65ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x65c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x65d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x65f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa80e at the offset 0x6608.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6617.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x662a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6650.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa822 at the offset 0x667e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x668f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184e0 at the offset 0x66d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x6725.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6734.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6744.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0x6754.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x676b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x6791.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x67a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x67bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x67d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb640 at the offset 0x67ff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0x6812.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x6843.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6858.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x6862.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x6899.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0x68aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x68b4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x68be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x68cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0x68e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x68ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x68f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x6907.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa847 at the offset 0x692a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x693c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5270 at the offset 0x6964.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x6a5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x6aba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x6aff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6b0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa86b at the offset 0x6b20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6b31.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x6b58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6b6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x6b9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa882 at the offset 0x6bca.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6bdb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6c0a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6c18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0x6c46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x6c50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa89b at the offset 0x6c68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ac at the offset 0x6c72.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8af at the offset 0x6c81.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d57 at the offset 0x6c90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8b9 at the offset 0x6c9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6caa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x6cbd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8bb at the offset 0x6ccf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ac at the offset 0x6cd9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8af at the offset 0x6ce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x6cf5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d1a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0x6d2d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d41.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0x6d64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d57 at the offset 0x6d73.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8b9 at the offset 0x6d7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d8e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d9b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6da9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dbf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dca.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6dd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0x6de1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6df4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8d1 at the offset 0x6e1d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6e2e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x6e46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x6ec8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x6ee8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x6ef8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x6f05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x51a at the offset 0x6f23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x6f37.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x6f5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x6f9f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x6fb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x6fbe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6fd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x6fe9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x993e at the offset 0x7012.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x7020.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x7057.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ef at the offset 0x7061.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x706b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7077.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x7086.
+grub-install: info: relocating an R_X86_64_64 entry to 0x61d4 at the offset 0x70a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x70b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x70c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x72bf at the offset 0x7122.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x712c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6728 at the offset 0x7136.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2aeb at the offset 0x714a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ee at the offset 0x7177.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f7 at the offset 0x7181.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x718b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8fe at the offset 0x71ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x71b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8fe at the offset 0x71c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x71cb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x71da.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0x71fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x721c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x7244.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x72aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x72c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x72dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa906 at the offset 0x7317.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x7321.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7342.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ee at the offset 0x7356.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f7 at the offset 0x7367.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7373.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa911 at the offset 0x738a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x7394.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x73a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x73b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x73bc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x73cb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x73dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x73e6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x73f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa911 at the offset 0x73fe.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x740a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x741c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4632 at the offset 0x7426.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x7432.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8f62 at the offset 0x7444.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa918 at the offset 0x7450.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x745a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x7466.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x7474.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa918 at the offset 0x747e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7487.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0x7494.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x74af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9750 at the offset 0x74d9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x74ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa91f at the offset 0x7507.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7513.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7525.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa91f at the offset 0x753c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7548.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x756f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x75d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x75e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x76d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7ad0 at the offset 0x771a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7ad0 at the offset 0x778b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x783a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x7858.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x7879.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x7895.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x78a7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x78c7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x7946.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x79f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa924 at the offset 0x7a03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x7a14.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa939 at the offset 0x7a45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x7a56.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x7b84.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7b9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x7bcc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7bd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b68 at the offset 0x7d20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7dc7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7e6d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7eb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x8010.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x804d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa94d at the offset 0x8190.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x826d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x8277.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x8288.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x82a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x82c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x82dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x82e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cc at the offset 0x82f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cd at the offset 0x82f9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2ce at the offset 0x8302.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cf at the offset 0x830d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x832e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x833a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x8349.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x835b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x83b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x83c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x8413.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x8426.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa954 at the offset 0x843d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa95a at the offset 0x846a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7b0e at the offset 0x8477.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa95e at the offset 0x8499.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x84a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x84d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x84e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x850b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x853c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x854d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x85a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x85b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x85e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x8603.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x861a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x862b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x89b2 at the offset 0x868d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x869f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x86e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x86f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa966 at the offset 0x8704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x8710.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa970 at the offset 0x8720.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0x872e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e7e at the offset 0x873a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x8783.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x87a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x87b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x87eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb6a0 at the offset 0x8841.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x8876.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8c1a at the offset 0x895d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8967.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8bd0 at the offset 0x8998.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x89a7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x89e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8a4e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8a64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8bd0 at the offset 0x8a83.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x8ab9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x8ade.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8b07.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8b12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b60 at the offset 0x8b65.
+grub-install: info: relocating an R_X86_64_64 entry to 0x94ce at the offset 0x8b70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b60 at the offset 0x8b9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8bae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8bc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x8c12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x8c24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9471 at the offset 0x8c65.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8c75.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a4d at the offset 0x8c98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8cc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8cd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8ce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8d48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x8d67.
+grub-install: info: relocating an R_X86_64_64 entry to 0x939d at the offset 0x8d95.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8daa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x8dd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa988 at the offset 0x8df8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x8e02.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x8e34.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0x8e59.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa989 at the offset 0x8e63.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x8e72.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x8e83.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0x8f2c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa98c at the offset 0x8f41.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9c8 at the offset 0x8f55.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x8f5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9be at the offset 0x8f71.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8f80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9304 at the offset 0x8fc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x9024.
+grub-install: info: relocating an R_X86_64_64 entry to 0x939d at the offset 0x9036.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x904d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9304 at the offset 0x9086.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x909b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x90bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8cd3 at the offset 0x90d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x911c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x914e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x9173.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0x9183.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9d9 at the offset 0x91ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8775 at the offset 0x91ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x91c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9f0 at the offset 0x91d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9f5 at the offset 0x91e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x91f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x9201.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x9216.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa0e at the offset 0x9228.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa0b at the offset 0x9235.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x924a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x9261.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x926b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x928c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x92b1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x92db.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x92e7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0x92f3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa1c at the offset 0x930d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x9317.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x9323.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x932f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x9339.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa1e at the offset 0x9353.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x935f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x936f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9625 at the offset 0x9379.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x938f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x94ce at the offset 0x93af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x93c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x940a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x9442.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x9459.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x947b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d8 at the offset 0x94af.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d0 at the offset 0x94c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x94d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x94fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98ad at the offset 0x9522.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x952c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x9541.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7f0 at the offset 0x954c.
+grub-install: info: dealing with the relocation section .rela.rodata for .rodata.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2419 at the offset 0x0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2430 at the offset 0x8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2443 at the offset 0x10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x245d at the offset 0x18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x246f at the offset 0x20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25c9 at the offset 0x28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25e4 at the offset 0x30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25fb at the offset 0x38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2616 at the offset 0x40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x262d at the offset 0x48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x266d at the offset 0x50.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0x58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0x60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x277e at the offset 0x68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27e4 at the offset 0x70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x267f at the offset 0x78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x26b6 at the offset 0x80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2704 at the offset 0x88.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27a1 at the offset 0x90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2644 at the offset 0x98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0xa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0xa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27c5 at the offset 0xb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2820 at the offset 0xb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2874 at the offset 0xc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2892 at the offset 0xc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x28b0 at the offset 0xd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2922 at the offset 0xd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5e56 at the offset 0x140.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5e56 at the offset 0x148.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5f4b at the offset 0x150.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5fef at the offset 0x158.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6013 at the offset 0x160.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8148 at the offset 0x168.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x170.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x178.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8168 at the offset 0x180.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x188.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x190.
+grub-install: info: dealing with the relocation section .rela.data for .data.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xec7 at the offset 0x10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc1b at the offset 0x18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xbe6 at the offset 0x20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1096 at the offset 0x28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x128e at the offset 0x30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa266 at the offset 0x90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3829 at the offset 0xa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa266 at the offset 0xd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3796 at the offset 0xd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3775 at the offset 0xe0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x34db at the offset 0xe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x36a3 at the offset 0xf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x370f at the offset 0x100.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3667 at the offset 0x108.
+grub-install: info: relocating an R_X86_64_64 entry to 0x38c2 at the offset 0x110.
+grub-install: info: relocating an R_X86_64_64 entry to 0x37c3 at the offset 0x118.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x120.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd700 at the offset 0x150.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8e4 at the offset 0x170.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6e4f at the offset 0x180.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d5d at the offset 0x188.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795a at the offset 0x1b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9855 at the offset 0x300.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa37 at the offset 0x310.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417 at the offset 0x318.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa42 at the offset 0x328.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x330.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa4d at the offset 0x340.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4cc at the offset 0x348.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa59 at the offset 0x358.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x360.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa64 at the offset 0x370.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x378.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa6f at the offset 0x388.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x390.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa7a at the offset 0x3a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x3a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa85 at the offset 0x3b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47c at the offset 0x3c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa90 at the offset 0x3d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49f at the offset 0x3d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa9b at the offset 0x3e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x3f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaaad at the offset 0x400.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x408.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaac2 at the offset 0x418.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x420.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaad4 at the offset 0x430.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49da at the offset 0x438.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaae8 at the offset 0x448.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x450.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaaf9 at the offset 0x460.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x468.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab0f at the offset 0x478.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x480.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab1f at the offset 0x490.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x498.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab32 at the offset 0x4a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ea0 at the offset 0x4b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab49 at the offset 0x4c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4eb5 at the offset 0x4c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab62 at the offset 0x4d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe430 at the offset 0x4e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab7a at the offset 0x4f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe420 at the offset 0x4f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab98 at the offset 0x508.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55c0 at the offset 0x510.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabab at the offset 0x520.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x528.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabba at the offset 0x538.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5270 at the offset 0x540.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabc9 at the offset 0x550.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe428 at the offset 0x558.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabde at the offset 0x568.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x570.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabec at the offset 0x580.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x588.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabf9 at the offset 0x598.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x5a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac06 at the offset 0x5b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5926 at the offset 0x5b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac1f at the offset 0x5c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x5d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac2b at the offset 0x5e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x5e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac3a at the offset 0x5f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x57cf at the offset 0x600.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac48 at the offset 0x610.
+grub-install: info: relocating an R_X86_64_64 entry to 0x599 at the offset 0x618.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac56 at the offset 0x628.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5a9 at the offset 0x630.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac68 at the offset 0x640.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5a5 at the offset 0x648.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac7a at the offset 0x658.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x660.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac92 at the offset 0x670.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2d32 at the offset 0x678.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacae at the offset 0x688.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x690.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaccc at the offset 0x6a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2f18 at the offset 0x6a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacea at the offset 0x6b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x6c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacfe at the offset 0x6d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x6d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad17 at the offset 0x6e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2289 at the offset 0x6f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad2d at the offset 0x700.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x708.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad47 at the offset 0x718.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x720.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad5f at the offset 0x730.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ff7 at the offset 0x738.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad75 at the offset 0x748.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x750.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad8b at the offset 0x760.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x768.
+grub-install: info: relocating an R_X86_64_64 entry to 0xada0 at the offset 0x778.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c5f at the offset 0x780.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadb7 at the offset 0x790.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c16 at the offset 0x798.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadd0 at the offset 0x7a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f8 at the offset 0x7b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xade4 at the offset 0x7c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x7c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadfb at the offset 0x7d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2370 at the offset 0x7e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae16 at the offset 0x7f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2117 at the offset 0x7f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae2b at the offset 0x808.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x810.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae42 at the offset 0x820.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1f1d at the offset 0x828.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae58 at the offset 0x838.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ec2 at the offset 0x840.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae79 at the offset 0x850.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e3f at the offset 0x858.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae88 at the offset 0x868.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x870.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae9e at the offset 0x880.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1581 at the offset 0x888.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaebd at the offset 0x898.
+grub-install: info: relocating an R_X86_64_64 entry to 0x16cc at the offset 0x8a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaeda at the offset 0x8b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x8b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaeea at the offset 0x8c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x8d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaef7 at the offset 0x8e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x8e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf04 at the offset 0x8f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6618 at the offset 0x900.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf13 at the offset 0x910.
+grub-install: info: relocating an R_X86_64_64 entry to 0x669c at the offset 0x918.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf2e at the offset 0x928.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x930.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf46 at the offset 0x940.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x948.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf52 at the offset 0x958.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x960.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf5d at the offset 0x970.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x978.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf68 at the offset 0x988.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x990.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf77 at the offset 0x9a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x9a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf87 at the offset 0x9b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e7e at the offset 0x9c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf91 at the offset 0x9d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x9d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf9c at the offset 0x9e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x9f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafac at the offset 0xa00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0xa08.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafc2 at the offset 0xa18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0xa20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafdc at the offset 0xa30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0xa38.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaff6 at the offset 0xa48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b50 at the offset 0xa50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb005 at the offset 0xa60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184e0 at the offset 0xa68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb01d at the offset 0xa78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a68 at the offset 0xa80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb02c at the offset 0xa90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d22 at the offset 0xa98.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb03b at the offset 0xaa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0xab0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb045 at the offset 0xac0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0xac8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb05b at the offset 0xad8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0xae0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb068 at the offset 0xaf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0xaf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb076 at the offset 0xb08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0xb10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb087 at the offset 0xb20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0xb28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb093 at the offset 0xb38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98ad at the offset 0xb40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0a7 at the offset 0xb50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0xb58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0b4 at the offset 0xb68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0xb70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0c1 at the offset 0xb80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0xb88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0d0 at the offset 0xb98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0xba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0e1 at the offset 0xbb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x534 at the offset 0xbb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0f3 at the offset 0xbc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0xbd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0ff at the offset 0xbe0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0xbe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb10d at the offset 0xbf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x547 at the offset 0xc00.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb121 at the offset 0xc10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0xc18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb12d at the offset 0xc28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0xc30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb13a at the offset 0xc40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0xc48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb146 at the offset 0xc58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4195 at the offset 0xc60.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb156 at the offset 0xc70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0xc78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb163 at the offset 0xc88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0xc90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb170 at the offset 0xca0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0xca8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb185 at the offset 0xcb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e8 at the offset 0xcc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb193 at the offset 0xcd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d0 at the offset 0xcd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1ac at the offset 0xce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8c1a at the offset 0xcf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1c6 at the offset 0xd00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8cd3 at the offset 0xd08.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1e0 at the offset 0xd18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0xd20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1f8 at the offset 0xd30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0xd38.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb20f at the offset 0xd48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0xd50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb227 at the offset 0xd60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fd0 at the offset 0xd68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb23c at the offset 0xd78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a2 at the offset 0xd80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb255 at the offset 0xd90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5d3 at the offset 0xd98.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb266 at the offset 0xda8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0xdb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb27c at the offset 0xdc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0xdc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb28d at the offset 0xdd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0xde0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb299 at the offset 0xdf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8775 at the offset 0xdf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2a6 at the offset 0xe08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x79d3 at the offset 0xe10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2b1 at the offset 0xe20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xe28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2c3 at the offset 0xe38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x40bf at the offset 0xe40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2d0 at the offset 0xe50.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0xe58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2dd at the offset 0xe68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0xe70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2f8 at the offset 0xe80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6728 at the offset 0xe88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb314 at the offset 0xe98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xea0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb322 at the offset 0xeb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0xeb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb32e at the offset 0xec8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0xed0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb33a at the offset 0xee0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x79c0 at the offset 0xee8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb346 at the offset 0xef8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0xf00.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb352 at the offset 0xf10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0xf18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb35e at the offset 0xf28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a4d at the offset 0xf30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb36b at the offset 0xf40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0xf48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb378 at the offset 0xf58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0xf60.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb385 at the offset 0xf70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0xf78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb392 at the offset 0xf88.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0xf90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3a0 at the offset 0xfa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7b0e at the offset 0xfa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3ad at the offset 0xfb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e8 at the offset 0xfc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3c7 at the offset 0xfd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0xfd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3d8 at the offset 0xfe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18550 at the offset 0xff0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3f2 at the offset 0x1000.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e9 at the offset 0x1008.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb409 at the offset 0x1018.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x1020.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb41b at the offset 0x1030.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18538 at the offset 0x1038.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb436 at the offset 0x1048.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d8 at the offset 0x1050.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb449 at the offset 0x1060.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x1068.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb457 at the offset 0x1078.
+grub-install: info: relocating an R_X86_64_64 entry to 0x42af at the offset 0x1080.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb46f at the offset 0x1090.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x1098.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb47c at the offset 0x10a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x10b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb48b at the offset 0x10c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x10c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb49a at the offset 0x10d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x10e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4a5 at the offset 0x10f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x89b2 at the offset 0x10f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4b5 at the offset 0x1108.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x1110.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4c1 at the offset 0x1120.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x1128.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4c8 at the offset 0x1138.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x1140.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4cf at the offset 0x1150.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x1158.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4d7 at the offset 0x1168.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x1170.
+grub-install: info: translating the relocation section .rela.text.
+grub-install: info: adding a relocation entry for 0x51d.
+grub-install: info: adding a relocation entry for 0x52a.
+grub-install: info: adding a relocation entry for 0x53c.
+grub-install: info: adding a relocation entry for 0x565.
+grub-install: info: adding a relocation entry for 0x57a.
+grub-install: info: adding a relocation entry for 0x58b.
+grub-install: info: adding a relocation entry for 0x59b.
+grub-install: info: adding a relocation entry for 0x5e0.
+grub-install: info: adding a relocation entry for 0x6af.
+grub-install: info: adding a relocation entry for 0x755.
+grub-install: info: adding a relocation entry for 0x766.
+grub-install: info: adding a relocation entry for 0x78f.
+grub-install: info: adding a relocation entry for 0x810.
+grub-install: info: adding a relocation entry for 0x822.
+grub-install: info: adding a relocation entry for 0x874.
+grub-install: info: adding a relocation entry for 0x885.
+grub-install: info: adding a relocation entry for 0x8fd.
+grub-install: info: adding a relocation entry for 0x927.
+grub-install: info: adding a relocation entry for 0x945.
+grub-install: info: adding a relocation entry for 0x97a.
+grub-install: info: adding a relocation entry for 0x9ac.
+grub-install: info: adding a relocation entry for 0x9cd.
+grub-install: info: adding a relocation entry for 0x9fa.
+grub-install: info: adding a relocation entry for 0xa0c.
+grub-install: info: adding a relocation entry for 0xa38.
+grub-install: info: adding a relocation entry for 0xa42.
+grub-install: info: adding a relocation entry for 0xa6d.
+grub-install: info: adding a relocation entry for 0xa94.
+grub-install: info: adding a relocation entry for 0xac0.
+grub-install: info: adding a relocation entry for 0xacf.
+grub-install: info: adding a relocation entry for 0xafd.
+grub-install: info: adding a relocation entry for 0xb22.
+grub-install: info: adding a relocation entry for 0xb3b.
+grub-install: info: adding a relocation entry for 0xb49.
+grub-install: info: adding a relocation entry for 0xb67.
+grub-install: info: adding a relocation entry for 0xb80.
+grub-install: info: adding a relocation entry for 0xbc6.
+grub-install: info: adding a relocation entry for 0xbeb.
+grub-install: info: adding a relocation entry for 0xbf5.
+grub-install: info: adding a relocation entry for 0xc04.
+grub-install: info: adding a relocation entry for 0xc10.
+grub-install: info: adding a relocation entry for 0xc24.
+grub-install: info: adding a relocation entry for 0xc2e.
+grub-install: info: adding a relocation entry for 0xc38.
+grub-install: info: adding a relocation entry for 0xc4a.
+grub-install: info: adding a relocation entry for 0xc80.
+grub-install: info: adding a relocation entry for 0xc8f.
+grub-install: info: adding a relocation entry for 0xca5.
+grub-install: info: adding a relocation entry for 0xcb6.
+grub-install: info: adding a relocation entry for 0xcc1.
+grub-install: info: adding a relocation entry for 0xcec.
+grub-install: info: adding a relocation entry for 0xcfb.
+grub-install: info: adding a relocation entry for 0xd0a.
+grub-install: info: adding a relocation entry for 0xd17.
+grub-install: info: adding a relocation entry for 0xd33.
+grub-install: info: adding a relocation entry for 0xd44.
+grub-install: info: adding a relocation entry for 0xd58.
+grub-install: info: adding a relocation entry for 0xd65.
+grub-install: info: adding a relocation entry for 0xd77.
+grub-install: info: adding a relocation entry for 0xd81.
+grub-install: info: adding a relocation entry for 0xdd4.
+grub-install: info: adding a relocation entry for 0xde5.
+grub-install: info: adding a relocation entry for 0xe18.
+grub-install: info: adding a relocation entry for 0xe22.
+grub-install: info: adding a relocation entry for 0xe31.
+grub-install: info: adding a relocation entry for 0xe3b.
+grub-install: info: adding a relocation entry for 0xe55.
+grub-install: info: adding a relocation entry for 0xe61.
+grub-install: info: adding a relocation entry for 0xe6c.
+grub-install: info: adding a relocation entry for 0xe77.
+grub-install: info: adding a relocation entry for 0xea4.
+grub-install: info: adding a relocation entry for 0xeb6.
+grub-install: info: adding a relocation entry for 0xeea.
+grub-install: info: adding a relocation entry for 0xeff.
+grub-install: info: adding a relocation entry for 0xf13.
+grub-install: info: adding a relocation entry for 0xf25.
+grub-install: info: adding a relocation entry for 0xf2f.
+grub-install: info: adding a relocation entry for 0xf3e.
+grub-install: info: adding a relocation entry for 0xf48.
+grub-install: info: adding a relocation entry for 0xf77.
+grub-install: info: adding a relocation entry for 0xf8c.
+grub-install: info: adding a relocation entry for 0xfa0.
+grub-install: info: adding a relocation entry for 0xfb2.
+grub-install: info: adding a relocation entry for 0xfbc.
+grub-install: info: adding a relocation entry for 0xfcb.
+grub-install: info: adding a relocation entry for 0xfd5.
+grub-install: info: adding a relocation entry for 0x1000.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 184 bytes of a fixup block starting at 0x0.
+grub-install: info: adding a relocation entry for 0x1015.
+grub-install: info: adding a relocation entry for 0x1029.
+grub-install: info: adding a relocation entry for 0x103b.
+grub-install: info: adding a relocation entry for 0x1045.
+grub-install: info: adding a relocation entry for 0x1054.
+grub-install: info: adding a relocation entry for 0x105e.
+grub-install: info: adding a relocation entry for 0x10a5.
+grub-install: info: adding a relocation entry for 0x10b1.
+grub-install: info: adding a relocation entry for 0x10be.
+grub-install: info: adding a relocation entry for 0x10db.
+grub-install: info: adding a relocation entry for 0x1109.
+grub-install: info: adding a relocation entry for 0x1124.
+grub-install: info: adding a relocation entry for 0x113d.
+grub-install: info: adding a relocation entry for 0x117f.
+grub-install: info: adding a relocation entry for 0x119c.
+grub-install: info: adding a relocation entry for 0x11b2.
+grub-install: info: adding a relocation entry for 0x11d8.
+grub-install: info: adding a relocation entry for 0x11e2.
+grub-install: info: adding a relocation entry for 0x1220.
+grub-install: info: adding a relocation entry for 0x127a.
+grub-install: info: adding a relocation entry for 0x129d.
+grub-install: info: adding a relocation entry for 0x12a9.
+grub-install: info: adding a relocation entry for 0x12b6.
+grub-install: info: adding a relocation entry for 0x12d3.
+grub-install: info: adding a relocation entry for 0x1301.
+grub-install: info: adding a relocation entry for 0x131c.
+grub-install: info: adding a relocation entry for 0x1335.
+grub-install: info: adding a relocation entry for 0x134e.
+grub-install: info: adding a relocation entry for 0x1362.
+grub-install: info: adding a relocation entry for 0x136c.
+grub-install: info: adding a relocation entry for 0x1387.
+grub-install: info: adding a relocation entry for 0x13ee.
+grub-install: info: adding a relocation entry for 0x13f8.
+grub-install: info: adding a relocation entry for 0x1404.
+grub-install: info: adding a relocation entry for 0x149d.
+grub-install: info: adding a relocation entry for 0x14b3.
+grub-install: info: adding a relocation entry for 0x1506.
+grub-install: info: adding a relocation entry for 0x1515.
+grub-install: info: adding a relocation entry for 0x151f.
+grub-install: info: adding a relocation entry for 0x153b.
+grub-install: info: adding a relocation entry for 0x1547.
+grub-install: info: adding a relocation entry for 0x1551.
+grub-install: info: adding a relocation entry for 0x156a.
+grub-install: info: adding a relocation entry for 0x15cd.
+grub-install: info: adding a relocation entry for 0x15d7.
+grub-install: info: adding a relocation entry for 0x1604.
+grub-install: info: adding a relocation entry for 0x1625.
+grub-install: info: adding a relocation entry for 0x1638.
+grub-install: info: adding a relocation entry for 0x16ac.
+grub-install: info: adding a relocation entry for 0x16d0.
+grub-install: info: adding a relocation entry for 0x16f6.
+grub-install: info: adding a relocation entry for 0x172c.
+grub-install: info: adding a relocation entry for 0x1783.
+grub-install: info: adding a relocation entry for 0x1796.
+grub-install: info: adding a relocation entry for 0x17ae.
+grub-install: info: adding a relocation entry for 0x17c0.
+grub-install: info: adding a relocation entry for 0x17f0.
+grub-install: info: adding a relocation entry for 0x180a.
+grub-install: info: adding a relocation entry for 0x181d.
+grub-install: info: adding a relocation entry for 0x182a.
+grub-install: info: adding a relocation entry for 0x1843.
+grub-install: info: adding a relocation entry for 0x1857.
+grub-install: info: adding a relocation entry for 0x1861.
+grub-install: info: adding a relocation entry for 0x1879.
+grub-install: info: adding a relocation entry for 0x1892.
+grub-install: info: adding a relocation entry for 0x18ad.
+grub-install: info: adding a relocation entry for 0x18c6.
+grub-install: info: adding a relocation entry for 0x19ec.
+grub-install: info: adding a relocation entry for 0x1a45.
+grub-install: info: adding a relocation entry for 0x1a64.
+grub-install: info: adding a relocation entry for 0x1a70.
+grub-install: info: adding a relocation entry for 0x1a84.
+grub-install: info: adding a relocation entry for 0x1c1f.
+grub-install: info: adding a relocation entry for 0x1c32.
+grub-install: info: adding a relocation entry for 0x1c68.
+grub-install: info: adding a relocation entry for 0x1ca5.
+grub-install: info: adding a relocation entry for 0x1cc3.
+grub-install: info: adding a relocation entry for 0x1cec.
+grub-install: info: adding a relocation entry for 0x1d2d.
+grub-install: info: adding a relocation entry for 0x1d63.
+grub-install: info: adding a relocation entry for 0x1d81.
+grub-install: info: adding a relocation entry for 0x1d99.
+grub-install: info: adding a relocation entry for 0x1dbf.
+grub-install: info: adding a relocation entry for 0x1dc9.
+grub-install: info: adding a relocation entry for 0x1df9.
+grub-install: info: adding a relocation entry for 0x1e24.
+grub-install: info: adding a relocation entry for 0x1e41.
+grub-install: info: adding a relocation entry for 0x1e59.
+grub-install: info: adding a relocation entry for 0x1e6a.
+grub-install: info: adding a relocation entry for 0x1e74.
+grub-install: info: adding a relocation entry for 0x1e81.
+grub-install: info: adding a relocation entry for 0x1e8d.
+grub-install: info: adding a relocation entry for 0x1ea9.
+grub-install: info: adding a relocation entry for 0x1eb6.
+grub-install: info: adding a relocation entry for 0x1ec7.
+grub-install: info: adding a relocation entry for 0x1eec.
+grub-install: info: adding a relocation entry for 0x1efe.
+grub-install: info: adding a relocation entry for 0x1f0f.
+grub-install: info: adding a relocation entry for 0x1f24.
+grub-install: info: adding a relocation entry for 0x1f4b.
+grub-install: info: adding a relocation entry for 0x1f59.
+grub-install: info: adding a relocation entry for 0x1f78.
+grub-install: info: adding a relocation entry for 0x1f8a.
+grub-install: info: adding a relocation entry for 0x1fad.
+grub-install: info: adding a relocation entry for 0x1fc9.
+grub-install: info: adding a relocation entry for 0x1fe1.
+grub-install: info: adding a relocation entry for 0x1ffb.
+grub-install: info: adding a relocation entry for 0x2005.
+grub-install: info: writing 224 bytes of a fixup block starting at 0x1000.
+grub-install: info: adding a relocation entry for 0x205c.
+grub-install: info: adding a relocation entry for 0x2066.
+grub-install: info: adding a relocation entry for 0x2078.
+grub-install: info: adding a relocation entry for 0x20b7.
+grub-install: info: adding a relocation entry for 0x20e4.
+grub-install: info: adding a relocation entry for 0x211b.
+grub-install: info: adding a relocation entry for 0x2127.
+grub-install: info: adding a relocation entry for 0x21a0.
+grub-install: info: adding a relocation entry for 0x21cf.
+grub-install: info: adding a relocation entry for 0x21ee.
+grub-install: info: adding a relocation entry for 0x2201.
+grub-install: info: adding a relocation entry for 0x221f.
+grub-install: info: adding a relocation entry for 0x223c.
+grub-install: info: adding a relocation entry for 0x22d3.
+grub-install: info: adding a relocation entry for 0x22ea.
+grub-install: info: adding a relocation entry for 0x235c.
+grub-install: info: adding a relocation entry for 0x2366.
+grub-install: info: adding a relocation entry for 0x237b.
+grub-install: info: adding a relocation entry for 0x23d4.
+grub-install: info: adding a relocation entry for 0x23e2.
+grub-install: info: adding a relocation entry for 0x23f5.
+grub-install: info: adding a relocation entry for 0x240e.
+grub-install: info: adding a relocation entry for 0x2423.
+grub-install: info: adding a relocation entry for 0x2436.
+grub-install: info: adding a relocation entry for 0x244d.
+grub-install: info: adding a relocation entry for 0x2462.
+grub-install: info: adding a relocation entry for 0x2474.
+grub-install: info: adding a relocation entry for 0x2483.
+grub-install: info: adding a relocation entry for 0x249c.
+grub-install: info: adding a relocation entry for 0x24b4.
+grub-install: info: adding a relocation entry for 0x24c9.
+grub-install: info: adding a relocation entry for 0x24de.
+grub-install: info: adding a relocation entry for 0x24f2.
+grub-install: info: adding a relocation entry for 0x2504.
+grub-install: info: adding a relocation entry for 0x251e.
+grub-install: info: adding a relocation entry for 0x2534.
+grub-install: info: adding a relocation entry for 0x2547.
+grub-install: info: adding a relocation entry for 0x2576.
+grub-install: info: adding a relocation entry for 0x25a1.
+grub-install: info: adding a relocation entry for 0x25be.
+grub-install: info: adding a relocation entry for 0x25d3.
+grub-install: info: adding a relocation entry for 0x25ee.
+grub-install: info: adding a relocation entry for 0x2605.
+grub-install: info: adding a relocation entry for 0x261c.
+grub-install: info: adding a relocation entry for 0x2637.
+grub-install: info: adding a relocation entry for 0x264e.
+grub-install: info: adding a relocation entry for 0x2672.
+grub-install: info: adding a relocation entry for 0x2689.
+grub-install: info: adding a relocation entry for 0x26be.
+grub-install: info: adding a relocation entry for 0x270c.
+grub-install: info: adding a relocation entry for 0x2788.
+grub-install: info: adding a relocation entry for 0x27ab.
+grub-install: info: adding a relocation entry for 0x27cf.
+grub-install: info: adding a relocation entry for 0x27e9.
+grub-install: info: adding a relocation entry for 0x27f8.
+grub-install: info: adding a relocation entry for 0x2815.
+grub-install: info: adding a relocation entry for 0x282b.
+grub-install: info: adding a relocation entry for 0x287e.
+grub-install: info: adding a relocation entry for 0x2897.
+grub-install: info: adding a relocation entry for 0x28a1.
+grub-install: info: adding a relocation entry for 0x28b6.
+grub-install: info: adding a relocation entry for 0x28e3.
+grub-install: info: adding a relocation entry for 0x28f5.
+grub-install: info: adding a relocation entry for 0x2902.
+grub-install: info: adding a relocation entry for 0x2913.
+grub-install: info: adding a relocation entry for 0x292c.
+grub-install: info: adding a relocation entry for 0x296b.
+grub-install: info: adding a relocation entry for 0x297b.
+grub-install: info: adding a relocation entry for 0x2993.
+grub-install: info: adding a relocation entry for 0x29b9.
+grub-install: info: adding a relocation entry for 0x29c6.
+grub-install: info: adding a relocation entry for 0x2a0e.
+grub-install: info: adding a relocation entry for 0x2a88.
+grub-install: info: adding a relocation entry for 0x2a94.
+grub-install: info: adding a relocation entry for 0x2a9e.
+grub-install: info: adding a relocation entry for 0x2aaa.
+grub-install: info: adding a relocation entry for 0x2ab6.
+grub-install: info: adding a relocation entry for 0x2ad4.
+grub-install: info: adding a relocation entry for 0x2ae1.
+grub-install: info: adding a relocation entry for 0x2aef.
+grub-install: info: adding a relocation entry for 0x2b04.
+grub-install: info: adding a relocation entry for 0x2b1c.
+grub-install: info: adding a relocation entry for 0x2b2c.
+grub-install: info: adding a relocation entry for 0x2b47.
+grub-install: info: adding a relocation entry for 0x2b6b.
+grub-install: info: adding a relocation entry for 0x2b85.
+grub-install: info: adding a relocation entry for 0x2b92.
+grub-install: info: adding a relocation entry for 0x2bbb.
+grub-install: info: adding a relocation entry for 0x2be5.
+grub-install: info: adding a relocation entry for 0x2c49.
+grub-install: info: adding a relocation entry for 0x2c5c.
+grub-install: info: adding a relocation entry for 0x2ca6.
+grub-install: info: adding a relocation entry for 0x2cc3.
+grub-install: info: adding a relocation entry for 0x2d13.
+grub-install: info: adding a relocation entry for 0x2d57.
+grub-install: info: adding a relocation entry for 0x2d76.
+grub-install: info: adding a relocation entry for 0x2dc5.
+grub-install: info: adding a relocation entry for 0x2de8.
+grub-install: info: adding a relocation entry for 0x2e16.
+grub-install: info: adding a relocation entry for 0x2e25.
+grub-install: info: adding a relocation entry for 0x2e32.
+grub-install: info: adding a relocation entry for 0x2e45.
+grub-install: info: adding a relocation entry for 0x2e52.
+grub-install: info: adding a relocation entry for 0x2e63.
+grub-install: info: adding a relocation entry for 0x2e76.
+grub-install: info: adding a relocation entry for 0x2e88.
+grub-install: info: adding a relocation entry for 0x2e9a.
+grub-install: info: adding a relocation entry for 0x2ec0.
+grub-install: info: adding a relocation entry for 0x2ee2.
+grub-install: info: adding a relocation entry for 0x2f1c.
+grub-install: info: adding a relocation entry for 0x2f46.
+grub-install: info: adding a relocation entry for 0x2f7c.
+grub-install: info: adding a relocation entry for 0x2f8c.
+grub-install: info: adding a relocation entry for 0x2f96.
+grub-install: info: adding a relocation entry for 0x2fa0.
+grub-install: info: adding a relocation entry for 0x2faa.
+grub-install: info: adding a relocation entry for 0x2fb7.
+grub-install: info: adding a relocation entry for 0x2fd2.
+grub-install: info: adding a relocation entry for 0x2fe5.
+grub-install: info: adding a relocation entry for 0x2ff6.
+grub-install: info: adding a relocation entry for 0x3007.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 256 bytes of a fixup block starting at 0x2000.
+grub-install: info: adding a relocation entry for 0x3014.
+grub-install: info: adding a relocation entry for 0x3023.
+grub-install: info: adding a relocation entry for 0x302e.
+grub-install: info: adding a relocation entry for 0x303d.
+grub-install: info: adding a relocation entry for 0x3047.
+grub-install: info: adding a relocation entry for 0x3051.
+grub-install: info: adding a relocation entry for 0x305e.
+grub-install: info: adding a relocation entry for 0x306f.
+grub-install: info: adding a relocation entry for 0x3079.
+grub-install: info: adding a relocation entry for 0x3088.
+grub-install: info: adding a relocation entry for 0x3097.
+grub-install: info: adding a relocation entry for 0x30ac.
+grub-install: info: adding a relocation entry for 0x30b9.
+grub-install: info: adding a relocation entry for 0x30c6.
+grub-install: info: adding a relocation entry for 0x30e4.
+grub-install: info: adding a relocation entry for 0x30ee.
+grub-install: info: adding a relocation entry for 0x30ff.
+grub-install: info: adding a relocation entry for 0x3110.
+grub-install: info: adding a relocation entry for 0x311c.
+grub-install: info: adding a relocation entry for 0x3134.
+grub-install: info: adding a relocation entry for 0x3140.
+grub-install: info: adding a relocation entry for 0x3153.
+grub-install: info: adding a relocation entry for 0x3163.
+grub-install: info: adding a relocation entry for 0x3170.
+grub-install: info: adding a relocation entry for 0x3181.
+grub-install: info: adding a relocation entry for 0x3193.
+grub-install: info: adding a relocation entry for 0x31a5.
+grub-install: info: adding a relocation entry for 0x31c1.
+grub-install: info: adding a relocation entry for 0x31cb.
+grub-install: info: adding a relocation entry for 0x31f9.
+grub-install: info: adding a relocation entry for 0x3212.
+grub-install: info: adding a relocation entry for 0x323c.
+grub-install: info: adding a relocation entry for 0x3254.
+grub-install: info: adding a relocation entry for 0x32a5.
+grub-install: info: adding a relocation entry for 0x32b1.
+grub-install: info: adding a relocation entry for 0x3317.
+grub-install: info: adding a relocation entry for 0x3452.
+grub-install: info: adding a relocation entry for 0x346e.
+grub-install: info: adding a relocation entry for 0x3478.
+grub-install: info: adding a relocation entry for 0x348a.
+grub-install: info: adding a relocation entry for 0x34aa.
+grub-install: info: adding a relocation entry for 0x34c2.
+grub-install: info: adding a relocation entry for 0x34dd.
+grub-install: info: adding a relocation entry for 0x34f8.
+grub-install: info: adding a relocation entry for 0x363a.
+grub-install: info: adding a relocation entry for 0x3652.
+grub-install: info: adding a relocation entry for 0x3669.
+grub-install: info: adding a relocation entry for 0x3678.
+grub-install: info: adding a relocation entry for 0x3698.
+grub-install: info: adding a relocation entry for 0x36a9.
+grub-install: info: adding a relocation entry for 0x36b7.
+grub-install: info: adding a relocation entry for 0x36ed.
+grub-install: info: adding a relocation entry for 0x3711.
+grub-install: info: adding a relocation entry for 0x3723.
+grub-install: info: adding a relocation entry for 0x3743.
+grub-install: info: adding a relocation entry for 0x3752.
+grub-install: info: adding a relocation entry for 0x376a.
+grub-install: info: adding a relocation entry for 0x377a.
+grub-install: info: adding a relocation entry for 0x3788.
+grub-install: info: adding a relocation entry for 0x379c.
+grub-install: info: adding a relocation entry for 0x37b0.
+grub-install: info: adding a relocation entry for 0x37c5.
+grub-install: info: adding a relocation entry for 0x37d6.
+grub-install: info: adding a relocation entry for 0x37ff.
+grub-install: info: adding a relocation entry for 0x380a.
+grub-install: info: adding a relocation entry for 0x381e.
+grub-install: info: adding a relocation entry for 0x382c.
+grub-install: info: adding a relocation entry for 0x3841.
+grub-install: info: adding a relocation entry for 0x3854.
+grub-install: info: adding a relocation entry for 0x38af.
+grub-install: info: adding a relocation entry for 0x38c4.
+grub-install: info: adding a relocation entry for 0x38d5.
+grub-install: info: adding a relocation entry for 0x38e2.
+grub-install: info: adding a relocation entry for 0x3909.
+grub-install: info: adding a relocation entry for 0x392f.
+grub-install: info: adding a relocation entry for 0x3940.
+grub-install: info: adding a relocation entry for 0x394f.
+grub-install: info: adding a relocation entry for 0x395b.
+grub-install: info: adding a relocation entry for 0x396b.
+grub-install: info: adding a relocation entry for 0x3975.
+grub-install: info: adding a relocation entry for 0x3981.
+grub-install: info: adding a relocation entry for 0x3990.
+grub-install: info: adding a relocation entry for 0x399a.
+grub-install: info: adding a relocation entry for 0x39a4.
+grub-install: info: adding a relocation entry for 0x39b2.
+grub-install: info: adding a relocation entry for 0x39c2.
+grub-install: info: adding a relocation entry for 0x39d2.
+grub-install: info: adding a relocation entry for 0x39dc.
+grub-install: info: adding a relocation entry for 0x39e8.
+grub-install: info: adding a relocation entry for 0x39f7.
+grub-install: info: adding a relocation entry for 0x3a01.
+grub-install: info: adding a relocation entry for 0x3a0c.
+grub-install: info: adding a relocation entry for 0x3a18.
+grub-install: info: adding a relocation entry for 0x3a2b.
+grub-install: info: adding a relocation entry for 0x3a35.
+grub-install: info: adding a relocation entry for 0x3a41.
+grub-install: info: adding a relocation entry for 0x3a4d.
+grub-install: info: adding a relocation entry for 0x3a5c.
+grub-install: info: adding a relocation entry for 0x3a79.
+grub-install: info: adding a relocation entry for 0x3a86.
+grub-install: info: adding a relocation entry for 0x3aea.
+grub-install: info: adding a relocation entry for 0x3b30.
+grub-install: info: adding a relocation entry for 0x3b49.
+grub-install: info: adding a relocation entry for 0x3b53.
+grub-install: info: adding a relocation entry for 0x3b5d.
+grub-install: info: adding a relocation entry for 0x3b69.
+grub-install: info: adding a relocation entry for 0x3b75.
+grub-install: info: adding a relocation entry for 0x3b8b.
+grub-install: info: adding a relocation entry for 0x3b9a.
+grub-install: info: adding a relocation entry for 0x3bc9.
+grub-install: info: adding a relocation entry for 0x3bd5.
+grub-install: info: adding a relocation entry for 0x3bea.
+grub-install: info: adding a relocation entry for 0x3bf6.
+grub-install: info: adding a relocation entry for 0x3c05.
+grub-install: info: adding a relocation entry for 0x3c2b.
+grub-install: info: adding a relocation entry for 0x3c70.
+grub-install: info: adding a relocation entry for 0x3cb9.
+grub-install: info: adding a relocation entry for 0x3cc5.
+grub-install: info: adding a relocation entry for 0x3cde.
+grub-install: info: adding a relocation entry for 0x3cea.
+grub-install: info: adding a relocation entry for 0x3de9.
+grub-install: info: adding a relocation entry for 0x3e00.
+grub-install: info: adding a relocation entry for 0x3e11.
+grub-install: info: adding a relocation entry for 0x3e2a.
+grub-install: info: adding a relocation entry for 0x3e3f.
+grub-install: info: adding a relocation entry for 0x3e5f.
+grub-install: info: adding a relocation entry for 0x3e7f.
+grub-install: info: adding a relocation entry for 0x3ece.
+grub-install: info: adding a relocation entry for 0x3eda.
+grub-install: info: adding a relocation entry for 0x3fb4.
+grub-install: info: adding a relocation entry for 0x3fc1.
+grub-install: info: adding a relocation entry for 0x4022.
+grub-install: info: writing 272 bytes of a fixup block starting at 0x3000.
+grub-install: info: adding a relocation entry for 0x408b.
+grub-install: info: adding a relocation entry for 0x40d7.
+grub-install: info: adding a relocation entry for 0x40f0.
+grub-install: info: adding a relocation entry for 0x4105.
+grub-install: info: adding a relocation entry for 0x4130.
+grub-install: info: adding a relocation entry for 0x4152.
+grub-install: info: adding a relocation entry for 0x4165.
+grub-install: info: adding a relocation entry for 0x417d.
+grub-install: info: adding a relocation entry for 0x418c.
+grub-install: info: adding a relocation entry for 0x419d.
+grub-install: info: adding a relocation entry for 0x41c2.
+grub-install: info: adding a relocation entry for 0x420a.
+grub-install: info: adding a relocation entry for 0x4223.
+grub-install: info: adding a relocation entry for 0x423e.
+grub-install: info: adding a relocation entry for 0x42cd.
+grub-install: info: adding a relocation entry for 0x42dc.
+grub-install: info: adding a relocation entry for 0x42ed.
+grub-install: info: adding a relocation entry for 0x42f7.
+grub-install: info: adding a relocation entry for 0x4304.
+grub-install: info: adding a relocation entry for 0x430e.
+grub-install: info: adding a relocation entry for 0x4328.
+grub-install: info: adding a relocation entry for 0x4332.
+grub-install: info: adding a relocation entry for 0x4351.
+grub-install: info: adding a relocation entry for 0x435b.
+grub-install: info: adding a relocation entry for 0x4367.
+grub-install: info: adding a relocation entry for 0x4371.
+grub-install: info: adding a relocation entry for 0x437d.
+grub-install: info: adding a relocation entry for 0x4394.
+grub-install: info: adding a relocation entry for 0x43a3.
+grub-install: info: adding a relocation entry for 0x43b9.
+grub-install: info: adding a relocation entry for 0x43d4.
+grub-install: info: adding a relocation entry for 0x43ec.
+grub-install: info: adding a relocation entry for 0x440f.
+grub-install: info: adding a relocation entry for 0x4420.
+grub-install: info: adding a relocation entry for 0x4431.
+grub-install: info: adding a relocation entry for 0x4441.
+grub-install: info: adding a relocation entry for 0x4457.
+grub-install: info: adding a relocation entry for 0x4464.
+grub-install: info: adding a relocation entry for 0x4470.
+grub-install: info: adding a relocation entry for 0x4485.
+grub-install: info: adding a relocation entry for 0x4497.
+grub-install: info: adding a relocation entry for 0x44a1.
+grub-install: info: adding a relocation entry for 0x44ad.
+grub-install: info: adding a relocation entry for 0x44be.
+grub-install: info: adding a relocation entry for 0x44c9.
+grub-install: info: adding a relocation entry for 0x44d8.
+grub-install: info: adding a relocation entry for 0x44f2.
+grub-install: info: adding a relocation entry for 0x4503.
+grub-install: info: adding a relocation entry for 0x4521.
+grub-install: info: adding a relocation entry for 0x452d.
+grub-install: info: adding a relocation entry for 0x4541.
+grub-install: info: adding a relocation entry for 0x4555.
+grub-install: info: adding a relocation entry for 0x4566.
+grub-install: info: adding a relocation entry for 0x4573.
+grub-install: info: adding a relocation entry for 0x458d.
+grub-install: info: adding a relocation entry for 0x4597.
+grub-install: info: adding a relocation entry for 0x45b3.
+grub-install: info: adding a relocation entry for 0x45bf.
+grub-install: info: adding a relocation entry for 0x45de.
+grub-install: info: adding a relocation entry for 0x45f8.
+grub-install: info: adding a relocation entry for 0x4609.
+grub-install: info: adding a relocation entry for 0x461f.
+grub-install: info: adding a relocation entry for 0x4638.
+grub-install: info: adding a relocation entry for 0x4642.
+grub-install: info: adding a relocation entry for 0x464c.
+grub-install: info: adding a relocation entry for 0x4656.
+grub-install: info: adding a relocation entry for 0x4660.
+grub-install: info: adding a relocation entry for 0x4678.
+grub-install: info: adding a relocation entry for 0x4685.
+grub-install: info: adding a relocation entry for 0x468f.
+grub-install: info: adding a relocation entry for 0x4699.
+grub-install: info: adding a relocation entry for 0x46a3.
+grub-install: info: adding a relocation entry for 0x46b2.
+grub-install: info: adding a relocation entry for 0x46bc.
+grub-install: info: adding a relocation entry for 0x46c6.
+grub-install: info: adding a relocation entry for 0x46d0.
+grub-install: info: adding a relocation entry for 0x46e2.
+grub-install: info: adding a relocation entry for 0x46ed.
+grub-install: info: adding a relocation entry for 0x46f7.
+grub-install: info: adding a relocation entry for 0x4701.
+grub-install: info: adding a relocation entry for 0x4713.
+grub-install: info: adding a relocation entry for 0x473a.
+grub-install: info: adding a relocation entry for 0x4751.
+grub-install: info: adding a relocation entry for 0x4766.
+grub-install: info: adding a relocation entry for 0x4772.
+grub-install: info: adding a relocation entry for 0x4785.
+grub-install: info: adding a relocation entry for 0x47c8.
+grub-install: info: adding a relocation entry for 0x47d2.
+grub-install: info: adding a relocation entry for 0x47eb.
+grub-install: info: adding a relocation entry for 0x47f5.
+grub-install: info: adding a relocation entry for 0x4806.
+grub-install: info: adding a relocation entry for 0x481b.
+grub-install: info: adding a relocation entry for 0x483a.
+grub-install: info: adding a relocation entry for 0x484e.
+grub-install: info: adding a relocation entry for 0x4860.
+grub-install: info: adding a relocation entry for 0x4888.
+grub-install: info: adding a relocation entry for 0x48a9.
+grub-install: info: adding a relocation entry for 0x48c1.
+grub-install: info: adding a relocation entry for 0x48d6.
+grub-install: info: adding a relocation entry for 0x48e1.
+grub-install: info: adding a relocation entry for 0x4914.
+grub-install: info: adding a relocation entry for 0x492c.
+grub-install: info: adding a relocation entry for 0x4946.
+grub-install: info: adding a relocation entry for 0x4958.
+grub-install: info: adding a relocation entry for 0x4965.
+grub-install: info: adding a relocation entry for 0x4974.
+grub-install: info: adding a relocation entry for 0x4985.
+grub-install: info: adding a relocation entry for 0x49c4.
+grub-install: info: adding a relocation entry for 0x49f7.
+grub-install: info: adding a relocation entry for 0x4a1c.
+grub-install: info: adding a relocation entry for 0x4a75.
+grub-install: info: adding a relocation entry for 0x4ad3.
+grub-install: info: adding a relocation entry for 0x4b04.
+grub-install: info: adding a relocation entry for 0x4b44.
+grub-install: info: adding a relocation entry for 0x4b76.
+grub-install: info: adding a relocation entry for 0x4b8a.
+grub-install: info: adding a relocation entry for 0x4ba1.
+grub-install: info: adding a relocation entry for 0x4bf0.
+grub-install: info: adding a relocation entry for 0x4c0d.
+grub-install: info: adding a relocation entry for 0x4c27.
+grub-install: info: adding a relocation entry for 0x4c3d.
+grub-install: info: adding a relocation entry for 0x4ca9.
+grub-install: info: adding a relocation entry for 0x4cc6.
+grub-install: info: adding a relocation entry for 0x4cd5.
+grub-install: info: adding a relocation entry for 0x4ce9.
+grub-install: info: adding a relocation entry for 0x4d03.
+grub-install: info: adding a relocation entry for 0x4d51.
+grub-install: info: adding a relocation entry for 0x4d9d.
+grub-install: info: adding a relocation entry for 0x4da9.
+grub-install: info: adding a relocation entry for 0x4db6.
+grub-install: info: adding a relocation entry for 0x4dc0.
+grub-install: info: adding a relocation entry for 0x4dd1.
+grub-install: info: adding a relocation entry for 0x4dde.
+grub-install: info: adding a relocation entry for 0x4def.
+grub-install: info: adding a relocation entry for 0x4e08.
+grub-install: info: adding a relocation entry for 0x4e5a.
+grub-install: info: adding a relocation entry for 0x4e65.
+grub-install: info: adding a relocation entry for 0x4e70.
+grub-install: info: adding a relocation entry for 0x4ea2.
+grub-install: info: adding a relocation entry for 0x4eb7.
+grub-install: info: adding a relocation entry for 0x4ec1.
+grub-install: info: adding a relocation entry for 0x4eec.
+grub-install: info: adding a relocation entry for 0x4ef6.
+grub-install: info: adding a relocation entry for 0x4f05.
+grub-install: info: adding a relocation entry for 0x4f17.
+grub-install: info: adding a relocation entry for 0x4f3b.
+grub-install: info: adding a relocation entry for 0x4f45.
+grub-install: info: adding a relocation entry for 0x4f51.
+grub-install: info: adding a relocation entry for 0x4f6c.
+grub-install: info: adding a relocation entry for 0x4f93.
+grub-install: info: adding a relocation entry for 0x4f9d.
+grub-install: info: adding a relocation entry for 0x4fae.
+grub-install: info: adding a relocation entry for 0x4fbf.
+grub-install: info: adding a relocation entry for 0x4fd7.
+grub-install: info: adding a relocation entry for 0x502d.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 320 bytes of a fixup block starting at 0x4000.
+grub-install: info: adding a relocation entry for 0x5055.
+grub-install: info: adding a relocation entry for 0x506a.
+grub-install: info: adding a relocation entry for 0x507e.
+grub-install: info: adding a relocation entry for 0x509d.
+grub-install: info: adding a relocation entry for 0x50a7.
+grub-install: info: adding a relocation entry for 0x50d7.
+grub-install: info: adding a relocation entry for 0x50f0.
+grub-install: info: adding a relocation entry for 0x5103.
+grub-install: info: adding a relocation entry for 0x5124.
+grub-install: info: adding a relocation entry for 0x5139.
+grub-install: info: adding a relocation entry for 0x5148.
+grub-install: info: adding a relocation entry for 0x5156.
+grub-install: info: adding a relocation entry for 0x5162.
+grub-install: info: adding a relocation entry for 0x5180.
+grub-install: info: adding a relocation entry for 0x5191.
+grub-install: info: adding a relocation entry for 0x51a8.
+grub-install: info: adding a relocation entry for 0x51b4.
+grub-install: info: adding a relocation entry for 0x51c7.
+grub-install: info: adding a relocation entry for 0x51d6.
+grub-install: info: adding a relocation entry for 0x51e0.
+grub-install: info: adding a relocation entry for 0x51ef.
+grub-install: info: adding a relocation entry for 0x51f9.
+grub-install: info: adding a relocation entry for 0x5208.
+grub-install: info: adding a relocation entry for 0x5217.
+grub-install: info: adding a relocation entry for 0x522a.
+grub-install: info: adding a relocation entry for 0x523b.
+grub-install: info: adding a relocation entry for 0x52bc.
+grub-install: info: adding a relocation entry for 0x52cd.
+grub-install: info: adding a relocation entry for 0x531b.
+grub-install: info: adding a relocation entry for 0x532c.
+grub-install: info: adding a relocation entry for 0x533c.
+grub-install: info: adding a relocation entry for 0x534a.
+grub-install: info: adding a relocation entry for 0x5357.
+grub-install: info: adding a relocation entry for 0x5361.
+grub-install: info: adding a relocation entry for 0x5370.
+grub-install: info: adding a relocation entry for 0x537a.
+grub-install: info: adding a relocation entry for 0x5387.
+grub-install: info: adding a relocation entry for 0x53c8.
+grub-install: info: adding a relocation entry for 0x5408.
+grub-install: info: adding a relocation entry for 0x545d.
+grub-install: info: adding a relocation entry for 0x547c.
+grub-install: info: adding a relocation entry for 0x54c4.
+grub-install: info: adding a relocation entry for 0x5589.
+grub-install: info: adding a relocation entry for 0x55a3.
+grub-install: info: adding a relocation entry for 0x55ec.
+grub-install: info: adding a relocation entry for 0x55f6.
+grub-install: info: adding a relocation entry for 0x562a.
+grub-install: info: adding a relocation entry for 0x5699.
+grub-install: info: adding a relocation entry for 0x56b3.
+grub-install: info: adding a relocation entry for 0x56c5.
+grub-install: info: adding a relocation entry for 0x56d7.
+grub-install: info: adding a relocation entry for 0x570c.
+grub-install: info: adding a relocation entry for 0x5724.
+grub-install: info: adding a relocation entry for 0x572f.
+grub-install: info: adding a relocation entry for 0x5772.
+grub-install: info: adding a relocation entry for 0x57a4.
+grub-install: info: adding a relocation entry for 0x57e1.
+grub-install: info: adding a relocation entry for 0x5836.
+grub-install: info: adding a relocation entry for 0x5840.
+grub-install: info: adding a relocation entry for 0x586a.
+grub-install: info: adding a relocation entry for 0x587b.
+grub-install: info: adding a relocation entry for 0x58cc.
+grub-install: info: adding a relocation entry for 0x58e6.
+grub-install: info: adding a relocation entry for 0x58fa.
+grub-install: info: adding a relocation entry for 0x5932.
+grub-install: info: adding a relocation entry for 0x593c.
+grub-install: info: adding a relocation entry for 0x5948.
+grub-install: info: adding a relocation entry for 0x5963.
+grub-install: info: adding a relocation entry for 0x5978.
+grub-install: info: adding a relocation entry for 0x59a6.
+grub-install: info: adding a relocation entry for 0x59b7.
+grub-install: info: adding a relocation entry for 0x59c8.
+grub-install: info: adding a relocation entry for 0x59e1.
+grub-install: info: adding a relocation entry for 0x5a08.
+grub-install: info: adding a relocation entry for 0x5a19.
+grub-install: info: adding a relocation entry for 0x5a2f.
+grub-install: info: adding a relocation entry for 0x5a51.
+grub-install: info: adding a relocation entry for 0x5a5d.
+grub-install: info: adding a relocation entry for 0x5a6c.
+grub-install: info: adding a relocation entry for 0x5a76.
+grub-install: info: adding a relocation entry for 0x5a83.
+grub-install: info: adding a relocation entry for 0x5a90.
+grub-install: info: adding a relocation entry for 0x5aa6.
+grub-install: info: adding a relocation entry for 0x5ab5.
+grub-install: info: adding a relocation entry for 0x5ad1.
+grub-install: info: adding a relocation entry for 0x5adb.
+grub-install: info: adding a relocation entry for 0x5af4.
+grub-install: info: adding a relocation entry for 0x5b0d.
+grub-install: info: adding a relocation entry for 0x5b1e.
+grub-install: info: adding a relocation entry for 0x5b2b.
+grub-install: info: adding a relocation entry for 0x5b3c.
+grub-install: info: adding a relocation entry for 0x5b4b.
+grub-install: info: adding a relocation entry for 0x5b60.
+grub-install: info: adding a relocation entry for 0x5b75.
+grub-install: info: adding a relocation entry for 0x5b82.
+grub-install: info: adding a relocation entry for 0x5b9b.
+grub-install: info: adding a relocation entry for 0x5bba.
+grub-install: info: adding a relocation entry for 0x5be1.
+grub-install: info: adding a relocation entry for 0x5bf2.
+grub-install: info: adding a relocation entry for 0x5c02.
+grub-install: info: adding a relocation entry for 0x5c20.
+grub-install: info: adding a relocation entry for 0x5c8d.
+grub-install: info: adding a relocation entry for 0x5cd0.
+grub-install: info: adding a relocation entry for 0x5ce3.
+grub-install: info: adding a relocation entry for 0x5d2d.
+grub-install: info: adding a relocation entry for 0x5d40.
+grub-install: info: adding a relocation entry for 0x5dc4.
+grub-install: info: adding a relocation entry for 0x5dd5.
+grub-install: info: adding a relocation entry for 0x5e4b.
+grub-install: info: adding a relocation entry for 0x5e8f.
+grub-install: info: adding a relocation entry for 0x5ea2.
+grub-install: info: adding a relocation entry for 0x5f37.
+grub-install: info: adding a relocation entry for 0x5f85.
+grub-install: info: adding a relocation entry for 0x5f94.
+grub-install: info: adding a relocation entry for 0x5fa3.
+grub-install: info: adding a relocation entry for 0x5fad.
+grub-install: info: adding a relocation entry for 0x5fd4.
+grub-install: info: adding a relocation entry for 0x6022.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 248 bytes of a fixup block starting at 0x5000.
+grub-install: info: adding a relocation entry for 0x6033.
+grub-install: info: adding a relocation entry for 0x605f.
+grub-install: info: adding a relocation entry for 0x60bc.
+grub-install: info: adding a relocation entry for 0x60e7.
+grub-install: info: adding a relocation entry for 0x60f5.
+grub-install: info: adding a relocation entry for 0x60ff.
+grub-install: info: adding a relocation entry for 0x610e.
+grub-install: info: adding a relocation entry for 0x6120.
+grub-install: info: adding a relocation entry for 0x612a.
+grub-install: info: adding a relocation entry for 0x6139.
+grub-install: info: adding a relocation entry for 0x614b.
+grub-install: info: adding a relocation entry for 0x6155.
+grub-install: info: adding a relocation entry for 0x6164.
+grub-install: info: adding a relocation entry for 0x6173.
+grub-install: info: adding a relocation entry for 0x618b.
+grub-install: info: adding a relocation entry for 0x619c.
+grub-install: info: adding a relocation entry for 0x61da.
+grub-install: info: adding a relocation entry for 0x6203.
+grub-install: info: adding a relocation entry for 0x621e.
+grub-install: info: adding a relocation entry for 0x6241.
+grub-install: info: adding a relocation entry for 0x6252.
+grub-install: info: adding a relocation entry for 0x6260.
+grub-install: info: adding a relocation entry for 0x627a.
+grub-install: info: adding a relocation entry for 0x6294.
+grub-install: info: adding a relocation entry for 0x62ab.
+grub-install: info: adding a relocation entry for 0x62c0.
+grub-install: info: adding a relocation entry for 0x62d1.
+grub-install: info: adding a relocation entry for 0x62e9.
+grub-install: info: adding a relocation entry for 0x62fd.
+grub-install: info: adding a relocation entry for 0x6321.
+grub-install: info: adding a relocation entry for 0x6330.
+grub-install: info: adding a relocation entry for 0x6345.
+grub-install: info: adding a relocation entry for 0x6362.
+grub-install: info: adding a relocation entry for 0x636c.
+grub-install: info: adding a relocation entry for 0x637d.
+grub-install: info: adding a relocation entry for 0x6396.
+grub-install: info: adding a relocation entry for 0x63a0.
+grub-install: info: adding a relocation entry for 0x63b7.
+grub-install: info: adding a relocation entry for 0x63c9.
+grub-install: info: adding a relocation entry for 0x63e1.
+grub-install: info: adding a relocation entry for 0x63f4.
+grub-install: info: adding a relocation entry for 0x6405.
+grub-install: info: adding a relocation entry for 0x641d.
+grub-install: info: adding a relocation entry for 0x6427.
+grub-install: info: adding a relocation entry for 0x6441.
+grub-install: info: adding a relocation entry for 0x6481.
+grub-install: info: adding a relocation entry for 0x648d.
+grub-install: info: adding a relocation entry for 0x64c0.
+grub-install: info: adding a relocation entry for 0x64f6.
+grub-install: info: adding a relocation entry for 0x6519.
+grub-install: info: adding a relocation entry for 0x652f.
+grub-install: info: adding a relocation entry for 0x654b.
+grub-install: info: adding a relocation entry for 0x656f.
+grub-install: info: adding a relocation entry for 0x65c7.
+grub-install: info: adding a relocation entry for 0x65dd.
+grub-install: info: adding a relocation entry for 0x65ec.
+grub-install: info: adding a relocation entry for 0x661e.
+grub-install: info: adding a relocation entry for 0x6647.
+grub-install: info: adding a relocation entry for 0x6651.
+grub-install: info: adding a relocation entry for 0x667a.
+grub-install: info: adding a relocation entry for 0x66a0.
+grub-install: info: adding a relocation entry for 0x66bd.
+grub-install: info: adding a relocation entry for 0x6735.
+grub-install: info: adding a relocation entry for 0x674b.
+grub-install: info: adding a relocation entry for 0x6758.
+grub-install: info: adding a relocation entry for 0x6767.
+grub-install: info: adding a relocation entry for 0x678b.
+grub-install: info: adding a relocation entry for 0x67a1.
+grub-install: info: adding a relocation entry for 0x67ae.
+grub-install: info: adding a relocation entry for 0x67db.
+grub-install: info: adding a relocation entry for 0x6815.
+grub-install: info: adding a relocation entry for 0x682e.
+grub-install: info: adding a relocation entry for 0x6838.
+grub-install: info: adding a relocation entry for 0x684b.
+grub-install: info: adding a relocation entry for 0x685c.
+grub-install: info: adding a relocation entry for 0x6873.
+grub-install: info: adding a relocation entry for 0x687f.
+grub-install: info: adding a relocation entry for 0x688f.
+grub-install: info: adding a relocation entry for 0x689a.
+grub-install: info: adding a relocation entry for 0x68a5.
+grub-install: info: adding a relocation entry for 0x68b5.
+grub-install: info: adding a relocation entry for 0x68c0.
+grub-install: info: adding a relocation entry for 0x68cc.
+grub-install: info: adding a relocation entry for 0x68d7.
+grub-install: info: adding a relocation entry for 0x68e8.
+grub-install: info: adding a relocation entry for 0x68f1.
+grub-install: info: adding a relocation entry for 0x6909.
+grub-install: info: adding a relocation entry for 0x691b.
+grub-install: info: adding a relocation entry for 0x6925.
+grub-install: info: adding a relocation entry for 0x6939.
+grub-install: info: adding a relocation entry for 0x6947.
+grub-install: info: adding a relocation entry for 0x6956.
+grub-install: info: adding a relocation entry for 0x6960.
+grub-install: info: adding a relocation entry for 0x696c.
+grub-install: info: adding a relocation entry for 0x6979.
+grub-install: info: adding a relocation entry for 0x6986.
+grub-install: info: adding a relocation entry for 0x6991.
+grub-install: info: adding a relocation entry for 0x699b.
+grub-install: info: adding a relocation entry for 0x69ab.
+grub-install: info: adding a relocation entry for 0x69ba.
+grub-install: info: adding a relocation entry for 0x69c6.
+grub-install: info: adding a relocation entry for 0x69d3.
+grub-install: info: adding a relocation entry for 0x69f2.
+grub-install: info: adding a relocation entry for 0x6a08.
+grub-install: info: adding a relocation entry for 0x6a17.
+grub-install: info: adding a relocation entry for 0x6a2a.
+grub-install: info: adding a relocation entry for 0x6a50.
+grub-install: info: adding a relocation entry for 0x6a7e.
+grub-install: info: adding a relocation entry for 0x6a8f.
+grub-install: info: adding a relocation entry for 0x6ad1.
+grub-install: info: adding a relocation entry for 0x6b25.
+grub-install: info: adding a relocation entry for 0x6b34.
+grub-install: info: adding a relocation entry for 0x6b44.
+grub-install: info: adding a relocation entry for 0x6b54.
+grub-install: info: adding a relocation entry for 0x6b6b.
+grub-install: info: adding a relocation entry for 0x6b91.
+grub-install: info: adding a relocation entry for 0x6ba9.
+grub-install: info: adding a relocation entry for 0x6bbb.
+grub-install: info: adding a relocation entry for 0x6bd5.
+grub-install: info: adding a relocation entry for 0x6bff.
+grub-install: info: adding a relocation entry for 0x6c12.
+grub-install: info: adding a relocation entry for 0x6c43.
+grub-install: info: adding a relocation entry for 0x6c58.
+grub-install: info: adding a relocation entry for 0x6c62.
+grub-install: info: adding a relocation entry for 0x6c99.
+grub-install: info: adding a relocation entry for 0x6caa.
+grub-install: info: adding a relocation entry for 0x6cb4.
+grub-install: info: adding a relocation entry for 0x6cbe.
+grub-install: info: adding a relocation entry for 0x6ccf.
+grub-install: info: adding a relocation entry for 0x6ce2.
+grub-install: info: adding a relocation entry for 0x6cec.
+grub-install: info: adding a relocation entry for 0x6cf6.
+grub-install: info: adding a relocation entry for 0x6d07.
+grub-install: info: adding a relocation entry for 0x6d2a.
+grub-install: info: adding a relocation entry for 0x6d3c.
+grub-install: info: adding a relocation entry for 0x6d64.
+grub-install: info: adding a relocation entry for 0x6e5c.
+grub-install: info: adding a relocation entry for 0x6eba.
+grub-install: info: adding a relocation entry for 0x6eff.
+grub-install: info: adding a relocation entry for 0x6f0e.
+grub-install: info: adding a relocation entry for 0x6f20.
+grub-install: info: adding a relocation entry for 0x6f31.
+grub-install: info: adding a relocation entry for 0x6f58.
+grub-install: info: adding a relocation entry for 0x6f6c.
+grub-install: info: adding a relocation entry for 0x6f9a.
+grub-install: info: adding a relocation entry for 0x6fca.
+grub-install: info: adding a relocation entry for 0x6fdb.
+grub-install: info: adding a relocation entry for 0x700a.
+grub-install: info: writing 304 bytes of a fixup block starting at 0x6000.
+grub-install: info: adding a relocation entry for 0x7018.
+grub-install: info: adding a relocation entry for 0x7046.
+grub-install: info: adding a relocation entry for 0x7050.
+grub-install: info: adding a relocation entry for 0x7068.
+grub-install: info: adding a relocation entry for 0x7072.
+grub-install: info: adding a relocation entry for 0x7081.
+grub-install: info: adding a relocation entry for 0x7090.
+grub-install: info: adding a relocation entry for 0x709a.
+grub-install: info: adding a relocation entry for 0x70aa.
+grub-install: info: adding a relocation entry for 0x70bd.
+grub-install: info: adding a relocation entry for 0x70cf.
+grub-install: info: adding a relocation entry for 0x70d9.
+grub-install: info: adding a relocation entry for 0x70e8.
+grub-install: info: adding a relocation entry for 0x70f5.
+grub-install: info: adding a relocation entry for 0x7100.
+grub-install: info: adding a relocation entry for 0x711a.
+grub-install: info: adding a relocation entry for 0x712d.
+grub-install: info: adding a relocation entry for 0x7141.
+grub-install: info: adding a relocation entry for 0x7158.
+grub-install: info: adding a relocation entry for 0x7164.
+grub-install: info: adding a relocation entry for 0x7173.
+grub-install: info: adding a relocation entry for 0x717d.
+grub-install: info: adding a relocation entry for 0x718e.
+grub-install: info: adding a relocation entry for 0x719b.
+grub-install: info: adding a relocation entry for 0x71a9.
+grub-install: info: adding a relocation entry for 0x71bf.
+grub-install: info: adding a relocation entry for 0x71ca.
+grub-install: info: adding a relocation entry for 0x71d7.
+grub-install: info: adding a relocation entry for 0x71e1.
+grub-install: info: adding a relocation entry for 0x71f4.
+grub-install: info: adding a relocation entry for 0x71ff.
+grub-install: info: adding a relocation entry for 0x721d.
+grub-install: info: adding a relocation entry for 0x722e.
+grub-install: info: adding a relocation entry for 0x7246.
+grub-install: info: adding a relocation entry for 0x72c8.
+grub-install: info: adding a relocation entry for 0x72e8.
+grub-install: info: adding a relocation entry for 0x72f8.
+grub-install: info: adding a relocation entry for 0x7305.
+grub-install: info: adding a relocation entry for 0x7323.
+grub-install: info: adding a relocation entry for 0x7337.
+grub-install: info: adding a relocation entry for 0x735e.
+grub-install: info: adding a relocation entry for 0x739f.
+grub-install: info: adding a relocation entry for 0x73b2.
+grub-install: info: adding a relocation entry for 0x73be.
+grub-install: info: adding a relocation entry for 0x73d6.
+grub-install: info: adding a relocation entry for 0x73e9.
+grub-install: info: adding a relocation entry for 0x7412.
+grub-install: info: adding a relocation entry for 0x7420.
+grub-install: info: adding a relocation entry for 0x7457.
+grub-install: info: adding a relocation entry for 0x7461.
+grub-install: info: adding a relocation entry for 0x746b.
+grub-install: info: adding a relocation entry for 0x7477.
+grub-install: info: adding a relocation entry for 0x7486.
+grub-install: info: adding a relocation entry for 0x74a3.
+grub-install: info: adding a relocation entry for 0x74b2.
+grub-install: info: adding a relocation entry for 0x74c9.
+grub-install: info: adding a relocation entry for 0x7522.
+grub-install: info: adding a relocation entry for 0x752c.
+grub-install: info: adding a relocation entry for 0x7536.
+grub-install: info: adding a relocation entry for 0x754a.
+grub-install: info: adding a relocation entry for 0x7577.
+grub-install: info: adding a relocation entry for 0x7581.
+grub-install: info: adding a relocation entry for 0x758b.
+grub-install: info: adding a relocation entry for 0x75ab.
+grub-install: info: adding a relocation entry for 0x75b5.
+grub-install: info: adding a relocation entry for 0x75c1.
+grub-install: info: adding a relocation entry for 0x75cb.
+grub-install: info: adding a relocation entry for 0x75da.
+grub-install: info: adding a relocation entry for 0x75fd.
+grub-install: info: adding a relocation entry for 0x761c.
+grub-install: info: adding a relocation entry for 0x7644.
+grub-install: info: adding a relocation entry for 0x76aa.
+grub-install: info: adding a relocation entry for 0x76c2.
+grub-install: info: adding a relocation entry for 0x76dd.
+grub-install: info: adding a relocation entry for 0x7717.
+grub-install: info: adding a relocation entry for 0x7721.
+grub-install: info: adding a relocation entry for 0x7742.
+grub-install: info: adding a relocation entry for 0x7756.
+grub-install: info: adding a relocation entry for 0x7767.
+grub-install: info: adding a relocation entry for 0x7773.
+grub-install: info: adding a relocation entry for 0x778a.
+grub-install: info: adding a relocation entry for 0x7794.
+grub-install: info: adding a relocation entry for 0x77a3.
+grub-install: info: adding a relocation entry for 0x77b2.
+grub-install: info: adding a relocation entry for 0x77bc.
+grub-install: info: adding a relocation entry for 0x77cb.
+grub-install: info: adding a relocation entry for 0x77dc.
+grub-install: info: adding a relocation entry for 0x77e6.
+grub-install: info: adding a relocation entry for 0x77f2.
+grub-install: info: adding a relocation entry for 0x77fe.
+grub-install: info: adding a relocation entry for 0x780a.
+grub-install: info: adding a relocation entry for 0x781c.
+grub-install: info: adding a relocation entry for 0x7826.
+grub-install: info: adding a relocation entry for 0x7832.
+grub-install: info: adding a relocation entry for 0x7844.
+grub-install: info: adding a relocation entry for 0x7850.
+grub-install: info: adding a relocation entry for 0x785a.
+grub-install: info: adding a relocation entry for 0x7866.
+grub-install: info: adding a relocation entry for 0x7874.
+grub-install: info: adding a relocation entry for 0x787e.
+grub-install: info: adding a relocation entry for 0x7887.
+grub-install: info: adding a relocation entry for 0x7894.
+grub-install: info: adding a relocation entry for 0x78af.
+grub-install: info: adding a relocation entry for 0x78d9.
+grub-install: info: adding a relocation entry for 0x78ef.
+grub-install: info: adding a relocation entry for 0x7907.
+grub-install: info: adding a relocation entry for 0x7913.
+grub-install: info: adding a relocation entry for 0x7925.
+grub-install: info: adding a relocation entry for 0x793c.
+grub-install: info: adding a relocation entry for 0x7948.
+grub-install: info: adding a relocation entry for 0x796f.
+grub-install: info: adding a relocation entry for 0x79d6.
+grub-install: info: adding a relocation entry for 0x79e4.
+grub-install: info: adding a relocation entry for 0x7ad3.
+grub-install: info: adding a relocation entry for 0x7b1a.
+grub-install: info: adding a relocation entry for 0x7b8b.
+grub-install: info: adding a relocation entry for 0x7c3a.
+grub-install: info: adding a relocation entry for 0x7c58.
+grub-install: info: adding a relocation entry for 0x7c79.
+grub-install: info: adding a relocation entry for 0x7c95.
+grub-install: info: adding a relocation entry for 0x7ca7.
+grub-install: info: adding a relocation entry for 0x7cc7.
+grub-install: info: adding a relocation entry for 0x7d46.
+grub-install: info: adding a relocation entry for 0x7df2.
+grub-install: info: adding a relocation entry for 0x7e03.
+grub-install: info: adding a relocation entry for 0x7e14.
+grub-install: info: adding a relocation entry for 0x7e45.
+grub-install: info: adding a relocation entry for 0x7e56.
+grub-install: info: adding a relocation entry for 0x7f84.
+grub-install: info: adding a relocation entry for 0x7f9c.
+grub-install: info: adding a relocation entry for 0x7fcc.
+grub-install: info: adding a relocation entry for 0x7fd6.
+grub-install: info: adding a relocation entry for 0x8120.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 280 bytes of a fixup block starting at 0x7000.
+grub-install: info: adding a relocation entry for 0x81c7.
+grub-install: info: adding a relocation entry for 0x826d.
+grub-install: info: adding a relocation entry for 0x82b7.
+grub-install: info: adding a relocation entry for 0x8410.
+grub-install: info: adding a relocation entry for 0x844d.
+grub-install: info: adding a relocation entry for 0x8590.
+grub-install: info: adding a relocation entry for 0x866d.
+grub-install: info: adding a relocation entry for 0x8677.
+grub-install: info: adding a relocation entry for 0x8688.
+grub-install: info: adding a relocation entry for 0x86a9.
+grub-install: info: adding a relocation entry for 0x86c6.
+grub-install: info: adding a relocation entry for 0x86dc.
+grub-install: info: adding a relocation entry for 0x86e5.
+grub-install: info: adding a relocation entry for 0x86f0.
+grub-install: info: adding a relocation entry for 0x86f9.
+grub-install: info: adding a relocation entry for 0x8702.
+grub-install: info: adding a relocation entry for 0x870d.
+grub-install: info: adding a relocation entry for 0x872e.
+grub-install: info: adding a relocation entry for 0x873a.
+grub-install: info: adding a relocation entry for 0x8749.
+grub-install: info: adding a relocation entry for 0x875b.
+grub-install: info: adding a relocation entry for 0x87b0.
+grub-install: info: adding a relocation entry for 0x87c4.
+grub-install: info: adding a relocation entry for 0x8813.
+grub-install: info: adding a relocation entry for 0x8826.
+grub-install: info: adding a relocation entry for 0x883d.
+grub-install: info: adding a relocation entry for 0x886a.
+grub-install: info: adding a relocation entry for 0x8877.
+grub-install: info: adding a relocation entry for 0x8899.
+grub-install: info: adding a relocation entry for 0x88a3.
+grub-install: info: adding a relocation entry for 0x88d8.
+grub-install: info: adding a relocation entry for 0x88e4.
+grub-install: info: adding a relocation entry for 0x890b.
+grub-install: info: adding a relocation entry for 0x893c.
+grub-install: info: adding a relocation entry for 0x894d.
+grub-install: info: adding a relocation entry for 0x89a3.
+grub-install: info: adding a relocation entry for 0x89b9.
+grub-install: info: adding a relocation entry for 0x89e1.
+grub-install: info: adding a relocation entry for 0x8a03.
+grub-install: info: adding a relocation entry for 0x8a1a.
+grub-install: info: adding a relocation entry for 0x8a2b.
+grub-install: info: adding a relocation entry for 0x8a8d.
+grub-install: info: adding a relocation entry for 0x8a9f.
+grub-install: info: adding a relocation entry for 0x8ae2.
+grub-install: info: adding a relocation entry for 0x8af6.
+grub-install: info: adding a relocation entry for 0x8b04.
+grub-install: info: adding a relocation entry for 0x8b10.
+grub-install: info: adding a relocation entry for 0x8b20.
+grub-install: info: adding a relocation entry for 0x8b2e.
+grub-install: info: adding a relocation entry for 0x8b3a.
+grub-install: info: adding a relocation entry for 0x8b83.
+grub-install: info: adding a relocation entry for 0x8ba0.
+grub-install: info: adding a relocation entry for 0x8bb5.
+grub-install: info: adding a relocation entry for 0x8beb.
+grub-install: info: adding a relocation entry for 0x8c41.
+grub-install: info: adding a relocation entry for 0x8c76.
+grub-install: info: adding a relocation entry for 0x8d5d.
+grub-install: info: adding a relocation entry for 0x8d67.
+grub-install: info: adding a relocation entry for 0x8d98.
+grub-install: info: adding a relocation entry for 0x8da7.
+grub-install: info: adding a relocation entry for 0x8de0.
+grub-install: info: adding a relocation entry for 0x8e4e.
+grub-install: info: adding a relocation entry for 0x8e64.
+grub-install: info: adding a relocation entry for 0x8e83.
+grub-install: info: adding a relocation entry for 0x8eb9.
+grub-install: info: adding a relocation entry for 0x8ede.
+grub-install: info: adding a relocation entry for 0x8f07.
+grub-install: info: adding a relocation entry for 0x8f12.
+grub-install: info: adding a relocation entry for 0x8f65.
+grub-install: info: adding a relocation entry for 0x8f70.
+grub-install: info: adding a relocation entry for 0x8f9d.
+grub-install: info: adding a relocation entry for 0x8fae.
+grub-install: info: adding a relocation entry for 0x8fc1.
+grub-install: info: adding a relocation entry for 0x9012.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 160 bytes of a fixup block starting at 0x8000.
+grub-install: info: adding a relocation entry for 0x9024.
+grub-install: info: adding a relocation entry for 0x9065.
+grub-install: info: adding a relocation entry for 0x9075.
+grub-install: info: adding a relocation entry for 0x9098.
+grub-install: info: adding a relocation entry for 0x90c0.
+grub-install: info: adding a relocation entry for 0x90d8.
+grub-install: info: adding a relocation entry for 0x90e8.
+grub-install: info: adding a relocation entry for 0x9148.
+grub-install: info: adding a relocation entry for 0x9167.
+grub-install: info: adding a relocation entry for 0x9195.
+grub-install: info: adding a relocation entry for 0x91aa.
+grub-install: info: adding a relocation entry for 0x91d8.
+grub-install: info: adding a relocation entry for 0x91f8.
+grub-install: info: adding a relocation entry for 0x9202.
+grub-install: info: adding a relocation entry for 0x9234.
+grub-install: info: adding a relocation entry for 0x9259.
+grub-install: info: adding a relocation entry for 0x9263.
+grub-install: info: adding a relocation entry for 0x9272.
+grub-install: info: adding a relocation entry for 0x9283.
+grub-install: info: adding a relocation entry for 0x932c.
+grub-install: info: adding a relocation entry for 0x9341.
+grub-install: info: adding a relocation entry for 0x9355.
+grub-install: info: adding a relocation entry for 0x935f.
+grub-install: info: adding a relocation entry for 0x9371.
+grub-install: info: adding a relocation entry for 0x9380.
+grub-install: info: adding a relocation entry for 0x93c0.
+grub-install: info: adding a relocation entry for 0x9424.
+grub-install: info: adding a relocation entry for 0x9436.
+grub-install: info: adding a relocation entry for 0x944d.
+grub-install: info: adding a relocation entry for 0x9486.
+grub-install: info: adding a relocation entry for 0x949b.
+grub-install: info: adding a relocation entry for 0x94bb.
+grub-install: info: adding a relocation entry for 0x94d1.
+grub-install: info: adding a relocation entry for 0x951c.
+grub-install: info: adding a relocation entry for 0x954e.
+grub-install: info: adding a relocation entry for 0x9573.
+grub-install: info: adding a relocation entry for 0x9583.
+grub-install: info: adding a relocation entry for 0x95ae.
+grub-install: info: adding a relocation entry for 0x95ba.
+grub-install: info: adding a relocation entry for 0x95c6.
+grub-install: info: adding a relocation entry for 0x95d0.
+grub-install: info: adding a relocation entry for 0x95e4.
+grub-install: info: adding a relocation entry for 0x95f0.
+grub-install: info: adding a relocation entry for 0x9601.
+grub-install: info: adding a relocation entry for 0x9616.
+grub-install: info: adding a relocation entry for 0x9628.
+grub-install: info: adding a relocation entry for 0x9635.
+grub-install: info: adding a relocation entry for 0x964a.
+grub-install: info: adding a relocation entry for 0x9661.
+grub-install: info: adding a relocation entry for 0x966b.
+grub-install: info: adding a relocation entry for 0x968c.
+grub-install: info: adding a relocation entry for 0x96b1.
+grub-install: info: adding a relocation entry for 0x96db.
+grub-install: info: adding a relocation entry for 0x96e7.
+grub-install: info: adding a relocation entry for 0x96f3.
+grub-install: info: adding a relocation entry for 0x970d.
+grub-install: info: adding a relocation entry for 0x9717.
+grub-install: info: adding a relocation entry for 0x9723.
+grub-install: info: adding a relocation entry for 0x972f.
+grub-install: info: adding a relocation entry for 0x9739.
+grub-install: info: adding a relocation entry for 0x9753.
+grub-install: info: adding a relocation entry for 0x975f.
+grub-install: info: adding a relocation entry for 0x976f.
+grub-install: info: adding a relocation entry for 0x9779.
+grub-install: info: adding a relocation entry for 0x978f.
+grub-install: info: adding a relocation entry for 0x97af.
+grub-install: info: adding a relocation entry for 0x97c0.
+grub-install: info: adding a relocation entry for 0x980a.
+grub-install: info: adding a relocation entry for 0x9842.
+grub-install: info: adding a relocation entry for 0x9859.
+grub-install: info: adding a relocation entry for 0x987b.
+grub-install: info: adding a relocation entry for 0x98af.
+grub-install: info: adding a relocation entry for 0x98c3.
+grub-install: info: adding a relocation entry for 0x98d4.
+grub-install: info: adding a relocation entry for 0x98fa.
+grub-install: info: adding a relocation entry for 0x9922.
+grub-install: info: adding a relocation entry for 0x992c.
+grub-install: info: adding a relocation entry for 0x9941.
+grub-install: info: adding a relocation entry for 0x994c.
+grub-install: info: translating the relocation section .rela.rodata.
+grub-install: info: adding a relocation entry for 0x9a00.
+grub-install: info: adding a relocation entry for 0x9a08.
+grub-install: info: adding a relocation entry for 0x9a10.
+grub-install: info: adding a relocation entry for 0x9a18.
+grub-install: info: adding a relocation entry for 0x9a20.
+grub-install: info: adding a relocation entry for 0x9a28.
+grub-install: info: adding a relocation entry for 0x9a30.
+grub-install: info: adding a relocation entry for 0x9a38.
+grub-install: info: adding a relocation entry for 0x9a40.
+grub-install: info: adding a relocation entry for 0x9a48.
+grub-install: info: adding a relocation entry for 0x9a50.
+grub-install: info: adding a relocation entry for 0x9a58.
+grub-install: info: adding a relocation entry for 0x9a60.
+grub-install: info: adding a relocation entry for 0x9a68.
+grub-install: info: adding a relocation entry for 0x9a70.
+grub-install: info: adding a relocation entry for 0x9a78.
+grub-install: info: adding a relocation entry for 0x9a80.
+grub-install: info: adding a relocation entry for 0x9a88.
+grub-install: info: adding a relocation entry for 0x9a90.
+grub-install: info: adding a relocation entry for 0x9a98.
+grub-install: info: adding a relocation entry for 0x9aa0.
+grub-install: info: adding a relocation entry for 0x9aa8.
+grub-install: info: adding a relocation entry for 0x9ab0.
+grub-install: info: adding a relocation entry for 0x9ab8.
+grub-install: info: adding a relocation entry for 0x9ac0.
+grub-install: info: adding a relocation entry for 0x9ac8.
+grub-install: info: adding a relocation entry for 0x9ad0.
+grub-install: info: adding a relocation entry for 0x9ad8.
+grub-install: info: adding a relocation entry for 0x9b40.
+grub-install: info: adding a relocation entry for 0x9b48.
+grub-install: info: adding a relocation entry for 0x9b50.
+grub-install: info: adding a relocation entry for 0x9b58.
+grub-install: info: adding a relocation entry for 0x9b60.
+grub-install: info: adding a relocation entry for 0x9b68.
+grub-install: info: adding a relocation entry for 0x9b70.
+grub-install: info: adding a relocation entry for 0x9b78.
+grub-install: info: adding a relocation entry for 0x9b80.
+grub-install: info: adding a relocation entry for 0x9b88.
+grub-install: info: adding a relocation entry for 0x9b90.
+grub-install: info: translating the relocation section .rela.data.
+grub-install: info: adding a relocation entry for 0xb4e0.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 248 bytes of a fixup block starting at 0x9000.
+grub-install: info: adding a relocation entry for 0xb4f0.
+grub-install: info: adding a relocation entry for 0xb4f8.
+grub-install: info: adding a relocation entry for 0xb500.
+grub-install: info: adding a relocation entry for 0xb508.
+grub-install: info: adding a relocation entry for 0xb510.
+grub-install: info: adding a relocation entry for 0xb570.
+grub-install: info: adding a relocation entry for 0xb588.
+grub-install: info: adding a relocation entry for 0xb5b0.
+grub-install: info: adding a relocation entry for 0xb5b8.
+grub-install: info: adding a relocation entry for 0xb5c0.
+grub-install: info: adding a relocation entry for 0xb5c8.
+grub-install: info: adding a relocation entry for 0xb5d8.
+grub-install: info: adding a relocation entry for 0xb5e0.
+grub-install: info: adding a relocation entry for 0xb5e8.
+grub-install: info: adding a relocation entry for 0xb5f0.
+grub-install: info: adding a relocation entry for 0xb5f8.
+grub-install: info: adding a relocation entry for 0xb600.
+grub-install: info: adding a relocation entry for 0xb630.
+grub-install: info: adding a relocation entry for 0xb650.
+grub-install: info: adding a relocation entry for 0xb660.
+grub-install: info: adding a relocation entry for 0xb668.
+grub-install: info: adding a relocation entry for 0xb690.
+grub-install: info: adding a relocation entry for 0xb7e0.
+grub-install: info: adding a relocation entry for 0xb7f0.
+grub-install: info: adding a relocation entry for 0xb7f8.
+grub-install: info: adding a relocation entry for 0xb808.
+grub-install: info: adding a relocation entry for 0xb810.
+grub-install: info: adding a relocation entry for 0xb820.
+grub-install: info: adding a relocation entry for 0xb828.
+grub-install: info: adding a relocation entry for 0xb838.
+grub-install: info: adding a relocation entry for 0xb840.
+grub-install: info: adding a relocation entry for 0xb850.
+grub-install: info: adding a relocation entry for 0xb858.
+grub-install: info: adding a relocation entry for 0xb868.
+grub-install: info: adding a relocation entry for 0xb870.
+grub-install: info: adding a relocation entry for 0xb880.
+grub-install: info: adding a relocation entry for 0xb888.
+grub-install: info: adding a relocation entry for 0xb898.
+grub-install: info: adding a relocation entry for 0xb8a0.
+grub-install: info: adding a relocation entry for 0xb8b0.
+grub-install: info: adding a relocation entry for 0xb8b8.
+grub-install: info: adding a relocation entry for 0xb8c8.
+grub-install: info: adding a relocation entry for 0xb8d0.
+grub-install: info: adding a relocation entry for 0xb8e0.
+grub-install: info: adding a relocation entry for 0xb8e8.
+grub-install: info: adding a relocation entry for 0xb8f8.
+grub-install: info: adding a relocation entry for 0xb900.
+grub-install: info: adding a relocation entry for 0xb910.
+grub-install: info: adding a relocation entry for 0xb918.
+grub-install: info: adding a relocation entry for 0xb928.
+grub-install: info: adding a relocation entry for 0xb930.
+grub-install: info: adding a relocation entry for 0xb940.
+grub-install: info: adding a relocation entry for 0xb948.
+grub-install: info: adding a relocation entry for 0xb958.
+grub-install: info: adding a relocation entry for 0xb960.
+grub-install: info: adding a relocation entry for 0xb970.
+grub-install: info: adding a relocation entry for 0xb978.
+grub-install: info: adding a relocation entry for 0xb988.
+grub-install: info: adding a relocation entry for 0xb990.
+grub-install: info: adding a relocation entry for 0xb9a0.
+grub-install: info: adding a relocation entry for 0xb9a8.
+grub-install: info: adding a relocation entry for 0xb9b8.
+grub-install: info: adding a relocation entry for 0xb9c0.
+grub-install: info: adding a relocation entry for 0xb9d0.
+grub-install: info: adding a relocation entry for 0xb9d8.
+grub-install: info: adding a relocation entry for 0xb9e8.
+grub-install: info: adding a relocation entry for 0xb9f0.
+grub-install: info: adding a relocation entry for 0xba00.
+grub-install: info: adding a relocation entry for 0xba08.
+grub-install: info: adding a relocation entry for 0xba18.
+grub-install: info: adding a relocation entry for 0xba20.
+grub-install: info: adding a relocation entry for 0xba30.
+grub-install: info: adding a relocation entry for 0xba38.
+grub-install: info: adding a relocation entry for 0xba48.
+grub-install: info: adding a relocation entry for 0xba50.
+grub-install: info: adding a relocation entry for 0xba60.
+grub-install: info: adding a relocation entry for 0xba68.
+grub-install: info: adding a relocation entry for 0xba78.
+grub-install: info: adding a relocation entry for 0xba80.
+grub-install: info: adding a relocation entry for 0xba90.
+grub-install: info: adding a relocation entry for 0xba98.
+grub-install: info: adding a relocation entry for 0xbaa8.
+grub-install: info: adding a relocation entry for 0xbab0.
+grub-install: info: adding a relocation entry for 0xbac0.
+grub-install: info: adding a relocation entry for 0xbac8.
+grub-install: info: adding a relocation entry for 0xbad8.
+grub-install: info: adding a relocation entry for 0xbae0.
+grub-install: info: adding a relocation entry for 0xbaf0.
+grub-install: info: adding a relocation entry for 0xbaf8.
+grub-install: info: adding a relocation entry for 0xbb08.
+grub-install: info: adding a relocation entry for 0xbb10.
+grub-install: info: adding a relocation entry for 0xbb20.
+grub-install: info: adding a relocation entry for 0xbb28.
+grub-install: info: adding a relocation entry for 0xbb38.
+grub-install: info: adding a relocation entry for 0xbb40.
+grub-install: info: adding a relocation entry for 0xbb50.
+grub-install: info: adding a relocation entry for 0xbb58.
+grub-install: info: adding a relocation entry for 0xbb68.
+grub-install: info: adding a relocation entry for 0xbb70.
+grub-install: info: adding a relocation entry for 0xbb80.
+grub-install: info: adding a relocation entry for 0xbb88.
+grub-install: info: adding a relocation entry for 0xbb98.
+grub-install: info: adding a relocation entry for 0xbba0.
+grub-install: info: adding a relocation entry for 0xbbb0.
+grub-install: info: adding a relocation entry for 0xbbb8.
+grub-install: info: adding a relocation entry for 0xbbc8.
+grub-install: info: adding a relocation entry for 0xbbd0.
+grub-install: info: adding a relocation entry for 0xbbe0.
+grub-install: info: adding a relocation entry for 0xbbe8.
+grub-install: info: adding a relocation entry for 0xbbf8.
+grub-install: info: adding a relocation entry for 0xbc00.
+grub-install: info: adding a relocation entry for 0xbc10.
+grub-install: info: adding a relocation entry for 0xbc18.
+grub-install: info: adding a relocation entry for 0xbc28.
+grub-install: info: adding a relocation entry for 0xbc30.
+grub-install: info: adding a relocation entry for 0xbc40.
+grub-install: info: adding a relocation entry for 0xbc48.
+grub-install: info: adding a relocation entry for 0xbc58.
+grub-install: info: adding a relocation entry for 0xbc60.
+grub-install: info: adding a relocation entry for 0xbc70.
+grub-install: info: adding a relocation entry for 0xbc78.
+grub-install: info: adding a relocation entry for 0xbc88.
+grub-install: info: adding a relocation entry for 0xbc90.
+grub-install: info: adding a relocation entry for 0xbca0.
+grub-install: info: adding a relocation entry for 0xbca8.
+grub-install: info: adding a relocation entry for 0xbcb8.
+grub-install: info: adding a relocation entry for 0xbcc0.
+grub-install: info: adding a relocation entry for 0xbcd0.
+grub-install: info: adding a relocation entry for 0xbcd8.
+grub-install: info: adding a relocation entry for 0xbce8.
+grub-install: info: adding a relocation entry for 0xbcf0.
+grub-install: info: adding a relocation entry for 0xbd00.
+grub-install: info: adding a relocation entry for 0xbd08.
+grub-install: info: adding a relocation entry for 0xbd18.
+grub-install: info: adding a relocation entry for 0xbd20.
+grub-install: info: adding a relocation entry for 0xbd30.
+grub-install: info: adding a relocation entry for 0xbd38.
+grub-install: info: adding a relocation entry for 0xbd48.
+grub-install: info: adding a relocation entry for 0xbd50.
+grub-install: info: adding a relocation entry for 0xbd60.
+grub-install: info: adding a relocation entry for 0xbd68.
+grub-install: info: adding a relocation entry for 0xbd78.
+grub-install: info: adding a relocation entry for 0xbd80.
+grub-install: info: adding a relocation entry for 0xbd90.
+grub-install: info: adding a relocation entry for 0xbd98.
+grub-install: info: adding a relocation entry for 0xbda8.
+grub-install: info: adding a relocation entry for 0xbdb0.
+grub-install: info: adding a relocation entry for 0xbdc0.
+grub-install: info: adding a relocation entry for 0xbdc8.
+grub-install: info: adding a relocation entry for 0xbdd8.
+grub-install: info: adding a relocation entry for 0xbde0.
+grub-install: info: adding a relocation entry for 0xbdf0.
+grub-install: info: adding a relocation entry for 0xbdf8.
+grub-install: info: adding a relocation entry for 0xbe08.
+grub-install: info: adding a relocation entry for 0xbe10.
+grub-install: info: adding a relocation entry for 0xbe20.
+grub-install: info: adding a relocation entry for 0xbe28.
+grub-install: info: adding a relocation entry for 0xbe38.
+grub-install: info: adding a relocation entry for 0xbe40.
+grub-install: info: adding a relocation entry for 0xbe50.
+grub-install: info: adding a relocation entry for 0xbe58.
+grub-install: info: adding a relocation entry for 0xbe68.
+grub-install: info: adding a relocation entry for 0xbe70.
+grub-install: info: adding a relocation entry for 0xbe80.
+grub-install: info: adding a relocation entry for 0xbe88.
+grub-install: info: adding a relocation entry for 0xbe98.
+grub-install: info: adding a relocation entry for 0xbea0.
+grub-install: info: adding a relocation entry for 0xbeb0.
+grub-install: info: adding a relocation entry for 0xbeb8.
+grub-install: info: adding a relocation entry for 0xbec8.
+grub-install: info: adding a relocation entry for 0xbed0.
+grub-install: info: adding a relocation entry for 0xbee0.
+grub-install: info: adding a relocation entry for 0xbee8.
+grub-install: info: adding a relocation entry for 0xbef8.
+grub-install: info: adding a relocation entry for 0xbf00.
+grub-install: info: adding a relocation entry for 0xbf10.
+grub-install: info: adding a relocation entry for 0xbf18.
+grub-install: info: adding a relocation entry for 0xbf28.
+grub-install: info: adding a relocation entry for 0xbf30.
+grub-install: info: adding a relocation entry for 0xbf40.
+grub-install: info: adding a relocation entry for 0xbf48.
+grub-install: info: adding a relocation entry for 0xbf58.
+grub-install: info: adding a relocation entry for 0xbf60.
+grub-install: info: adding a relocation entry for 0xbf70.
+grub-install: info: adding a relocation entry for 0xbf78.
+grub-install: info: adding a relocation entry for 0xbf88.
+grub-install: info: adding a relocation entry for 0xbf90.
+grub-install: info: adding a relocation entry for 0xbfa0.
+grub-install: info: adding a relocation entry for 0xbfa8.
+grub-install: info: adding a relocation entry for 0xbfb8.
+grub-install: info: adding a relocation entry for 0xbfc0.
+grub-install: info: adding a relocation entry for 0xbfd0.
+grub-install: info: adding a relocation entry for 0xbfd8.
+grub-install: info: adding a relocation entry for 0xbfe8.
+grub-install: info: adding a relocation entry for 0xbff0.
+grub-install: info: adding a relocation entry for 0xc000.
+grub-install: info: writing 400 bytes of a fixup block starting at 0xb000.
+grub-install: info: adding a relocation entry for 0xc008.
+grub-install: info: adding a relocation entry for 0xc018.
+grub-install: info: adding a relocation entry for 0xc020.
+grub-install: info: adding a relocation entry for 0xc030.
+grub-install: info: adding a relocation entry for 0xc038.
+grub-install: info: adding a relocation entry for 0xc048.
+grub-install: info: adding a relocation entry for 0xc050.
+grub-install: info: adding a relocation entry for 0xc060.
+grub-install: info: adding a relocation entry for 0xc068.
+grub-install: info: adding a relocation entry for 0xc078.
+grub-install: info: adding a relocation entry for 0xc080.
+grub-install: info: adding a relocation entry for 0xc090.
+grub-install: info: adding a relocation entry for 0xc098.
+grub-install: info: adding a relocation entry for 0xc0a8.
+grub-install: info: adding a relocation entry for 0xc0b0.
+grub-install: info: adding a relocation entry for 0xc0c0.
+grub-install: info: adding a relocation entry for 0xc0c8.
+grub-install: info: adding a relocation entry for 0xc0d8.
+grub-install: info: adding a relocation entry for 0xc0e0.
+grub-install: info: adding a relocation entry for 0xc0f0.
+grub-install: info: adding a relocation entry for 0xc0f8.
+grub-install: info: adding a relocation entry for 0xc108.
+grub-install: info: adding a relocation entry for 0xc110.
+grub-install: info: adding a relocation entry for 0xc120.
+grub-install: info: adding a relocation entry for 0xc128.
+grub-install: info: adding a relocation entry for 0xc138.
+grub-install: info: adding a relocation entry for 0xc140.
+grub-install: info: adding a relocation entry for 0xc150.
+grub-install: info: adding a relocation entry for 0xc158.
+grub-install: info: adding a relocation entry for 0xc168.
+grub-install: info: adding a relocation entry for 0xc170.
+grub-install: info: adding a relocation entry for 0xc180.
+grub-install: info: adding a relocation entry for 0xc188.
+grub-install: info: adding a relocation entry for 0xc198.
+grub-install: info: adding a relocation entry for 0xc1a0.
+grub-install: info: adding a relocation entry for 0xc1b0.
+grub-install: info: adding a relocation entry for 0xc1b8.
+grub-install: info: adding a relocation entry for 0xc1c8.
+grub-install: info: adding a relocation entry for 0xc1d0.
+grub-install: info: adding a relocation entry for 0xc1e0.
+grub-install: info: adding a relocation entry for 0xc1e8.
+grub-install: info: adding a relocation entry for 0xc1f8.
+grub-install: info: adding a relocation entry for 0xc200.
+grub-install: info: adding a relocation entry for 0xc210.
+grub-install: info: adding a relocation entry for 0xc218.
+grub-install: info: adding a relocation entry for 0xc228.
+grub-install: info: adding a relocation entry for 0xc230.
+grub-install: info: adding a relocation entry for 0xc240.
+grub-install: info: adding a relocation entry for 0xc248.
+grub-install: info: adding a relocation entry for 0xc258.
+grub-install: info: adding a relocation entry for 0xc260.
+grub-install: info: adding a relocation entry for 0xc270.
+grub-install: info: adding a relocation entry for 0xc278.
+grub-install: info: adding a relocation entry for 0xc288.
+grub-install: info: adding a relocation entry for 0xc290.
+grub-install: info: adding a relocation entry for 0xc2a0.
+grub-install: info: adding a relocation entry for 0xc2a8.
+grub-install: info: adding a relocation entry for 0xc2b8.
+grub-install: info: adding a relocation entry for 0xc2c0.
+grub-install: info: adding a relocation entry for 0xc2d0.
+grub-install: info: adding a relocation entry for 0xc2d8.
+grub-install: info: adding a relocation entry for 0xc2e8.
+grub-install: info: adding a relocation entry for 0xc2f0.
+grub-install: info: adding a relocation entry for 0xc300.
+grub-install: info: adding a relocation entry for 0xc308.
+grub-install: info: adding a relocation entry for 0xc318.
+grub-install: info: adding a relocation entry for 0xc320.
+grub-install: info: adding a relocation entry for 0xc330.
+grub-install: info: adding a relocation entry for 0xc338.
+grub-install: info: adding a relocation entry for 0xc348.
+grub-install: info: adding a relocation entry for 0xc350.
+grub-install: info: adding a relocation entry for 0xc360.
+grub-install: info: adding a relocation entry for 0xc368.
+grub-install: info: adding a relocation entry for 0xc378.
+grub-install: info: adding a relocation entry for 0xc380.
+grub-install: info: adding a relocation entry for 0xc390.
+grub-install: info: adding a relocation entry for 0xc398.
+grub-install: info: adding a relocation entry for 0xc3a8.
+grub-install: info: adding a relocation entry for 0xc3b0.
+grub-install: info: adding a relocation entry for 0xc3c0.
+grub-install: info: adding a relocation entry for 0xc3c8.
+grub-install: info: adding a relocation entry for 0xc3d8.
+grub-install: info: adding a relocation entry for 0xc3e0.
+grub-install: info: adding a relocation entry for 0xc3f0.
+grub-install: info: adding a relocation entry for 0xc3f8.
+grub-install: info: adding a relocation entry for 0xc408.
+grub-install: info: adding a relocation entry for 0xc410.
+grub-install: info: adding a relocation entry for 0xc420.
+grub-install: info: adding a relocation entry for 0xc428.
+grub-install: info: adding a relocation entry for 0xc438.
+grub-install: info: adding a relocation entry for 0xc440.
+grub-install: info: adding a relocation entry for 0xc450.
+grub-install: info: adding a relocation entry for 0xc458.
+grub-install: info: adding a relocation entry for 0xc468.
+grub-install: info: adding a relocation entry for 0xc470.
+grub-install: info: adding a relocation entry for 0xc480.
+grub-install: info: adding a relocation entry for 0xc488.
+grub-install: info: adding a relocation entry for 0xc498.
+grub-install: info: adding a relocation entry for 0xc4a0.
+grub-install: info: adding a relocation entry for 0xc4b0.
+grub-install: info: adding a relocation entry for 0xc4b8.
+grub-install: info: adding a relocation entry for 0xc4c8.
+grub-install: info: adding a relocation entry for 0xc4d0.
+grub-install: info: adding a relocation entry for 0xc4e0.
+grub-install: info: adding a relocation entry for 0xc4e8.
+grub-install: info: adding a relocation entry for 0xc4f8.
+grub-install: info: adding a relocation entry for 0xc500.
+grub-install: info: adding a relocation entry for 0xc510.
+grub-install: info: adding a relocation entry for 0xc518.
+grub-install: info: adding a relocation entry for 0xc528.
+grub-install: info: adding a relocation entry for 0xc530.
+grub-install: info: adding a relocation entry for 0xc540.
+grub-install: info: adding a relocation entry for 0xc548.
+grub-install: info: adding a relocation entry for 0xc558.
+grub-install: info: adding a relocation entry for 0xc560.
+grub-install: info: adding a relocation entry for 0xc570.
+grub-install: info: adding a relocation entry for 0xc578.
+grub-install: info: adding a relocation entry for 0xc588.
+grub-install: info: adding a relocation entry for 0xc590.
+grub-install: info: adding a relocation entry for 0xc5a0.
+grub-install: info: adding a relocation entry for 0xc5a8.
+grub-install: info: adding a relocation entry for 0xc5b8.
+grub-install: info: adding a relocation entry for 0xc5c0.
+grub-install: info: adding a relocation entry for 0xc5d0.
+grub-install: info: adding a relocation entry for 0xc5d8.
+grub-install: info: adding a relocation entry for 0xc5e8.
+grub-install: info: adding a relocation entry for 0xc5f0.
+grub-install: info: adding a relocation entry for 0xc600.
+grub-install: info: adding a relocation entry for 0xc608.
+grub-install: info: adding a relocation entry for 0xc618.
+grub-install: info: adding a relocation entry for 0xc620.
+grub-install: info: adding a relocation entry for 0xc630.
+grub-install: info: adding a relocation entry for 0xc638.
+grub-install: info: adding a relocation entry for 0xc648.
+grub-install: info: adding a relocation entry for 0xc650.
+grub-install: info: adding 204 padding fixup entries.
+grub-install: info: writing 688 bytes of a fixup block starting at 0xc000.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/fshelp.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/ext2.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/part_gpt.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/search_fs_uuid.mod.
+grub-install: info: reading /boot/grub/x86_64-efi/load.cfg.
+grub-install: info: kernel_img=0x27cb200, kernel_size=0x18200.
+grub-install: info: the core size is 0x1d3c8.
+grub-install: info: writing 0x1e600 bytes.
+grub-install: info: grub-mkimage --directory '/usr/lib/grub/x86_64-efi' --prefix '' --output '/boot/grub/x86_64-efi/grub.efi' --format 'x86_64-efi' --compression 'auto'  --config '/boot/grub/x86_64-efi/load.cfg' 'ext2' 'part_gpt' 'search_fs_uuid'
+.
+grub-install: info: the size of config file is 0x68.
+grub-install: info: the total module size is 0x51c0.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/kernel.img.
+grub-install: info: locating the section .text at 0x0.
+grub-install: info: locating the section .rodata at 0x9600.
+grub-install: info: locating the section .rodata.str1.1 at 0x9798.
+grub-install: info: locating the section .data at 0xb0e0.
+grub-install: info: locating the section .module_license at 0xc278.
+grub-install: info: locating the section .bss at 0xc290.
+grub-install: info: locating  at 0x400 (0x400).
+grub-install: info: locating  at 0x9a00 (0x9a00).
+grub-install: info: locating  at 0x9b98 (0x9b98).
+grub-install: info: locating  at 0xb4e0 (0xb4e0).
+grub-install: info: locating  at 0xc690 (0xc690).
+grub-install: info: locating  at 0xc678 (0xc678).
+grub-install: info: locating  at 0x400 (0x400).
+grub-install: info: locating grub_strlen at 0x7c25 (0x400).
+grub-install: info: locating grub_net_poll_cards_idle at 0xe3d0 (0xc690).
+grub-install: info: locating grub_efi_finish_boot_services at 0x2f18 (0x400).
+grub-install: info: locating grub_disk_get_size at 0x55c0 (0x400).
+grub-install: info: locating grub_file_progress_hook at 0x184e0 (0xc690).
+grub-install: info: locating grub_efidisk_fini at 0xe51 (0x400).
+grub-install: info: locating grub_puts_ at 0x79d3 (0x400).
+grub-install: info: locating grub_millisleep at 0x4195 (0x400).
+grub-install: info: locating grub_fs_autoload_hook at 0xe1b0 (0xc690).
+grub-install: info: locating efi_wrap_10 at 0x4cc (0x400).
+grub-install: info: locating grub_efi_allocate_pages_max at 0x2d32 (0x400).
+grub-install: info: locating grub_fs_blocklist at 0xb640 (0xb4e0).
+grub-install: info: locating grub_errmsg at 0x183d0 (0xc690).
+grub-install: info: locating efi_wrap_5 at 0x463 (0x400).
+grub-install: info: locating grub_strncmp at 0x7a4d (0x400).
+grub-install: info: locating grub_strtoull at 0x7d3d (0x400).
+grub-install: info: locating grub_dma_get_virt at 0x5a5 (0x400).
+grub-install: info: locating grub_efi_system_table at 0xe3e0 (0xc690).
+grub-install: info: locating memmove at 0x797a (0x400).
+grub-install: info: locating efi_wrap_4 at 0x44f (0x400).
+grub-install: info: locating grub_disk_open at 0x4f8a (0x400).
+grub-install: info: locating grub_efi_locate_protocol at 0x1c16 (0x400).
+grub-install: info: locating grub_env_update_get_sorted at 0x669c (0x400).
+grub-install: info: locating grub_strcpy at 0x79c0 (0x400).
+grub-install: info: locating grub_partition_probe at 0x8fd0 (0x400).
+grub-install: info: locating grub_strrchr at 0x7a99 (0x400).
+grub-install: info: locating grub_partition_get_name at 0x91d0 (0x400).
+grub-install: info: locating grub_dl_load at 0x631d (0x400).
+grub-install: info: locating grub_efi_stall at 0x1e3f (0x400).
+grub-install: info: locating grub_efi_get_filename at 0x2289 (0x400).
+grub-install: info: locating grub_env_export at 0x6788 (0x400).
+grub-install: info: locating grub_xvasprintf at 0x89b2 (0x400).
+grub-install: info: locating grub_error_push at 0x684a (0x400).
+grub-install: info: locating grub_rescue_run at 0x9750 (0x400).
+grub-install: info: locating grub_xasprintf at 0x8a4d (0x400).
+grub-install: info: locating grub_realloc at 0x40bf (0x400).
+grub-install: info: locating grub_exit at 0x1e7e (0x400).
+grub-install: info: locating memcpy at 0x797a (0x400).
+grub-install: info: locating grub_memmove at 0x797a (0x400).
+grub-install: info: locating grub_device_open at 0x47bb (0x400).
+grub-install: info: locating grub_register_exported_symbols at 0x993e (0x400).
+grub-install: info: locating grub_strdup at 0x7c8f (0x400).
+grub-install: info: locating grub_disk_firmware_is_tainted at 0xe420 (0xc690).
+grub-install: info: locating grub_divmod64 at 0x7cd7 (0x400).
+grub-install: info: locating grub_file_get_device_name at 0x69dd (0x400).
+grub-install: info: locating grub_efi_print_device_path at 0x2370 (0x400).
+grub-install: info: locating grub_partition_iterate at 0x9164 (0x400).
+grub-install: info: locating grub_dma_free at 0x599 (0x400).
+grub-install: info: locating grub_vsnprintf at 0x88fd (0x400).
+grub-install: info: locating grub_partition_map_list at 0x18530 (0xc690).
+grub-install: info: locating efi_wrap_1 at 0x422 (0x400).
+grub-install: info: locating grub_command_list at 0xe410 (0xc690).
+grub-install: info: locating grub_machine_fini at 0x534 (0x400).
+grub-install: info: locating grub_tsc_rate at 0xe400 (0xc690).
+grub-install: info: locating grub_rescue_parse_line at 0x94ce (0x400).
+grub-install: info: locating grub_efi_get_variable at 0x1ff7 (0x400).
+grub-install: info: locating grub_snprintf at 0x896d (0x400).
+grub-install: info: locating grub_register_core_commands at 0x4632 (0x400).
+grub-install: info: locating grub_disk_dev_register at 0x4ea0 (0x400).
+grub-install: info: locating grub_console_init at 0x3927 (0x400).
+grub-install: info: locating grub_disk_write_weak at 0xe428 (0xc690).
+grub-install: info: locating grub_dl_add at 0x5696 (0x400).
+grub-install: info: locating grub_disk_read at 0x5270 (0x400).
+grub-install: info: locating grub_term_highlight_color at 0xb7e8 (0xb4e0).
+grub-install: info: locating grub_parser_execute at 0x8f62 (0x400).
+grub-install: info: locating grub_xputs at 0xb7e0 (0xb4e0).
+grub-install: info: locating grub_console_fini at 0x3a28 (0x400).
+grub-install: info: locating grub_fatal at 0x8a9c (0x400).
+grub-install: info: locating grub_dl_ref at 0x5792 (0x400).
+grub-install: info: locating grub_file_seek at 0x6d22 (0x400).
+grub-install: info: locating grub_pci_find_capability at 0x6a2 (0x400).
+grub-install: info: locating grub_efi_get_loaded_image at 0x1e63 (0x400).
+grub-install: info: locating grub_errno at 0x184d0 (0xc690).
+grub-install: info: locating grub_parser_cmdline_state at 0x8c1a (0x400).
+grub-install: info: locating grub_memset at 0x7baf (0x400).
+grub-install: info: locating grub_getkey at 0x991f (0x400).
+grub-install: info: locating grub_term_outputs_disabled at 0x18538 (0xc690).
+grub-install: info: locating grub_grubnet_fini at 0x184e8 (0xc690).
+grub-install: info: locating grub_register_variable_hook at 0x6728 (0x400).
+grub-install: info: locating grub_efi_image_handle at 0xe3e8 (0xc690).
+grub-install: info: locating grub_vprintf at 0x8666 (0x400).
+grub-install: info: locating grub_net_open at 0xc6e8 (0xc690).
+grub-install: info: locating grub_register_command_prio at 0x41be (0x400).
+grub-install: info: locating grub_efi_compare_device_paths at 0x29f5 (0x400).
+grub-install: info: locating grub_file_filters_all at 0x184f0 (0xc690).
+grub-install: info: locating grub_install_get_time_ms at 0x4187 (0x400).
+grub-install: info: locating _start at 0x400 (0x400).
+grub-install: info: locating grub_term_inputs at 0x18540 (0xc690).
+grub-install: info: locating grub_parser_split_cmdline at 0x8cd3 (0x400).
+grub-install: info: locating grub_disk_firmware_fini at 0xe430 (0xc690).
+grub-install: info: locating grub_disk_close at 0x4ee6 (0x400).
+grub-install: info: locating grub_dl_unload at 0x580c (0x400).
+grub-install: info: locating grub_efi_set_variable at 0x1f1d (0x400).
+grub-install: info: locating grub_printf at 0x87d3 (0x400).
+grub-install: info: locating grub_efi_secure_boot at 0x2117 (0x400).
+grub-install: info: locating grub_unregister_command at 0x42af (0x400).
+grub-install: info: locating grub_fs_list at 0xe1b8 (0xc690).
+grub-install: info: locating grub_efidisk_get_device_handle at 0x1581 (0x400).
+grub-install: info: locating grub_main at 0x731f (0x400).
+grub-install: info: locating grub_file_read at 0x6a68 (0x400).
+grub-install: info: locating grub_dl_unload_unneeded at 0x641a (0x400).
+grub-install: info: locating grub_pci_make_address at 0x5ac (0x400).
+grub-install: info: locating memcmp at 0x7a0c (0x400).
+grub-install: info: locating grub_term_normal_color at 0xb7e9 (0xb4e0).
+grub-install: info: locating grub_disk_dev_list at 0xe438 (0xc690).
+grub-install: info: locating grub_machine_init at 0x51a (0x400).
+grub-install: info: locating efi_wrap_0 at 0x417 (0x400).
+grub-install: info: locating grub_efi_locate_handle at 0x1c5f (0x400).
+grub-install: info: locating grub_term_outputs at 0x18548 (0xc690).
+grub-install: info: locating grub_modbase at 0xe3f0 (0xc690).
+grub-install: info: locating grub_term_inputs_disabled at 0x18550 (0xc690).
+grub-install: info: locating grub_efi_net_config at 0xe3f8 (0xc690).
+grub-install: info: locating grub_efi_set_virtual_address_map at 0x1ec2 (0x400).
+grub-install: info: locating grub_print_error at 0x6944 (0x400).
+grub-install: info: locating grub_efi_mm_init at 0x31e7 (0x400).
+grub-install: info: locating memset at 0x7baf (0x400).
+grub-install: info: locating grub_zalloc at 0x3e36 (0x400).
+grub-install: info: locating grub_strcmp at 0x7a2e (0x400).
+grub-install: info: locating grub_tsc_init at 0x3aa7 (0x400).
+grub-install: info: locating grub_efi_allocate_pages at 0x2c6e (0x400).
+grub-install: info: locating grub_strchr at 0x7a83 (0x400).
+grub-install: info: locating grub_refresh at 0x98f7 (0x400).
+grub-install: info: locating grub_malloc at 0x3e25 (0x400).
+grub-install: info: locating grub_efi_get_memory_map at 0x2de4 (0x400).
+grub-install: info: locating grub_efidisk_get_device_name at 0x16cc (0x400).
+grub-install: info: locating grub_get_time_ms at 0x417b (0x400).
+grub-install: info: locating grub_file_close at 0x6b05 (0x400).
+grub-install: info: locating grub_file_open at 0x6b50 (0x400).
+grub-install: info: locating grub_isspace at 0x7aae (0x400).
+grub-install: info: locating grub_efi_open_protocol at 0x1d5a (0x400).
+grub-install: info: locating grub_real_dprintf at 0x8822 (0x400).
+grub-install: info: locating efi_wrap_3 at 0x43e (0x400).
+grub-install: info: locating grub_dl_load_core_noinit at 0x5926 (0x400).
+grub-install: info: locating grub_dl_load_file at 0x621a (0x400).
+grub-install: info: locating grub_env_unset at 0x6618 (0x400).
+grub-install: info: locating grub_device_close at 0x4899 (0x400).
+grub-install: info: locating efi_wrap_6 at 0x47c (0x400).
+grub-install: info: locating grub_dl_head at 0xc700 (0xc690).
+grub-install: info: locating grub_fs_probe at 0x7033 (0x400).
+grub-install: info: locating grub_mm_base at 0xe408 (0xc690).
+grub-install: info: locating grub_term_poll_usb at 0xe3d8 (0xc690).
+grub-install: info: locating grub_file_filters_enabled at 0x18510 (0xc690).
+grub-install: info: locating grub_strword at 0x7b0e (0x400).
+grub-install: info: locating grub_machine_get_bootlocation at 0x2aeb (0x400).
+grub-install: info: locating grub_efi_fini at 0x2b82 (0x400).
+grub-install: info: locating grub_err_printed_errors at 0x184d4 (0xc690).
+grub-install: info: locating grub_error at 0x67ce (0x400).
+grub-install: info: locating grub_current_context at 0xb630 (0xb4e0).
+grub-install: info: locating efi_codes at 0x9ae0 (0x9a00).
+grub-install: info: locating grub_dl_register_symbol at 0x56d3 (0x400).
+grub-install: info: locating grub_efi_is_finished at 0xc6a8 (0xc690).
+grub-install: info: locating grub_list_remove at 0x7290 (0x400).
+grub-install: info: locating grub_pci_iterate at 0x5d3 (0x400).
+grub-install: info: locating grub_modules_get_end at 0x7303 (0x400).
+grub-install: info: locating grub_free at 0x3e70 (0x400).
+grub-install: info: locating grub_strndup at 0x7c36 (0x400).
+grub-install: info: locating efi_wrap_7 at 0x49f (0x400).
+grub-install: info: locating grub_named_list_find at 0x7242 (0x400).
+grub-install: info: locating grub_dl_unref at 0x57cf (0x400).
+grub-install: info: locating grub_efidisk_init at 0x134a (0x400).
+grub-install: info: locating grub_disk_dev_unregister at 0x4eb5 (0x400).
+grub-install: info: locating grub_efi_init at 0x2a85 (0x400).
+grub-install: info: locating grub_arch_dl_check_header at 0x744 (0x400).
+grub-install: info: locating grub_arch_dl_relocate_symbols at 0x773 (0x400).
+grub-install: info: locating grub_efi_free_pages at 0x2c44 (0x400).
+grub-install: info: locating grub_printf_ at 0x8775 (0x400).
+grub-install: info: locating grub_efi_get_device_path at 0x2355 (0x400).
+grub-install: info: locating start at 0x400 (0x400).
+grub-install: info: locating grub_efi_modules_addr at 0x21ea (0x400).
+grub-install: info: locating grub_error_pop at 0x68d6 (0x400).
+grub-install: info: locating grub_device_iterate at 0x49da (0x400).
+grub-install: info: locating grub_getkey_noblock at 0x98ad (0x400).
+grub-install: info: locating grub_memalign_dma32 at 0x547 (0x400).
+grub-install: info: locating grub_list_push at 0x7276 (0x400).
+grub-install: info: locating grub_efi_set_text_mode at 0x1db8 (0x400).
+grub-install: info: locating grub_err_printf at 0x87d3 (0x400).
+grub-install: info: locating grub_disk_cache_invalidate_all at 0x4e56 (0x400).
+grub-install: info: locating grub_env_set at 0x64bc (0x400).
+grub-install: info: locating grub_dl_load_core at 0x61d4 (0x400).
+grub-install: info: locating grub_gettext at 0xb690 (0xb4e0).
+grub-install: info: locating grub_memcmp at 0x7a0c (0x400).
+grub-install: info: locating grub_env_get at 0x65ea (0x400).
+grub-install: info: locating efi_wrap_2 at 0x430 (0x400).
+grub-install: info: locating grub_strtoul at 0x81c5 (0x400).
+grub-install: info: locating grub_dma_get_phys at 0x5a9 (0x400).
+grub-install: info: locating grub_mm_init_region at 0x3f86 (0x400).
+grub-install: info: locating grub_disk_cache_table at 0xe440 (0xc690).
+grub-install: info: locating grub_memalign at 0x3c27 (0x400).
+grub-install: info: dealing with the relocation section .rela.text for .text.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0xdfe1 at the offset 0x3.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0xdfd2 at the offset 0xa.
+grub-install: info: relocating an R_X86_64_PC32 entry to 0x6f08 at the offset 0x13.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2a85 at the offset 0x11d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3aa7 at the offset 0x12a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b82 at the offset 0x13c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x165.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b98 at the offset 0x17a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x18b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x19b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x1e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x2af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bb8 at the offset 0x355.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x366.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bd9 at the offset 0x38f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9bfc at the offset 0x410.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x422.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c14 at the offset 0x474.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x485.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x527.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x545.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x57a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x5ac.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x5cd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c3b at the offset 0x5fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0x60c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x638.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c9 at the offset 0x642.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x66d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x694.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb520 at the offset 0x6c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c5f at the offset 0x6cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x6fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x722.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb520 at the offset 0x73b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x749.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x767.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x780.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c3f at the offset 0x7eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x7f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x804.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x810.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c66 at the offset 0x824.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x82e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x838.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x84a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x880.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x88f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c72 at the offset 0x8a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x8b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x8ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x8fb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x90a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8da at the offset 0x917.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c80 at the offset 0x933.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x944.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c8f at the offset 0x958.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x965.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0x977.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x981.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cbb at the offset 0x9d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x9e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cd2 at the offset 0xa18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xa22.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xa31.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xa3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0xa55.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xa61.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0xa6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0xa77.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4e0 at the offset 0xaa4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4eb5 at the offset 0xab6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xaea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ce8 at the offset 0xaff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xb13.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xb25.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xb2f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xb3e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xb48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0xb77.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9cfb at the offset 0xb8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xbb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xbbc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xbcb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xbd5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0xc00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d00 at the offset 0xc15.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xc29.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ced at the offset 0xc3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xc45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xc54.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xc5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xca5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d05 at the offset 0xcb1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xcbe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xcdb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0xd09.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d39 at the offset 0xd24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0xd3d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0xd7f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0xd9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0xdb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0xdd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0xde2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0xe20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0xe7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xe9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d61 at the offset 0xea9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0xeb6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c53 at the offset 0xed3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0xf01.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9d93 at the offset 0xf1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0xf35.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe51 at the offset 0xf4e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe430 at the offset 0xf62.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaba at the offset 0xf6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x11ae at the offset 0xf87.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0xfee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91b at the offset 0xff8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x1004.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x109d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x11ae at the offset 0x10b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a0 at the offset 0x1106.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc698 at the offset 0x1115.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91b at the offset 0x111f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0x113b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4e0 at the offset 0x1147.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ea0 at the offset 0x1151.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc690 at the offset 0x116a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaba at the offset 0x11cd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0x11d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x1204.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x1225.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1238.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fa at the offset 0x12ac.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x12d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a0 at the offset 0x12f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1152 at the offset 0x132c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa34 at the offset 0x1383.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1396.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x13ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x13c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55c0 at the offset 0x13f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x140a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1239 at the offset 0x141d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0x142a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x1443.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9db9 at the offset 0x1457.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x1461.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1479.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x1492.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa34 at the offset 0x14ad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x14c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x15ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9dbf at the offset 0x1645.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e00 at the offset 0x1664.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x1670.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e02 at the offset 0x1684.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x181f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x1832.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1868.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x18a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x18c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x18ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x192d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1963.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1981.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47c at the offset 0x1999.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c16 at the offset 0x19bf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb530 at the offset 0x19c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x19f9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x1a24.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1a41.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x1a59.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb540 at the offset 0x1a6a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x1a74.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b82 at the offset 0x1a81.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1a8d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1aa9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x1ab6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1ac7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x1aec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e08 at the offset 0x1afe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x1b0f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x1b24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1b4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x1b59.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1a98 at the offset 0x1b78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1b8a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x1bad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e27 at the offset 0x1bc9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x1be1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x1bfb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1c05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1a98 at the offset 0x1c5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x1c66.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x1c78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1cb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1ce4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e47 at the offset 0x1d1b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ff7 at the offset 0x1d27.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e52 at the offset 0x1da0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x1dcf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x1dee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x1e01.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x1e1f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e5c at the offset 0x1e3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x1ed3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18dd at the offset 0x1eea.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb550 at the offset 0x1f5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x1f66.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x1f7b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e61 at the offset 0x1fd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e6d at the offset 0x1fe2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e77 at the offset 0x1ff5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9a00 at the offset 0x200e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e88 at the offset 0x2023.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9e94 at the offset 0x2036.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ea0 at the offset 0x204d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eb4 at the offset 0x2062.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ebd at the offset 0x2074.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ec7 at the offset 0x2083.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9efa at the offset 0x209c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ed6 at the offset 0x20b4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ee3 at the offset 0x20c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eea at the offset 0x20de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eee at the offset 0x20f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x2104.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eea at the offset 0x211e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9eee at the offset 0x2134.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x2147.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ef2 at the offset 0x2176.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ef6 at the offset 0x21a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9a28 at the offset 0x21be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f0b at the offset 0x21d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f1c at the offset 0x21ee.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f29 at the offset 0x2205.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f42 at the offset 0x221c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f4e at the offset 0x2237.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f5a at the offset 0x224e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f74 at the offset 0x2272.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9f7d at the offset 0x2289.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9fa8 at the offset 0x22be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9fd3 at the offset 0x230c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa016 at the offset 0x2388.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa035 at the offset 0x23ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa04a at the offset 0x23cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa05a at the offset 0x23e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa064 at the offset 0x23f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ab8 at the offset 0x2415.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa07a at the offset 0x242b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0b3 at the offset 0x247e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0c5 at the offset 0x2497.
+grub-install: info: relocating an R_X86_64_64 entry to 0x19e8 at the offset 0x24a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x24b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18dd at the offset 0x24e3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x24f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0cb at the offset 0x2502.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2513.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa0d5 at the offset 0x252c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa111 at the offset 0x256b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa133 at the offset 0x257b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa123 at the offset 0x2593.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa144 at the offset 0x25b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x25c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x260e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x21ea at the offset 0x2688.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x2694.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3927 at the offset 0x269e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x31e7 at the offset 0x26aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x26b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x26d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x134a at the offset 0x26e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x26ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x2704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x16cc at the offset 0x271c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2289 at the offset 0x272c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f8 at the offset 0x2747.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0x276b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe51 at the offset 0x2785.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3a28 at the offset 0x2792.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0x27bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a2 at the offset 0x27e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2849.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x285c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x28a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x28c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x2913.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2957.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x2976.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x29c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x29e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2a16.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2a25.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2a32.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2a45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2a52.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2a63.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2a76.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2a88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2a9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2ac0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x2ae2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x2b1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2b46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x2b7c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2b8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2b96.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2ba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2baa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2bb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2bd2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa176 at the offset 0x2be5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x2bf6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2c07.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x2c14.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2c23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x2c2e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2c3d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2c47.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2c51.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2c5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2c6f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2c79.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa159 at the offset 0x2c88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x2c97.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2cac.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x2cb9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x2cc6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2ce4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x2cee.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa195 at the offset 0x2cff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1b5 at the offset 0x2d10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x2d1c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x2d34.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2d40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b8 at the offset 0x2d53.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6b0 at the offset 0x2d63.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2d70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c0 at the offset 0x2d81.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6c8 at the offset 0x2d93.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d0 at the offset 0x2da5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2b9c at the offset 0x2dc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5d3 at the offset 0x2dcb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x2df9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1dd at the offset 0x2e12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x2e3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x2e54.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa1f4 at the offset 0x2ea5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x2eb1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x2f17.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x3052.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa20a at the offset 0x306e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3078.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3f86 at the offset 0x308a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa23f at the offset 0x30aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x30c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x30dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x30f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x323a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x3252.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3269.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3278.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x3298.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x32a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x32b7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x32ed.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3311.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3323.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x3343.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3352.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x336a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x337a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x3388.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x339c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x33b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x33c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x33d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e9 at the offset 0x33ff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e8 at the offset 0x340a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x341e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x342c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x3441.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x3454.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9ae0 at the offset 0x34af.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x34c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x34d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x34e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x3509.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x352f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa251 at the offset 0x3540.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x354f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x355b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x356b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18550 at the offset 0x3575.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb578 at the offset 0x3581.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3590.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x359a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0x35a4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x35b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x35c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x35d2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18538 at the offset 0x35dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5b8 at the offset 0x35e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x35f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x3601.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0x360c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x3618.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0x362b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3635.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb560 at the offset 0x3641.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x364d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb5a0 at the offset 0x365c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d8 at the offset 0x3679.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x3686.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6d8 at the offset 0x36ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x3730.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x3749.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3a67 at the offset 0x3753.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4187 at the offset 0x375d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa26e at the offset 0x3769.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3775.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa27b at the offset 0x378b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x379a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa290 at the offset 0x37c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x37d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2a2 at the offset 0x37ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x37f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2c3 at the offset 0x3805.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x382b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3870.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2db at the offset 0x38b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x38c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2ec at the offset 0x38de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x38ea.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4e56 at the offset 0x39e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa30d at the offset 0x3a00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x3a11.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x3a2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x3a3f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x3a5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3b7f at the offset 0x3a7f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa2ec at the offset 0x3ace.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x3ada.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3bb4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3bc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3c22.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0x3c8b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x3cd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3cf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3b7f at the offset 0x3d05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x3d30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x3d52.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3d65.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e0 at the offset 0x3d7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e0 at the offset 0x3d8c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x3d9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x3dc2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31b at the offset 0x3e0a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x3e23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x3e3e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0x3ecd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x3edc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31e at the offset 0x3eed.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31c at the offset 0x3ef7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x3f04.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa31f at the offset 0x3f0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x3f28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa325 at the offset 0x3f32.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4322 at the offset 0x3f51.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49da at the offset 0x3f5b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa333 at the offset 0x3f67.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x3f71.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x3f7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0x3f94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x3fa3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x3fb9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0x3fd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x3fec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa335 at the offset 0x400f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4020.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4031.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4041.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa32b at the offset 0x4057.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa346 at the offset 0x4064.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x4070.
+grub-install: info: relocating an R_X86_64_64 entry to 0x42e7 at the offset 0x4085.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa333 at the offset 0x4097.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x40a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x40ad.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x40be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x40c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x40d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa35f at the offset 0x40f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4103.
+grub-install: info: relocating an R_X86_64_64 entry to 0x621a at the offset 0x4121.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x412d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x4141.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa35f at the offset 0x4155.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4166.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6618 at the offset 0x4173.
+grub-install: info: relocating an R_X86_64_64 entry to 0x669c at the offset 0x418d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x4197.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa375 at the offset 0x41b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x41bf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x41de.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa37c at the offset 0x41f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4209.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x421f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa38e at the offset 0x4238.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3ab at the offset 0x4242.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4584 at the offset 0x424c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3ba at the offset 0x4256.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0x4260.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0x4278.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3be at the offset 0x4285.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3de at the offset 0x428f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x454f at the offset 0x4299.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3e5 at the offset 0x42a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa3eb at the offset 0x42b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa402 at the offset 0x42bc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4342 at the offset 0x42c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa408 at the offset 0x42d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa40b at the offset 0x42e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa41c at the offset 0x42ed.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44ec at the offset 0x42f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa423 at the offset 0x4301.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4313.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0x433a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4351.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa42a at the offset 0x4366.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x4372.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4385.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa430 at the offset 0x43c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x43d2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa430 at the offset 0x43eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa435 at the offset 0x43f5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4406.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x441b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x443a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e8 at the offset 0x444e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4460.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4488.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x44a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x44c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x44d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x44e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x4514.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x452c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x470c at the offset 0x4546.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0x4558.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4565.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x4574.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4585.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x45c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x45f7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x48ed at the offset 0x461c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4675.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x46d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4744.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4776.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x478a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x47a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4a48 at the offset 0x47f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x480d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4aa6 at the offset 0x4827.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x483d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x48a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4afd at the offset 0x48c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x48d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x48e9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4903.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4951.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x499d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x49a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa44d at the offset 0x49b6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x49c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x49d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x49de.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x49ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x4a08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4a5a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183c8 at the offset 0x4a65.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x4a70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4aa2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4ab7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4ac1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa46e at the offset 0x4aec.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4af6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4b05.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4b17.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x4b3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4b45.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4b51.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4b6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa47d at the offset 0x4b93.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4b9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4bae.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4bbf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x4bd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x4c2d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x4c55.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x4c6a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x4c7e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x4c9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4ca7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4cd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa48e at the offset 0x4cf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4d03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fd0 at the offset 0x4d24.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4bc at the offset 0x4d39.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4d48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0x4d56.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4d62.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4e56 at the offset 0x4d80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6f0 at the offset 0x4d91.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x4da8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x4db4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x4dc7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4ce at the offset 0x4dd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4de0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4def.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4df9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x4e08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x4e17.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4e4 at the offset 0x4e2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4e3b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa4f8 at the offset 0x4ebc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4ecd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa526 at the offset 0x4f1b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x4f2c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x4f3c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x4f4a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa554 at the offset 0x4f57.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa45d at the offset 0x4f61.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa462 at the offset 0x4f70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x4f7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x4f87.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4bc1 at the offset 0x4fc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4a48 at the offset 0x5008.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x505d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4aa6 at the offset 0x507c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4afd at the offset 0x50c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5189.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4bc1 at the offset 0x51a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x51ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x51f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x522a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55e8 at the offset 0x5299.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa57c at the offset 0x52b3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x52c5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x52d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x530c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5324.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x532f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x5372.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x53a4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x57cf at the offset 0x53e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5436.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5440.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x546a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x547b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x54cc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x54e6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x54fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa593 at the offset 0x5532.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x553c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5548.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5563.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5bf at the offset 0x5578.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5e0 at the offset 0x55a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x55b7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x744 at the offset 0x55c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa603 at the offset 0x55e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa62a at the offset 0x5608.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5619.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x562f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa644 at the offset 0x5651.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x565d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x566c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5676.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa656 at the offset 0x5683.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x5690.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa666 at the offset 0x56a6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x56b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa67b at the offset 0x56d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x56db.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa689 at the offset 0x56f4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa698 at the offset 0x570d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6a7 at the offset 0x571e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x572b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6b0 at the offset 0x573c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x574b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x5760.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6c5 at the offset 0x5775.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5626 at the offset 0x5782.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x579b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x57ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x57e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x57f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5802.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x5820.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0x588d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x58d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x58e3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x592d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x5940.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6ce at the offset 0x59c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x59d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b40 at the offset 0x5a4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5a8f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc710 at the offset 0x5aa2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x5b37.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x5b85.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x5b94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5ba3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6de at the offset 0x5bad.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6ec at the offset 0x5bd4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa6fa at the offset 0x5c22.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5c33.
+grub-install: info: relocating an R_X86_64_64 entry to 0x773 at the offset 0x5c5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x5cbc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x5ce7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa713 at the offset 0x5cf5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5cff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa72f at the offset 0x5d20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5d2a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d39.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa740 at the offset 0x5d4b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5ad at the offset 0x5d55.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa5b5 at the offset 0x5d64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5696 at the offset 0x5d73.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa753 at the offset 0x5d8b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5d9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5926 at the offset 0x5dda.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x5e03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2117 at the offset 0x5e1e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa769 at the offset 0x5e41.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5e52.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b50 at the offset 0x5e60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x5e7a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x5e94.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a68 at the offset 0x5eab.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x5ec0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5ed1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x61d4 at the offset 0x5ee9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5efd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x5f21.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa794 at the offset 0x5f30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55e8 at the offset 0x5f45.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa794 at the offset 0x5f62.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa79b at the offset 0x5f6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x5f7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7b3 at the offset 0x5f96.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x5fa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x621a at the offset 0x5fb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x5fc9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x5fe1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7c8 at the offset 0x5ff4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6005.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x601d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x6027.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x6041.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x6081.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x608d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x60c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x60f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6119.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x612f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x614b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x616f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x61c7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x61dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x61ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x621e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x6247.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x6251.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x627a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x62a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x62bd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x6335.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x634b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x6358.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6367.
+grub-install: info: relocating an R_X86_64_64 entry to 0x645b at the offset 0x638b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7d9 at the offset 0x63a1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x63ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x63db.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x6415.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x642e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x6438.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x644b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd780 at the offset 0x645c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x6473.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x647f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x648f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x649a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64a5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x64b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x64c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x64cc.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64d7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd780 at the offset 0x64e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd770 at the offset 0x64f1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x6509.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x651b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6525.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6539.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6547.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7da at the offset 0x6556.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x6560.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x656c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x6579.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x6586.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x6591.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x659b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x65ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa7e6 at the offset 0x65ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x65c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1a8 at the offset 0x65d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x65f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa80e at the offset 0x6608.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6617.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x662a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6650.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa822 at the offset 0x667e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x668f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184e0 at the offset 0x66d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x6725.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6734.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6744.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0x6754.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x676b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x6791.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x67a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x67bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x67d5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb640 at the offset 0x67ff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0x6812.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x6843.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6858.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x6862.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x6899.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0x68aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x68b4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x68be.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x68cf.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0x68e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0x68ec.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x68f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x6907.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa847 at the offset 0x692a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x693c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5270 at the offset 0x6964.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x6a5c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x6aba.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x6aff.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6b0e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa86b at the offset 0x6b20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6b31.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x6b58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6b6c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x6b9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa882 at the offset 0x6bca.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6bdb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x6c0a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6c18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0x6c46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x6c50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa89b at the offset 0x6c68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ac at the offset 0x6c72.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8af at the offset 0x6c81.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d57 at the offset 0x6c90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8b9 at the offset 0x6c9a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6caa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x6cbd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8bb at the offset 0x6ccf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ac at the offset 0x6cd9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8af at the offset 0x6ce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x6cf5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d1a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0x6d2d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d41.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0x6d64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d57 at the offset 0x6d73.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8b9 at the offset 0x6d7d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6d8e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6d9b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6da9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dbf.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dca.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x6dd7.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0x6de1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6df4.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c0 at the offset 0x6dff.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8d1 at the offset 0x6e1d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x6e2e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0x6e46.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x6ec8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x6ee8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x6ef8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x6f05.
+grub-install: info: relocating an R_X86_64_64 entry to 0x51a at the offset 0x6f23.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x6f37.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x6f5e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x6f9f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x6fb2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x6fbe.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x6fd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x6fe9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x993e at the offset 0x7012.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x7020.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x7057.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ef at the offset 0x7061.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x706b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7077.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x7086.
+grub-install: info: relocating an R_X86_64_64 entry to 0x61d4 at the offset 0x70a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x70b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x70c9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x72bf at the offset 0x7122.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x712c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6728 at the offset 0x7136.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2aeb at the offset 0x714a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ee at the offset 0x7177.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f7 at the offset 0x7181.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x718b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8fe at the offset 0x71ab.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x71b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8fe at the offset 0x71c1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x71cb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x71da.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0x71fd.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x721c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x7244.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x72aa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x72c2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x72dd.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa906 at the offset 0x7317.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x7321.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7342.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8ee at the offset 0x7356.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f7 at the offset 0x7367.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7373.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa911 at the offset 0x738a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x7394.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x73a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x73b2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x73bc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x73cb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x73dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x73e6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8f2 at the offset 0x73f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa911 at the offset 0x73fe.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x740a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0x741c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4632 at the offset 0x7426.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1c8 at the offset 0x7432.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8f62 at the offset 0x7444.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa918 at the offset 0x7450.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x745a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x7466.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x7474.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa918 at the offset 0x747e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7487.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0x7494.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x74af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9750 at the offset 0x74d9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x74ef.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa91f at the offset 0x7507.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7513.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x7525.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa91f at the offset 0x753c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x7548.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x756f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x75d6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x75e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x76d3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7ad0 at the offset 0x771a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7ad0 at the offset 0x778b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x783a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x7858.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x7879.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x7895.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x78a7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x78c7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x7946.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x79f2.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa924 at the offset 0x7a03.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x7a14.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa939 at the offset 0x7a45.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x7a56.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x7b84.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x7b9c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x7bcc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7bd6.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9b68 at the offset 0x7d20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7dc7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7e6d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0x7eb7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x8010.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x804d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa94d at the offset 0x8190.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x826d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x8277.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x8288.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x82a9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x82c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x82dc.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x82e5.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cc at the offset 0x82f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cd at the offset 0x82f9.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2ce at the offset 0x8302.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2cf at the offset 0x830d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x832e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x833a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1d0 at the offset 0x8349.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x835b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x83b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x83c4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x8413.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x8426.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa954 at the offset 0x843d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa95a at the offset 0x846a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7b0e at the offset 0x8477.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa95e at the offset 0x8499.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x84a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x84d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x84e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x850b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x853c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x854d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x85a3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7e79 at the offset 0x85b9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x85e1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81d1 at the offset 0x8603.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795e at the offset 0x861a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x862b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x89b2 at the offset 0x868d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x869f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0x86e2.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x86f6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa966 at the offset 0x8704.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x8710.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa970 at the offset 0x8720.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0x872e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e7e at the offset 0x873a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x8783.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0x87a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x87b5.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x87eb.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb6a0 at the offset 0x8841.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x8876.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8c1a at the offset 0x895d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8967.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8bd0 at the offset 0x8998.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x89a7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0x89e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8a4e.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b44 at the offset 0x8a64.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8bd0 at the offset 0x8a83.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x8ab9.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x8ade.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8b07.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8b12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b60 at the offset 0x8b65.
+grub-install: info: relocating an R_X86_64_64 entry to 0x94ce at the offset 0x8b70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8b60 at the offset 0x8b9d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8bae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8bc1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0x8c12.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x8c24.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9471 at the offset 0x8c65.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8c75.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a4d at the offset 0x8c98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8cc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8cd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8ce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8d48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x8d67.
+grub-install: info: relocating an R_X86_64_64 entry to 0x939d at the offset 0x8d95.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x8daa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x8dd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa988 at the offset 0x8df8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x8e02.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x8e34.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0x8e59.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa989 at the offset 0x8e63.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0x8e72.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x8e83.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0x8f2c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa98c at the offset 0x8f41.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9c8 at the offset 0x8f55.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0x8f5f.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9be at the offset 0x8f71.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x8f80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9304 at the offset 0x8fc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0x9024.
+grub-install: info: relocating an R_X86_64_64 entry to 0x939d at the offset 0x9036.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x904d.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9304 at the offset 0x9086.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0x909b.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x90bb.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8cd3 at the offset 0x90d1.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0x911c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x914e.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x9173.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0x9183.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9d9 at the offset 0x91ae.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8775 at the offset 0x91ba.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x91c6.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9f0 at the offset 0x91d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa9f5 at the offset 0x91e4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x91f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x9201.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x9216.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa0e at the offset 0x9228.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa0b at the offset 0x9235.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x924a.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x9261.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x926b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x928c.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x92b1.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x92db.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x92e7.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0x92f3.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa1c at the offset 0x930d.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x9317.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x9323.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe2d0 at the offset 0x932f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0x9339.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa1e at the offset 0x9353.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0x935f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0x936f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9625 at the offset 0x9379.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x938f.
+grub-install: info: relocating an R_X86_64_64 entry to 0x94ce at the offset 0x93af.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0x93c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x940a.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x9442.
+grub-install: info: relocating an R_X86_64_64 entry to 0x97cc at the offset 0x9459.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x947b.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d8 at the offset 0x94af.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d0 at the offset 0x94c3.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0x94d4.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x94fa.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98ad at the offset 0x9522.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0x952c.
+grub-install: info: relocating an R_X86_64_64 entry to 0x56d3 at the offset 0x9541.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7f0 at the offset 0x954c.
+grub-install: info: dealing with the relocation section .rela.rodata for .rodata.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2419 at the offset 0x0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2430 at the offset 0x8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2443 at the offset 0x10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x245d at the offset 0x18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x246f at the offset 0x20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25c9 at the offset 0x28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25e4 at the offset 0x30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x25fb at the offset 0x38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2616 at the offset 0x40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x262d at the offset 0x48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x266d at the offset 0x50.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0x58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0x60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x277e at the offset 0x68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27e4 at the offset 0x70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x267f at the offset 0x78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x26b6 at the offset 0x80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2704 at the offset 0x88.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27a1 at the offset 0x90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2644 at the offset 0x98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0xa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27f6 at the offset 0xa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x27c5 at the offset 0xb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2820 at the offset 0xb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2874 at the offset 0xc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2892 at the offset 0xc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x28b0 at the offset 0xd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2922 at the offset 0xd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5e56 at the offset 0x140.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5e56 at the offset 0x148.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5f4b at the offset 0x150.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5fef at the offset 0x158.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6013 at the offset 0x160.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8148 at the offset 0x168.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x170.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x178.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8168 at the offset 0x180.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x188.
+grub-install: info: relocating an R_X86_64_64 entry to 0x818a at the offset 0x190.
+grub-install: info: dealing with the relocation section .rela.data for .data.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9c4b at the offset 0x0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xec7 at the offset 0x10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc1b at the offset 0x18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xbe6 at the offset 0x20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1096 at the offset 0x28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x128e at the offset 0x30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa266 at the offset 0x90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3829 at the offset 0xa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa266 at the offset 0xd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3796 at the offset 0xd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3775 at the offset 0xe0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x34db at the offset 0xe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x36a3 at the offset 0xf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x370f at the offset 0x100.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3667 at the offset 0x108.
+grub-install: info: relocating an R_X86_64_64 entry to 0x38c2 at the offset 0x110.
+grub-install: info: relocating an R_X86_64_64 entry to 0x37c3 at the offset 0x118.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3741 at the offset 0x120.
+grub-install: info: relocating an R_X86_64_64 entry to 0xd700 at the offset 0x150.
+grub-install: info: relocating an R_X86_64_64 entry to 0xa8e4 at the offset 0x170.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6e4f at the offset 0x180.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d5d at the offset 0x188.
+grub-install: info: relocating an R_X86_64_64 entry to 0x795a at the offset 0x1b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9855 at the offset 0x300.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa37 at the offset 0x310.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417 at the offset 0x318.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa42 at the offset 0x328.
+grub-install: info: relocating an R_X86_64_64 entry to 0x422 at the offset 0x330.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa4d at the offset 0x340.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4cc at the offset 0x348.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa59 at the offset 0x358.
+grub-install: info: relocating an R_X86_64_64 entry to 0x430 at the offset 0x360.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa64 at the offset 0x370.
+grub-install: info: relocating an R_X86_64_64 entry to 0x43e at the offset 0x378.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa6f at the offset 0x388.
+grub-install: info: relocating an R_X86_64_64 entry to 0x44f at the offset 0x390.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa7a at the offset 0x3a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x463 at the offset 0x3a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa85 at the offset 0x3b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47c at the offset 0x3c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa90 at the offset 0x3d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49f at the offset 0x3d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaa9b at the offset 0x3e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe410 at the offset 0x3f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaaad at the offset 0x400.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb630 at the offset 0x408.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaac2 at the offset 0x418.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4899 at the offset 0x420.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaad4 at the offset 0x430.
+grub-install: info: relocating an R_X86_64_64 entry to 0x49da at the offset 0x438.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaae8 at the offset 0x448.
+grub-install: info: relocating an R_X86_64_64 entry to 0x47bb at the offset 0x450.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaaf9 at the offset 0x460.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe440 at the offset 0x468.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab0f at the offset 0x478.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ee6 at the offset 0x480.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab1f at the offset 0x490.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe438 at the offset 0x498.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab32 at the offset 0x4a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4ea0 at the offset 0x4b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab49 at the offset 0x4c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4eb5 at the offset 0x4c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab62 at the offset 0x4d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe430 at the offset 0x4e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab7a at the offset 0x4f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe420 at the offset 0x4f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xab98 at the offset 0x508.
+grub-install: info: relocating an R_X86_64_64 entry to 0x55c0 at the offset 0x510.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabab at the offset 0x520.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4f8a at the offset 0x528.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabba at the offset 0x538.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5270 at the offset 0x540.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabc9 at the offset 0x550.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe428 at the offset 0x558.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabde at the offset 0x568.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7cd7 at the offset 0x570.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabec at the offset 0x580.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc700 at the offset 0x588.
+grub-install: info: relocating an R_X86_64_64 entry to 0xabf9 at the offset 0x598.
+grub-install: info: relocating an R_X86_64_64 entry to 0x631d at the offset 0x5a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac06 at the offset 0x5b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5926 at the offset 0x5b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac1f at the offset 0x5c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5792 at the offset 0x5d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac2b at the offset 0x5e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x580c at the offset 0x5e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac3a at the offset 0x5f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x57cf at the offset 0x600.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac48 at the offset 0x610.
+grub-install: info: relocating an R_X86_64_64 entry to 0x599 at the offset 0x618.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac56 at the offset 0x628.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5a9 at the offset 0x630.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac68 at the offset 0x640.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5a5 at the offset 0x648.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac7a at the offset 0x658.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c6e at the offset 0x660.
+grub-install: info: relocating an R_X86_64_64 entry to 0xac92 at the offset 0x670.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2d32 at the offset 0x678.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacae at the offset 0x688.
+grub-install: info: relocating an R_X86_64_64 entry to 0x29f5 at the offset 0x690.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaccc at the offset 0x6a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2f18 at the offset 0x6a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacea at the offset 0x6b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2c44 at the offset 0x6c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xacfe at the offset 0x6d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2355 at the offset 0x6d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad17 at the offset 0x6e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2289 at the offset 0x6f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad2d at the offset 0x700.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e63 at the offset 0x708.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad47 at the offset 0x718.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2de4 at the offset 0x720.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad5f at the offset 0x730.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ff7 at the offset 0x738.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad75 at the offset 0x748.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e8 at the offset 0x750.
+grub-install: info: relocating an R_X86_64_64 entry to 0xad8b at the offset 0x760.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6a8 at the offset 0x768.
+grub-install: info: relocating an R_X86_64_64 entry to 0xada0 at the offset 0x778.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c5f at the offset 0x780.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadb7 at the offset 0x790.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1c16 at the offset 0x798.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadd0 at the offset 0x7a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f8 at the offset 0x7b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xade4 at the offset 0x7c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1d5a at the offset 0x7c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xadfb at the offset 0x7d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2370 at the offset 0x7e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae16 at the offset 0x7f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x2117 at the offset 0x7f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae2b at the offset 0x808.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1db8 at the offset 0x810.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae42 at the offset 0x820.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1f1d at the offset 0x828.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae58 at the offset 0x838.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1ec2 at the offset 0x840.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae79 at the offset 0x850.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e3f at the offset 0x858.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae88 at the offset 0x868.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3e0 at the offset 0x870.
+grub-install: info: relocating an R_X86_64_64 entry to 0xae9e at the offset 0x880.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1581 at the offset 0x888.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaebd at the offset 0x898.
+grub-install: info: relocating an R_X86_64_64 entry to 0x16cc at the offset 0x8a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaeda at the offset 0x8b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6788 at the offset 0x8b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaeea at the offset 0x8c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x65ea at the offset 0x8d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaef7 at the offset 0x8e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x64bc at the offset 0x8e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf04 at the offset 0x8f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6618 at the offset 0x900.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf13 at the offset 0x910.
+grub-install: info: relocating an R_X86_64_64 entry to 0x669c at the offset 0x918.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf2e at the offset 0x928.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d4 at the offset 0x930.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf46 at the offset 0x940.
+grub-install: info: relocating an R_X86_64_64 entry to 0x183d0 at the offset 0x948.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf52 at the offset 0x958.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184d0 at the offset 0x960.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf5d at the offset 0x970.
+grub-install: info: relocating an R_X86_64_64 entry to 0x67ce at the offset 0x978.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf68 at the offset 0x988.
+grub-install: info: relocating an R_X86_64_64 entry to 0x68d6 at the offset 0x990.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf77 at the offset 0x9a0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x684a at the offset 0x9a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf87 at the offset 0x9b8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x1e7e at the offset 0x9c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf91 at the offset 0x9d0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a9c at the offset 0x9d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaf9c at the offset 0x9e8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b05 at the offset 0x9f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafac at the offset 0xa00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184f0 at the offset 0xa08.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafc2 at the offset 0xa18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18510 at the offset 0xa20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xafdc at the offset 0xa30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x69dd at the offset 0xa38.
+grub-install: info: relocating an R_X86_64_64 entry to 0xaff6 at the offset 0xa48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6b50 at the offset 0xa50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb005 at the offset 0xa60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x184e0 at the offset 0xa68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb01d at the offset 0xa78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a68 at the offset 0xa80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb02c at the offset 0xa90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6d22 at the offset 0xa98.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb03b at the offset 0xaa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e70 at the offset 0xab0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb045 at the offset 0xac0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b0 at the offset 0xac8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb05b at the offset 0xad8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe1b8 at the offset 0xae0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb068 at the offset 0xaf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7033 at the offset 0xaf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb076 at the offset 0xb08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x417b at the offset 0xb10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb087 at the offset 0xb20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x991f at the offset 0xb28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb093 at the offset 0xb38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98ad at the offset 0xb40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0a7 at the offset 0xb50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb690 at the offset 0xb58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0b4 at the offset 0xb68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7aae at the offset 0xb70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0c1 at the offset 0xb80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7276 at the offset 0xb88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0d0 at the offset 0xb98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7290 at the offset 0xba0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0e1 at the offset 0xbb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x534 at the offset 0xbb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0f3 at the offset 0xbc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e25 at the offset 0xbd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb0ff at the offset 0xbe0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3c27 at the offset 0xbe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb10d at the offset 0xbf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x547 at the offset 0xc00.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb121 at the offset 0xc10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0xc18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb12d at the offset 0xc28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0xc30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb13a at the offset 0xc40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0xc48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb146 at the offset 0xc58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x4195 at the offset 0xc60.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb156 at the offset 0xc70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe408 at the offset 0xc78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb163 at the offset 0xc88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3f0 at the offset 0xc90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb170 at the offset 0xca0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7242 at the offset 0xca8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb185 at the offset 0xcb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xc6e8 at the offset 0xcc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb193 at the offset 0xcd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d0 at the offset 0xcd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1ac at the offset 0xce8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8c1a at the offset 0xcf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1c6 at the offset 0xd00.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8cd3 at the offset 0xd08.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1e0 at the offset 0xd18.
+grub-install: info: relocating an R_X86_64_64 entry to 0x91d0 at the offset 0xd20.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb1f8 at the offset 0xd30.
+grub-install: info: relocating an R_X86_64_64 entry to 0x9164 at the offset 0xd38.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb20f at the offset 0xd48.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18530 at the offset 0xd50.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb227 at the offset 0xd60.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8fd0 at the offset 0xd68.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb23c at the offset 0xd78.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6a2 at the offset 0xd80.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb255 at the offset 0xd90.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5d3 at the offset 0xd98.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb266 at the offset 0xda8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x5ac at the offset 0xdb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb27c at the offset 0xdc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6944 at the offset 0xdc8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb28d at the offset 0xdd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x87d3 at the offset 0xde0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb299 at the offset 0xdf0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8775 at the offset 0xdf8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2a6 at the offset 0xe08.
+grub-install: info: relocating an R_X86_64_64 entry to 0x79d3 at the offset 0xe10.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2b1 at the offset 0xe20.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8822 at the offset 0xe28.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2c3 at the offset 0xe38.
+grub-install: info: relocating an R_X86_64_64 entry to 0x40bf at the offset 0xe40.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2d0 at the offset 0xe50.
+grub-install: info: relocating an R_X86_64_64 entry to 0x98f7 at the offset 0xe58.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2dd at the offset 0xe68.
+grub-install: info: relocating an R_X86_64_64 entry to 0x41be at the offset 0xe70.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb2f8 at the offset 0xe80.
+grub-install: info: relocating an R_X86_64_64 entry to 0x6728 at the offset 0xe88.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb314 at the offset 0xe98.
+grub-install: info: relocating an R_X86_64_64 entry to 0x896d at the offset 0xea0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb322 at the offset 0xeb0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a83 at the offset 0xeb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb32e at the offset 0xec8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a2e at the offset 0xed0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb33a at the offset 0xee0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x79c0 at the offset 0xee8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb346 at the offset 0xef8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c8f at the offset 0xf00.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb352 at the offset 0xf10.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c25 at the offset 0xf18.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb35e at the offset 0xf28.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a4d at the offset 0xf30.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb36b at the offset 0xf40.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7c36 at the offset 0xf48.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb378 at the offset 0xf58.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a99 at the offset 0xf60.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb385 at the offset 0xf70.
+grub-install: info: relocating an R_X86_64_64 entry to 0x81c5 at the offset 0xf78.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb392 at the offset 0xf88.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7d3d at the offset 0xf90.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3a0 at the offset 0xfa0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7b0e at the offset 0xfa8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3ad at the offset 0xfb8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e8 at the offset 0xfc0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3c7 at the offset 0xfd0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18540 at the offset 0xfd8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3d8 at the offset 0xfe8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18550 at the offset 0xff0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb3f2 at the offset 0x1000.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e9 at the offset 0x1008.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb409 at the offset 0x1018.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18548 at the offset 0x1020.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb41b at the offset 0x1030.
+grub-install: info: relocating an R_X86_64_64 entry to 0x18538 at the offset 0x1038.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb436 at the offset 0x1048.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe3d8 at the offset 0x1050.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb449 at the offset 0x1060.
+grub-install: info: relocating an R_X86_64_64 entry to 0xe400 at the offset 0x1068.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb457 at the offset 0x1078.
+grub-install: info: relocating an R_X86_64_64 entry to 0x42af at the offset 0x1080.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb46f at the offset 0x1090.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8666 at the offset 0x1098.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb47c at the offset 0x10a8.
+grub-install: info: relocating an R_X86_64_64 entry to 0x88fd at the offset 0x10b0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb48b at the offset 0x10c0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x8a4d at the offset 0x10c8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb49a at the offset 0x10d8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb7e0 at the offset 0x10e0.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4a5 at the offset 0x10f0.
+grub-install: info: relocating an R_X86_64_64 entry to 0x89b2 at the offset 0x10f8.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4b5 at the offset 0x1108.
+grub-install: info: relocating an R_X86_64_64 entry to 0x3e36 at the offset 0x1110.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4c1 at the offset 0x1120.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7a0c at the offset 0x1128.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4c8 at the offset 0x1138.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x1140.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4cf at the offset 0x1150.
+grub-install: info: relocating an R_X86_64_64 entry to 0x797a at the offset 0x1158.
+grub-install: info: relocating an R_X86_64_64 entry to 0xb4d7 at the offset 0x1168.
+grub-install: info: relocating an R_X86_64_64 entry to 0x7baf at the offset 0x1170.
+grub-install: info: translating the relocation section .rela.text.
+grub-install: info: adding a relocation entry for 0x51d.
+grub-install: info: adding a relocation entry for 0x52a.
+grub-install: info: adding a relocation entry for 0x53c.
+grub-install: info: adding a relocation entry for 0x565.
+grub-install: info: adding a relocation entry for 0x57a.
+grub-install: info: adding a relocation entry for 0x58b.
+grub-install: info: adding a relocation entry for 0x59b.
+grub-install: info: adding a relocation entry for 0x5e0.
+grub-install: info: adding a relocation entry for 0x6af.
+grub-install: info: adding a relocation entry for 0x755.
+grub-install: info: adding a relocation entry for 0x766.
+grub-install: info: adding a relocation entry for 0x78f.
+grub-install: info: adding a relocation entry for 0x810.
+grub-install: info: adding a relocation entry for 0x822.
+grub-install: info: adding a relocation entry for 0x874.
+grub-install: info: adding a relocation entry for 0x885.
+grub-install: info: adding a relocation entry for 0x8fd.
+grub-install: info: adding a relocation entry for 0x927.
+grub-install: info: adding a relocation entry for 0x945.
+grub-install: info: adding a relocation entry for 0x97a.
+grub-install: info: adding a relocation entry for 0x9ac.
+grub-install: info: adding a relocation entry for 0x9cd.
+grub-install: info: adding a relocation entry for 0x9fa.
+grub-install: info: adding a relocation entry for 0xa0c.
+grub-install: info: adding a relocation entry for 0xa38.
+grub-install: info: adding a relocation entry for 0xa42.
+grub-install: info: adding a relocation entry for 0xa6d.
+grub-install: info: adding a relocation entry for 0xa94.
+grub-install: info: adding a relocation entry for 0xac0.
+grub-install: info: adding a relocation entry for 0xacf.
+grub-install: info: adding a relocation entry for 0xafd.
+grub-install: info: adding a relocation entry for 0xb22.
+grub-install: info: adding a relocation entry for 0xb3b.
+grub-install: info: adding a relocation entry for 0xb49.
+grub-install: info: adding a relocation entry for 0xb67.
+grub-install: info: adding a relocation entry for 0xb80.
+grub-install: info: adding a relocation entry for 0xbc6.
+grub-install: info: adding a relocation entry for 0xbeb.
+grub-install: info: adding a relocation entry for 0xbf5.
+grub-install: info: adding a relocation entry for 0xc04.
+grub-install: info: adding a relocation entry for 0xc10.
+grub-install: info: adding a relocation entry for 0xc24.
+grub-install: info: adding a relocation entry for 0xc2e.
+grub-install: info: adding a relocation entry for 0xc38.
+grub-install: info: adding a relocation entry for 0xc4a.
+grub-install: info: adding a relocation entry for 0xc80.
+grub-install: info: adding a relocation entry for 0xc8f.
+grub-install: info: adding a relocation entry for 0xca5.
+grub-install: info: adding a relocation entry for 0xcb6.
+grub-install: info: adding a relocation entry for 0xcc1.
+grub-install: info: adding a relocation entry for 0xcec.
+grub-install: info: adding a relocation entry for 0xcfb.
+grub-install: info: adding a relocation entry for 0xd0a.
+grub-install: info: adding a relocation entry for 0xd17.
+grub-install: info: adding a relocation entry for 0xd33.
+grub-install: info: adding a relocation entry for 0xd44.
+grub-install: info: adding a relocation entry for 0xd58.
+grub-install: info: adding a relocation entry for 0xd65.
+grub-install: info: adding a relocation entry for 0xd77.
+grub-install: info: adding a relocation entry for 0xd81.
+grub-install: info: adding a relocation entry for 0xdd4.
+grub-install: info: adding a relocation entry for 0xde5.
+grub-install: info: adding a relocation entry for 0xe18.
+grub-install: info: adding a relocation entry for 0xe22.
+grub-install: info: adding a relocation entry for 0xe31.
+grub-install: info: adding a relocation entry for 0xe3b.
+grub-install: info: adding a relocation entry for 0xe55.
+grub-install: info: adding a relocation entry for 0xe61.
+grub-install: info: adding a relocation entry for 0xe6c.
+grub-install: info: adding a relocation entry for 0xe77.
+grub-install: info: adding a relocation entry for 0xea4.
+grub-install: info: adding a relocation entry for 0xeb6.
+grub-install: info: adding a relocation entry for 0xeea.
+grub-install: info: adding a relocation entry for 0xeff.
+grub-install: info: adding a relocation entry for 0xf13.
+grub-install: info: adding a relocation entry for 0xf25.
+grub-install: info: adding a relocation entry for 0xf2f.
+grub-install: info: adding a relocation entry for 0xf3e.
+grub-install: info: adding a relocation entry for 0xf48.
+grub-install: info: adding a relocation entry for 0xf77.
+grub-install: info: adding a relocation entry for 0xf8c.
+grub-install: info: adding a relocation entry for 0xfa0.
+grub-install: info: adding a relocation entry for 0xfb2.
+grub-install: info: adding a relocation entry for 0xfbc.
+grub-install: info: adding a relocation entry for 0xfcb.
+grub-install: info: adding a relocation entry for 0xfd5.
+grub-install: info: adding a relocation entry for 0x1000.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 184 bytes of a fixup block starting at 0x0.
+grub-install: info: adding a relocation entry for 0x1015.
+grub-install: info: adding a relocation entry for 0x1029.
+grub-install: info: adding a relocation entry for 0x103b.
+grub-install: info: adding a relocation entry for 0x1045.
+grub-install: info: adding a relocation entry for 0x1054.
+grub-install: info: adding a relocation entry for 0x105e.
+grub-install: info: adding a relocation entry for 0x10a5.
+grub-install: info: adding a relocation entry for 0x10b1.
+grub-install: info: adding a relocation entry for 0x10be.
+grub-install: info: adding a relocation entry for 0x10db.
+grub-install: info: adding a relocation entry for 0x1109.
+grub-install: info: adding a relocation entry for 0x1124.
+grub-install: info: adding a relocation entry for 0x113d.
+grub-install: info: adding a relocation entry for 0x117f.
+grub-install: info: adding a relocation entry for 0x119c.
+grub-install: info: adding a relocation entry for 0x11b2.
+grub-install: info: adding a relocation entry for 0x11d8.
+grub-install: info: adding a relocation entry for 0x11e2.
+grub-install: info: adding a relocation entry for 0x1220.
+grub-install: info: adding a relocation entry for 0x127a.
+grub-install: info: adding a relocation entry for 0x129d.
+grub-install: info: adding a relocation entry for 0x12a9.
+grub-install: info: adding a relocation entry for 0x12b6.
+grub-install: info: adding a relocation entry for 0x12d3.
+grub-install: info: adding a relocation entry for 0x1301.
+grub-install: info: adding a relocation entry for 0x131c.
+grub-install: info: adding a relocation entry for 0x1335.
+grub-install: info: adding a relocation entry for 0x134e.
+grub-install: info: adding a relocation entry for 0x1362.
+grub-install: info: adding a relocation entry for 0x136c.
+grub-install: info: adding a relocation entry for 0x1387.
+grub-install: info: adding a relocation entry for 0x13ee.
+grub-install: info: adding a relocation entry for 0x13f8.
+grub-install: info: adding a relocation entry for 0x1404.
+grub-install: info: adding a relocation entry for 0x149d.
+grub-install: info: adding a relocation entry for 0x14b3.
+grub-install: info: adding a relocation entry for 0x1506.
+grub-install: info: adding a relocation entry for 0x1515.
+grub-install: info: adding a relocation entry for 0x151f.
+grub-install: info: adding a relocation entry for 0x153b.
+grub-install: info: adding a relocation entry for 0x1547.
+grub-install: info: adding a relocation entry for 0x1551.
+grub-install: info: adding a relocation entry for 0x156a.
+grub-install: info: adding a relocation entry for 0x15cd.
+grub-install: info: adding a relocation entry for 0x15d7.
+grub-install: info: adding a relocation entry for 0x1604.
+grub-install: info: adding a relocation entry for 0x1625.
+grub-install: info: adding a relocation entry for 0x1638.
+grub-install: info: adding a relocation entry for 0x16ac.
+grub-install: info: adding a relocation entry for 0x16d0.
+grub-install: info: adding a relocation entry for 0x16f6.
+grub-install: info: adding a relocation entry for 0x172c.
+grub-install: info: adding a relocation entry for 0x1783.
+grub-install: info: adding a relocation entry for 0x1796.
+grub-install: info: adding a relocation entry for 0x17ae.
+grub-install: info: adding a relocation entry for 0x17c0.
+grub-install: info: adding a relocation entry for 0x17f0.
+grub-install: info: adding a relocation entry for 0x180a.
+grub-install: info: adding a relocation entry for 0x181d.
+grub-install: info: adding a relocation entry for 0x182a.
+grub-install: info: adding a relocation entry for 0x1843.
+grub-install: info: adding a relocation entry for 0x1857.
+grub-install: info: adding a relocation entry for 0x1861.
+grub-install: info: adding a relocation entry for 0x1879.
+grub-install: info: adding a relocation entry for 0x1892.
+grub-install: info: adding a relocation entry for 0x18ad.
+grub-install: info: adding a relocation entry for 0x18c6.
+grub-install: info: adding a relocation entry for 0x19ec.
+grub-install: info: adding a relocation entry for 0x1a45.
+grub-install: info: adding a relocation entry for 0x1a64.
+grub-install: info: adding a relocation entry for 0x1a70.
+grub-install: info: adding a relocation entry for 0x1a84.
+grub-install: info: adding a relocation entry for 0x1c1f.
+grub-install: info: adding a relocation entry for 0x1c32.
+grub-install: info: adding a relocation entry for 0x1c68.
+grub-install: info: adding a relocation entry for 0x1ca5.
+grub-install: info: adding a relocation entry for 0x1cc3.
+grub-install: info: adding a relocation entry for 0x1cec.
+grub-install: info: adding a relocation entry for 0x1d2d.
+grub-install: info: adding a relocation entry for 0x1d63.
+grub-install: info: adding a relocation entry for 0x1d81.
+grub-install: info: adding a relocation entry for 0x1d99.
+grub-install: info: adding a relocation entry for 0x1dbf.
+grub-install: info: adding a relocation entry for 0x1dc9.
+grub-install: info: adding a relocation entry for 0x1df9.
+grub-install: info: adding a relocation entry for 0x1e24.
+grub-install: info: adding a relocation entry for 0x1e41.
+grub-install: info: adding a relocation entry for 0x1e59.
+grub-install: info: adding a relocation entry for 0x1e6a.
+grub-install: info: adding a relocation entry for 0x1e74.
+grub-install: info: adding a relocation entry for 0x1e81.
+grub-install: info: adding a relocation entry for 0x1e8d.
+grub-install: info: adding a relocation entry for 0x1ea9.
+grub-install: info: adding a relocation entry for 0x1eb6.
+grub-install: info: adding a relocation entry for 0x1ec7.
+grub-install: info: adding a relocation entry for 0x1eec.
+grub-install: info: adding a relocation entry for 0x1efe.
+grub-install: info: adding a relocation entry for 0x1f0f.
+grub-install: info: adding a relocation entry for 0x1f24.
+grub-install: info: adding a relocation entry for 0x1f4b.
+grub-install: info: adding a relocation entry for 0x1f59.
+grub-install: info: adding a relocation entry for 0x1f78.
+grub-install: info: adding a relocation entry for 0x1f8a.
+grub-install: info: adding a relocation entry for 0x1fad.
+grub-install: info: adding a relocation entry for 0x1fc9.
+grub-install: info: adding a relocation entry for 0x1fe1.
+grub-install: info: adding a relocation entry for 0x1ffb.
+grub-install: info: adding a relocation entry for 0x2005.
+grub-install: info: writing 224 bytes of a fixup block starting at 0x1000.
+grub-install: info: adding a relocation entry for 0x205c.
+grub-install: info: adding a relocation entry for 0x2066.
+grub-install: info: adding a relocation entry for 0x2078.
+grub-install: info: adding a relocation entry for 0x20b7.
+grub-install: info: adding a relocation entry for 0x20e4.
+grub-install: info: adding a relocation entry for 0x211b.
+grub-install: info: adding a relocation entry for 0x2127.
+grub-install: info: adding a relocation entry for 0x21a0.
+grub-install: info: adding a relocation entry for 0x21cf.
+grub-install: info: adding a relocation entry for 0x21ee.
+grub-install: info: adding a relocation entry for 0x2201.
+grub-install: info: adding a relocation entry for 0x221f.
+grub-install: info: adding a relocation entry for 0x223c.
+grub-install: info: adding a relocation entry for 0x22d3.
+grub-install: info: adding a relocation entry for 0x22ea.
+grub-install: info: adding a relocation entry for 0x235c.
+grub-install: info: adding a relocation entry for 0x2366.
+grub-install: info: adding a relocation entry for 0x237b.
+grub-install: info: adding a relocation entry for 0x23d4.
+grub-install: info: adding a relocation entry for 0x23e2.
+grub-install: info: adding a relocation entry for 0x23f5.
+grub-install: info: adding a relocation entry for 0x240e.
+grub-install: info: adding a relocation entry for 0x2423.
+grub-install: info: adding a relocation entry for 0x2436.
+grub-install: info: adding a relocation entry for 0x244d.
+grub-install: info: adding a relocation entry for 0x2462.
+grub-install: info: adding a relocation entry for 0x2474.
+grub-install: info: adding a relocation entry for 0x2483.
+grub-install: info: adding a relocation entry for 0x249c.
+grub-install: info: adding a relocation entry for 0x24b4.
+grub-install: info: adding a relocation entry for 0x24c9.
+grub-install: info: adding a relocation entry for 0x24de.
+grub-install: info: adding a relocation entry for 0x24f2.
+grub-install: info: adding a relocation entry for 0x2504.
+grub-install: info: adding a relocation entry for 0x251e.
+grub-install: info: adding a relocation entry for 0x2534.
+grub-install: info: adding a relocation entry for 0x2547.
+grub-install: info: adding a relocation entry for 0x2576.
+grub-install: info: adding a relocation entry for 0x25a1.
+grub-install: info: adding a relocation entry for 0x25be.
+grub-install: info: adding a relocation entry for 0x25d3.
+grub-install: info: adding a relocation entry for 0x25ee.
+grub-install: info: adding a relocation entry for 0x2605.
+grub-install: info: adding a relocation entry for 0x261c.
+grub-install: info: adding a relocation entry for 0x2637.
+grub-install: info: adding a relocation entry for 0x264e.
+grub-install: info: adding a relocation entry for 0x2672.
+grub-install: info: adding a relocation entry for 0x2689.
+grub-install: info: adding a relocation entry for 0x26be.
+grub-install: info: adding a relocation entry for 0x270c.
+grub-install: info: adding a relocation entry for 0x2788.
+grub-install: info: adding a relocation entry for 0x27ab.
+grub-install: info: adding a relocation entry for 0x27cf.
+grub-install: info: adding a relocation entry for 0x27e9.
+grub-install: info: adding a relocation entry for 0x27f8.
+grub-install: info: adding a relocation entry for 0x2815.
+grub-install: info: adding a relocation entry for 0x282b.
+grub-install: info: adding a relocation entry for 0x287e.
+grub-install: info: adding a relocation entry for 0x2897.
+grub-install: info: adding a relocation entry for 0x28a1.
+grub-install: info: adding a relocation entry for 0x28b6.
+grub-install: info: adding a relocation entry for 0x28e3.
+grub-install: info: adding a relocation entry for 0x28f5.
+grub-install: info: adding a relocation entry for 0x2902.
+grub-install: info: adding a relocation entry for 0x2913.
+grub-install: info: adding a relocation entry for 0x292c.
+grub-install: info: adding a relocation entry for 0x296b.
+grub-install: info: adding a relocation entry for 0x297b.
+grub-install: info: adding a relocation entry for 0x2993.
+grub-install: info: adding a relocation entry for 0x29b9.
+grub-install: info: adding a relocation entry for 0x29c6.
+grub-install: info: adding a relocation entry for 0x2a0e.
+grub-install: info: adding a relocation entry for 0x2a88.
+grub-install: info: adding a relocation entry for 0x2a94.
+grub-install: info: adding a relocation entry for 0x2a9e.
+grub-install: info: adding a relocation entry for 0x2aaa.
+grub-install: info: adding a relocation entry for 0x2ab6.
+grub-install: info: adding a relocation entry for 0x2ad4.
+grub-install: info: adding a relocation entry for 0x2ae1.
+grub-install: info: adding a relocation entry for 0x2aef.
+grub-install: info: adding a relocation entry for 0x2b04.
+grub-install: info: adding a relocation entry for 0x2b1c.
+grub-install: info: adding a relocation entry for 0x2b2c.
+grub-install: info: adding a relocation entry for 0x2b47.
+grub-install: info: adding a relocation entry for 0x2b6b.
+grub-install: info: adding a relocation entry for 0x2b85.
+grub-install: info: adding a relocation entry for 0x2b92.
+grub-install: info: adding a relocation entry for 0x2bbb.
+grub-install: info: adding a relocation entry for 0x2be5.
+grub-install: info: adding a relocation entry for 0x2c49.
+grub-install: info: adding a relocation entry for 0x2c5c.
+grub-install: info: adding a relocation entry for 0x2ca6.
+grub-install: info: adding a relocation entry for 0x2cc3.
+grub-install: info: adding a relocation entry for 0x2d13.
+grub-install: info: adding a relocation entry for 0x2d57.
+grub-install: info: adding a relocation entry for 0x2d76.
+grub-install: info: adding a relocation entry for 0x2dc5.
+grub-install: info: adding a relocation entry for 0x2de8.
+grub-install: info: adding a relocation entry for 0x2e16.
+grub-install: info: adding a relocation entry for 0x2e25.
+grub-install: info: adding a relocation entry for 0x2e32.
+grub-install: info: adding a relocation entry for 0x2e45.
+grub-install: info: adding a relocation entry for 0x2e52.
+grub-install: info: adding a relocation entry for 0x2e63.
+grub-install: info: adding a relocation entry for 0x2e76.
+grub-install: info: adding a relocation entry for 0x2e88.
+grub-install: info: adding a relocation entry for 0x2e9a.
+grub-install: info: adding a relocation entry for 0x2ec0.
+grub-install: info: adding a relocation entry for 0x2ee2.
+grub-install: info: adding a relocation entry for 0x2f1c.
+grub-install: info: adding a relocation entry for 0x2f46.
+grub-install: info: adding a relocation entry for 0x2f7c.
+grub-install: info: adding a relocation entry for 0x2f8c.
+grub-install: info: adding a relocation entry for 0x2f96.
+grub-install: info: adding a relocation entry for 0x2fa0.
+grub-install: info: adding a relocation entry for 0x2faa.
+grub-install: info: adding a relocation entry for 0x2fb7.
+grub-install: info: adding a relocation entry for 0x2fd2.
+grub-install: info: adding a relocation entry for 0x2fe5.
+grub-install: info: adding a relocation entry for 0x2ff6.
+grub-install: info: adding a relocation entry for 0x3007.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 256 bytes of a fixup block starting at 0x2000.
+grub-install: info: adding a relocation entry for 0x3014.
+grub-install: info: adding a relocation entry for 0x3023.
+grub-install: info: adding a relocation entry for 0x302e.
+grub-install: info: adding a relocation entry for 0x303d.
+grub-install: info: adding a relocation entry for 0x3047.
+grub-install: info: adding a relocation entry for 0x3051.
+grub-install: info: adding a relocation entry for 0x305e.
+grub-install: info: adding a relocation entry for 0x306f.
+grub-install: info: adding a relocation entry for 0x3079.
+grub-install: info: adding a relocation entry for 0x3088.
+grub-install: info: adding a relocation entry for 0x3097.
+grub-install: info: adding a relocation entry for 0x30ac.
+grub-install: info: adding a relocation entry for 0x30b9.
+grub-install: info: adding a relocation entry for 0x30c6.
+grub-install: info: adding a relocation entry for 0x30e4.
+grub-install: info: adding a relocation entry for 0x30ee.
+grub-install: info: adding a relocation entry for 0x30ff.
+grub-install: info: adding a relocation entry for 0x3110.
+grub-install: info: adding a relocation entry for 0x311c.
+grub-install: info: adding a relocation entry for 0x3134.
+grub-install: info: adding a relocation entry for 0x3140.
+grub-install: info: adding a relocation entry for 0x3153.
+grub-install: info: adding a relocation entry for 0x3163.
+grub-install: info: adding a relocation entry for 0x3170.
+grub-install: info: adding a relocation entry for 0x3181.
+grub-install: info: adding a relocation entry for 0x3193.
+grub-install: info: adding a relocation entry for 0x31a5.
+grub-install: info: adding a relocation entry for 0x31c1.
+grub-install: info: adding a relocation entry for 0x31cb.
+grub-install: info: adding a relocation entry for 0x31f9.
+grub-install: info: adding a relocation entry for 0x3212.
+grub-install: info: adding a relocation entry for 0x323c.
+grub-install: info: adding a relocation entry for 0x3254.
+grub-install: info: adding a relocation entry for 0x32a5.
+grub-install: info: adding a relocation entry for 0x32b1.
+grub-install: info: adding a relocation entry for 0x3317.
+grub-install: info: adding a relocation entry for 0x3452.
+grub-install: info: adding a relocation entry for 0x346e.
+grub-install: info: adding a relocation entry for 0x3478.
+grub-install: info: adding a relocation entry for 0x348a.
+grub-install: info: adding a relocation entry for 0x34aa.
+grub-install: info: adding a relocation entry for 0x34c2.
+grub-install: info: adding a relocation entry for 0x34dd.
+grub-install: info: adding a relocation entry for 0x34f8.
+grub-install: info: adding a relocation entry for 0x363a.
+grub-install: info: adding a relocation entry for 0x3652.
+grub-install: info: adding a relocation entry for 0x3669.
+grub-install: info: adding a relocation entry for 0x3678.
+grub-install: info: adding a relocation entry for 0x3698.
+grub-install: info: adding a relocation entry for 0x36a9.
+grub-install: info: adding a relocation entry for 0x36b7.
+grub-install: info: adding a relocation entry for 0x36ed.
+grub-install: info: adding a relocation entry for 0x3711.
+grub-install: info: adding a relocation entry for 0x3723.
+grub-install: info: adding a relocation entry for 0x3743.
+grub-install: info: adding a relocation entry for 0x3752.
+grub-install: info: adding a relocation entry for 0x376a.
+grub-install: info: adding a relocation entry for 0x377a.
+grub-install: info: adding a relocation entry for 0x3788.
+grub-install: info: adding a relocation entry for 0x379c.
+grub-install: info: adding a relocation entry for 0x37b0.
+grub-install: info: adding a relocation entry for 0x37c5.
+grub-install: info: adding a relocation entry for 0x37d6.
+grub-install: info: adding a relocation entry for 0x37ff.
+grub-install: info: adding a relocation entry for 0x380a.
+grub-install: info: adding a relocation entry for 0x381e.
+grub-install: info: adding a relocation entry for 0x382c.
+grub-install: info: adding a relocation entry for 0x3841.
+grub-install: info: adding a relocation entry for 0x3854.
+grub-install: info: adding a relocation entry for 0x38af.
+grub-install: info: adding a relocation entry for 0x38c4.
+grub-install: info: adding a relocation entry for 0x38d5.
+grub-install: info: adding a relocation entry for 0x38e2.
+grub-install: info: adding a relocation entry for 0x3909.
+grub-install: info: adding a relocation entry for 0x392f.
+grub-install: info: adding a relocation entry for 0x3940.
+grub-install: info: adding a relocation entry for 0x394f.
+grub-install: info: adding a relocation entry for 0x395b.
+grub-install: info: adding a relocation entry for 0x396b.
+grub-install: info: adding a relocation entry for 0x3975.
+grub-install: info: adding a relocation entry for 0x3981.
+grub-install: info: adding a relocation entry for 0x3990.
+grub-install: info: adding a relocation entry for 0x399a.
+grub-install: info: adding a relocation entry for 0x39a4.
+grub-install: info: adding a relocation entry for 0x39b2.
+grub-install: info: adding a relocation entry for 0x39c2.
+grub-install: info: adding a relocation entry for 0x39d2.
+grub-install: info: SET@_progressbar1.pulse()
+adding a relocation entry for 0x39dc.
+grub-install: info: adding a relocation entry for 0x39e8.
+grub-install: info: adding a relocation entry for 0x39f7.
+grub-install: info: adding a relocation entry for 0x3a01.
+grub-install: info: adding a relocation entry for 0x3a0c.
+grub-install: info: adding a relocation entry for 0x3a18.
+grub-install: info: adding a relocation entry for 0x3a2b.
+grub-install: info: adding a relocation entry for 0x3a35.
+grub-install: info: adding a relocation entry for 0x3a41.
+grub-install: info: adding a relocation entry for 0x3a4d.
+grub-install: info: adding a relocation entry for 0x3a5c.
+grub-install: info: adding a relocation entry for 0x3a79.
+grub-install: info: adding a relocation entry for 0x3a86.
+grub-install: info: adding a relocation entry for 0x3aea.
+grub-install: info: adding a relocation entry for 0x3b30.
+grub-install: info: adding a relocation entry for 0x3b49.
+grub-install: info: adding a relocation entry for 0x3b53.
+grub-install: info: adding a relocation entry for 0x3b5d.
+grub-install: info: adding a relocation entry for 0x3b69.
+grub-install: info: adding a relocation entry for 0x3b75.
+grub-install: info: adding a relocation entry for 0x3b8b.
+grub-install: info: adding a relocation entry for 0x3b9a.
+grub-install: info: adding a relocation entry for 0x3bc9.
+grub-install: info: adding a relocation entry for 0x3bd5.
+grub-install: info: adding a relocation entry for 0x3bea.
+grub-install: info: adding a relocation entry for 0x3bf6.
+grub-install: info: adding a relocation entry for 0x3c05.
+grub-install: info: adding a relocation entry for 0x3c2b.
+grub-install: info: adding a relocation entry for 0x3c70.
+grub-install: info: adding a relocation entry for 0x3cb9.
+grub-install: info: adding a relocation entry for 0x3cc5.
+grub-install: info: adding a relocation entry for 0x3cde.
+grub-install: info: adding a relocation entry for 0x3cea.
+grub-install: info: adding a relocation entry for 0x3de9.
+grub-install: info: adding a relocation entry for 0x3e00.
+grub-install: info: adding a relocation entry for 0x3e11.
+grub-install: info: adding a relocation entry for 0x3e2a.
+grub-install: info: adding a relocation entry for 0x3e3f.
+grub-install: info: adding a relocation entry for 0x3e5f.
+grub-install: info: adding a relocation entry for 0x3e7f.
+grub-install: info: adding a relocation entry for 0x3ece.
+grub-install: info: adding a relocation entry for 0x3eda.
+grub-install: info: adding a relocation entry for 0x3fb4.
+grub-install: info: adding a relocation entry for 0x3fc1.
+grub-install: info: adding a relocation entry for 0x4022.
+grub-install: info: writing 272 bytes of a fixup block starting at 0x3000.
+grub-install: info: adding a relocation entry for 0x408b.
+grub-install: info: adding a relocation entry for 0x40d7.
+grub-install: info: adding a relocation entry for 0x40f0.
+grub-install: info: adding a relocation entry for 0x4105.
+grub-install: info: adding a relocation entry for 0x4130.
+grub-install: info: adding a relocation entry for 0x4152.
+grub-install: info: adding a relocation entry for 0x4165.
+grub-install: info: adding a relocation entry for 0x417d.
+grub-install: info: adding a relocation entry for 0x418c.
+grub-install: info: adding a relocation entry for 0x419d.
+grub-install: info: adding a relocation entry for 0x41c2.
+grub-install: info: adding a relocation entry for 0x420a.
+grub-install: info: adding a relocation entry for 0x4223.
+grub-install: info: adding a relocation entry for 0x423e.
+grub-install: info: adding a relocation entry for 0x42cd.
+grub-install: info: adding a relocation entry for 0x42dc.
+grub-install: info: adding a relocation entry for 0x42ed.
+grub-install: info: adding a relocation entry for 0x42f7.
+grub-install: info: adding a relocation entry for 0x4304.
+grub-install: info: adding a relocation entry for 0x430e.
+grub-install: info: adding a relocation entry for 0x4328.
+grub-install: info: adding a relocation entry for 0x4332.
+grub-install: info: adding a relocation entry for 0x4351.
+grub-install: info: adding a relocation entry for 0x435b.
+grub-install: info: adding a relocation entry for 0x4367.
+grub-install: info: adding a relocation entry for 0x4371.
+grub-install: info: adding a relocation entry for 0x437d.
+grub-install: info: adding a relocation entry for 0x4394.
+grub-install: info: adding a relocation entry for 0x43a3.
+grub-install: info: adding a relocation entry for 0x43b9.
+grub-install: info: adding a relocation entry for 0x43d4.
+grub-install: info: adding a relocation entry for 0x43ec.
+grub-install: info: adding a relocation entry for 0x440f.
+grub-install: info: adding a relocation entry for 0x4420.
+grub-install: info: adding a relocation entry for 0x4431.
+grub-install: info: adding a relocation entry for 0x4441.
+grub-install: info: adding a relocation entry for 0x4457.
+grub-install: info: adding a relocation entry for 0x4464.
+grub-install: info: adding a relocation entry for 0x4470.
+grub-install: info: adding a relocation entry for 0x4485.
+grub-install: info: adding a relocation entry for 0x4497.
+grub-install: info: adding a relocation entry for 0x44a1.
+grub-install: info: adding a relocation entry for 0x44ad.
+grub-install: info: adding a relocation entry for 0x44be.
+grub-install: info: adding a relocation entry for 0x44c9.
+grub-install: info: adding a relocation entry for 0x44d8.
+grub-install: info: adding a relocation entry for 0x44f2.
+grub-install: info: adding a relocation entry for 0x4503.
+grub-install: info: adding a relocation entry for 0x4521.
+grub-install: info: adding a relocation entry for 0x452d.
+grub-install: info: adding a relocation entry for 0x4541.
+grub-install: info: adding a relocation entry for 0x4555.
+grub-install: info: adding a relocation entry for 0x4566.
+grub-install: info: adding a relocation entry for 0x4573.
+grub-install: info: adding a relocation entry for 0x458d.
+grub-install: info: adding a relocation entry for 0x4597.
+grub-install: info: adding a relocation entry for 0x45b3.
+grub-install: info: adding a relocation entry for 0x45bf.
+grub-install: info: adding a relocation entry for 0x45de.
+grub-install: info: adding a relocation entry for 0x45f8.
+grub-install: info: adding a relocation entry for 0x4609.
+grub-install: info: adding a relocation entry for 0x461f.
+grub-install: info: adding a relocation entry for 0x4638.
+grub-install: info: adding a relocation entry for 0x4642.
+grub-install: info: adding a relocation entry for 0x464c.
+grub-install: info: adding a relocation entry for 0x4656.
+grub-install: info: adding a relocation entry for 0x4660.
+grub-install: info: adding a relocation entry for 0x4678.
+grub-install: info: adding a relocation entry for 0x4685.
+grub-install: info: adding a relocation entry for 0x468f.
+grub-install: info: adding a relocation entry for 0x4699.
+grub-install: info: adding a relocation entry for 0x46a3.
+grub-install: info: adding a relocation entry for 0x46b2.
+grub-install: info: adding a relocation entry for 0x46bc.
+grub-install: info: adding a relocation entry for 0x46c6.
+grub-install: info: adding a relocation entry for 0x46d0.
+grub-install: info: adding a relocation entry for 0x46e2.
+grub-install: info: adding a relocation entry for 0x46ed.
+grub-install: info: adding a relocation entry for 0x46f7.
+grub-install: info: adding a relocation entry for 0x4701.
+grub-install: info: adding a relocation entry for 0x4713.
+grub-install: info: adding a relocation entry for 0x473a.
+grub-install: info: adding a relocation entry for 0x4751.
+grub-install: info: adding a relocation entry for 0x4766.
+grub-install: info: adding a relocation entry for 0x4772.
+grub-install: info: adding a relocation entry for 0x4785.
+grub-install: info: adding a relocation entry for 0x47c8.
+grub-install: info: adding a relocation entry for 0x47d2.
+grub-install: info: adding a relocation entry for 0x47eb.
+grub-install: info: adding a relocation entry for 0x47f5.
+grub-install: info: adding a relocation entry for 0x4806.
+grub-install: info: adding a relocation entry for 0x481b.
+grub-install: info: adding a relocation entry for 0x483a.
+grub-install: info: adding a relocation entry for 0x484e.
+grub-install: info: adding a relocation entry for 0x4860.
+grub-install: info: adding a relocation entry for 0x4888.
+grub-install: info: adding a relocation entry for 0x48a9.
+grub-install: info: adding a relocation entry for 0x48c1.
+grub-install: info: adding a relocation entry for 0x48d6.
+grub-install: info: adding a relocation entry for 0x48e1.
+grub-install: info: adding a relocation entry for 0x4914.
+grub-install: info: adding a relocation entry for 0x492c.
+grub-install: info: adding a relocation entry for 0x4946.
+grub-install: info: adding a relocation entry for 0x4958.
+grub-install: info: adding a relocation entry for 0x4965.
+grub-install: info: adding a relocation entry for 0x4974.
+grub-install: info: adding a relocation entry for 0x4985.
+grub-install: info: adding a relocation entry for 0x49c4.
+grub-install: info: adding a relocation entry for 0x49f7.
+grub-install: info: adding a relocation entry for 0x4a1c.
+grub-install: info: adding a relocation entry for 0x4a75.
+grub-install: info: adding a relocation entry for 0x4ad3.
+grub-install: info: adding a relocation entry for 0x4b04.
+grub-install: info: adding a relocation entry for 0x4b44.
+grub-install: info: adding a relocation entry for 0x4b76.
+grub-install: info: adding a relocation entry for 0x4b8a.
+grub-install: info: adding a relocation entry for 0x4ba1.
+grub-install: info: adding a relocation entry for 0x4bf0.
+grub-install: info: adding a relocation entry for 0x4c0d.
+grub-install: info: adding a relocation entry for 0x4c27.
+grub-install: info: adding a relocation entry for 0x4c3d.
+grub-install: info: adding a relocation entry for 0x4ca9.
+grub-install: info: adding a relocation entry for 0x4cc6.
+grub-install: info: adding a relocation entry for 0x4cd5.
+grub-install: info: adding a relocation entry for 0x4ce9.
+grub-install: info: adding a relocation entry for 0x4d03.
+grub-install: info: adding a relocation entry for 0x4d51.
+grub-install: info: adding a relocation entry for 0x4d9d.
+grub-install: info: adding a relocation entry for 0x4da9.
+grub-install: info: adding a relocation entry for 0x4db6.
+grub-install: info: adding a relocation entry for 0x4dc0.
+grub-install: info: adding a relocation entry for 0x4dd1.
+grub-install: info: adding a relocation entry for 0x4dde.
+grub-install: info: adding a relocation entry for 0x4def.
+grub-install: info: adding a relocation entry for 0x4e08.
+grub-install: info: adding a relocation entry for 0x4e5a.
+grub-install: info: adding a relocation entry for 0x4e65.
+grub-install: info: adding a relocation entry for 0x4e70.
+grub-install: info: adding a relocation entry for 0x4ea2.
+grub-install: info: adding a relocation entry for 0x4eb7.
+grub-install: info: adding a relocation entry for 0x4ec1.
+grub-install: info: adding a relocation entry for 0x4eec.
+grub-install: info: adding a relocation entry for 0x4ef6.
+grub-install: info: adding a relocation entry for 0x4f05.
+grub-install: info: adding a relocation entry for 0x4f17.
+grub-install: info: adding a relocation entry for 0x4f3b.
+grub-install: info: adding a relocation entry for 0x4f45.
+grub-install: info: adding a relocation entry for 0x4f51.
+grub-install: info: adding a relocation entry for 0x4f6c.
+grub-install: info: adding a relocation entry for 0x4f93.
+grub-install: info: adding a relocation entry for 0x4f9d.
+grub-install: info: adding a relocation entry for 0x4fae.
+grub-install: info: adding a relocation entry for 0x4fbf.
+grub-install: info: adding a relocation entry for 0x4fd7.
+grub-install: info: adding a relocation entry for 0x502d.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 320 bytes of a fixup block starting at 0x4000.
+grub-install: info: adding a relocation entry for 0x5055.
+grub-install: info: adding a relocation entry for 0x506a.
+grub-install: info: adding a relocation entry for 0x507e.
+grub-install: info: adding a relocation entry for 0x509d.
+grub-install: info: adding a relocation entry for 0x50a7.
+grub-install: info: adding a relocation entry for 0x50d7.
+grub-install: info: adding a relocation entry for 0x50f0.
+grub-install: info: adding a relocation entry for 0x5103.
+grub-install: info: adding a relocation entry for 0x5124.
+grub-install: info: adding a relocation entry for 0x5139.
+grub-install: info: adding a relocation entry for 0x5148.
+grub-install: info: adding a relocation entry for 0x5156.
+grub-install: info: adding a relocation entry for 0x5162.
+grub-install: info: adding a relocation entry for 0x5180.
+grub-install: info: adding a relocation entry for 0x5191.
+grub-install: info: adding a relocation entry for 0x51a8.
+grub-install: info: adding a relocation entry for 0x51b4.
+grub-install: info: adding a relocation entry for 0x51c7.
+grub-install: info: adding a relocation entry for 0x51d6.
+grub-install: info: adding a relocation entry for 0x51e0.
+grub-install: info: adding a relocation entry for 0x51ef.
+grub-install: info: adding a relocation entry for 0x51f9.
+grub-install: info: adding a relocation entry for 0x5208.
+grub-install: info: adding a relocation entry for 0x5217.
+grub-install: info: adding a relocation entry for 0x522a.
+grub-install: info: adding a relocation entry for 0x523b.
+grub-install: info: adding a relocation entry for 0x52bc.
+grub-install: info: adding a relocation entry for 0x52cd.
+grub-install: info: adding a relocation entry for 0x531b.
+grub-install: info: adding a relocation entry for 0x532c.
+grub-install: info: adding a relocation entry for 0x533c.
+grub-install: info: adding a relocation entry for 0x534a.
+grub-install: info: adding a relocation entry for 0x5357.
+grub-install: info: adding a relocation entry for 0x5361.
+grub-install: info: adding a relocation entry for 0x5370.
+grub-install: info: adding a relocation entry for 0x537a.
+grub-install: info: adding a relocation entry for 0x5387.
+grub-install: info: adding a relocation entry for 0x53c8.
+grub-install: info: adding a relocation entry for 0x5408.
+grub-install: info: adding a relocation entry for 0x545d.
+grub-install: info: adding a relocation entry for 0x547c.
+grub-install: info: adding a relocation entry for 0x54c4.
+grub-install: info: adding a relocation entry for 0x5589.
+grub-install: info: adding a relocation entry for 0x55a3.
+grub-install: info: adding a relocation entry for 0x55ec.
+grub-install: info: adding a relocation entry for 0x55f6.
+grub-install: info: adding a relocation entry for 0x562a.
+grub-install: info: adding a relocation entry for 0x5699.
+grub-install: info: adding a relocation entry for 0x56b3.
+grub-install: info: adding a relocation entry for 0x56c5.
+grub-install: info: adding a relocation entry for 0x56d7.
+grub-install: info: adding a relocation entry for 0x570c.
+grub-install: info: adding a relocation entry for 0x5724.
+grub-install: info: adding a relocation entry for 0x572f.
+grub-install: info: adding a relocation entry for 0x5772.
+grub-install: info: adding a relocation entry for 0x57a4.
+grub-install: info: adding a relocation entry for 0x57e1.
+grub-install: info: adding a relocation entry for 0x5836.
+grub-install: info: adding a relocation entry for 0x5840.
+grub-install: info: adding a relocation entry for 0x586a.
+grub-install: info: adding a relocation entry for 0x587b.
+grub-install: info: adding a relocation entry for 0x58cc.
+grub-install: info: adding a relocation entry for 0x58e6.
+grub-install: info: adding a relocation entry for 0x58fa.
+grub-install: info: adding a relocation entry for 0x5932.
+grub-install: info: adding a relocation entry for 0x593c.
+grub-install: info: adding a relocation entry for 0x5948.
+grub-install: info: adding a relocation entry for 0x5963.
+grub-install: info: adding a relocation entry for 0x5978.
+grub-install: info: adding a relocation entry for 0x59a6.
+grub-install: info: adding a relocation entry for 0x59b7.
+grub-install: info: adding a relocation entry for 0x59c8.
+grub-install: info: adding a relocation entry for 0x59e1.
+grub-install: info: adding a relocation entry for 0x5a08.
+grub-install: info: adding a relocation entry for 0x5a19.
+grub-install: info: adding a relocation entry for 0x5a2f.
+grub-install: info: adding a relocation entry for 0x5a51.
+grub-install: info: adding a relocation entry for 0x5a5d.
+grub-install: info: adding a relocation entry for 0x5a6c.
+grub-install: info: adding a relocation entry for 0x5a76.
+grub-install: info: adding a relocation entry for 0x5a83.
+grub-install: info: adding a relocation entry for 0x5a90.
+grub-install: info: adding a relocation entry for 0x5aa6.
+grub-install: info: adding a relocation entry for 0x5ab5.
+grub-install: info: adding a relocation entry for 0x5ad1.
+grub-install: info: adding a relocation entry for 0x5adb.
+grub-install: info: adding a relocation entry for 0x5af4.
+grub-install: info: adding a relocation entry for 0x5b0d.
+grub-install: info: adding a relocation entry for 0x5b1e.
+grub-install: info: adding a relocation entry for 0x5b2b.
+grub-install: info: adding a relocation entry for 0x5b3c.
+grub-install: info: adding a relocation entry for 0x5b4b.
+grub-install: info: adding a relocation entry for 0x5b60.
+grub-install: info: adding a relocation entry for 0x5b75.
+grub-install: info: adding a relocation entry for 0x5b82.
+grub-install: info: adding a relocation entry for 0x5b9b.
+grub-install: info: adding a relocation entry for 0x5bba.
+grub-install: info: adding a relocation entry for 0x5be1.
+grub-install: info: adding a relocation entry for 0x5bf2.
+grub-install: info: adding a relocation entry for 0x5c02.
+grub-install: info: adding a relocation entry for 0x5c20.
+grub-install: info: adding a relocation entry for 0x5c8d.
+grub-install: info: adding a relocation entry for 0x5cd0.
+grub-install: info: adding a relocation entry for 0x5ce3.
+grub-install: info: adding a relocation entry for 0x5d2d.
+grub-install: info: adding a relocation entry for 0x5d40.
+grub-install: info: adding a relocation entry for 0x5dc4.
+grub-install: info: adding a relocation entry for 0x5dd5.
+grub-install: info: adding a relocation entry for 0x5e4b.
+grub-install: info: adding a relocation entry for 0x5e8f.
+grub-install: info: adding a relocation entry for 0x5ea2.
+grub-install: info: adding a relocation entry for 0x5f37.
+grub-install: info: adding a relocation entry for 0x5f85.
+grub-install: info: adding a relocation entry for 0x5f94.
+grub-install: info: adding a relocation entry for 0x5fa3.
+grub-install: info: adding a relocation entry for 0x5fad.
+grub-install: info: adding a relocation entry for 0x5fd4.
+grub-install: info: adding a relocation entry for 0x6022.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 248 bytes of a fixup block starting at 0x5000.
+grub-install: info: adding a relocation entry for 0x6033.
+grub-install: info: adding a relocation entry for 0x605f.
+grub-install: info: adding a relocation entry for 0x60bc.
+grub-install: info: adding a relocation entry for 0x60e7.
+grub-install: info: adding a relocation entry for 0x60f5.
+grub-install: info: adding a relocation entry for 0x60ff.
+grub-install: info: adding a relocation entry for 0x610e.
+grub-install: info: adding a relocation entry for 0x6120.
+grub-install: info: adding a relocation entry for 0x612a.
+grub-install: info: adding a relocation entry for 0x6139.
+grub-install: info: adding a relocation entry for 0x614b.
+grub-install: info: adding a relocation entry for 0x6155.
+grub-install: info: adding a relocation entry for 0x6164.
+grub-install: info: adding a relocation entry for 0x6173.
+grub-install: info: adding a relocation entry for 0x618b.
+grub-install: info: adding a relocation entry for 0x619c.
+grub-install: info: adding a relocation entry for 0x61da.
+grub-install: info: adding a relocation entry for 0x6203.
+grub-install: info: adding a relocation entry for 0x621e.
+grub-install: info: adding a relocation entry for 0x6241.
+grub-install: info: adding a relocation entry for 0x6252.
+grub-install: info: adding a relocation entry for 0x6260.
+grub-install: info: adding a relocation entry for 0x627a.
+grub-install: info: adding a relocation entry for 0x6294.
+grub-install: info: adding a relocation entry for 0x62ab.
+grub-install: info: adding a relocation entry for 0x62c0.
+grub-install: info: adding a relocation entry for 0x62d1.
+grub-install: info: adding a relocation entry for 0x62e9.
+grub-install: info: adding a relocation entry for 0x62fd.
+grub-install: info: adding a relocation entry for 0x6321.
+grub-install: info: adding a relocation entry for 0x6330.
+grub-install: info: adding a relocation entry for 0x6345.
+grub-install: info: adding a relocation entry for 0x6362.
+grub-install: info: adding a relocation entry for 0x636c.
+grub-install: info: adding a relocation entry for 0x637d.
+grub-install: info: adding a relocation entry for 0x6396.
+grub-install: info: adding a relocation entry for 0x63a0.
+grub-install: info: adding a relocation entry for 0x63b7.
+grub-install: info: adding a relocation entry for 0x63c9.
+grub-install: info: adding a relocation entry for 0x63e1.
+grub-install: info: adding a relocation entry for 0x63f4.
+grub-install: info: adding a relocation entry for 0x6405.
+grub-install: info: adding a relocation entry for 0x641d.
+grub-install: info: adding a relocation entry for 0x6427.
+grub-install: info: adding a relocation entry for 0x6441.
+grub-install: info: adding a relocation entry for 0x6481.
+grub-install: info: adding a relocation entry for 0x648d.
+grub-install: info: adding a relocation entry for 0x64c0.
+grub-install: info: adding a relocation entry for 0x64f6.
+grub-install: info: adding a relocation entry for 0x6519.
+grub-install: info: adding a relocation entry for 0x652f.
+grub-install: info: adding a relocation entry for 0x654b.
+grub-install: info: adding a relocation entry for 0x656f.
+grub-install: info: adding a relocation entry for 0x65c7.
+grub-install: info: adding a relocation entry for 0x65dd.
+grub-install: info: adding a relocation entry for 0x65ec.
+grub-install: info: adding a relocation entry for 0x661e.
+grub-install: info: adding a relocation entry for 0x6647.
+grub-install: info: adding a relocation entry for 0x6651.
+grub-install: info: adding a relocation entry for 0x667a.
+grub-install: info: adding a relocation entry for 0x66a0.
+grub-install: info: adding a relocation entry for 0x66bd.
+grub-install: info: adding a relocation entry for 0x6735.
+grub-install: info: adding a relocation entry for 0x674b.
+grub-install: info: adding a relocation entry for 0x6758.
+grub-install: info: adding a relocation entry for 0x6767.
+grub-install: info: adding a relocation entry for 0x678b.
+grub-install: info: adding a relocation entry for 0x67a1.
+grub-install: info: adding a relocation entry for 0x67ae.
+grub-install: info: adding a relocation entry for 0x67db.
+grub-install: info: adding a relocation entry for 0x6815.
+grub-install: info: adding a relocation entry for 0x682e.
+grub-install: info: adding a relocation entry for 0x6838.
+grub-install: info: adding a relocation entry for 0x684b.
+grub-install: info: adding a relocation entry for 0x685c.
+grub-install: info: adding a relocation entry for 0x6873.
+grub-install: info: adding a relocation entry for 0x687f.
+grub-install: info: adding a relocation entry for 0x688f.
+grub-install: info: adding a relocation entry for 0x689a.
+grub-install: info: adding a relocation entry for 0x68a5.
+grub-install: info: adding a relocation entry for 0x68b5.
+grub-install: info: adding a relocation entry for 0x68c0.
+grub-install: info: adding a relocation entry for 0x68cc.
+grub-install: info: adding a relocation entry for 0x68d7.
+grub-install: info: adding a relocation entry for 0x68e8.
+grub-install: info: adding a relocation entry for 0x68f1.
+grub-install: info: adding a relocation entry for 0x6909.
+grub-install: info: adding a relocation entry for 0x691b.
+grub-install: info: adding a relocation entry for 0x6925.
+grub-install: info: adding a relocation entry for 0x6939.
+grub-install: info: adding a relocation entry for 0x6947.
+grub-install: info: adding a relocation entry for 0x6956.
+grub-install: info: adding a relocation entry for 0x6960.
+grub-install: info: adding a relocation entry for 0x696c.
+grub-install: info: adding a relocation entry for 0x6979.
+grub-install: info: adding a relocation entry for 0x6986.
+grub-install: info: adding a relocation entry for 0x6991.
+grub-install: info: adding a relocation entry for 0x699b.
+grub-install: info: adding a relocation entry for 0x69ab.
+grub-install: info: adding a relocation entry for 0x69ba.
+grub-install: info: adding a relocation entry for 0x69c6.
+grub-install: info: adding a relocation entry for 0x69d3.
+grub-install: info: adding a relocation entry for 0x69f2.
+grub-install: info: adding a relocation entry for 0x6a08.
+grub-install: info: adding a relocation entry for 0x6a17.
+grub-install: info: adding a relocation entry for 0x6a2a.
+grub-install: info: adding a relocation entry for 0x6a50.
+grub-install: info: adding a relocation entry for 0x6a7e.
+grub-install: info: adding a relocation entry for 0x6a8f.
+grub-install: info: adding a relocation entry for 0x6ad1.
+grub-install: info: adding a relocation entry for 0x6b25.
+grub-install: info: adding a relocation entry for 0x6b34.
+grub-install: info: adding a relocation entry for 0x6b44.
+grub-install: info: adding a relocation entry for 0x6b54.
+grub-install: info: adding a relocation entry for 0x6b6b.
+grub-install: info: adding a relocation entry for 0x6b91.
+grub-install: info: adding a relocation entry for 0x6ba9.
+grub-install: info: adding a relocation entry for 0x6bbb.
+grub-install: info: adding a relocation entry for 0x6bd5.
+grub-install: info: adding a relocation entry for 0x6bff.
+grub-install: info: adding a relocation entry for 0x6c12.
+grub-install: info: adding a relocation entry for 0x6c43.
+grub-install: info: adding a relocation entry for 0x6c58.
+grub-install: info: adding a relocation entry for 0x6c62.
+grub-install: info: adding a relocation entry for 0x6c99.
+grub-install: info: adding a relocation entry for 0x6caa.
+grub-install: info: adding a relocation entry for 0x6cb4.
+grub-install: info: adding a relocation entry for 0x6cbe.
+grub-install: info: adding a relocation entry for 0x6ccf.
+grub-install: info: adding a relocation entry for 0x6ce2.
+grub-install: info: adding a relocation entry for 0x6cec.
+grub-install: info: adding a relocation entry for 0x6cf6.
+grub-install: info: adding a relocation entry for 0x6d07.
+grub-install: info: adding a relocation entry for 0x6d2a.
+grub-install: info: adding a relocation entry for 0x6d3c.
+grub-install: info: adding a relocation entry for 0x6d64.
+grub-install: info: adding a relocation entry for 0x6e5c.
+grub-install: info: adding a relocation entry for 0x6eba.
+grub-install: info: adding a relocation entry for 0x6eff.
+grub-install: info: adding a relocation entry for 0x6f0e.
+grub-install: info: adding a relocation entry for 0x6f20.
+grub-install: info: adding a relocation entry for 0x6f31.
+grub-install: info: adding a relocation entry for 0x6f58.
+grub-install: info: adding a relocation entry for 0x6f6c.
+grub-install: info: adding a relocation entry for 0x6f9a.
+grub-install: info: adding a relocation entry for 0x6fca.
+grub-install: info: adding a relocation entry for 0x6fdb.
+grub-install: info: adding a relocation entry for 0x700a.
+grub-install: info: writing 304 bytes of a fixup block starting at 0x6000.
+grub-install: info: adding a relocation entry for 0x7018.
+grub-install: info: adding a relocation entry for 0x7046.
+grub-install: info: adding a relocation entry for 0x7050.
+grub-install: info: adding a relocation entry for 0x7068.
+grub-install: info: adding a relocation entry for 0x7072.
+grub-install: info: adding a relocation entry for 0x7081.
+grub-install: info: adding a relocation entry for 0x7090.
+grub-install: info: adding a relocation entry for 0x709a.
+grub-install: info: adding a relocation entry for 0x70aa.
+grub-install: info: adding a relocation entry for 0x70bd.
+grub-install: info: adding a relocation entry for 0x70cf.
+grub-install: info: adding a relocation entry for 0x70d9.
+grub-install: info: adding a relocation entry for 0x70e8.
+grub-install: info: adding a relocation entry for 0x70f5.
+grub-install: info: adding a relocation entry for 0x7100.
+grub-install: info: adding a relocation entry for 0x711a.
+grub-install: info: adding a relocation entry for 0x712d.
+grub-install: info: adding a relocation entry for 0x7141.
+grub-install: info: adding a relocation entry for 0x7158.
+grub-install: info: adding a relocation entry for 0x7164.
+grub-install: info: adding a relocation entry for 0x7173.
+grub-install: info: adding a relocation entry for 0x717d.
+grub-install: info: adding a relocation entry for 0x718e.
+grub-install: info: adding a relocation entry for 0x719b.
+grub-install: info: adding a relocation entry for 0x71a9.
+grub-install: info: adding a relocation entry for 0x71bf.
+grub-install: info: adding a relocation entry for 0x71ca.
+grub-install: info: adding a relocation entry for 0x71d7.
+grub-install: info: adding a relocation entry for 0x71e1.
+grub-install: info: adding a relocation entry for 0x71f4.
+grub-install: info: adding a relocation entry for 0x71ff.
+grub-install: info: adding a relocation entry for 0x721d.
+grub-install: info: adding a relocation entry for 0x722e.
+grub-install: info: adding a relocation entry for 0x7246.
+grub-install: info: adding a relocation entry for 0x72c8.
+grub-install: info: adding a relocation entry for 0x72e8.
+grub-install: info: adding a relocation entry for 0x72f8.
+grub-install: info: adding a relocation entry for 0x7305.
+grub-install: info: adding a relocation entry for 0x7323.
+grub-install: info: adding a relocation entry for 0x7337.
+grub-install: info: adding a relocation entry for 0x735e.
+grub-install: info: adding a relocation entry for 0x739f.
+grub-install: info: adding a relocation entry for 0x73b2.
+grub-install: info: adding a relocation entry for 0x73be.
+grub-install: info: adding a relocation entry for 0x73d6.
+grub-install: info: adding a relocation entry for 0x73e9.
+grub-install: info: adding a relocation entry for 0x7412.
+grub-install: info: adding a relocation entry for 0x7420.
+grub-install: info: adding a relocation entry for 0x7457.
+grub-install: info: adding a relocation entry for 0x7461.
+grub-install: info: adding a relocation entry for 0x746b.
+grub-install: info: adding a relocation entry for 0x7477.
+grub-install: info: adding a relocation entry for 0x7486.
+grub-install: info: adding a relocation entry for 0x74a3.
+grub-install: info: adding a relocation entry for 0x74b2.
+grub-install: info: adding a relocation entry for 0x74c9.
+grub-install: info: adding a relocation entry for 0x7522.
+grub-install: info: adding a relocation entry for 0x752c.
+grub-install: info: adding a relocation entry for 0x7536.
+grub-install: info: adding a relocation entry for 0x754a.
+grub-install: info: adding a relocation entry for 0x7577.
+grub-install: info: adding a relocation entry for 0x7581.
+grub-install: info: adding a relocation entry for 0x758b.
+grub-install: info: adding a relocation entry for 0x75ab.
+grub-install: info: adding a relocation entry for 0x75b5.
+grub-install: info: adding a relocation entry for 0x75c1.
+grub-install: info: adding a relocation entry for 0x75cb.
+grub-install: info: adding a relocation entry for 0x75da.
+grub-install: info: adding a relocation entry for 0x75fd.
+grub-install: info: adding a relocation entry for 0x761c.
+grub-install: info: adding a relocation entry for 0x7644.
+grub-install: info: adding a relocation entry for 0x76aa.
+grub-install: info: adding a relocation entry for 0x76c2.
+grub-install: info: adding a relocation entry for 0x76dd.
+grub-install: info: adding a relocation entry for 0x7717.
+grub-install: info: adding a relocation entry for 0x7721.
+grub-install: info: adding a relocation entry for 0x7742.
+grub-install: info: adding a relocation entry for 0x7756.
+grub-install: info: adding a relocation entry for 0x7767.
+grub-install: info: adding a relocation entry for 0x7773.
+grub-install: info: adding a relocation entry for 0x778a.
+grub-install: info: adding a relocation entry for 0x7794.
+grub-install: info: adding a relocation entry for 0x77a3.
+grub-install: info: adding a relocation entry for 0x77b2.
+grub-install: info: adding a relocation entry for 0x77bc.
+grub-install: info: adding a relocation entry for 0x77cb.
+grub-install: info: adding a relocation entry for 0x77dc.
+grub-install: info: adding a relocation entry for 0x77e6.
+grub-install: info: adding a relocation entry for 0x77f2.
+grub-install: info: adding a relocation entry for 0x77fe.
+grub-install: info: adding a relocation entry for 0x780a.
+grub-install: info: adding a relocation entry for 0x781c.
+grub-install: info: adding a relocation entry for 0x7826.
+grub-install: info: adding a relocation entry for 0x7832.
+grub-install: info: adding a relocation entry for 0x7844.
+grub-install: info: adding a relocation entry for 0x7850.
+grub-install: info: adding a relocation entry for 0x785a.
+grub-install: info: adding a relocation entry for 0x7866.
+grub-install: info: adding a relocation entry for 0x7874.
+grub-install: info: adding a relocation entry for 0x787e.
+grub-install: info: adding a relocation entry for 0x7887.
+grub-install: info: adding a relocation entry for 0x7894.
+grub-install: info: adding a relocation entry for 0x78af.
+grub-install: info: adding a relocation entry for 0x78d9.
+grub-install: info: adding a relocation entry for 0x78ef.
+grub-install: info: adding a relocation entry for 0x7907.
+grub-install: info: adding a relocation entry for 0x7913.
+grub-install: info: adding a relocation entry for 0x7925.
+grub-install: info: adding a relocation entry for 0x793c.
+grub-install: info: adding a relocation entry for 0x7948.
+grub-install: info: adding a relocation entry for 0x796f.
+grub-install: info: adding a relocation entry for 0x79d6.
+grub-install: info: adding a relocation entry for 0x79e4.
+grub-install: info: adding a relocation entry for 0x7ad3.
+grub-install: info: adding a relocation entry for 0x7b1a.
+grub-install: info: adding a relocation entry for 0x7b8b.
+grub-install: info: adding a relocation entry for 0x7c3a.
+grub-install: info: adding a relocation entry for 0x7c58.
+grub-install: info: adding a relocation entry for 0x7c79.
+grub-install: info: adding a relocation entry for 0x7c95.
+grub-install: info: adding a relocation entry for 0x7ca7.
+grub-install: info: adding a relocation entry for 0x7cc7.
+grub-install: info: adding a relocation entry for 0x7d46.
+grub-install: info: adding a relocation entry for 0x7df2.
+grub-install: info: adding a relocation entry for 0x7e03.
+grub-install: info: adding a relocation entry for 0x7e14.
+grub-install: info: adding a relocation entry for 0x7e45.
+grub-install: info: adding a relocation entry for 0x7e56.
+grub-install: info: adding a relocation entry for 0x7f84.
+grub-install: info: adding a relocation entry for 0x7f9c.
+grub-install: info: adding a relocation entry for 0x7fcc.
+grub-install: info: adding a relocation entry for 0x7fd6.
+grub-install: info: adding a relocation entry for 0x8120.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 280 bytes of a fixup block starting at 0x7000.
+grub-install: info: adding a relocation entry for 0x81c7.
+grub-install: info: adding a relocation entry for 0x826d.
+grub-install: info: adding a relocation entry for 0x82b7.
+grub-install: info: adding a relocation entry for 0x8410.
+grub-install: info: adding a relocation entry for 0x844d.
+grub-install: info: adding a relocation entry for 0x8590.
+grub-install: info: adding a relocation entry for 0x866d.
+grub-install: info: adding a relocation entry for 0x8677.
+grub-install: info: adding a relocation entry for 0x8688.
+grub-install: info: adding a relocation entry for 0x86a9.
+grub-install: info: adding a relocation entry for 0x86c6.
+grub-install: info: adding a relocation entry for 0x86dc.
+grub-install: info: adding a relocation entry for 0x86e5.
+grub-install: info: adding a relocation entry for 0x86f0.
+grub-install: info: adding a relocation entry for 0x86f9.
+grub-install: info: adding a relocation entry for 0x8702.
+grub-install: info: adding a relocation entry for 0x870d.
+grub-install: info: adding a relocation entry for 0x872e.
+grub-install: info: adding a relocation entry for 0x873a.
+grub-install: info: adding a relocation entry for 0x8749.
+grub-install: info: adding a relocation entry for 0x875b.
+grub-install: info: adding a relocation entry for 0x87b0.
+grub-install: info: adding a relocation entry for 0x87c4.
+grub-install: info: adding a relocation entry for 0x8813.
+grub-install: info: adding a relocation entry for 0x8826.
+grub-install: info: adding a relocation entry for 0x883d.
+grub-install: info: adding a relocation entry for 0x886a.
+grub-install: info: adding a relocation entry for 0x8877.
+grub-install: info: adding a relocation entry for 0x8899.
+grub-install: info: adding a relocation entry for 0x88a3.
+grub-install: info: adding a relocation entry for 0x88d8.
+grub-install: info: adding a relocation entry for 0x88e4.
+grub-install: info: adding a relocation entry for 0x890b.
+grub-install: info: adding a relocation entry for 0x893c.
+grub-install: info: adding a relocation entry for 0x894d.
+grub-install: info: adding a relocation entry for 0x89a3.
+grub-install: info: adding a relocation entry for 0x89b9.
+grub-install: info: adding a relocation entry for 0x89e1.
+grub-install: info: adding a relocation entry for 0x8a03.
+grub-install: info: adding a relocation entry for 0x8a1a.
+grub-install: info: adding a relocation entry for 0x8a2b.
+grub-install: info: adding a relocation entry for 0x8a8d.
+grub-install: info: adding a relocation entry for 0x8a9f.
+grub-install: info: adding a relocation entry for 0x8ae2.
+grub-install: info: adding a relocation entry for 0x8af6.
+grub-install: info: adding a relocation entry for 0x8b04.
+grub-install: info: adding a relocation entry for 0x8b10.
+grub-install: info: adding a relocation entry for 0x8b20.
+grub-install: info: adding a relocation entry for 0x8b2e.
+grub-install: info: adding a relocation entry for 0x8b3a.
+grub-install: info: adding a relocation entry for 0x8b83.
+grub-install: info: adding a relocation entry for 0x8ba0.
+grub-install: info: adding a relocation entry for 0x8bb5.
+grub-install: info: adding a relocation entry for 0x8beb.
+grub-install: info: adding a relocation entry for 0x8c41.
+grub-install: info: adding a relocation entry for 0x8c76.
+grub-install: info: adding a relocation entry for 0x8d5d.
+grub-install: info: adding a relocation entry for 0x8d67.
+grub-install: info: adding a relocation entry for 0x8d98.
+grub-install: info: adding a relocation entry for 0x8da7.
+grub-install: info: adding a relocation entry for 0x8de0.
+grub-install: info: adding a relocation entry for 0x8e4e.
+grub-install: info: adding a relocation entry for 0x8e64.
+grub-install: info: adding a relocation entry for 0x8e83.
+grub-install: info: adding a relocation entry for 0x8eb9.
+grub-install: info: adding a relocation entry for 0x8ede.
+grub-install: info: adding a relocation entry for 0x8f07.
+grub-install: info: adding a relocation entry for 0x8f12.
+grub-install: info: adding a relocation entry for 0x8f65.
+grub-install: info: adding a relocation entry for 0x8f70.
+grub-install: info: adding a relocation entry for 0x8f9d.
+grub-install: info: adding a relocation entry for 0x8fae.
+grub-install: info: adding a relocation entry for 0x8fc1.
+grub-install: info: adding a relocation entry for 0x9012.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 160 bytes of a fixup block starting at 0x8000.
+grub-install: info: adding a relocation entry for 0x9024.
+grub-install: info: adding a relocation entry for 0x9065.
+grub-install: info: adding a relocation entry for 0x9075.
+grub-install: info: adding a relocation entry for 0x9098.
+grub-install: info: adding a relocation entry for 0x90c0.
+grub-install: info: adding a relocation entry for 0x90d8.
+grub-install: info: adding a relocation entry for 0x90e8.
+grub-install: info: adding a relocation entry for 0x9148.
+grub-install: info: adding a relocation entry for 0x9167.
+grub-install: info: adding a relocation entry for 0x9195.
+grub-install: info: adding a relocation entry for 0x91aa.
+grub-install: info: adding a relocation entry for 0x91d8.
+grub-install: info: adding a relocation entry for 0x91f8.
+grub-install: info: adding a relocation entry for 0x9202.
+grub-install: info: adding a relocation entry for 0x9234.
+grub-install: info: adding a relocation entry for 0x9259.
+grub-install: info: adding a relocation entry for 0x9263.
+grub-install: info: adding a relocation entry for 0x9272.
+grub-install: info: adding a relocation entry for 0x9283.
+grub-install: info: adding a relocation entry for 0x932c.
+grub-install: info: adding a relocation entry for 0x9341.
+grub-install: info: adding a relocation entry for 0x9355.
+grub-install: info: adding a relocation entry for 0x935f.
+grub-install: info: adding a relocation entry for 0x9371.
+grub-install: info: adding a relocation entry for 0x9380.
+grub-install: info: adding a relocation entry for 0x93c0.
+grub-install: info: adding a relocation entry for 0x9424.
+grub-install: info: adding a relocation entry for 0x9436.
+grub-install: info: adding a relocation entry for 0x944d.
+grub-install: info: adding a relocation entry for 0x9486.
+grub-install: info: adding a relocation entry for 0x949b.
+grub-install: info: adding a relocation entry for 0x94bb.
+grub-install: info: adding a relocation entry for 0x94d1.
+grub-install: info: adding a relocation entry for 0x951c.
+grub-install: info: adding a relocation entry for 0x954e.
+grub-install: info: adding a relocation entry for 0x9573.
+grub-install: info: adding a relocation entry for 0x9583.
+grub-install: info: adding a relocation entry for 0x95ae.
+grub-install: info: adding a relocation entry for 0x95ba.
+grub-install: info: adding a relocation entry for 0x95c6.
+grub-install: info: adding a relocation entry for 0x95d0.
+grub-install: info: adding a relocation entry for 0x95e4.
+grub-install: info: adding a relocation entry for 0x95f0.
+grub-install: info: adding a relocation entry for 0x9601.
+grub-install: info: adding a relocation entry for 0x9616.
+grub-install: info: adding a relocation entry for 0x9628.
+grub-install: info: adding a relocation entry for 0x9635.
+grub-install: info: adding a relocation entry for 0x964a.
+grub-install: info: adding a relocation entry for 0x9661.
+grub-install: info: adding a relocation entry for 0x966b.
+grub-install: info: adding a relocation entry for 0x968c.
+grub-install: info: adding a relocation entry for 0x96b1.
+grub-install: info: adding a relocation entry for 0x96db.
+grub-install: info: adding a relocation entry for 0x96e7.
+grub-install: info: adding a relocation entry for 0x96f3.
+grub-install: info: adding a relocation entry for 0x970d.
+grub-install: info: adding a relocation entry for 0x9717.
+grub-install: info: adding a relocation entry for 0x9723.
+grub-install: info: adding a relocation entry for 0x972f.
+grub-install: info: adding a relocation entry for 0x9739.
+grub-install: info: adding a relocation entry for 0x9753.
+grub-install: info: adding a relocation entry for 0x975f.
+grub-install: info: adding a relocation entry for 0x976f.
+grub-install: info: adding a relocation entry for 0x9779.
+grub-install: info: adding a relocation entry for 0x978f.
+grub-install: info: adding a relocation entry for 0x97af.
+grub-install: info: adding a relocation entry for 0x97c0.
+grub-install: info: adding a relocation entry for 0x980a.
+grub-install: info: adding a relocation entry for 0x9842.
+grub-install: info: adding a relocation entry for 0x9859.
+grub-install: info: adding a relocation entry for 0x987b.
+grub-install: info: adding a relocation entry for 0x98af.
+grub-install: info: adding a relocation entry for 0x98c3.
+grub-install: info: adding a relocation entry for 0x98d4.
+grub-install: info: adding a relocation entry for 0x98fa.
+grub-install: info: adding a relocation entry for 0x9922.
+grub-install: info: adding a relocation entry for 0x992c.
+grub-install: info: adding a relocation entry for 0x9941.
+grub-install: info: adding a relocation entry for 0x994c.
+grub-install: info: translating the relocation section .rela.rodata.
+grub-install: info: adding a relocation entry for 0x9a00.
+grub-install: info: adding a relocation entry for 0x9a08.
+grub-install: info: adding a relocation entry for 0x9a10.
+grub-install: info: adding a relocation entry for 0x9a18.
+grub-install: info: adding a relocation entry for 0x9a20.
+grub-install: info: adding a relocation entry for 0x9a28.
+grub-install: info: adding a relocation entry for 0x9a30.
+grub-install: info: adding a relocation entry for 0x9a38.
+grub-install: info: adding a relocation entry for 0x9a40.
+grub-install: info: adding a relocation entry for 0x9a48.
+grub-install: info: adding a relocation entry for 0x9a50.
+grub-install: info: adding a relocation entry for 0x9a58.
+grub-install: info: adding a relocation entry for 0x9a60.
+grub-install: info: adding a relocation entry for 0x9a68.
+grub-install: info: adding a relocation entry for 0x9a70.
+grub-install: info: adding a relocation entry for 0x9a78.
+grub-install: info: adding a relocation entry for 0x9a80.
+grub-install: info: adding a relocation entry for 0x9a88.
+grub-install: info: adding a relocation entry for 0x9a90.
+grub-install: info: adding a relocation entry for 0x9a98.
+grub-install: info: adding a relocation entry for 0x9aa0.
+grub-install: info: adding a relocation entry for 0x9aa8.
+grub-install: info: adding a relocation entry for 0x9ab0.
+grub-install: info: adding a relocation entry for 0x9ab8.
+grub-install: info: adding a relocation entry for 0x9ac0.
+grub-install: info: adding a relocation entry for 0x9ac8.
+grub-install: info: adding a relocation entry for 0x9ad0.
+grub-install: info: adding a relocation entry for 0x9ad8.
+grub-install: info: adding a relocation entry for 0x9b40.
+grub-install: info: adding a relocation entry for 0x9b48.
+grub-install: info: adding a relocation entry for 0x9b50.
+grub-install: info: adding a relocation entry for 0x9b58.
+grub-install: info: adding a relocation entry for 0x9b60.
+grub-install: info: adding a relocation entry for 0x9b68.
+grub-install: info: adding a relocation entry for 0x9b70.
+grub-install: info: adding a relocation entry for 0x9b78.
+grub-install: info: adding a relocation entry for 0x9b80.
+grub-install: info: adding a relocation entry for 0x9b88.
+grub-install: info: adding a relocation entry for 0x9b90.
+grub-install: info: translating the relocation section .rela.data.
+grub-install: info: adding a relocation entry for 0xb4e0.
+grub-install: info: adding a padding fixup entry.
+grub-install: info: writing 248 bytes of a fixup block starting at 0x9000.
+grub-install: info: adding a relocation entry for 0xb4f0.
+grub-install: info: adding a relocation entry for 0xb4f8.
+grub-install: info: adding a relocation entry for 0xb500.
+grub-install: info: adding a relocation entry for 0xb508.
+grub-install: info: adding a relocation entry for 0xb510.
+grub-install: info: adding a relocation entry for 0xb570.
+grub-install: info: adding a relocation entry for 0xb588.
+grub-install: info: adding a relocation entry for 0xb5b0.
+grub-install: info: adding a relocation entry for 0xb5b8.
+grub-install: info: adding a relocation entry for 0xb5c0.
+grub-install: info: adding a relocation entry for 0xb5c8.
+grub-install: info: adding a relocation entry for 0xb5d8.
+grub-install: info: adding a relocation entry for 0xb5e0.
+grub-install: info: adding a relocation entry for 0xb5e8.
+grub-install: info: adding a relocation entry for 0xb5f0.
+grub-install: info: adding a relocation entry for 0xb5f8.
+grub-install: info: adding a relocation entry for 0xb600.
+grub-install: info: adding a relocation entry for 0xb630.
+grub-install: info: adding a relocation entry for 0xb650.
+grub-install: info: adding a relocation entry for 0xb660.
+grub-install: info: adding a relocation entry for 0xb668.
+grub-install: info: adding a relocation entry for 0xb690.
+grub-install: info: adding a relocation entry for 0xb7e0.
+grub-install: info: adding a relocation entry for 0xb7f0.
+grub-install: info: adding a relocation entry for 0xb7f8.
+grub-install: info: adding a relocation entry for 0xb808.
+grub-install: info: adding a relocation entry for 0xb810.
+grub-install: info: adding a relocation entry for 0xb820.
+grub-install: info: adding a relocation entry for 0xb828.
+grub-install: info: adding a relocation entry for 0xb838.
+grub-install: info: adding a relocation entry for 0xb840.
+grub-install: info: adding a relocation entry for 0xb850.
+grub-install: info: adding a relocation entry for 0xb858.
+grub-install: info: adding a relocation entry for 0xb868.
+grub-install: info: adding a relocation entry for 0xb870.
+grub-install: info: adding a relocation entry for 0xb880.
+grub-install: info: adding a relocation entry for 0xb888.
+grub-install: info: adding a relocation entry for 0xb898.
+grub-install: info: adding a relocation entry for 0xb8a0.
+grub-install: info: adding a relocation entry for 0xb8b0.
+grub-install: info: adding a relocation entry for 0xb8b8.
+grub-install: info: adding a relocation entry for 0xb8c8.
+grub-install: info: adding a relocation entry for 0xb8d0.
+grub-install: info: adding a relocation entry for 0xb8e0.
+grub-install: info: adding a relocation entry for 0xb8e8.
+grub-install: info: adding a relocation entry for 0xb8f8.
+grub-install: info: adding a relocation entry for 0xb900.
+grub-install: info: adding a relocation entry for 0xb910.
+grub-install: info: adding a relocation entry for 0xb918.
+grub-install: info: adding a relocation entry for 0xb928.
+grub-install: info: adding a relocation entry for 0xb930.
+grub-install: info: adding a relocation entry for 0xb940.
+grub-install: info: adding a relocation entry for 0xb948.
+grub-install: info: adding a relocation entry for 0xb958.
+grub-install: info: adding a relocation entry for 0xb960.
+grub-install: info: adding a relocation entry for 0xb970.
+grub-install: info: adding a relocation entry for 0xb978.
+grub-install: info: adding a relocation entry for 0xb988.
+grub-install: info: adding a relocation entry for 0xb990.
+grub-install: info: adding a relocation entry for 0xb9a0.
+grub-install: info: adding a relocation entry for 0xb9a8.
+grub-install: info: adding a relocation entry for 0xb9b8.
+grub-install: info: adding a relocation entry for 0xb9c0.
+grub-install: info: adding a relocation entry for 0xb9d0.
+grub-install: info: adding a relocation entry for 0xb9d8.
+grub-install: info: adding a relocation entry for 0xb9e8.
+grub-install: info: adding a relocation entry for 0xb9f0.
+grub-install: info: adding a relocation entry for 0xba00.
+grub-install: info: adding a relocation entry for 0xba08.
+grub-install: info: adding a relocation entry for 0xba18.
+grub-install: info: adding a relocation entry for 0xba20.
+grub-install: info: adding a relocation entry for 0xba30.
+grub-install: info: adding a relocation entry for 0xba38.
+grub-install: info: adding a relocation entry for 0xba48.
+grub-install: info: adding a relocation entry for 0xba50.
+grub-install: info: adding a relocation entry for 0xba60.
+grub-install: info: adding a relocation entry for 0xba68.
+grub-install: info: adding a relocation entry for 0xba78.
+grub-install: info: adding a relocation entry for 0xba80.
+grub-install: info: adding a relocation entry for 0xba90.
+grub-install: info: adding a relocation entry for 0xba98.
+grub-install: info: adding a relocation entry for 0xbaa8.
+grub-install: info: adding a relocation entry for 0xbab0.
+grub-install: info: adding a relocation entry for 0xbac0.
+grub-install: info: adding a relocation entry for 0xbac8.
+grub-install: info: adding a relocation entry for 0xbad8.
+grub-install: info: adding a relocation entry for 0xbae0.
+grub-install: info: adding a relocation entry for 0xbaf0.
+grub-install: info: adding a relocation entry for 0xbaf8.
+grub-install: info: adding a relocation entry for 0xbb08.
+grub-install: info: adding a relocation entry for 0xbb10.
+grub-install: info: adding a relocation entry for 0xbb20.
+grub-install: info: adding a relocation entry for 0xbb28.
+grub-install: info: adding a relocation entry for 0xbb38.
+grub-install: info: adding a relocation entry for 0xbb40.
+grub-install: info: adding a relocation entry for 0xbb50.
+grub-install: info: adding a relocation entry for 0xbb58.
+grub-install: info: adding a relocation entry for 0xbb68.
+grub-install: info: adding a relocation entry for 0xbb70.
+grub-install: info: adding a relocation entry for 0xbb80.
+grub-install: info: adding a relocation entry for 0xbb88.
+grub-install: info: adding a relocation entry for 0xbb98.
+grub-install: info: adding a relocation entry for 0xbba0.
+grub-install: info: adding a relocation entry for 0xbbb0.
+grub-install: info: adding a relocation entry for 0xbbb8.
+grub-install: info: adding a relocation entry for 0xbbc8.
+grub-install: info: adding a relocation entry for 0xbbd0.
+grub-install: info: adding a relocation entry for 0xbbe0.
+grub-install: info: adding a relocation entry for 0xbbe8.
+grub-install: info: adding a relocation entry for 0xbbf8.
+grub-install: info: adding a relocation entry for 0xbc00.
+grub-install: info: adding a relocation entry for 0xbc10.
+grub-install: info: adding a relocation entry for 0xbc18.
+grub-install: info: adding a relocation entry for 0xbc28.
+grub-install: info: adding a relocation entry for 0xbc30.
+grub-install: info: adding a relocation entry for 0xbc40.
+grub-install: info: adding a relocation entry for 0xbc48.
+grub-install: info: adding a relocation entry for 0xbc58.
+grub-install: info: adding a relocation entry for 0xbc60.
+grub-install: info: adding a relocation entry for 0xbc70.
+grub-install: info: adding a relocation entry for 0xbc78.
+grub-install: info: adding a relocation entry for 0xbc88.
+grub-install: info: adding a relocation entry for 0xbc90.
+grub-install: info: adding a relocation entry for 0xbca0.
+grub-install: info: adding a relocation entry for 0xbca8.
+grub-install: info: adding a relocation entry for 0xbcb8.
+grub-install: info: adding a relocation entry for 0xbcc0.
+grub-install: info: adding a relocation entry for 0xbcd0.
+grub-install: info: adding a relocation entry for 0xbcd8.
+grub-install: info: adding a relocation entry for 0xbce8.
+grub-install: info: adding a relocation entry for 0xbcf0.
+grub-install: info: adding a relocation entry for 0xbd00.
+grub-install: info: adding a relocation entry for 0xbd08.
+grub-install: info: adding a relocation entry for 0xbd18.
+grub-install: info: adding a relocation entry for 0xbd20.
+grub-install: info: adding a relocation entry for 0xbd30.
+grub-install: info: adding a relocation entry for 0xbd38.
+grub-install: info: adding a relocation entry for 0xbd48.
+grub-install: info: adding a relocation entry for 0xbd50.
+grub-install: info: adding a relocation entry for 0xbd60.
+grub-install: info: adding a relocation entry for 0xbd68.
+grub-install: info: adding a relocation entry for 0xbd78.
+grub-install: info: adding a relocation entry for 0xbd80.
+grub-install: info: adding a relocation entry for 0xbd90.
+grub-install: info: adding a relocation entry for 0xbd98.
+grub-install: info: adding a relocation entry for 0xbda8.
+grub-install: info: adding a relocation entry for 0xbdb0.
+grub-install: info: adding a relocation entry for 0xbdc0.
+grub-install: info: adding a relocation entry for 0xbdc8.
+grub-install: info: adding a relocation entry for 0xbdd8.
+grub-install: info: adding a relocation entry for 0xbde0.
+grub-install: info: adding a relocation entry for 0xbdf0.
+grub-install: info: adding a relocation entry for 0xbdf8.
+grub-install: info: adding a relocation entry for 0xbe08.
+grub-install: info: adding a relocation entry for 0xbe10.
+grub-install: info: adding a relocation entry for 0xbe20.
+grub-install: info: adding a relocation entry for 0xbe28.
+grub-install: info: adding a relocation entry for 0xbe38.
+grub-install: info: adding a relocation entry for 0xbe40.
+grub-install: info: adding a relocation entry for 0xbe50.
+grub-install: info: adding a relocation entry for 0xbe58.
+grub-install: info: adding a relocation entry for 0xbe68.
+grub-install: info: adding a relocation entry for 0xbe70.
+grub-install: info: adding a relocation entry for 0xbe80.
+grub-install: info: adding a relocation entry for 0xbe88.
+grub-install: info: adding a relocation entry for 0xbe98.
+grub-install: info: adding a relocation entry for 0xbea0.
+grub-install: info: adding a relocation entry for 0xbeb0.
+grub-install: info: adding a relocation entry for 0xbeb8.
+grub-install: info: adding a relocation entry for 0xbec8.
+grub-install: info: adding a relocation entry for 0xbed0.
+grub-install: info: adding a relocation entry for 0xbee0.
+grub-install: info: adding a relocation entry for 0xbee8.
+grub-install: info: adding a relocation entry for 0xbef8.
+grub-install: info: adding a relocation entry for 0xbf00.
+grub-install: info: adding a relocation entry for 0xbf10.
+grub-install: info: adding a relocation entry for 0xbf18.
+grub-install: info: adding a relocation entry for 0xbf28.
+grub-install: info: adding a relocation entry for 0xbf30.
+grub-install: info: adding a relocation entry for 0xbf40.
+grub-install: info: adding a relocation entry for 0xbf48.
+grub-install: info: adding a relocation entry for 0xbf58.
+grub-install: info: adding a relocation entry for 0xbf60.
+grub-install: info: adding a relocation entry for 0xbf70.
+grub-install: info: adding a relocation entry for 0xbf78.
+grub-install: info: adding a relocation entry for 0xbf88.
+grub-install: info: adding a relocation entry for 0xbf90.
+grub-install: info: adding a relocation entry for 0xbfa0.
+grub-install: info: adding a relocation entry for 0xbfa8.
+grub-install: info: adding a relocation entry for 0xbfb8.
+grub-install: info: adding a relocation entry for 0xbfc0.
+grub-install: info: adding a relocation entry for 0xbfd0.
+grub-install: info: adding a relocation entry for 0xbfd8.
+grub-install: info: adding a relocation entry for 0xbfe8.
+grub-install: info: adding a relocation entry for 0xbff0.
+grub-install: info: adding a relocation entry for 0xc000.
+grub-install: info: writing 400 bytes of a fixup block starting at 0xb000.
+grub-install: info: adding a relocation entry for 0xc008.
+grub-install: info: adding a relocation entry for 0xc018.
+grub-install: info: adding a relocation entry for 0xc020.
+grub-install: info: adding a relocation entry for 0xc030.
+grub-install: info: adding a relocation entry for 0xc038.
+grub-install: info: adding a relocation entry for 0xc048.
+grub-install: info: adding a relocation entry for 0xc050.
+grub-install: info: adding a relocation entry for 0xc060.
+grub-install: info: adding a relocation entry for 0xc068.
+grub-install: info: adding a relocation entry for 0xc078.
+grub-install: info: adding a relocation entry for 0xc080.
+grub-install: info: adding a relocation entry for 0xc090.
+grub-install: info: adding a relocation entry for 0xc098.
+grub-install: info: adding a relocation entry for 0xc0a8.
+grub-install: info: adding a relocation entry for 0xc0b0.
+grub-install: info: adding a relocation entry for 0xc0c0.
+grub-install: info: adding a relocation entry for 0xc0c8.
+grub-install: info: adding a relocation entry for 0xc0d8.
+grub-install: info: adding a relocation entry for 0xc0e0.
+grub-install: info: adding a relocation entry for 0xc0f0.
+grub-install: info: adding a relocation entry for 0xc0f8.
+grub-install: info: adding a relocation entry for 0xc108.
+grub-install: info: adding a relocation entry for 0xc110.
+grub-install: info: adding a relocation entry for 0xc120.
+grub-install: info: adding a relocation entry for 0xc128.
+grub-install: info: adding a relocation entry for 0xc138.
+grub-install: info: adding a relocation entry for 0xc140.
+grub-install: info: adding a relocation entry for 0xc150.
+grub-install: info: adding a relocation entry for 0xc158.
+grub-install: info: adding a relocation entry for 0xc168.
+grub-install: info: adding a relocation entry for 0xc170.
+grub-install: info: adding a relocation entry for 0xc180.
+grub-install: info: adding a relocation entry for 0xc188.
+grub-install: info: adding a relocation entry for 0xc198.
+grub-install: info: adding a relocation entry for 0xc1a0.
+grub-install: info: adding a relocation entry for 0xc1b0.
+grub-install: info: adding a relocation entry for 0xc1b8.
+grub-install: info: adding a relocation entry for 0xc1c8.
+grub-install: info: adding a relocation entry for 0xc1d0.
+grub-install: info: adding a relocation entry for 0xc1e0.
+grub-install: info: adding a relocation entry for 0xc1e8.
+grub-install: info: adding a relocation entry for 0xc1f8.
+grub-install: info: adding a relocation entry for 0xc200.
+grub-install: info: adding a relocation entry for 0xc210.
+grub-install: info: adding a relocation entry for 0xc218.
+grub-install: info: adding a relocation entry for 0xc228.
+grub-install: info: adding a relocation entry for 0xc230.
+grub-install: info: adding a relocation entry for 0xc240.
+grub-install: info: adding a relocation entry for 0xc248.
+grub-install: info: adding a relocation entry for 0xc258.
+grub-install: info: adding a relocation entry for 0xc260.
+grub-install: info: adding a relocation entry for 0xc270.
+grub-install: info: adding a relocation entry for 0xc278.
+grub-install: info: adding a relocation entry for 0xc288.
+grub-install: info: adding a relocation entry for 0xc290.
+grub-install: info: adding a relocation entry for 0xc2a0.
+grub-install: info: adding a relocation entry for 0xc2a8.
+grub-install: info: adding a relocation entry for 0xc2b8.
+grub-install: info: adding a relocation entry for 0xc2c0.
+grub-install: info: adding a relocation entry for 0xc2d0.
+grub-install: info: adding a relocation entry for 0xc2d8.
+grub-install: info: adding a relocation entry for 0xc2e8.
+grub-install: info: adding a relocation entry for 0xc2f0.
+grub-install: info: adding a relocation entry for 0xc300.
+grub-install: info: adding a relocation entry for 0xc308.
+grub-install: info: adding a relocation entry for 0xc318.
+grub-install: info: adding a relocation entry for 0xc320.
+grub-install: info: adding a relocation entry for 0xc330.
+grub-install: info: adding a relocation entry for 0xc338.
+grub-install: info: adding a relocation entry for 0xc348.
+grub-install: info: adding a relocation entry for 0xc350.
+grub-install: info: adding a relocation entry for 0xc360.
+grub-install: info: adding a relocation entry for 0xc368.
+grub-install: info: adding a relocation entry for 0xc378.
+grub-install: info: adding a relocation entry for 0xc380.
+grub-install: info: adding a relocation entry for 0xc390.
+grub-install: info: adding a relocation entry for 0xc398.
+grub-install: info: adding a relocation entry for 0xc3a8.
+grub-install: info: adding a relocation entry for 0xc3b0.
+grub-install: info: adding a relocation entry for 0xc3c0.
+grub-install: info: adding a relocation entry for 0xc3c8.
+grub-install: info: adding a relocation entry for 0xc3d8.
+grub-install: info: adding a relocation entry for 0xc3e0.
+grub-install: info: adding a relocation entry for 0xc3f0.
+grub-install: info: adding a relocation entry for 0xc3f8.
+grub-install: info: adding a relocation entry for 0xc408.
+grub-install: info: adding a relocation entry for 0xc410.
+grub-install: info: adding a relocation entry for 0xc420.
+grub-install: info: adding a relocation entry for 0xc428.
+grub-install: info: adding a relocation entry for 0xc438.
+grub-install: info: adding a relocation entry for 0xc440.
+grub-install: info: adding a relocation entry for 0xc450.
+grub-install: info: adding a relocation entry for 0xc458.
+grub-install: info: adding a relocation entry for 0xc468.
+grub-install: info: adding a relocation entry for 0xc470.
+grub-install: info: adding a relocation entry for 0xc480.
+grub-install: info: adding a relocation entry for 0xc488.
+grub-install: info: adding a relocation entry for 0xc498.
+grub-install: info: adding a relocation entry for 0xc4a0.
+grub-install: info: adding a relocation entry for 0xc4b0.
+grub-install: info: adding a relocation entry for 0xc4b8.
+grub-install: info: adding a relocation entry for 0xc4c8.
+grub-install: info: adding a relocation entry for 0xc4d0.
+grub-install: info: adding a relocation entry for 0xc4e0.
+grub-install: info: adding a relocation entry for 0xc4e8.
+grub-install: info: adding a relocation entry for 0xc4f8.
+grub-install: info: adding a relocation entry for 0xc500.
+grub-install: info: adding a relocation entry for 0xc510.
+grub-install: info: adding a relocation entry for 0xc518.
+grub-install: info: adding a relocation entry for 0xc528.
+grub-install: info: adding a relocation entry for 0xc530.
+grub-install: info: adding a relocation entry for 0xc540.
+grub-install: info: adding a relocation entry for 0xc548.
+grub-install: info: adding a relocation entry for 0xc558.
+grub-install: info: adding a relocation entry for 0xc560.
+grub-install: info: adding a relocation entry for 0xc570.
+grub-install: info: adding a relocation entry for 0xc578.
+grub-install: info: adding a relocation entry for 0xc588.
+grub-install: info: adding a relocation entry for 0xc590.
+grub-install: info: adding a relocation entry for 0xc5a0.
+grub-install: info: adding a relocation entry for 0xc5a8.
+grub-install: info: adding a relocation entry for 0xc5b8.
+grub-install: info: adding a relocation entry for 0xc5c0.
+grub-install: info: adding a relocation entry for 0xc5d0.
+grub-install: info: adding a relocation entry for 0xc5d8.
+grub-install: info: adding a relocation entry for 0xc5e8.
+grub-install: info: adding a relocation entry for 0xc5f0.
+grub-install: info: adding a relocation entry for 0xc600.
+grub-install: info: adding a relocation entry for 0xc608.
+grub-install: info: adding a relocation entry for 0xc618.
+grub-install: info: adding a relocation entry for 0xc620.
+grub-install: info: adding a relocation entry for 0xc630.
+grub-install: info: adding a relocation entry for 0xc638.
+grub-install: info: adding a relocation entry for 0xc648.
+grub-install: info: adding a relocation entry for 0xc650.
+grub-install: info: adding 204 padding fixup entries.
+grub-install: info: writing 688 bytes of a fixup block starting at 0xc000.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/fshelp.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/ext2.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/part_gpt.mod.
+grub-install: info: reading /usr/lib/grub/x86_64-efi/search_fs_uuid.mod.
+grub-install: info: reading /boot/grub/x86_64-efi/load.cfg.
+grub-install: info: kernel_img=0x27cb200, kernel_size=0x18200.
+grub-install: info: the core size is 0x1d3c0.
+grub-install: info: writing 0x1e600 bytes.
+grub-install: info: copying `/usr/lib/shim/shim.efi.signed' -> `/boot/efi/EFI/ubuntu/shimx64.efi'.
+grub-install: info: copying `/usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed' -> `/boot/efi/EFI/ubuntu/grubx64.efi'.
+grub-install: info: copying `/usr/lib/shim/MokManager.efi.signed' -> `/boot/efi/EFI/ubuntu/MokManager.efi'.
+grub-install: info: copying `/boot/grub/x86_64-efi/load.cfg' -> `/boot/efi/EFI/ubuntu/grub.cfg'.
+grub-install: info: Registering with EFI: distributor = `ubuntu', path = `EFIubuntushimx64.efi', ESP at hostdisk//dev/sda,gpt1.
+grub-install: info: executing efibootmgr --version </dev/null >/dev/null.
+grub-install: info: executing modprobe -q efivars.
+grub-install: info: executing efibootmgr -b 0000 -B.
+grub-install: info: executing efibootmgr -c -d /dev/sda -p 1 -w -L ubuntu -l EFIubuntushimx64.efi.
+Installation finished. No error reported.
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 2003,2001,2002
+Boot0002* EFI Network 0 for IPv4 (00-8C-FA-AA-04-D4)
+Boot0003* EFI Network 0 for IPv6 (00-8C-FA-AA-04-D4)
+Boot2001* EFI USB Device
+Boot2002* EFI DVD/CDROM
+Boot2003* EFI Network
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 0000,2003,2001,2002
+Boot0002* EFI Network 0 for IPv4 (00-8C-FA-AA-04-D4)
+Boot0003* EFI Network 0 for IPv6 (00-8C-FA-AA-04-D4)
+Boot2001* EFI USB Device
+Boot2002* EFI DVD/CDROM
+Boot2003* EFI Network
+Boot0000* ubuntu,BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 2003,2001,2002
+Boot0002* EFI Network 0 for IPv4 (00-8C-FA-AA-04-D4)
+Boot0003* EFI Network 0 for IPv6 (00-8C-FA-AA-04-D4)
+Boot2001* EFI USB Device
+Boot2002* EFI DVD/CDROM
+Boot2003* EFI Network
+BootCurrent: 0000
+Timeout: 2 seconds
+BootOrder: 0000,2003,2001,2002
+Boot0002* EFI Network 0 for IPv4 (00-8C-FA-AA-04-D4)
+Boot0003* EFI Network 0 for IPv6 (00-8C-FA-AA-04-D4)
+Boot2001* EFI USB Device
+Boot2002* EFI DVD/CDROM
+Boot2003* EFI Network
+Boot0000* ubuntu.
+Wrong GRUB version detected. Please report this message to boot.repair@gmail.com
+
+Reinstall the GRUB of sda2 into the MBR of sda
+Installing for x86_64-efi platform.
+Installation finished. No error reported.
+grub-install /dev/sda: exit code of grub-install /dev/sda:0
+
+update-grub -y
+Unrecognized option `-y'
+Usage: grub-mkconfig [OPTION]
+Generate a grub config file
+
+-o, --output=FILE       output generated config to FILE [default=stdout]
+-h, --help              print this message and exit
+-v, --version           print the version information and exit
+
+Report bugs to <bug-grub@gnu.org>.
+
+update-grub
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-3.13.0-24-generic
+Found initrd image: /boot/initrd.img-3.13.0-24-generic
+Found linux image: /boot/vmlinuz-3.13.0-23-generic
+Found initrd image: /boot/initrd.img-3.13.0-23-generic
+Found linux image: /boot/vmlinuz-3.13.0-19-generic
+Found initrd image: /boot/initrd.img-3.13.0-19-generic
+Adding boot menu entry for EFI firmware configuration
+Unhide GRUB boot menu in sda2/boot/grub/grub.cfg
+
+An error occurred during the repair.
+
+You can now reboot your computer.
+
+
+The boot files of [The OS now in use - Ubuntu 14.04 LTS] are far from the start of the disk. Your BIOS may not detect them. You may want to retry after creating a /boot partition (EXT4, >200MB, start of the disk). This can be performed via tools such as gParted. Then select this partition via the [Separate /boot partition:] option of [Boot Repair]. (https://help.ubuntu.com/community/BootPartition)
+
+ [/TD]
+[/TR]
+[/TABLE]
+ 
+ 
+```
+
+     		    
+ 	    
+ 	[/COLOR]
+[/CODE]
+
+---
+
+### Post by demonic_crow on 2014-04-14
+I just pulled up Gparted and I'm seeing 3 partition boot/efi, /, and swap . Is it possible that some how it was erased? I have a recover disc for Windows.
+
+---
+
+### Post by oldfred on 2014-04-14
+See the Caution heading in the link in my signature. Its been there for several months.
+
+You need to restore Windows and reinstall Ubuntu.
+
+---
+
+### Post by demonic_crow on 2014-04-18
+What would you recommend for partition on Ubuntu.  Right now I have 200gb set aside for my install. 
+
+Should I make a partition for
+
+/boot   300mb
+logical     /         ?
+logical      /home   ?
+swap    4gb
+
+---
+
+### Post by ubfan1 on 2014-04-18
+Assuming you already have the EFI partition and a Windows partition, your Ubuntu partitions could be:
+1)Forget the /boot, there is no longer a need in most cases to try to position the kernels near the beginning of the disk.
+2)25G -30G is fine for /    You even have space for two of them, so you can alternate between them when it's update time, and avoid the "jump off the cliff" problem with upgrades.
+3)8G swap, you probably will add to your memory sometime, and you have the space.
+4)Make the rest a data partition, you can mount/link from the home on any / (In case you have more than one).  Your home directory gets many desktop specific files, and if you are switching between releases with different roots, you really don't want to mix things up.  Better to keep your data in its own location and refer to it from where ever your home is.
+
+---
+
+### Post by oldfred on 2014-04-18
++1 on ubfan1's suggestions.
+
+I often also suggest a shared NTFS data partition when dual booting. Best not to write into Windows system partition. But I do not think you can unmount the data partition in Windows, so still have to be sure the always on hibernation is turned off.
+
+UEFI installs use gpt partitions, so there are not anymore primary, extended or logical partitions. The in effect are all primary.
+
+---
+
+### Post by john.errington on 2014-04-24
+great. Installing UBUNTU requires one click.
+Uninstalling requires me to type an essay - letter perfect - 
+then a cludge because 
+"Boot-Repair does not have a trusty version, but saucy version works, so you have to lie to system."
+then I get "gksudo is not installed"
+"you can install it by typing sudo apt-get install gksu"
+so I type
+sudo apt-get install gksu
+and I get "unable to locate package gksu"
+
+---
+

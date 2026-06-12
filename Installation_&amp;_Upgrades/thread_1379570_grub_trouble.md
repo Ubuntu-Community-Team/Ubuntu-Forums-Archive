@@ -1,0 +1,355 @@
+---
+title: "grub trouble"
+date: 2010-01-12
+forum: Installation &amp; Upgrades
+---
+
+### Post by wlraider70 on 2010-01-12
+I have been thinking about installing a dual boot.
+
+I tried wubi first and im pretty sure it messed up the MBR.
+
+
+so i ran the boot script.
+
+```
+
+
+============================= Boot Info Summary: ==============================
+
+ => Windows is installed in the MBR of /dev/sda
+ => Syslinux is installed in the MBR of /dev/sdb
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Dell Utility: Fat16
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe 
+                       /wubildr.mbr /ubuntu/winboot/wubildr.mbr 
+                       /ubuntu/disks/root.disk /ubuntu/disks/swap.disk 
+                       /boot/grub/core.img
+
+sda3/Wubi: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab
+
+sdb1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Fat32
+    Boot sector info:  According to the info in the boot sector, sdb1 starts 
+                       at sector 0. But according to the info from fdisk, 
+                       sdb1 starts at sector 8064.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 750.2 GB, 750156374016 bytes
+255 heads, 63 sectors/track, 91201 cylinders, total 1465149168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x48000000
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63       112,454       112,392  de Dell Utility
+/dev/sda2             112,640    31,569,919    31,457,280   7 HPFS/NTFS
+/dev/sda3    *     31,569,920 1,465,145,343 1,433,575,424   7 HPFS/NTFS
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 4005 MB, 4005560320 bytes
+21 heads, 21 sectors/track, 17740 cylinders, total 7823360 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0xb8ff77e6
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1    *          8,064     7,823,359     7,815,296   c W95 FAT32 (LBA)
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+/dev/loop0: TYPE="squashfs" 
+/dev/loop1: UUID="13de8490-c2a0-4415-98d3-b6aa055e91bc" TYPE="ext4" 
+/dev/sda1: SEC_TYPE="msdos" LABEL="DellUtility" UUID="07D8-021D" TYPE="vfat" 
+/dev/sda2: UUID="F8C23922C238E712" LABEL="RECOVERY" TYPE="ntfs" 
+/dev/sda3: UUID="D8FA3C07FA3BE104" LABEL="OS" TYPE="ntfs" 
+/dev/sdb1: LABEL="ORANGE 4GB" UUID="2F75-2767" TYPE="vfat" 
+
+=============================== "mount" output: ===============================
+
+aufs on / type aufs (rw)
+none on /proc type proc (rw,noexec,nosuid,nodev)
+none on /sys type sysfs (rw,noexec,nosuid,nodev)
+udev on /dev type tmpfs (rw,mode=0755)
+/dev/sr0 on /cdrom type iso9660 (rw)
+/dev/loop0 on /rofs type squashfs (rw)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+none on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev)
+none on /var/run type tmpfs (rw,nosuid,mode=0755)
+none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+none on /lib/init/rw type tmpfs (rw,nosuid,mode=0755)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/ubuntu/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=ubuntu)
+/dev/sda3 on /mnt type fuseblk (rw,nosuid,nodev,allow_other,blksize=4096)
+
+
+=================== sda3: Location of files loaded by Grub: ===================
+
+
+  16.1GB: boot/grub/core.img
+
+======================== sda3/Wubi/boot/grub/grub.cfg: ========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+menuentry "Ubuntu, Linux 2.6.31-17-generic-pae" {
+	insmod ntfs
+	set root=(hd0,3)
+	search --no-floppy --fs-uuid --set d8fa3c07fa3be104
+	loopback loop0 /ubuntu/disks/root.disk
+	set root=(loop0)
+	linux /boot/vmlinuz-2.6.31-17-generic-pae root=/dev/sda3 loop=/ubuntu/disks/root.disk ro   quiet splash
+	initrd /boot/initrd.img-2.6.31-17-generic-pae
+}
+menuentry "Ubuntu, Linux 2.6.31-17-generic-pae (recovery mode)" {
+	insmod ntfs
+	set root=(hd0,3)
+	search --no-floppy --fs-uuid --set d8fa3c07fa3be104
+	loopback loop0 /ubuntu/disks/root.disk
+	set root=(loop0)
+	linux /boot/vmlinuz-2.6.31-17-generic-pae root=/dev/sda3 loop=/ubuntu/disks/root.disk ro single 
+	initrd /boot/initrd.img-2.6.31-17-generic-pae
+}
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda3)" {
+	insmod ntfs
+	set root=(hd0,3)
+	search --no-floppy --fs-uuid --set d8fa3c07fa3be104
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+============================= sda3/Wubi/etc/fstab: =============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+/host/ubuntu/disks/root.disk /               ext4    loop,errors=remount-ro 0       1
+/host/ubuntu/disks/swap.disk none            swap    loop,sw         0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+================= sda3/Wubi: Location of files loaded by Grub: =================
+
+
+    .0GB: boot/grub/grub.cfg
+    .0GB: boot/initrd.img-2.6.31-17-generic-pae
+    .0GB: boot/vmlinuz-2.6.31-17-generic-pae
+    .0GB: initrd.img
+    .0GB: vmlinuz
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdc sdd sde sdf sdg 
+
+
+
+```
+
+then i tried following this guide
+
+[https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD](https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD)
+
+the simplest method.
+
+i ran this
+
+```
+
+
+ubuntu@ubuntu:~/Downloads$ sudo fdisk -l
+
+Disk /dev/sda: 750.2 GB, 750156374016 bytes
+255 heads, 63 sectors/track, 91201 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Disk identifier: 0x48000000
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1               1           7       56196   de  Dell Utility
+/dev/sda2               8        1966    15728640    7  HPFS/NTFS
+/dev/sda3   *        1966       91202   716787712    7  HPFS/NTFS
+
+Disk /dev/sdb: 4005 MB, 4005560320 bytes
+21 heads, 21 sectors/track, 17740 cylinders
+Units = cylinders of 441 * 512 = 225792 bytes
+Disk identifier: 0xb8ff77e6
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1   *          19       17741     3907648    c  W95 FAT32 (LBA)
+
+
+ubuntu@ubuntu:~/Downloads$ sudo mount /dev/sda3 /mnt
+ubuntu@ubuntu:~/Downloads$ sudo grub-install --root-directory=/mnt/ /dev/sda3
+grub-setup: warn: Attempting to install GRUB to a partition instead of the MBR.  This is a BAD idea.
+grub-setup: warn: Embedding is not possible.  GRUB can only be installed in this setup by using blocklists.  However, blocklists are UNRELIABLE and its use is discouraged.
+grub-setup: error: Cannot read `/grub/core.img' correctly
+
+
+```
+
+
+
+I'm running off a live CD right now.
+
+I'm ready to just install ubuntu on a partition now, but g-parted wont let me make the partition smaller so that i can create a new one.
+I tried and go nowhere.
+could this be the cause too?
+
+---
+
+### Post by darkod on 2010-01-12
+The link you supplied.... DO NOT FOLLOW IT FOR WUBI!!!!!
+WUBI IS NOT UBUNTU!!!! YOU DO NOT HAVE GRUB ON YOUR MBR.
+This is not as much for you as for others reading this. Wubi is virtual ubuntu running from a virtual image inside windows on ntfs partition.
+
+If you want to move to proper, full ubuntu, first it would be better to remove wubi. You do that in add/remove programs just like any other windows app (because it's installed inside windows). That will delete the ubuntu folder and free the space you allocated to wubi. Of course, this assumes you have no data you want to copy from wubi, otherwise copy the data first before removing it.
+
+When you say Gparted didn't allow you to resize the partition, did you try it from inside wubi/ubuntu, or from the live session off the cd? It should have allowed you to resize if from a live session. But remove wubi first, so you can use the space it will free too.
+
+After doing this you should have no problems installing full ubuntu. If you do, just ask.
+
+---
+
+### Post by oldfred on 2010-01-12
+With the wubi install the only way you boot is from the windows boot in the mbr. You are running a program in windows that is a full ubuntu but still in windows and on the windows NTFS partition. 
+
+You can reinstall the Vista boot to get your system working. You really should resize Vista from within Vista as Vista and 7 do not like others messing with their partitions.
+
+How to restore the Ubuntu/XP/Vista/7 bootloader (Updated for Ubuntu 9.10)
+[http://ubuntuforums.org/showthread.php?t=1014708](http://ubuntuforums.org/showthread.php?t=1014708)
+
+If you want touse gparted make sure it is a version that has the checkbox.
+starting with Vista - MSoft made some changes to the way it installs itself in a partition. Gparted can deal with it but should have the round to cylinder unchecked.
+Herman on checkbox
+[http://www.uluga.ubuntuforums.org/showpost.php?p=7816261&postcount=17](http://www.uluga.ubuntuforums.org/showpost.php?p=7816261&postcount=17)
+
+Windows Disk Cleanup tool to houseclean
+defrag at least twice
+#Partitioning generally better
+Windows Vista - partition your hard drive using Disk Management, if XP use Gparted
+25GB at an absolute minimum 
+[http://www.howtogeek.com/howto/windows-vista/working-around-windows-vistas-shrink-volume-inadequacy-problems/](http://www.howtogeek.com/howto/windows-vista/working-around-windows-vistas-shrink-volume-inadequacy-problems/)
+
+---
+
+### Post by presence1960 on 2010-01-12
+why do you think the MBR is messed up? Can you boot windows? If so the MBR is fine and wubi is the problem.
+
+---
+
+### Post by wlraider70 on 2010-01-12
+Ok i got the vista booting correctly.
+I deleted wubi.
+
+I still have the gparted issue. G-parted will not allow me to shrink the main ntfs partition, when running from the live CD.
+Here is a screen shot off one issue i found, i don't know if its part of the issue
+
+---
+
+### Post by presence1960 on 2010-01-12
+> **wlraider70 said:**
+> Ok i got the vista booting correctly.
+I deleted wubi.
+
+I still have the gparted issue. G-parted will not allow me to shrink the main ntfs partition, when running from the live CD.
+Here is a screen shot off one issue i found, i don't know if its part of the issue
+
+Try to shrink vista's partition with it's own disk management utility. First make sure you have a backup of all data you don't want to lose. This is a precaution but whenever partitioning/installing OSs it is a wise practice to do so.
+
+Then defrag Vista at least once or twice (twice is better!).
+Then go into Control Panel and disable System Restore until after ubuntu is installed.
+Go into Vista's disk management utilty and shrink Vista's partition to create space for Ubuntu.
+
+Once you have unallocated space the easiest way to install Ubuntu is to boot the Live CD and at the partitioner window choose the option to use the largest continuous free space. This will install Ubuntu to that unallocated space.
+
+At the Ready to install window of the installation click the advanced button (see pic below)and choose /dev/sda to put GRUB on the MBR so you can boot both OSs. Use /dev/sda if you only have 1 hard disk.
+
+---
+

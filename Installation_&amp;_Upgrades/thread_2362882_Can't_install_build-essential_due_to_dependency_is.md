@@ -1,0 +1,31 @@
+---
+title: "Can't install build-essential due to dependency issues"
+date: 2017-06-03
+forum: Installation &amp; Upgrades
+---
+
+### Post by dunique on 2017-06-03
+I am running Ubuntu 14.04 on my virtualbox after installing flex and bison, I needed to install build-essential but I keep getting this error
+
+Build-essential: Depends: g++(>=4:4.3.3)
+
+I then did
+
+ sudo apt-get update 
+ Sudo apt-get install build-essential
+
+Yet it's not installing. 
+
+What do I do? 
+
+Thanks
+
+---
+
+### Post by lisati on 2017-06-03
+Please do not start multiple threads for the same problem, it dilutes the community's ability to help.
+
+Duplicate of [https://ubuntuforums.org/showthread.php?t=2362885](https://ubuntuforums.org/showthread.php?t=2362885) closed.
+
+---
+

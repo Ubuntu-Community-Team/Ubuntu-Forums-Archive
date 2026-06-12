@@ -1,0 +1,100 @@
+---
+title: "Java version 7 update 25 is now available"
+date: 2013-06-20
+forum: Installation &amp; Upgrades
+---
+
+### Post by Cavsfan on 2013-06-20
+Java version 7 update 25 is available.
+The link to **Check Java version** is in my signature.
+For Ubuntu, download the Linux version for 32 bit machines or the Linux x64 version for 64 bit machines.
+The .RPM version is for other Linux Distros.
+Choose "save file" when prompted and then the instructions to install it are in the other link in my signature **Manually update Java**.
+The How to link is Oracle (Sun) Java JRE for Ubuntu, Linux Mint and Debian.
+Just open up a terminal and copy and paste the commands.
+The instructions have been updated to 7.25 so you just have to copy and paste.
+For 32 bit the instructions are on the left and for 64 bit the instructions are on the right.
+It will tell you to remove any older version first and provides instructions for doing so.
+This method also removes the IcedTea Java-plug-in
+
+This is intended for those who prefer the CLI method of updating Java.
+
+When you get it installed and restart Firefox open a tab and enter:
+
+```
+about:plugins
+```
+It should show this:
+[SIZE=2]**Java(TM) Plug-in 1.7.0_25**[/SIZE]
+
+This post can always be used to check and update java anytime a new version comes out.
+
+---
+
+### Post by katef on 2013-06-28
+> **Cavsfan said:**
+> Java version 7 update 25 is available.
+The link to **Check Java version** is in my signature.
+For Ubuntu, download the Linux version for 32 bit machines or the Linux x64 version for 64 bit machines.
+The .RPM version is for other Linux Distros.
+Choose "save file" when prompted and then the instructions to install it are in the other link in my signature **Manually update Java**.
+The How to link is Oracle (Sun) Java JRE for Ubuntu, Linux Mint and Debian.
+Just open up a terminal and copy and paste the commands.
+The instructions have been updated to 7.25 so you just have to copy and paste.
+For 32 bit the instructions are on the left and for 64 bit the instructions are on the right.
+It will tell you to remove any older version first and provides instructions for doing so.
+This method also removes the IcedTea Java-plug-in
+
+This is intended for those who prefer the CLI method of updating Java.
+
+When you get it installed and restart Firefox open a tab and enter:
+
+```
+about:plugins
+```
+It should show this:
+[SIZE=2]**Java(TM) Plug-in 1.7.0_25**[/SIZE]
+
+This post can always be used to check and update java anytime a new version comes out.
+
+Hi,
+
+I just wanted to say thank you for writing that - this is exactly what I needed.
+
+---
+
+### Post by Cavsfan on 2013-06-28
+> **Cavsfan said:**
+> Java version 7 update 25 is available.
+The link to **Check Java version** is in my signature.
+For Ubuntu, download the Linux version for 32 bit machines or the Linux x64 version for 64 bit machines.
+The .RPM version is for other Linux Distros.
+Choose "save file" when prompted and then the instructions to install it are in the other link in my signature **Manually update Java**.
+The How to link is Oracle (Sun) Java JRE for Ubuntu, Linux Mint and Debian.
+Just open up a terminal and copy and paste the commands.
+The instructions have been updated to 7.25 so you just have to copy and paste.
+For 32 bit the instructions are on the left and for 64 bit the instructions are on the right.
+It will tell you to remove any older version first and provides instructions for doing so.
+This method also removes the IcedTea Java-plug-in
+
+This is intended for those who prefer the CLI method of updating Java.
+
+When you get it installed and restart Firefox open a tab and enter:
+
+```
+about:plugins
+```
+It should show this:
+[SIZE=2]**Java(TM) Plug-in 1.7.0_25**[/SIZE]
+
+This post can always be used to check and update java anytime a new version comes out.
+
+> **katef said:**
+> Hi,
+
+I just wanted to say thank you for writing that - this is exactly what I needed.
+
+You are very welcome. :D
+
+---
+

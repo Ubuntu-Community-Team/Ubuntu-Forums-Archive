@@ -1,0 +1,872 @@
+---
+title: "Grub doesn´t recognize partitions"
+date: 2010-04-13
+forum: Installation &amp; Upgrades
+---
+
+### Post by Skari on 2010-04-13
+Good day
+
+I am currently trying to dual boot my old laptop. I installed Ubuntu 9.10 on a rezised partition but the system won´t boot. 
+
+When I try to boot the "grub-rescue> no such partiton" screen comes up an nothing happens. When I type ls to see which partitions grub sees it only shows hd(0) and hd(0,1). I can´t even boot into Windows.
+
+Both Windows and when I boot up with the Ubuntu Live cd I can see the partitions but Grub doesn´t. I have often tried to reinstall Grub but with no luck. 
+
+The Partitions are as follows
+
+Windows sda1
+Ubuntu sda5
+Swap sda6
+
+If it is necessary I could boot up with the live cd and print out the actual data from fdisk
+
+Any ideas ?
+
+---
+
+### Post by presence1960 on 2010-04-13
+Let's get a better look at your setup & boot process. Boot the Ubuntu Live CD/USB. Choose "try ubuntu without any changes", when the desktop loads come back here and do the following:
+
+1. Download the boot info script. There is a link in my signature.
+2. Once downloaded move the boot info script to the desktop.
+3. Open a terminal and run the command ```
+sudo bash ~/Desktop/boot_info_script*.sh
+```
+
+  This will create a RESULTS.txt file on the desktop. Paste the entire contents of that file back here. Once pasted highlight all text and click the # sign on the toolbar to place code tags around the text. 
+
+See [here]("http://bootinfoscript.sourceforge.net/") for more info on the boot info script.
+
+Above link is to meierfra's Sourceforge web page.
+
+---
+
+### Post by Skari on 2010-04-13
+Here are the results
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Lilo is installed in the MBR of /dev/sda
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x01a0019f
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   272,847,959   272,847,897   7 HPFS/NTFS
+/dev/sda2         272,847,960   312,576,704    39,728,745   5 Extended
+/dev/sda5         272,848,023   310,825,619    37,977,597  83 Linux
+/dev/sda6         310,825,683   312,576,704     1,751,022  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/ramzswap0                                          swap                                     
+/dev/sda1        7B5FB5D0515BCF91                       ntfs                                     
+/dev/sda5        7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e   ext4                                     
+/dev/sda6        37ceb988-9ad9-485b-a400-41c7c91b3724   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (rw)
+/dev/loop0       /rofs                    squashfs   (rw)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /fastdetect /NoExecute=OptIn 
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,5)
+search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e ro single 
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+    insmod ntfs
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 7b5fb5d0515bcf91
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=37ceb988-9ad9-485b-a400-41c7c91b3724 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 140.4GB: boot/grub/core.img
+ 143.1GB: boot/grub/grub.cfg
+ 140.4GB: boot/initrd.img-2.6.31-14-generic
+ 142.1GB: boot/vmlinuz-2.6.31-14-generic
+ 140.4GB: initrd.img
+ 142.1GB: vmlinuz
+```
+
+p.s. Here it says that there is Lilo installed in the MBR, that must be because I wanted to be able to use Windows and used some Lilo method to install a Windows bootloader. I can install grub once more if that helps :roll:
+
+---
+
+### Post by presence1960 on 2010-04-13
+Boot the 9.10 Live CD and choose "try ubuntu without any changes", when the desktop loads open a terminal and run ```
+sudo mount /dev/sda5 /mnt
+```
+This will mount your Ubuntu / partition. 
+
+next in terminal run ```
+sudo grub-install --root-directory=/mnt/ /dev/sda
+```This will put GRUB on MBR. You should be good to go. Reboot without the Live CD and check both ubuntu & windows to see if they both boot. If windows is not in the GRUB menu at boot then boot into ubuntu and run in terminal ```
+sudo update-grub
+```
+
+---
+
+### Post by Skari on 2010-04-14
+Thanks. I´ll try it later to day
+
+---
+
+### Post by Skari on 2010-04-14
+I followed the instructions but still no luck !
+
+This comes up when I try to boot
+```
+grub-rescue> no such partition
+ls
+hd(0) hd(0,1)
+```One question. Is it normal that the ubuntu and swap partitions are under the extended sda2 partition ? Isn't that confusing grub ? Should I try to reinstall Ubuntu but manually manage the partitions and not let ubuntu decide where to put itself ?
+
+Here is a screenshot I took from Gparted
+[IMG]http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs414.snc3/24986_1441995172771_1319833191_1217346_5942939_n.jpg[/IMG]
+
+---
+
+### Post by srs5694 on 2010-04-14
+I'm not entirely sure what's going on with your GRUB setup, but I can say with certainty that Linux's presence in logical partitions is *not* the problem. Linux is perfectly happy booting from a logical partition, and GRUB is perfectly capable of redirecting the boot process to a logical partition. I've got at least one system that's set up this way right now, and in the past I've had others. (I've switched most of my six computers to partly or completely use GPT rather than MBR partitions, or I'd have more set up to boot from logical partitions now.)
+
+---
+
+### Post by oldfred on 2010-04-14
+You mentioned old computer. Old grub would give an error 18 if  the BIOS was beyond its limits. Is this perhaps your problem??
+
+[http://members.iinet.net.au/~herman546/p15.html#18](http://members.iinet.net.au/~herman546/p15.html#18)
+
+---
+
+### Post by Skari on 2010-04-14
+My laptop was made in 2004 and came with a 40gb harddrive, so I don´t suspect that that is a problem
+
+---
+
+### Post by oldfred on 2010-04-14
+If the drive was only 40GB the 137GB barrier would not have been a concern. You now have a 149GB (usable) drive.
+
+---
+
+### Post by presence1960 on 2010-04-14
+> **oldfred said:**
+> If the drive was only 40GB the 137GB barrier would not have been a concern. You now have a 149GB (usable) drive.
+
+I would think that the BIOS is the problem as it is from 2004 and the files read by GRUB are beyond the 137 GB limit addressable by BIOS. See here from your script output:
+
+```
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 140.4GB: boot/grub/core.img
+ 143.1GB: boot/grub/grub.cfg
+ 140.4GB: boot/initrd.img-2.6.31-14-generic
+ 142.1GB: boot/vmlinuz-2.6.31-14-generic
+ 140.4GB: initrd.img
+ 142.1GB: vmlinuz
+```
+
+There are only  a few solutions to this problem. One is create a separate /boot partition within the 137 GB limit or repartition your disk so Ubuntu's root (/) is entirely within the 137 GB limit.
+
+The last option is the least attractive in my opinion and that is to check your manufacturer's site to see if there is a BIOS update that addresses the problem of the BIOS not being able to read past a certain point.
+
+To be more certain why don't you run another boot info script and post the new results.
+
+---
+
+### Post by Skari on 2010-04-15
+How can I create a separate boot partiton when Windows takes up most of the space ? 
+
+Gparted can only create a new partiton at the end of the first partiton, right ? Could I do that and then move the partition in front after wards ?
+
+I´ll try to run another boot info script this evening and also check if there is a BIOS update
+
+---
+
+### Post by oldfred on 2010-04-15
+Gparted can do just about anything but often you do not want to totally move partitions around. You should be able to shrink window just a bit more (make sure you do leave 10-20% free space inside windows) and create a new small  /boot partition within the 137GB limit.
+
+I have seen recommendations from 100mb to half a GB for /boot. If smaller you may have to keep track of how many kernels you keep after updates. I have a old grub only partition that uses about 33mb.
+
+---
+
+### Post by Skari on 2010-04-15
+I´m gonna try it !
+
+It should be sufficient to shrink the windows partition just a little bit more and keep the boot partition after windows. The Windows partition is only 130,10 gb.
+
+---
+
+### Post by Skari on 2010-04-15
+I may have been to quick and should have read more before I acted...
+
+I made the 100mb partition after windows and ran these commands as I thought it should be done this way according to the grub2 wiki page. I also changed the boot flag to sda3 from sda1
+```
+sudo mount /dev/sda5 /mnt
+sudo mount /dev/sda3 /mnt/boot
+
+sudo grub-install --root-directory=/mnt/ /dev/sda3
+
+```
+
+Now no bootloader loads and the system asks for a system disk.
+
+Can some one tell me how to make a seperate boot partition and installing grub or link another site that does as I haven't found a good one yet. 
+
+Here is the boot info scrip
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Lilo is installed in the MBR of /dev/sda
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda3: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda3 and 
+                       looks at sector 272781593 of the same hard drive for 
+                       core.img, core.img is at this location on /dev/sda and 
+                       looks on partition #3 for /grub.
+    Operating System:  
+    Boot files/dirs:   /grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x01a0019f
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63   272,639,114   272,639,052   7 HPFS/NTFS
+/dev/sda2         272,847,960   312,576,704    39,728,745   5 Extended
+/dev/sda5         272,848,023   310,825,619    37,977,597  83 Linux
+/dev/sda6         310,825,683   312,576,704     1,751,022  82 Linux swap / Solaris
+/dev/sda3    *    272,639,115   272,847,959       208,845  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/ramzswap0                                          swap                                     
+/dev/sda1        7B5FB5D0515BCF91                       ntfs                                     
+/dev/sda3        39c3a55d-1f1f-42d4-be71-59e0dfda49db   ext2       boot                          
+/dev/sda5        7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e   ext4                                     
+/dev/sda6        37ceb988-9ad9-485b-a400-41c7c91b3724   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (rw)
+/dev/loop0       /rofs                    squashfs   (rw)
+/dev/sda5        /media/7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e ext4       (rw,nosuid,nodev,uhelper=devkit)
+/dev/sda3        /media/boot              ext2       (rw,nosuid,nodev,uhelper=devkit)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /fastdetect /NoExecute=OptIn 
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,5)
+search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e ro single 
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+    insmod ntfs
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 7b5fb5d0515bcf91
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=37ceb988-9ad9-485b-a400-41c7c91b3724 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 140.4GB: boot/grub/core.img
+ 143.1GB: boot/grub/grub.cfg
+ 140.4GB: boot/initrd.img-2.6.31-14-generic
+ 142.1GB: boot/vmlinuz-2.6.31-14-generic
+ 140.4GB: initrd.img
+ 142.1GB: vmlinuz
+
+=================== sda3: Location of files loaded by Grub: ===================
+
+
+ 139.6GB: grub/core.img
+```
+
+I see now that the boot partition isn't inside the 137gb barrier yet. I'll enlarge it again.
+
+---
+
+### Post by oldfred on 2010-04-15
+You do not install grub to the partition -PBR unless you want to chainboot from another grub in the MBR. Linux does not use the boot flag, lilo may, windows does. It is ok on the new partiion.
+
+General instructions except since they are older they discuss old grub. You will have to install grub to the MBR the same way any install of new grub2, as you did but now all the files to boot will be in the /boot partition.
+
+Basically you have to copy all the files from your existing /boot and reset fstab to look for /boot. And then reinstall grub2 using the new partition.
+
+[https://help.ubuntu.com/community/CreateBootPartitionAfterInstall](https://help.ubuntu.com/community/CreateBootPartitionAfterInstall)
+
+---
+
+### Post by Skari on 2010-04-18
+How do I reset my fstab to look in boot ? I can't figure out how to set up fstab. Here is fstab as of now
+
+```
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=7603e738-f0bc-4d23-8ba0-b8f65c6b0f1e /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=37ceb988-9ad9-485b-a400-41c7c91b3724 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+```
+
+Shouldn't I add the new boot partition to fstab ?
+
+---
+
+### Post by oldfred on 2010-04-18
+I never had a /boot entry.
+
+I would copy my root entry and change UUID to new /boot UUID an change from / to /boot.
+
+to see uuids
+sudo blkid
+
+---
+
+### Post by Skari on 2010-04-22
+I´m back !
+
+All this had become a little overwhelming so I gave it a rest for a while. I´ve started again with a clean install, but now I manually managed the partitions.
+
+I had created a separate boot partition at the beginning of the disk and marked that as /boot in the installation (I know that that might not be enough). 
+
+The system still can´t boot into Ubuntu, but at least grub shows up with a decent menu and I can choose Windows. When I try to choose Ubuntu it says that it can´t find the specific drive (I think it´s the UUID tag that follows)
+
+So what should I do now ? I have to change fstab and move some files to the boot partition ?
+
+Here is my new boot info script
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #3 for /grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /etc/fstab
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda3: _________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   /grub/grub.cfg /grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x01a0019f
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *        208,845   272,847,959   272,639,115   7 HPFS/NTFS
+/dev/sda2         272,847,960   312,576,704    39,728,745   5 Extended
+/dev/sda5         272,848,023   310,825,619    37,977,597  83 Linux
+/dev/sda6         310,825,683   312,576,704     1,751,022  82 Linux swap / Solaris
+/dev/sda3                  63       208,844       208,782  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/ramzswap0                                          swap                                     
+/dev/sda1        7B5FB5D0515BCF91                       ntfs                                     
+/dev/sda3        3da696e2-eb43-4e4d-b80e-f64c3869a774   ext2                                     
+/dev/sda5        e2476a90-0f93-458c-b170-c7db2a3e9b37   ext4                                     
+/dev/sda6        37ceb988-9ad9-485b-a400-41c7c91b3724   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (rw)
+/dev/loop0       /rofs                    squashfs   (rw)
+/dev/sda5        /media/e2476a90-0f93-458c-b170-c7db2a3e9b37 ext4       (rw,nosuid,nodev,uhelper=devkit)
+/dev/sda3        /media/3da696e2-eb43-4e4d-b80e-f64c3869a774 ext2       (rw,nosuid,nodev,uhelper=devkit)
+/dev/sda5        /mnt                     ext4       (rw)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /fastdetect /NoExecute=OptIn 
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=e2476a90-0f93-458c-b170-c7db2a3e9b37 /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/sda3 during installation
+UUID=3da696e2-eb43-4e4d-b80e-f64c3869a774 /boot           ext2    defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=37ceb988-9ad9-485b-a400-41c7c91b3724 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+============================= sda3/grub/grub.cfg: =============================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,5)
+search --no-floppy --fs-uuid --set e2476a90-0f93-458c-b170-c7db2a3e9b37
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,3)
+    search --no-floppy --fs-uuid --set 3da696e2-eb43-4e4d-b80e-f64c3869a774
+    linux    /vmlinuz-2.6.31-14-generic root=UUID=e2476a90-0f93-458c-b170-c7db2a3e9b37 ro   quiet splash
+    initrd    /initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,3)
+    search --no-floppy --fs-uuid --set 3da696e2-eb43-4e4d-b80e-f64c3869a774
+    linux    /vmlinuz-2.6.31-14-generic root=UUID=e2476a90-0f93-458c-b170-c7db2a3e9b37 ro single 
+    initrd    /initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+    insmod ntfs
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set 7b5fb5d0515bcf91
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=================== sda3: Location of files loaded by Grub: ===================
+
+
+    .0GB: grub/core.img
+    .0GB: grub/grub.cfg
+    .0GB: initrd.img-2.6.31-14-generic
+    .0GB: vmlinuz-2.6.31-14-generic
+```
+
+I know it can be frustrating to tell the same guy the same things twice, but I am just to new to all of this and I don´t want to give up just yet !
+
+---
+

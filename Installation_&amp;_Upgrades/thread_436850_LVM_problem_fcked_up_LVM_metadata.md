@@ -1,0 +1,212 @@
+---
+title: "LVM problem: f*cked up LVM metadata"
+date: 2007-05-08
+forum: Installation &amp; Upgrades
+---
+
+### Post by realBigMac on 2007-05-08
+My fileserver stored it's data on 3 physical disks,building a volumegroup with lvm2.
+The mashine was running dapper drake for a long time without any problems but I decided to switch to feisty fawn. Switching from debian to dapper drake I installed and removed quite a lot of packages, leaving a messy system, so I thought a new and clean installation with feisty fawn might be a great idea.
+
+box config with dapper drake:
+
+hda: 120GB (PATA) systemdisk
+hdb: unused
+hdc: 250GB (PATA) part of the LVM-array
+hdd: 250GB (PATA) part of the LVM-array
+sda: 400GB (SATA) part of the LVM-array
+sdb: DVD-RW (PATA on additional PCI-controller UDMA-100)
+
+The additional IDE-controller was installed to be able to install even more disks, but as I won't buy any new PATA stuff the controller was dispensable.
+
+new box config:
+
+hda: 120GB (PATA) systemdisk
+hdb: DVD-RW
+hdc: 250GB (PATA) part of the LVM-array
+hdd: 250GB (PATA) part of the LVM-array
+sda: 400GB (SATA) part of the LVM-array
+
+I exported the vg before shutting down dapper drake and while installing festy fawn to the box I - no idea what did me do so - installed grub to hdc. Ooops, this disk was part of the LVM array and so grub f*cked up the lvm meta-data on hdc.
+
+After installing grub to hda the box is running fine, despite the LVM which can't find one of the vgs volumes:
+
+```
+bigmac@knecht:~$ sudo pvscan
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  PV /dev/hdd         VG vgdata   lvm2 [232.88 GB / 0    free]
+  PV unknown device   VG vgdata   lvm2 [232.88 GB / 0    free]
+  PV /dev/sda         VG vgdata   lvm2 [372.61 GB / 4.00 MB free]
+  Total: 3 [838.38 GB] / in use: 3 [838.38 GB] / in no VG: 0 [0   ]
+
+bigmac@knecht:~$ sudo pvdisplay
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  --- Physical volume ---
+  PV Name               /dev/hdd
+  VG Name               vgdata
+  PV Size               232.88 GB / not usable 0   
+  Allocatable           yes (but full)
+  PE Size (KByte)       4096
+  Total PE              59618
+  Free PE               0
+  Allocated PE          59618
+  PV UUID               locW5S-HNFK-b1WW-iOLt-olHl-2SNd-fmXKC8
+   
+  --- Physical volume ---
+  PV Name               unknown device
+  VG Name               vgdata
+  PV Size               232.88 GB / not usable 0   
+  Allocatable           yes (but full)
+  PE Size (KByte)       4096
+  Total PE              59618
+  Free PE               0
+  Allocated PE          59618
+  PV UUID               9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81
+   
+  --- Physical volume ---
+  PV Name               /dev/sda
+  VG Name               vgdata
+  PV Size               372.61 GB / not usable 0   
+  Allocatable           yes 
+  PE Size (KByte)       4096
+  Total PE              95388
+  Free PE               1
+  Allocated PE          95387
+  PV UUID               YUJcsF-3XP7-OrbO-pITp-5z96-gw1A-DI11QS
+
+   
+bigmac@knecht:~$ sudo vgscan
+  Reading all physical volumes.  This may take a while...
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find all physical volumes for volume group vgdata.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find all physical volumes for volume group vgdata.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find all physical volumes for volume group vgdata.
+  Couldn't find device with uuid '9kpWwu-LdwT-YiqV-DRPg-kSAN-plYN-v1Eq81'.
+  Couldn't find all physical volumes for volume group vgdata.
+  Volume group "vgdata" not found
+```
+
+I tried multiple Live-CDs like gparted (with testdisk), Ultimate Boot-CD and SystemRescueCd, but none could help.
+
+Any idea what to do to get the lvm up and running?
+How to restore the metadata on hdc?
+
+Regards,
+
+BigMac
+
+---
+
+### Post by realBigMac on 2007-05-09
+keep alive
+
+---
+
+### Post by realBigMac on 2007-05-10
+Hmm.
+To easy or to difficult?
+
+---
+
+### Post by georgeav on 2008-01-06
+I know it's late, but just for the record in case somebody stumbles here. I also lost the metadata on a RHEL server and this is how I fixed it:
+Every time you make a change to lvm (i think) it writes a backup config in /etc/lvm/backup/ which looks something like:
+```
+
+root@hostname:~# cat /etc/lvm/backup/vg0
+# Generated by LVM2: Fri Dec 28 22:26:00 2007
+
+contents = "Text Format Volume Group"
+version = 1
+
+description = "Created *after* executing '/sbin/vgcfgbackup'"
+
+creation_host = "hostname"      # Linux hostname 2.6.22-14-generic #1 SMP Sun Oct 14 23:05:12 GMT 2007 i686
+creation_time = 1198880760      # Fri Dec 28 22:26:00 2007
+
+vg0 {
+        id = "UZoYkV-7pxl-mqxX-d8AK-g3pn-rurK-4XCKIe"
+        seqno = 6
+        status = ["RESIZEABLE", "READ", "WRITE"]
+        extent_size = 8192              # 4 Megabytes
+        max_lv = 0
+        max_pv = 0
+
+        physical_volumes {
+
+                pv0 {
+                        id = "PNQ9f2-eEyf-Iju2-NYN5-JaH2-30xH-q3PpIH"
+                        device = "/dev/sda5"    # Hint only
+
+                        status = ["ALLOCATABLE"]
+                        dev_size = 152006967    # 72.4826 Gigabytes
+                        pe_start = 384
+                        pe_count = 18555        # 72.4805 Gigabytes
+                }
+        }
+
+        logical_volumes {
+
+                root {
+                        id = "D2Q2gU-WfRW-hbC1-uiCW-gqcH-WZhX-ud0qp7"
+                        status = ["READ", "WRITE", "VISIBLE"]
+                        segment_count = 1
+
+                        segment1 {
+                                start_extent = 0
+                                extent_count = 512      # 2 Gigabytes
+
+                                type = "striped"
+                                stripe_count = 1        # linear
+
+                                stripes = [
+                                        "pv0", 0
+                                ]
+                        }
+                }
+
+
+```
+
+First you have to restore the metadata for pv0, locate the UUID and partition in the lvm backup and substitute them in the following command:
+```
+
+pvcreate --uuid PNQ9f2-eEyf-Iju2-NYN5-JaH2-30xH-q3PpIH --restorefile /etc/lvm/backup/vg0 /dev/sda5
+
+```
+after this you have to restore the volume group using vgcfgrestore:
+```
+
+vgcfgrestore --filename /etc/lvm/backup/vg0 vg0
+
+```
+To see a list of the available backups for a volume group you can also run
+```
+
+root@hostname:~# vgcfgrestore --list vg0
+  Couldn't scan the archive directory (/etc/lvm/archive).
+
+  File:         /etc/lvm/backup/vg0
+  VG name:      vg0
+  Description:  Created *after* executing '/sbin/vgcfgbackup'
+  Backup Time:  Sat Dec 29 00:26:00 2007
+
+```
+and get the filename from there.
+After this I think that the volume group is not active so you have to run the following to be able to use the logical volumes:
+```
+
+vgchange -ay vg0
+
+```
+
+---
+

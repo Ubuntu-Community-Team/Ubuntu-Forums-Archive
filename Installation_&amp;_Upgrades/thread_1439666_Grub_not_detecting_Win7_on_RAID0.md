@@ -1,0 +1,735 @@
+---
+title: "Grub not detecting Win7 on RAID0"
+date: 2010-03-26
+forum: Installation &amp; Upgrades
+---
+
+### Post by bpierce on 2010-03-26
+Looks like Grub2 on my new installation of Ubuntu 9.10 is not picking up a Windows 7 installation on a RAID0 array (using the built-in RAID software from my Asus P5Q-Deluxe)
+
+Here are the results of the boot info script:
+
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks for 
+    (UUID=43b4cb20-dfea-4513-80e9-54d066107c71)/boot/grub.
+ => No boot loader is installed in the MBR of /dev/sdb
+ => Grub 2 is installed in the MBR of /dev/sdc and looks on the same drive in 
+    partition #1 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       isw_raid_member
+    Boot sector type:  Unknown
+    Boot sector info:  
+    Mounting failed:
+mount: unknown filesystem type 'isw_raid_member'
+
+sdb1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  BSD4.4: Fat32
+    Boot sector info:  According to the info in the boot sector, sdb1 starts 
+                       at sector 0. But according to the info from fdisk, 
+                       sdb1 starts at sector 40.
+    Operating System:  
+    Boot files/dirs:   
+
+sdc1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sdc2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sdc5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0xa12b305b
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048 1,953,533,951 1,953,531,904   7 HPFS/NTFS
+
+/dev/sda1 ends after the last sector of /dev/sda
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x00000000
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1                   1   976,773,167   976,773,167  ee GPT
+
+
+GUID Partition Table detected.
+
+Partition           Start           End          Size System
+/dev/sdb1              40       409,639       409,600 System/Boot Partition
+
+Drive: sdc ___________________ _____________________________________________________
+
+Disk /dev/sdc: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x00019356
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdc1                  63   937,167,839   937,167,777  83 Linux
+/dev/sdc2         937,167,840   976,768,064    39,600,225   5 Extended
+/dev/sdc5         937,167,903   976,768,064    39,600,162  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1                                               isw_raid_member                               
+/dev/sda                                                isw_raid_member                               
+/dev/sdb1        826A-0900                              vfat       EFI                           
+/dev/sdb                                                isw_raid_member                               
+/dev/sdc1        43b4cb20-dfea-4513-80e9-54d066107c71   ext4                                     
+/dev/sdc5        7f9232c5-4131-4cbd-904a-9cbba85434d0   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sdc1        /                        ext4       (rw,errors=remount-ro)
+
+
+=========================== sdc1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd2,1)
+search --no-floppy --fs-uuid --set 43b4cb20-dfea-4513-80e9-54d066107c71
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-20-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 43b4cb20-dfea-4513-80e9-54d066107c71
+    linux    /boot/vmlinuz-2.6.31-20-generic root=UUID=43b4cb20-dfea-4513-80e9-54d066107c71 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-20-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-20-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 43b4cb20-dfea-4513-80e9-54d066107c71
+    linux    /boot/vmlinuz-2.6.31-20-generic root=UUID=43b4cb20-dfea-4513-80e9-54d066107c71 ro single 
+    initrd    /boot/initrd.img-2.6.31-20-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 43b4cb20-dfea-4513-80e9-54d066107c71
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=43b4cb20-dfea-4513-80e9-54d066107c71 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd2,1)
+    search --no-floppy --fs-uuid --set 43b4cb20-dfea-4513-80e9-54d066107c71
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=43b4cb20-dfea-4513-80e9-54d066107c71 ro single 
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sdc1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sdc1 during installation
+UUID=43b4cb20-dfea-4513-80e9-54d066107c71 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdc5 during installation
+UUID=7f9232c5-4131-4cbd-904a-9cbba85434d0 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sdc1: Location of files loaded by Grub: ===================
+
+
+   1.3GB: boot/grub/core.img
+   1.4GB: boot/grub/grub.cfg
+    .8GB: boot/initrd.img-2.6.31-14-generic
+   1.5GB: boot/initrd.img-2.6.31-20-generic
+    .6GB: boot/vmlinuz-2.6.31-14-generic
+   1.2GB: boot/vmlinuz-2.6.31-20-generic
+   1.5GB: initrd.img
+    .8GB: initrd.img.old
+   1.2GB: vmlinuz
+    .6GB: vmlinuz.old
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda1
+
+00000000  ff 75 30 8d 47 ff 50 53  57 56 e8 85 fd ff ff 83  |.u0.G.PSWV......|
+00000010  c4 10 8b 85 28 fd ff ff  8b 08 50 ff 51 08 8b 85  |....(.....P.Q...|
+00000020  14 fd ff ff 89 38 8b 85  18 fd ff ff 89 30 33 c0  |.....8.......03.|
+00000030  40 eb 3d ff b5 24 fd ff  ff 56 ff b5 20 fd ff ff  |@.=..$...V.. ...|
+00000040  e8 73 fb ff ff 83 c4 0c  56 ff 15 5c 10 00 10 8b  |.s......V..\....|
+00000050  85 28 fd ff ff 8b 08 50  ff 51 08 0f b7 85 1c fd  |.(.....P.Q......|
+00000060  ff ff eb 03 0f b7 c0 50  ff 15 68 10 00 10 33 c0  |.......P..h...3.|
+00000070  8b 4d fc 5f 5e 33 cd 5b  e8 9e 1f 00 00 c9 c3 cc  |.M._^3.[........|
+00000080  cc cc cc cc 33 c0 57 89  01 89 41 04 89 41 08 89  |....3.W...A..A..|
+00000090  41 0c 89 41 10 89 41 14  89 41 30 89 41 34 8d 79  |A..A..A..A0.A4.y|
+000000a0  18 ab ab 33 c0 8d 79 20  ab ab 33 c0 8d 79 28 ab  |...3..y ..3..y(.|
+000000b0  ab 8b c1 5f c3 cc cc cc  cc cc 8b ff 55 8b ec 51  |..._........U..Q|
+000000c0  53 56 8b f1 8b 46 08 33  db 57 8b 3d 48 10 00 10  |SV...F.3.W.=H...|
+000000d0  c7 46 34 01 00 00 00 3b  c3 74 06 50 ff d7 89 5e  |.F4....;.t.P...^|
+000000e0  08 8b 46 0c 3b c3 74 06  50 ff d7 89 5e 0c 8b 06  |..F.;.t.P...^...|
+000000f0  3b c3 74 0d 50 ff 15 4c  10 00 10 ff 36 ff d7 89  |;.t.P..L....6...|
+00000100  1e 8b 46 04 3b c3 74 22  68 f4 01 00 00 50 ff 15  |..F.;.t"h....P..|
+00000110  50 10 00 10 85 c0 74 0a  53 ff 76 04 ff 15 54 10  |P.....t.S.v...T.|
+00000120  00 10 ff 76 04 ff d7 89  5e 04 8d 7e 18 c7 45 fc  |...v....^..~..E.|
+00000130  02 00 00 00 8b 07 3b c3  74 09 50 ff 15 5c 10 00  |......;.t.P..\..|
+00000140  10 89 1f 83 c7 04 ff 4d  fc 75 e9 33 c0 8d 7e 18  |.......M.u.3..~.|
+00000150  ab ab 33 c0 8d 7e 20 ab  ab 8d 7e 28 33 c0 ab ab  |..3..~ ...~(3...|
+00000160  5f 89 5e 30 5e 5b c9 c3  cc cc cc cc cc e9 48 ff  |_.^0^[........H.|
+00000170  ff ff cc cc cc cc cc 8b  ff 55 8b ec 8b 45 0c 53  |.........U...E.S|
+00000180  56 8b d9 be 00 00 01 00  57 89 43 30 89 75 0c 8d  |V.......W.C0.u..|
+00000190  7b 1c 8b 45 0c 39 45 08  76 26 83 3f 00 75 0f 56  |{..E.9E.v&.?.u.V|
+000001a0  6a 00 ff 15 58 10 00 10  89 07 85 c0 74 27 01 75  |j...X.......t'.u|
+000001b0  0c 89 77 10 83 c7 04 81  7d 0c 00 00 02 00 7c d2  |..w.....}.....|.|
+000001c0  ff 33 ff 15 4c 10 00 10  85 c0 74 09 33 c0 5f 5e  |.3..L.....t.3._^|
+000001d0  5b 5d c2 08 00 ff 15 64  10 00 10 eb f1 cc cc cc  |[].....d........|
+000001e0  cc cc 8b ff 55 8b ec 8d  41 10 8b 10 56 8b 75 08  |....U...A...V.u.|
+000001f0  89 74 91 20 ff 00 8b 10  83 fa 02 5e 7c 03 83 20  |.t. .......^|.. |
+00000200
+
+
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdd 
+=============================== StdErr Messages: ===============================
+
+ERROR: only one argument allowed for this option
+ERROR: only one argument allowed for this option
+
+```
+
+I would be indebted to anyone who might be able to help get me back onto my Win7 drive.
+
+Thank you!
+
+---
+
+### Post by psusi on 2010-03-26
+It looks like you have 3 disks, two of which are part of the raid.  Did you intend to install Ubuntu on the third lone disk, or was it supposed to be part of the raid array too?
+
+---
+
+### Post by bpierce on 2010-03-26
+> **psusi said:**
+> It looks like you have 3 disks, two of which are part of the raid.  Did you intend to install Ubuntu on the third lone disk, or was it supposed to be part of the raid array too?
+
+that's correct. All three drives are the same make and model. sata1 and sata2 are in a raid0 array. I was able to successfully install Ubuntu on sata3 but am now no longer able to boot into Win7 on the raid array.
+
+---
+
+### Post by psusi on 2010-03-26
+And before you installed Ubuntu, the third drive was not part of the array?  What does this say when you run it in a terminal:
+
+```
+sudo dmraid -ay
+```
+
+---
+
+### Post by bpierce on 2010-03-26
+> **psusi said:**
+> And before you installed Ubuntu, the third drive was not part of the array?  What does this say when you run it in a terminal:
+
+```
+sudo dmraid -ay
+```
+
+I'm away from the machine, I'll run the command when I get back from class. But I can say the third drive was not part of the array.
+
+---
+
+### Post by psusi on 2010-03-26
+Ok, good... I was getting worried that you had destroyed your raid by reusing one of the disks in it on its own to install Ubuntu.
+
+---
+
+### Post by bpierce on 2010-03-26
+Here's the response for the requested command:
+
+```
+
+pierce@pierce-Ubuntu:~$ sudo dmraid -ay
+RAID set "isw_bdegiacdfb_Windows Vista" was activated
+RAID set "isw_bdegiacdfb_Windows Vista1" was not activated
+
+```
+
+There's only ever been 1 RAID 0 array, not sure why two show up.
+
+If push comes to shove, I think I'll install another copy of Win7 on hdc tonight if only to get on to the Win7 partition.
+
+But if anyone does know of a solution int he meantime, I would still very much like to have multiple operating systems on my machine. I'd like to move to Ubuntu or another distro. 
+
+Thanks for the help so far, it's much appreciated.
+
+---
+
+### Post by psusi on 2010-03-26
+Isw can split the raid array into multiple virtual disks and that looks like what you have.  Not sure why one does not work.  Run dmraid -n
+
+---
+
+### Post by bpierce on 2010-03-26
+Output for dmraid -n:
+
+```
+
+pierce@pierce-Ubuntu:~$ sudo dmraid -n
+[sudo] password for pierce: 
+/dev/sdb (isw):
+0x000 sig: "  Intel Raid ISM Cfg Sig. 1.0.00"
+0x020 check_sum: 3448614159
+0x024 mpb_size: 480
+0x028 family_num: 1346802351
+0x02c generation_num: 643
+0x030 error_log_size: 4080
+0x034 attributes: 2147483648
+0x038 num_disks: 2
+0x039 num_raid_devs: 1
+0x03a error_log_pos: 2
+0x03c cache_size: 0
+0x040 orig_family_num: 1346802351
+0x0d8 disk[0].serial: " WD-WMAT00042146"
+0x0e8 disk[0].totalBlocks: 976773168
+0x0ec disk[0].scsiId: 0x0
+0x0f0 disk[0].status: 0x13a
+0x0f4 disk[0].owner_cfg_num: 0x0
+0x108 disk[1].serial: " WD-WCASY5100371"
+0x118 disk[1].totalBlocks: 976773168
+0x11c disk[1].scsiId: 0x10000
+0x120 disk[1].status: 0x13a
+0x124 disk[1].owner_cfg_num: 0x0
+0x138 isw_dev[0].volume: "   Windows Vista"
+0x14c isw_dev[0].SizeHigh: 0
+0x148 isw_dev[0].SizeLow: 1953536000
+0x150 isw_dev[0].status: 0xc
+0x154 isw_dev[0].reserved_blocks: 0
+0x158 isw_dev[0].migr_priority: 0
+0x159 isw_dev[0].num_sub_vol: 0
+0x15a isw_dev[0].tid: 1
+0x15b isw_dev[0].cng_master_disk: 0
+0x15c isw_dev[0].cache_policy: 0
+0x15e isw_dev[0].cng_state: 0
+0x15f isw_dev[0].cng_sub_state: 0
+0x188 isw_dev[0].vol.curr_migr_unit: 0
+0x18c isw_dev[0].vol.check_point_id: 0
+0x190 isw_dev[0].vol.migr_state: 0
+0x191 isw_dev[0].vol.migr_type: 0
+0x192 isw_dev[0].vol.dirty: 0
+0x193 isw_dev[0].vol.fs_state: 255
+0x194 isw_dev[0].vol.verify_errors: 0
+0x196 isw_dev[0].vol.verify_bad_blocks: 0
+0x1a8 isw_dev[0].vol.map[0].pba_of_lba0: 0
+0x1ac isw_dev[0].vol.map[0].blocks_per_member: 976768264
+0x1b0 isw_dev[0].vol.map[0].num_data_stripes: 3815500
+0x1b4 isw_dev[0].vol.map[0].blocks_per_strip: 256
+0x1b6 isw_dev[0].vol.map[0].map_state: 0
+0x1b7 isw_dev[0].vol.map[0].raid_level: 0
+0x1b8 isw_dev[0].vol.map[0].num_members: 2
+0x1b9 isw_dev[0].vol.map[0].num_domains: 1
+0x1ba isw_dev[0].vol.map[0].failed_disk_num: 255
+0x1bb isw_dev[0].vol.map[0].ddf: 1
+0x1d8 isw_dev[0].vol.map[0].disk_ord_tbl[0]: 0x0
+0x1dc isw_dev[0].vol.map[0].disk_ord_tbl[1]: 0x1
+
+/dev/sda (isw):
+0x000 sig: "  Intel Raid ISM Cfg Sig. 1.0.00"
+0x020 check_sum: 3448614159
+0x024 mpb_size: 480
+0x028 family_num: 1346802351
+0x02c generation_num: 643
+0x030 error_log_size: 4080
+0x034 attributes: 2147483648
+0x038 num_disks: 2
+0x039 num_raid_devs: 1
+0x03a error_log_pos: 2
+0x03c cache_size: 0
+0x040 orig_family_num: 1346802351
+0x0d8 disk[0].serial: " WD-WMAT00042146"
+0x0e8 disk[0].totalBlocks: 976773168
+0x0ec disk[0].scsiId: 0x0
+0x0f0 disk[0].status: 0x13a
+0x0f4 disk[0].owner_cfg_num: 0x0
+0x108 disk[1].serial: " WD-WCASY5100371"
+0x118 disk[1].totalBlocks: 976773168
+0x11c disk[1].scsiId: 0x10000
+0x120 disk[1].status: 0x13a
+0x124 disk[1].owner_cfg_num: 0x0
+0x138 isw_dev[0].volume: "   Windows Vista"
+0x14c isw_dev[0].SizeHigh: 0
+0x148 isw_dev[0].SizeLow: 1953536000
+0x150 isw_dev[0].status: 0xc
+0x154 isw_dev[0].reserved_blocks: 0
+0x158 isw_dev[0].migr_priority: 0
+0x159 isw_dev[0].num_sub_vol: 0
+0x15a isw_dev[0].tid: 1
+0x15b isw_dev[0].cng_master_disk: 0
+0x15c isw_dev[0].cache_policy: 0
+0x15e isw_dev[0].cng_state: 0
+0x15f isw_dev[0].cng_sub_state: 0
+0x188 isw_dev[0].vol.curr_migr_unit: 0
+0x18c isw_dev[0].vol.check_point_id: 0
+0x190 isw_dev[0].vol.migr_state: 0
+0x191 isw_dev[0].vol.migr_type: 0
+0x192 isw_dev[0].vol.dirty: 0
+0x193 isw_dev[0].vol.fs_state: 255
+0x194 isw_dev[0].vol.verify_errors: 0
+0x196 isw_dev[0].vol.verify_bad_blocks: 0
+0x1a8 isw_dev[0].vol.map[0].pba_of_lba0: 0
+0x1ac isw_dev[0].vol.map[0].blocks_per_member: 976768264
+0x1b0 isw_dev[0].vol.map[0].num_data_stripes: 3815500
+0x1b4 isw_dev[0].vol.map[0].blocks_per_strip: 256
+0x1b6 isw_dev[0].vol.map[0].map_state: 0
+0x1b7 isw_dev[0].vol.map[0].raid_level: 0
+0x1b8 isw_dev[0].vol.map[0].num_members: 2
+0x1b9 isw_dev[0].vol.map[0].num_domains: 1
+0x1ba isw_dev[0].vol.map[0].failed_disk_num: 255
+0x1bb isw_dev[0].vol.map[0].ddf: 1
+0x1d8 isw_dev[0].vol.map[0].disk_ord_tbl[0]: 0x0
+0x1dc isw_dev[0].vol.map[0].disk_ord_tbl[1]: 0x1
+
+```
+
+---
+
+### Post by psusi on 2010-03-27
+Never mind... it is one disk, with one partition that was not activated for some reason.  ls /dev/mapper and sudo dmraid -ayv
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Never mind... it is one disk, with one partition that was not activated for some reason.  ls /dev/mapper and sudo dmraid -ayv
+
+Not sure this had the desired output, but here it is:
+
+```
+pierce@pierce-Ubuntu:~$ sudo ls /dev/mapper
+control
+pierce@pierce-Ubuntu:~$ sudo dmraid -ayv
+ERROR: invalid option argument for -a
+
+```
+
+---
+
+### Post by psusi on 2010-03-27
+Oops, you have to separate the v.... sudo dmraid -ay -v
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Oops, you have to separate the v.... sudo dmraid -ay -v
+
+That did it, here you go:
+
+```
+pierce@pierce-Ubuntu:~$ sudo dmraid -ay -v
+RAID set "isw_bdegiacdfb_Windows Vista" was activated
+INFO: Activating GROUP raid set "isw_bdegiacdfb"
+RAID set "isw_bdegiacdfb_Windows Vista1" was not activated
+
+```
+
+---
+
+### Post by psusi on 2010-03-27
+Grrr.... let's go for maximum verbosity.... sudo dmraid -ay -vvv -ddd
+
+---
+
+### Post by psusi on 2010-03-27
+Oh wait, there is a space in the name "Windows Vista".... I don't think it likes that... try renaming that in your bios to something without a space.
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Grrr.... let's go for maximum verbosity.... sudo dmraid -ay -vvv -ddd
+
+Aye Aye:
+
+```
+
+pierce@pierce-Ubuntu:~$ sudo dmraid -ay -vvv -ddd
+WARN: locking /var/lock/dmraid/.lock
+NOTICE: skipping removable device /dev/sdd
+NOTICE: /dev/sdc: asr     discovering
+NOTICE: /dev/sdc: ddf1    discovering
+NOTICE: /dev/sdc: hpt37x  discovering
+NOTICE: /dev/sdc: hpt45x  discovering
+NOTICE: /dev/sdc: isw     discovering
+DEBUG: not isw at 500107860992
+DEBUG: isw trying hard coded -2115 offset.
+DEBUG: not isw at 500106779136
+NOTICE: /dev/sdc: jmicron discovering
+NOTICE: /dev/sdc: lsi     discovering
+NOTICE: /dev/sdc: nvidia  discovering
+NOTICE: /dev/sdc: pdc     discovering
+NOTICE: /dev/sdc: sil     discovering
+NOTICE: /dev/sdc: via     discovering
+NOTICE: /dev/sdb: asr     discovering
+NOTICE: /dev/sdb: ddf1    discovering
+NOTICE: /dev/sdb: hpt37x  discovering
+NOTICE: /dev/sdb: hpt45x  discovering
+NOTICE: /dev/sdb: isw     discovering
+DEBUG: isw metadata found at 500107860992 from probe at 500107860992
+
+NOTICE: /dev/sdb: isw metadata discovered
+NOTICE: /dev/sdb: jmicron discovering
+NOTICE: /dev/sdb: lsi     discovering
+NOTICE: /dev/sdb: nvidia  discovering
+NOTICE: /dev/sdb: pdc     discovering
+NOTICE: /dev/sdb: sil     discovering
+NOTICE: /dev/sdb: via     discovering
+NOTICE: /dev/sda: asr     discovering
+NOTICE: /dev/sda: ddf1    discovering
+NOTICE: /dev/sda: hpt37x  discovering
+NOTICE: /dev/sda: hpt45x  discovering
+NOTICE: /dev/sda: isw     discovering
+DEBUG: isw metadata found at 500107860992 from probe at 500107860992
+
+NOTICE: /dev/sda: isw metadata discovered
+NOTICE: /dev/sda: jmicron discovering
+NOTICE: /dev/sda: lsi     discovering
+NOTICE: /dev/sda: nvidia  discovering
+NOTICE: /dev/sda: pdc     discovering
+NOTICE: /dev/sda: sil     discovering
+NOTICE: /dev/sda: via     discovering
+DEBUG: _find_set: searching isw_bdegiacdfb
+DEBUG: _find_set: not found isw_bdegiacdfb
+DEBUG: _find_set: searching isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: searching isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: not found isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: not found isw_bdegiacdfb_Windows Vista
+NOTICE: added /dev/sdb to RAID set "isw_bdegiacdfb"
+DEBUG: _find_set: searching isw_bdegiacdfb
+DEBUG: _find_set: found isw_bdegiacdfb
+DEBUG: _find_set: searching isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: searching isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: found isw_bdegiacdfb_Windows Vista
+DEBUG: _find_set: found isw_bdegiacdfb_Windows Vista
+NOTICE: added /dev/sda to RAID set "isw_bdegiacdfb"
+DEBUG: checking isw device "/dev/sda"
+DEBUG: checking isw device "/dev/sdb"
+DEBUG: set status of set "isw_bdegiacdfb_Windows Vista" to 16
+RAID set "isw_bdegiacdfb_Windows Vista" already active
+INFO: Activating GROUP raid set "isw_bdegiacdfb"
+NOTICE: discovering partitions on "isw_bdegiacdfb_Windows Vista"
+NOTICE: /dev/mapper/isw_bdegiacdfb_Windows Vista: dos     discovering
+NOTICE: /dev/mapper/isw_bdegiacdfb_Windows Vista: dos metadata discovered
+DEBUG: _find_set: searching isw_bdegiacdfb_Windows Vista1
+DEBUG: _find_set: not found isw_bdegiacdfb_Windows Vista1
+NOTICE: created partitioned RAID set(s) for /dev/mapper/isw_bdegiacdfb_Windows Vista
+RAID set "isw_bdegiacdfb_Windows Vista1" was not activated
+WARN: unlocking /var/lock/dmraid/.lock
+DEBUG: freeing devices of RAID set "isw_bdegiacdfb_Windows Vista"
+DEBUG: freeing device "isw_bdegiacdfb_Windows Vista", path "/dev/sda"
+DEBUG: freeing device "isw_bdegiacdfb_Windows Vista", path "/dev/sdb"
+DEBUG: freeing devices of RAID set "isw_bdegiacdfb"
+DEBUG: freeing device "isw_bdegiacdfb", path "/dev/sda"
+DEBUG: freeing device "isw_bdegiacdfb", path "/dev/sdb"
+DEBUG: freeing devices of RAID set "isw_bdegiacdfb_Windows Vista1"
+DEBUG: freeing device "isw_bdegiacdfb_Windows Vista1", path "/dev/mapper/isw_bdegiacdfb_Windows Vista"
+
+```
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Oh wait, there is a space in the name "Windows Vista".... I don't think it likes that... try renaming that in your bios to something without a space.
+
+Alright, I'll see if there's a way to do that and get back to you.
+
+After that, do I run that command that rebuilds the grub list? If so, what is the command again?
+
+Thanks so much for your help, it's very appreciated.
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Oh wait, there is a space in the name "Windows Vista".... I don't think it likes that... try renaming that in your bios to something without a space.
+
+Doesn't look like it's going to let me. I'll have to install another copy of Win7 on the third hdd to recover the drive that seems to be in digital purgatory.
+
+Here's what I'm thinking. On my way back from class today, I picked up two new hard drives, 1 x 1tb & another of the 500GB drives (same make/model as the current 3). I'm planning on making a RAID 1/0 array out of the four 500GB, and using the 1TB drive to run a couple different distros to find one I might like.
+
+What I'm not sure of is the order or method for installing the OSs to make sure they're all bootable.
+
+Do you have any advice on this plan?
+
+Thanks again,
+
+Edit: Obviously first thing to remember is to make the raid array's name something without spaces. lol
+
+---
+
+### Post by psusi on 2010-03-27
+Yea, I think there is a bug in dmraid where it doesn't like names with spaces, so linux can't see your vista partition properly.  If you just want to boot back into windows you can do so by interrupting grub and pressing c to to go the grub command prompt.  From there do:
+
+```
+
+root (hd0,1)
+chainloader +1
+boot
+
+```
+
+That is, assuming you have your bios set to boot from the raid set and not sdc.  If it is set to boot from sdc then you may need to use hd1 instead.
+
+---
+
+### Post by bpierce on 2010-03-27
+> **psusi said:**
+> Yea, I think there is a bug in dmraid where it doesn't like names with spaces, so linux can't see your vista partition properly.  If you just want to boot back into windows you can do so by interrupting grub and pressing c to to go the grub command prompt.  From there do:
+
+```
+
+root (hd0,1)
+chainloader +1
+boot
+
+```
+
+That is, assuming you have your bios set to boot from the raid set and not sdc.  If it is set to boot from sdc then you may need to use hd1 instead.
+
+Posting from Win7
+
+[Hero Achievement Unlocked]
+
+Thank you very much. Now onto the next challenge. Will it be possible for me to multiboot Win7 from any raid array? I guess only way to find out is to try...
+
+Thanks again.
+
+---
+
+### Post by psusi on 2010-03-27
+Yes, you should be fine once you get rid of the space in the name.  Getting those fake raids working used to be a royal pain ( there's a wiki page dedicated to it ) but Karmic seems to handle them just fine.
+
+---
+

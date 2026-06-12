@@ -1,0 +1,952 @@
+---
+title: "installed 10.10, now only get &quot;no such device&quot; error"
+date: 2010-12-02
+forum: Installation &amp; Upgrades
+---
+
+### Post by thebullfrog82 on 2010-12-02
+So, after a few video card related complications (had to use "nomodeset"), I managed to get Ubuntu 10.10 installed onto my GF's laptop. Except now the system is completely unbootable. Right now I'm running off of the Live CD in safe mode. Any time I try and boot the system I just get the error:
+
+No Such Device 060e8755-3e56-4c0f-94e9-ccabf376df87
+
+and it then throws me to the Grub Rescue command line interface, of which I know exactly ZERO commands for. I am more or less completely new to Linux (used Ubuntu once a few years ago) I need to know how to get this thing bootable again. If I don't get this fixed before my GF finds out I may have some serious issues lol. Even if I can't get Ubuntu working, I at least need to be able to get Win 7 to boot again.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+After reading through some threads, I ran the boot info script. Here's the results, I just have no idea what to do with the info:
+
+```
+                 Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Vista: Fat 32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /boot/bcd
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda2 and 
+                       looks at sector 812025920 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location. No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1               2,048    40,965,749    40,963,702  1c Hidden W95 FAT32 (LBA)
+/dev/sda2    *     40,965,750   799,153,670   758,187,921   7 HPFS/NTFS
+/dev/sda3         799,154,174   976,771,071   177,616,898   5 Extended
+/dev/sda5         799,154,176   969,453,567   170,299,392  83 Linux
+/dev/sda6         969,455,616   976,771,071     7,315,456  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        3C98-AC5D                              vfat       RECOVERY                      
+/dev/sda2        3494A8D394A898BE                       ntfs       OS                            
+/dev/sda3: PTTYPE="dos" 
+/dev/sda5        ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f   ext4                                     
+/dev/sda6        73745ca4-ecf0-45c5-bfd4-3883802715e9   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda2        /media/OS                fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096,default_permissions)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod part_msdos
+    insmod fat
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 3c98-ac5d
+    chainloader +1
+}
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set 3494a8d394a898be
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=73745ca4-ecf0-45c5-bfd4-3883802715e9 none            swap    sw              0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 415.7GB: boot/grub/core.img
+ 484.4GB: boot/grub/grub.cfg
+ 410.1GB: boot/initrd.img-2.6.35-22-generic
+ 415.7GB: boot/vmlinuz-2.6.35-22-generic
+ 410.1GB: initrd.img
+ 415.7GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda3
+
+00000000  ea 99 89 1f e6 29 47 1a  5b 84 23 82 e6 de d1 8f  |.....)G.[.#.....|
+00000010  a3 9b 76 28 c9 95 c3 9d  31 3d e7 52 f6 d0 b9 6f  |..v(....1=.R...o|
+00000020  eb 93 bd 93 46 e7 34 7c  1b 9c 34 c6 fd fe a8 90  |....F.4|..4.....|
+00000030  87 24 78 24 dc 0d 80 c1  5b ce ab 2c 07 d2 08 7d  |.$x$....[..,...}|
+00000040  36 ff d3 b2 17 e9 89 7b  33 fd f2 d5 11 b8 39 c2  |6......{3.....9.|
+00000050  c7 d2 f2 03 71 6e 38 b3  e4 5a ad 04 24 19 9b f1  |....qn8..Z..$...|
+00000060  f3 40 f5 e4 77 88 6d 75  bb 09 82 09 3f 65 9a 8c  |.@..w.mu....?e..|
+00000070  82 fe 02 24 ab 26 0d d1  f6 3d 12 32 65 0a 93 2a  |...$.&...=.2e..*|
+00000080  39 b7 3f 87 8d 29 f8 ce  dd 23 03 c8 a4 6b ee 4c  |9.?..)...#...k.L|
+00000090  dc 10 cb e4 a5 86 1b 7c  af e0 f7 18 f5 ff 10 85  |.......|........|
+000000a0  32 bb ce fd 73 29 54 e4  b3 a4 92 6f 63 2a 58 5e  |2...s)T....oc*X^|
+000000b0  f7 65 6d a5 7d f8 88 12  2b 9f 79 1a ed 5b 30 68  |.em.}...+.y..[0h|
+000000c0  f3 b9 c7 a5 48 e7 9b 15  61 f3 50 61 9c fe f7 2a  |....H...a.Pa...*|
+000000d0  ec 5e 03 c8 5b da 6d fa  8f d6 bc 93 70 81 12 2f  |.^..[.m.....p../|
+000000e0  a6 06 47 da 35 c4 ec c5  03 6d 60 fb 70 4a e9 08  |..G.5....m`.pJ..|
+000000f0  e2 5b b2 ad 5a 8b ef 8b  f6 eb e0 e9 9a cb db 3e  |.[..Z..........>|
+00000100  67 07 6d 04 4f 20 68 57  ba 74 de a0 fa 6f 4b 5d  |g.m.O hW.t...oK]|
+00000110  f2 ba 9b b2 99 6d 2e 2e  89 36 ff 75 8f 9f a3 ef  |.....m...6.u....|
+00000120  52 1b 5f 7f bc 5c 31 20  a7 63 ec ac 63 c7 45 85  |R._..\1 .c..c.E.|
+00000130  44 da db 37 3c da 4c 3a  5a 20 44 9a 6e 58 93 a9  |D..7<.L:Z D.nX..|
+00000140  8b a3 34 aa 9a d5 63 87  ea a0 ab 86 c3 b9 f3 e5  |..4...c.........|
+00000150  f1 23 90 9e 5f 3b 5f 15  94 06 c3 b9 58 5a c5 c6  |.#.._;_.....XZ..|
+00000160  36 fe 15 e5 09 f0 25 ec  a3 85 39 83 3d a3 71 d8  |6.....%...9.=.q.|
+00000170  1b e8 df 46 23 e6 92 1e  54 46 a9 33 6a 03 5a a5  |...F#...TF.3j.Z.|
+00000180  6c 8b 1c 94 2e 0b 91 af  f1 78 b4 0d f0 e2 e7 be  |l........x......|
+00000190  e7 95 e8 93 aa 42 ff b1  b9 44 08 62 c7 b4 76 b0  |.....B...D.b..v.|
+000001a0  4e ae 6b 10 22 84 c7 31  f6 d5 44 81 fd d9 6c fc  |N.k."..1..D...l.|
+000001b0  6b 83 c4 dd 13 b2 c8 33  e4 5c 09 ad 90 c8 00 fe  |k......3.\......|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 90 26 0a 00 fe  |............&...|
+000001d0  ff ff 05 fe ff ff 02 90  26 0a 00 a8 6f 00 00 00  |........&...o...|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+```
+
+---
+
+### Post by drs305 on 2010-12-02
+From the LiveCD Desktop, open a terminal and run the following commands. Grub currently isn't looking at the correct partition during boot. This will fix that:
+
+```
+sudo mount /dev/sda5 /mnt
+sudo grub-install --root-directory=/mnt /dev/sda
+```
+
+Note you do not use the partition number in the second command.
+
+That should restore the GF's system and make you both happy.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Well, that sorta worked. I can boot Ubuntu now, but I still can't get to Win 7. Grub gives me the option of Linux, Linux safe mode, Vista loader, and Win 7 loader. The Vista and 7 loader options do nothing whatsoever. Am I just being dense or is something still wonky?
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Okay, even more odd. After getting drivers etc. installed and rebooting, the Grub menu now shows TWO of every option, yet I still can't access Win 7.
+
+---
+
+### Post by drs305 on 2010-12-02
+Well, remember how you installed Grub2 from the LiveCD because you are probably going to have to do it again later.
+
+I would suspect since G2 ended up on the Windows partition as well you are going to have to run the Windows repair disk's "fixmbr" command to restore things. You may also have to run the "fixboot" command. I'm not a Windows person so I can't really provide a lot more information, but I can provide a link:
+[http://ubuntuforums.org/showpost.php?p=10049238&postcount=4]("http://ubuntuforums.org/showpost.php?p=10049238&postcount=4")
+
+I would get the Windows boot problem resolved first. Once it is booting normally, you can reinstall Grub as you did before and G2 should recognize Windows and allow it to boot. After installing, run "sudo update-grub" to make sure Windows is found and added to the menu.
+
+The 'two of everything' you see on your menu - are they different kernels (different numbered kernels). On a normal Grub menu you are going to see each kernel (vmlinuz-2.6.35-XX) stored in /boot, as well as a recovery mode for each one. You can hide the recovery mode option but I wouldn't recommend it until you get more comfortable with Ubuntu. You can also remove older kernels (and their display) but it's probably safest to keep at least one older kernel available in case you run into problems and have to revert.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Yeah, that might be a problem. Don't have a recovery disk.......
+Good call on the Kernal number though I didn't even notice that until now, not sure I ever would have lol. As far as installing Grub 2, I have no clue, I just did the full install.  But if I'm understanding correctly, by doing the Windows fix, it'll go back to behaving as it did before I ever started screwing things up and just boot directly to 7, then I reinstall Grub if I want to get back into Ubuntu? Sooner or later she's going to probably make me remove Ubuntu so I'm just gonna have to undo all this work.. *sigh*
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Ah okay, there's a link in the thread you linked to DL a recover disk. After reading that, it does make sense to me. I just gotta figure out how to re-install Grub when I'm done. Thank's for the help, I'm feeling more confident I can get this working and won't be castrated :D
+
+---
+
+### Post by drs305 on 2010-12-02
+> **thebullfrog82 said:**
+> Yeah, that might be a problem. Don't have a recovery disk.......
+Good call on the Kernal number though I didn't even notice that until now, not sure I ever would have lol. As far as installing Grub 2, I have no clue, I just did the full install.  But if I'm understanding correctly, by doing the Windows fix, it'll go back to behaving as it did before I ever started screwing things up and just boot directly to 7, then I reinstall Grub if I want to get back into Ubuntu? Sooner or later she's going to probably make me remove Ubuntu so I'm just gonna have to undo all this work.. *sigh*
+
+Edit: Was writing this as you posted, so I hadn't read it first. But it appears we are on the same track (and hopefully headed in the same direction.)
+If you need Windows more than Ubuntu:
+If only the MBR is messed up, you may be able to get Windows back by installing a bootloader from the Ubuntu LiveCD. The commands will generate some messages about full installation, but you aren't fully installing lilo so just disregard them.
+
+```
+sudo apt-get install lilo
+sudo lilo -M /dev/sda mbr
+```
+If the Windows boot files are intact this should let you boot into Windows. If not, here is the link to a downloadable Windows repair file:
+[http://neosmart.net/blog/2009/windows-7-system-repair-discs/]("http://neosmart.net/blog/2009/windows-7-system-repair-discs/")
+It says Win7 but there are other links on the page as well.
+
+If you use the repair disks and get Windows booting again you should be able to reinstall Grub and both should work.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Well I'm creating the rec. disk now, which is nice since Asus didn't feel it was necessary to provide that...
+I'll give the lilo thing a shot since it's probably the easiest route, if that doesn't work I'll run the recovery, hope it works (don't see why it wouldn't), then try and get Grub to install properly this time. What a PITA, but I gotta say, installation problems aside, Ubuntu has come a long way since I tried it last.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Well, lilo didn't work, just results in the blinking cursor of death when I pick anything other than ubuntu. Oh well, guess I gotta do it the hard way.
+
+---
+
+### Post by thebullfrog82 on 2010-12-02
+Ran the windows repair a couple times. It claims to have found and fixed all the errors, which is great. Except the computer still boots into Grub and I still can't access anything other than Ubuntu. I'll try manually running the commands listed in the thread you linked this time and hope it actually does.....something.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I fell asleep....
+
+Anyway, after following the instructions to manually repair the MBR via the command prompt the system is now no longer bootable AT ALL. After POST it goes straight to the flashing cursor of death. No more Grub, but still no Windows. The repair disk no longer sees that there even is a Windows installation, however from the Live CD I can see the data is all still there, but it seems the MBR is now missing completely rendering the system completely non-operational. HELP!
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Here's the boot info script data again. If I'm interpreting it right, then the MBR is there but doesn't point to any place?
+
+```
+                 Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Windows is installed in the MBR of /dev/sda
+
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Vista: Fat 32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /boot/bcd
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1               2,048    40,965,749    40,963,702  1c Hidden W95 FAT32 (LBA)
+/dev/sda2    *     40,965,750   799,153,670   758,187,921   7 HPFS/NTFS
+/dev/sda3         799,154,174   976,771,071   177,616,898   5 Extended
+/dev/sda5         799,154,176   969,453,567   170,299,392  83 Linux
+/dev/sda6         969,455,616   976,771,071     7,315,456  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        3C98-AC5D                              vfat       RECOVERY                      
+/dev/sda2        3494A8D394A898BE                       ntfs       OS                            
+/dev/sda3: PTTYPE="dos" 
+/dev/sda5        ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f   ext4                                     
+/dev/sda6        73745ca4-ecf0-45c5-bfd4-3883802715e9   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-23-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux    /boot/vmlinuz-2.6.35-23-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-23-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    echo    'Loading Linux 2.6.35-23-generic ...'
+    linux    /boot/vmlinuz-2.6.35-23-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod part_msdos
+    insmod fat
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 3c98-ac5d
+    chainloader +1
+}
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set 3494a8d394a898be
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=ee5a6cd9-39fe-49ba-b14f-1d10f31d3f3f /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=73745ca4-ecf0-45c5-bfd4-3883802715e9 none            swap    sw              0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 415.7GB: boot/grub/core.img
+ 493.1GB: boot/grub/grub.cfg
+ 410.5GB: boot/initrd.img-2.6.35-22-generic
+ 410.5GB: boot/initrd.img-2.6.35-23-generic
+ 415.7GB: boot/vmlinuz-2.6.35-22-generic
+ 415.7GB: boot/vmlinuz-2.6.35-23-generic
+ 410.5GB: initrd.img
+ 410.5GB: initrd.img.old
+ 415.7GB: vmlinuz
+ 415.7GB: vmlinuz.old
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda3
+
+00000000  ea 99 89 1f e6 29 47 1a  5b 84 23 82 e6 de d1 8f  |.....)G.[.#.....|
+00000010  a3 9b 76 28 c9 95 c3 9d  31 3d e7 52 f6 d0 b9 6f  |..v(....1=.R...o|
+00000020  eb 93 bd 93 46 e7 34 7c  1b 9c 34 c6 fd fe a8 90  |....F.4|..4.....|
+00000030  87 24 78 24 dc 0d 80 c1  5b ce ab 2c 07 d2 08 7d  |.$x$....[..,...}|
+00000040  36 ff d3 b2 17 e9 89 7b  33 fd f2 d5 11 b8 39 c2  |6......{3.....9.|
+00000050  c7 d2 f2 03 71 6e 38 b3  e4 5a ad 04 24 19 9b f1  |....qn8..Z..$...|
+00000060  f3 40 f5 e4 77 88 6d 75  bb 09 82 09 3f 65 9a 8c  |.@..w.mu....?e..|
+00000070  82 fe 02 24 ab 26 0d d1  f6 3d 12 32 65 0a 93 2a  |...$.&...=.2e..*|
+00000080  39 b7 3f 87 8d 29 f8 ce  dd 23 03 c8 a4 6b ee 4c  |9.?..)...#...k.L|
+00000090  dc 10 cb e4 a5 86 1b 7c  af e0 f7 18 f5 ff 10 85  |.......|........|
+000000a0  32 bb ce fd 73 29 54 e4  b3 a4 92 6f 63 2a 58 5e  |2...s)T....oc*X^|
+000000b0  f7 65 6d a5 7d f8 88 12  2b 9f 79 1a ed 5b 30 68  |.em.}...+.y..[0h|
+000000c0  f3 b9 c7 a5 48 e7 9b 15  61 f3 50 61 9c fe f7 2a  |....H...a.Pa...*|
+000000d0  ec 5e 03 c8 5b da 6d fa  8f d6 bc 93 70 81 12 2f  |.^..[.m.....p../|
+000000e0  a6 06 47 da 35 c4 ec c5  03 6d 60 fb 70 4a e9 08  |..G.5....m`.pJ..|
+000000f0  e2 5b b2 ad 5a 8b ef 8b  f6 eb e0 e9 9a cb db 3e  |.[..Z..........>|
+00000100  67 07 6d 04 4f 20 68 57  ba 74 de a0 fa 6f 4b 5d  |g.m.O hW.t...oK]|
+00000110  f2 ba 9b b2 99 6d 2e 2e  89 36 ff 75 8f 9f a3 ef  |.....m...6.u....|
+00000120  52 1b 5f 7f bc 5c 31 20  a7 63 ec ac 63 c7 45 85  |R._..\1 .c..c.E.|
+00000130  44 da db 37 3c da 4c 3a  5a 20 44 9a 6e 58 93 a9  |D..7<.L:Z D.nX..|
+00000140  8b a3 34 aa 9a d5 63 87  ea a0 ab 86 c3 b9 f3 e5  |..4...c.........|
+00000150  f1 23 90 9e 5f 3b 5f 15  94 06 c3 b9 58 5a c5 c6  |.#.._;_.....XZ..|
+00000160  36 fe 15 e5 09 f0 25 ec  a3 85 39 83 3d a3 71 d8  |6.....%...9.=.q.|
+00000170  1b e8 df 46 23 e6 92 1e  54 46 a9 33 6a 03 5a a5  |...F#...TF.3j.Z.|
+00000180  6c 8b 1c 94 2e 0b 91 af  f1 78 b4 0d f0 e2 e7 be  |l........x......|
+00000190  e7 95 e8 93 aa 42 ff b1  b9 44 08 62 c7 b4 76 b0  |.....B...D.b..v.|
+000001a0  4e ae 6b 10 22 84 c7 31  f6 d5 44 81 fd d9 6c fc  |N.k."..1..D...l.|
+000001b0  6b 83 c4 dd 13 b2 c8 33  e4 5c 09 ad 90 c8 00 fe  |k......3.\......|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 90 26 0a 00 fe  |............&...|
+000001d0  ff ff 05 fe ff ff 02 90  26 0a 00 a8 6f 00 00 00  |........&...o...|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+ 
+```
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Woohoo! Got Grub reinstalled so I can at least get back to Ubuntu. However, I still have no access to Win 7.  I tried using
+
+```
+ bootsect /nt60 SYS /mbr 
+```
+
+from the command prompt on the repair disk and I got an error roughly stating (I didn't write i down) that access to the disk was denied. I got the same error when I tried to run chkdsk, it then had to forcibly unmount the disk, stating that some other process was using the disk, Something is REALLY getting in the way of my Win7 install.
+
+Sorry for the repeated posts, even though it feels like I'm just talking to myself at this point (it IS the middle of the night after all) I'm trying to keep this thread as updated as possible hoping somebody has any ideas.
+
+---
+
+### Post by drs305 on 2010-12-03
+I'm sure you had at least a few hours of despair and I wish we'd been around to help you. lilo should have booted Windows if the only problem was with the way the MBR was written.
+
+I'm not a Windows guy but those that are will probably ask if you ran the complete repair from the Windows disk. They frequently say you have to run it three times to get everything back to normal. They'll also want to know if you ran both fixboot and fixmbr. Also, did you manually partition the drive, and if so, did you do it via a Windows app?
+
+We'll have to wait for some Windows experts to chime in at this point as the problem is not likely Grub's.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I've done all of that, several times, step-by-step. Same effect every time. I can wipe out Grub, but the Windows bootloader still does nothing and I wind up reinstalling grub just so I can get into ubuntu.
+
+The partitioning was done by the ubuntu install. Really wish Asus had bothered to provide an install disk so I could just try a Windows repair install. The recovery disks I made from their software just wants to re-format the entire drive and start over.
+
+I'm really stumped. I can get Grub to work fine,but whenever I try and rebuild the MBR or repair the Win7 bootloader, all I get is that Godforsaken flashing cursor. Ubuntu can find Windows and all of my files, but Windows can't. Go figure.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+No one else has any ideas huh? Typical. I always manage to create problems like this that nobody can figure out lol. I'll try and hit up the Seven Forums to see if any one has a clue. Thanks for all the attempts at help, we did make some progress at least getting the system bootable, just gotta figure out where 7 went.
+
+---
+
+### Post by drs305 on 2010-12-03
+Concentrate on repairing Windows and perhaps even seek advice on Windows forums. 8-[ I am fairly certain that is where the problem lies (even though Ubuntu partitioning may have broken it). Grub is passing control over to Windows but Windows is broken. Until you can repair your Windows so it will boot on it's own Grub can't help much.
+
+Good luck. At least Ubuntu works...
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Yeah that's where I'm headed next. Grub seems to be working perfectly, as is Ubuntu. It's 7 that clearly has the problem all of a sudden. I found a thread where the problem was the boot flag had to be set to a different partition because of the way Dell set up the system. It's possible Asus did something similar, but I can't figure out how to move the boot-flag. I just tried Gparted, but it wouldn't load (don't think the disk was burned correctly). Thanks again for at least getting me into Ubuntu, but if I don't get 7 back you may hear about me in the news lol. I've been considering the option of moving all our data to my external drive since ubuntu can access everything in Windows, then just doing the full re-format and re-install via the Asus recovery utility, but trying to avoid that.
+
+---
+
+### Post by drs305 on 2010-12-03
+> **thebullfrog82 said:**
+> YI found a thread where the problem was the boot flag had to be set to a different partition because of the way Dell set up the system. It's possible Asus did something similar, but I can't figure out how to move the boot-flag. I just tried Gparted, but it wouldn't load (don't think the disk was burned correctly). 
+
+If you are still on Ubuntu another way of setting the boot flag is via System, Adminsitration, Disk Utility. Select the drive, then partition, then click "Edit Partition" in the bottom section. That will display a tick box for the "bootable" flag.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Oh nice! Trying that now.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Damn. No dice. Oh well, was worth a shot. I am now officially 100% out of ideas. And so is Google. *sigh*
+
+---
+
+### Post by Quackers on 2010-12-03
+Have you tried booting with the boot flag set on sda1? There really isn't a reason for this other than it is possible that this is where it was originally.
+It may just boot the recovery system and if it does you can just shut down the pc and reboot from the live cd and use Gparted to put it back. It may be interesting to see the outcome.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Yeah I actually just tried that. Nothing different happened whatsoever.
+
+---
+
+### Post by Quackers on 2010-12-03
+It may well be the case that Windows needs to run a chkdisk (as a result of using a non-Windows partition manager to shrink its partition). There must be a way to run it from a Windows repair disk (which are downloadable from many places).
+Let me do some mooching about.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I did that last night. Found zero errors.
+
+---
+
+### Post by Quackers on 2010-12-03
+Did you run chkdsk C: /r from the command prompt in the repair cd?
+
+Also have you tried recovering partitions with testdisk from the Ubuntu live cd?
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I'm starting the process of copying both of our Windows "Users" folders over to my external. Just in case. What sucks is that I'm really liking Ubuntu, and it'll be a shame to have to give up on it until I can build myself a new desktop rig. What sucks more is I may have to answer to her for wiping her HD lol.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Yeah, I ran the chckdsk /r from the repair disk's command prompt. 
+Haven't tried the repair partition thing from the Live CD. Not sure how to and don't wanna screw it up any more. Pointers?
+
+---
+
+### Post by Quackers on 2010-12-03
+I sympathise.
+I suspect the resizing didn't go as well as you thought. This can happen with Windows from time to time. It is safer, in my experience, to use Windows Vista's/ 7's disk management console to achieve this. And it's quick too :-)
+
+Back up and start again - I have needed to to do that myself once or twice. It's the damned updates that take all the time :-(
+
+[http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step](http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+OMG, I forgot about the updates *facepalm*
+
+Wonder if I could do it quickly enough and restore things back to how they were well enough, that she won't even notice lmao. And no, it's reinstalling her copy of WoW and all of IT'S updates that are going to take the longest. Then Steam, and all her games from there. Boy am I in trouble when she gets off work tonight.
+
+---
+
+### Post by Quackers on 2010-12-03
+Install everything she had first (and anti-virus) then say there are millions of updates to run :-)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I think I'm just buying dinner tonight. And the rest of the week. In all honesty she has everything of hers that I'm aware of on her desktop rig as well, so it's not THAT big a deal in that sense. The big deal is that she wasn't too thrilled about me playing with Linux on the laptop in the first place, and since I did anyway, and screwed it up...you get the picture. I'm a bit concerned about the recover disks even working. They were actually burned from a different laptop. Same exact machine, but her first one had a HD failure less than a week after opening the box. She never burned the recovery disks for this machine, so I'm not entirely sure how well it will work. Worst case, I suppose I can just DL and burn a Win 7 ISO from MS, activate the product key, then install all the drivers, etc. myself. 
+
+Word of advice guys, if you tell your GF you're going to install the latest Linux distro on her machine, and she doesn't say "no", but doesn't really sound thrilled about it either: listen to the voice in your head and don't do it.
+
+---
+
+### Post by Quackers on 2010-12-03
+Wise words :-)
+One last tip. If you ever resize a Windows system (after defragging first, of course) it is wise to boot back into it a couple of times just to make sure things went well :-)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Yeah, next time I guess I'll do it within Windows too. And on my next rig it's going to done right from the start so if something goes wrong, there's nothing there to lose lol.
+
+And here's a stupid question: How do you get testdisk to run? I downloaded it, and extracted it, but can;t figure out what to do with the damned thing. I suddenly feel very very noobish
+
+---
+
+### Post by Quackers on 2010-12-03
+Sorry, I edited post #31 to include a link for testdisk, but you may not have seen it.
+
+[http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step](http://www.cgsecurity.org/wiki/TestDisk_Step_By_Step)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+No, I saw and read that, but I still can't get the thing to even run. I'm downloading a Win7 iso I can activate with her product key right now in case everything goes bad. guess while i wait 2.5 hours i can get more familiar with ubuntu.
+
+---
+
+### Post by Quackers on 2010-12-03
+Never had to use it, fortunately, but I would imagine testdisk in a terminal would start it or maybe sudo testdisk
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Actually it appears that using "sudo" was the problem. It's just testdisk. Been sooooo long since I've had to do so much work from command line.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+lmao. Testdisk tells me "no partition is bootable" omgwtfbbq
+
+---
+
+### Post by Quackers on 2010-12-03
+Is that after selecting Intel partition table type and analyse current partition structure? Or something else?
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+"Is that after selecting Intel partition table type and analyse current partition structure?"
+
+Yep. Then it tells me that the NTFS partition containing Windows "can't be recovered"
+
+---
+
+### Post by Quackers on 2010-12-03
+Hmm, as I said I have never had to use testdisk, but that doesn't sound encouraging. 
+Maybe somebody who has used testdisk can offer some advice.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Yeah, "encouraging" is certainly not the term I would use either. Once I finish downloading and burning the win7 iso from Digitalriver I'm going to see if I can get it to do a repair install and see what happens. If that doesn't do it, then I think I'll just have to throw in the towel and start from scratch. Can't say we didn't try at least.
+
+---
+
+### Post by Quackers on 2010-12-03
+Definitely can't say that.
+Have you looked at this thread (just below us at the moment)?
+
+[http://ubuntuforums.org/showthread.php?t=1635696](http://ubuntuforums.org/showthread.php?t=1635696)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+I skimed throgh t last night but most of it didn't make any sense to me. After having been doing this for about 100 hours it feels like my understanding level has substantially improved. The results of his deep scan sound interesting, but like him, I'm at a loss as to what to even do with the information. I did tell testdisk to repair the MBR, but I have to reboot to have it take effect. Can;t do that until I finish DLing and burning this Win7 .iso (about another hour, yay for slow *** internet)
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Well, I guess we can go ahead and tagged this as solved now. The attemot at repairing the install only ended in maging BOOTMGR disappear completely. I wound up having to finally give up and restore back to the factory image. Now I get to reinstall, reupdate, and econfigure everything back as close to how she had it as I can. 
+ 
+I wanna throw out a MASSIVE thank you to those that spent their time doing their best to help me find a fix over the last like 24 hours - you guys are awesome. From now on, I'm just going to swallow my pride and just use WUBI. At least I learned a TON about how Linux works throughot this whole thing, so that's something. Thanks again guys.
+
+---
+
+### Post by Quackers on 2010-12-03
+Wow, that's tough. 
+I would say, however, that wubi is really only for trying out ubuntu and not for permanent use. I would also say that a proper dual boot is usually safer in the long run than using wubi. 
+But obviously you have more to think about at the moment.
+Good luck with your re-install.
+
+---
+
+### Post by thebullfrog82 on 2010-12-03
+Oh I agree. i wanna play around with it some more, so I may go the WUBI route again, but I'm not doing another permanent install until after I move in a couple weeks and can get around to building my new rig. The HD will be partitioned and set up for it right from the get-go.
+
+---
+

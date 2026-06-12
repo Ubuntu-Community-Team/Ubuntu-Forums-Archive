@@ -1,0 +1,469 @@
+---
+title: "dual boot"
+date: 2009-12-28
+forum: Installation &amp; Upgrades
+---
+
+### Post by stldirty on 2009-12-28
+okay please read this closely because this really doesn't seem like the usual grub problem
+
+i had vista and windows 7 dual booting.  i had vista on the first partition, windows 7 on the second, and i have a spare storage drive on a third partition.  i recently installed ubuntu 9.10 over vista which was over the first partition.  i used the regular installer.  for some reason, grub is failing to see windows 7 at all.  i've tried a lot of the usual methods for reinstalling grub, but none have worked so far.  it just doesn't seem to see windows no matter what i do.  i REALLY need someone to lay this out to me like i'm a 2 year old.  i think i'm getting confused on the (hd0,0) part of most of the fixes.  any help is greatly appreciated.
+
+---
+
+### Post by presence1960 on 2009-12-28
+Let's get a better look at your setup & boot process. Boot into Ubuntu. Come back here and use the link in my signature to download the Boot Info Script to the desktop. Once on desktop open a terminal (Applications > Accessories > Terminal) and run this command ```
+sudo bash ~/Desktop/boot_info_script*.sh
+``` This will create a RESULTS.txt file on the desktop. Paste the entire contents of that file back here. Once pasted highlight all text and click the # sign on the toolbar to place code tags around the text.
+
+---
+
+### Post by stldirty on 2009-12-28
+```
+============================= Boot Info Summary: ==============================
+
+ => Grub 1.97 is installed in the MBR of /dev/sda and looks on the same drive 
+    in partition #6 for /boot/grub.
+sda1: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda6: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x000b6bdd
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   102,398,309   102,398,247   5 Extended
+/dev/sda5         100,454,445   102,398,309     1,943,865  82 Linux swap / Solaris
+/dev/sda6                 189   100,438,379   100,438,191  83 Linux
+/dev/sda2         102,402,048   260,607,999   158,205,952   7 HPFS/NTFS
+/dev/sda3         260,608,000   625,139,711   364,531,712   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+/dev/sda2: UUID="C6A45BD9A45BCB17" TYPE="ntfs" 
+/dev/sda3: UUID="20BC9D30BC9D0208" LABEL="Stuff" TYPE="ntfs" 
+/dev/sda5: UUID="20e03ace-e53d-46ba-be23-2aae893b5bff" TYPE="swap" 
+/dev/sda6: UUID="34b93cf8-78f1-47f3-a8c3-4e65740fd864" TYPE="ext4" 
+
+=============================== "mount" output: ===============================
+
+/dev/sda6 on / type ext4 (rw,errors=remount-ro)
+proc on /proc type proc (rw)
+none on /sys type sysfs (rw,noexec,nosuid,nodev)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+udev on /dev type tmpfs (rw,mode=0755)
+none on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+none on /dev/shm type tmpfs (rw,nosuid,nodev)
+none on /var/run type tmpfs (rw,nosuid,mode=0755)
+none on /var/lock type tmpfs (rw,noexec,nosuid,nodev)
+none on /lib/init/rw type tmpfs (rw,nosuid,mode=0755)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/jarett/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=jarett)
+
+
+=========================== sda6/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,6)
+search --no-floppy --fs-uuid --set 34b93cf8-78f1-47f3-a8c3-4e65740fd864
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-16-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	set quiet=1
+	insmod ext2
+	set root=(hd0,6)
+	search --no-floppy --fs-uuid --set 34b93cf8-78f1-47f3-a8c3-4e65740fd864
+	linux	/boot/vmlinuz-2.6.31-16-generic root=UUID=34b93cf8-78f1-47f3-a8c3-4e65740fd864 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-16-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	insmod ext2
+	set root=(hd0,6)
+	search --no-floppy --fs-uuid --set 34b93cf8-78f1-47f3-a8c3-4e65740fd864
+	linux	/boot/vmlinuz-2.6.31-16-generic root=UUID=34b93cf8-78f1-47f3-a8c3-4e65740fd864 ro single 
+	initrd	/boot/initrd.img-2.6.31-16-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	set quiet=1
+	insmod ext2
+	set root=(hd0,6)
+	search --no-floppy --fs-uuid --set 34b93cf8-78f1-47f3-a8c3-4e65740fd864
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=34b93cf8-78f1-47f3-a8c3-4e65740fd864 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	insmod ext2
+	set root=(hd0,6)
+	search --no-floppy --fs-uuid --set 34b93cf8-78f1-47f3-a8c3-4e65740fd864
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=34b93cf8-78f1-47f3-a8c3-4e65740fd864 ro single 
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/11_Windows ###
+menuentry “Windows 7&#8243; {
+set root=(hd0,1)
+chainloader +1
+}
+### END /etc/grub.d/11_Windows ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda6/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda6 during installation
+UUID=34b93cf8-78f1-47f3-a8c3-4e65740fd864 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=20e03ace-e53d-46ba-be23-2aae893b5bff none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+=================== sda6: Location of files loaded by Grub: ===================
+
+
+    .0GB: boot/grub/grub.cfg
+    .0GB: boot/initrd.img-2.6.31-14-generic
+    .0GB: boot/initrd.img-2.6.31-16-generic
+    .0GB: boot/vmlinuz-2.6.31-14-generic
+    .0GB: boot/vmlinuz-2.6.31-16-generic
+    .0GB: initrd.img
+    .0GB: initrd.img.old
+    .0GB: vmlinuz
+    .0GB: vmlinuz.old
+```
+
+---
+
+### Post by presence1960 on 2009-12-28
+When you installed windows 7 with Vista your boot files for both were combined in Vista. Unfortunately that is how windows works. You are now missing some windows 7 boot files caused by the removal of Vista. Here is a link: [http://ubuntuforums.org/showthread.php?p=5726832#post5726832#4](http://ubuntuforums.org/showthread.php?p=5726832#post5726832#4)
+
+Go to post # 4 and scroll down to instruction in red titled Manual Repair of the Vista bootloader. Follow those instructions for Windows 7 as they are the same.
+
+---
+
+### Post by stldirty on 2009-12-28
+ok so the menu.lst file is completely empty.  isn't it supposed to have some linux stuff already in there?
+
+---
+
+### Post by presence1960 on 2009-12-28
+> **stldirty said:**
+> ok so the menu.lst file is completely empty.  isn't it supposed to have some linux stuff already in there?
+
+You have GRUB2 (version 1.97) which does not use menu.lst, but rather grub.cfg which you have. GRUB is not detecting Windows 7 because some boot files are missing and as such does not recognize windows 7 as being installed. You need to restore those boot files per the instructions from the link I provided you.
+
+---
+
+### Post by stldirty on 2009-12-28
+ok.  so at first i wasn't getting any grub menu at all.  after i did the windows 7 startup recover the grub menu now shows at start but windows 7 isn't on there.  and for some reason step 3 of that post makes it so the grub menu goes away altogether again.  i definitely added the info into the menu.lst file like the post said.
+
+---
+
+### Post by presence1960 on 2009-12-28
+> **stldirty said:**
+> ok so the menu.lst file is completely empty.  isn't it supposed to have some linux stuff already in there?
+
+Again I reiterate that you have no menu.lst because you have GRUB2 (version 1.97). If you created one and added items to it it will not be used in booting because GRUB2 does not use menu.lst like Legacy GRUB (version 0.97) does. You can try booting into Ubuntu, open a terminal and run ```
+sudo update-grub
+``` to refresh the GRUB menu.The instructions I asked you to follow do not say to do anything to a menu.lst
+
+Here are the directions I asked you to follow:
+
+[COLOR="Red"]Manual Repair of the Vista Boot Loader[/COLOR]
+
+At the first screen select your favorite language.
+At the second screen, select "Install Now"
+At the third screen, press "Shift F10".
+
+This will open a terminal. In the terminal type
+
+ ```
+diskpart
+```
+
+and then at the 'diskpart' prompt:
+
+ ```
+list volume
+```
+
+This will list the drive letters for all the 'NTFS' and 'Fat' partitions on your computer. Determine the drive letter for your Vista partition. In the following I'll assume it is "C:". If the drive letter of your Vista partition is different, you need to replace all "C:" accordingly. Also determine the drive letter for the CDrom drive, I'll assume that is "E:". Type
+
+```
+ exit
+```
+
+to exit the ``diskpart'' prompt.
+
+Type
+
+```
+copy E:\bootmgr C:\
+
+mkdir C:\BOOT
+
+copy E:\BOOT C:\BOOT 
+
+bcdedit /store C:\boot\bcd /set {default} osdevice boot
+
+bcdedit /store C:\boot\bcd /set {default} device boot
+
+bcdedit /store C:\boot\bcd /set {default} path \Windows\system32\winload.exe
+
+bcdedit /store C:\boot\bcd /set {bootmgr} device boot
+
+bcdedit /store C:\boot\bcd /set {memdiag} device boot
+```
+
+Depending on the DVD you are using you might also have to type the following three lines
+
+```
+bcdedit /store C:\boot\bcd /deletevalue  {default} detecthal 
+
+bcdedit /store C:\boot\bcd /deletevalue  {default} winpe
+
+bcdedit /store C:\boot\bcd /deletevalue  {default} ems
+```
+
+Just go ahead and type those three lines. But you might get an "element not found" warning, which you can ignore.
+
+Then type:
+
+```
+E:\boot\bootsect.exe /nt60  C:
+```
+
+This might produce an error message, since some Vista CDs (including the one I linked above) do not come with 'bootsect'. But the command is not always necessary, so just proceed. If after completing the HowTo you get an 'ntldr misssing' message while trying to boot Vista, reply to this thread and ask for help.
+
+Reboot and select 'Vista' at the grub menu.
+
+Sometimes this does not work right away and you have to do a third step.
+
+---
+
+### Post by stldirty on 2009-12-28
+Ok my bad. Didn't read that I was just to do that part. I did the whole damned post. I'll go back and just do that and see what happens. Thanks for your patience.
+
+---
+
+### Post by presence1960 on 2009-12-28
+> **stldirty said:**
+> Ok my bad. Didn't read that I was just to do that part. I did the whole damned post. I'll go back and just do that and see what happens. Thanks for your patience.
+
+No biggie. At least you are learning something. meierfra is very knowledgeable. He & caljohnsmith were very inspirational to me when I was just starting Ubuntu and still are.
+
+---
+
+### Post by stldirty on 2009-12-29
+edit:
+
+ok i did sudo grub --update and FINALLY grub recognized the windows 7 partition
+
+BUT, windows isn't playing nice now.  i get an error message from windows when i try it.  i took a couple pictures of the screen.
+
+i ran the windows disc again and tried startup repair to no avail.  i really think i'm going to end up having to reinstall :(
+
+---
+
+### Post by meierfra. on 2009-12-29
+Are you able to boot into Ubuntu now? If yes, just open a terminal in ubuntu and run
+
+```
+sudo update-grub
+```
+
+Hopefully that will add  Windows 7 to the Grub menu.
+
+---
+
+### Post by stldirty on 2009-12-29
+my bad. i just edited my last post with an update.  that should get u caught up to where i'm at now.
+
+---
+
+### Post by meierfra. on 2009-12-29
+I did not see your edit when I posted. Give me couple of minutes  to think about the next move.
+
+---
+
+### Post by meierfra. on 2009-12-29
+We know from RESULTS.txt that winload.exe is not missing. But for some  reason the Windows boot loader cannot find it. If you are lucky,  you just had  typo when you followed  instruction.  So lets check that out.
+
+But first, just to make Windows 7 a little happier, lets put  the boot flag onto the Window 7 partition (a wrong boot flag might confuse the Automatic Startup Repair). Open a terminal in Ubuntu and type
+
+```
+ sudo sfdisk -A2 /dev/sda
+
+```
+
+Then boot from the Window CD and go to the command line as before.
+
+Type ```
+bcdedit /store C:\boot\bcd
+```
+
+(Here replace C: by the correct drive letter, since you changed the boot flag, the drive letter might have changed. So  check on the drive letter via "diskpart, list volume, exit', just as before.)
+
+That will display the information stored in the Windows Boot loader.
+
+Look for
+
+```
+\Windows\System32\winload.exe
+```
+
+and make sure that it is spelled exactly like that. If not change it via:
+
+
+```
+bcdedit /store C:\boot\bcd /set {default} path \Windows\System32\winload.exe
+```
+
+Whether you changed it or not, do 
+
+
+```
+bcdedit /store C:\boot\bcd > C:\bcd.txt
+```
+This writes the output of "bcdedit" to the file "\bcd.txt" on your Vista partition. You can access this file in ubuntu via
+
+```
+sudo mount /dev/sda2 /mnt
+gedit  /mnt/bcd.txt
+```
+
+If you still can't boot into Windows 7, post the content of that file so  I can have a look at it
+
+---
+
+### Post by stldirty on 2009-12-31
+i somehow got everything to work.  i ended up running the windows startup repair then reinstalling ubuntu and now everything is running fine.  thanks for all the help guys.
+
+---
+

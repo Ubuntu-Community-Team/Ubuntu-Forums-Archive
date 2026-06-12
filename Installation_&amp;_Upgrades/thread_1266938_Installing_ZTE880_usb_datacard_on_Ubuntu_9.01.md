@@ -1,0 +1,217 @@
+---
+title: "Installing ZTE880 usb datacard on Ubuntu 9.01"
+date: 2009-09-15
+forum: Installation &amp; Upgrades
+---
+
+### Post by hallenr on 2009-09-15
+I have recently shifted to Ubuntu from Windows. I had this Reliance datacard for my laptop.. I surfed the net, and found on this forum certain suggestions regarding this posted by a member called Shailendra. I thought it would be now easy for me to surf the net.
+
+But, when i tried the command:sudo "modprobe usbserial vendor=0xXXXX product=0xXXXX' (after putting in the vendor and the productid) i get the message no usbserial found.
+
+Similarly when i run the modprobe command, the system tells me that there is no such command.:confused:
+
+Can someone help me please:)
+
+---
+
+### Post by GeorgeVita on 2009-09-17
+Hi **hallenr**,
+initial version of Ubuntu 9.04 had the usbserial driver 'encapsulated' into kernel, supposed to be a 'bug' a later update returns the usbserial as an external driver. The easy way to restore it is to update your system using another internet connection (wifi or ethernet) or wait for the newer version of Ubuntu (9.10). If you still want to try read **post#2** of: [http://ubuntuforums.org/showthread.php?t=1224347](http://ubuntuforums.org/showthread.php?t=1224347)
+
+Although I am not sure I can help you on "Installing ZTE880 modem" you can start from determining system activity when you plug it in, and find the actual vendorID : productID using the procedure below:
+
+- boot without the modem, wait for the system to load, open a terminal window (Applications > Accessories > Terminal), 'give' the command: ```
+sudo dmesg -c
+```
+- attach modem, **wait** 15 seconds and: ```
+dmesg
+``` ```
+lsusb
+```
+- copy (use your mouse/touchpad) the terminal contents from the second dmesg and lsusb commands and post them here.
+
+Regards,
+George
+
+---
+
+### Post by hallenr on 2009-09-20
+Thanx a lot! Here is the response:
+
+alka@alka-laptop:~$ dmesg
+[ 2045.956092] usb 2-1: new full speed USB device using uhci_hcd and address 13
+[ 2046.076066] usb 2-1: device descriptor read/64, error -71
+[ 2046.300070] usb 2-1: device descriptor read/64, error -71
+[ 2046.516068] usb 2-1: new full speed USB device using uhci_hcd and address 14
+[ 2046.636064] usb 2-1: device descriptor read/64, error -71
+[ 2046.860070] usb 2-1: device descriptor read/64, error -71
+[ 2047.076067] usb 2-1: new full speed USB device using uhci_hcd and address 15
+[ 2047.484085] usb 2-1: device not accepting address 15, error -71
+[ 2047.540132] hub 2-0:1.0: unable to enumerate USB device on port 1
+[ 2048.084062] usb 2-1: new full speed USB device using uhci_hcd and address 17
+[ 2048.305554] usb 2-1: configuration #1 chosen from 1 choice
+alka@alka-laptop:~$ lsusb
+Bus 001 Device 005: ID 04f2:b057 Chicony Electronics Co., Ltd 
+Bus 001 Device 004: ID 0bda:0158 Realtek Semiconductor Corp. Mass Stroage Device
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 003 Device 002: ID 04b3:3107 IBM Corp. ThinkPad 800dpi Optical Travel Mouse
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 017: ID 19d2:fffd  
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+
+---
+
+### Post by GeorgeVita on 2009-09-20
+Hi **hallenr**, check kernel version with: ```
+uname -a
+``` if it is up to 2.6.28-12 will have **usbserial** 'encapsulated' into kernel and you must follow [this]("http://ubuntuforums.org/showpost.php?p=7691132&postcount=2") to edit grub. Otherwise you must do a full update via other internet connection.
+
+Post your progress/question to follow up.
+
+Regards,
+George
+
+---
+
+### Post by hallenr on 2009-09-21
+I am getting:
+> 
+rakesh@rakesh-desktop:~$ uname -a
+Linux rakesh-desktop 2.6.28-15-generic #49-Ubuntu SMP Tue Aug 18 18:40:08 UTC 20
+
+Now,  do i have to edit grub as you have indicated in your other post?
+
+---
+
+### Post by GeorgeVita on 2009-09-21
+No as you have the latest kernel REMOVE modem, and try (copy/paste) the following from a terminal window: ```
+sudo modprobe usbserial vendor=0x19d2 product=0xfffd
+``` and then ATTACH the modem, check last lines of ```
+dmesg
+``````
+ls /dev/ttyU*
+``` to see if some ports created.
+
+Regards,
+George
+
+EDIT: if above not work, REMOVE modem, try removing the driver and run it again: ```
+sudo modprobe -r usbserial
+``` ```
+sudo modprobe usbserial vendor=0x19d2 product=0xfffd
+``` ATTACH modem and check **dmesg** and **lsusb**
+
+---
+
+### Post by hallenr on 2009-09-21
+I tried! There was no difference observed from the first approach. 
+However in the second approach USB0 was detected. But when i tried wvdial the message is get is:
+
+> rakesh@rakesh-desktop:~$ wvdial
+--> WvDial: Internet dialer version 1.60
+--> Cannot open /dev/modem: No such file or directory
+--> Cannot open /dev/modem: No such file or directory
+--> Cannot open /dev/modem: No such file or directory
+
+Further the log file of Gnome ppp is as follows:
+
+> --> Ignoring malformed input line: ";Do NOT edit this file by hand!"
+--> WvDial: Internet dialer version 1.60
+--> Cannot set information for serial port.
+--> Initializing modem.
+--> Sending: ATX3
+--> Sending: ATQ0
+--> Re-Sending: ATX3
+--> Modem not responding.
+
+
+---
+
+### Post by hallenr on 2009-09-21
+The latest status is the following log file of Gnome PPP
+> 
+--> Ignoring malformed input line: ";Do NOT edit this file by hand!"
+--> WvDial: Internet dialer version 1.60
+--> Cannot get information for serial port.
+--> Initializing modem.
+--> Sending: ATX3
+ATX3
+OK
+--> Sending: ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+OK
+--> Modem initialized.
+--> Configuration does not specify a valid phone number.
+
+I think i am almost near the goal, just a helpful comment from you will kick me there:)
+
+---
+
+### Post by GeorgeVita on 2009-09-21
+Hi, first the system must create some  communication ports, assume the working one is **/dev/ttyUSB0** (not the default /dev/modem).
+
+Now you need a configuration file: **/etc/wvdial.conf** (for wvdial)
+
+A typical one is: ```
+[Dialer Defaults]
+Modem = /dev/ttyUSB0
+Modem Type = Analog Modem
+Dial Command = ATDT
+Dial Attempts = 1
+ISDN = 0
+Baud = 460800
+Username = user
+Password = pass
+Init1 = ATZ
+Init2 = AT&F E1 V1 X1 &D2 &C1 S0=0
+Init3 = AT+CGDCONT=1,"IP","internet"
+Phone = *99***1#
+Stupid Mode = 1
+
+```
+Notes:
+APN ("internet" at Init3), user/password and phone depends on provider. post exact data to help.
+To connect use **sudo wvdial**
+Disconnect by pressing **CTRL-C** at the same terminal window
+Start firefox and **remove offline mode** with **ALT-F W**
+
+**EDIT: **try also to setup/connect using network manager: right click icon, edit connections, mobile broadband, add, choose country, provider and keep a note of default apn, user, password, phone for your provider. If you cannot use network manager these parameters will be used for wvdial or gnome-ppp.
+
+Regards,
+George
+
+---
+
+### Post by hallenr on 2009-09-29
+Well, i was indeed successful in installing a Tata wireless connection on my desktop that has the kernel 2.6.28-15-generic #49,:popcorn:but i am still not able to update the kernel from 2.6.28.11, despite repeated attempts both from update manager and Synaptic Package manager. I have installed and reinstalled all packages that have the word Linux 2.6. 28.15, but when i run the command uname -a i get back the same response that is Kernal 2.6.28.11. Can you please help me in this regard too:)
+
+---
+
+### Post by GeorgeVita on 2009-09-29
+Hi **hallenr**,
+although my knowledge is more 'modem related', I will try it!
+
+1. connect to internet
+
+2. check that you have enabled:
+System > Preferences > Software Sources
+all 'downloadable from the Internet' except 'source code'
+and under the **Updates** tab at least 'important', 'recomented' and  'normal releases' (at release upgrade).
+
+3. open a terminal window and: ```
+sudo apt-get update && sudo apt-get dist-upgrade
+```
+
+4. keep note if any error message, reboot and check 'uname -a'
+
+Post your progress/result!
+
+If still cannot succeed, open a NEW thread [here]("http://ubuntuforums.org/newthread.php?do=newthread&f=333")
+
+Regards,
+George
+
+---
+

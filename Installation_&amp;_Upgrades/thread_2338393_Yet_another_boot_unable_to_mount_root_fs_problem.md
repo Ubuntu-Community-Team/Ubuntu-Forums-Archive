@@ -1,0 +1,973 @@
+---
+title: "Yet another boot unable to mount root fs problem"
+date: 2016-09-27
+forum: Installation &amp; Upgrades
+---
+
+### Post by 1729er on 2016-09-27
+Hi all,
+
+Like so many before me, I have gotten the "VFS: unable to mount root fs on unknown block(0,0)" error message, made some progress, and yet I don't know how to proceed to fix the thing.
+
+Here's what I believe to be important details of what has happened:
+
+* Desktop computer.  One hard drive, 1 TB.  I initially dual-partitioned Windows (I think it came with 7?) and Ubuntu, but a year or so ago, I realized I was only using the Ubuntu portion, so I used ... something? ... to overwrite Windows and make it a fully Ubuntu machine.
+
+* About a week ago, I bought an external HD that didn't cooperate (WD My Book, 4TB).  I've since discovered I need to do something to that HD in Windows (going to use a friend's machine to do this in a few days) to get it to play nicely with Ubuntu, but not before I tried various ways to mount this.  I think this is where I messed up, because my next reboot of the desktop was my first of the "unable to mount root fs" piece.  This is partly why I want guidance on the mount/grub-install pieces shortly.
+
+* When I boot from a Live CD, I am able to see my files on my HD, so I know they're there.  That's a relief.
+
+
+* I was able to run the script from bootinfoscript.sourceforge.net that was suggested elsewhere on this site.  RESULTS.txt is below;  it looks to me as though Grub is looking in the wrong place, or that it isn't clear where it should look.  I'm aware I could sudo mount / sudo grub-install pieces, but I'm not sure what the right parameters are and I don't want to mess it up further. 
+
+
+Here is the RESULTS.txt:
+
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 112 for .
+
+sda1: __________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg
+
+sda2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info: 
+
+sda5: __________________________________________________________________________
+
+    File system:       LVM2_member
+    Boot sector type:  -
+    Boot sector info: 
+
+ubuntu-vg-root': _______________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+
+ubuntu-vg-swap_1': _____________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+mount: unknown filesystem type ''
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+Disk /dev/sda: 931.5 GiB, 1000204886016 bytes, 1953525168 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048       499,711       497,664  83 Linux
+/dev/sda2             501,758 1,953,523,711 1,953,021,954   5 Extended
+/dev/sda5             501,760 1,953,523,711 1,953,021,952  8e Linux LVM
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/mapper/ubuntu--vg-root 8de698c3-bab4-4f86-a19a-790fa84f1d2a   ext4       
+/dev/mapper/ubuntu--vg-swap_1 cac555d8-f1f6-49cd-ab34-bf18c23ad2ea   swap       
+/dev/sda1        2c0d9166-96e3-4919-a7bf-5ca59b7be849   ext2       
+/dev/sda5        9WJCMz-mE5r-ayMS-YDkX-mg8S-O9HV-aD6Fzy LVM2_member 
+/dev/sr0         2016-07-19-21-27-51-00                 iso9660    Ubuntu 16.04.1 LTS amd64
+
+========================= "ls -R /dev/mapper/" output: =========================
+
+/dev/mapper:
+control
+ubuntu--vg-root
+ubuntu--vg-swap_1
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod lvm
+insmod ext2
+set root='lvmid/OGb0lK-pYwg-ASvk-2zlH-zEdb-lpRx-0fp1ln/h6ZYZc-ybI2-vmlY-nUf6-e4fA-wUVA-NMEfGF'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint='lvmid/OGb0lK-pYwg-ASvk-2zlH-zEdb-lpRx-0fp1ln/h6ZYZc-ybI2-vmlY-nUf6-e4fA-wUVA-NMEfGF'  8de698c3-bab4-4f86-a19a-790fa84f1d2a
+else
+  search --no-floppy --fs-uuid --set=root 8de698c3-bab4-4f86-a19a-790fa84f1d2a
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=30
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=0
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 0 ; then
+    set timeout=0
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30,0; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    else
+      search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    fi
+    linux    /vmlinuz-3.13.0-91-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+    menuentry 'Ubuntu, with Linux 3.13.0-91-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-91-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-91-generic ...'
+        linux    /vmlinuz-3.13.0-91-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-91-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-91-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-91-generic ...'
+        linux    /vmlinuz-3.13.0-91-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-88-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-88-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-88-generic ...'
+        linux    /vmlinuz-3.13.0-88-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-88-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-88-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-88-generic ...'
+        linux    /vmlinuz-3.13.0-88-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-57-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-57-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-57-generic ...'
+        linux    /vmlinuz-3.13.0-57-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-57-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-57-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-57-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-57-generic ...'
+        linux    /vmlinuz-3.13.0-57-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-57-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-55-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-55-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-55-generic ...'
+        linux    /vmlinuz-3.13.0-55-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-55-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-55-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-55-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-55-generic ...'
+        linux    /vmlinuz-3.13.0-55-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-55-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-53-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-53-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-53-generic ...'
+        linux    /vmlinuz-3.13.0-53-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-53-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-53-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-53-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-53-generic ...'
+        linux    /vmlinuz-3.13.0-53-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-53-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-52-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-52-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-52-generic ...'
+        linux    /vmlinuz-3.13.0-52-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-52-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-52-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-52-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-52-generic ...'
+        linux    /vmlinuz-3.13.0-52-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-52-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-49-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-49-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-49-generic ...'
+        linux    /vmlinuz-3.13.0-49-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-49-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-49-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-49-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-49-generic ...'
+        linux    /vmlinuz-3.13.0-49-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-49-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-48-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-48-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-48-generic ...'
+        linux    /vmlinuz-3.13.0-48-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-48-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-48-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-48-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-48-generic ...'
+        linux    /vmlinuz-3.13.0-48-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-48-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-32-generic-advanced-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-32-generic ...'
+        linux    /vmlinuz-3.13.0-32-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-32-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-32-generic-recovery-8de698c3-bab4-4f86-a19a-790fa84f1d2a' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        else
+          search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+        fi
+        echo    'Loading Linux 3.13.0-32-generic ...'
+        linux    /vmlinuz-3.13.0-32-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-32-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry 'Memory test (memtest86+)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    else
+      search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    fi
+    knetbsd    /memtest86+.elf
+}
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    else
+      search --no-floppy --fs-uuid --set=root 2c0d9166-96e3-4919-a7bf-5ca59b7be849
+    fi
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  63 81 59 11 88 67 43 db  6b 8a 6d 6a 63 c6 73 cd  |c.Y..gC.k.mjc.s.|
+00000010  6c 37 c3 94 7b 48 f6 ca  7f a6 4c b5 27 38 0e 58  |l7..{H....L.'8.X|
+00000020  eb 3f 0e 7d ab af ff 61  51 71 24 ad ba 4e 1e 3b  |.?.}...aQq$..N.;|
+00000030  36 ab 57 f7 71 29 20 aa  47 93 4c f0 52 d1 20 3c  |6.W.q) .G.L.R. <|
+00000040  2b 5f 9a 2d e4 47 d3 52  de fa 16 f4 0f 68 0e 5c  |+_.-.G.R.....h.\|
+00000050  9d c5 2d 84 6a 4e 15 8b  b9 9c 95 14 1c 1f e4 96  |..-.jN..........|
+00000060  54 1d 7c 69 11 a0 8a 80  fa ef 36 ba 1c 2f 86 15  |T.|i......6../..|
+00000070  83 26 57 6c 6d 19 9d 2e  02 1b 5a e8 4d eb 18 07  |.&Wlm.....Z.M...|
+00000080  d4 90 f8 5f b8 12 6a 0b  62 e7 4e 3a c0 94 3d 60  |..._..j.b.N:..=`|
+00000090  02 cf 11 43 bb 43 68 e9  63 84 fe 6a 5e e0 5f 7d  |...C.Ch.c..j^._}|
+000000a0  7f 9e f5 e2 ff 97 43 7a  99 ce fe 87 42 7a c6 39  |......Cz....Bz.9|
+000000b0  3f 30 a4 ef c6 d7 11 29  1e dc 89 e3 52 b0 c8 74  |?0.....)....R..t|
+000000c0  f5 3c 58 f4 58 51 1b 64  47 9c 18 7b c2 c4 94 1e  |.<X.XQ.dG..{....|
+000000d0  19 27 be 37 4c 9c b2 c2  c4 74 21 4a 9c 10 0e d6  |.'.7L....t!J....|
+000000e0  2b f4 b0 28 31 96 26 4a  2c df 3b 48 7c 32 b7 a4  |+..(1.&J,.;H|2..|
+000000f0  91 8b 9c 85 92 e2 e2 1c  36 17 12 3a d1 3c 7d 7f  |........6..:.<}.|
+00000100  1e 77 52 f6 6b cf af 3f  6b 83 9e 1b 18 e3 2d eb  |.wR.k..?k.....-.|
+00000110  f1 42 72 48 20 f4 68 fa  e4 c4 e3 20 c8 95 5e da  |.BrH .h.... ..^.|
+00000120  21 1f 26 4d c8 c6 0b d1  64 a7 58 f7 f6 7e d8 61  |!.&M....d.X..~.a|
+00000130  a2 57 cb bd 13 d8 ee f7  ec 6d 48 e8 3e 2e b6 c1  |.W.......mH.>...|
+00000140  62 1b 1a b3 f6 a9 85 c3  e5 40 84 a9 f6 dd b2 b2  |b........@......|
+00000150  64 fd 82 ab 18 c2 c7 4c  15 2b e4 38 b2 8d 7c 3d  |d......L.+.8..|=|
+00000160  18 82 6a cf b3 7e 52 f5  15 ac 31 d4 f1 75 d1 ba  |..j..~R...1..u..|
+00000170  c9 00 c0 c1 bc 88 2a 76  37 70 8d e1 c4 57 f3 12  |......*v7p...W..|
+00000180  eb e4 c4 d6 24 f5 c5 60  00 bf aa a0 b7 1e 68 4e  |....$..`......hN|
+00000190  80 fe 4f 18 32 a2 3a c6  8f 75 de b1 1b 48 e2 02  |..O.2.:..u...H..|
+000001a0  5a 05 e1 a1 a1 49 72 57  18 ef b0 0b e2 c1 ea 75  |Z....IrW.......u|
+000001b0  7e b4 55 2e 2a 10 c2 03  dd 21 c1 81 f0 e2 00 3b  |~.U.*....!.....;|
+000001c0  1d 1f 8e fe ff ff 02 00  00 00 00 c0 68 74 00 00  |............ht..|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+Unknown BootLoader on ubuntu-vg-root'
+
+
+Unknown BootLoader on ubuntu-vg-swap_1'
+
+
+
+========= Devices which don't seem to have a corresponding hard drive: =========
+
+sdb sdc sdd sde 
+
+=============================== StdErr Messages: ===============================
+
+cat: /tmp/BootInfo-oUGEX12k/Tmp_Log: No such file or directory
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-root'.
+  Volume group name "ubuntu-vg-root'" has invalid characters.
+  Cannot process volume group ubuntu-vg-root'
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-root'.
+  Volume group name "ubuntu-vg-root'" has invalid characters.
+  Cannot process volume group ubuntu-vg-root'
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-root'.
+  Volume group name "ubuntu-vg-root'" has invalid characters.
+  Cannot process volume group ubuntu-vg-root'
+hexdump: /dev/mapper/ubuntu-vg-root': No such file or directory
+hexdump: /dev/mapper/ubuntu-vg-root': No such file or directory
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-swap_1'.
+  Volume group name "ubuntu-vg-swap_1'" has invalid characters.
+  Cannot process volume group ubuntu-vg-swap_1'
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-swap_1'.
+  Volume group name "ubuntu-vg-swap_1'" has invalid characters.
+  Cannot process volume group ubuntu-vg-swap_1'
+  skip_dev_dir: Couldn't split up device name ubuntu-vg-swap_1'.
+  Volume group name "ubuntu-vg-swap_1'" has invalid characters.
+  Cannot process volume group ubuntu-vg-swap_1'
+hexdump: /dev/mapper/ubuntu-vg-swap_1': No such file or directory
+hexdump: /dev/mapper/ubuntu-vg-swap_1': No such file or directory
+
+
+```
+
+
+Thank you for any help or insight you can provide.
+
+---
+
+### Post by oldfred on 2016-09-28
+If using the old bootinfoscript, better to use the updated fork. Old one does not parse newer versions of grub2 correctly, so you see incorrect partition info in MBR.
+ Updated fork  as original bootinfoscript does not seem to be maintained
+[https://github.com/arvidjaar/bootinfoscript](https://github.com/arvidjaar/bootinfoscript) 
+
+But Boot-Repair actually uses the updated fork and adds even more info in its Summary Report and often can reinstall grub, if that is all that is required.
+
+
+ May be best to see details:
+Post the link to the Create BootInfo summary report. Is part of Boot-Repair:
+[https://help.ubuntu.com/community/Boot-Info](https://help.ubuntu.com/community/Boot-Info) 
+
+It also looks like you are using LVM which is for advanced users. But it also is required if you want full drive encryption. But with LVM, you have to mount LVM to restore grub and have to use LVM tools for many other tasks, not standard tools.
+
+If using full drive encryption, you must have very  good backup procedures as repair of encrypted partitions often is more difficult or impossible.
+
+      
+ Advantages/Disadvantages LVM Post #9
+[http://ubuntuforums.org/showthread.php?t=1586328&p=9917145#post9917145](http://ubuntuforums.org/showthread.php?t=1586328&p=9917145#post9917145)
+[https://wiki.ubuntu.com/Lvm](https://wiki.ubuntu.com/Lvm)
+[https://help.ubuntu.com/community/UbuntuDesktopLVM](https://help.ubuntu.com/community/UbuntuDesktopLVM)
+
+---
+
+### Post by 1729er on 2016-09-28
+First, thank you for taking the time to reply.  I'm at work at the moment, but I will follow through with your information when I get home this evening.
+
+I haven't clicked the github link, but I take it that has the updated script?  I'll run that tonight.
+
+I didn't realize I was using LVM.  I don't intend to encrypt my hard drive -- there's a bunch of junk on it, but nothing really private or even personal.  I'll read the LVM advantages/disadvantages later just the same.  
+
+And of course, once I resolve the issue, I'll post what I did and update to [Solved] so that others can use it if it helps them.
+
+---
+
+### Post by 1729er on 2016-09-29
+Apologies for the delay;  late day at the office so I was late getting home ... but what's worse, I failed early.  In particular:
+
+> **oldfred said:**
+> If using the old bootinfoscript, better to use the updated fork. Old one does not parse newer versions of grub2 correctly, so you see incorrect partition info in MBR.
+ Updated fork  as original bootinfoscript does not seem to be maintained
+[https://github.com/arvidjaar/bootinfoscript](https://github.com/arvidjaar/bootinfoscript) 
+
+But Boot-Repair actually uses the updated fork and adds even more info in its Summary Report and often can reinstall grub, if that is all that is required.
+
+
+
+I downloaded the new bootinfoscript, seems far more recent.  I ran it and get this:
+
+```
+
+ubuntu@ubuntu:~/Documents/bootinfoscript-master$ sudo ./bootinfoscript 
+
+Boot Info Script 0.74      [06 February 2016]
+
+"mawk v1.3.3" has known bugs.
+Install "mawk v1.3.4" or newer from http://invisible-island.net/mawk/ or use "gawk" instead.
+
+Please install the missing program(s) and run Boot Info Script again.
+
+```
+
+From the script, it looks like it detects mawk v1.3.3 on my system.  Ubuntu software center doesn't seem to show it as installed, so I couldn't update from there. 
+
+I went to the website and it isn't clear which download I want -- none are clearly Ubuntu, and although I'm sure at least one (Fedora maybe?) is equivalent enough to install, to get this to work, I'm worried of messing it up.  
+
+It also isn't clear to me how to use gawk instead (as the text indicated I should consider) -- the boot script's help dialog seems to tell me about where the output file goes, how to get the help text, and how to update the script from the command line.  Looking at the process_args() function didn't shed any more light on this.
+
+I suppose I could comment out the section checking the part that checks mawk/gawk and hard-code AWK='gawk'; -- would that be advisable here?  
+
+
+It looked to me like the next part might be independent, although I could be mistaken since I wasn't successful there either.
+
+
+> **oldfred said:**
+> 
+ May be best to see details:
+Post the link to the Create BootInfo summary report. Is part of Boot-Repair:
+[https://help.ubuntu.com/community/Boot-Info](https://help.ubuntu.com/community/Boot-Info) 
+
+
+
+
+I tried the first step in Boot-Info, which was to load a terminal and do:
+
+```
+
+sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+```
+ and got this:
+
+```
+ubuntu@ubuntu:~$ sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+ Simple tool to repair frequent boot problems.
+
+Website: https://sourceforge.net/p/boot-repair/home
+ More info: https://launchpad.net/~yannubuntu/+archive/ubuntu/boot-repair
+Press [ENTER] to continue or ctrl-c to cancel adding it
+
+gpg: keyring `/tmp/tmp3oz7ecnx/secring.gpg' created
+gpg: keyring `/tmp/tmp3oz7ecnx/pubring.gpg' created
+gpg: requesting key 60D8DA0B from hkp server keyserver.ubuntu.com
+gpg: /tmp/tmp3oz7ecnx/trustdb.gpg: trustdb created
+gpg: key 60D8DA0B: public key "Launchpad PPA for YannUbuntu" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+OK
+Ign:1 cdrom://Ubuntu 16.04.1 LTS _Xenial Xerus_ - Release amd64 (20160719) xenial InRelease
+Hit:2 cdrom://Ubuntu 16.04.1 LTS _Xenial Xerus_ - Release amd64 (20160719) xenial Release
+Hit:4 http://archive.ubuntu.com/ubuntu xenial InRelease                        
+Get:5 http://security.ubuntu.com/ubuntu xenial-security InRelease [94.5 kB]    
+Get:6 http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu xenial InRelease [17.5 kB]
+Get:7 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [95.7 kB]      
+Get:8 http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu xenial/main amd64 Packages [1,864 B]
+Get:9 http://ppa.launchpad.net/yannubuntu/boot-repair/ubuntu xenial/main Translation-en [2,092 B]
+Fetched 212 kB in 1s (184 kB/s)             
+
+** (appstreamcli:15721): CRITICAL **: Error while moving old database out of the way.
+AppStream cache update failed.
+Reading package lists... Done
+
+```
+
+I tried it a few times and got minor variations of the ending message. 
+
+Thank you again for your help earlier, and of course, thanks in advance for any further help you can offer.  I promise it's appreciated.
+
+(P.S. Thank you also to the individual who fixed my use of QUOTE to CODE -- I didn't intend it to be such a big scroll on the original post, and I wasn't aware of the tag difference, and I hope I used them correctly here)
+
+---
+
+### Post by oldfred on 2016-09-29
+Do not know enough about LVM.
+
+This has instructions to manually mount LVM, then run fsck on your ext4 partition(s) from live installer.
+ How to: Mount & Resize an Encrypted Partition (LUKS) also mount for repairs, you only need the top section until where it says you can do other maintenance.
+[http://ubuntuforums.org/showthread.php?p=4530641](http://ubuntuforums.org/showthread.php?p=4530641)
+sudo apt-get update && sudo apt-get install lvm2 cryptsetup 
+
+Change this command to match where your partition is mounted.
+      
+ sudo e2fsck -f /dev/ubuntu-vg/root 
+    
+This is a standard partition, again you can use this if you change to your mounts.
+
+ #e2fsck is used to check the ext2/ext3/ext4 family of file systems. -p trys fixes where response not required
+sudo e2fsck -C0 -p -f -v /dev/sdb1
+#if errors: -y auto answers yes for fixes needing response, also see man e2fsck
+sudo e2fsck -f -y -v /dev/sdb1
+
+---
+
+### Post by Geoffrey_Arndt on 2016-09-29
+One option is just to use a live Linux disk (_Parted Magic_ is excellent, but costs around $10usd) . . . . or usb-stick and run the file manager to copy and offload your files to cloud service or to another flash-stick.    Then, rather than "spinning my wheels" on a real mess of a prior install/fix etc., I would just do a total and fresh install of the latest Ubuntu LTS (16.04.1).  Let the installer use the entire disk, BUT, DO NOT choose to use whole disk encryption, and be sure to accept the default installer option of installing grub2 to your sda partition.
+
+The above is just my own preferences for the "situation" you're in.   There may for sure be an easier fix, but it may take 10 times as long to get the right answers or read the half-dozen or more detailed articles/threads on the fix.
+
+---
+
+### Post by 1729er on 2016-09-30
+> **oldfred said:**
+> Do not know enough about LVM.
+
+This has instructions to manually mount LVM, then run fsck on your ext4 partition(s) from live installer.
+ How to: Mount & Resize an Encrypted Partition (LUKS) also mount for repairs, you only need the top section until where it says you can do other maintenance.
+[http://ubuntuforums.org/showthread.php?p=4530641](http://ubuntuforums.org/showthread.php?p=4530641)
+sudo apt-get update && sudo apt-get install lvm2 cryptsetup 
+
+Change this command to match where your partition is mounted.
+      
+ sudo e2fsck -f /dev/ubuntu-vg/root 
+    
+This is a standard partition, again you can use this if you change to your mounts.
+
+ #e2fsck is used to check the ext2/ext3/ext4 family of file systems. -p trys fixes where response not required
+sudo e2fsck -C0 -p -f -v /dev/sdb1
+#if errors: -y auto answers yes for fixes needing response, also see man e2fsck
+sudo e2fsck -f -y -v /dev/sdb1
+
+
+I'm a little worried by how many times it says to back-up my data, and I'm worried I'm misreading something.  I'm going to take a closer look at this when I'm more awake.  My computer picked a great week (possibly my busiest at work in a few month span) for this to happen (or, more accurately, I picked a great week to mess up my computer). 
+
+Thank you, by the way, for the prompt response you gave me.  I'm sorry I keep delaying being able to get back to you and try your suggestions.
+
+> **Geoffrey_Arndt said:**
+> One option is just to use a live Linux disk (_Parted Magic_  is excellent, but costs around $10usd) . . . . or usb-stick and run the  file manager to copy and offload your files to cloud service or to  another flash-stick.    Then, rather than "spinning my wheels" on a real  mess of a prior install/fix etc., I would just do a total and fresh  install of the latest Ubuntu LTS (16.04.1).  Let the installer use the  entire disk, BUT, DO NOT choose to use whole disk encryption, and be  sure to accept the default installer option of installing grub2 to your  sda partition.
+
+The above is just my own preferences for the "situation" you're in.    There may for sure be an easier fix, but it may take 10 times as long to  get the right answers or read the half-dozen or more detailed  articles/threads on the fix.
+
+I like this idea, and $10 usd is definitely something I'd be willing  to pay.   I do have a quick question about it though.  I'm able to see  my HD from the Ubuntu Live CD, and I can access /home/(my user name)/ and the sub-directories  within there, but many files I'm told I don't have permission to view  the contents of.  Is this something that Parted Magic could fix for me,  or is this something I can do on my own?  I do know my passwords if the disk were mounted, but if it were mounted, I wouldn't have this issue.
+
+Regardless of how I fix  it, my plan is to copy all my files off the machine and reinstall, being  sure to not use whole disk encryption.  I wasn't even aware I was doing  it.
+
+---
+
+### Post by Geoffrey_Arndt on 2016-09-30
+Well, it's hard to say what is causing the permissions issue - - that's very unusual unless the files are "somehow" copied to the wrong place in your directory system (which is NOT easy to do as users don't have write permission outside of home (except for usb flashsticks formatted with non-linux file systems).    All files in your Home directory (/home) are owned by you and permissions should not be an issue.   But files anywhere else (with a few exceptions) are owned by root and are not editable by default (must use "sudo").
+
+Offhand, I doubt if the permissions situation will be any different by using Parted Magic.   But if you post more detail or examples of what you can't open or edit (and where the files are located), then, there are ways to "change ownerhip" via the CLI and the chown command.   You can view basic help for chown via the CLI "chown --help".
+
+So, in the new install, do not use encryption and/or LVM formatting.   Then, do a search for links to articles at places like OMG!UBUNTU! site for "post Ubuntu install tweaks" or something close to that so you can do the standard enhancements to your install.
+
+---
+
+### Post by 1729er on 2016-09-30
+> **Geoffrey_Arndt said:**
+> Well, it's hard to say what is causing the permissions issue - - that's very unusual unless the files are "somehow" copied to the wrong place in your directory system (which is NOT easy to do as users don't have write permission outside of home (except for usb flashsticks formatted with non-linux file systems).    All files in your Home directory (/home) are owned by you and permissions should not be an issue.   But files anywhere else (with a few exceptions) are owned by root and are not editable by default (must use "sudo").
+
+Offhand, I doubt if the permissions situation will be any different by using Parted Magic.   But if you post more detail or examples of what you can't open or edit (and where the files are located), then, there are ways to "change ownerhip" via the CLI and the chown command.   You can view basic help for chown via the CLI "chown --help".
+
+So, in the new install, do not use encryption and/or LVM formatting.   Then, do a search for links to articles at places like OMG!UBUNTU! site for "post Ubuntu install tweaks" or something close to that so you can do the standard enhancements to your install.
+
+
+The files are in /home/(my user name there)/ and so on.  When I boot with a Live CD, I can see (looking at the ~1TB volume) that they're there (I can go through the folders), but I can't open the files.  I think this is because (if I'm understanding this issue correctly) when I use the Live CD, I'm not logged in as me, and I can't log in as me non-live because of the boot problem.
+
+If that doesn't make sense, please let me know -- it's likely I'm missing something in the process.
+
+---
+
+### Post by Geoffrey_Arndt on 2016-10-01
+What Live CD?  What OS/Distro?   Each are slightly different.   In Parted Magic, as so with many other "Live Rescue" type OS's . . you will have copy authority for your /home files.  So, they can be copied to the Cloud (like dropbox) or to another usb flashstick etc.   I think (imho) PM is a good investment considering the importance of data to those that use their PC's for meaningful tasks.
+
+---
+
+### Post by 1729er on 2016-10-01
+> **Geoffrey_Arndt said:**
+> What Live CD?  What OS/Distro?   Each are slightly different.   In Parted Magic, as so with many other "Live Rescue" type OS's . . you are running as Root and therefore will have copy authority for your /home files.  So, they can be copied to the Cloud (like dropbox) or to another usb flashstick etc.
+
+Just the basic Ubuntu Live CD -- burned fresh from my laptop (not the machine with the problem) a few days ago.  If I can just copy the files off of it from that, it's easy.  All I have to do is be able to mount the external HD in live it sounds like.
+
+---
+
+### Post by Geoffrey_Arndt on 2016-10-01
+Just boot up the Live Ubuntu DVD and click on Try Ubuntu . . then after good boot, insert another drive into a second usb port - - it should automount after you click on the right icon in the file manager.   Then, start copying away.
+
+---
+
+### Post by 1729er on 2016-10-01
+> **Geoffrey_Arndt said:**
+> Just boot up the Live Ubuntu DVD and click on Try Ubuntu . . then after good boot, insert another drive into a second usb port - - it should automount after you click on the right icon in the file manager.   Then, start copying away.
+
+I tried this.  I was able to automount the other USB disk.  Then I opened the drive that is my HD, went to /home/(my name)/Documents .  There's a folder I want to copy, and it has the folder icon with an X in a square on it.  I tried to drag and drop that onto the USB drive and it says that I can't do that because I don't have permission to read it. 
+
+So I load up a terminal in that window and 
+
+```
+
+sudo chmod 777 (folder name)
+
+```
+
+Looks like the missing piece of information for me was that live CD had root access (which makes sense now that I think of it).
+
+Bam, folder is visible.  I'm starting the copying now.  If this works, I can copy the rest of the HD contents over, back them up, and then reinstall fresh onto the original disk, complete with boot and no LVM encryption.
+
+I'll report back updates and will fix this to the correct tag of solved once I'm done.
+
+---
+

@@ -1,0 +1,316 @@
+---
+title: "recover ubuntu from HDD crash"
+date: 2006-10-26
+forum: Installation &amp; Upgrades
+---
+
+### Post by smsmith050 on 2006-10-26
+Originally I had ubuntu 6 installed on /dev/hdb however the boot was from /dev/hda. /dev/hda crashed. I replaced it with a sata drive. 
+How can I boot my ubuntu now on /dev/hdb? 
+Can I re-install the mbr on /dev/hdb? (my attempts so far have failed.) 
+
+I was able to copy the /boot from the crashed HDD.
+I have tried booting from /dev/hdb but only get a beep error code. 
+Ubuntu is on /dev/hdb5, fedora is on /dev/hdb4
+
+
+I started to install ubuntu on /dev/sda but would rather run my original install on /dev/hdb.
+
+thanks for any help!
+
+
+Here is what the drives organization is:
+
+Disk /dev/sda: 250.0 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1        3748    30105778+   7  HPFS/NTFS
+/dev/sda2            3749       30401   214090222+   f  W95 Ext'd (LBA)
+/dev/sda5            3749        9882    49271323+   b  W95 FAT32
+/dev/sda6            9883       16404    52387933+   7  HPFS/NTFS
+/dev/sda7           23423       30401    56058786    b  W95 FAT32
+/dev/sda8           16405       23343    55737486   83  Linux
+/dev/sda9           23358       23422      522081   82  Linux swap / Solaris
+/dev/sda10          23344       23357      112423+  83  Linux
+
+Partition table entries are not in disk order
+
+Disk /dev/hdb: 120.0 GB, 120034123776 bytes
+255 heads, 63 sectors/track, 14593 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/hdb1   *           1          13      104391   83  Linux
+/dev/hdb2              14        5099    40853295    5  Extended
+/dev/hdb3            5100        8286    25599577+   c  W95 FAT32 (LBA)
+/dev/hdb4            8287       14464    49624785   83  Linux
+/dev/hdb5              14        5099    40853263+  83  Linux
+
+devices map:
+(hd0)	/dev/hdb
+(hd1)	/dev/sda
+
+menu list:
+
+# menu.lst - See: grub(8), info grub, update-grub(8)
+#            grub-install(8), grub-floppy(8),
+#            grub-md5-crypt, /usr/share/doc/grub
+#            and /usr/share/doc/grub-doc/.
+
+## default num
+# Set the default entry to the entry number NUM. Numbering starts from 0, and
+# the entry number 0 is the default if the command is not used.
+#
+# You can specify 'saved' instead of a number. In this case, the default entry
+# is the entry saved with the command 'savedefault'.           
+default		0
+
+## timeout sec
+# Set a timeout, in SEC seconds, before automatically booting the default entry
+# (normally the first entry defined).
+timeout		10
+
+## hiddenmenu
+# Hides the menu by default (press ESC to see the menu)
+#hiddenmenu
+
+# Pretty colours
+#color cyan/blue white/blue
+
+## password ['--md5'] passwd
+# If used in the first section of a menu file, disable all interactive editing
+# control (menu entry editor and command-line)  and entries protected by the
+# command 'lock'
+# e.g. password topsecret
+#      password --md5 $1$gLhU0/$aW78kHK1QfV3P2b2znUoe/
+# password topsecret
+
+#
+# examples
+#
+# title		Windows 95/98/NT/2000
+# root		(hd0,0)
+# makeactive
+# chainloader	+1
+#
+# title		Linux
+# root		(hd0,0)
+# kernel	/vmlinuz root=/dev/hda2 ro
+#
+
+#
+# Put static boot stanzas before and/or after AUTOMAGIC KERNEL LIST
+
+### BEGIN AUTOMAGIC KERNELS LIST
+## lines between the AUTOMAGIC KERNELS LIST markers will be modified
+## by the debian update-grub script except for the default options below
+
+## DO NOT UNCOMMENT THEM, Just edit them to your needs
+
+## ## Start Default Options ##
+## default kernel options
+## default kernel options for automagic boot options
+## If you want special options for specific kernels use kopt_x_y_z
+## where x.y.z is kernel version. Minor versions can be omitted.
+## e.g. kopt=root=/dev/hda1 ro
+##      kopt_2_6_8=root=/dev/hdc1 ro
+##      kopt_2_6_8_2_686=root=/dev/hdc2 ro
+# kopt=root=/dev/hdb5 ro
+
+## default grub root device
+## e.g. groot=(hd0,0)
+# groot=(hd0,0)
+
+## should update-grub create alternative automagic boot options
+## e.g. alternative=true
+##      alternative=false
+# alternative=true
+
+## should update-grub lock alternative automagic boot options
+## e.g. lockalternative=true
+##      lockalternative=false
+# lockalternative=false
+
+## additional options to use with the default boot option, but not with the
+## alternatives
+## e.g. defoptions=vga=791 resume=/dev/hda5
+# defoptions=quiet splash
+
+## altoption boot targets option
+## multiple altoptions lines are allowed
+## e.g. altoptions=(extra menu suffix) extra boot options
+##      altoptions=(recovery mode) single
+# altoptions=(recovery mode) single
+
+## controls how many kernels should be put into the menu.lst
+## only counts the first occurence of a kernel, not the
+## alternative kernel options
+## e.g. howmany=all
+##      howmany=7
+# howmany=all
+
+## should update-grub create memtest86 boot option
+## e.g. memtest86=true
+##      memtest86=false
+# memtest86=true
+
+## should update-grub adjust the value of the default booted system
+## can be true or false
+# updatedefaultentry=false
+
+## ## End Default Options ##
+
+title		Ubuntu, kernel 2.6.15-23-686
+root		(hd0,0)
+kernel		/vmlinuz-2.6.15-23-686 root=/dev/hdb5 ro quiet splash
+initrd		/initrd.img-2.6.15-23-686
+savedefault
+boot
+
+title          FC4
+root            (hd0,0)
+kernel          /vmlinuz-2.6.15-1.1831_FC4 root=/dev/hdb4 ro quiet splash
+initrd          /initrd-2.6.15-1.1831_FC4.img
+boot
+
+
+title		Ubuntu, kernel 2.6.15-23-686 (recovery mode)
+root		(hd0,0)
+kernel		/vmlinuz-2.6.15-23-686 root=/dev/hdb5 ro single
+initrd		/initrd.img-2.6.15-23-686
+boot
+
+title		Ubuntu, kernel 2.6.15-23-386
+root		(hd0,0)
+kernel		/vmlinuz-2.6.15-23-386 root=/dev/hdb5 ro quiet splash
+initrd		/initrd.img-2.6.15-23-386
+savedefault
+boot
+
+title		Ubuntu, kernel 2.6.15-23-386 (recovery mode)
+root		(hd0,0)
+kernel		/vmlinuz-2.6.15-23-386 root=/dev/hdb5 ro single
+initrd		/initrd.img-2.6.15-23-386
+boot
+
+title		Ubuntu, kernel 2.6.12-10-386
+root		(hd0,0)
+kernel		/vmlinuz-2.6.12-10-386 root=/dev/hdb5 ro quiet splash
+initrd		/initrd.img-2.6.12-10-386
+savedefault
+boot
+
+title		Ubuntu, kernel 2.6.12-10-386 (recovery mode)
+root		(hd0,0)
+kernel		/vmlinuz-2.6.12-10-386 root=/dev/hdb5 ro single
+initrd		/initrd.img-2.6.12-10-386
+boot
+
+title		Ubuntu, kernel 2.6.12-9-386
+root		(hd0,0)
+kernel		/vmlinuz-2.6.12-9-386 root=/dev/hdb5 ro quiet splash
+initrd		/initrd.img-2.6.12-9-386
+savedefault
+boot
+
+title		Ubuntu, kernel 2.6.12-9-386 (recovery mode)
+root		(hd0,0)
+kernel		/vmlinuz-2.6.12-9-386 root=/dev/hdb5 ro single
+initrd		/initrd.img-2.6.12-9-386
+boot
+
+title		Ubuntu, memtest86+
+root		(hd0,0)
+kernel		/memtest86+.bin 
+boot
+
+### END DEBIAN AUTOMAGIC KERNELS LIST
+
+# This is a divider, added to separate the menu items below from the Debian
+# ones.
+title		Other operating systems:
+root
+
+
+# This entry automatically added by the Debian installer for a non-linux OS
+# on /dev/hda1
+title		Microsoft Windows 2000 Professional
+root		(hd0,0)
+savedefault
+chainloader	+1
+
+---
+
+### Post by smsmith050 on 2006-10-26
+Made little progress. 
+However - no menu 
+I don't understand how the /boot did not get mounted
+
+booted from live/install cd
+opened terminal
+sudo grub-floppy /dev/fd0 "make a bootable floppy"
+boot from floppy
+grub>
+look for the linux image
+grub> find (hd0, "hit TAB key"
+ Possible partitions are:
+   Partition num: 0,  Filesystem type is ext2fs, partition type 0x83
+   Partition num: 2,  Filesystem type is fat, partition type 0xc
+   Partition num: 3,  Filesystem type is ext2fs, partition type 0x83
+   Partition num: 4,  Filesystem type is ext2fs, partition type 0x83
+
+I think that partition 0 is the boot
+
+grub> find (hd0,0)/ "hit TAB key"
+ Possible files are: abi-2.6.12-10-386 abi-2.6.12-9-386 abi-2.6.15-23-386 abi-2
+.6.15-23-686 config-2.6.12-10-386 config-2.6.12-9-386 config-2.6.15-23-386 conf
+ig-2.6.15-23-686 grub initrd-2.6.15-1.1831_FC4.img initrd.img-2.6.12-10-386 ini
+trd.img-2.6.12-9-386 initrd.img-2.6.15-23-386 initrd.img-2.6.15-23-686 lost+fou
+nd memtest86+.bin System.map-2.6.12-10-386 System.map-2.6.12-9-386 System.map-2
+.6.15-23-386 System.map-2.6.15-23-686 vmlinuz-2.6.12-10-386 vmlinuz-2.6.12-9-38
+6 vmlinuz-2.6.15-1.1831_FC4 vmlinuz-2.6.15-23-386 vmlinuz-2.6.15-23-686 boot
+
+Yes (hd0,0) is correct
+Set the root
+
+grub> root (hd0,0) 
+ Filesystem type is ext2fs, partition type 0x83
+
+Set the kernel
+
+grub> kernel /vmlinuz-2.6.15-23-686 root=/dev/hdb5 ro
+   [Linux-bzImage, setup=0x1c00, size=0x16e65c]
+
+Set initrd
+grub> initrd /initrd.img-2.6.15-23-686
+
+boot
+
+---
+
+### Post by smsmith050 on 2006-10-26
+More progress
+re-boot get
+grub>
+manually enter the kernel and initrd parameters and boot ubuntu
+edited fstab to mount /dev/hdb1 on /boot
+also remove entries that pointed to the crashed HDD /dev/hda
+
+unmounted /media/hdb1 "my /dev/hdb1 boot partition got mounted here"
+mounted /dev/hdb1 on /boot
+cd /
+sudo grub-install  /dev/hdb
+
+now I have the boot menu when I boot from hdb
+
+The keys for making this work was getting grub on hdb, booting to ubuntu, correctly mounting /boot, fixing fstab and grub-install.
+
+---
+
+### Post by smsmith050 on 2006-10-26
+Finally have ubuntu back. I have been using XP for 3 weeks since my HDD crashed. During that time I have caught a virus from work and endured many IE crashes. I realize that I need to run windows from time to time - catch a virus and experience IE crashing - so that I can relate to my co-workers. THe HDD crash was a learning experience.
+
+---
+

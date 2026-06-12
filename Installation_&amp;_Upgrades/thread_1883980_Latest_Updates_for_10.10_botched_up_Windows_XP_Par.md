@@ -1,0 +1,448 @@
+---
+title: "Latest Updates for 10.10 botched up Windows XP Partition!?"
+date: 2011-11-20
+forum: Installation &amp; Upgrades
+---
+
+### Post by Saurabhdua on 2011-11-20
+Hi Guys!
+
+Only Suddenly, I have realized that my Windows XP Partition is facing some kind of trouble since the time (just a day ago) I installed latest updates for my Ubuntu 10.10(34MB in size!).
+
+WinXP boot seem to progress till the time of blue teeth rolling in within the cheeks, & after that it goes for a Reboot without fail!
+
+There are no issues with the Ubuntu partition.
+
+Any ideas for this critical coincidence?
+
+**Also, Iam able to access the Windows file system(Files n Folders) from within Ubuntu.
+
+---
+
+### Post by oldfred on 2011-11-20
+I would normally say they are independant events, but sometimes a grub file gets written into Windows and confuses it. So lets verify that first.
+
+
+Boot Info Script courtesy of forum members meierfra & Gert Hulselmans
+Page with instructions and download:
+[http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/)
+Paste contents of results.txt in a New Reply, then highlight entire file and click on # in edit panel(code tags) to make it easier to read.
+Or You can generate the tags first by pressing the # icon in the New Reply Edit toolbar and then paste the contents between the generated [ code] paste here [ /code] tags.
+V60 has improved formating and requires code tags to make it legible. New Version is a zip file that you have to extract to get .sh to run.
+Install these before running script:
+sudo apt-get install mawk
+
+---
+
+### Post by Saurabhdua on 2011-11-21
+Thanks Oldfred!
+
+Here we go::
+
+                  ```
+Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 5 for (,msdos5)/boot/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files:        /boot.ini /ntldr /NTDETECT.COM
+
+sda2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 41.1 GB, 41110142976 bytes
+255 heads, 63 sectors/track, 4998 cylinders, total 80293248 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *             63    45,062,324    45,062,262   7 NTFS / exFAT / HPFS
+/dev/sda2          45,064,190    80,291,839    35,227,650   5 Extended
+/dev/sda5          45,064,192    78,729,215    33,665,024  83 Linux
+/dev/sda6          78,731,264    80,291,839     1,560,576  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        405044695044682C                       ntfs       
+/dev/sda5        06ab22f5-9a68-4eaa-b97a-08e1e307ce98   ext4       
+/dev/sda6        75bfda39-f68c-4cb5-b9ba-0c67a003015a   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro,commit=0)
+
+
+================================ sda1/boot.ini: ================================
+
+--------------------------------------------------------------------------------
+[boot loader]
+
+timeout=30
+
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS
+
+[operating systems]
+
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Home Edition" /fastdetect /NoExecute=OptIn
+
+--------------------------------------------------------------------------------
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux    /boot/vmlinuz-2.6.35-30-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    echo    'Loading Linux 2.6.35-30-generic ...'
+    linux    /boot/vmlinuz-2.6.35-30-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-27-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux    /boot/vmlinuz-2.6.35-27-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-27-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    echo    'Loading Linux 2.6.35-27-generic ...'
+    linux    /boot/vmlinuz-2.6.35-27-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 06ab22f5-9a68-4eaa-b97a-08e1e307ce98
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Home Edition (on /dev/sda1)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 405044695044682C
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda5/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=06ab22f5-9a68-4eaa-b97a-08e1e307ce98 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=75bfda39-f68c-4cb5-b9ba-0c67a003015a none            swap    sw              0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+--------------------------------------------------------------------------------
+
+=================== sda5: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+  25.673557281 = 27.566772224   boot/grub/core.img                             1
+  34.075771332 = 36.588580864   boot/grub/grub.cfg                             1
+  22.746299744 = 24.423653376   boot/initrd.img-2.6.35-22-generic              2
+  35.857677460 = 38.501888000   boot/initrd.img-2.6.35-25-generic              1
+  23.410156250 = 25.136463872   boot/initrd.img-2.6.35-27-generic              2
+  22.244350433 = 23.884689408   boot/initrd.img-2.6.35-28-generic              2
+  24.298973083 = 26.090823680   boot/initrd.img-2.6.35-30-generic              2
+  26.307399750 = 28.247355392   boot/vmlinuz-2.6.35-22-generic                 1
+  26.314289093 = 28.254752768   boot/vmlinuz-2.6.35-25-generic                 1
+  26.273445129 = 28.210896896   boot/vmlinuz-2.6.35-27-generic                 1
+  26.406139374 = 28.353376256   boot/vmlinuz-2.6.35-28-generic                 1
+  26.389484406 = 28.335493120   boot/vmlinuz-2.6.35-30-generic                 1
+  24.298973083 = 26.090823680   initrd.img                                     2
+  22.244350433 = 23.884689408   initrd.img.old                                 2
+  26.389484406 = 28.335493120   vmlinuz                                        1
+  26.406139374 = 28.353376256   vmlinuz.old                                    1
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  5e 7a ba a4 51 1e 2f dd  11 0b 57 0c b6 a4 58 b8  |^z..Q./...W...X.|
+00000010  32 0d 3e 0a 0b 9d 06 55  23 0b 57 a6 41 d5 18 4a  |2.>....U#.W.A..J|
+00000020  f2 93 3a 8f 50 92 9f 54  01 2c c9 9f 8b 8f 02 7b  |..:.P..T.,.....{|
+00000030  99 77 d7 11 ec 45 7a a7  ff 44 02 4d bb de 00 66  |.w...Ez..D.M...f|
+00000040  80 2d 93 ab 11 f6 92 4f  3d 17 96 e4 17 37 4c 66  |.-.....O=....7Lf|
+00000050  80 59 46 72 8a 19 60 5b  51 2f c5 0c b0 63 d2 c7  |.YFr..`[Q/...c..|
+00000060  06 80 23 4d 7f 88 20 94  72 2e 6a 98 0c a5 08 83  |..#M.. .r.j.....|
+00000070  e3 4f 84 a1 14 ff 80 24  93 58 e9 54 8d ac 4a e9  |.O.....$.X.T..J.|
+00000080  3a 3f ba 27 a1 a5 8f 82  d0 9b 95 35 2f 01 2a cc  |:?.'.......5/.*.|
+00000090  b3 bc f6 4b 80 0a f3 2c  f1 a3 25 40 85 79 6e 99  |...K...,..%@.yn.|
+000000a0  96 7f 22 0c a7 0b 28 5c  6a 76 63 5f 6e a2 48 51  |.."...(\jvc_n.HQ|
+000000b0  91 85 dc 45 93 8a e0 b5  b7 12 eb 25 d6 93 0c 9b  |...E.......%....|
+000000c0  ef e8 11 ca 82 ba 2e ff  bf b2 a0 e9 df c9 86 d3  |................|
+000000d0  9d ce 0a 07 fc 27 32 50  a4 57 11 a4 a5 9c 55 9c  |.....'2P.W....U.|
+000000e0  e4 3f 91 29 ac a5 bf fe  31 62 57 22 48 4b 39 2b  |.?.)....1bW"HK9+|
+000000f0  93 fa 4f 04 69 29 67 15  4a f9 4f 64 89 9b ee ff  |..O.i)g.J.Od....|
+00000100  d9 6f 25 92 a3 48 fa c7  01 53 89 20 f8 3c fc b1  |.o%..H...S. .<..|
+00000110  16 70 47 cf 55 42 c9 7f  22 ec df 58 85 2f fe 13  |.pG.UB.."..X./..|
+00000120  79 c5 b5 cc ff f2 89 2b  91 77 b5 dc 7f bf 65 56  |y......+.w....eV|
+00000130  22 55 bf cf 3c b4 a7 cb  e4 96 49 77 f4 0c c9 2d  |"U..<.....Iw...-|
+00000140  aa 46 f6 fb dc 66 1f 65  88 9a 2e ed 8e 80 d5 fe  |.F...f.e........|
+00000150  b7 dc 76 47 cf a9 16 69  76 c4 7e 9f 57 75 8f fe  |..vG...iv.~.Wu..|
+00000160  13 41 c8 60 98 54 01 4f  f6 e3 ab 12 62 ff 13 41  |.A.`.T.O....b..A|
+00000170  a6 d3 d9 fb a6 0b 0d f3  52 11 a4 49 9e d5 af c4  |........R..I....|
+00000180  ff 89 20 ed ed 3c f4 36  b2 df 67 ff 87 1a 99 0c  |.. ..<.6..g.....|
+00000190  55 b1 0e fd 27 52 db 0b  fa c3 fe 27 f2 ad ac 6e  |U...'R.....'...n|
+000001a0  6d 74 04 ac f6 7f 22 6b  23 d2 47 91 f2 2f e4 55  |mt...."k#.G../.U|
+000001b0  89 44 7b e9 d6 f6 c2 be  d8 1f d6 77 44 86 00 fe  |.D{........wD...|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 b0 01 02 00 fe  |................|
+000001d0  ff ff 05 fe ff ff 02 b0  01 02 00 d8 17 00 00 00  |................|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+========= Devices which don't seem to have a corresponding hard drive: =========
+
+sdb
+```
+
+---
+
+### Post by oldfred on 2011-11-21
+I do not see anything in boot script.
+
+I might run chkdsk from a Windows XP install disk. Sometimes a fixboot repairs PBR - partition boot sector even though script says it is ok. 
+
+ Checkdisk ---------------------------
+To repair windows with mounting issues from your Windows XP CD - Do not run fixMBR unless you want windows boot loader in the MBR.
+fixboot C:
+XP CHKDSK command:
+chkdsk drive /p /r
+The chkdsk command checks the specified drive and repairs or recovers the drive if the drive requires it. The command also marks any bad sectors and it recovers readable information. Run chkdsk several times, until no more errors are detected.
+chkdsk c: /r
+You can use the following options:
+/p Does an exhaustive check of the drive and corrects any errors.
+/r Locates bad sectors and recovers readable information.
+Note If you specify the /r option, the /p option is implied. When you specify the chkdsk command without arguments, the command checks the current drive with no options in effect. 
+[http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx?mfr=true](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/chkdsk.mspx?mfr=true)
+
+---
+

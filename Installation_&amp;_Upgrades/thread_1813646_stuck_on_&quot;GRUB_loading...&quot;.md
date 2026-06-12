@@ -1,0 +1,531 @@
+---
+title: "stuck on &quot;GRUB loading...&quot;"
+date: 2011-07-28
+forum: Installation &amp; Upgrades
+---
+
+### Post by chidat on 2011-07-28
+Hi,
+
+I installed Ubuntu 11.04 (dual-boot with Win 7) and at first the bootloader was working fine; I even installed BURG (although I installed it on hd0 because I don't know how to find out where the MBR is installed...) but it worked fine when I restarted my computer several times. However, when I booted into Windows 7 and then restarted for the first time since installing BURG, I am stuck with the "GRUB loading" screen at startup, and can't get into any OS. I will try using the Live CD, but I'm wondering if the problem was because I installed BURG in the wrong drive? How do I figure out where the MBR is, and how do I fix this with the Live CD?
+
+Thank you very much!
+
+---
+
+### Post by YesWeCan on 2011-07-28
+Can you boot live CD and run [http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/) and post RESULTS.txthere inside code tags?
+
+---
+
+### Post by chidat on 2011-07-28
+Sure, here's the ouput of RESULTS.txt:
+
+```
+                  Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 5 for /boot/burg.
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /boot/bcd
+
+sda2: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /Boot/BCD
+
+sda3: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files:        /Windows/System32/winload.exe
+
+sda4: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 11.04
+    Boot files:        /boot/grub/grub.cfg /boot/burg/burg.cfg /etc/fstab 
+                       /boot/grub/core.img /boot/burg/core.img
+
+sda6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1               2,048    29,237,247    29,235,200  27 Hidden NTFS (Recovery Environment)
+/dev/sda2    *     29,237,248    29,442,047       204,800   7 NTFS / exFAT / HPFS
+/dev/sda3          29,442,048   605,733,796   576,291,749   7 NTFS / exFAT / HPFS
+/dev/sda4         605,734,910   625,141,759    19,406,850   5 Extended
+/dev/sda5         605,734,912   624,216,063    18,481,152  83 Linux
+/dev/sda6         624,218,112   625,141,759       923,648  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        086EE7FE6EE7E304                       ntfs       Recovery
+/dev/sda2        20F8B8BEF8B8940E                       ntfs       System Reserved
+/dev/sda3        A0AEBA31AEBA0038                       ntfs       
+/dev/sda5        8e815b77-1ec5-43a8-a72b-fde13ae0b64f   ext4       
+/dev/sda6        44a29717-f729-4e9f-93e4-ec8f820e0828   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos5)'
+search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos5)'
+search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+set locale_dir=($root)/boot/grub/locale
+set lang=en_US
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+if [ ${recordfail} != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "$linux_gfx_mode" != "text" ]; then load_video; fi
+menuentry 'Ubuntu, with Linux 2.6.38-10-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    linux    /boot/vmlinuz-2.6.38-10-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro   quiet splash vt.handoff=7
+    initrd    /boot/initrd.img-2.6.38-10-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.38-10-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.38-10-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.38-10-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.38-10-generic-pae
+}
+submenu "Previous Linux versions" {
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    linux    /boot/vmlinuz-2.6.35-30-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro   quiet splash vt.handoff=7
+    initrd    /boot/initrd.img-2.6.35-30-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.35-30-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.35-30-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.35-30-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-30-generic-pae
+}
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos5)'
+    search --no-floppy --fs-uuid --set=root 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Recovery Environment (loader) (on /dev/sda1)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 086EE7FE6EE7E304
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+menuentry "Windows 7 (loader) (on /dev/sda2)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root 20F8B8BEF8B8940E
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=========================== sda5/boot/burg/burg.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/burg-mkconfig using templates
+# from /etc/burg.d and settings from /etc/default/burg
+#
+
+### BEGIN /etc/burg.d/00_header ###
+set theme_name=ubuntu
+set gfxmode=640x480
+if [ -s $prefix/burgenv ]; then
+  load_env
+fi
+set default="5"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+function select_menu {
+  if menu_popup -t template_popup theme_menu ; then
+    free_config template_popup template_subitem menu class screen
+    load_config ${prefix}/themes/${theme_name}/theme ${prefix}/themes/custom/theme_${theme_name}
+    save_env theme_name
+    menu_refresh
+  fi
+}
+function toggle_fold {
+  if test -z $theme_fold ; then
+    set theme_fold=1
+  else
+    set theme_fold=
+  fi
+  save_env theme_fold
+  menu_refresh
+}
+function select_resolution {
+  if menu_popup -t template_popup resolution_menu ; then
+    menu_reload_mode
+    save_env gfxmode
+  fi
+}
+if test -f ${prefix}/themes/${theme_name}/theme ; then
+  insmod coreui
+  menu_region.text
+  load_string '+theme_menu { -arabic_and_freedom { command="set theme_name=arabic_and_freedom" }}'
+  load_string '+theme_menu { -black_and_white { command="set theme_name=black_and_white" }}'
+  load_string '+theme_menu { -burg { command="set theme_name=burg" }}'
+  load_string '+theme_menu { -chiva { command="set theme_name=chiva" }}'
+  load_string '+theme_menu { -coffee { command="set theme_name=coffee" }}'
+  load_string '+theme_menu { -minimum { command="set theme_name=minimum" }}'
+  load_string '+theme_menu { -proto { command="set theme_name=proto" }}'
+  load_string '+theme_menu { -radiance { command="set theme_name=radiance" }}'
+  load_string '+theme_menu { -radiancetext { command="set theme_name=radiancetext" }}'
+  load_string '+theme_menu { -refit { command="set theme_name=refit" }}'
+  load_string '+theme_menu { -sora { command="set theme_name=sora" }}'
+  load_string '+theme_menu { -sora_clean { command="set theme_name=sora_clean" }}'
+  load_string '+theme_menu { -sora_extended { command="set theme_name=sora_extended" }}'
+  load_string '+theme_menu { -ubuntu { command="set theme_name=ubuntu" }}'
+  load_string '+theme_menu { -ubuntu2 { command="set theme_name=ubuntu2" }}'
+  load_string '+theme_menu { -winter { command="set theme_name=winter" }}'
+  load_config ${prefix}/themes/conf.d/10_hotkey
+  load_config ${prefix}/themes/${theme_name}/theme ${prefix}/themes/custom/theme_${theme_name}
+  insmod vbe
+  insmod png
+  insmod jpeg
+  set gfxfont="Unifont Regular 16"
+  menu_region.gfx
+  vmenu resolution_menu
+  controller.ext
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+set locale_dir=($root)/boot/burg/locale
+set lang=en
+insmod gettext
+set timeout=5
+### END /etc/burg.d/00_header ###
+
+### BEGIN /etc/burg.d/10_linux ###
+menuentry 'Ubuntu GNU/Linux, with Linux 2.6.38-10-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os --group group_main {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.38-10-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.38-10-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro  quiet splash
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.38-10-generic-pae
+}
+menuentry 'Ubuntu GNU/Linux, with Linux 2.6.38-10-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --group group_main {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.38-10-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.38-10-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.38-10-generic-pae
+}
+menuentry 'Ubuntu GNU/Linux, with Linux 2.6.35-30-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os --group group_main {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.35-30-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.35-30-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro  quiet splash
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-30-generic-pae
+}
+menuentry 'Ubuntu GNU/Linux, with Linux 2.6.35-30-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os --group group_main {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 8e815b77-1ec5-43a8-a72b-fde13ae0b64f
+    echo    'Loading Linux 2.6.35-30-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.35-30-generic-pae root=UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-30-generic-pae
+}
+### END /etc/burg.d/10_linux ###
+
+### BEGIN /etc/burg.d/30_os-prober ###
+menuentry "Windows Recovery Environment (loader) (on /dev/sda1)" --class windows --class os {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 086ee7fe6ee7e304
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+menuentry "Windows 7 (loader) (on /dev/sda2)" --class windows --class os {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set 20f8b8bef8b8940e
+    chainloader +1
+}
+### END /etc/burg.d/30_os-prober ###
+
+### BEGIN /etc/burg.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/burg.d/40_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda5/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=8e815b77-1ec5-43a8-a72b-fde13ae0b64f /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=44a29717-f729-4e9f-93e4-ec8f820e0828 none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sda5: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+ 293.399616241 = 315.035439104  boot/burg/burg.cfg                             2
+ 289.014686584 = 310.327156736  boot/burg/core.img                             1
+ 295.007411957 = 316.761796608  boot/grub/core.img                             1
+ 289.082832336 = 310.400327680  boot/grub/grub.cfg                             1
+ 290.727539062 = 312.166318080  boot/initrd.img-2.6.35-30-generic-pae          2
+ 290.905918121 = 312.357851136  boot/initrd.img-2.6.38-10-generic-pae          2
+ 295.317279816 = 317.094514688  boot/vmlinuz-2.6.35-30-generic-pae             1
+ 290.755313873 = 312.196141056  boot/vmlinuz-2.6.38-10-generic-pae             1
+ 290.905918121 = 312.357851136  initrd.img                                     2
+ 290.727539062 = 312.166318080  initrd.img.old                                 2
+ 290.755313873 = 312.196141056  vmlinuz                                        1
+ 295.317279816 = 317.094514688  vmlinuz.old                                    1
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda4
+
+00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+000001b0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff 00 fe  |................|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 00 1a 01 00 fe  |................|
+000001d0  ff ff 05 fe ff ff 02 00  1a 01 00 20 0e 00 00 00  |........... ....|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+
+```
+
+---
+
+### Post by YesWeCan on 2011-07-28
+I am  not familiar with BURG. You can get it booting again by reinstalling Grub. Boot from live CD/USB, then run
+[COLOR=Navy]sudo mount /dev/sda5 /mnt
+sudo grub-install --root-directory=/mnt /dev/sda[/COLOR]
+
+It should then boot into Ubuntu. Then run
+[COLOR=Navy]sudo update-grub[/COLOR] to add Windows to your Grub menu.
+
+> **chidat said:**
+> How do I figure out where the MBR is, and how do I fix this with the Live CD?
+The Master Boot Record is always the first 512 bytes (usually 1 sector) of a disk. It contains boot code and a partition table. The standard boot code simply looks for a bootable partition (aka active) in the partition table and then loads the partition boot code for that partition (also 512 bytes at the start of that partition). When you install Grub it blows away the standard MBR code and puts in one that only loads the Grub boot program. The Grub boot program is usually installed to the "no mans land" sectors immediately after the MBR, and sometimes these can be corrupted by other apps that use this area.
+
+---
+

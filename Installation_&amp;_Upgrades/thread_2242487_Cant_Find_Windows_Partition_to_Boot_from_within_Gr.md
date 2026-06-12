@@ -1,0 +1,450 @@
+---
+title: "Cant Find Windows Partition to Boot from within Grub"
+date: 2014-09-02
+forum: Installation &amp; Upgrades
+---
+
+### Post by bobby15 on 2014-09-02
+```
+                 Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 112 for .
+ => Syslinux MBR (4.04 and higher) is installed in the MBR of /dev/sdb.
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /Boot/BCD
+
+sda2: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files:        /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /boot/bcd
+
+sda4: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 14.04.1 LTS
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sdb1: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  SYSLINUX 4.07 2013-07-25
+    Boot sector info:  Syslinux looks at sector 2121744 of /dev/sdb1 for its 
+                       second stage. SYSLINUX is installed in the /uui 
+                       directory. The integrity check of the ADV area failed. 
+                       No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /boot/grub/grub.cfg /efi/BOOT/grubx64.efi
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048       206,847       204,800   7 NTFS / exFAT / HPFS
+/dev/sda2             206,848 1,374,726,143 1,374,519,296   7 NTFS / exFAT / HPFS
+/dev/sda3       1,918,486,528 1,953,521,663    35,035,136   7 NTFS / exFAT / HPFS
+/dev/sda4       1,374,726,144 1,918,486,527   543,760,384  83 Linux
+
+
+Drive: sdb _____________________________________________________________________
+
+Disk /dev/sdb: 8103 MB, 8103395328 bytes
+255 heads, 63 sectors/track, 985 cylinders, total 15826944 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdb1    *              2    11,041,823    11,041,822   b W95 FAT32
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        78061644061603B2                       ntfs       SYSTEM
+/dev/sda2        9E8C1CB68C1C8AC3                       ntfs       OS
+/dev/sda3        56E06174E0615AEF                       ntfs       HP_RECOVERY
+/dev/sda4        c298f401-8047-4b0e-82d0-2c48cf1ac48f   ext4       
+/dev/sdb1        74AD-CD75                              vfat       UUI
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda1        /media/ubuntu/SYSTEM     fuseblk    (rw,nosuid,nodev,allow_other,default_permissions,blksize=4096)
+/dev/sda2        /media/ubuntu/OS         fuseblk    (rw,nosuid,nodev,allow_other,default_permissions,blksize=4096)
+/dev/sda4        /media/ubuntu/c298f401-8047-4b0e-82d0-2c48cf1ac48f ext4       (rw,nosuid,nodev,uhelper=udisks2)
+/dev/sdb1        /cdrom                   vfat       (ro,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+
+
+=========================== sda4/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd0,msdos4'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+else
+  search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=-1
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=0
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 0 ; then
+    set timeout=0
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos4'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+    else
+      search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+    fi
+    linux    /boot/vmlinuz-3.13.0-35-generic.efi.signed root=UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f ro  quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.13.0-35-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+    menuentry 'Ubuntu, with Linux 3.13.0-35-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-35-generic-advanced-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos4'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        else
+          search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        fi
+        echo    'Loading Linux 3.13.0-35-generic ...'
+        linux    /boot/vmlinuz-3.13.0-35-generic.efi.signed root=UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.13.0-35-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-35-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-35-generic-recovery-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos4'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        else
+          search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        fi
+        echo    'Loading Linux 3.13.0-35-generic ...'
+        linux    /boot/vmlinuz-3.13.0-35-generic.efi.signed root=UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.13.0-35-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-32-generic-advanced-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos4'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        else
+          search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        fi
+        echo    'Loading Linux 3.13.0-32-generic ...'
+        linux    /boot/vmlinuz-3.13.0-32-generic root=UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.13.0-32-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-32-generic-recovery-c298f401-8047-4b0e-82d0-2c48cf1ac48f' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos4'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos4 --hint-efi=hd0,msdos4 --hint-baremetal=ahci0,msdos4  c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        else
+          search --no-floppy --fs-uuid --set=root c298f401-8047-4b0e-82d0-2c48cf1ac48f
+        fi
+        echo    'Loading Linux 3.13.0-32-generic ...'
+        linux    /boot/vmlinuz-3.13.0-32-generic root=UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.13.0-32-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda4/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda4 during installation
+UUID=c298f401-8047-4b0e-82d0-2c48cf1ac48f /               ext4    errors=remount-ro 0       1
+--------------------------------------------------------------------------------
+
+=================== sda4: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+
+=========================== sdb1/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+
+if loadfont /boot/grub/font.pf2 ; then
+    set gfxmode=auto
+    insmod efi_gop
+    insmod efi_uga
+    insmod gfxterm
+    terminal_output gfxterm
+fi
+
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+
+menuentry "Try Ubuntu without installing" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed cdrom-detect/try-usb=true noprompt floppy.allowed_drive_mask=0 ignore_uuid boot=casper quiet splash --
+    initrd    /casper/initrd.lz
+}
+menuentry "Install Ubuntu" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed cdrom-detect/try-usb=true noprompt floppy.allowed_drive_mask=0 ignore_uuid boot=casper only-ubiquity quiet splash --
+    initrd    /casper/initrd.lz
+}
+menuentry "OEM install (for manufacturers)" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  file=/cdrom/preseed/ubuntu.seed cdrom-detect/try-usb=true noprompt floppy.allowed_drive_mask=0 ignore_uuid boot=casper only-ubiquity quiet splash oem-config/enable=true --
+    initrd    /casper/initrd.lz
+}
+menuentry "Check disc for defects" {
+    set gfxpayload=keep
+    linux    /casper/vmlinuz.efi  cdrom-detect/try-usb=true noprompt floppy.allowed_drive_mask=0 ignore_uuid boot=casper integrity-check quiet splash --
+    initrd    /casper/initrd.lz
+}
+--------------------------------------------------------------------------------
+
+=================== sdb1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+
+=============================== StdErr Messages: ===============================
+
+cat: /tmp/BootInfo-k5iu2Ut0/Tmp_Log: No such file or directory
+/home/ubuntu/Desktop/bootinfoscript: line 1646: [: 2.73495e+09: integer expression expected
+cat: /tmp/BootInfo-k5iu2Ut0/Tmp_Log: No such file or directory
+  No volume groups found
+
+
+```
+
+---
+
+### Post by fantab on 2014-09-02
+What happens when you run:
+```
+sudo update-grub
+```
+
+from terminal? Post the output of the above if reboot doesn't find Windows.
+
+---
+

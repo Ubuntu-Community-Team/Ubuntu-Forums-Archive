@@ -1,0 +1,457 @@
+---
+title: "Grub rescue after usb install"
+date: 2010-12-03
+forum: Installation &amp; Upgrades
+---
+
+### Post by mastron on 2010-12-03
+I'm installing ubuntu 10.10 to an external drive from a stick.
+
+So i boot from the usb-stick and preform the install from there. No internal hdd attached, just computer, usb-stick and usb-hdd.
+
+The installation goes well to the point of rebooting. Than it gives me a grub rescue> prompt.
+
+I've been trying to fix this for days now, but I come back in the same circle ... 
+
+Anybody knows a solution?
+
+Thanks in advance!!
+
+---
+
+### Post by sikander3786 on 2010-12-03
+Welcome to the forums :-)
+
+Please boot a live cd/usb and post the output of bootinfoscript as per instructions here.
+
+[http://bootinfoscript.sourceforge.net](http://bootinfoscript.sourceforge.net)
+
+Wrap your output with proper code tags # from post menu. [/code] at the end [code] at the beginning.
+
+Seems like you installed Grub to some of your internal drives rather than the external one. Bootinfoscript will tell us....
+
+Make sure your external drive is connected while you run that script ;-)
+
+---
+
+### Post by mastron on 2010-12-03
+Thanks for the welcome :popcorn:
+
+Here is what the scipt outputed:
+
+ ```
+               Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+ => Syslinux is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Unknown
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048 1,941,235,711 1,941,233,664  83 Linux
+/dev/sda2       1,941,237,758 1,953,523,711    12,285,954   5 Extended
+/dev/sda5       1,941,237,760 1,953,523,711    12,285,952  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 8019 MB, 8019509248 bytes
+255 heads, 63 sectors/track, 974 cylinders, total 15663104 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1    *             63    15,663,059    15,662,997   b W95 FAT32
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        b631ec78-c5dc-44c7-9be9-407d62df8ad4   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        361cf95a-3896-4b66-bd04-74637961e22f   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        96F3-84D0                              vfat       PENDRIVE                      
+/dev/sdb: PTTYPE="dos" 
+error: /dev/sdc: No medium found
+error: /dev/sdd: No medium found
+error: /dev/sde: No medium found
+error: /dev/sdf: No medium found
+error: /dev/sdg: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sdb1        /cdrom                   vfat       (rw,relatime,fmask=0022,dmask=0022,codepage=cp437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=b631ec78-c5dc-44c7-9be9-407d62df8ad4 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=b631ec78-c5dc-44c7-9be9-407d62df8ad4 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set b631ec78-c5dc-44c7-9be9-407d62df8ad4
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=b631ec78-c5dc-44c7-9be9-407d62df8ad4 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=361cf95a-3896-4b66-bd04-74637961e22f none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+ 917.1GB: boot/grub/core.img
+   8.7GB: boot/grub/grub.cfg
+    .6GB: boot/initrd.img-2.6.35-22-generic
+ 917.1GB: boot/vmlinuz-2.6.35-22-generic
+    .6GB: initrd.img
+ 917.1GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  31 5c 9c 15 84 6b 4d 49  24 76 3b bb 09 43 b5 60  |1\...kMI$v;..C.`|
+00000010  f4 61 4b b5 55 6b 84 67  bf cf c5 af 99 75 61 91  |.aK.Uk.g.....ua.|
+00000020  dd ac 87 83 a2 df 00 db  de 70 89 74 57 cc a1 53  |.........p.tW..S|
+00000030  a0 b0 e8 8a 67 99 f9 b9  ac 39 19 a5 f6 10 03 bd  |....g....9......|
+00000040  49 bd 32 cf 0c cc 43 e1  a6 98 6e 4d 58 54 01 c8  |I.2...C...nMXT..|
+00000050  dc 3e b8 35 79 82 bd b5  41 63 86 cf a7 19 f9 13  |.>.5y...Ac......|
+00000060  4d 27 c3 82 2c 9f 64 ec  0d 6c 9f 31 0c b4 fc d9  |M'..,.d..l.1....|
+00000070  98 21 be 1c 53 49 a3 e0  7d d7 f5 a3 da 8f 41 95  |.!..SI..}.....A.|
+00000080  86 c0 47 e5 1f b8 d4 8a  ee 7b ea 9e dc 30 d0 30  |..G......{...0.0|
+00000090  e0 cd 7b 80 75 22 b0 25  07 ab 73 e2 2d 62 0e 3d  |..{.u".%..s.-b.=|
+000000a0  c3 8e 4b ea 48 9f ff e8  08 df 68 42 f4 44 f0 76  |..K.H.....hB.D.v|
+000000b0  fd 76 5e 23 a8 2d ce 50  4f 71 05 3d b2 e1 cf d5  |.v^#.-.POq.=....|
+000000c0  47 48 e4 91 59 cc c4 0f  a6 4e 48 68 c2 1e 34 30  |GH..Y....NHh..40|
+000000d0  28 9c de 1a de d7 69 df  db e6 6c 17 12 13 01 85  |(.....i...l.....|
+000000e0  1f 1c 54 3b 84 c5 34 d0  35 ab c6 b5 a2 d0 1a fc  |..T;..4.5.......|
+000000f0  d3 fa ce e2 33 80 e1 fc  25 3b 33 2e c7 37 ce 5e  |....3...%;3..7.^|
+00000100  6d dd 64 50 3e 20 91 62  3b 9f 7a fd 2e 6a f6 d6  |m.dP> .b;.z..j..|
+00000110  d6 c7 73 9e 2b de 87 cc  20 c7 ed 9f a6 bc 81 4f  |..s.+... ......O|
+00000120  b6 4d a5 8f bd 0d ac af  2a c6 ef 53 4c cd b4 ac  |.M......*..SL...|
+00000130  57 db 60 03 b6 7a 9c 99  7c 98 c2 23 5f c6 50 8e  |W.`..z..|..#_.P.|
+00000140  b3 eb 07 fb 56 4c 65 47  ce d5 e2 fd f7 2a da 07  |....VLeG.....*..|
+00000150  54 0d b7 59 5c 6e 7e 26  9e e2 47 2f 7b 4c e4 13  |T..Y\n~&..G/{L..|
+00000160  51 6a 67 8d 74 05 9d fd  1f 5f ae fc 3f 37 94 f9  |Qjg.t...._..?7..|
+00000170  bb 27 db ae ef 3b 69 d7  fd 97 05 f6 8e 6c 56 ad  |.'...;i......lV.|
+00000180  67 4e 55 c4 eb a3 c2 a8  63 31 29 5c 53 42 cc a5  |gNU.....c1)\SB..|
+00000190  ef a5 26 78 09 4b 1c 7e  03 1a 52 5b 84 92 1f e3  |..&x.K.~..R[....|
+000001a0  b7 2a 24 46 a9 db 37 1a  27 be 8b fe 70 5e 69 1a  |.*$F..7.'...p^i.|
+000001b0  5d 81 79 66 ee 33 16 0a  9f e3 b0 a2 4d 07 00 fe  |].yf.3......M...|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 78 bb 00 00 00  |...........x....|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+Unknown BootLoader  on sdb1
+
+00000000  eb 58 90 53 59 53 4c 49  4e 55 58 00 02 08 c0 08  |.X.SYSLINUX.....|
+00000010  02 00 00 00 00 f8 00 00  3f 00 ff 00 3f 00 00 00  |........?...?...|
+00000020  95 ff ee 00 a0 3b 00 00  00 00 00 00 02 00 00 00  |.....;..........|
+00000030  01 00 06 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000040  80 00 29 d0 84 f3 96 4e  4f 20 4e 41 4d 45 20 20  |..)....NO NAME  |
+00000050  20 20 46 41 54 33 32 20  20 20 fa fc 31 c9 8e d1  |  FAT32   ..1...|
+00000060  bc 76 7b 52 06 57 8e c1  b1 26 bf 78 7b f3 a5 8e  |.v{R.W...&.x{...|
+00000070  d9 bb 78 00 0f b4 37 0f  a0 56 20 d2 78 1b 31 c0  |..x...7..V .x.1.|
+00000080  b1 06 89 3f 89 47 02 f3  64 a5 8a 0e 18 7c 88 4d  |...?.G..d....|.M|
+00000090  bc 50 50 50 50 cd 13 eb  4b f6 45 b4 7f 75 25 38  |.PPPP...K.E..u%8|
+000000a0  4d b8 74 20 66 3d 21 47  50 54 75 10 80 7d b8 ed  |M.t f=!GPTu..}..|
+000000b0  75 0a 66 ff 75 ec 66 ff  75 e8 eb 0f 51 51 66 ff  |u.f.u.f.u...QQf.|
+000000c0  75 bc eb 07 51 51 66 ff  36 1c 7c b4 08 cd 13 72  |u...QQf.6.|....r|
+000000d0  13 20 e4 75 0f c1 ea 08  42 89 16 1a 7c 83 e1 3f  |. .u....B...|..?|
+000000e0  89 0e 18 7c fb bb aa 55  b4 41 8a 16 74 7b cd 13  |...|...U.A..t{..|
+000000f0  72 10 81 fb 55 aa 75 0a  f6 c1 01 74 05 c6 06 32  |r...U.u....t...2|
+00000100  7d 00 66 b8 e0 27 16 00  66 ba 00 00 00 00 bb 00  |}.f..'..f.......|
+00000110  7e e8 10 00 66 81 3e 24  7e 34 be f5 72 75 76 ea  |~...f.>$~4..ruv.|
+00000120  38 7e 00 00 66 03 06 64  7b 66 13 16 68 7b b9 10  |8~..f..d{f..h{..|
+00000130  00 eb 2b 66 52 66 50 06  53 6a 01 6a 10 89 e6 66  |..+fRfP.Sj.j...f|
+00000140  60 b4 42 e8 7f 00 66 61  8d 64 10 72 01 c3 66 60  |`.B...fa.d.r..f`|
+00000150  31 c0 e8 70 00 66 61 e2  da c6 06 32 7d 2b 66 60  |1..p.fa....2}+f`|
+00000160  66 0f b7 36 18 7c 66 0f  b7 3e 1a 7c 66 f7 f6 31  |f..6.|f..>.|f..1|
+00000170  c9 87 ca 66 f7 f7 66 3d  ff 03 00 00 77 17 c0 e4  |...f..f=....w...|
+00000180  06 41 08 e1 88 c5 88 d6  b8 01 02 e8 37 00 66 61  |.A..........7.fa|
+00000190  72 01 c3 e2 c9 31 f6 8e  d6 bc 6c 7b 8e de 66 8f  |r....1....l{..f.|
+000001a0  06 78 00 be cc 7d e8 09  00 31 c0 cd 16 cd 19 f4  |.x...}...1......|
+000001b0  eb fd 66 60 ac 20 c0 74  09 b4 0e bb 07 00 cd 10  |..f`. .t........|
+000001c0  eb f2 66 61 c3 8a 16 74  7b cd 13 c3 42 6f 6f 74  |..fa...t{...Boot|
+000001d0  20 65 72 72 6f 72 0d 0a  00 00 00 00 00 00 00 00  | error..........|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdc sdd sde sdf sdg
+```
+
+---
+
+### Post by sikander3786 on 2010-12-03
+Please edit your post and type [/code] at the end of your output and [code] at the beginning. That would make it easier to read ;-)
+
+And are you sure your Bios is properly set to boot from the external HDD? Bootinfoscript output seems ok to me.
+
+---
+
+### Post by mastron on 2010-12-03
+Bios is set right. It boots from the usb-hdd into grub rescue. No other disk are attached to the computer ...
+
+---
+
+### Post by sikander3786 on 2010-12-03
+See here and try to boot from Grub Rescue prompt.
+
+[http://ubuntuforums.org/showthread.php?t=1594052](http://ubuntuforums.org/showthread.php?t=1594052)
+(courtesy of forum member **drs305**)
+
+If not successful, re-install Grub from Live CD/USB.
+
+```
+sudo mount /dev/sda1 /mnt
+```
+
+```
+sudo grub-install --root-directory=/mnt/ /dev/sda
+```
+
+Note for the second one it is just sda without an integer and not sda1.
+
+Let us know about your progress ;-)
+
+---
+
+### Post by efflandt on 2010-12-03
+What is the specific error message, unknown filesystem, file not found, etc.?  From grub rescue see what **ls** shows, and what shows for **ls (hd0,msdos1)/**, **ls (hd0,msdos1)/boot**, and **ls (hd0,msdos1)/boot/grub**.
+
+I have a similar issue with a Dell XPS 8100 bought this year, but it is a mystery why.  It will boot Ubuntu fine from the far end of its 1 TB internal drive, but cannot boot at the far end of a 500 GB USB drive.  It boots fine at the end of a 160 GB USB drive, or closer to the beginning of a 500 GB USB drive.
+
+That same 500 GB drive, earlier with Lucid and now Maverick, ext3 or ext4 farther out on the USB that will not boot on the new desktop, boots fine from older Dell or Toshiba laptops from 2006.  So it is nothing wrong with the installation.  It is just that some computers, for some reason, have trouble booting farther out on an external drive.
+
+Some people mention a 137 GB barrier, but why would that affect a USB drive for some (even new) computers, when it does not affect their internal drive booting well beyond that?
+
+I just noticed that you posted boot info script output while I was posting.  Notice that your core.img is way out there.  Not sure if that is the issue, since my new PC had no trouble with it beyond the 900 GB point on its internal drive, but something seems to be different for USB drives.  I would try a separate /boot partition near the beginning of the drive.
+
+ 917.1GB: boot/grub/core.img
+   8.7GB: boot/grub/grub.cfg
+    .6GB: boot/initrd.img-2.6.35-22-generic
+ 917.1GB: boot/vmlinuz-2.6.35-22-generic
+    .6GB: initrd.img
+ 917.1GB: vmlinuz
+
+---
+
+### Post by mastron on 2010-12-03
+I'm going to reinstall on a partition of 50 Gb ... Maybe that works.
+
+---
+
+### Post by mastron on 2010-12-03
+Ok the 50Gb partition did the trick!!!
+
+THX everybody!!!
+
+---
+
+### Post by Quackers on 2010-12-03
+That's good news :-)
+Like Sikander3786, I have looked at your boot script output and I can't see anything wrong at all. Sometimes odd things happen!
+
+---
+
+### Post by oldfred on 2010-12-03
+Newer BIOS do not have the 137GB limit, but I think we are seeing multiple cases where very large drives 1GB or larger with just root & swap have boot issues. Does grub stop searching drive for some reason?
+
+Perhaps we just need to promote the smaller / (root) and larger /home configuration for those installs to large drives. I do not believe in very large partitions for anything as repair, fsck or even just backup become major issues.
+
+---
+

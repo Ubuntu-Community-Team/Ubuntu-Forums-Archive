@@ -1,0 +1,984 @@
+---
+title: "Help on Vista recover after 10.4. install"
+date: 2010-10-23
+forum: Installation &amp; Upgrades
+---
+
+### Post by mumble83 on 2010-10-23
+Hi all,
+I have tried many methods but still didn't succeed in rebooting Win Vista (blank page after selecting it in boot menu). The main problems were that GRUB was installed also on Windows partition, and Win partition appears as FAT16 and not NTFS
+Here is the output of boot_info_script, I would say that everything seems OK.
+Do you have any suggestion? 
+
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Windows is installed in the MBR of /dev/sda
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda1 and 
+                       looks at sector 593897347 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location. No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda5 and 
+                       looks at sector 584860931 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location.
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disco /dev/sda: 500.1 GB, 500107862016 byte
+255 testine, 63 settori/tracce, 60801 cilindri, totale 976773168 settori
+Unità = settori di 1 * 512 = 512 byte
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63    20,466,809    20,466,747  27 Hidden HPFS/NTFS
+/dev/sda2          20,467,712   323,074,047   302,606,336   7 HPFS/NTFS
+/dev/sda3         323,074,048   584,059,139   260,985,092   7 HPFS/NTFS
+/dev/sda4         584,059,140   625,137,344    41,078,205   5 Extended
+/dev/sda5         584,059,203   623,129,219    39,070,017  83 Linux
+/dev/sda6         623,129,283   625,137,344     2,008,062  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        3448D9F8E49BED2A                       ntfs       PQSERVICE                     
+/dev/sda2        DAE4F6C7E4F6A543                       ntfs       ACER                          
+/dev/sda3        38924BB7924B7880                       ntfs       DATA                          
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        b3489956-ea40-44c7-90d1-87cc4467e773   ext4                                     
+/dev/sda6        a3e6263a-a328-4004-928d-ff53070ab028   swap                                     
+/dev/sda: PTTYPE="dos" 
+error: /dev/sdb: No medium found
+error: /dev/sdc: No medium found
+error: /dev/sdd: No medium found
+error: /dev/sde: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+/dev/sda3        /media/DATA              fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+/dev/sr0         /media/cdrom0            udf        (ro,nosuid,nodev,utf8,user=saltas)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+set locale_dir=($root)/boot/grub/locale
+set lang=it
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=2
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, con Linux 2.6.32-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.32-25-generic (modalità ripristino)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Caricamento Linux 2.6.32-25-generic...'
+    linux    /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Caricamento ramdisk iniziale...'
+    initrd    /boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.32-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.32-24-generic (modalità ripristino)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Caricamento Linux 2.6.32-24-generic...'
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Caricamento ramdisk iniziale...'
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.32-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.32-22-generic (modalità ripristino)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Caricamento Linux 2.6.32-22-generic...'
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Caricamento ramdisk iniziale...'
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.31-14-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry 'Ubuntu, con Linux 2.6.31-14-generic (modalità ripristino)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Caricamento Linux 2.6.31-14-generic...'
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Caricamento ramdisk iniziale...'
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 3448d9f8e49bed2a
+    chainloader +1
+}
+menuentry "Windows Recovery Environment (loader) (on /dev/sda2)" {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set dae4f6c7e4f6a543
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=b3489956-ea40-44c7-90d1-87cc4467e773 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=a3e6263a-a328-4004-928d-ff53070ab028 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+#DIMT  mount DATA hard drive at startup 
+/dev/sda3       /media/DATA   ntfs 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 299.4GB: boot/grub/core.img
+ 302.1GB: boot/grub/grub.cfg
+ 303.4GB: boot/initrd.img-2.6.31-14-generic
+ 302.3GB: boot/initrd.img-2.6.32-22-generic
+ 307.0GB: boot/initrd.img-2.6.32-24-generic
+ 307.1GB: boot/initrd.img-2.6.32-25-generic
+ 301.1GB: boot/vmlinuz-2.6.31-14-generic
+ 300.5GB: boot/vmlinuz-2.6.32-22-generic
+ 304.6GB: boot/vmlinuz-2.6.32-24-generic
+ 307.0GB: boot/vmlinuz-2.6.32-25-generic
+ 307.1GB: initrd.img
+ 307.0GB: initrd.img.old
+ 307.0GB: vmlinuz
+ 304.6GB: vmlinuz.old
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb sdc sdd sde 
+
+```
+
+---
+
+### Post by Rubi1200 on 2010-10-23
+Hi,
+you need to first reinstall GRUB to the MBR of sda because (as the script shows) it was incorrectly installed to sda1 and not sda.
+
+If this is successful, it should pick up Vista and you will be able to dual-boot both operating systems.
+[https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD]("https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD")
+
+```
+sudo mount /dev/sda5 /mnt
+``````
+sudo grub-install --root-directory=/mnt/ /dev/sda
+```After rebooting, run```
+ sudo update-grub
+``` in Ubuntu (you must do this otherwise GRUB will not recognize the Windows installation).
+
+Good luck!
+
+---
+
+### Post by coffeecat on 2010-10-23
+> **Rubi1200 said:**
+> you need to first reinstall GRUB to the MBR of sda
+
+Agreed, but there's another problem you need to be aware of.
+
+There's   a bug in grub that gets confused when there is both  a Vista C: partition and a manufacturer's recovery partition.
+
+If you look under the Drive/Partition Info section of your output, you'll see that your recovery partition is sda1 and your Vista C: partition is sda2. But if you look in the grub.cfg contents, you'll see that it shows these two options in the menu:
+
+```
+menuentry "Windows Vista (loader) (on /dev/sda1)"
+[FONT=monospace]
+[/FONT]menuentry "Windows Recovery Environment (loader) (on /dev/sda2)"
+```You need to boot the recovery environment choice to get Vista and the Vista loader choice to get the recovery environment. :| I suspect that you've been trying the sda1 option and the reason (I guess) for the blank screen is that grub stage 1 in sda1 has overwritten the Windows boot loader that was there.
+
+I don't see where sda1 appears as FAT16 in your output, but hidden recovery partitions can be peculiar things.
+
+I guess (hope) if you follow all this you'll be able to boot into Vista, but your recovery partition is damaged. Theoretically, you might be able to repair it with a Microsoft Vista install or recovery disc, but I don't know. If you've made the Acer recovery DVDs you probably won't be able to re-install the recovery partition without setting the whole hard drive back to factory defaults.
+
+---
+
+### Post by kansasnoob on 2010-10-23
+I also think the boot flag needs to be set on sda2 instead of sda1:
+
+```
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63    20,466,809    20,466,747  27 Hidden HPFS/NTFS
+/dev/sda2          20,467,712   323,074,047   302,606,336   7 HPFS/NTFS
+
+```
+
+That can be done using Gparted.
+
+---
+
+### Post by mumble83 on 2010-10-23
+Hello,
+thanks for your reply but I've not solved yet!
+I saw the problem with grub and tried with both sda1 and sda2 to both without succeeding!
+Now I've installed Grub on sda and put bottable flag on sda2.
+Here is the output after the changes.
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Grub 2
+    Boot sector info:  Grub 2 is installed in the boot sector of sda5 and 
+                       looks at sector 584860931 of the same hard drive for 
+                       core.img, but core.img can not be found at this 
+                       location.
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disco /dev/sda: 500.1 GB, 500107862016 byte
+255 testine, 63 settori/tracce, 60801 cilindri, totale 976773168 settori
+Unità = settori di 1 * 512 = 512 byte
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63    20,466,809    20,466,747  27 Hidden HPFS/NTFS
+/dev/sda2    *     20,467,712   323,074,047   302,606,336   7 HPFS/NTFS
+/dev/sda3         323,074,048   584,059,139   260,985,092   7 HPFS/NTFS
+/dev/sda4         584,059,140   625,137,344    41,078,205   5 Extended
+/dev/sda5         584,059,203   623,129,219    39,070,017  83 Linux
+/dev/sda6         623,129,283   625,137,344     2,008,062  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        3448D9F8E49BED2A                       ntfs       PQSERVICE                     
+/dev/sda2        DAE4F6C7E4F6A543                       ntfs       ACER                          
+/dev/sda3        38924BB7924B7880                       ntfs       DATA                          
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        b3489956-ea40-44c7-90d1-87cc4467e773   ext4                                     
+/dev/sda6        a3e6263a-a328-4004-928d-ff53070ab028   swap                                     
+/dev/sda: PTTYPE="dos" 
+error: /dev/sdb: No medium found
+error: /dev/sdc: No medium found
+error: /dev/sdd: No medium found
+error: /dev/sde: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+/dev/sda3        /media/DATA              fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=6
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Loading Linux 2.6.32-25-generic ...'
+    linux    /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Loading Linux 2.6.32-24-generic ...'
+    linux    /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Loading Linux 2.6.32-22-generic ...'
+    linux    /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-14-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-14-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    echo    'Loading Linux 2.6.31-14-generic ...'
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 3448d9f8e49bed2a
+    chainloader +1
+}
+menuentry "Windows Recovery Environment (loader) (on /dev/sda2)" {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set dae4f6c7e4f6a543
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+menuentry "Ubuntu, with Linux 2.6.32-25-generic (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro quiet splash
+    initrd /boot/initrd.img-2.6.32-25-generic
+}
+menuentry "Ubuntu, with Linux 2.6.32-25-generic (recovery mode) (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-25-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single
+    initrd /boot/initrd.img-2.6.32-25-generic
+}
+menuentry "Ubuntu, with Linux 2.6.32-24-generic (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro quiet splash
+    initrd /boot/initrd.img-2.6.32-24-generic
+}
+menuentry "Ubuntu, with Linux 2.6.32-24-generic (recovery mode) (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-24-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single
+    initrd /boot/initrd.img-2.6.32-24-generic
+}
+menuentry "Ubuntu, with Linux 2.6.32-22-generic (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro quiet splash
+    initrd /boot/initrd.img-2.6.32-22-generic
+}
+menuentry "Ubuntu, with Linux 2.6.32-22-generic (recovery mode) (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.32-22-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single
+    initrd /boot/initrd.img-2.6.32-22-generic
+}
+menuentry "Ubuntu, with Linux 2.6.31-14-generic (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro quiet splash
+    initrd /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, with Linux 2.6.31-14-generic (recovery mode) (on /dev/sda5)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set b3489956-ea40-44c7-90d1-87cc4467e773
+    linux /boot/vmlinuz-2.6.31-14-generic root=UUID=b3489956-ea40-44c7-90d1-87cc4467e773 ro single
+    initrd /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=b3489956-ea40-44c7-90d1-87cc4467e773 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=a3e6263a-a328-4004-928d-ff53070ab028 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+#DIMT  mount DATA hard drive at startup 
+/dev/sda3       /media/DATA   ntfs 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 299.3GB: boot/grub/core.img
+ 303.0GB: boot/grub/grub.cfg
+ 303.4GB: boot/initrd.img-2.6.31-14-generic
+ 302.3GB: boot/initrd.img-2.6.32-22-generic
+ 307.0GB: boot/initrd.img-2.6.32-24-generic
+ 307.1GB: boot/initrd.img-2.6.32-25-generic
+ 301.1GB: boot/vmlinuz-2.6.31-14-generic
+ 300.5GB: boot/vmlinuz-2.6.32-22-generic
+ 304.6GB: boot/vmlinuz-2.6.32-24-generic
+ 307.0GB: boot/vmlinuz-2.6.32-25-generic
+ 307.1GB: initrd.img
+ 307.0GB: initrd.img.old
+ 307.0GB: vmlinuz
+ 304.6GB: vmlinuz.old
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb sdc sdd sde 
+
+```
+
+---
+
+### Post by coffeecat on 2010-10-23
+Did you by any chance resize the Vista sda2 partition with Gparted when you installed Ubuntu? It used to be that this could make Vista unbootable, although I would hope with later versions of Gparted, this would no longer be an issue.
+
+Do you have a Microsoft Vista install DVD? Microsoft, not an OEM image disc. If so, boot into the recovery console and see if you can repair Vista with one of the options there. If you don't have a Vista DVD, you can download a recovery CD image, which has the recovery console, from here:
+
+[http://neosmart.net/blog/2008/windows-vista-recovery-disc-download/](http://neosmart.net/blog/2008/windows-vista-recovery-disc-download/)
+
+I believe that sometimes there are no seeders, so I don't know whether the torrent is working at the moment.
+
+Odd that the Windows bootsector is OK now in sda1. I don't understand how that could happen if you've only reinstalled grub to the mbr.
+
+---
+
+### Post by kansasnoob on 2010-10-23
+> I saw the problem with grub and tried with both sda1 and sda2 to both without succeeding!
+
+You want to boot sda2:
+
+> sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    **[COLOR="Red"]Operating System:  Windows Vista[/COLOR]**
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+I notice a lot of "junk" in grub.cfg so first try just running:
+
+```
+sudo update-grub
+```
+
+---
+
+### Post by kansasnoob on 2010-10-23
+After running "update-grub" and trying to boot **only** sda2 what error message (if any) shows up?
+
+---
+
+### Post by Rubi1200 on 2010-10-23
+It seems that grub.cfg is still picking up the partitions in the wrong order, as coffeecat previously observed.
+
+I wonder if simply correcting the entries would solve the problem?
+
+In other words, 
+```
+menuentry "Windows Vista (loader) (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 3448d9f8e49bed2a
+    chainloader +1
+}
+menuentry "Windows Recovery Environment (loader) (on /dev/sda2)" {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set dae4f6c7e4f6a543
+    drivemap -s (hd0) ${root}
+    chainloader +1
+```
+change the entries around to represent the true picture. Meaning that sda1 is the recovery partition and sda2 the Vista partition. What do you guys think?
+
+---
+
+### Post by efflandt on 2010-10-23
+Just curious how you fixed the boot sector of sda1 from "Grub 2" to "Windows Vista/7"?  If that is your Recovery partition and originally the boot partition, maybe it was something different.  What brand of computer?
+
+Also not sure how "Grub 2" got onto sda5 or how to remove that (with dd?), probably the reason for duplicate Linux menu entries.  I have used grub or grub2 on a primary Linux partition with that partition marked as the boot partition and standard Windows mbr, but I do not know if that even works from a logical partition.  Back in the pre-grub lilo days, lilo could boot from boot sector of a primary or "extended" partition (but not a logical partition).
+
+It appears from one older kernel version that you may have done an upgrade rather than fresh 10.04 install.  Did everything work before the upgrade and where was grub or grub2 then?
+
+---
+
+### Post by coffeecat on 2010-10-23
+> **Rubi1200 said:**
+> It seems that grub.cfg is still picking up the partitions in the wrong order, as coffeecat previously observed.
+
+I wonder if simply correcting the entries would solve the problem?What do you guys think?
+
+It's a cosmetic problem only. Besides, if you edit grub.cfg it will be reverted back next time you run update-grub. I'd like to see the results of kansasnoob's suggestion. Run 'sudo update-grub' and then choose the sda2 grub stanza however it is labelled.
+
+Failing that I think mumble83 needs to run a Vista recovery console as I suggested in my earlier post.
+
+---
+
+### Post by kansasnoob on 2010-10-23
+> Failing that I think mumble83 needs to run a Vista recovery console as I suggested in my earlier post.
+
+Another option, just to see if Vista will boot under it's own power, would be to create a generic Windows mbr with lilo using an Ubuntu Live CD:
+
+```
+sudo apt-get install lilo
+```
+
+```
+sudo lilo -M /dev/sda mbr
+```
+
+If that lets Windows boot then it's definitely something hosed in grub, in which case I'd use Rubi1200's prior instructions to once again recover grub, then I'd boot back into Ubuntu and purge and reinstall "grub-pc" and "grub-common".
+
+Sometimes things get hosed in grub2's config and it's best to start fresh. Once in a while I've even had to rename "boot/grub" and "mkdir" a new one, then reinstall grub2.
+
+Basically like:
+
+sudo mv /boot/grub /boot/grub_OLD
+sudo mkdir /boot/grub
+sudo apt-get --purge remove grub-pc grub-common
+sudo apt-get install grub-pc
+sudo update-grub
+sudo grub-install /dev/sda
+
+---
+
+### Post by Rubi1200 on 2010-10-23
+Have to say I tend to agree with kansasnoob on this one. I know these recovery partitions can, and do, cause problems, but not like this surely? From what I have seen, reinstalling GRUB should, in most cases, rectify the problem. Therefore, reinstalling the Windows bootloader and then GRUB should fix things (fingers crossed).
+
+For instructions on purging and reinstalling GRUB using chroot from the LiveCD:
+[http://ubuntuforums.org/showthread.php?t=1581099](http://ubuntuforums.org/showthread.php?t=1581099)
+
+---
+
+### Post by coffeecat on 2010-10-23
+> **kansasnoob said:**
+> ```
+sudo apt-get install lilo
+``````
+sudo lilo -M /dev/sda mbr
+```If that lets Windows boot then it's definitely something hosed in grub, in which case I'd use Rubi1200's prior instructions to once again recover grub, then I'd boot back into Ubuntu and purge and reinstall "grub-pc" and "grub-common".
+
+If I read the OP right, they are seeing the grub menu because they are trying both the sda1 and sda2 stanzas without success. This means that grub has got as far as stage 2 and is working fine. No need to reinstall grub-pc. It's after grub stage 2 and the menu that the problem is occurring with Windows. The problem is within the Windows partition.
+
+The lilo code won't help either because that merely replaces grub stage 1 with the Windows mbr booting code and calls the Windows boot manager in the C: partition. Which is where the problem lies.
+
+---
+
+### Post by mumble83 on 2010-10-24
+@kansasnoob: after update-grub and selecting sda2 I got a black screen without errors.
+
+@efflandt: Yes, I did an upgrade to 10.4 and before everything was working good.
+
+FYI, I've already tried many methods using directly the console from the DVD recovering disc. And this is how I changed the bootloader in sda1 to Vista. Here are the instructions:
+
+[http://neosmart.net/wiki/display/EBCD/Recovering+the+Vista+Bootloader+from+the+DVD](http://neosmart.net/wiki/display/EBCD/Recovering+the+Vista+Bootloader+from+the+DVD)
+
+If reinstalling grub is not useful what else I should try?
+
+---
+
+### Post by coffeecat on 2010-10-24
+> **mumble83 said:**
+> FYI, I've already tried many methods using directly the console from the DVD recovering disc. And this is how I changed the bootloader in sda1 to Vista. Here are the instructions:
+
+We've been concentrating on the bootloader. I wonder if the problem is different. Question: did you shrink the Vista partition with Gparted in Ubuntu and, if so, was Vista unbootable thereafter.
+
+If this is the case, it might not be a bootloader problem. Have a look at this link:
+
+[http://www.howtogeek.com/howto/windows-vista/using-gparted-to-resize-your-windows-vista-partition/](http://www.howtogeek.com/howto/windows-vista/using-gparted-to-resize-your-windows-vista-partition/)
+
+Ignore the first half which deals with using Gparted to resize your Vista partition and thus make it unbootable. Scroll down to 'Here's a screenshot of the error...' I know you're not getting that but I think it's still worth following the instructions following. From the link you gave I think you may very well have already done this, but there might be something there you have missed.
+
+---
+
+### Post by mumble83 on 2010-10-24
+I didn't modify the Vista partition! I'm also not sure that the problem was only the bootloader, but I cannot understand how it could happen that the partition was damaged.
+@ coffeecat: Should I try with your hint anyway?
+
+---
+
+### Post by coffeecat on 2010-10-24
+> **mumble83 said:**
+> @ coffeecat: Should I try with your hint anyway?
+
+I can't see how it will do any harm seeing as you are using a Vista utility to try to repair Vista. The problem I see is that the link I gave is using the install DVD and your link seems to be using the recovery disc and there are differences in the two sequences, so you may have already tried all the options. Whatever, if I was in your situation I would give it a go.
+
+I guess that would be better than having to do a complete re-install which in your situation would be complicated. It seems you can't get into the recovery partition either, so you would have to reinstall from the recovery DVDs you made (you did make them?) which would in all probability restore your hard drive to its factory condition - that is, wipe out Ubuntu.
+
+---
+
+### Post by mumble83 on 2010-10-26
+My main concern is to be able to recover my outlook email archive before formatting the hard drive. Do you know hot this could be done?
+By the way, I don't have any Win DVD since the desktop PC was sold as it is with the OS already install, hence I could not also install again Vista...
+
+---
+
+### Post by coffeecat on 2010-10-26
+> **mumble83 said:**
+> My main concern is to be able to recover my outlook email archive before formatting the hard drive. Do you know hot this could be done?
+
+I have no experience of Outlook. Since you can't export or backup your emails directly from Outlook, I guess you would have to find where Outlook saves its data - somewhere in your Windows equivalent of home, I should imagine. That presupposes that you can read the Windows C: drive from Ubuntu, and I can't remember whether you said whether this was possible or not.
+
+And even if you found the Outlook data, I don't know how you would read it. 
+
+> **mumble83 said:**
+>  By the way, I don't have any Win DVD since the desktop PC was sold as it is with the OS already install, hence I could not also install again Vista...
+
+What make is it? With the big name manufacturers, they usually include a utility to make restore DVDs. Even if you didn't do this, they will usually be able to sell you a set, which would probably be much cheaper than buying a retail copy. Even if you could find a retail copy of Vista.
+
+---
+
+### Post by Mark Phelps on 2010-10-27
+IF your Vista stuff is still there and you're only really having a problem booting into it or starting it, go to the link below and download the appropriate Vista Repair CD image.
+
+[http://neosmart.net/blog/2008/windows-vista-recovery-disc-download/]("http://neosmart.net/blog/2008/windows-vista-recovery-disc-download/")
+
+Burn that to CD, boot from it, and attempt to run Startup Repair three times.  IF it finds the OS installation, it's likely to be able to repair the boot as well.
+
+---
+
+### Post by mumble83 on 2010-10-29
+As I said, I've already tried to use this repair CD without succeeding.
+I can access all data in Vista partition but no chance to boot it..
+Anyway I find a way to recover the email archive, hence I'll probably go on with complete reinstallation, although I'm very disappointed I could not manage to solve the problem!!!
+Thanks anyway
+
+---
+

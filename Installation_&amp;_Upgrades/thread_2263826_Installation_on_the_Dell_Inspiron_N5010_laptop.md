@@ -1,0 +1,25 @@
+---
+title: "Installation on the Dell Inspiron N5010 laptop"
+date: 2015-02-03
+forum: Installation &amp; Upgrades
+---
+
+### Post by stgparris on 2015-02-03
+[CENTER]Tweaks for Ubuntu and Ubuntubased distributions.[/CENTER]
+[LEFT]
+I recently got a new laptopafter a hiatus of almost two years.  It is a Dell Inspiron N5010.  Ibought it used at a pawn shop but am pleasantly pleased with what ithas in it.  The specifications are as follows:
+Core i5 Arrandale 2.53Gigahertz M460 processorIntel HD graphics (Kinfocenterreports Intel Ironlake rasterizer)8 Gigabyte of ram (I added newram shortly after I bought the system.  It came with 4 Gigabyte)Dell 1501 Wireless NetworkAdapter (Broadcom BCM4313 chip)Dell Wireless 365 BluetoothModule (Broadcom BCM2046B1 chip)Realtek RTL8101E/8102E WiredNetwork AdapterSeagate ST9640320AS 640Gigabyte Hard DrivePLDS DVD+/- RW DS8A5SH DVDWriter
+At first I wasn't terriblyhappy having a Broadcom wireless network adapter.  I'd had ratherharrowing experiences with them (b43-fwcutter and ndiswrapper, though ndiswrapper was better than b43-fwcutter).  After reading online what Dell andBroadcom agreed to I was not as concerned as I once was.  I waspleasantly surprised to see when I booted the Live DVD (I used athumb drive) and was greeted to connecting up at a local open wifinetwork. Thus I installed Kubuntu 14.10.  I wasn't finished once Igot the system up, removing applications I didn't want, andinstalling those applications that I wanted.  I had to tweak thesystem so I went hunting for information via the search engines.  Ifound two of my old favorites and they are still somewhat applicabletoday.  They are:
+[COLOR=#000080]_[http://archive.news.softpedia.com/news/Improve-Performance-in-Ubuntu-Edgy-47261.shtml](http://archive.news.softpedia.com/news/Improve-Performance-in-Ubuntu-Edgy-47261.shtml)_[/COLOR]
+This one though written forUbuntu Edgy I found that most of the tweaks still work for UtopicUnicorn.  My only comment to add here is [COLOR=#ff3333]_**DONOT**_[/COLOR] usethese tweaks on a solid state drive.  There is no telling what kindof damage you can do to them.  [COLOR=#ff3333]_**NOMATTER WHAT YOUR DECISION IS STEP LIGHTLY WHEN DOING THIS AND OTHERTWEAKS!**_[/COLOR]
+[COLOR=#000080]_[http://ubuntuforums.org/printthread.php?t=89491&pp=10](http://ubuntuforums.org/printthread.php?t=89491&pp=10)_[/COLOR]
+This later one is well written (again for Ubuntu Edgy) and easy to follow as the previous.  However, you must [COLOR=#ff3333]_**BEABSOLUTELY CERTAIN OF WHAT YOU ARE DOING WITH THIS PARTICULAR HOW TO.**_[/COLOR][COLOR=#000000] If you are not careful here you may end up reloading any one of theUbuntu distributions after locking yourself out of the system.  Oneother warning here:  [/COLOR][COLOR=#ff3333]_**DONOT UNDER ANY CIRCUMSTANCES RENAME THE FILE /etc/rc0.d/K12halt.**_[/COLOR][COLOR=#000000] This will stop your system from shutting down completely.[/COLOR]
+[COLOR=#000000]Nowthe most interesting chase I've had in a long time of running Linuxand Kubuntu.  Power management has always been a field of manychoices and Ubuntu has tried their best to have the best settings forboth laptops and desktops with Ondemand.  There are a fewapplications like TLP that govern the P-state of Intel Coreprocessors (Arrandale and newer).  My only warning to those that wishto use the P-state software like TLP is this:  [/COLOR][COLOR=#ff3333]_**BEWARE! TLP AND OTHER P-STATE SOFTWARE MAY CAUSE MORE POWER USAGE AS WELL ASWEAR AND TEAR ON YOUR LAPTOP!**_[/COLOR][COLOR=#000000] In this particular instance, my laptop did NOT like TLP.  It ranhotter while on A/C.  It did however run  longer on battery but at acost to other hardware.  Not good.[/COLOR]
+The good thing for those thatuse Ondemand strictly is you can manage your power even better usingthe following link (yes, I know it's a Manjaro wiki but it aptlyapplies to this situation):
+[COLOR=#000080]_[https://wiki.manjaro.org/index.php/PowerTOP_to_Optimise_Laptop_Power_Consumption](https://wiki.manjaro.org/index.php/PowerTOP_to_Optimise_Laptop_Power_Consumption)_[/COLOR]
+[COLOR=#000000]Justremember where they talk about pacman (Manjaro's package tools)substitute sudo apt-get install powertop to install powertop.  Therest of the wiki is easy step by step instructions.  Just follow themto the letter if you are going to use Ondemand and powertop to curbyour power consumption and keep your hardware cool (especially alaptop).[/COLOR]
+My only issue after all thisis the Fn + Function key combinations.  I've scanned as much as I canand still not seen a fix for this issue on this particular laptop. It's currently quite easy to turn the wireless off when typing.  Fornow, I simply use Dell|Dell Latitude series laptop in Systemsettings/Input devices/Keyboard.  Still better than nothing.  Perhapsone day Dell will fix this keyboard mapping issue in the future.
+Hope these links situated inone logical place will help.  For now I'm running Kubuntu 14.10smoothly and without any large issues.  I wonder what Kubuntu 15.04will be like when they shift to KDE 5 Frameworks.[/LEFT]
+
+---
+

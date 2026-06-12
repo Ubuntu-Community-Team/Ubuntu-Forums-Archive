@@ -1,0 +1,339 @@
+---
+title: "Kernel Panic - Not syncing: VFS: Unable to mount root fs on unknown-block(0,0)"
+date: 2010-12-07
+forum: Installation &amp; Upgrades
+---
+
+### Post by IGotGame on 2010-12-07
+Hey guys, I've recently been trying to install Ubuntu to my old computer, and I've been having a lot of trouble. I've tried several installs, from Ubuntu 10.10, to 10.04, and now I've just tried the alternate installer for 10.10. The most common error I get is after I install, and I try to boot Ubuntu from the GRUB menu, it gives me the error:
+
+> Kernel Panic - Not syncing: VFS: Unable to mount root fs on unknown-block(0,0)I'd figured it may have been a corrupt download, so I bought some new CD-RWs, re-downloaded the .iso, and it still isn't working.
+ 
+Now I really don't know very much about computers, and I would appreciate if you would walk me step by step on how to fix this.
+
+Thanks for your help
+
+---
+
+### Post by drs305 on 2010-12-07
+IGotGame
+
+Welcome to the Ubuntu forums.  :-)
+
+We need to see the status of your boot files. Please go to the following site and download/run the boot info script. Post the contents of the RESULTS.txt and we can probably help you out. 
+[http://bootinfoscript.sourceforge.net]("http://bootinfoscript.sourceforge.net")
+
+Often the problem is an incorrect path in the grub menuentry, but until we see the RESULTS.txt we really won't know.
+
+---
+
+### Post by IGotGame on 2010-12-07
+Okay, I guess I'll just paste it all.
+
+Sorry if I'm doing this wrong:
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for (,msdos5)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 82.3 GB, 82348277760 bytes
+255 heads, 63 sectors/track, 10011 cylinders, total 160836480 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63    64,018,079    64,018,017   7 HPFS/NTFS
+/dev/sda2          64,018,430   160,835,583    96,817,154   5 Extended
+/dev/sda5          64,018,432   156,784,639    92,766,208  83 Linux
+/dev/sda6         156,786,688   160,835,583     4,048,896  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        AA44D3E044D3AD77                       ntfs                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        9efc98a6-5e8b-4d58-b496-acbb23e609e8   ext4                                     
+/dev/sda6        84a2c040-51a2-44b7-9ca4-a26ddcdacc68   swap                                     
+/dev/sda: PTTYPE="dos" 
+error: /dev/sdb: No medium found
+error: /dev/sdc: No medium found
+error: /dev/sdd: No medium found
+error: /dev/sde: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+
+
+================================ sda1/boot.ini: ================================
+
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Home Edition" /fastdetect 
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos5)'
+search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+set locale_dir=($root)/boot/grub/locale
+set lang=C.UTF-8
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=9efc98a6-5e8b-4d58-b496-acbb23e609e8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=9efc98a6-5e8b-4d58-b496-acbb23e609e8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos5)'
+    search --no-floppy --fs-uuid --set 9efc98a6-5e8b-4d58-b496-acbb23e609e8
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Home Edition (on /dev/sda1)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set aa44d3e044d3ad77
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=9efc98a6-5e8b-4d58-b496-acbb23e609e8 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=84a2c040-51a2-44b7-9ca4-a26ddcdacc68 none            swap    sw              0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+  67.2GB: boot/grub/core.img
+  48.0GB: boot/grub/grub.cfg
+  33.1GB: boot/initrd.img-2.6.35-22-generic
+  67.2GB: boot/vmlinuz-2.6.35-22-generic
+  33.1GB: initrd.img
+  67.2GB: vmlinuz
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb sdc sdd sde 
+```
+
+---
+
+### Post by drs305 on 2010-12-08
+I don't see any problems with RESULTS.txt. If it's a Grub2 problem we can fix it by removing and reinstalling it. Here is the link:
+[HOWTO: Purge and Reinstall Grub 2 from the Live CD]("http://http://ubuntuforums.org/showthread.php?t=1581099")
+In Step 1 the partition you want to mount is */dev/sda5*
+
+---
+
+### Post by IGotGame on 2010-12-08
+I tried that and still got the same problem.
+
+---
+
+### Post by IGotGame on 2010-12-09
+What exactly is a kernel? Do I need to download one from [www.kernel.org](www.kernel.org) or something?
+
+---
+
+### Post by IGotGame on 2010-12-09
+Anyone have any ideas?
+
+---
+
+### Post by IGotGame on 2010-12-10
+Sorry for spamming, but I really need help with this
+
+---
+
+### Post by matt_symes on 2010-12-11
+Hi
+
+If its not an issue with grub then maybe it a problem with initramfs. You could try booting into the LiveCD, mounting the partition and regenerating  initramfs
+
+sudo mkdir /mnt/drive
+
+sudo mount /dev/sda5 /mnt/drive
+
+sudo update-initramfs -k all -u -b /mnt/drive/boot
+
+Maybe that's the problem. Good luck.
+
+As for the kernel...
+
+[http://en.wikipedia.org/wiki/Kernel_%28computing%29](http://en.wikipedia.org/wiki/Kernel_%28computing%29)
+
+Kind regards.
+
+---
+
+### Post by sunmake on 2010-12-12
+I think that different HDD partitionig can help.But first of all check your HDD connection(power supply!!!,because of old computer).Even after succesfull installation,loose power connection coming to KERNEL PANIC after reboot!!!!
+
+---
+

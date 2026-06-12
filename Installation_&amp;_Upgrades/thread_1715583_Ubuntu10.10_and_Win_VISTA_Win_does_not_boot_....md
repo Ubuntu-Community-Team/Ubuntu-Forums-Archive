@@ -1,0 +1,344 @@
+---
+title: "Ubuntu10.10 and Win VISTA: Win does not boot ..."
+date: 2011-03-27
+forum: Installation &amp; Upgrades
+---
+
+### Post by rh42 on 2011-03-27
+Hello,
+
+I just installed Ubuntu10.10 64bit on a DELL Inspiron Laptop dualboot with  Windows VISTA. May be I did a bit too much: I resized the Win partition (wit Ubuntu Installation tools) and Win was not shut down but in sleep mode.
+
+Now in grub I can choose between Ubuntu, memtest and "Windows Recovery Environment" - first time Win came up fine (continued the session). After I shut windows down, it does not boot correctly (shutdown after half way Win boot).
+
+Thank you for any advice!
+
+Here is my boot Info script output:
+
+> 
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #7 for (,msdos7)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Dell Utility: Fat16
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /COMMAND.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /Windows/System32/winload.exe
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files/dirs:   /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sda4: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda7: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Platte /dev/sda: 320.1 GByte, 320072933376 Byte
+255 Köpfe, 63 Sektoren/Spur, 38913 Zylinder, zusammen 625142448 Sektoren
+Einheiten = Sektoren von 1 × 512 = 512 Bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63        80,324        80,262  de Dell Utility
+/dev/sda2              81,920    30,801,919    30,720,000   7 HPFS/NTFS
+/dev/sda3    *     30,801,920   261,108,560   230,306,641   7 HPFS/NTFS
+/dev/sda4         351,004,246   625,137,344   274,133,099   5 Extended
+/dev/sda5         351,004,248   568,402,685   217,398,438  83 Linux
+/dev/sda6         613,924,038   625,137,344    11,213,307  82 Linux swap / Solaris
+/dev/sda7         568,403,968   613,922,815    45,518,848  83 Linux
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        3030-3030                              vfat       DellUtility                   
+/dev/sda2        865810F25810E2AB                       ntfs       RECOVERY                      
+/dev/sda3        FCA4132AA412E744                       ntfs       OS                            
+/dev/sda4: PTTYPE="dos" 
+/dev/sda5        6e0cdbd6-6734-4286-93c9-16f207175561   ext4                                     
+/dev/sda6        7f078524-4795-4c0d-886a-57604d0e976b   swap                                     
+/dev/sda7        667dedd9-d0b3-429e-8658-e76adc569eb2   ext4                                     
+/dev/sda: PTTYPE="dos" 
+error: /dev/sdb: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda7        /                        ext4       (rw,errors=remount-ro,commit=0)
+/dev/sda5        /home                    ext4       (rw,commit=0)
+
+
+=========================== sda7/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos7)'
+search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos7)'
+search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+set locale_dir=($root)/boot/grub/locale
+set lang=de
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=667dedd9-d0b3-429e-8658-e76adc569eb2 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=667dedd9-d0b3-429e-8658-e76adc569eb2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=667dedd9-d0b3-429e-8658-e76adc569eb2 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=667dedd9-d0b3-429e-8658-e76adc569eb2 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos7)'
+    search --no-floppy --fs-uuid --set 667dedd9-d0b3-429e-8658-e76adc569eb2
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Recovery Environment (loader) (on /dev/sda3)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos3)'
+    search --no-floppy --fs-uuid --set fca4132aa412e744
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda7/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda7 during installation
+UUID=667dedd9-d0b3-429e-8658-e76adc569eb2 /               ext4    errors=remount-ro 0       1
+# /home was on /dev/sda5 during installation
+UUID=6e0cdbd6-6734-4286-93c9-16f207175561 /home           ext4    defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=7f078524-4795-4c0d-886a-57604d0e976b none            swap    sw              0       0
+
+=================== sda7: Location of files loaded by Grub: ===================
+
+
+ 308.4GB: boot/grub/core.img
+ 293.5GB: boot/grub/grub.cfg
+ 292.3GB: boot/initrd.img-2.6.35-22-generic
+ 292.3GB: boot/initrd.img-2.6.35-28-generic
+ 292.0GB: boot/vmlinuz-2.6.35-22-generic
+ 292.0GB: boot/vmlinuz-2.6.35-28-generic
+ 292.3GB: initrd.img
+ 292.3GB: initrd.img.old
+ 292.0GB: vmlinuz
+ 292.0GB: vmlinuz.old
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb 
+
+
+---
+
+### Post by Quackers on 2011-03-27
+Your first mistake was re-sizing a Vista partition with a Linux tool. Vista doesn't like that.
+I don't even know how you managed to install Ubuntu while Vista was sleeping, as you need to boot from a cd or usb.
+I would imagine that a chkdsk needs to be run on the Vista system, but I'm not sure it will allow it.
+If you have a Vista/7 installation disc or a Vista repair disc (not a recovery dvd) you can run the command prompt from the recovery environment and type in ```
+chkdsk C: /r
+``` but I suspect it may not allow access.
+
+---
+
+### Post by Hedgehog1 on 2011-03-27
+If you don't have a recovery disk, you can download the ISO for [VISTA]("http://neosmart.net/blog/2008/windows-vista-recovery-disc-download/") or [WINDOWS7]("http://neosmart.net/blog/2009/windows-7-system-repair-discs/")
+
+***The Hedge***
+
+:KS
+
+---
+
+### Post by Spitefulrain on 2011-03-27
+This same thing is happening to me with Win7 instead. Coming a from a clean, formated install of both Win7, then ubuntu. About 3/4 of the time, windows fails to load and restarts halfway through. :/ Haven't found a solution yet.
+
+---
+
+### Post by Quackers on 2011-03-27
+> **Spitefulrain said:**
+> This same thing is happening to me with Win7 instead. Coming a from a clean, formated install of both Win7, then ubuntu. About 3/4 of the time, windows fails to load and restarts halfway through. :/ Haven't found a solution yet.
+
+Try scheduling a chkdsk and see if that helps. Keep scheduling it until, no errors are reported.
+[http://www.sevenforums.com/tutorials/433-disk-check.html](http://www.sevenforums.com/tutorials/433-disk-check.html)
+
+---
+

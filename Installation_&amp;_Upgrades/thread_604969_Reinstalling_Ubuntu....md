@@ -1,0 +1,389 @@
+---
+title: "Reinstalling Ubuntu..."
+date: 2007-11-06
+forum: Installation &amp; Upgrades
+---
+
+### Post by Tony_SA on 2007-11-06
+Hi Everyone,
+
+In an attempt to install drivers for my ATI Radeon X1600 graphics card I managed to screw up the graphics on ubuntu, what I did was I went into Administration -> Graphics and chose a different driver and that is pretty much where I went wrong because it totally messed up everything and I can't see what I'm doing.  I would like to reinstall ubuntu since I figured that would be the easiest way to get this graphics issue resolved.  I'm able to boot up in Live CD mode so am I able to now reinstall ubuntu from Live CD mode?  If so, what's the best way to go about reinstalling it?  Sorry I'm brand new to Linux.  I have ubuntu installed on another partition due to having Windows xp on my machine too.
+
+Any help would be highly appreciated :).
+
+Thanks.
+
+- Tony
+
+---
+
+### Post by Pumalite on 2007-11-06
+I think you'll have better luck with the Alternate CD.
+
+---
+
+### Post by bulldog on 2007-11-06
+Before you install again,try to boot in recovery mode [second option in your grub menu] from the hard disk.
+If you come to the console [non graphical] you can login and type in a command.
+With a little luck this will solve your problem.
+```
+sudo dpkg-reconfigure -phigh xserver-xorg
+```
+Write this command on a piece of paper exactly as it is displayed!
+
+---
+
+### Post by Tony_SA on 2007-11-07
+Thanks for your responses.
+
+bulldog - I'll give inputting that command a try - before I do though I would just like to know; what will this command actually do?  I'm just checking to make sure that command doesn't affect the partition my windows xp os is installed on.
+
+Pumalite - By alternate CD do you mean the windows xp cd?  The thought of booting up with the windows xp disk crossed my mind due to being able to delete partitions using the windows disk, I didn't go ahead with that route because I need to read up on how to use fdisk/mbr to get those partitions formatted... would this be the better option to go with?
+
+Thanks for the help.
+
+---
+
+### Post by bulldog on 2007-11-07
+Hi Tony.
+The command will do nothing with your windows or your partitions.
+It just will reconfigure your xorg.conf to the best possible solution.
+If you want to have more control about this.leave the  -phigh out of it and you get a bunch of questions you have to answer,this is not hard but you have to know something about your hardware.
+But the command is perfectly safe for your windows.
+
+If you go for a reinstall.
+When you come to the partition questions,just choose manual.
+You'll get a overview of your partitions,choose the same one as you use now for the / system and mount it there,set the bootflag to yes and set it to format ext3
+Your swap partition is mounted as swap no bootflag and format as swap.
+Son't do anything with the windows partition it will be mounted automatically in /media.
+Just watch that they are not set to format to be sure.
+
+---
+
+### Post by Tony_SA on 2007-11-07
+Hey bulldog,
+
+Thanks for the help... that command worked perfectly, I managed to get into ubuntu again with the graphics working fine.  But unfortunately when i reboot and then choose the first option to go into ubuntu, the graphics are all messed up again.  What I did next was repeated the procedure of entering in that command into the command prompt after selecting the second option from the menu upon booting - again it fixed the graphics but everytime i reboot into ubuntu selecting the first option the login screen is still all fuzzy as it was before.  Also when I do the entering in of the command route - I get into ubuntu fine as I've said but when I log out in order to get to the login screen again without rebooting, the graphics goes back to its crazy state again.
+
+Any idea why this is happening?  Is there a way to fix this?  I'm thinking I should probably go with the reinstall, before I do I thought I'd post to ask if thats the only option.
+
+Thanks again for your help, it's much appreciated :).
+
+- Tony
+
+---
+
+### Post by bulldog on 2007-11-07
+When you login using this command,can you take a look at the xorg.conf and post it here?
+You can find it with```
+cat /etc/X11/xorg.conf
+```
+
+It's most likely a wrong driver setting no need to reinstall.
+
+---
+
+### Post by Pumalite on 2007-11-07
+The Alternate CD is a text based installer especially designed to avoid graphical interface problems. Download from here:[http://www.ubuntu.com/getubuntu/download](http://www.ubuntu.com/getubuntu/download)
+Mark the box below sign 'Start Download'
+
+---
+
+### Post by Tony_SA on 2007-11-08
+bulldog: I typed in that command into my terminal after logging in via the sudo 'dpgk-reconfigure...' command and I got the following:
+
+```
+
+antonio@antonio-desktop:~$ cat /etc/X11/xorg.conf
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "CoreKeyboard"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc105"
+        Option          "XkbLayout"     "us"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+        Option          "Device"        "/dev/input/mice"
+        Option          "Protocol"      "ImPS/2"
+        Option          "ZAxisMapping"  "4 5"
+        Option          "Emulate3Buttons"       "true"
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "stylus"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"  "stylus"
+        Option          "ForceDevice"   "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "eraser"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"  "eraser"
+        Option          "ForceDevice"   "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "cursor"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"  "cursor"
+        Option          "ForceDevice"   "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "Device"
+        Identifier      "Generic Video Card"
+        Boardname       "vesa"
+        Busid           "PCI:1:0:0"
+        Driver          "vesa"
+        Screen  0
+EndSection
+
+Section "Monitor"
+        Identifier      "LE2262"
+        Vendorname      "Plug 'n' Play"
+        Modelname       "Plug 'n' Play"
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+  modeline  "640x480@72" 31.5 640 664 704 832 480 489 491 520 -vsync -hsync
+  modeline  "640x480@75" 31.5 640 656 720 840 480 481 484 500 -vsync -hsync
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@72" 50.0 800 856 976 1040 600 637 643 666 +hsync +vsync
+  modeline  "800x600@75" 49.5 800 816 896 1056 600 601 604 625 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "832x624@75" 57.284 832 864 928 1152 624 625 628 667 -vsync -hsync
+  modeline  "1024x768@75" 78.8 1024 1040 1136 1312 768 769 772 800 +hsync +vsync
+  modeline  "1024x768@70" 75.0 1024 1048 1184 1328 768 771 777 806 -vsync -hsync
+  modeline  "1024x768@60" 65.0 1024 1048 1184 1344 768 771 777 806 -vsync -hsync
+  modeline  "1152x864@75" 108.0 1152 1216 1344 1600 864 865 868 900 +hsync +vsync
+  modeline  "1280x1024@75" 135.0 1280 1296 1440 1688 1024 1025 1028 1066 +hsync +vsync
+  modeline  "1280x960@60" 102.1 1280 1360 1496 1712 960 961 964 994 -hsync +vsync
+  modeline  "1280x1024@60" 108.0 1280 1328 1440 1688 1024 1025 1028 1066 +hsync +vsync
+  modeline  "1280x960@75" 129.86 1280 1368 1504 1728 960 961 964 1002 -hsync +vsync
+  modeline  "1400x1050@60" 122.61 1400 1488 1640 1880 1050 1051 1054 1087 -hsync +vsync
+  modeline  "1400x1050@75" 155.85 1400 1496 1648 1896 1050 1051 1054 1096 -hsync +vsync
+  modeline  "1600x1200@65" 175.5 1600 1664 1856 2160 1200 1201 1204 1250 +hsync +vsync
+  modeline  "1600x1200@60" 162.0 1600 1664 1856 2160 1200 1201 1204 1250 +hsync +vsync
+  modeline  "1792x1344@60" 204.8 1792 1920 2120 2448 1344 1345 1348 1394 -hsync +vsync
+        Gamma   1.0
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "Generic Video Card"
+        Monitor         "LE2262"
+        Defaultdepth    24
+        SubSection "Display"
+                Depth   24
+                Virtual 1792    1344
+                Modes           "1280x1024@75"  "1280x960@60"   "1152x864@75"   "1280x1024@60" "1024x768@60"   "1280x960@75"   "1024x768@70"   "1400x1050@60"  "1024x768@75" "1400x1050@75"   "832x624@75"    "1600x1200@65"  "800x600@60"    "1600x1200@60"  "800x600@75"   "1792x1344@60"  "800x600@72"    "800x600@56"    "640x480@75"    "640x480@72"  "640x480@60"
+        EndSubSection
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+  screen 0 "Default Screen" 0 0
+        Inputdevice     "Generic Keyboard"
+        Inputdevice     "Configured Mouse"
+
+        # Uncomment if you have a wacom tablet
+        #       InputDevice     "stylus"        "SendCoreEvents"
+        #       InputDevice     "cursor"        "SendCoreEvents"
+        #       InputDevice     "eraser"        "SendCoreEvents"
+EndSection
+Section "Module"
+        Load            "glx"
+        Load            "GLcore"
+        Load            "v4l"
+EndSection
+Section "device" # 
+        Identifier      "device1"
+        Boardname       "vesa"
+        Busid           "PCI:1:0:0"
+        Driver          "vesa"
+        Screen  1
+EndSection
+Section "screen" # 
+        Identifier      "screen1"
+        Device          "device1"
+        Defaultdepth    24
+        Monitor         "monitor1"
+EndSection
+Section "monitor" # 
+        Identifier      "monitor1"
+        Gamma   1.0
+EndSection
+Section "ServerFlags"
+EndSection
+
+```
+
+Quite a bit of text there :).  Before I messed up the graphics I was about to follow the instructions [[COLOR="Blue"]here[/COLOR]]("http://wiki.cchtml.com/index.php/Ubuntu_Edgy_Installation_Guide") in order to get my ATI Radeon X1600 graphics card to work properly.  I got that link from another thread here on the forum.  I'll give it a go once this is sorted :).
+
+Thanks for the help.
+
+Pumalite:  I'll take a look at downloading that installer if I can't get this to work, bulldog has given me hope! :D
+
+Cheers
+
+---
+
+### Post by bulldog on 2007-11-08
+```
+Section "Device"
+        Identifier      "Generic Video Card"
+        Boardname       "vesa"
+        Busid           "PCI:1:0:0"
+        Driver          "vesa"
+        Screen  0
+EndSection
+
+Section "Monitor"
+        Identifier      "LE2262"
+        Vendorname      "Plug 'n' Play"
+        Modelname       "Plug 'n' Play"
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+  modeline  "640x480@72" 31.5 640 664 704 832 480 489 491 520 -vsync -hsync
+  modeline  "640x480@75" 31.5 640 656 720 840 480 481 484 500 -vsync -hsync
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@72" 50.0 800 856 976 1040 600 637 643 666 +hsync +vsync
+  modeline  "800x600@75" 49.5 800 816 896 1056 600 601 604 625 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "832x624@75" 57.284 832 864 928 1152 624 625 628 667 -vsync -hsync
+  modeline  "1024x768@75" 78.8 1024 1040 1136 1312 768 769 772 800 +hsync +vsync
+  modeline  "1024x768@70" 75.0 1024 1048 1184 1328 768 771 777 806 -vsync -hsync
+  modeline  "1024x768@60" 65.0 1024 1048 1184 1344 768 771 777 806 -vsync -hsync
+  modeline  "1152x864@75" 108.0 1152 1216 1344 1600 864 865 868 900 +hsync +vsync
+  modeline  "1280x1024@75" 135.0 1280 1296 1440 1688 1024 1025 1028 1066 +hsync +vsync
+  modeline  "1280x960@60" 102.1 1280 1360 1496 1712 960 961 964 994 -hsync +vsync
+  modeline  "1280x1024@60" 108.0 1280 1328 1440 1688 1024 1025 1028 1066 +hsync +vsync
+  modeline  "1280x960@75" 129.86 1280 1368 1504 1728 960 961 964 1002 -hsync +vsync
+  modeline  "1400x1050@60" 122.61 1400 1488 1640 1880 1050 1051 1054 1087 -hsync +vsync
+  modeline  "1400x1050@75" 155.85 1400 1496 1648 1896 1050 1051 1054 1096 -hsync +vsync
+  modeline  "1600x1200@65" 175.5 1600 1664 1856 2160 1200 1201 1204 1250 +hsync +vsync
+  modeline  "1600x1200@60" 162.0 1600 1664 1856 2160 1200 1201 1204 1250 +hsync +vsync
+  modeline  "1792x1344@60" 204.8 1792 1920 2120 2448 1344 1345 1348 1394 -hsync +vsync
+        Gamma   1.0
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "Generic Video Card"
+        Monitor         "LE2262"
+        Defaultdepth    24
+        SubSection "Display"
+                Depth   24
+                Virtual 1792    1344
+                Modes           "1280x1024@75"  "1280x960@60"   "1152x864@75"   "1280x1024@60" "1024x768@60"   "1280x960@75"   "1024x768@70"   "1400x1050@60"  "1024x768@75" "1400x1050@75"   "832x624@75"    "1600x1200@65"  "800x600@60"    "1600x1200@60"  "800x600@75"   "1792x1344@60"  "800x600@72"    "800x600@56"    "640x480@75"    "640x480@72"  "640x480@60"
+        EndSubSection
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+  screen 0 "Default Screen" 0 0
+        Inputdevice     "Generic Keyboard"
+        Inputdevice     "Configured Mouse"
+
+        # Uncomment if you have a wacom tablet
+        #       InputDevice     "stylus"        "SendCoreEvents"
+        #       InputDevice     "cursor"        "SendCoreEvents"
+        #       InputDevice     "eraser"        "SendCoreEvents"
+EndSection
+Section "Module"
+        Load            "glx"
+        Load            "GLcore"
+        Load            "v4l"
+EndSection
+Section "device" # 
+        Identifier      "device1"
+        Boardname       "vesa"
+        Busid           "PCI:1:0:0"
+        Driver          "vesa"
+        Screen  1
+EndSection
+Section "screen" # 
+        Identifier      "screen1"
+        Device          "device1"
+        Defaultdepth    24
+        Monitor         "monitor1"
+EndSection
+Section "monitor" # 
+        Identifier      "monitor1"
+        Gamma   1.0
+EndSection
+Section "ServerFlags"
+EndSection
+```
+
+Only this section is of some importance to us.
+I would comment out all the modelines you don't want to use,keep only the one you use and your graphics and monotor can handle.
+You can keep one safe default like the 800x600 if you like.
+
+To install your graphics I suggest you use envy
+[http://albertomilone.com/nvidia_scripts1.html](http://albertomilone.com/nvidia_scripts1.html)
+This is a .deb which is capable to install your graphics even in recovery mode.
+
+You can perform the reconfigure command in the first boot option as well,you don't have to boot into recovery mode,try and see that you get the envy .deb installed,just right click and chose the first option.
+After the install you find it in your start menu systemtools.
+Run it and see what it brings.
+
+---
+
+### Post by Pumalite on 2007-11-08
+This:
+
+ATI Radeon X1600
+
+Demands that you install with Alternate CD.
+(configure your xserver after the installation)
+
+---
+
+### Post by Tony_SA on 2007-11-10
+Ok so this is where I am...
+
+The first thing I tried was commenting out those modelines that I don't need.  By commenting them out I assumed I would need to place a '#' in the beginning of each line I want commented.  I tried saving it and it came up with an error telling me I don't have permission to do so (I tried this using the GUI).  So I then tried editing that configuration file via the terminal using pico -w.  I was able to comment out the lines I wanted and was able to save it fine.  Right so I then rebooted with the hopes of the graphics being fine after selecting the first option in the boot menu (which i think is called grub?).  Graphics were still messed up.  I then decided to move on and downloaded Envy.  When I tried installing the Envy package it came up with an error stating the following:  'Error:  Dependency is not satisfiable.  xserver-xorg-dev'.  So I tried downloading the xserver-xorg-dev package and tried installing that package and yet another error came up:  'Error:  Dependency is not satisfiable:  x11proto-core-dev'.
+
+So just to experiment I rebooted with the Live CD in my drive, it went into Live CD mode - I clicked on install and went half way through the instructions - right up until it asks me about partitions because I wanted to see if there is an option to just overwrite ubuntu that is currently installed.  There are three partitions there, the first being Windows XP, the second being ext3 (which I think is ubuntu), and the third being 'swap', which I think belongs to ubuntu as well.  There is a format checkbox I can check next to the ext3 partition which I think will format that partition, there is also a delete/edit partition buttons on the same window too... if overwriting is possible, what steps do you think I should take when I get to that part of the installation wizard?
+
+If using the alternate CD is the best option, could you recommend a guide I could use in order to use that text-based installer?  I would obviously need to overwrite or delete/format the partitions ubuntu is currently installed on which I'm assuming can be done via the text-based installer?
+
+Thanks for the help guys, I look forward to your responses (as always :))
+
+Cheers.
+
+- Tony
+
+---
+
+### Post by Pumalite on 2007-11-10
+[http://users.bigpond.net.au/hermanzone/](http://users.bigpond.net.au/hermanzone/)
+[https://help.ubuntu.com/community/Installation#head-194b248381c71c37f7b187c6b814bbe7e31d91d6](https://help.ubuntu.com/community/Installation#head-194b248381c71c37f7b187c6b814bbe7e31d91d6)
+
+---
+

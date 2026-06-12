@@ -1,0 +1,396 @@
+---
+title: "Need grub2 help on 10.04 concerning dual boot"
+date: 2011-02-02
+forum: Installation &amp; Upgrades
+---
+
+### Post by ajm8127 on 2011-02-02
+On my work computer I needed to set up a dual boot environment to do some Linux embedded development. I decided to use a new hard drive because I really didn't want to resize my NTFS partition. I moved my windows drive to channel SATA1 and plugged the new, empty drive into SATA0. The 10.04 install went smoothly. The problem arose when I went to load windows. I select it from the grub menu and get the following errors:
+
+```
+
+no such device: 568c325f8c323a37
+no such partition.
+```
+
+here is the output of the boot info script:
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for /boot/grub.
+ => Windows is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Dell Utility: Fat16
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /COMMAND.COM
+
+sdb2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048    97,656,831    97,654,784  83 Linux
+/dev/sda2          97,658,878   199,313,407   101,654,530   5 Extended
+/dev/sda5          97,658,880   195,313,663    97,654,784  83 Linux
+/dev/sda6         195,315,712   199,313,407     3,997,696  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 80.0 GB, 80000000000 bytes
+255 heads, 63 sectors/track, 9726 cylinders, total 156250000 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1                  63        96,389        96,327  de Dell Utility
+/dev/sdb2    *         96,390   156,232,124   156,135,735   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        6d01c0f1-0f8e-40cc-9508-11d66d6dd997   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        9de2900d-a329-4bd4-9377-e040c402541f   ext4                                     
+/dev/sda6        cf9bee71-94f1-4665-b8a4-76784f6a5e93   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        07D7-0905                              vfat       DellUtility                   
+/dev/sdb2        568C325F8C323A37                       ntfs                                     
+/dev/sdb: PTTYPE="dos" 
+error: /dev/sdc: No medium found
+error: /dev/sdd: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro)
+/dev/sda5        /home                    ext4       (rw)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+	linux	/boot/vmlinuz-2.6.32-24-generic root=UUID=6d01c0f1-0f8e-40cc-9508-11d66d6dd997 ro   quiet splash
+	initrd	/boot/initrd.img-2.6.32-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+	echo	'Loading Linux 2.6.32-24-generic ...'
+	linux	/boot/vmlinuz-2.6.32-24-generic root=UUID=6d01c0f1-0f8e-40cc-9508-11d66d6dd997 ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-24-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set 6d01c0f1-0f8e-40cc-9508-11d66d6dd997
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Dell Utility Partition (on /dev/sdb1)" {
+	insmod fat
+	set root='(hd1,1)'
+	search --no-floppy --fs-uuid --set 07d7-0905
+	drivemap -s (hd0) ${root}
+	chainloader +1
+}
+menuentry "Microsoft Windows XP Professional (on /dev/sdb2)" {
+	insmod ntfs
+	set root='(hd1,2)'
+	search --no-floppy --fs-uuid --set 568c325f8c323a37
+	drivemap -s (hd0) ${root}
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=6d01c0f1-0f8e-40cc-9508-11d66d6dd997 /               ext4    errors=remount-ro 0       1
+# /home was on /dev/sda5 during installation
+UUID=9de2900d-a329-4bd4-9377-e040c402541f /home           ext4    defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=cf9bee71-94f1-4665-b8a4-76784f6a5e93 none            swap    sw              0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+  13.0GB: boot/grub/core.img
+   8.7GB: boot/grub/grub.cfg
+  13.0GB: boot/initrd.img-2.6.32-24-generic
+    .2GB: boot/vmlinuz-2.6.32-24-generic
+  13.0GB: initrd.img
+    .2GB: vmlinuz
+
+================================ sdb2/boot.ini: ================================
+
+[boot loader]
+
+timeout=30
+
+default=multi(0)disk(0)rdisk(0)partition(2)\WINDOWS
+
+[operating systems]
+
+multi(0)disk(0)rdisk(0)partition(2)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect
+
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdc sdd 
+```
+
+The only thing that stands out to me is the boot.ini file. It says the windows partition is on drive0, partition 2. With the configuration I have post Ubuntu install, the Windows partition is sdb2 (hd1,2)
+
+Any help would be appreciated!
+Thanks
+
+---
+
+### Post by Quackers on 2011-02-02
+Try swapping the drives over again, and run sudo update-grub once Ubuntu loads. See if that enables XP to boot from grub. I suspect that you could also change the boot.ini as an option.
+
+---
+
+### Post by ajm8127 on 2011-02-02
+I tried swapping the drives and the Windows boot loader took over. I could try to boot with a live CD and run the update grub command that way. Would that actually overwrite the windows boot loader on the MBR of the windows drive? If the windows boot loader never gets overwritten, the computer will always only boot to windows with the windows drive plugged into SATA0, right?
+
+---
+
+### Post by Quackers on 2011-02-02
+I would suggest that you go into your bios settings and set things so that your Ubuntu hard drive is the first boot device (or at least before the Windows hard drive), then reboot and Grub menu should then appear. As the drives are now reversed (and boot.ini is now correct), you could just try booting Windows from the grub menu.
+
+---
+
+### Post by ajm8127 on 2011-02-02
+> **Quackers said:**
+> I would suggest that you go into your bios
+
+Of course. I don't know why I didn't think of that.
+
+I tried it, and with the BIOS on this particular machine (Dell) it does not give you the option of specifying a boot order for the SATA drives. It only allows you to change the order of devices like CD_ROM, PATA, and SATA, but not individual drives on the PATA and SATA interfaces.  
+
+I tried modifying boot.ini, and that did not work either. It seems that grub is having the issue, and that boot.ini is not related to the problem. This makes sense as grub2 is the boot loader, so boot.ini should never be read by NTLDR (windows boot loader). 
+
+I suppose I can try moving the windows drive back to SATA0, with the linux drive on SATA1. Then if I can install grub2 to the Windows drive, that may work. However, it still does not make sense that grub is having trouble finding the windows partition.  I don't want to go to all this trouble without knowing it will work. The real question is why is grub having trouble finding the windows partition?
+
+---
+
+### Post by Quackers on 2011-02-02
+I thought you had already swapped the drives back, so that the Windows drive is on SATA0.  If it is not on SATA0 then boot.ini is wrong. It's not that grub can't find the Windows partition. It's boot.ini that can't find it, as I understand it. If the Windows drive is on SATA1, boot.ini is looking at the wrong drive.
+I understand the bios problem, mine is the same. As a result I have grub installed in the mbr of both hard drives. The only problem with that is that grub over-writes the Windows bootloader, so if the Ubuntu drive is taken out, Windows won't then boot. You then need a Windows repair disc to replace grub with the Windows bootloader.
+
+---
+
+### Post by ajm8127 on 2011-02-02
+I did swap the drives, but because I couldn't change the boot order of the SATA drives, I could only access windows through NTLDR. Grub is completely by-passed in this configuration because it is on the linux drive, which is connected to SATA1. 
+
+After that I swapped them back and tried to modify boot.ini on the windows drive to reflect that the windows drive is device 1, and the linux drive is device 0. This still did not work, and grub reported the same error. That is why I think boot.ini has nothing to do with the problem. I could be wrong though, as I'm not an expert, but as I understand it, "no such device" is a grub error. 
+
+[This]("http://www.linuxquestions.org/questions/linux-general-1/problem-with-dual-boot-ubuntu-10-04-windows-7-no-such-device-no-such-partition-839297/") thread on another forum sound very much like my problem. I think I will try to do this.
+
+---
+
+### Post by ajm8127 on 2011-02-02
+nope, still no luck. 
+
+I added ```
+GRUB_PRELOAD_MODULES="part_msdos"
+``` to /etc/defualt/grub and ran```
+sudo update-grub
+``` and the problem persists.
+
+I am about ready to swap windows back to SATA0 and linux to SATA1 then install grub on the windows drive, but I'm not convinced that will fix the problem.
+
+---
+
+### Post by Quackers on 2011-02-02
+That other thread may have been due to a GUID partition table being used.
+
+Actually, similar circumstances to yours occurred about a week ago with somebody else. The outcome for that user was to edit 30_os-prober file (IIRC) to read the wrong drive! That worked! This made no sense to me, but the user was happy with the outcome.
+I too, am no expert with grub's finer details (or Window's loaders), but as I understand it, grub first loads and then when Windows is chosen from the grub menu, control then passes to the Windows loader. Which part gives the error "no such device" I am not sure, though your assumption does seem reasonable :-)
+Maybe a guru will appear and clear this up for us :-)
+
+---
+
+### Post by ajm8127 on 2011-02-02
+Alright, I fixed it.
+
+Even though I didn't think that the SATA interface cared where your bootable drive was plugged in (be it SATA, SATA1, SATA2, etc.) I changed the windows drive to SATA2, then rebuild grub.cfg with update-grub. This did not work.
+
+As per Quackers' suggestion, I then manually edited grub.cfg to use (hd2,2) for the bootable windows partition. I restarted and it worked! I have no idea why, but I don't really care. 
+
+This does tell use something else though. The boot.ini file doesn't seem to be having a problem even though rdisk(0) is defined as where the windows partition resides. 
+
+Thanks to Quackers for the suggestion and his time.
+
+---
+
+### Post by Quackers on 2011-02-02
+No problem at all and I'm glad that worked.
+However, if you edited grub.cfg directly, the next time grub is updated your changes may be over-written. One way to make the changes permanent is to make a manual entry in /etc/grub.d/40_custom.
+Unfortunately the guide that I was going to refer you to seems incomplete :-(  and, as this is something I have not done myself, I am unable to give specific instructions.  Basically I believe you would copy the whole stanza that you have just edited and paste that into /etc/grub.d/40_custom, then run update-grub, then turn off the 0s-prober, but there may be slightly more to it than that. I will have a look for more accurate details and post back. Just don't run update-grub in the meantime :-)
+
+---
+
+### Post by Quackers on 2011-02-02
+If you scroll down to the Custom Menu Entries heading in the guide below it will help you :-)
+
+[https://help.ubuntu.com/community/Grub2#Custom%20Menu%20Entries](https://help.ubuntu.com/community/Grub2#Custom%20Menu%20Entries)
+
+---
+
+### Post by ajm8127 on 2011-02-02
+Awesome, thanks.
+
+---
+

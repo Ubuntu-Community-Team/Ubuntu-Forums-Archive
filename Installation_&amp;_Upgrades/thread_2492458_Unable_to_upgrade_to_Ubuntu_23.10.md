@@ -1,0 +1,107 @@
+---
+title: "Unable to upgrade to Ubuntu 23.10"
+date: 2023-11-11
+forum: Installation &amp; Upgrades
+---
+
+### Post by brav3ry on 2023-11-11
+[SIZE=2][B]I have been unable to upgrade to Ubuntu 23.10. It stops at "setting new software channels". 
+Software updater is failing to download repository information.
+Also, apt update throws the error NO_PUBKEY for steam, a few repos have no release file including Bluez, and I can't turn bluetooth on.[/B][/SIZE]
+
+That is all the information I can provide right now. If you have an idea of other information to look for, please tell me. Also there are some deprecated keys, I think.
+
+---
+
+### Post by Tadaen_Sylvermane on 2023-11-11
+It sounds like you have non official repositories in your system. That is the problem if you do. It isn't an Ubuntu problem nor can anyone here really help you until you eliminate those non official repositories and ppa's as well as the software from them.
+
+---
+
+### Post by brav3ry on 2023-11-12
+Would there be some quick way of finding and getting rid of these unofficial repos & ppa's?
+
+---
+
+### Post by brav3ry on 2023-11-12
+And what exactly are these links? I'm especially not sure what the first one is for. It doesn't exactly say.
+
+---
+
+### Post by brav3ry on 2023-11-12
+I did upgrade to 23.04 from LTS 22.04. It's definitely possible that messed some stuff up, although bluethooth still worked until last night. Actually I'm not sure. I'm not sure I've tried to use bluetooth. I had been using xorg after upgrading. obs is broken on wayland, but steam (and some other software) is broken on xorg. I only discovered bluetooth wasn't working because I wanted to connect a wii remote.
+
+---
+
+### Post by MAFoElffen on 2023-11-12
+Open "Software & Updates" > "Other Software" Tab... Write down all the boxes that are checked. Remove any that are not checked. (Good time to do a clean up.) > Uncheck all the boxes until after you do your release upgrade...
+
+After the upgrade, go back to that tab... check all the checkboxes that you left there...
+
+If while doing a
+```
+
+sudo apt update
+
+```
+Pay attention to the output for any errors. Go back to that tab and uncheck the ones that had errors. Especially if the error mentions "no release files"... That would mean that there are no packages built for the new release you upgraded to.
+
+Once you have no errors with that, then do
+```
+
+sudo apt upgrade
+
+```
+Then it will upgrade those packages.
+
+---
+
+### Post by brav3ry on 2023-11-13
+I have some images. I can't seem to find everything that's causing an issue here.
+
+---
+
+### Post by brav3ry on 2023-11-13
+1 more image. This is now the only error from running 
+
+sudo apt update
+
+---
+
+### Post by brav3ry on 2023-11-13
+Should I try to upgrade now?
+
+---
+
+### Post by brav3ry on 2023-11-13
+i found steam.gpg
+
+---
+
+### Post by brav3ry on 2023-11-14
+Upgraded. Bluetooth still doesn't work.
+
+---
+
+### Post by MAFoElffen on 2023-11-14
+No... Go to the first tab "Ubuntu Software" and uncheck the CDROM line checkbox... Then try test with the Update command again... That should get rid of the key error on that....
+
+Then you are oon Lunar, trying to upgrade to Mantic... Remove any of those that still says Jammy!!!. Then uncheck all PPA's left there.
+
+---
+
+### Post by brav3ry on 2023-11-14
+I'm on 23.10
+
+---
+
+### Post by brav3ry on 2023-11-14
+Also, there is no cdrom check box. There _IS_ however, an area that says "Installable from CD-ROM/DVD", and underneath it a dark grey box with text inside that says "To install from a CD-ROM or DVD, insert the medium into the drive.
+
+---
+
+### Post by brav3ry on 2023-11-14
+[IMG]https://ubuntuforums.org/image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAuUAAABLCAYAAADXs/lJAAAABHNCSVQICAgIfAhkiAAAABl0RVh0U29mdHdhcmUAZ25vbWUtc2NyZWVuc2hvdO8Dvz4AAAAtdEVYdENyZWF0aW9uIFRpbWUAVHVlIDE0IE5vdiAyMDIzIDA4OjMwOjI2IFBNIEVTVPthQOkAABrzSURBVHic7d15bFTX/Tbw585yZ7PxxnjBCzbYYMCAsXGAGEjCEnAoS0mqNg2krUTLEhKlAZLQtLSkNIrKklQoiiqrSpVCFCqxhEAIlCUgVrMYMMZsARsvGPDu8exz7 8P3rmvhxmvGCaQ5/MPyp3xvcc3Y81zzv2ec4SMjAwZREREREQUNKpgN4CIiIiI6MeOoZyIiIiIKMgYyomIiIiIgoyhnIiIiIgoyBjKiYiIiIiCjKGciIiIiCjINA/z5LLM1RaJiIiI6PEnCMJDPX PhXJvAL//XyIiIiKiJ4E3mN//b0/okVAuyzJkWYYgCBBFERqNBlqtFmq1 qH3KoiIiIiIHiZZluHxeOByueB2u FyuZQB6J7Kug8Uyr1hHACMRiP0ej1DOBERERE9UQRBgEajgUZzLzrLsgy73Q6r1aoMTD9oBu5WKG8dxnU6HQwGA9Rq9QM1hIiIiIjocSAIAgwGA0RRhM1mg8PheOBw3uVQ3rpW3GQyQa/Xd vCRERERESPM7VajZCQEGg0GrS0tACAEs67qkuhvPUIeWhoKERR7PIFiYiIiIieJHq9HiqVCs3NzcqxrgbzLq1T7g3lJpOJgZyIiIiI6P8RRREmk8lnELsrOh3KvRfQ6XQsWSEiIiIiuo9er4dOp tWMO9UKG 95KHRaOxWI4mIiIiInnRGoxGCIHQ5mHcplBuNRq6yQkRERETUBrVaDaPR2POhvPUoOctWiIiIiIja5927pyvBvFOhHAA0Gg03BiIiIiIi6oB3syEAPRfKvSfTarXdbxkRERER0Y IVqvtufKV1idiKCciIiIi6pzW2bkz4bzTodw7BE9ERERERO1rnZ0fOJS3xnpyIiIiIqLOeag7ehIRERERUc9jKCciIiIiCjKGciIiIiKiIGszlHdlCRciIiIiImpbR9maI VEREREREHGUE5EREREFGQM5UREREREQcZQTkREREQUZAzlRERERERBxlBORERERBRkDOU9SK1Ww2w2B7sZRERE9ITQarUIDw/v8pbt9PhRR0dH/6WjN8myDJPJ9FAakJaWhtzcXAwcOBCCIKCuru6hXOdRmDx5Mt5//30cPXoUTU1Nj/Ta8fHxGD9 PAYPHgy9Xo87d 480usTERFRx Li4pCUlIS7d /6vSYIAtLS0hAWFoaGhgYAQGJiIl544QVcunQJbrf7UTf3odBoNEhJSUFCQgJUKhUsFovfe9RqNRITE5GUlITw8HBYLBZ4PJ5OXyMkJATp6ent5qHo6Gj069cPOp3uoeU2q9WqdKgEQWi3c6V5KC3ohAkTJmDu3LmIjo5WPpi9e/fGnTt38J///AcHDhwIVtM6FBISgunTp2Pbtm2w2WzK8aqqKpw/fx7Nzc2PrC1RUVF44403MHLkSNTW1sLj8aB3796w2 1YtmwZSktLe Q6er0eEydOxDfffMONpYiIiLopKSkJqampKCkp8fs ValUGDJkCOx2O0pLSyHLMlQqFdRqdZBaC6Snp P777 Hy V64HPpdDpkZ2cjPT0dNpsNdrsdOTk5qK vx969e9Hc3AyVSoWsrCwMGjQIHo8HLS0t0Ov1yM3NxdmzZ3H27NkOc0hqaipyc3Oh0WhQXFzsF ZFUcSkSZMQGxuL vp6hIaGwm63Y /evUEdHA5KKM/NzcXbb7 NS5cuYfny5aiurgYAREZGYvny5Vi6dClqa2tx/vz5YDSvQ np6XjxxRfx7bff oTyCxcu4MKFC4 0LTNmzMDIkSPxt7/9DUePHgUAGAwGPP300z06Wh4fH49Zs2bhm26bFzEhER0Q XTqfDyJEjUVZW1iOhXJZlmM1m7Nu3D2VlZQCA8PBwzJw5E PGjVMG/vR6PQoLC1FcXKx0TJ555hkMHz4cly9fhtVqDXh lUqFESNGYPjw4bh27RpSU1MDvi8zMxMxMTHYvn07ampqYDAYMHPmTIwePRq7du0K2uDjIy9f0el0WLp0KRobG/Huuivr5eec1ms HgwYPIzMzEpEmTsG/fPjidTgDA008/jcbGRrjdbgwfPhxpaWlwOp0BH3kIgoABAwZgyJAh0Ov1fr2esLAwZGVloaKiQvnADRgwAOXl5ZBlGUajERkZGRg0aBBEUURtba3ysyEhIZgzZw4SExNRW1uLhIQEAEBDQwOio6MxatQoVFZWwuPxIC4uDiNGjEBVVRUMBgOysrKQlJSE5uZmOBwOv3aLoohhw4ahX79 sFgscDqdyM7OhkajQWNjY8D7OXPmTISEhODTTz9VeoJutxs3btyAy VCWloaMjMzUV5eDkmSfH42OzsbKSkpqKioAAAYjUZkZmYiLS0NBoMB9fX1yh/QwoULERsbi4aGBqSkpECSJJ82JSYmYvjw4YiMjERtba3PtaKjozFo0CBUVVUhIiIC2dnZMJvNysg APTv3x/Dhg2DIAjKIzsiIqInTUJCAiIjI1FUVOT3mkqlwsCBA F2u/H9998DACIiItCvXz cP38eOp0OCQkJCAkJgdVq9fmu9ZaEuFwuJTsB98pA vfvD6fTCafTCUEQkJCQAI1GA5vNhoiICPTp0weiKPqEXbVajezsbMTGxsJqtSI8PByhoaFobGyE2WxGXFycT4YDALPZDLPZ3GZm8Xg8uHbtms/P2e12mEwmJCcno6ioCJIkoby83GdgUZZl2Gw2DB48GKWlpWhpaQl4flEUMWrUKBw5cgR1dXVITU31G1kXRRETJkzAxYsXcfXqVQD3clNtbS2ysrJw8 bNNkN/d/ygy1ciIyORlJSEjRs3BrypTqcTBw8exPz585GYmIiLFy9CEAT87ne/w44dOzBu3DhERUUBuBeut2zZgi EIJubGxsXjzzTeRmpqKpqYmREZG4sKFC1izZo0S9uLi4rB48WLcvHkTK1asgNlsRktLCw4dOoTnn38e8 fPR0tLCxwOB6Kjo3H58mWsWrUKVqsVS5YsQXp6OkRRRF5eHtxuN3bu3IkbN24gLS0Ny5YtQ2FhIZxOJ4YMGYJFixYhLi4Os2bNgtPphMlkgl6vx7p163xKdPr164c//vGPiIiIQGNjI3Q6HbZs2YIpU6Zg165duHnzZsD72dzcDFEU0atXr4D1aTExMVi2bBlqa2tx7tw55bher8c777yDAwcO4OjRo5g8eTJee 01NDU1we12Izw8HLdu3cKSJUswZ84cpKWlwWg0YtasWQCAr776CmVlZTCZTJg3bx6ee 451NfXw2g0or6 HmvWrMG1a9cA3Js3sHDhQmzatAmvvPIKHA4HoqKicPPmTaxfvx6//vWvkZSUBJfLBbPZjG //RaffPLJE1M7R0RE9KAGDhyIoUOHwuVyQafTweFw4ODBg0q1gU6nwzPPPIPvvvvOZ8BSp9Ph2Wefxf/ 9z9YLBalPKSlpQVqtRrR0dFwu90wmUyoqanB7t27YbfbMXToUKSkpECtViM9PV0ZjCsrK8OAAQMwcOBAXL9 3SfwpqamIikpSRkFDyRQXbggCJAkSTlXoJFqk8kESZJgt9vbPLfD4cBXX30Fl8uFpKSkgO8JCwuDVqtV7ptXfX09nE4n vTpg5qamjav8TA98lDer18/iKKIs2fPtvme69evQ6PRICYmBhcvXlSOv/rqq1i7di0KCgoAALNnz8bcuXNx/fp1HDx4EACwYMECJCYmYvHixWhoaIDRaMRHH32E9957D8847SqwwPD8eqVauwY8cO7N69G5IkwePxoLCwEEuWLMHt27chSRKysrLw5z//GZmZmTh06BAOADvPrqq8jLy8OKFSvQ0NDQ7sQDk8mEF154Ab///e/R2NgIURSxatUqLF68GEeOHFGC ocffoimpib89re/hcViQWRkJP7 9793uJrLkSNHMGXKFKxatQpr167FlStXfF73PuYZOXKkTygfP348TCYTNm3aBIPBgMWLF2Pjxo34 uuvIcsyNBoNYmNj4XA4sH79esiyjOHDh2PJkiXKvRIEAfPmzcOYMWPw uuv4 7du9DpdHj//ffx5ptvYsmSJUpnyWw2Y/LkyVi4cCFsNhvi4 OxZs0arF69Ghs2bMDKlSshyzLmzJmDmTNnYtOmTX5/MERERD9GgiAgJSUFmzdvhsvlglarRV5eHsaPH4 tW7d2q7QkJSUFhYWF O677yDLMqKjo5GXl4eMjAycOnUK58 fh8PhwKhRo7B7927YbLaHUtahVqvRt29f3Lhxo808ZTKZkJOTgzt37gSskGito3thNBoDhnuPxwOn04mwsLCu/QI96JEviRgZGelX nA/i8UCQRDQq1cvn O3bt3CsWPHYLPZYLPZsHXrVtTV1WHy5MkA7o2SZ2dn4 OPP0Z1dTXsdjvq6uqwd 9epKamIiYmRjmXRqNBSUkJtm3bBovFojyquHv3LkpLS2Gz2eBwOHDmzBl4PB6lTMXlcinB3u12 /x3ILIs4/PPP8ft27dht9vR1NSEf/7znzCZTMo5MzMzERoaivz8fNTU1MBut6Oqqgoffvhhu cGgIKCAvz1r3 FJEn46KOPsHbtWkybNg0azb3 Vk1NDQoLC5GTk6M8MtFoNJgxYwYuXryIuro6qFQqCIIArVYLl8sFu90Oi8WCa9euQZZluN1upQfrdDqV39loNCI7Oxv79 9HRUUF7HY7GhsbsW3bNiQnJyMyMtKnrVu3bkV9fT3sdjtu3ryJ0tJS3L17F9u3b4fVaoXNZsP27duhVquRkpLS7u9NRET0YyEIAoqKimCz2eB2u2Gz2XD69Gn06tULERER3TqnxWJBUVGR8r1eWVmJW7duKdlEkiTlu9/j8cDj8XSYSbpKEATk5ORApVLh9OnTPq9FR0dj1qxZ NnPfoaf//znqKmpwb59 7q0Aksg3kmzgToYkiRBq9U 0PkfxCMfKXe5XBAEod2ZxN7X7r/xly5d8qmTslqtOHPmDLKysqBSqTB8 HBotVo89dRTyM7OVt6XnJwMrVaLkJAQ5Zgsy9iyZYvfNQwGA5KTkzF06FBERERApVJBpVIpIber3G63UrPtVVNTA1mWYTAYANyrx3Y4HH7vKy8v77BHKMsyDh8 jMOHD Opp57Cb37zGyxatAjPP/88/vCHP6ClpQUbN27EJ598gtTUVFy9ehWxsbFISEjAxo0bAQAtLS3YvHkzfvnLXyInJwf5 fm4fv26zyTWQIxGo1KONH/ fOV4RESEMtJ 69YtAPc 6JcuXVLeI0kSHA6H8rjIq6mpyefeEBER/djJsuxXour9fjWbzd1a2KGlpcWvTNRms8FoNHa/oV3gHf0fPHgwjh8/7pd3rFYrrl27Bp1OB7PZjMTERBiNRuzevdsnN/S0nu54dMUjD Xl5eXKJIP7Q6hX7969IUmSX01PoJDorakWBAFhYWGQJAlqtRoq1f9/CFBZWYmysjKf0XlZlv3WpIyPj8eKFStgMBhw6NAhVFVVPfBi/d6R5vaIohjwfZIkdamuuqCgAGfOnEFeXh5ee 015ObmYs ePSgtLcXVq1fxyiuvYOXKlRgwYAB0Oh1OnTql/OzGjRtx8uRJzJgxA6tXr0ZlZSW /PJL7N /v83HVRqNBhqNBrIs /QsLRYLduzY4TNBFkDAOrAH7fESERE9TiRJajdbCILg970bKCN4vz9FUWz3em1dy Px9Hg5Suvs1ZHU1FSMHTsWJ0 eRElJid/rFovFZ0W7qKgozJw5ExkZGThz5ky32 hwOCAIgt9gq/dYoIU4HpVHHsorKirQ2NiIMWPG4MSJEwE/EEOHDoXD4UBVVZXP8ejoaL/3xsfHK6Or3p7ihg0burXO5JQpUxAbG4s33nhDmaSg0 l8RoEfhpaWFqhUKuh0Op/jKpWqy49R3G439u3bh4ULFyI5ORnAvT/m48eP48UXX0RUVBTGjx Pq1ev kzEcLvduHjxIi5evIh///vfeP3117FgwQKcOXPGb3a1l3cm97Fjx7hUIhERUSdYLBaIogitVus34qtSqSCKorL6mZcgCDAYDD6rghgMBgiC4LdSyP0hXK/X9/huoN623d B6Mwou3dgdvTo0SguLlaWPexIbW0tmpqaEBsb2/2G494TeUEQ/FYV1Gq10Ol0QV2n/JHXlDc3N6OkpARjx44NeGPNZjPy8vJQUlLiN5Kenp7ucxOjoqKQnZ2N4uJiSJKEkydPwuVy4Re/ EW32hYeHg6bzeYzwpucnOzXm/L2cntqMf/S0lLodDq/OuqkpCSfkpvOioyMhEql8vlgnThxAkajEYMHD0ZWVhaOKLNh/RVFdXIz8/HyEhIUpdv8vlUp5IeFmtVty5cwfjxo0L6sYGREREj4sbN25AEARkZWX5vRYTE4PQ0FC/1UsEQUBiYqLPseTkZEiS5FMm6vF4/ObjJScndzuUS5KkzDtrzeFwQK1WQ6/XK8d0Op3P3L22xMbGYtKkSSgpKcHJkyc7XS5iNBoRFhbmM1AoiqJPGzrDYrGgtrYW/fv39zmekpICjUaD8vLyLp2vJz3ykXJJkvDpp5/iT3/6E9avX489e/bg vXrAIC fftiypQpqKioCDjJ0ePxYOHChcomOdOmTYPH48GuXbsA3Btx3r59O2bPng0AKCoqgsfjQXx8PBITE/GPf/yj3XKJmzdvYuLEiZgxYwaKi4sRExODCRMm K2bXVFRAYPBgOnTp PcuXOwWCx q550xYULF3D27FnMnz8fvXr1QmVlJRISEvDTn/60w/KVt956C01NTaiqqlLWG50wYQKamppw/Phx5X2lpaW4dOkSXn75ZTQ3N6O4uFh5LTQ0FPPmzUNRURHu3r0LURQxdepU1NXVKR/ 8 fPY8aMGXj55ZdRUlKCuro6lJWVYevWrViwYAGWLl2KgoIC2O129O7dG3Fxcfj888/bXbqIiIjox8Zut6O4uBhDhgyBTqdDdXU1PB4PoqKiMGjQIJSWlvqFcrfbjf79 8PtdqOxsRG9evVCZmYmqqqqlOWlXS4XGhsbMWjQIFitVlitVkRERCA5ObnbZSq1tbVQqVTIycnB9evXIQgCysvLUV1dDVmWMWbMGFy9elVZoKGjzBITE4OJEycqC3YMHDjQ5/Xbt2/DarVizJgxqK vR1NTEzweD0JCQpCeng673a6UtHgXrdBqtdi8eXOn68xlWcbRo0cxdepU5ObmorKyEhERERgxYgQuXLjQo2uUd1VQdvSsrq7G22 /jfnz52PChAmYOnUqgHvlEEeOHEF fn7Am7Jv3z6YzWa89dZbUKlUaG5uxsqVK32WTfzss89gtVoxffp0TJo0yee83g lJEloaWnxC/1ff/01MjIyMHv2bLz00ktwOBxYt24dxowZ47PEzsGDBzF27FhMmzYN06dPx86dO3HlyhVlO1jvddxud8DrSJIEq9WqdBAcDgf 8pe/4L333sOvfvUrqFQq1NfX4 OPP8a7777b7r0UBAGTJ0 GRqOBIAjweDy4ceMGFi1a5FOTL0kSNmzYgA8AAFBQU a8S73W4kJSUhNzcXarUakiShoaEBq1evVuruT548iRMnTmD27NkQBAH//e9/UVpaip07d6KxsRHz58/HqFGjlPOdO3dO b3vvy9edrsdarXa73igySdERERPihMnTsBut2PIkCHKSLbb7caVK1dQUFDgkxu8o GnTp3CpEmTlBry6upq7N /32fjwEOHDmHixIkYPXo0gHvfs/v378ezzz6rnFOWZbhcroDfs95V5bzq6upw vRpDBs2DMnJyWhubkZFRQWqqqpw7tw5pKenIzExEZIkoaysDMePHw/4BMArLi5OmY Wk5Pj93pBQQGuXLkCvV6PYcOGKaP0kiShvr4eBw4cQHNzs/J h8PRZm28JElwOp0BX6uursaJEyeQnZ2NtLQ0pf2t59oFg5CRkRGw yTLsk I7Wi97O4KCQlRSjQsFkubO3R 9tlnOHz4MP71r38hMjISWq0WjY2Nba4QYjKZEBoaCuBeyUzrECqKInr37o3bt2/7jZwLgoCoqChoNBo0NTXBarUiNDQUgiD4TAxVqVSIjIyEWq1WVhAxGAyIiIhAdXW1smRgWFgYampqfD7karUaMTExqKmp8enZec p0WjQ0NAAURSRn5 PL7/8Elu3bg34e3rrokwmE1QqFRwOBxoaGgI DoqNjUV fr7fxkXeNoWHh0MURXg8HtTX1/ut9alWq5XSmIaGBp/JEHq9HmFhYVCpVLBarUqdPwC/IVFRUFQRB8Og CICi7hHW0 gsREdHjTBRFZT6Z0 kMOMlQo9Eou21qtVro9XplcC9Q4FSr1TAajcoumN6RZrvdrgRxk8kEWZb9BkCNRiNUKpVPFvPWs6vVar826vV6iKIIl8sFm80GtVoNg8HQ5spxOp2u3XITm82m5CK9Xg tVgtBEJTlmu//fXU6HQRBCPhUXqPRwGg0 i3q0Zq3/MXtdj 0EfK7d 8qE2B/cDt63q tIB6Id0LB/at6BNLS0tLmNqxOp9NvEqmXLMt q7607pV5tbU6TOsg6X18dD PxxPw vefs0 fPjCZTAF36mzd3s7ew7y8PFgsFhw7dixgmzq6rx6Pp8222O32NktV7r8vXoGuJ8tym/9viIiIniTeBRPa43a7lTDtcrk63BzH4/H45Zb7M0Jb ShQZgkU3r3u/ 73eDzt5hGHw9Hp1U3ayxWtz9cWt9vdbiAHOnf/H6VHPtGT/AmCgNmzZ/v0HkNDQ7F8 XI4nU4UFhY 8DXS0tLw0ksvYdu2bazzJiIiIvqBCfpIOd3z3HPPYe7cuaiurla2oRcEAevWrWuzR9vZ8/7kJz9B3759cfnyZezZs6cHW01EREREPSHoNeWdNWXKFFRVVaGoqCio7XhYvDtbpaamwmg0KpM6HnRznfj4eGRnZ6OystJvC1siIiIieni6UlP 2IRyIiIiIqLHSVdCOWvKiYiIiIiCjKGciIiIiCjIGMqJiIiIiIKMoZyIiIiIKMgYyomIiIiIgoyhnIiIiIgoyBjKiYiIiIiCjKGciIiIiCjIGMqJiIiIiIKMoZyIiIiIKMgYyomIiIiIgoyhnIiIiIgoyBjKiYiIiIiCjKGciIiIiCjIGMqJiIiIiIKMoZyIiIiIKMgYyomIiIiIgoyhnIiIiIgoyBjKiYiIiIiCjKGciIiIiCjIGMqJiIiIiILs/wAGI2CrKOxX1wAAAABJRU5ErkJggg==[/IMG]
+
+---
+

@@ -1,0 +1,654 @@
+---
+title: "Error: You Need To Load the Kernel First"
+date: 2010-10-11
+forum: Installation &amp; Upgrades
+---
+
+### Post by MCleveland89 on 2010-10-11
+I've finally gotten around to installing Ubuntu 10.10. I currently have it installed on on a 320GB HDD. It's the 64bit. I also have Windows 7 x64 on a 1TB HDD. After I installed it, I keeping getting "Error: You Need To Load the Kernel First." Windows 7 boots up fine, but Ubuntu doesn't. I'm almost completely new to Ubuntu so I don't know how I would go about fixing this. I found a couple other forum topics on this problem but it all seems like a foreign language to me. Any help for a newbie?
+
+---
+
+### Post by wilee-nilee on 2010-10-11
+Post the bootscript in my signature, it will give us a lot of information to work with. Post it in code tags by clicking on the # in the reply and put the text in between.
+
+---
+
+### Post by MCleveland89 on 2010-10-12
+I hope this is what you were looking for.
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+ => Windows is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sdb2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /Windows/System32/winload.exe
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders, total 625142448 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048   599,740,415   599,738,368  83 Linux
+/dev/sda2         599,742,462   625,141,759    25,399,298   5 Extended
+/dev/sda5         599,742,464   625,141,759    25,399,296  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1    *          2,048       206,847       204,800   7 HPFS/NTFS
+/dev/sdb2             206,848 1,953,521,663 1,953,314,816   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        42bd427f-9dfa-4ce0-bd9b-ab5bb790292c   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        c1d9c248-5269-41aa-b78a-781e681d53b7   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        E6DE1E94DE1E5D5D                       ntfs       System Reserved               
+/dev/sdb2        F2DA2669DA262A75                       ntfs                                     
+/dev/sdb: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=42bd427f-9dfa-4ce0-bd9b-ab5bb790292c ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=42bd427f-9dfa-4ce0-bd9b-ab5bb790292c ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 42bd427f-9dfa-4ce0-bd9b-ab5bb790292c
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sdb1)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd1,msdos1)'
+    search --no-floppy --fs-uuid --set e6de1e94de1e5d5d
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=42bd427f-9dfa-4ce0-bd9b-ab5bb790292c /               ext4    errors=remount-ro 0       1
+/dev/sda5       none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+  77.4GB: boot/grub/core.img
+ 227.8GB: boot/grub/grub.cfg
+    .5GB: boot/initrd.img-2.6.35-22-generic
+  77.4GB: boot/vmlinuz-2.6.35-22-generic
+    .5GB: initrd.img
+  77.4GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+000001b0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff 00 fe  |................|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 90 83 01 00 00  |................|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+```
+
+---
+
+### Post by wilee-nilee on 2010-10-12
+Make sure the HD with Ubuntu is the first to be read in the bios. The script with a quick look I think is okay, windows 7 is in the os-prober part of the menu. If windows 7 is booting right up the bios is set with sdb before sda, probably
+
+You might use the per-session key usually f12 at power up to get the post bios boot choice menu. This can be other keys on different computer models, tab, esc, another f-key..etc.
+
+---
+
+### Post by MCleveland89 on 2010-10-12
+I set my HDD with Ubuntu to boot first but I'm still getting the same result.
+
+---
+
+### Post by wilee-nilee on 2010-10-12
+> **MCleveland89 said:**
+> I set my HDD with Ubuntu to boot first but I'm still getting the same result.
+
+So when you boot it just goes straight to W7, or is there a bootloader.
+
+Edit; So your getting the grub menu, but if you choose Ubuntu the kernel error is shown is this correct.
+
+---
+
+### Post by MCleveland89 on 2010-10-12
+> **wilee-nilee said:**
+> So when you boot it just goes straight to W7, or is there a bootloader.
+
+Edit; So your getting the grub menu, but if you choose Ubuntu the kernel error is shown is this correct.
+
+Exactly. I get a Ubuntu, Ubuntu recovery, 2 different memtests. and my Windows 7.
+
+---
+
+### Post by wilee-nilee on 2010-10-12
+Doesn't hurt to try this, lets just see if reloading grub works here is a link that defaults to the live cd reload.
+[https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD](https://help.ubuntu.com/community/Grub2#Reinstalling%20from%20LiveCD)
+
+The script looks like everything is working, but it is a computer sometimes errors happen in spite of our diligence.
+
+---
+
+### Post by MCleveland89 on 2010-10-12
+I'll give that a shot when I get home tomorrow. Right now I don't have the energy for it. I'll post back with results. Thanks for all your help.
+
+---
+
+### Post by MCleveland89 on 2010-10-12
+I tried doing what the link you gave me said but either I'm doing it wrong or it's not cooperating with me so I decided to just try and reinstall Ubuntu all together. Now I'm getting "Error: hd0, msdos1 out of disk". I tried getting the bootscript but whenever I click "Try Ubuntu" on the LiveCD, it just hangs.
+
+---
+
+### Post by kc8hr on 2010-10-13
+Hi,
+
+I upgraded to Ubuntu 10.10 this afternoon, and when I rebooted I got the following message:
+
+error:hd0,msdos out of disk
+
+I tried reinstalling grub, now all I get is a blank screen--nothing at all.
+
+> **wilee-nilee said:**
+> Post the bootscript in my signature, it will give us a lot of information to work with. Post it in code tags by clicking on the # in the reply and put the text in between.
+
+As you suggested, I ran your script. Here are the results:
+
+```
+Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 400.1 GB, 400088457216 bytes
+255 heads, 63 sectors/track, 48641 cylinders, total 781422768 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048   778,819,583   778,817,536  83 Linux
+/dev/sda2         778,821,630   781,422,591     2,600,962   5 Extended
+/dev/sda5         778,821,632   781,422,591     2,600,960  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/ramzswap0                                          swap                                     
+/dev/sda1        31fc859a-0f21-4906-a0df-664dd08d5716   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        dfd407ee-7949-42e2-a8fb-d8c254f0a389   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda1        /media/31fc859a-0f21-4906-a0df-664dd08d5716 ext4       (rw,nosuid,nodev,uhelper=udisks)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	linux	/boot/vmlinuz-2.6.35-22-generic root=UUID=31fc859a-0f21-4906-a0df-664dd08d5716 ro nomodeset  quiet splash
+	initrd	/boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	echo	'Loading Linux 2.6.35-22-generic ...'
+	linux	/boot/vmlinuz-2.6.35-22-generic root=UUID=31fc859a-0f21-4906-a0df-664dd08d5716 ro single nomodeset
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	linux	/boot/vmlinuz-2.6.32-25-generic root=UUID=31fc859a-0f21-4906-a0df-664dd08d5716 ro nomodeset  quiet splash
+	initrd	/boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	echo	'Loading Linux 2.6.32-25-generic ...'
+	linux	/boot/vmlinuz-2.6.32-25-generic root=UUID=31fc859a-0f21-4906-a0df-664dd08d5716 ro single nomodeset
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-25-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set 31fc859a-0f21-4906-a0df-664dd08d5716
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=31fc859a-0f21-4906-a0df-664dd08d5716 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=dfd407ee-7949-42e2-a8fb-d8c254f0a389 none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+  90.3GB: boot/grub/core.img
+  61.0GB: boot/grub/grub.cfg
+   6.0GB: boot/initrd.img-2.6.32-25-generic
+   6.5GB: boot/initrd.img-2.6.35-22-generic
+  90.3GB: boot/vmlinuz-2.6.32-25-generic
+  90.3GB: boot/vmlinuz-2.6.35-22-generic
+   6.5GB: initrd.img
+   6.0GB: initrd.img.old
+  90.3GB: vmlinuz
+  90.3GB: vmlinuz.old
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  0a 0d 0a 0d 0a 0d 0a 0d  0a 0d 0a 0d 0a 0d 0a 0d  |................|
+*
+000001b0  0a 0d 0a 0d 0a 0d 0a 0d  0a 0d 0a 0d 0a 0d 00 fe  |................|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 b0 27 00 00 00  |............'...|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+```
+
+I can't make head-nor-tail out of it. Could you suggest a solution to getting my system back again?
+
+Thanks!
+Tim
+
+---
+
+### Post by Sageth on 2010-10-15
+Just adding that I also received the error tonight on 10.10 32-bit.  Everything has been working fine and then my PC froze.  When I rebooted, I Got error:hd0,msdos1 out of disk.  
+
+If I find a solution, I'll post back.
+
+---
+
+### Post by MCleveland89 on 2010-10-16
+> **Sageth said:**
+> Just adding that I also received the error tonight on 10.10 32-bit.  Everything has been working fine and then my PC froze.  When I rebooted, I Got error:hd0,msdos1 out of disk.  
+
+If I find a solution, I'll post back.
+Thanks, please do.
+
+---
+
+### Post by kc8hr on 2010-10-17
+I re-installed grub2, and the problem seems to be fixed.
+
+I am unhappy with grub2, though. No splash screen, no messages, just a black screen--and 10.10 starts more slowly than 10.04.
+
+But at least I got my machine back.
+
+---
+

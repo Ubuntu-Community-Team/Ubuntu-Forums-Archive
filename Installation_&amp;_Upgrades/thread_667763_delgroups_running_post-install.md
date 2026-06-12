@@ -1,0 +1,20 @@
+---
+title: "delgroups running post-install"
+date: 2008-01-14
+forum: Installation &amp; Upgrades
+---
+
+### Post by In Pog Form on 2008-01-14
+I was getting increasingly frustrated with trying to install 7.10 to older Linux Certiufied laptop. 
+I installed and then re-installed repeatedly.
+
+After the install the machine ran slow due to scrollkeeper doing it's index build... no problem let it run.
+
+The problems came when I noticed that delgroups was running and wiping out all the administrative groups (and their files?) and so on a subsequent reboot I'd see all these boot time messages about can't find or chown directory and so on. No administrative users and groups leaves the operating system very much broken.
+
+I noticed this did not happen when I left the machine off the network.
+
+Is this an exploit?
+
+---
+

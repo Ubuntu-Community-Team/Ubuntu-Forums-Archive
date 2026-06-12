@@ -1,0 +1,755 @@
+---
+title: "Where is Grub located?"
+date: 2013-01-27
+forum: Installation &amp; Upgrades
+---
+
+### Post by nervynewman on 2013-01-27
+Is Grub on sda AND sdc, or just sdc?  The first few lines of bootinfoscript seem incorrect.  Are they just routinely added to every file?
+
+```
+
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 72 for .
+ => Windows is installed in the MBR of /dev/sdb.
+ => Grub2 (v1.99) is installed in the MBR of /dev/sdc and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 72 for .
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files:        /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sdb1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sdc1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sdc2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info: 
+
+sdc5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 12.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sdc6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info: 
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048   312,578,047   312,576,000   7 NTFS / exFAT / HPFS
+
+
+Drive: sdb _____________________________________________________________________
+
+Disk /dev/sdb: 256.1 GB, 256060514304 bytes
+255 heads, 63 sectors/track, 31130 cylinders, total 500118192 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdb1               2,048   500,115,455   500,113,408   7 NTFS / exFAT / HPFS
+
+
+Drive: sdc _____________________________________________________________________
+
+Disk /dev/sdc: 128.0 GB, 128035676160 bytes
+255 heads, 63 sectors/track, 15566 cylinders, total 250069680 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdc1    *          2,048   174,270,071   174,268,024   7 NTFS / exFAT / HPFS
+/dev/sdc2         174,270,462   250,068,991    75,798,530   5 Extended
+/dev/sdc5         174,270,464   199,755,775    25,485,312  83 Linux
+/dev/sdc6         199,757,824   250,068,991    50,311,168  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        6E1EA8671EA829D3                       ntfs       Windows 7 Ultimate
+/dev/sdb1        B2E2AD07E2ACD0C1                       ntfs       Music & Movies
+/dev/sdc1        503271BB3271A71E                       ntfs       Programs & Games
+/dev/sdc5        eae49a61-a496-4eed-9866-36d39fe63d1c   ext4       
+/dev/sdc6        114bd8f8-5e70-4c63-87cc-178212293b38   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sdc5        /                        ext4       (rw,errors=remount-ro)
+
+
+=========================== sdc5/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd3,msdos5'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+else
+  search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "${linux_gfx_mode}" != "text" ]; then load_video; fi
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+recordfail
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd3,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+    else
+      search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+    fi
+    linux    /boot/vmlinuz-3.5.0-22-generic root=UUID=eae49a61-a496-4eed-9866-36d39fe63d1c ro   quiet splash $vt_handoff
+    initrd    /boot/initrd.img-3.5.0-22-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+    menuentry 'Ubuntu, with Linux 3.5.0-22-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-22-generic-advanced-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd3,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+        else
+          search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+        fi
+        echo    'Loading Linux 3.5.0-22-generic ...'
+        linux    /boot/vmlinuz-3.5.0-22-generic root=UUID=eae49a61-a496-4eed-9866-36d39fe63d1c ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-22-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-22-generic-recovery-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd3,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+        else
+          search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+        fi
+        echo    'Loading Linux 3.5.0-22-generic ...'
+        linux    /boot/vmlinuz-3.5.0-22-generic root=UUID=eae49a61-a496-4eed-9866-36d39fe63d1c ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-22-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-advanced-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+    recordfail
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd3,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+        else
+          search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=eae49a61-a496-4eed-9866-36d39fe63d1c ro   quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.5.0-17-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.5.0-17-generic-recovery-eae49a61-a496-4eed-9866-36d39fe63d1c' {
+    recordfail
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd3,msdos5'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+        else
+          search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+        fi
+        echo    'Loading Linux 3.5.0-17-generic ...'
+        linux    /boot/vmlinuz-3.5.0-17-generic root=UUID=eae49a61-a496-4eed-9866-36d39fe63d1c ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /boot/initrd.img-3.5.0-17-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='hd3,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+    else
+      search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+    fi
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='hd3,msdos5'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd3,msdos5 --hint-efi=hd3,msdos5 --hint-baremetal=ahci3,msdos5  eae49a61-a496-4eed-9866-36d39fe63d1c
+    else
+      search --no-floppy --fs-uuid --set=root eae49a61-a496-4eed-9866-36d39fe63d1c
+    fi
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Windows 7 (loader) (on /dev/sda1)' --class windows --class os $menuentry_id_option 'osprober-chain-6E1EA8671EA829D3' {
+    insmod part_msdos
+    insmod ntfs
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6E1EA8671EA829D3
+    else
+      search --no-floppy --fs-uuid --set=root 6E1EA8671EA829D3
+    fi
+    chainloader +1
+}
+menuentry 'Windows 7 (loader) (on /dev/sdc1)' --class windows --class os $menuentry_id_option 'osprober-chain-6E0E4F640E4F2505' {
+    insmod part_msdos
+    insmod ntfs
+    set root='hd2,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd2,msdos1 --hint-efi=hd2,msdos1 --hint-baremetal=ahci2,msdos1  6E0E4F640E4F2505
+    else
+      search --no-floppy --fs-uuid --set=root 6E0E4F640E4F2505
+    fi
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sdc5/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sdd5 during installation
+UUID=eae49a61-a496-4eed-9866-36d39fe63d1c /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdd6 during installation
+UUID=114bd8f8-5e70-4c63-87cc-178212293b38 none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sdc5: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+               =                boot/grub/grub.cfg                             1
+               =                boot/initrd.img-3.5.0-17-generic               1
+               =                boot/initrd.img-3.5.0-22-generic               1
+               =                boot/vmlinuz-3.5.0-17-generic                  1
+               =                boot/vmlinuz-3.5.0-22-generic                  1
+               =                initrd.img                                     1
+               =                initrd.img.old                                 1
+               =                vmlinuz                                        1
+               =                vmlinuz.old                                    1
+
+=============================== StdErr Messages: ===============================
+
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+awk: cmd. line:36: Math support is not compiled in
+
+
+```The Grub menu will only load if the sdc drive boots first.  Windows 7 is also on sda, not sdb.
+
+I added Ubuntu using the install alongside another OS option to a drive that has programs that won't fit on the Windows 7 main drive.  sdb is just for music and other media files.
+
+---
+
+### Post by darkod on 2013-01-27
+What bootloader you have on the MBR of the disks has no relation to what OS is installed on the same disk. Win7 is on sda1 but you have windows bootloader on the MBR of sdb.
+
+If booting from sdc works, just keep the settings in bios to boot from sdc and it's fine. You probably have a broken grub2 on sda from previous installs or attempts. It doesn't hurt if it stays there as long as you remember you have to boot from sdc.
+
+---
+
+### Post by oldfred on 2013-01-27
+Any of the auto install options will typically install grub2's boot loader to the MBR of sda as that is assumed to be the drive you boot from in BIOS settings.
+
+You can install grub2's boot loader from your install to any drive. And then set BIOS to boot that drive first.
+       sudo grub-install /dev/sdc
+
+Grub also remembers which drive you used to install and on major updates will reinstall to that location. But if you are booting from another drive that may create issues.
+       
+ #To see what drive grub2 uses see this line  - grub-pc/install_devices:
+sudo debconf-show grub-pc
+ sudo grub-probe -t device /boot/grub
+
+You may just want to set BIOS to boot from sdc, but install the Windows boot loader to sda, so you can directly boot Windows in case of issues with Ubuntu.
+       
+ How to restore the Ubuntu/XP/Vista/7 bootloader 
+[https://help.ubuntu.com/community/RestoreUbuntu/XP/Vista/7Bootloader](https://help.ubuntu.com/community/RestoreUbuntu/XP/Vista/7Bootloader)
+
+---
+
+### Post by furything on 2013-01-28
+Hi nervynewman
+
+oldfred is correct as was my response to your previous thread.
+
+Easiest way to fix sda if to boot in windows repair mode as previously suggested and type 
+```
+FixMbr
+```If concerned about overwriting other disk MBRs then disconnect them until you have done the repair on sda.
+
+Personally for dual boot system I install windows on sda.
+I then change the bios to boot for a new hard drive and install ubuntu on new drive.
+
+This means sda has windows MBR and if I want to run windows back up I select this drive from BIOS boot menu (windows can be picky if the MBR is not MS and the drive is not set as the first system drive)
+
+Otherwise  I boot from sdb which has grub and I choose either kbuntu (I prefer KDE) or windows if I don't care about running a back up.
+
+You have a number of MBRs doing different things from previous install attempts so you can clean them up by running the windows fix. If you do not have a windows recovery/install disk you can get things on line to do the job
+BartPe
+WinPE
+etc
+
+---
+
+### Post by Bucky Ball on 2013-01-28
+Posted in error ...
+
+---
+
+### Post by nervynewman on 2013-01-28
+Thanks again for all the help.
+
+It seems as though my best option is to use grub only to run Ubuntu  until I learn enough to try the dual-boot again.  I'll just choose what  OS to load from BIOS since they're both on different drives after fixing all this.
+
+> **furything said:**
+> 
+This means sda has windows MBR and if I want to run windows back up I  select this drive from BIOS boot menu (windows can be picky if the MBR  is not MS and the drive is not set as the first system drive)
+Now I just need to fix the MBR  to keep the windows sda drive from loading the grub rescue screen, but the commands durring windows recovery don't help
+
+> **furything said:**
+> 
+You have a number of MBRs doing different things from previous install  attempts so you can clean them up by running the windows fix. If you do  not have a windows recovery/install disk you can get things on line to  do the job
+This all started when I moved Ubuntu from a slower HDD to a SSD, but  did  it the wrong way. The grub menu still shows a second windows  loader  line for sdc.
+
+I want to completely remove everything related to grub and  Ubuntu without erasing its partition, and then try again the right way?  I  still have all discs and image files.
+
+Sorry to say the same things again.  As I also wrote in the other thread, this should all have been started in the beginners section! jk
+
+---
+
+### Post by dino99 on 2013-01-28
+what you should do:
+
+- boot on ubuntu
+- run into a terminal:  
+
+sudo dpkg-reconfigure grub-pc
+then select to remove grub installation
+
+then, reinstall grub-pc on /dev/sda :
+sudo apt-get install grub-pc
+
+now, the grub bootloader is only installed on sda, and will deal with all the installed OS
+
+---
+
+### Post by oldfred on 2013-01-28
+If Windows is sda, you want to follow dino's suggestion but use sdb not sda. Ater fixing Windows MBR change BIOS to boot sdb first.
+
+Make sure BIOS is set to boot from sda and then do Windows repairs:
+You can run the fixMBR to install the Windows boot loader or install a Windows type boot loader to sda. All the Windows boot loader really does is look for a partition with a boot flag and jump to that partition's PBR, partition boot sector.
+
+       How to restore the Ubuntu/XP/Vista/7 bootloader 
+[https://help.ubuntu.com/community/RestoreUbuntu/XP/Vista/7Bootloader](https://help.ubuntu.com/community/RestoreUbuntu/XP/Vista/7Bootloader)
+
+    
+       Restore basic windows boot loader - universe enabled if error on lilo not found
+Simply open Synaptic and Settings > Repositories and tick the box against the Universe repo in the Ubuntu Software tab. Close that window and click on reload before installing lilo with Synaptic or command line.
+sudo apt-get install lilo
+sudo lilo -M /dev/sda mbr
+May show error messages about the rest of lilo missing, ignore, we just want MBR with bootloader.
+
+---
+
+### Post by nervynewman on 2013-01-29
+I'd like to understand terminal commands more, but since I don't understand dino99's reconfigure grub commands, I finally used the Boot-Repair tool to change the drive MBRs, but only after accidently adding grub to all 4 of them. Now sda loads windows like it should, but if sdb(where ubuntu used to be) doesn't load grub it freezes the computer instead of saying that the bootmgr is missing.  Its driver also says windows on it.
+
+This is all fine for now, but are these generic MBR sectors okay to have at the beginning of each drive?
+
+Boot-Repair also gave me an url after every change like [http://paste.ubuntu.com/1584820](http://paste.ubuntu.com/1584820) or [http://paste.ubuntu.com/1584642](http://paste.ubuntu.com/1584642).
+
+
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Syslinux MBR (4.04 and higher) is installed in the MBR of /dev/sda.
+ => Syslinux MBR (4.04 and higher) is installed in the MBR of /dev/sdb.
+ => Syslinux MBR (4.04 and higher) is installed in the MBR of /dev/sdc.
+ => Grub2 (v1.99) is installed in the MBR of /dev/sdd and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 72 for .
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files:        /bootmgr /Boot/BCD /Windows/System32/winload.exe
+
+sdb1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /Boot/BCD
+
+sdc1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sdd1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /Boot/BCD
+
+sdd2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info: 
+
+sdd5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  Ubuntu 12.10
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sdd6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info: 
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048   312,578,047   312,576,000   7 NTFS / exFAT / HPFS
+
+
+Drive: sdb _____________________________________________________________________
+
+Disk /dev/sdb: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdb1    *          2,048 3,907,024,895 3,907,022,848   7 NTFS / exFAT / HPFS
+
+
+Drive: sdc _____________________________________________________________________
+
+Disk /dev/sdc: 256.1 GB, 256060514304 bytes
+255 heads, 63 sectors/track, 31130 cylinders, total 500118192 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdc1    *          2,048   500,115,455   500,113,408   7 NTFS / exFAT / HPFS
+
+
+Drive: sdd _____________________________________________________________________
+
+Disk /dev/sdd: 128.0 GB, 128035676160 bytes
+255 heads, 63 sectors/track, 15566 cylinders, total 250069680 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdd1    *          2,048   174,270,071   174,268,024   7 NTFS / exFAT / HPFS
+/dev/sdd2         174,270,462   250,068,991    75,798,530   5 Extended
+/dev/sdd5         174,270,464   199,755,775    25,485,312  83 Linux
+/dev/sdd6         199,757,824   250,068,991    50,311,168  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        6E1EA8671EA829D3                       ntfs       Windows 7 Ultimate
+/dev/sdb1        6E0E4F640E4F2505                       ntfs       Extras
+/dev/sdc1        B2E2AD07E2ACD0C1                       ntfs       Music & Movies
+/dev/sdd1        503271BB3271A71E                       ntfs       Windows 7 Programs
+/dev/sdd5        eae49a61-a496-4eed-9866-36d39fe63d1c   ext4       
+/dev/sdd6        114bd8f8-5e70-4c63-87cc-178212293b38   swap       
+/dev/sr0                                                udf        Repair disc 64-bit
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sdd5        /                        ext4       (rw,errors=remount-ro)
+/dev/sr0         /media/brandon/Repair disc  64-bit udf        (ro,nosuid,nodev,uid=1000,gid=1000,iocharset=utf8,umask=0077,uhelper=udisks2)
+
+
+=========================== sdd5/boot/grub/grub.cfg: ===========================
+
+```Thank you yet again for the help, as I've learned more in the last few days than years.
+
+I'll mark the thread as solved tomorrow,
+
+Brandon
+
+---
+
+### Post by oldfred on 2013-01-29
+Drive order changed and Ubuntu is on sdd as is grub's boot loader, so that is good. And the Windows boot loader is on the Windows drive. 
+It should not matter that it is syslinux not Windows. But you can change BIOS to boot Windows drive and run Windows repairs fixMBR to restore the Windows boot loader if you really want it. 
+
+Grub also remembers where to reinstall on major updates. I think you have to run dino's command to reset that.
+       #To see what drive grub2 uses see this  - grub-pc/install_devices:
+sudo debconf-show grub-pc
+ sudo grub-probe -t device /boot/grub
+
+    #to get grub2 to remember where to reinstall on updates:
+sudo dpkg-reconfigure grub-pc
+#Enter thru first pages,spacebar to choose/unchoose drive, enter to accept, do not choose partitions
+
+---
+
+### Post by nervynewman on 2013-01-30
+I was confused yesterday when I saw "quiet splash" after dino's reconfigure command, so I stopped.  Other websites say its just a boot screen.
+
+The terminal window says "Found Windows 7 (loader) on /dev/sdb1" and the GRUB boot screen still has a "Windows 7 (loader) on /dev/sdb1" option that leads nowhere.  If these are both from its boot loader* then I'll start another thread later if I can't fix it.
+
+* I still confuse boot loader with MBR boot sector.
+
+GRUB is only where I want it , so that's all for now.  Thank you very much for the instructions.
+
+---
+
+### Post by Bucky Ball on 2013-01-30
+In that case, please mark this thread as Solved from Thread Tools to help others and start another thread when/if you need. ;)
+
+---
+

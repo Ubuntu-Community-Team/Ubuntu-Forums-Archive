@@ -1,0 +1,181 @@
+---
+title: "Ethernet adapters detected but disabled"
+date: 2011-03-06
+forum: Installation &amp; Upgrades
+---
+
+### Post by atm999 on 2011-03-06
+Hi all,
+
+I'm trying to install a second NIC on a computer running 10.10 x64 server edition, but am having a bit of trouble and hoping someone can help. I got a used gigabit PCIe ethernet adapter and hooked it up, but it didn't display when I ran ifconfig, so I assumed that it was broken. However, when I plugged in a known working 10/100 adapter from another machine it also wasn't configured. 
+
+I then did a bit of investigating and found that both cards ARE detected, but are unable to work for an unknown reason. 
+
+Here's the output of  "sudo lspci | grep -r Ethernet"
+
+00:08.0 Bridge: nVidia Corporation MCP55 Ethernet (rev a3)
+01:07.0 Ethernet controller: ADMtek NC100 Network Everywhere Fast Ethernet 10/100 (rev 11)
+02:00.0 Ethernet controller: D-Link System Inc DGE-560T PCI Express Gigabit Ethernet Adapter (rev 11)
+
+The bridge is the working onboard NIC, and the others are the ones that I'm trying to get to work. 
+
+This also might help diagnose the problem:
+
+sudo lshw -C network
+```
+ *-network DISABLED      
+       description: Ethernet interface
+       product: NC100 Network Everywhere Fast Ethernet 10/100
+       vendor: ADMtek
+       physical id: 7
+       bus info: pci@0000:01:07.0
+       logical name: eth2
+       version: 11
+       serial: 00:4c:69:6e:75:79
+       width: 32 bits
+       clock: 33MHz
+       capabilities: bus_master rom ethernet physical
+       configuration: broadcast=yes driver=tulip driverversion=1.1.15 latency=32 multicast=yes
+       resources: irq:17 ioport:ac00(size=256) memory:fdeff000-fdeff3ff memory:fdec0000-fdedffff
+  *-network DISABLED
+       description: Ethernet interface
+       product: DGE-560T PCI Express Gigabit Ethernet Adapter
+       vendor: D-Link System Inc
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eth1
+       version: 11
+       serial: 00:00:5a:9e:b4:bf
+       capacity: 1GB/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm vpd msi pciexpress bus_master cap_list rom ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=sky2 driverversion=1.28 firmware=N/A latency=0 link=no multicast=yes port=twisted pair
+       resources: irq:42 memory:fddfc000-fddfffff ioport:9c00(size=256) memory:fddc0000-fdddffff
+```
+
+ifconfig
+```
+eth0      Link encap:Ethernet  HWaddr *******  
+          inet addr:********  Bcast: *******  Mask:255.255.255.0
+          inet6 addr: ********** Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:13628 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:131 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1889958 (1.8 MB)  TX bytes:19430 (19.4 KB)
+          Interrupt:44 Base address:0xe000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+```
+(Note: ip addresses are **'ed out, but this interface works fine.)
+
+
+cat /etc/network/interfaces 
+```
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet dhcp
+```
+
+Again, thank you for any advice!
+
+---
+
+### Post by grahammechanical on 2011-03-06
+Try
+
+```
+sudo ifup eth1
+```and
+
+```
+sudo ifup eth2
+```eth0 is the onboard ethernet, so the two new ones will be eth1 and eth2. May be they need to be activated. Also do you need to enable then in the BIOS?
+
+Regards.
+
+---
+
+### Post by atm999 on 2011-03-06
+Thanks for the reply, but no luck. After entering those commands I get 
+
+```
+Ignoring unknown interface eth1=eth1.
+(or eth2 in the second case)
+```
+
+I checked the BIOS and there are no options that I can see relating to LAN except to disable onboard LAN, and to enable boot-on-lan. Any other ideas?
+
+---
+
+### Post by davidmohammed on 2011-03-06
+you'll most probably have to get it a helping hand identifying the linux kernel module to load...
+
+have a look [here]("http://franchu.net/2008/09/20/gigabit-ethernet-network-card-setup-in-ubuntu-804/") for a good example of how to do this.
+
+---
+
+### Post by atm999 on 2011-03-06
+I'm a bit confused on what changes I need to make to etc/udev/rules.d/70-persistent-net.rules
+Here are the current contents of that file.
+
+```
+# This file was automatically generated by the /lib/udev/write_net_rules
+# program, run by the persistent-net-generator.rules rules file.
+#
+# You can modify it, as long as you keep each rule on a single
+# line, and change only the value of the NAME= key.
+
+# PCI device 0x10de:0x0373 (forcedeth)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="****", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
+
+# PCI device 0x1186:0x4b00 (sky2)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="****", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth1"
+
+# PCI device 0x1317:0x0985 (tulip)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="****", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth2"
+```
+(MAC addresses **'ed out, but correct.) As listed, eth0 is my onboard lan, eth1 is the gigabit card, and eth2 is the 10/100 card, but only eth0 shows up in ifconfig as mentioned before.
+
+How can I figure out which drivers to use, and is it a problem that they all have the same ATTR{dev_id}? Thanks again for the help!
+
+---
+
+### Post by davidmohammed on 2011-03-07
+You'll notice that in the 'capabilities' section of lshw -C network there is embedded in there a 'driver' value - that is the kernel name that Franchu used for his Drivers== 
+
+his ATTR{address} is taken from the 'serial' value
+
+Dont know about the 'dev_id' since that wasnt in his example.  Maybe you dont need that
+
+suggest
+
+```
+SUBSYSTEM==”net”, ACTION==”add”, DRIVERS==”tulip&#8243;, ATTR{address}==”00:4c:69:6e:75:79&#8243;, ATTR{type}==”1&#8243;, KERNEL==”eth*”, NAME=”eth2&#8243;
+SUBSYSTEM==”net”, ACTION==”add”, DRIVERS==”sky2”, ATTR{address}==”00:00:5a:9e:b4:bf”, ATTR{type}==”1&#8243;, KERNEL==”eth*”, NAME=”eth1&#8243; 
+```
+
+N.B. seems my copying and pasting hasnt copied the correct "quotation marks" - suggest use the " above the number 2 key and do not copy and paste from the code section above.
+
+---
+
+### Post by atm999 on 2011-03-07
+Thank you very much, that did it!
+
+---
+

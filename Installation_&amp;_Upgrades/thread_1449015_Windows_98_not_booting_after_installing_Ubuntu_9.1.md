@@ -1,0 +1,501 @@
+---
+title: "Windows 98 not booting after installing Ubuntu 9.10"
+date: 2010-04-07
+forum: Installation &amp; Upgrades
+---
+
+### Post by Newuser2010 on 2010-04-07
+I installed Ubuntu 9.10 on a Dell latitude.
+After insallation I can not boot into Windows 98 because Grub does not find my windows 98 Intallation.
+But I am sure it is there because I can access all the Windows files from within Ubuntu.
+If I  update-grub it does not find Windows 98. 
+Is grub-pc compatible with Win 98 and Fat32 ?
+How do I get it to boot Win98.
+Best Regards
+U
+
+---
+
+### Post by bpalone on 2010-04-07
+This is purely a W.A.G., but it is entirely possible that Grub 2 does not look for nor recognize a 9x OS.  It isn't exactly a new OS.  I have a 98 box that I just recently built, so I'm not anti 98.  But, many developers wouldn't even think of 9x as possibility today.
+
+I do remember seeing a thread on here about reverting back to the old Grub.  If nobody comes forth with an answer, you might try gong that route.
+
+Good luck.
+
+p.s. Another option would be to try the 8.04 LTS since it use the old Grub.  That would be a reasonably quick way to see.
+
+---
+
+### Post by oldfred on 2010-04-07
+Lets run this script to see what is where. Script was updated to see win98 as it only went back to see XP files before.
+
+Boot Info Script courtesy of forum member meierfra
+Page with instructions and download:
+[http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/)
+Be sure to highlight and use code tags (# in edit panel) to make it easier to read when you post the results.txt.
+
+---
+
+### Post by Newuser2010 on 2010-04-08
+Thanks I run the scripts and it gave the following results.
+
+
+```
+
+
+Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  MSWIN4.1: Fat 32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 98
+    Boot files/dirs:   /boot.ini /IO.SYS /MSDOS.SYS /COMMAND.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Fat32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sda3: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 20.0 GB, 20003880960 bytes
+255 heads, 63 sectors/track, 2432 cylinders, total 39070080 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x5ababb03
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63     9,221,309     9,221,247   b W95 FAT32
+/dev/sda2           9,221,310    14,490,629     5,269,320   b W95 FAT32
+/dev/sda3          14,490,630    39,070,079    24,579,450   5 Extended
+/dev/sda5          14,490,693    37,929,464    23,438,772  83 Linux
+/dev/sda6          37,929,528    39,070,079     1,140,552  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        252F-17FC                              vfat                                     
+/dev/sda2        ED9E-0CF6                              vfat                                     
+/dev/sda5        49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b   ext4                                     
+/dev/sda6        a07bb244-54dd-41e7-b85c-2599547f76b4   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+
+
+================================ sda1/boot.ini: ================================
+
+[Boot Loader]
+timeout=0
+Default=C:\
+
+
+[Operating Systems]
+C:\="Microsoft Windows 98"
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,5)
+search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,5)
+    search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b ro single 
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda5 during installation
+UUID=49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=a07bb244-54dd-41e7-b85c-2599547f76b4 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+   9.5GB: boot/grub/core.img
+   8.2GB: boot/grub/grub.cfg
+   8.2GB: boot/initrd.img-2.6.31-14-generic
+   9.5GB: boot/vmlinuz-2.6.31-14-generic
+   8.2GB: initrd.img
+   9.5GB: vmlinuz
+```
+
+What next?
+
+Best Regards:
+U:)
+
+---
+
+### Post by oldfred on 2010-04-08
+I would try a custom entry in 40_custom.
+
+You add entries to this
+/etc/grub.d/40_custom
+
+menuentry "Windows 98 on sda1" {
+set root=(hd0,1)
+chainloader +1
+}
+
+Then run 
+sudo update-grub
+
+---
+
+### Post by Newuser2010 on 2010-04-08
+I tryed a custom entry in 40_custom as you said,
+but no results:
+
+Custom Entry:
+```
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+menuentry "Windows 98 on sda1"{
+set root=(hd0,1)
+chainloader +1
+}
+
+```
+
+Update-Grub:
+
+```
+ndatulumukwa@ndatulumukwa-laptop:~$ sudo update-grub
+Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-2.6.31-14-generic
+Found initrd image: /boot/initrd.img-2.6.31-14-generic
+Found memtest86+ image: /boot/memtest86+.bin
+done
+ndatulumukwa@ndatulumukwa-laptop:~$ 
+
+```
+
+Best Regards:
+U
+
+---
+
+### Post by oldfred on 2010-04-08
+I just reran mine and it does not show the results of 40_custom but the grub.cfg should be updated and when you reboot an entry should be there. 
+
+You can check before rebooting by looking at 
+/boot/grub/grub.cfg
+
+The real test is does it work.
+
+---
+
+### Post by Newuser2010 on 2010-04-09
+Yes there is an entry in Grub.cfg
+But it still does not work it goes straight to Ubuntu.
+```
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,5)
+search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	set quiet=1
+	insmod ext2
+	set root=(hd0,5)
+	search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b ro   quiet splash
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+	insmod ext2
+	set root=(hd0,5)
+	search --no-floppy --fs-uuid --set 49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b
+	linux	/boot/vmlinuz-2.6.31-14-generic root=UUID=49c3d65a-a030-4e1c-ac3d-ec61e8b12e1b ro single 
+	initrd	/boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+menuentry "Windows 98 on sda1"{
+set root=(hd0,1)
+chainloader +1
+}
+### END /etc/grub.d/40_custom ###
+```
+
+Best Regards
+U
+
+---
+
+### Post by oldfred on 2010-04-09
+With the entry in 40_custom the menu should come up. Only when there are only Ubuntu entries is it supposed to directly boot.
+
+You can hold down the shift key from BIOS boot to get the menu.
+
+---
+
+### Post by Newuser2010 on 2010-04-10
+When I press the shift key then the menu comes up and I can boot Windows 98.
+What can I do so that the menu comes up automatically?
+
+Best Regards:
+U:)
+
+---
+
+### Post by oldfred on 2010-04-10
+You can change the settings in /etc/default/grub. I have not changed much so I do not know the exact setting.
+
+It may be this but check the links for more explanation:
+GRUB_HIDDEN_TIMEOUT=0 on single operating system computers.
+
+    * No menu is displayed. The system is immediately booted to the default OS.
+    * This is the default setting with only one identified operating system.
+          o
+
+            To display the menu under this condition, place a # symbol at the start of the line and ensure the GRUB_TIMEOUT setting is a positive integer. 
+
+
+General info:
+look for Boot Display Behavior
+[https://help.ubuntu.com/community/Grub2](https://help.ubuntu.com/community/Grub2)
+The Grub 2 Guide (formerly Grub 2 Basics)
+[http://ubuntuforums.org/showthread.php?t=1195275](http://ubuntuforums.org/showthread.php?t=1195275)
+
+Grub 2 Title Tweaks
+[http://ubuntuforums.org/showthread.php?t=1287602](http://ubuntuforums.org/showthread.php?t=1287602)
+drs305's hack to get hidden timeout to work:
+[http://ubuntuforums.org/showthread.php?t=1319672](http://ubuntuforums.org/showthread.php?t=1319672)
+ranch hand's custom grub2
+[http://ubuntuforums.org/showthread.php?t=1284553](http://ubuntuforums.org/showthread.php?t=1284553)
+
+---
+
+### Post by Newuser2010 on 2010-04-15
+Everything is working now the way I want.
+I put a comment in front of hidden timeout in /etc/default/grub
+
+```
+# GRUB_HIDDEN_TIMEOUT=0
+```
+
+Since then the menu comes up automatically.
+Thanks for your help.
+Best Regards
+U.
+:)
+
+---
+

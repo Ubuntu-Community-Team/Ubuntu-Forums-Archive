@@ -1,0 +1,441 @@
+---
+title: "Partition not allocated after win installation"
+date: 2011-04-28
+forum: Installation &amp; Upgrades
+---
+
+### Post by marcelbanu on 2011-04-28
+Hi, it is my first post. Sorry for my english !
+I use **Ubuntu 10.4.2 Lucid **romanian.
+
+I had install** Windows XP** *after* Ubuntu installation.
+Before Win installation I had these partition:
+
+[[IMG]http://i.imgur.com/Temifs.png[/IMG]]("http://imgur.com/Temif")
+
+For Win installation I** deleted** the **Madbox** partition** /sda7** (12.70 GiB) 
+and I unified it with the near partition of 12**.**70 GiB** unallocated.**
+After Win installation all the disk
+is not allocated as seen in the picture with Gparted:
+
+[[IMG]http://i.imgur.com/SKOhns.png[/IMG]]("http://imgur.com/SKOhn")
+
+But disk utility see the partition:
+[[IMG]http://i.imgur.com/8Wm00s.png[/IMG]]("http://imgur.com/8Wm00")
+
+It is a hilarious situation because the system boot normally in Ubuntu and Windows, as seen in terminal.
+
+
+The **RESULTS**.txt file of** boot info script:**
+
+```
+                 Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for /boot/burg.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.2 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files/dirs:   
+
+sda6: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  According to the info in the boot sector, sda6 starts 
+                       at sector 63.
+    Operating System:  Windows XP
+    Boot files/dirs:   
+
+sda3: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda4: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /grub/grub.cfg /boot.ini /ntldr /NTDETECT.COM 
+                       /boot/grub/core.img
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1               2,048    20,000,767    19,998,720  83 Linux
+/dev/sda2          20,002,814   763,826,175   743,823,362   5 Extended
+Extended  partition  linking to another extended partition
+/dev/sda5          20,002,816   706,666,495   686,663,680  83 Linux
+/dev/sda6         706,667,283   759,938,759    53,271,477   7 HPFS/NTFS
+/dev/sda3         759,943,168   763,826,175     3,883,008  82 Linux swap / Solaris
+/dev/sda4    *    763,826,490   953,762,984   189,936,495   7 HPFS/NTFS
+
+/dev/sda2 overlaps with /dev/sda3
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        1d02b889-da83-484e-bffd-37d1809e5c41   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda3        755920a0-504f-49db-8706-303e08ae72f4   swap                                     
+/dev/sda4        0AFB572C3AB8B291                       ntfs       REFUGIU                       
+/dev/sda5        bf53279e-fd95-41a7-86a2-6142d5a28414   ext4                                     
+/dev/sda6        F85C9B615C9B1A08                       ntfs       Xp                            
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro)
+/dev/sda5        /home                    ext4       (rw,user_xattr)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+set locale_dir=($root)/boot/grub/locale
+set lang=ro
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    linux    /boot/vmlinuz-2.6.32-31-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-31-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    echo    'Loading Linux 2.6.32-31-generic ...'
+    linux    /boot/vmlinuz-2.6.32-31-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-31-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    linux    /boot/vmlinuz-2.6.32-30-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    echo    'Loading Linux 2.6.32-30-generic ...'
+    linux    /boot/vmlinuz-2.6.32-30-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-30-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    linux    /boot/vmlinuz-2.6.32-29-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-29-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    echo    'Loading Linux 2.6.32-29-generic ...'
+    linux    /boot/vmlinuz-2.6.32-29-generic root=UUID=1d02b889-da83-484e-bffd-37d1809e5c41 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-29-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 1d02b889-da83-484e-bffd-37d1809e5c41
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda4)" {
+    insmod ntfs
+    set root='(hd0,4)'
+    search --no-floppy --fs-uuid --set 0afb572c3ab8b291
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda2 during installation
+UUID=1d02b889-da83-484e-bffd-37d1809e5c41 /               ext4    errors=remount-ro 0       1
+# /home was on /dev/sda6 during installation
+UUID=bf53279e-fd95-41a7-86a2-6142d5a28414 /home           ext4    defaults,user_xattr        0       2
+# swap was on /dev/sda5 during installation
+UUID=755920a0-504f-49db-8706-303e08ae72f4 none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+   2.2GB: boot/grub/core.img
+   7.0GB: boot/grub/grub.cfg
+   2.5GB: boot/initrd.img-2.6.32-29-generic
+   4.0GB: boot/initrd.img-2.6.32-30-generic
+   5.6GB: boot/initrd.img-2.6.32-31-generic
+   2.9GB: boot/vmlinuz-2.6.32-29-generic
+   3.1GB: boot/vmlinuz-2.6.32-30-generic
+   3.5GB: boot/vmlinuz-2.6.32-31-generic
+   5.6GB: initrd.img
+   4.0GB: initrd.img.old
+   3.5GB: vmlinuz
+   3.1GB: vmlinuz.old
+
+============================= sda4/grub/grub.cfg: =============================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=1
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+================================ sda4/boot.ini: ================================
+
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(5)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(5)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect 
+
+=================== sda4: Location of files loaded by Grub: ===================
+
+
+    ??GB: boot/grub/core.img
+    ??GB: grub/grub.cfg   
+```
+
+---
+
+### Post by dino99 on 2011-04-28
+you still get the answer yesterday, maybe you can take care of it instead of reopening new thread
+
+follow this help:
+[http://ubuntuforums.org/showpost.php...28&postcount=2](http://ubuntuforums.org/showpost.php...28&postcount=2)
+
+---
+
+### Post by srs5694 on 2011-04-28
+Dino99, your link doesn't work. I checked marcelbanu's posts and the only duplicate I saw was a post in another person's thread, and in response to that post he was (appropriately) asked to open a new thread. Perhaps I missed a post, though.
+
+In any event, the problem is identified in the Boot Info Script output:
+
+```
+
+/dev/sda2 overlaps with /dev/sda3
+
+```
+
+This problem is caused by the Windows XP installer under certain circumstances.
+
+There are a number of possible fixes. The easiest is to use my [FixParts](http://www.rodsbooks.com/fixparts) program:
+
+
+[list=1]
+[*]Install FixParts. (Follow the download links on the FixParts Web page.)
+[*]Open a Terminal window.
+[*]Type "sudo sfdisk -d /dev/sda > parts.txt" to back up the current partition table data.
+[*]Copy parts.txt to a removable disk for safe keeping.
+[*]Type "sudo fixparts /dev/sda"
+[*]In FixParts, type "p" to view the partitions. Ensure they're all present, except for the extended partition (/dev/sda2). If all five partitions aren't present, type "q" and post back with details.
+[*]Optional: Type "l" (that's a lowercase letter L, not a digit 1) and tell FixParts to change partition 3 to logical. Chances are your swap space was originally in a logical partition, and Windows inappropriately changed it to primary. This action will restore the swap partition to being logical, which will give you a bit more flexibility for future partition changes. It's not absolutely required, though; you could leave it as a primary partition.
+[*]Type "w" to save your changes.
+[*]Reboot to be sure everything works. (There's a slim chance that you'll need to re-install your boot loader.)
+[/list]
+
+
+Other options include using sfdisk to edit the primary/logical status of /dev/sda3 and using fdisk to delete /dev/sda3 and create a new swap partition in its place. Both these procedures would require extended descriptions, since there are details you'd need to take care of in each case.
+
+---
+

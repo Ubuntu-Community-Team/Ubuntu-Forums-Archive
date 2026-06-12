@@ -1,0 +1,391 @@
+---
+title: "Unable to install nvidia 8800GS driver"
+date: 2008-06-26
+forum: Installation &amp; Upgrades
+---
+
+### Post by torque154 on 2008-06-26
+I got a new card (8800GS) and I can not install it without it failing.  I went step by step from the offical method, nvidia method and some random guy on a forum.  when I did more research, the binary driver is unsuported. do you have any idea?
+
+---
+
+### Post by Pumalite on 2008-06-26
+The latest Nvidia driver will do just fine. Install it through a Virtual Terminal. Make sure your card is recognized and well configured in BIOS.
+
+---
+
+### Post by Victormd on 2008-06-26
+I have an 8800 GTS that I got working through Envy-NG (look for envyng in the repos).
+
+---
+
+### Post by torque154 on 2008-06-26
+I checked my BIOS settings and I forgot to Set the VGA to PCI-E, however I did not fix the problem.  
+
+When you say Virtual Terminal, you mean the regualar terminal in the main menu.  I'm sort of a noob.
+
+---
+
+### Post by Pumalite on 2008-06-26
+You get to a Virtual Terminal by:
+Ctrl+Alt+F1
+username
+password
+sudo /etc/init.d/gdm stop
+sudo sh /path/to/driver/NVIDIAxxxx.run
+Let driver configure the module into your kernel
+Let the driver reconfigure your xorg.conf file
+Then: startx
+
+---
+
+### Post by torque154 on 2008-06-26
+> **Victormd said:**
+> I have an 8800 GTS that I got working through Envy-NG (look for envyng in the repos).
+
+I tried that. went to blank screen this time instead of going to the origional driver
+
+---
+
+### Post by torque154 on 2008-06-26
+> **Pumalite said:**
+> You get to a Virtual Terminal by:
+Ctrl+Alt+F1
+username
+password
+sudo /etc/init.d/gdm stop
+sudo sh /path/to/driver/NVIDIAxxxx.run
+Let driver configure the module into your kernel
+Let the driver reconfigure your xorg.conf file
+Then: startx
+
+That's what it's called.  I'v been doing it with that method.
+
+---
+
+### Post by earthmeLon on 2008-06-26
+I think something like
+
+```
+sudo apt-get install envyng
+gksudo envyng -g
+
+```
+
+will solve your problems
+
+---
+
+### Post by PmDematagoda on 2008-06-26
+> **torque154 said:**
+> I got a new card (8800GS) and I can not install it without it failing.  I went step by step from the offical method, nvidia method and some random guy on a forum.  when I did more research, the binary driver is unsuported. do you have any idea?
+
+Did you install build-essential? The kernel development and a few other files are required for the Nvidia install to go well. You can install build-essential with:-
+```
+sudo apt-get install build-essential
+```
+
+If the above does not fix the problem, can you post the error message here.
+
+---
+
+### Post by torque154 on 2008-06-26
+> **PmDematagoda said:**
+> Did you install build-essential? The kernel development and a few other files are required for the Nvidia install to go well. You can install build-essential with:-
+```
+sudo apt-get install build-essential
+```
+
+If the above does not fix the problem, can you post the error message here.
+It installed without a hitch but when I again tried to install the driver it failed.
+
+---
+
+### Post by Pumalite on 2008-06-26
+Try:
+sudo apt-get install linux-headers-`uname -r`
+
+---
+
+### Post by torque154 on 2008-06-26
+```
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+linux-headers-2.6.24-19-generic is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+torque@Ubuntu-country:~$ 
+
+
+
+```
+
+thats too bad
+
+---
+
+### Post by PmDematagoda on 2008-06-27
+> **torque154 said:**
+> It installed without a hitch but when I again tried to install the driver it failed.
+
+What is the exact error you get?
+
+---
+
+### Post by torque154 on 2008-06-27
+> **PmDematagoda said:**
+> What is the exact error you get?
+
+Thats the thing.  I get a black screen with signal when I install it in the virtual terminal and I get no signal when I install with EnvyNG, when installing the driver no error appears that I can see. I'v never had a problem installing before my other grahics cards so I know I'm not messing it up.
+
+---
+
+### Post by torque154 on 2008-06-27
+scratch that.  It loads normally and it loads 4 things on the screen. setting up clock type of things.  then it blinks 3 times and then goes back to the origional X-server setings.
+
+---
+
+### Post by earthmeLon on 2008-06-27
+To get one card to work, I had to go into the bios and disable some sort of shared gfx memory on the board.
+If you mobo has on board video RAM, try disabling it.
+
+When are you geting the "black screen" or "no signal"  Is it before Ubuntu load screen (with the pong-style status bar) or is it after this?
+
+---
+
+### Post by torque154 on 2008-06-27
+it's after the loading bar.  there is only 1 option for memory which I already forgot what it was but it was where it needed to be.
+
+```
+This is my xorg.conf after I change the settings.
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder3)  Thu Feb 14 18:20:37 PST 2008
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by failsafeDexconf, using
+# values from the debconf database and some overrides to use vesa mode.
+#
+# You should use dexconf or another such tool for creating a "real" xorg.conf
+# For example:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+    Identifier     "Default Layout"
+    Screen      0  "Default Screen" 0 0
+    InputDevice    "Generic Keyboard" "CoreKeyboard"
+    InputDevice    "Configured Mouse" "CorePointer"
+EndSection
+
+Section "Module"
+    Load           "glx"
+    Load           "v4l"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Generic Keyboard"
+    Driver         "kbd"
+    Option         "XkbRules" "xorg"
+    Option         "XkbModel" "pc105"
+    Option         "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Configured Mouse"
+    Driver         "mouse"
+EndSection
+
+Section "Monitor"
+    Identifier     "Configured Monitor"
+    VendorName     "Generic LCD Display"
+    ModelName      "LCD Panel 1280x1024"
+    HorizSync       31.5 - 64.0
+    VertRefresh     56.0 - 65.0
+    Gamma           1
+    ModeLine       "640x480@60" 25.2 640 656 752 800 480 490 492 525 -hsync -vsync
+    ModeLine       "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+    ModeLine       "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+    ModeLine       "1024x768@60" 65.0 1024 1048 1184 1344 768 771 777 806 -hsync -vsync
+    ModeLine       "1280x960@60" 102.1 1280 1360 1496 1712 960 961 964 994 -hsync +vsync
+    ModeLine       "1280x1024@60" 108.0 1280 1328 1440 1688 1024 1025 1028 1066 +hsync +vsync
+EndSection
+
+Section "Device"
+    Identifier     "Configured Video Device"
+    Driver         "nvidia"
+    BoardName      "vesa"
+    Screen          0
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+    SubSection     "Display"
+        Virtual     1280 1024
+        Depth       24
+        Modes      "1280x1024@60" "1280x960@60" "1024x768@60" "800x600@60" "800x600@56" "640x480@60"
+    EndSubSection
+EndSection
+
+```
+
+---
+
+### Post by PmDematagoda on 2008-06-28
+Open the xorg.conf file for editing with:-
+```
+sudo nano /etc/X11/xorg.conf
+```
+and then uncomment the following line in the "Section "Device"" paragraph by adding a # next to it:-
+```
+    BoardName      "vesa"
+```
+after that is done, reboot your system and see if that makes an improvement.
+
+---
+
+### Post by torque154 on 2008-06-30
+I tryed that and it didn't do any good.  same result.  I tried installing a new distro and I couldn't even install it.  then I went to Xubuntu.  I can easilly get it back to Ubunutu but here's the latest result of the X server
+gets up to boot on local.  then screen flashes 3 times then reverts to backup x-server
+
+ ```
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder63)  Mon May 19 00:33:37 PDT 2008
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+    Identifier     "Default Layout"
+    Screen         "Default Screen" 0 0
+    InputDevice    "Generic Keyboard" "CoreKeyboard"
+    InputDevice    "Configured Mouse"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Generic Keyboard"
+    Driver         "kbd"
+    Option         "XkbRules" "xorg"
+    Option         "XkbModel" "pc105"
+    Option         "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Configured Mouse"
+    Driver         "mouse"
+    Option         "CorePointer"
+EndSection
+
+Section "Monitor"
+    Identifier     "Configured Monitor"
+EndSection
+
+Section "Device"
+    Identifier     "Configured Video Device"
+    Driver         "nvidia"
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Depth       24
+        Modes      "nvidia-auto-select"
+    EndSubSection
+EndSection
+
+Section "Extensions"
+    Option         "Composite" "Enable"
+EndSection
+
+
+```
+
+thank you everyone for helping but I don't think I'll be getting this to work.  I'll try everything you suggest. but I still have my windows partition.
+
+---
+
+### Post by tenmoi on 2008-06-30
+torque154,
+
+Don't be discouraged just yet.
+
+I don't know what method you used to install the driver but there are some preinstallation chores you must accomplish before you do the following instructions.
+
+1. Download the newest driver from nvidia which matches your architecture. 32 bit or 64 bit ubuntu?
+2. Open synaptics and search for linux-restricted-modules-*, nvidia-*, xserver-xorg-video-nv, and choose the option: Mark for complete removal. then sudo apt-get update && sudo apt-get upgrade. Make sure that /etc/init.d/nvidia-glx and /etc/init.d/nvidia-kernel do not exist. Also, make sure that  /lib/linux-restricted-modules/.nvidia_new_installed does not exist.
+
+3. Reboot.
+
+4. sudo apt-get install build-essential libxft-dev. 
+
+5. Ctrl + F1 + ALt
+
+6. sudo /etc/init.d/gdm stop
+
+7. sudo sh /path to your nvidia.run  ##(if it spits out errors to the effect that certain driver is installed and you did manually install the driver, then you should sudo sh /path to your nvidia.run --uninstall, then repeat at step 7)
+
+8. ok/accept all the way
+
+9. sudo /etc/init.d/gdm restart
+
+Troubleshooting
+1. If you get a blank screen but still hear the welcoming sound, then the driver has set too high a refresh rate for your monitor. Consult your manual and sudo nano /etc/X11/xorg.conf and modify the horz and vert parameters accordingly.
+
+Logout and back in to see if it works.
+
+2. If this problem persists and you own an LCD/Plasma monitor, you should search the forum. Someone has a solution to it.
+
+Good luck.
+
+---
+
+### Post by starcannon on 2008-06-30
+Heres a guide I wrote, its how I install all my nvidia cards, don't skip steps and you should be golden
+
+[http://ubuntuforums.org/showpost.php?p=5086971&postcount=6](http://ubuntuforums.org/showpost.php?p=5086971&postcount=6)
+
+GL
+
+---
+
+### Post by tenmoi on 2008-06-30
+In your previous thread you should add libxft-dev. Without the X development libraries I doubt if you can compile the driver kernel.
+
+Just my 2 cents.
+
+---
+
+### Post by torque154 on 2008-07-12
+Sorry for replying so late. I'v been swamped with work and havn't been able to mess around.
+
+tenmoi screwed up my OS so bad that I couldn't recover
+
+starcannon didn't work. as well.  reverted to old driver after the screen flashed 3 times.
+
+---
+
+### Post by E-RC on 2008-07-26
+I don't know if it will help you or not.  I was also was having trouble getting my new Nvidia 8800GS to work.  I installed EnvyNG though the Synaptic Package Manager.  Changed my BOIS graphics settings to PCI.  For some reason the next 2 times I booted it still used the onboard but then the 3rd time it booted on the 2nd screen (plugged into the 8800GS).  I got some notice asking if I wanted to continue in low resolution.  I continued to boot and then using EnvyNG I installed the Nvidia driver.  Restarted and it is now working fine (glxgears runs at 9200FPS).
+
+---
+

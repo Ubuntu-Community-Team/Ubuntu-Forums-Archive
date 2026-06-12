@@ -1,0 +1,309 @@
+---
+title: "Save My Ship -- HELP"
+date: 2011-02-18
+forum: Installation &amp; Upgrades
+---
+
+### Post by kakashi_12 on 2011-02-18
+Finally! I found documentation on how to edit GRUB2
+
+[http://www.youtube.com/watch?v=TDf_fRAophc](http://www.youtube.com/watch?v=TDf_fRAophc)
+
+short video
+Only thing I changed was the names like the video showed in pink text between two single quotes. I changed the top menu entry to say ubuntu 10, then changed my bottom menu entry from windows loader to windows BCD loader. When i ran the cmd below
+
+sudo update-grub ... i get this error...
+
+Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-2.6.32-28-generic
+Found initrd image: /boot/initrd.img-2.6.32-28-generic
+Found linux image: /boot/vmlinuz-2.6.32-27-generic
+Found initrd image: /boot/initrd.img-2.6.32-27-generic
+Found linux image: /boot/vmlinuz-2.6.32-25-generic
+Found initrd image: /boot/initrd.img-2.6.32-25-generic
+Found linux image: /boot/vmlinuz-2.6.32-21-generic
+Found initrd image: /boot/initrd.img-2.6.32-21-generic
+Found memtest86+ image: /boot/memtest86+.bin
+/etc/grub.d/30_os-prober: 157: Syntax error: word unexpected (expecting ")")
+
+Last line is error. I am afraid to reboot unitl that is fixed. I opened up that 30_os-prober file... but DO not see where the error is. I know I have a rescue cd and a backup image. But I'd like to fix this error now that I am in the middle of it and booted up.
+
+---
+
+### Post by kakashi_12 on 2011-02-18
+HERE IS THE FILE WITH THE ERROR. The file that i changed though is the one that the video shows. then i just did the update grub.
+
+#! /bin/sh -e
+
+# grub-mkconfig helper script.
+# Copyright (C) 2006,2007,2008,2009  Free Software Foundation, Inc.
+#
+# GRUB is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# GRUB is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with GRUB.  If not, see <http://www.gnu.org/licenses/>.
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+. ${libdir}/grub/grub-mkconfig_lib
+
+found_other_os=
+
+adjust_timeout () {
+  if [ "x${found_other_os}" = "x" ] ; then
+    if [ "x${GRUB_HIDDEN_TIMEOUT}" != "x" ] ; then
+      if [ "x${GRUB_HIDDEN_TIMEOUT_QUIET}" = "xtrue" ] ; then
+    verbose=
+      else
+    verbose=" --verbose"
+      fi
+
+      if [ "x${GRUB_HIDDEN_TIMEOUT}" = "x0" ] ; then
+    cat <<EOF
+if [ \${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep$verbose --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+EOF
+      else
+    cat << EOF
+if [ \${timeout} != -1 ]; then
+  if sleep$verbose --interruptible ${GRUB_HIDDEN_TIMEOUT} ; then
+    set timeout=0
+  fi
+fi
+EOF
+      fi
+    fi
+  fi
+}
+
+if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
+  adjust_timeout
+  exit 0
+fi
+
+if [ -z "`which os-prober 2> /dev/null`" -o -z "`which linux-boot-prober 2> /dev/null`" ] ; then
+  # missing os-prober and/or linux-boot-prober
+  adjust_timeout
+  exit 0
+fi
+
+OSPROBED="`os-prober | tr ' ' '^' | paste -s -d ' '`"
+if [ -z "${OSPROBED}" ] ; then
+  # empty os-prober output, nothing doing
+  adjust_timeout
+  exit 0
+fi
+
+osx_entry() {
+        cat << EOF
+menuentry "${LONGNAME} (${2}-bit) (on ${DEVICE})" {
+EOF
+    save_default_entry | sed -e "s/^/\t/"
+    prepare_grub_to_access_device ${DEVICE} | sed -e "s/^/\t/"
+    cat << EOF
+        insmod ${GRUB_VIDEO_BACKEND}
+        set do_resume=0
+        if [ /var/vm/sleepimage -nt10 / ]; then
+           if xnu_resume /var/vm/sleepimage; then
+             set do_resume=1
+           fi
+        fi
+        if [ \$do_resume == 0 ]; then
+           xnu_uuid ${OSXUUID} uuid
+           if [ -f /Extra/DSDT.aml ]; then
+              acpi -e /Extra/DSDT.aml
+           fi
+           $1 /mach_kernel boot-uuid=\${uuid} rd=*uuid
+           if [ /System/Library/Extensions.mkext -nt /System/Library/Extensions ]; then
+              xnu_mkext /System/Library/Extensions.mkext
+           else
+              xnu_kextdir /System/Library/Extensions
+           fi
+           if [ -f /Extra/Extensions.mkext ]; then
+              xnu_mkext /Extra/Extensions.mkext
+           fi
+           if [ -d /Extra/Extensions ]; then
+              xnu_kextdir /Extra/Extensions
+           fi
+           if [ -f /Extra/devprop.bin ]; then
+              xnu_devprop_load /Extra/devprop.bin
+           fi
+           if [ -f /Extra/splash.jpg ]; then
+              insmod jpeg
+              xnu_splash /Extra/splash.jpg
+           fi
+           if [ -f /Extra/splash.png ]; then
+              insmod png
+              xnu_splash /Extra/splash.png
+           fi
+           if [ -f /Extra/splash.tga ]; then
+              insmod tga
+              xnu_splash /Extra/splash.tga
+           fi
+        fi
+}
+EOF
+}
+
+for OS in ${OSPROBED} ; do
+  DEVICE="`echo ${OS} | cut -d ':' -f 1`"
+  LONGNAME="`echo ${OS} | cut -d ':' -f 2 | tr '^' ' '`"
+  LABEL="`echo ${OS} | cut -d ':' -f 3 | tr '^' ' '`"
+  BOOT="`echo ${OS} | cut -d ':' -f 4`"
+
+  if [ -z "${LONGNAME}" ] ; then
+    LONGNAME="${LABEL}"
+  fi
+
+  echo "Found ${LONGNAME} on ${DEVICE}" >&2
+  found_other_os=1
+
+  case ${BOOT} in
+    chain)
+
+      cat << EOF
+menuentry "${LONGNAME} (on ${DEVICE})" {
+EOF
+      save_default_entry | sed -e "s/^/\t/"
+      prepare_grub_to_access_device ${DEVICE} | sed -e "s/^/\t/"
+
+      case ${LONGNAME} in
+    Windows \ Vista*|Windows \ 7*)
+    ;;
+    *)
+      cat << EOF
+    drivemap -s (hd0) \${root}
+EOF
+    ;;
+      esac
+
+      cat <<EOF
+    chainloader +1
+}
+EOF
+    ;;
+    linux)
+      LINUXPROBED="`linux-boot-prober ${DEVICE} 2> /dev/null | tr ' ' '^' | paste -s -d ' '`"
+      prepare_boot_cache=
+
+      for LINUX in ${LINUXPROBED} ; do
+        LROOT="`echo ${LINUX} | cut -d ':' -f 1`"
+        LBOOT="`echo ${LINUX} | cut -d ':' -f 2`"
+        LLABEL="`echo ${LINUX} | cut -d ':' -f 3 | tr '^' ' '`"
+        LKERNEL="`echo ${LINUX} | cut -d ':' -f 4`"
+        LINITRD="`echo ${LINUX} | cut -d ':' -f 5`"
+        LPARAMS="`echo ${LINUX} | cut -d ':' -f 6- | tr '^' ' '`"
+
+        if [ -z "${LLABEL}" ] ; then
+          LLABEL="${LONGNAME}"
+        fi
+
+    if [ "${LROOT}" != "${LBOOT}" ]; then
+      LKERNEL="${LKERNEL#/boot}"
+      LINITRD="${LINITRD#/boot}"
+    fi
+
+        cat << EOF
+menuentry "${LLABEL} (on ${DEVICE})" {
+EOF
+    save_default_entry | sed -e "s/^/\t/"
+    if [ -z "${prepare_boot_cache}" ]; then
+      prepare_boot_cache="$(prepare_grub_to_access_device ${LBOOT} | sed -e "s/^/\t/")"
+    fi
+    printf '%s\n' "${prepare_boot_cache}"
+    cat <<  EOF
+    linux ${LKERNEL} ${LPARAMS}
+EOF
+        if [ -n "${LINITRD}" ] ; then
+          cat << EOF
+    initrd ${LINITRD}
+EOF
+        fi
+        cat << EOF
+}
+EOF
+      done
+    ;;
+    macosx)
+      OSXUUID="`grub-probe --target=fs_uuid --device ${DEVICE} 2> /dev/null`"
+      osx_entry xnu_kernel 32
+      osx_entry xnu_kernel64 64
+    ;;
+    hurd)
+      cat << EOF
+menuentry "${LONGNAME} (on ${DEVICE})" {
+EOF
+      save_default_entry | sed -e "s/^/\t/"
+      prepare_grub_to_access_device ${DEVICE} | sed -e "s/^/\t/"
+      grub_device="`${grub_probe} --device ${DEVICE} --target=drive`"
+      mach_device="`echo "${grub_device}" | tr -d '()' | tr , s`"
+      grub_fs="`${grub_probe} --device ${DEVICE} --target=fs`"
+      case "${grub_fs}" in
+    *fs)    hurd_fs="${grub_fs}" ;;
+    *)    hurd_fs="${grub_fs}fs" ;;
+      esac
+      cat << EOF
+    multiboot /boot/gnumach.gz root=device:${mach_device}
+    module /hurd/${hurd_fs}.static ${hurd_fs} --readonly \\
+            --multiboot-command-line='\${kernel-command-line}' \\
+            --host-priv-port='\${host-port}' \\
+            --device-master-port='\${device-port}' \\
+            --exec-server-task='\${exec-task}' -T typed '\${root}' \\
+            '\$(task-create)' '\$(task-resume)'
+    module /lib/ld.so.1 exec /hurd/exec '\$(exec-task=task-create)'
+}
+EOF
+    ;;
+    *)
+      echo "  ${LONGNAME} is not yet supported by grub-mkconfig." >&2
+    ;;
+  esac
+done
+
+adjust_timeout
+
+---
+
+### Post by kakashi_12 on 2011-02-18
+Once this is fixed... I also would like to be able to change the name of the Boot loader title itself that displays at top. It should Say...
+'GRUB 2 Boot Loader, Choose your OS Operating System with arrow keys'
+
+---
+
+### Post by kakashi_12 on 2011-02-19
+Ok, Ok. So I rebooted and I'm okay. I can boot okay. But the title entries did not change as i requested.... because of the error.
+
+---
+
+### Post by kakashi_12 on 2011-02-20
+bump.):P
+
+---
+
+### Post by kakashi_12 on 2011-02-21
+You know what. The stupid grub file said DO NOT EDIT, but I did anyway cause nothing else worked.
+Once I did that and run sudo update-grub , then it worked!
+
+---
+

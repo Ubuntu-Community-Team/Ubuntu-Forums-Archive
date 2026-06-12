@@ -1,0 +1,20 @@
+---
+title: "Install ubuntu on Lenovo tab m8 and use OTG host"
+date: 2020-11-16
+forum: Installation &amp; Upgrades
+---
+
+### Post by harucowo on 2020-11-16
+My heart was beating with a combination of fear and lustful excitement. What if Frank noticed something amiss and discovered the naughty doggy between my legs? I couldn&#8217;t even imagine the embarrassment as I would have to try to explain myself. I felt a red flush of shame creep its way up my face. I should put a stop to this immediately, I realized. I chewed nervously at my lower lip, and then did the only reasonable thing. I slowly scooted forward to the edge of my chair, spreading my legs wide and allowing the curious Akita unrestricted access.
+[https://bigasspics.me/](https://bigasspics.me/)
+Immediately his wet canine tongue caressed my panty-covered vaginal mound. I clenched my teeth, holding in a lustful moan of passion. This was already more intimate attention than I had received from Frank in months. I felt my panties quickly begin to moisten, absorbing both saliva from Shindo&#8217;s energetic tongue and the steamy dampness oozing from my humid vaginal slit. My tight slippery ***** -- neglected for far too long -- eagerly unfurled its fleshy pink lips. The Akita dug deeper, lured by the irresistible flavor. Pressing his snout harder into my lustful cleft, Shindo worked his rough tongue against the thin cotton barrier, pushing the crotch of my panties up into my snug little ****. I gripped the edge of the table with both hands, fighting the need to thrash my legs in response to simmering sexual urges that were quickly coming to a boil.
+
+The Akita nipped gently at my panty-covered ***** lips and I shuddered, giving in to the inevitable orgasm. My breathing became ragged and desperate, and suddenly my hips bucked of their own accord. The joints of the chair creaked alarmingly, but Frank didn&#8217;t seem to notice. The muscles in my thighs clenched and trembled as a convulsive spasm gripped my ****. Barely in control of my body, I ground my hips in a slow, sensual motion in the kitchen chair as Shindo eagerly consumed the syrupy wetness that flooded through the cotton crotch of my panties. I closed my legs tightly around the Akita&#8217;s furry head, wrapping him in a loving embrace as orgasmic ripples vibrated through the depths of my **** slot. Then, in a final spasm, I rocked my head back and pressed my loins eagerly forward against the canine&#8217;s talented snout. My hair whipped in a cascade of blonde and I dared to let my hands slip from the table and caress my naked upper thighs. Dragging my fingers up over my tummy, I sensuously squeezed my breasts, pinching my aching nipples through the soft covering of my robe.
+[https://bootypics.me/](https://bootypics.me/)
+Then -- finally -- I felt the wonderful sensations in my **** begin to falter. Small post-orgasmic tremors continued to register as Shindo maintained a steady rhythm with his talented ****-licking tongue. Despite his energetic efforts, the flood of syrupy fluids poured through my panties faster than he could lap them up. I felt a warm, sticky puddle begin to form on the seat of the chair, soaking my panties from below. The scent of wet **** butter hung heavily in the air, overwhelming the mundane breakfast smells of coffee and toast.
+
+&#8220;Well, time to go,&#8221; Frank announced, ending his conversation and rising from the table. I jerked in shock and then looked at him, slack-jawed and with glazed eyes, trying to recover from my sexually-induced stupor. He took no notice of my tussled hair, red-faced expression, or panting breath as he gathered his keys and briefcase and headed out to his car. I heard the garage door cycle and the engine of his Mercedes growl to life. The sound of the car receded as the automatic garage door rattled shut. I sat there at the kitchen table in my cum-soaked panties as Shindo continued to diligently work his tongue in my panty crotch. A singled tear rolled down my cheek as I stared ahead into nothingness.
+[https://bigbootypics.me/](https://bigbootypics.me/)
+
+---
+
