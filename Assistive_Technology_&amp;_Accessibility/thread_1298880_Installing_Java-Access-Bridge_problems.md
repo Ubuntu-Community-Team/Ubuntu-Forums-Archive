@@ -1,0 +1,57 @@
+---
+title: "Installing Java-Access-Bridge problems"
+date: 2009-10-23
+forum: Assistive Technology &amp; Accessibility
+---
+
+### Post by mari23 on 2009-10-23
+[COLOR=black][FONT=Book Antiqua]Hello everyone,[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]I’m using Ubuntu jaunty 9.04 (so I’m working with GNOME 2.26.1) with the screen reader option and speech works (but not with root user login, why?).[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]I need of accessibility features for Java Applet and Java Application Swing-Component based, so I’m trying for a well-functioning installation of Java-Access-Bridge for GNOME, but something does not work correctly![/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]I follow the instructions at  [http://live.gnome.org/Java%20Access%20Bridge](http://live.gnome.org/Java%20Access%20Bridge) with java-access-bridge-1.26.x (or 1.25.x or 1.24.x) version, but when I run a Java demo application (for example Notepad.jar) it always shows:[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]… [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]com.sun.corba.se.impl.interceptors.PIHandlerImpl peekClientRequestInfoImplStack[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]AVVERTENZA: "IOP00710817: (INTERNAL) Assertion failed: client request info stack is null"[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]org.omg.CORBA.INTERNAL:   vmcid: SUN  minor code: 817  completed: No[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.logging.InterceptorsSystemException.clientInfoStackNull(InterceptorsSystemException.java:701)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.logging.InterceptorsSystemException.clientInfoStackNull(InterceptorsSystemException.java:723)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.interceptors.PIHandlerImpl.peekClientRequestInfoImplStack(PIHandlerImpl.java:735)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.interceptors.PIHandlerImpl.invokeClientPIEndingPoint(PIHandlerImpl.java:386) [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]…[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]What reason would it have to show this message?[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]What can I do?[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]However the simple Java demo application is accessible and everything seems to work well, but isn’t worth for my Java Applet! When my applet connects with Server, then it isn’t accessible anymore, while Orca keep on work if others windows are focused. The terminal shows the above and the following error messages: [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]…[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl convertThrowableToSystemException[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]AVVERTENZA: "IOP00010202: (UNKNOWN) Unknown user exception thrown by the server"[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]org.omg.CORBA.UNKNOWN:   vmcid: SUN  minor code: 202 completed: Maybe[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.logging.ORBUtilSystemException.runtimeexception(ORBUtilSystemException.java:8869)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl.convertThrowableToSystemException(CorbaMessageMediatorImpl.java:1920)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl.handleThrowableDuringServerDispatch(CorbaMessageMediatorImpl.java:1870)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]…[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]Caused by: java.lang.RuntimeException: handleThrowableDuringServerDispatch: cannot create response.[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl.handleThrowableDuringServerDispatch(CorbaMessageMediatorImpl.java:1847)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl.handleThrowableDuringServerDispatch(CorbaMessageMediatorImpl.java:1882)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.protocol.CorbaMessageMediatorImpl.handleThrowableDuringServerDispatch(CorbaMessageMediatorImpl.java:1882)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]…[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]Caused by: org.omg.CORBA.INTERNAL:   vmcid: SUN  minor code: 817  completed: No[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.logging.InterceptorsSystemException.clientInfoStackNull(InterceptorsSystemException.java:701)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.logging.InterceptorsSystemException.clientInfoStackNull(InterceptorsSystemException.java:723)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.interceptors.PIHandlerImpl.peekClientRequestInfoImplStack(PIHandlerImpl.java:735)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]            at com.sun.corba.se.impl.interceptors.PIHandlerImpl.invokeClientPIEndingPoint(PIHandlerImpl.java:386)[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]…[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]How can I obtain a correct installation of JABG?[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]Can anyone help me please?[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]If you installed JABG without any problem and your terminal showed “Just registered Application”, can you tell me please?[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]Thank you very much[/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua] [/FONT][/COLOR]
+[COLOR=black][FONT=Book Antiqua]Mari[/FONT][/COLOR]
+
+---
+
