@@ -1,0 +1,38 @@
+---
+title: "Weird Apache logs"
+date: 2010-01-11
+forum: Security
+---
+
+### Post by FuturePilot on 2010-01-11
+I noticed this in my Apache logs
+
+```
+192.168.1.130 - - [11/Jan/2010:15:00:25 -0500] "\x88\xc0~\x1d\x9b\xea6\xcbJ&\x81?\xd6WJ\x03~\x9a\xc5\xe4\x11V\x98\xfaB\x15\xef%\xba\xc9\\\xfa\xf9B\xd0\x1aI\x9d'y\xce\x05\x88N\x84\xfc09\xb0\xd4\xcfry?S\\|B\x80\xd1\xd2\x7f)\xd3\xb7\xdf4G%\xf8\xdf\xe9W\x83\xf1\xe0m\x02Oz\xc0\xe8<\xc8v\x8c\xc4\xba\x02Jf\x86,\xf8M\xf5HaH\xa5" 403 269 "-" "-"
+192.168.1.130 - - [11/Jan/2010:15:00:25 -0500] "'I~\xd2V\xcf\xdbxZ%N\x17B\xbeq\xbf\x8d\xd26\xaa\x94Sx\x9b\xcf\xe8..}f\xec\xea;m\x87\x84\xf5\x05\xe1\xe7\x12\xc2\x1e\xbe\xb1\xb2\by\x99@,vTC\xffPB\x9f\x82\xa5\xce\x85\xd7_\x84\x10\xdc\xde\bf\xd3\x07\xcd\xed\xf7\xf3`\xca\xd2\xce\x11\xd9\xb4i\x84&;" 403 269 "-" "-"
+192.168.1.130 - - [11/Jan/2010:15:00:30 -0500] "\x88\xc0~\x1d\x9b\xea6\xcbJ&\x81?\xd6WJ\x03~\x9a\xc5\xe4\x11V\x98\xfaB\x15\xef%\xba\xc9\\\xfa\xf9B\xd0\x1aI\x9d'y\xce\x05\x88N\x84\xfc09\xb0\xd4\xcfry?S\\|B\x80\xd1\xd2\x7f)\xd3\xb7\xdf4G%\xf8\xdf\xe9W\x83\xf1\xe0m\x02Oz\xc0\xe8<\xc8v\x8c\xc4\xba\x02Jf\x86,\xf8M\xf5\x18L/o\xe6e`&\xd9QT\xfb\xc5\xf5\x0c\xee\x95\xcc\xa6\xd1\xce-9\x95\xc9!\xad\xbb^\xf4\x05\xda\xfe\xd1\xad9\x84@\xce" 400 293 "-" "-"
+192.168.1.130 - - [11/Jan/2010:15:00:30 -0500] "z\xac\x90\xc7\x8f\x88b\x1bY\x0e\x13\"e\x83\xcb\x17i\x9e\xfa\xa7\x1d\x19\xbe*\xc6\xb7\x12\x02\xb5\xce\xb0\x10\xf6\xea;\x1f\x91\xc6\xe0\x97M\xc1\xc6\xe8\x87\xe5G\\N\xe7\xd9\xbfT\x16\x82v\x10\xc5a\xeaS\xad\xb6\r\x9aM\x8be\xa3\x83\x93\x88\xcf\xb5\\oi\xb3\xc6\xc1\x879c\xb6\x98t\x92\x82\xdan;\xa2\xb3 3\xef\xa4\xde}f\x1f f" 400 477 "-" "-"
+```
+
+Anyone have a clue what that is? It's showing that it came from my LAN IP address but I know I didn't do that, or at least knowingly do that. Usually when I access the webserver locally, the logs show the traffic coming from my router's IP address. I'm not sure how or why this is showing up with my IP address.
+
+---
+
+### Post by bodhi.zazen on 2010-01-12
+It is an attempt to crack your box =)
+
+[http://www.codebreakers-journal.com/content/view/133/27/](http://www.codebreakers-journal.com/content/view/133/27/)
+
+If you did not initiate it, then I would assume the ip is spoofed.
+
+You can write a set of (iptables) rules to block spoofed ip addresses.
+
+[http://www.cyberciti.biz/tips/linux-iptables-8-how-to-avoid-spoofing-and-bad-addresses-attack.html](http://www.cyberciti.biz/tips/linux-iptables-8-how-to-avoid-spoofing-and-bad-addresses-attack.html)
+
+---
+
+### Post by FuturePilot on 2010-01-12
+Ah, interesting. Thanks for the links. :)
+
+---
+
