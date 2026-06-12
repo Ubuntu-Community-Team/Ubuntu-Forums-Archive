@@ -1,0 +1,164 @@
+---
+title: "Make SeaMonkey default browser in 14.04"
+date: 2014-07-13
+forum: Ubuntuzilla
+---
+
+### Post by RogerDavis on 2014-07-13
+I want to change some DEFAULT APPS to something other than is listed as options.  Right now, I want to add SeaMonkey as default for Browser.
+
+This is how I installed it, I think... it's been a few days.
+------------------------
+$ echo -e "deb [http://downloads.sourceforge.net/projec](http://downloads.sourceforge.net/projec) ... ozilla/apt all main" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C1289A29
+$ sudo apt-get update
+$ sudo apt-get install seamonkey-mozilla-build
+---------------------
+
+However, there is no "other" or "browse" option at the default app selection, just the dropdown list that doesn't include SeaMonkey.
+
+I don't know if this is due to my use of Gnome (Flashback Metacity, I'm pretty sure) or not.
+
+How do I either add my app to the list, or input it's name and location, or ???
+
+---
+
+### Post by nanotube on 2014-07-21
+Hi,
+Sorry for slow reply. This issue is something specific to the desktop environment you are using. I have been using xubuntu for a while now, so I don't know off the top of my head how things are done in gnome these days. 
+
+upon some googling I just did myself, it seems gnome goes by the content of the MimeType entry in the .desktop file. Would you please check for me by editing (as root) /usr/share/applications/seamonkey-mozilla-build.desktop , and add the following line to it (all on one line):
+
+```
+
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;x-scheme-handler/mailto;
+```
+
+after that, restart, or logout/login (whatever is needed for gnome to re-read the .desktop info), and see if it shows up in the preferred application selection list for browser.
+
+Please let me know if that works!
+
+---
+
+### Post by RogerDavis on 2014-07-21
+No luck.
+
+I edited  /usr/share/applications/seamonkey-mozilla-build.desktop  in gedit, cut and pasted the line you show above in Code, did a complete system shut down and restart, still no other choices in System Settings - Details - Defaults - Web , only FireFox and Browser.
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=Mozilla Build of Seamonkey
+GenericName=Internet Suite
+Comment=Web Browser, Email/News Client, HTML Editor, IRC Client
+Exec=seamonkey %u
+Icon=seamonkey-mozilla-build
+Terminal=false
+X-MultipleArgs=false
+StartupWMClass=SeaMonkey
+Type=Application
+Categories=Network;WebBrowser;Email;WebDevelopment;IRCClient;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;x-scheme-handler/mailto;
+
+---
+
+### Post by Bashing-om on 2014-07-21
+RogerDavis; Hello,
+
+Try this:
+```
+
+sudo update-alternatives --config x-www-browser
+
+```
+
+is SeaMonkey in the list ?
+
+If so then;
+See: 
+```
+
+man update-alternatives
+
+```
+for more information.
+
+[INDENT][INDENT]hope this helps
+[/INDENT][/INDENT]
+
+---
+
+### Post by RogerDavis on 2014-07-22
+I'll be back at the machine late Wednesday.  I should be able to try this no later than Thursday.
+
+Thanks!
+
+---
+
+### Post by RogerDavis on 2014-07-24
+roger@roger-desktop:~$ sudo update-alternatives --config x-www-browser
+[sudo] password for roger: 
+There is only one alternative in link group x-www-browser (providing /usr/bin/x-www-browser): /usr/bin/firefox
+Nothing to configure.
+roger@roger-desktop:~$ 
+
+So no luck there.  Is there any way to add, maybe, /opt/seamonkey/seamonkey, or even drop that in where the  /usr/bin/firefox is?
+--------------
+In the help file, I found some difficult instructions.  I couldn't decide how to do "--install link name path priority [--slave link name path]...", which seems closest to my needs.
+
+---
+
+### Post by RogerDavis on 2014-07-24
+Strange after a couple MORE reboots, it was present.  
+
+I set SeaMonkey as default, we'll see if it works...
+
+---
+
+### Post by buellboy9 on 2014-08-02
+> **RogerDavis said:**
+> Strange after a couple MORE reboots, it was present.  
+
+I set SeaMonkey as default, we'll see if it works...
+
+For future reference, read this thread to see how to update the "Default Applications" dialog after you've made the changes above:
+[http://manpages.ubuntu.com/manpages/precise/man1/update-desktop-database.1.html](http://manpages.ubuntu.com/manpages/precise/man1/update-desktop-database.1.html)
+
+Works in Linux Mint too.
+
+---
+
+### Post by nanotube on 2014-08-06
+aha, update-desktop-database , perfect, good find buellboy9 :) thanks!
+
+---
+
+### Post by nanotube on 2014-08-06
+added the MimeType entry into the .desktop generated by ubuntuzilla. should show up in future mozilla release debs.
+
+---
+
+### Post by Bashing-om on 2014-08-06
+> **nanotube said:**
+> added the MimeType entry into the .desktop generated by ubuntuzilla. should show up in future mozilla release debs.
+
+When you are good, You are good ! 
+Thanks for the advisement and the update .
+
+[INDENT][INDENT]'buntu
+[INDENT][INDENT][INDENT]just keeps getting better
+[/INDENT][/INDENT][/INDENT][/INDENT][/INDENT]
+
+---
+
+### Post by meduzapat on 2014-09-09
+the .desktop mime change and the [B]sudo update-desktop-database
+did the trick, remember to avoid empty spaces on the .desktop file or you will get errors
+[/B]
+
+---
+
+### Post by Bashing-om on 2014-09-09
+:p+1 ^^ :p
+
+---
+
