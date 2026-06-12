@@ -1,0 +1,446 @@
+---
+title: "cant use my smart bro"
+date: 2014-01-21
+forum: Philippine Team
+---
+
+### Post by quinee on 2014-01-21
+Hi! I'm new in Ubuntu and i use my smart bro to have internet connection but I can't use it and the "enable mobile broadband" doesn't appear. Please help me. Thanks a lot
+
+---
+
+### Post by carl4926 on 2014-01-21
+First I heard of these
+Exactly what device is it
+I looked at the website and there seem a few options
+I guess it's the pocket device is it?
+Which has a usb connection?
+
+---
+
+### Post by quinee on 2014-01-21
+it is usb broadband stick
+
+---
+
+### Post by carl4926 on 2014-01-21
+Post the result of
+
+lsusb -v
+
+---
+
+### Post by quinee on 2014-01-22
+what is lsusb-v?
+
+---
+
+### Post by quinee on 2014-01-22
+```
+eyetracker@eyetracker-ThinkPad-X60:~$ lsusb -v
+
+Bus 001 Device 004: ID 1c9e:f000 OMEGA TECHNOLOGY
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x1c9e OMEGA TECHNOLOGY
+  idProduct          0xf000
+  bcdDevice            0.00
+  iManufacturer           3
+  iProduct                2
+  iSerial                 4
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           32
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          1
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower              500mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass         8 Mass Storage
+      bInterfaceSubClass      6 SCSI
+      bInterfaceProtocol     80 Bulk-Only
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+
+Bus 001 Device 003: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0 (Defined at Interface level)
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x0bda Realtek Semiconductor Corp.
+  idProduct          0x8176 RTL8188CUS 802.11n WLAN Adapter
+  bcdDevice            2.00
+  iManufacturer           1
+  iProduct                2
+  iSerial                 3
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           46
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xa0
+      (Bus Powered)
+      Remote Wakeup
+    MaxPower              500mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           4
+      bInterfaceClass       255 Vendor Specific Class
+      bInterfaceSubClass    255 Vendor Specific Subclass
+      bInterfaceProtocol    255 Vendor Specific Protocol
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x02  EP 2 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x03  EP 3 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x84  EP 4 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               1
+
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 Unused
+  bDeviceProtocol         0 Full speed (or root) hub
+  bMaxPacketSize0        64
+  idVendor           0x1d6b Linux Foundation
+  idProduct          0x0002 2.0 root hub
+  bcdDevice            3.11
+  iManufacturer           3
+  iProduct                2
+  iSerial                 1
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           25
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower                0mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         9 Hub
+      bInterfaceSubClass      0 Unused
+      bInterfaceProtocol      0 Full speed (or root) hub
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0004  1x 4 bytes
+        bInterval              12
+
+Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 Unused
+  bDeviceProtocol         0 Full speed (or root) hub
+  bMaxPacketSize0        64
+  idVendor           0x1d6b Linux Foundation
+  idProduct          0x0001 1.1 root hub
+  bcdDevice            3.11
+  iManufacturer           3
+  iProduct                2
+  iSerial                 1
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           25
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower                0mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         9 Hub
+      bInterfaceSubClass      0 Unused
+      bInterfaceProtocol      0 Full speed (or root) hub
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0002  1x 2 bytes
+        bInterval             255
+
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 Unused
+  bDeviceProtocol         0 Full speed (or root) hub
+  bMaxPacketSize0        64
+  idVendor           0x1d6b Linux Foundation
+  idProduct          0x0001 1.1 root hub
+  bcdDevice            3.11
+  iManufacturer           3
+  iProduct                2
+  iSerial                 1
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           25
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower                0mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         9 Hub
+      bInterfaceSubClass      0 Unused
+      bInterfaceProtocol      0 Full speed (or root) hub
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0002  1x 2 bytes
+        bInterval             255
+
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 Unused
+  bDeviceProtocol         0 Full speed (or root) hub
+  bMaxPacketSize0        64
+  idVendor           0x1d6b Linux Foundation
+  idProduct          0x0001 1.1 root hub
+  bcdDevice            3.11
+  iManufacturer           3
+  iProduct                2
+  iSerial                 1
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           25
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower                0mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         9 Hub
+      bInterfaceSubClass      0 Unused
+      bInterfaceProtocol      0 Full speed (or root) hub
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0002  1x 2 bytes
+        bInterval             255
+
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Couldn't open device, some information will be missing
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            9 Hub
+  bDeviceSubClass         0 Unused
+  bDeviceProtocol         0 Full speed (or root) hub
+  bMaxPacketSize0        64
+  idVendor           0x1d6b Linux Foundation
+  idProduct          0x0001 1.1 root hub
+  bcdDevice            3.11
+  iManufacturer           3
+  iProduct                2
+  iSerial                 1
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength           25
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0xe0
+      Self Powered
+      Remote Wakeup
+    MaxPower                0mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         9 Hub
+      bInterfaceSubClass      0 Unused
+      bInterfaceProtocol      0 Full speed (or root) hub
+      iInterface              0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0002  1x 2 bytes
+        bInterval             255
+```
+
+thats the result of lsusb -v
+
+---
+
+### Post by carl4926 on 2014-01-22
+Looks like the devices uses
+idProduct          0x8176 RTL8188CUS 802.11n WLAN Adapter
+
+Now try Googling
+
+RTL8188CUS ubuntu
+
+---
+
+### Post by quinee on 2014-01-22
+i google it and what should I do after?
+
+I already read different problems regarding the RTL8188CUS and I tried all the instructions but it doesn't work for me. Please help me we need to have internet connection for our upcoming defense thank you.
+
+---
+
