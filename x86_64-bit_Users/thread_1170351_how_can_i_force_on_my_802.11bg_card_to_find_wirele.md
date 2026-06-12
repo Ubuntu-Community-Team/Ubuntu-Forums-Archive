@@ -1,0 +1,62 @@
+---
+title: "how can i force on my 802.11bg card to find wireless  connection"
+date: 2009-05-26
+forum: x86 64-bit Users
+---
+
+### Post by Kenny85 on 2009-05-26
+Ok. Since i've connected to my m8  network couple days ago i can't find any wireless network at all I'm on the wired network at the moment...i give u all details which could be helpfull  i work on ubuntu 9.04
+iwconfig 
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+wmaster0  no wireless extensions.
+
+wlan0     IEEE 802.11bg  ESSID:"M&A"  
+          Mode:Ad-Hoc  Frequency:2.412 GHz  Cell: 0E:4A:18:04:47:E6   
+          Tx-Power=20 dBm   
+          Retry min limit:7   RTS thr:off   Fragment thr=2352 B   
+          Encryption key:*******
+          Power Management:off
+          Link Quality:0  Signal level:0  Noise level:0
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+pan0      no wireless extensions.
+ifconfig
+wlan0     Link encap:Ethernet  HWaddr 00:16:44:c2:82:ba  
+          inet addr:10.42.43.1  Bcast:10.42.43.255  Mask:255.255.255.0
+          inet6 addr: fe80::216:44ff:fec2:82ba/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:25 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:4394 (4.3 KB)
+lspci
+00:00.0 RAM memory: nVidia Corporation MCP67 Memory Controller (rev a2)
+00:01.0 ISA bridge: nVidia Corporation MCP67 ISA Bridge (rev a2)
+00:01.1 SMBus: nVidia Corporation MCP67 SMBus (rev a2)
+00:01.3 Co-processor: nVidia Corporation MCP67 Co-processor (rev a2)
+00:02.0 USB Controller: nVidia Corporation MCP67 OHCI USB 1.1 Controller (rev a2)
+00:02.1 USB Controller: nVidia Corporation MCP67 EHCI USB 2.0 Controller (rev a2)
+00:04.0 USB Controller: nVidia Corporation MCP67 OHCI USB 1.1 Controller (rev a2)
+00:04.1 USB Controller: nVidia Corporation MCP67 EHCI USB 2.0 Controller (rev a2)
+00:06.0 IDE interface: nVidia Corporation MCP67 IDE Controller (rev a1)
+00:07.0 Audio device: nVidia Corporation MCP67 High Definition Audio (rev a1)
+00:08.0 PCI bridge: nVidia Corporation MCP67 PCI Bridge (rev a2)
+00:09.0 SATA controller: nVidia Corporation MCP67 SATA Controller (rev a2)
+00:0a.0 Ethernet controller: nVidia Corporation MCP67 Ethernet (rev a2)
+00:0b.0 PCI bridge: nVidia Corporation MCP67 PCI Express Bridge (rev a2)
+00:0c.0 PCI bridge: nVidia Corporation MCP67 PCI Express Bridge (rev a2)
+00:0d.0 PCI bridge: nVidia Corporation MCP67 PCI Express Bridge (rev a2)
+00:18.0 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] HyperTransport Technology Configuration
+00:18.1 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Address Map
+00:18.2 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] DRAM Controller
+00:18.3 Host bridge: Advanced Micro Devices [AMD] K8 [Athlon64/Opteron] Miscellaneous Control
+02:00.0 VGA compatible controller: nVidia Corporation GeForce 8400M G (rev a1)
+03:00.0 Ethernet controller: Atheros Communications Inc. AR242x 802.11abg Wireless PCI Express Adapter (rev 04)
+  I was trying to force it. I have succeeded only  with eth0 so at leat  i have connection  but it still doesn't solve my problem cause can't see wireless connection...thanks in advance....
+
+---
+
