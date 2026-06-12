@@ -1,0 +1,26 @@
+---
+title: "Gutsy Release Party - Nashville - Thursday 7 PM"
+date: 2007-10-16
+forum: Tennessee Team - US
+---
+
+### Post by matthewcraig on 2007-10-16
+In celebration of the next release of Ubuntu (Gutsy Gibbon), there will be a LoCo Release Party on this coming Thursday,
+October 18th, at 7 PM.
+
+
+We'll take a look at the new features.  Ubuntu is especially focusing on the GNU side of their distribution, and it is terrific seeing the
+increased functionality of Free Software.  We have a couple door prizes for people arriving early, courtesy of the vendors at the
+recent Ohio Linuxfest.  There will be Ubuntu case badge give-aways for anyone who brings a Linux computer.  Be sure to bring your camera, and you'll probably want a way to exchange contact information with people you meet there.
+
+So send an R.S.V.P. and we can get an accurate count for the table reservation.  Feel free to bring friends who are also interested in promoting Free Software and Ubuntu in the community.
+
+This "gutsy" event will be at La Hacienda restaurant, in Nashville, right off I-40, exit 219.
+
+
+Google Map directions: [http://tinyurl.com/2uk94g](http://tinyurl.com/2uk94g)
+
+:guitar:  :guitar:  :guitar:  :guitar:  :guitar:  :guitar:
+
+---
+
