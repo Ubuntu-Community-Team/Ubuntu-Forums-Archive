@@ -1,0 +1,53 @@
+---
+title: "What do those kernel messages mean ?"
+date: 2010-06-01
+forum: Server Platforms
+---
+
+### Post by argoson on 2010-06-01
+I am running a LAMP server for web development use, and while checking the kernel log, i came across these messages:
+
+```
+
+Jun 1 17:37:47 zepp1 kernel: [597218.049774] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26558 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:37:52 zepp1 kernel: [597223.586852] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26569 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:37:57 zepp1 kernel: [597229.549815] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26572 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:02 zepp1 kernel: [597234.978387] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26603 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:07 zepp1 kernel: [597240.693393] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26608 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:12 zepp1 kernel: [597246.537499] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26611 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:17 zepp1 kernel: [597252.157324] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26614 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:22 zepp1 kernel: [597257.636909] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26618 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:27 zepp1 kernel: [597263.118292] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26627 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:32 zepp1 kernel: [597268.783013] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26637 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:34 zepp1 kernel: [597270.976696] ''IN-world':'IN=eth0 OUT=MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26642 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:34 zepp1 kernel: [597271.772697] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26643 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:35 zepp1 kernel: [597272.556709] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26646 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:36 zepp1 kernel: [597273.888711] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26649 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:37 zepp1 kernel: [597274.899294] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26650 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:37 zepp1 kernel: [597275.349970] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26651 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:38 zepp1 kernel: [597276.099051] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26652 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:42 zepp1 kernel: [597280.195650] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26676 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:47 zepp1 kernel: [597285.803521] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26686 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:49 zepp1 kernel: [597288.106798] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26691 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:49 zepp1 kernel: [597289.079869] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26692 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:50 zepp1 kernel: [597289.829887] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26693 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:51 zepp1 kernel: [597290.857007] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26696 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:52 zepp1 kernel: [597291.552974] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26697 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+Jun 1 17:38:52 zepp1 kernel: [597292.013397] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26698 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:53 zepp1 kernel: [597292.890640] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=192.168.1.255 LEN=78 TOS=0x00 PREC=0x00 TTL=128 ID=26699 PROTO=UDP SPT=137 DPT=137 LEN=58 
+Jun 1 17:38:57 zepp1 kernel: [597297.252547] ''IN-world':'IN=eth0 OUT= MAC=ff:ff:ff:ff:ff:ff:00:18:de:6c:75:c9:08:00 SRC=192.168.1.5 DST=255.255.255.255 LEN=116 TOS=0x00 PREC=0x00 TTL=128 ID=26702 PROTO=UDP SPT=52277 DPT=19540 LEN=96 
+```
+
+What do they mean ? These are just a few. the log file is full of them.
+
+IP 192.168.1.5 is a computer with static IP in the system, but it is not used to access the server. why does it flood the server with requests ?
+
+Thanks
+
+---
+
+### Post by capscrew on 2010-06-01
+Those are broadcasts which means every host on the subnet responds - They appear to be from a host running Samba.  This is iptables doing its job tracking IP traffic
+
+---
+

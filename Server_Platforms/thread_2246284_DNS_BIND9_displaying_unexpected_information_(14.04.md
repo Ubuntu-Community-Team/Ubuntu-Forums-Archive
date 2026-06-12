@@ -1,0 +1,485 @@
+---
+title: "DNS BIND9 displaying unexpected information (14.04 server)"
+date: 2014-09-29
+forum: Server Platforms
+---
+
+### Post by chris33 on 2014-09-29
+Hi,
+I have configured bind9 on Ubuntu 14.04 server (latest updates).
+This server is internal and resolves internal IPs and forwards for internet IPs.
+
+Resolution works fine, but when I execute nslookup on a windows client, then change to this DNS server it displays :
+
+C:\Windows\System32>nslookup
+Serveur par dÚfaut :   resolver2.opendns.com
+Address:  208.67.220.220
+
+> server 10.1.1.22
+22.1.1.10.in-addr.arpa
+      [COLOR=#ff0000]  primary name server = localhost
+        responsible mail addr = nobody.invalid[/COLOR]
+        [COLOR=#ff0000]serial  = 1
+        refresh = 600 (10 mins)
+        retry   = 1200 (20 mins)
+        expire  = 604800 (7 days)
+        default TTL = 10800 (3 hours)[/COLOR]
+Serveur par dÚfaut :   [10.1.1.22]
+Address:  10.1.1.22
+
+
+Where  does it take these values ??? How can it show right names/values or nothing  like other DNS servers (eg : 208.67.222.222 - openDNS)
+
+Here is my configuration :
+[B]
+/etc/bind/named.conf.local[/B]
+
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "domain.local" {
+    type master;
+    file "/etc/bind/domain.local.db";
+};
+
+zone "1.1.10.in-addr.arpa" {
+        type master;
+        file "/etc/bind/db.10";
+};
+
+
+**/etc/bind/named.conf.options**
+
+
+options {
+        directory "/var/cache/bind";
+
+        // If there is a firewall between you and nameservers you want
+        // to talk to, you may need to fix the firewall to allow multiple
+        // ports to talk.  See [http://www.kb.cert.org/vuls/id/800113](http://www.kb.cert.org/vuls/id/800113)
+
+        // If your ISP provided one or more IP addresses for stable
+        // nameservers, you probably want to use them as forwarders.
+
+        // Uncomment the following block, and insert the addresses replacing
+        // the all-0's placeholder.
+
+
+
+        recursion yes;                 # enables resursive queries
+        allow-recursion {
+                10.1.1.0/24;
+                127.0.0.1;
+        };  # allows recursive queries from "trusted" clients
+        listen-on {
+                10.1.1.22;
+                127.0.0.1;
+        };   # ns1 private IP address + local - listen on private network only
+        allow-transfer { none; };      # disable zone transfers by default
+
+        forwarders {
+                208.67.220.220;
+                208.67.222.222;
+        };
+
+
+        //==========================================================
+==============
+        // If BIND logs error messages about the root key being expi
+red,
+        // you will need to update your keys.  See [https://www.isc.o](https://www.isc.o)
+rg/bind-keys
+        //==========================================================
+==============
+//      dnssec-validation auto;
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};
+
+
+[B]
+/etc/bind/domain.local.db[/B]
+
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     ns1.domain.local. admin.domain.local. (
+                     2014092202         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@           IN      NS      ns1.domain.local.
+ns1         IN      A       10.1.1.22
+server1     IN      A       10.1.1.40
+server2     IN      A       10.1.1.41
+
+
+
+[B]
+/etc/bind/db.10[/B]
+
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     ns1.domain.local. admin.domain.local. (
+                     2014092202         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.
+22      IN      PTR     ns1.domain.local.
+40      IN      PTR     server1.domain.local.
+41      IN      PTR     server2.domain.local.
+
+
+
+[B]
+/etc/network/interfaces[/B]
+
+# This file describes the network interfaces available on your syste
+m
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 10.1.1.22
+netmask 255.255.255.0
+gateway 10.1.1.254
+
+
+[B]
+/etc/hosts[/B]
+
+#127.0.0.1      localhost
+10.1.1.22      ns1 ns1.domain.local
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+
+**/etc/resolv.conf** is not changed
+
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by res
+olvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRIT
+TEN
+
+
+Thank you for your help.
+
+---
+
+### Post by SeijiSensei on 2014-10-01
+All that information that concerns you is published in the SOA record for the domain.  Here's the record for Ubuntu Forums as comparison:
+```
+
+$ host -t soa ubuntuforums.com
+ubuntuforums.com has SOA record ns1.canonical.com. hostmaster.canonical.com. 2014072102 10800 3600 604800 3600
+
+```
+That includes a server name, an administrative address (hostmaster@canonical.com; the "@" is not used because it has a reserved meaning in the SOA), the serial number of the records, and the refresh, retry, expire, and negative TTL entries like those shown in your example above.
+
+---
+
+### Post by chris33 on 2014-10-03
+> **SeijiSensei said:**
+> All that information that concerns you is published in the SOA record for the domain.  Here's the record for Ubuntu Forums as comparison:
+```
+
+$ host -t soa ubuntuforums.com
+ubuntuforums.com has SOA record ns1.canonical.com. hostmaster.canonical.com. 2014072102 10800 3600 604800 3600
+
+```
+That includes a server name, an administrative address (hostmaster@canonical.com; the "@" is not used because it has a reserved meaning in the SOA), the serial number of the records, and the refresh, retry, expire, and negative TTL entries like those shown in your example above.
+
+Thank you for your reply . In my case I have this :
+
+host -t soa domain.local
+domain.local has SOA record ns1.domain.local. admin.domain.local. 2014092202 604800 86400 2419200 604800
+
+Which is correct, but doesn't explain why the nslookup command on windows shows :
+
+> server 10.1.1.22
+22.1.1.10.in-addr.arpa
+      [COLOR=#ff0000]  primary name server = localhost
+        responsible mail addr = nobody.invalid[/COLOR]
+        [COLOR=#ff0000]serial  = 1
+        refresh = 600 (10 mins)
+        retry   = 1200 (20 mins)
+        expire  = 604800 (7 days)
+        default TTL = 10800 (3 hours)[/COLOR]
+Serveur par dÚfaut :   [10.1.1.22]
+Address:  10.1.1.22
+
+---
+
+### Post by SeijiSensei on 2014-10-03
+You probably need to ask this on a Windows site, then, and see how nslookup gets its information.
+
+---
+
+### Post by Doug S on 2014-10-03
+I agree with what Seiji said, but it also seems clear to me that it is not even using db.10 for the lookup. That part I do not understand.
+
+If you search your entire /etc/bind directory, are there any files at all that have a refresh of 600 or a retry of 1200 or a serial number of 1?
+My system doesn't, but it also works properly. 
+By the way, how to you get the microsoft version of nslookup to print what you listed? If I turn on the debug option I get way more stuff, and without the debug option I don't get any of it. Anyway, here is an example from an MS windows 8.1 computer on my LAN:```
+C:\Users\Doug\SPlot\SPlot>nslookup
+Default Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+> 1.111.168.192.in-addr.arpa
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    1.111.168.192.in-addr.arpa
+
+> set debug
+> 1.111.168.192.in-addr.arpa
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 14, rcode = NXDOMAIN
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa.smythies.com, type = A, class = IN
+    AUTHORITY RECORDS:
+    ->  smythies.com
+        ttl = 604800 (7 days)
+        primary name server = smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 15, rcode = NXDOMAIN
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa.smythies.com, type = AAAA, class = IN
+    AUTHORITY RECORDS:
+    ->  smythies.com
+        ttl = 604800 (7 days)
+        primary name server = smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 16, rcode = NOERROR
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa, type = A, class = IN
+    AUTHORITY RECORDS:
+    ->  111.168.192.in-addr.arpa
+        ttl = 604800 (7 days)
+        primary name server = ns1.smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+```However, more typically, I would just do this:```
+C:\Users\Doug\SPlot\SPlot>nslookup 192.168.111.1
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    ns1.smythies.com
+Address:  192.168.111.1
+
+C:\Users\Doug\SPlot\SPlot>
+```
+
+---
+
+### Post by chris33 on 2014-10-06
+Hi Doug,
+Thanks for your reply.
+You are right my reverse zone doesn't seem to work.
+It cannot resolve 22.1.1.10.in-addr.arpa for instance.
+I checked with the BIND9 documentation but can't see what I did wrong with the reverse zone.
+How did you notice it ? WHat do I miss please ?
+Maybe this is the cause of a default nslookup answer on Windows.
+I have no default values like returned in my bind folder.
+Thank you.
+
+
+> **Doug S said:**
+> I agree with what Seiji said, but it also seems clear to me that it is not even using db.10 for the lookup. That part I do not understand.
+
+If you search your entire /etc/bind directory, are there any files at all that have a refresh of 600 or a retry of 1200 or a serial number of 1?
+My system doesn't, but it also works properly. 
+By the way, how to you get the microsoft version of nslookup to print what you listed? If I turn on the debug option I get way more stuff, and without the debug option I don't get any of it. Anyway, here is an example from an MS windows 8.1 computer on my LAN:```
+C:\Users\Doug\SPlot\SPlot>nslookup
+Default Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+> 1.111.168.192.in-addr.arpa
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    1.111.168.192.in-addr.arpa
+
+> set debug
+> 1.111.168.192.in-addr.arpa
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 14, rcode = NXDOMAIN
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa.smythies.com, type = A, class = IN
+    AUTHORITY RECORDS:
+    ->  smythies.com
+        ttl = 604800 (7 days)
+        primary name server = smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 15, rcode = NXDOMAIN
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa.smythies.com, type = AAAA, class = IN
+    AUTHORITY RECORDS:
+    ->  smythies.com
+        ttl = 604800 (7 days)
+        primary name server = smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+Got answer:
+    HEADER:
+        opcode = QUERY, id = 16, rcode = NOERROR
+        header flags:  response, auth. answer, want recursion, recursion avail.
+        questions = 1,  answers = 0,  authority records = 1,  additional = 0
+
+    QUESTIONS:
+        1.111.168.192.in-addr.arpa, type = A, class = IN
+    AUTHORITY RECORDS:
+    ->  111.168.192.in-addr.arpa
+        ttl = 604800 (7 days)
+        primary name server = ns1.smythies.com
+        responsible mail addr = doug.smythies.com
+        serial  = 2014091601
+        refresh = 604800 (7 days)
+        retry   = 86400 (1 day)
+        expire  = 2419200 (28 days)
+        default TTL = 604800 (7 days)
+
+------------
+------------
+```However, more typically, I would just do this:```
+C:\Users\Doug\SPlot\SPlot>nslookup 192.168.111.1
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    ns1.smythies.com
+Address:  192.168.111.1
+
+C:\Users\Doug\SPlot\SPlot>
+```
+
+---
+
+### Post by Doug S on 2014-10-06
+> **chris33 said:**
+> I checked with the BIND9 documentation but can't see what I did wrong with the reverse zone.
+How did you notice it ? WHat do I miss please ?I noticed that the refresh, retry and serial number values were not what was listed in your source file.
+I do not know what you are missing.
+If it were my system, my next steps would be: Try a different internal domain name (i.e. in case of some reserved words being used (which I searched for, but didn't find)); Use tcpdump (or wireshark) to observe any forwarding traffic during a lookup (i.e to determine if the request is actually being forwarded somehow).
+
+Edit: By the way, myself I don't care if this works or not:```
+C:\Users\Doug>[COLOR=#ff0000]nslookup 100.111.168.192.in-addr.arpa[/COLOR]
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    100.111.168.192.in-addr.arpa
+```I only care that this works:```
+C:\Users\Doug>[COLOR=#ff0000]nslookup 192.168.111.100[/COLOR]
+Server:  ns1.smythies.com
+Address:  192.168.111.1
+
+Name:    doug-xps.smythies.com
+Address:  192.168.111.100
+```
+
+---
+
+### Post by nerdtron on 2014-10-06
+And when you use nslookup, you can specify the ip address (of even domain namen) of the specific dns server you want to query.
+```
+nslookup mydomain.com dns.server.here
+```
+
+You can also check PTR records by nslookup too. 
+```
+nslookup ip.address.here.x optional.dns.server.here
+```
+
+---
+

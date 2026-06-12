@@ -1,0 +1,61 @@
+---
+title: "Postfix-how to restrict outgoing mails to Local eccept one domain"
+date: 2008-07-14
+forum: Server Platforms
+---
+
+### Post by sohan on 2008-07-14
+Hi all,
+
+I am new to Linux. My setup is like this : Installed LAMP, postfix,devcot...all running properly. My server is also serving as Firewall(iptables & Transparent Squid)
+
+My problem is I want to restrict outgoing mails to LAN only. Our domain is hosted at ixwebhosting. I named my Linux domain as the same name (xxxxxsoftware.com)
+
+Is it possible to allow outgoing mails to only xxxxsoftware.com and deny to other domains ? 
+
+I have created couple of local users who access mails from my linux box. I don't want them to send mails outside world but allow only xxxxsoftware.com...
+
+my mail.cf is :
+
+# Debian specific:  Specifying a file name will cause the first
+# line of that file to be used as the name.  The Debian default
+# is /etc/mailname.
+#myorigin = /etc/mailname
+
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+
+readme_directory = no
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
+# information on enabling SSL in the smtp client.
+
+myhostname = xxxxsoftware.com
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+mailbox_command = procmail -a $EXTENSION
+mailbox_size_limit = 0
+recipient_delimiter = +
+mydomain = xxxxsoftware.com
+relayhost = 
+
+please help me....
+
+Thank you 
+SOHAN
+
+---
+

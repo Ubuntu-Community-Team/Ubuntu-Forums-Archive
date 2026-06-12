@@ -1,0 +1,122 @@
+---
+title: "Ubuntu Security Notice USN-16-1"
+date: 2004-11-02
+forum: Server Platforms
+---
+
+### Post by jdodson on 2004-11-02
+===========================================================
+Ubuntu Security Notice USN-16-1           November 02, 2004
+perl vulnerabilities
+CAN-2004-0976
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 4.10 (Warty Warthog)
+
+The following packages are affected:
+
+perl
+
+The problem can be corrected by upgrading the affected package to
+version 5.8.4-2ubuntu0.1.  In general, a standard system upgrade is
+sufficient to effect the necessary changes.
+
+Details follow:
+
+Recently, Trustix Secure Linux discovered some vulnerabilities in the
+perl package. The utility "instmodsh", the Perl package "PPPort.pm",
+and several test scripts (which are not shipped and only used during
+build) created temporary files in an insecure way, which could allow a
+symlink attack to create or overwrite arbitrary files with the
+privileges of the user invoking the program, or building the perl
+package, respectively.
+
+ Source archives:
+
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1.diff.gz)
+     Size/MD5:    56716 d5f93d4521ddc87d8f7c8dfbc82f9465
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1.dsc)
+     Size/MD5:      727 1dc005c45130d1dcca02c4e04d22c229
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4.orig.tar.gz)
+     Size/MD5: 12094233 912050a9cb6b0f415b76ba56052fb4cf
+
+ Architecture independent packages:
+
+   [http://security.ubuntu.com/ubuntu/pool/universe/p/perl/libcgi-fast-perl_5.8.4-2ubuntu0.1_all.deb](http://security.ubuntu.com/ubuntu/pool/universe/p/perl/libcgi-fast-perl_5.8.4-2ubuntu0.1_all.deb)
+     Size/MD5:    36368 a6688d0b21164b829ed3999b10f367ed
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-doc_5.8.4-2ubuntu0.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-doc_5.8.4-2ubuntu0.1_all.deb)
+     Size/MD5:  7049896 fd4003c656589b437e1fd5f6dafc0cbc
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-modules_5.8.4-2ubuntu0.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-modules_5.8.4-2ubuntu0.1_all.deb)
+     Size/MD5:  2181512 188df1e3bfc11485da2140e09eab80cc
+
+ amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:   605390 0b406c1ca29710f7de99c79211d86134
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:     1034 afc27d0c462c213ec205d7e1b2d373d1
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:   786632 0998222120d32561c94a25c83899fa2d
+   [http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:  3819870 a79d6c93cfc4b85ac0d977bc854acc3d
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:    32830 9cea4d9c974e36c43b12e7038e650bfa
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_amd64.deb)
+     Size/MD5:  3834282 b05319dac1909847d7ac11a354ce3d8b
+
+ i386 architecture (x86 compatible Intel/AMD)
+
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:   546804 d0810bca6015bb925d0f84840a616dc5
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:   494038 3b2c662dfbf227d6b91b6226afb549e7
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:   726984 61c5b85db23b8b089dbe3da138a5192c
+   [http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:  3630998 f99a50dcee317be15e59b1c96abcddd8
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:    30810 a078736398014ad88c0b1b14013f613c
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_i386.deb)
+     Size/MD5:  3229790 d4055641a1d862a6689ab558c2e2d703
+
+ powerpc architecture (Apple Macintosh G3/G4/G5)
+
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl-dev_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:   560976 01c0f685545f71ef9d63b49a4d8e89e4
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/libperl5.8_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:     1032 4161c4a64ea0de87702cdad169900d32
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-base_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:   717954 87444b8ecf1324ab901c22be42d3d659
+   [http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/universe/p/perl/perl-debug_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:  3817034 9622d49e221adbedb47ae5d7d3ce1257
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl-suid_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:    30562 3aa52c138a8838357defbe848c335a08
+   [http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/perl/perl_5.8.4-2ubuntu0.1_powerpc.deb)
+     Size/MD5:  3477180 669dd12820648ff141a6974c8f0a2c65
+
+
+--
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce@lists.ubuntu.com[/email]
+[http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+---
+
+### Post by jdong on 2004-11-02
+[http://ubuntuforums.org/showthread.php?t=3037](http://ubuntuforums.org/showthread.php?t=3037)
+
+Yep, on mailing list! Go Ubuntu
+
+---
+
+### Post by jdodson on 2004-11-02
+[QUOTE=jdong][http://ubuntuforums.org/showthread.php?t=3037](http://ubuntuforums.org/showthread.php?t=3037)
+
+Yep, on mailing list! Go Ubuntu[/QUOTE]
+
+DOH!  ok, my bad #-o
+
+---
+

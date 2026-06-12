@@ -1,0 +1,196 @@
+---
+title: "HowTo Install DJBdns with cache read/write  to/from hard disk, in Ubuntu Linux"
+date: 2010-04-02
+forum: Server Platforms
+---
+
+### Post by docplastic on 2010-04-02
+**This HowTo describes the procedure to patch & install djbdns in such a way that it writes & reads its DNS cache to/from hard disk, allowing it to survive computer reboots.**
+
+DJBdns <http://cr.yp.to/djbdns.html> are a set of tools to retrieve and publish Domain Name System (DNS) information.
+Its main applications are a local DNS cache (dnscache) and an authoritarive DNS server (tinydns).
+
+[Posted at <http://ubuntuforums.org/showthread.php?p=9064333>]
+
+
+**1. Prepare to install**
+# Install tools used to build djbdns
+sudo aptitude install -R build-essential devscripts
+
+cd $(mktemp -d) ; # create a temp dir and cd to it
+apt-get source djbdns ; sudo apt-get build-dep djbdns # get source & deps
+cd $(ls -d djbdns-*/) # cd djbdns-1.05/
+
+**# Ubuntu 10.04: patch with djbdns-dumpcache.patch**
+# we use the patch, proposed by riemann <http://riemann.fmi.uni-sofia.bg/docs/djbdns-dumpcache.html>, to enable save/load dns cache to/from hard disk and to fix the SIGPIPE bug.
+
+# get riemann patch
+wget [http://riemann.fmi.uni-sofia.bg/programs/djbdns-dumpcache.patch](http://riemann.fmi.uni-sofia.bg/programs/djbdns-dumpcache.patch)
+
+# make it Debian friendly
+sed -i 's|djbdns-1.05\/|djbdns-1.05.orig\/|;s|djbdns-1.05_new\/|djbdns-1.05\/|' djbdns-dumpcache.patch
+sed -i '/diff -/d;s/"14400:/"300:/' djbdns-dumpcache.patch # disk dump every 5m
+mv -v djbdns-dumpcache.patch debian/diff/0003-djbdns-dumpcache.diff
+sed -i '/>conf-cc/s| -O2|& -DDUMPCACHE|' debian/rules # enable riemann patch
+
+**# fix bugs in: debian/rules & debian/control, make them process only djbdns code**
+sed -i '/cat FILES/,/done/d ; /^dbndns\//,/-stamp/d ; /# dbndns/,/done/d ; s/build-stamp \\$/build-stamp/ ; /dbndns\/\*/d ; s|[ \t]\+dbndns[^ \t]\+||g ; /DIRDBN/d'  debian/rules ; sed -i '/^Package:.*dbndns/,/remote servers./d' debian/control
+
+**# fix bugs in: dnscache-run.postinst, dnscache-run.postrm**
+tee debian/dnscache-run.postinst.new <<-\EOA
+#!/bin/sh
+set -e
+
+test "$1" = 'configure' || exit 0
+mv -f /etc/sv/dnscache/root/servers/@ /etc/dnsroots.global
+test -x /etc/sv/dnscache && rm -fr /etc/sv/dnscache
+test -x /etc/service/dnscache && rm -fr /etc/service/dnscache
+test -x /etc/dnscache && rm -fr /etc/dnscache
+dnscache-conf Gdnscache Gdnslog /etc/sv/dnscache
+(cd /etc/sv/dnscache/log/;rm -fr main;ln -sfn /var/log/dnscache/ main)
+update-service --add /etc/sv/dnscache
+
+test -z "$2" || exit 0
+chown Gdnslog:adm /var/log/dnscache
+EOA
+mv debian/dnscache-run.postinst.new debian/dnscache-run.postinst
+
+**# fix bugs in: djbdns-1.05/debian/dnscache-run.postrm**
+tee debian/dnscache-run.postrm.new <<-\EOA
+#!/bin/sh
+set -e
+
+test "$1" = 'purge' || exit 0
+svc -dx /etc/sv/dnscache /etc/sv/dnscache/log || :
+rm -rf /etc/sv/dnscache
+rm -rf /var/lib/supervise/dnscache /var/lib/supervise/dnscache.log
+rm -rf /var/log/dnscache || :
+for i in Gdnscache Gdnslog; do
+  ! getent passwd $i >/dev/null ||
+    userdel $i || :
+done
+test -f /etc/dhcp3/dhclient.conf && sed -i '/^prepend.*127.0.0.1/s/^/#/' /etc/dhcp3/dhclient.conf > /dev/null 2>&1
+sed -i '/dnscache-run/d;/127.0.0.1/d' /etc/resolv.conf > /dev/null 2>&1
+EOA
+mv debian/dnscache-run.postrm.new debian/dnscache-run.postrm
+
+**# customize maintainer data**
+sed -i '/^Maintainer/s/: .*/: dummy <dummy@example.com>/' debian/control ; grep '^Maintainer\|^Uploaders\|XSBC-Original-Maintainer' debian/control
+
+**# update debian/changelog**
+(export DEBFULLNAME='dummy';export DEBEMAIL='dummy <dummy@example.com>';dch -i "apply debian/diff/0003-djbdns-dumpcache.diff patch from <http://riemann.fmi.uni-sofia.bg/docs/djbdns-dumpcache.html>. This patch enables save/load dns cache to/from hard disk and fixes the SIGPIPE bug).") ; head -n 9 debian/changelog
+
+**# build the modified djbdns & dnscache-run .deb packages**
+(export DEBFULLNAME='dummy';export DEBEMAIL='dummy@example.com';debuild -i -us -uc);
+
+
+**2. install patched djbdns app.**
+
+**# If reinstalling: first purge djbdns, daemontools, ucspi-tcp**
+cp -vaf /etc/dnscache/root/dump/data ~/ # if available
+sudo /sbin/stop svscan
+sudo aptitude -y purge dnscache-run djbdns daemontools-run daemontools ucspi-tcp
+test -f /etc/dhcp3/dhclient.conf && sudo sed -i '/^prepend.*127.0.0.1/s/^/#/' /etc/dhcp3/dhclient.conf
+sudo sed -i '/dnscache-run/d;/127.0.0.1/d' /etc/resolv.conf
+sudo rm -fr /var/lib/supervise /etc/dnscache* /etc/service /etc/sv
+
+**# install the new .deb's**
+sudo aptitude install daemontools daemontools-run ucspi-tcp
+sudo dpkg -i djbdns_1.05-*.deb && sudo aptitude hold djbdns
+sudo dpkg -i dnscache-run_1.05-*.deb && sudo aptitude hold dnscache-run
+sudo sh -c "chown Gdnscache.Gdnscache ~/data;cp -vaf ~/data /etc/dnscache/root/dump/;chattr -i /etc/resolv.conf"
+
+pgrep dhclient >/dev/null && sudo sed -i '/prepend.*127.0.0.1/s/^#//' /etc/dhcp3/dhclient.conf # if using dhcp
+
+pgrep dhclient >/dev/null || { echo '# Generated by dnscache-run' >~/resolv.conf.'{tmp}'.$$ ; echo 'nameserver 127.0.0.1' >>~/resolv.conf.'{tmp}'.$$ ; cat /etc/resolv.conf >>~/resolv.conf.'{tmp}'.$$ ; sudo mv -f ~/resolv.conf.'{tmp}'.$$ /etc/resolv.conf; } # if NOT using dhcp
+
+**# Now start djbdns service**
+sudo /sbin/start svscan # start service
+pgrep dhclient >/dev/null && { sudo dhclient;sleep 2; } # if using dhcp
+pgrep dhclient >/dev/null || sudo /etc/init.d/networking restart # if static ip
+
+[B]################################
+####  PROCEDURE ENDS HERE  ####
+################################[/B]
+
+**3. 3. Test & control**
+**## check status**
+sudo svstat /etc/sv/* /etc/sv/*/log # service status
+ps -ef | sed '/!d/d;/readproctitle/!d' # service errors
+(cd /etc/sv/dnscache/env 2>&1>/dev/null && grep "^" * ) # env & config
+(cd /etc/sv/dnscache/root/ip 2>&1>/dev/null && ls -1 ) # authorised clients
+# show root servers: (cd /etc/sv/dnscache/root/servers 2>&1>/dev/null && grep "^" /dev/null * )
+
+# IF  dnscache CACHE LOGGING enabled:
+#   Open 2 terminals side-by-side (press ALT+F2 and enter: gnome-terminal)
+# in terminal 1: check dnscache working:
+tail -f /etc/sv/dnscache/log/main/current
+# in terminal 2: compare "Query time" from both runs:
+dig google.com | grep time && sleep 3
+dig google.com | grep time
+
+dnsip $(dnsqr ns . | sed -e '/answer/!d;s/\(.*\)NS \(.*\)/\2/')
+dnsip [www.fsf.org](www.fsf.org)
+dnsqr any cnn.com
+dnsq a [www.google.com](www.google.com) 192.203.230.10
+env DNSCACHEIP=208.67.222.222 dnsqr a [www.google.com](www.google.com)
+
+**## control cache**
+sudo svc -a /etc/sv/dnscache ;# PATCHED dump cache
+sudo svc -h /etc/sv/dnscache ;# PATCHED (re)load cache
+sudo svc -t /etc/sv/dnscache # PATCHED dump & exit
+sudo svc -d /etc/sv/dnscache # DOWN
+sudo svc -u /etc/sv/dnscache # UP
+
+**4. Customize**
+
+**# change riemann's dumpcache write to disk interval (in seconds)**
+sudo sed -i 's/^.*:/300:/' /etc/dnscache/env/DUMPCACHE # modify 300
+
+**# change log profile**
+cat /etc/sv/dnscache/log/run
+#!/bin/sh
+exec setuidgid Gdnslog multilog t ./main
+
+# change to: multilog t '-*' +'*stats *' ./main
+# ...
+# change to: s+d+s: multilog t '-*' +'*stats *' +'*dump *' +'*slurp *' ./main
+#
+sudo cp /etc/sv/dnscache/log/run /etc/sv/dnscache/log/run.{NEW}
+sudo sed -i '/exec/d' /etc/sv/dnscache/log/run.{NEW}
+## multilog t '-*' '+* fatal: *' ./main
+echo "exec setuidgid Gdnslog multilog t '-*' '+*stats *' '+*dump *' '+*slurp *' ./main" | sudo tee -a /etc/sv/dnscache/log/run.{NEW}
+cat /etc/sv/dnscache/log/run.{NEW}
+sudo mv /etc/sv/dnscache/log/run.{NEW} /etc/sv/dnscache/log/run
+cat /etc/sv/dnscache/log/run
+sudo svc -h /etc/sv/dnscache/log ;# restart log service
+# restore default
+#
+sudo sed -i 's/multilog.*/multilog t \.\/main/' /etc/sv/dnscache/log/run
+
+**# update dns root servers list**
+dnsip $(dnsqr ns . | sed -e '/answer/!d;s/\(.*\)NS \(.*\)/\2/') | sudo tee /etc/dnsroots.global ; sudo cp -v /etc/dnsroots.global /etc/dnscache/root/servers/@'{NEW}' && sudo mv /etc/dnscache/root/servers/@'{NEW}' /etc/dnscache/root/servers/@
+
+**# add a procedure to CLEAR the service error log**
+sudo rm -rf /etc/sv/clear /var/lib/supervise/clear
+sudo mkdir -p /etc/sv/clear /var/lib/supervise/clear
+sudo touch /etc/sv/clear/down && sudo chmod a-w /etc/sv/clear/down
+sudo tee /etc/sv/clear/run <<-\EOA
+#!/bin/sh
+# to check for service errors execute:
+#    ps -ef | sed '/!d/d;/readproctitle/!d'
+# to clear the service error log execute:
+#    sudo svc -o /etc/sv/clear
+yes '' | head -400 | tr '\n' .
+EOA
+sudo chmod +x /etc/sv/clear/run
+(cd /etc/;sudo ln -sv sv/clear dnscacheclear)
+sudo update-service --add /etc/sv/clear;sleep 3 # man update-service
+
+sudo svstat /etc/sv/* /etc/sv/*/log # check djb tools status
+ps -ef | sed '/!d/d;/readproctitle/!d'
+# sudo update-service --remove /etc/sv/clear
+# sudo rm -rf /etc/sv/clear /var/lib/supervise/clear
+
+---
+

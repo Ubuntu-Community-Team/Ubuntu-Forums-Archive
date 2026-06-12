@@ -1,0 +1,106 @@
+---
+title: "Help configuring phpmyadmin on https and a different port"
+date: 2013-06-17
+forum: Server Platforms
+---
+
+### Post by wtfacoconut on 2013-06-17
+Hello,
+
+I've been bashing away at this for a few hours now and can't seem to get this working. I'm at the point now where I need some fresh eyes to tell me what I'm doing wrong.
+
+I'm trying to configure phpMyAdmin to
+[LIST=1]
+[*]Operate on a different port. In this case I want port 9999
+[*]Configure apache so that all traffic on port 9999 goes over HTTPS
+[/LIST]
+
+Below is a copy of my configs
+
+/etc/apache/ports.conf
+```
+
+NameVirtualHost *:80
+Listen 80
+
+#NameVirtualHost *:9999
+#Listen 9999
+
+<IfModule mod_ssl.c>
+    NameVirtualHost *:9999
+    NameVirtualHost *:443
+
+    Listen 443
+    Listen 9999
+</IfModule>
+
+<IfModule mod_gnutls.c>
+    Listen 443
+    Listen 9999
+</IfModule>
+
+```
+
+
+A symlink: /etc/apache2/sites-available/phpmyadmin.conf --> /etc/apache2/sites-available/phpmyadmin.conf
+```
+
+<VirtualHost *:9999>
+#DocumentRoot /var/www-9999/phpmyadmin
+DocumentRoot /usr/share/phpmyadmin
+ServerName dummy-domain
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !dummy-domain
+RewriteRule (.*) [L]
+
+<Directory /usr/share/phpmyadmin>
+        Options FollowSymLinks
+        DirectoryIndex index.php
+
+        <IfModule mod_php5.c>
+                AddType application/x-httpd-php .php
+
+                php_flag magic_quotes_gpc Off
+                php_flag track_vars On
+                php_flag register_globals Off
+                php_admin_flag allow_url_fopen Off
+                php_value include_path .
+                php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+                php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/
+        </IfModule>
+
+</Directory>
+
+# Authorize for setup
+<Directory /usr/share/phpmyadmin/setup>
+    <IfModule mod_authn_file.c>
+    AuthType Basic
+    AuthName "phpMyAdmin Setup"
+    AuthUserFile /etc/phpmyadmin/htpasswd.setup
+    </IfModule>
+    Require valid-user
+</Directory>
+
+# Disallow web access to directories that don't need it
+<Directory /usr/share/phpmyadmin/libraries>
+    Order Deny,Allow
+    Deny from All
+</Directory>
+<Directory /usr/share/phpmyadmin/setup/lib>
+    Order Deny,Allow
+    Deny from All
+</Directory>
+SSLEngine on
+SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
+SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+
+</VirtualHost>
+
+```
+
+
+Thanks again in advance!
+
+---
+

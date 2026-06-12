@@ -1,0 +1,1013 @@
+---
+title: "Need advice on boot/drive oddities"
+date: 2013-01-28
+forum: Server Platforms
+---
+
+### Post by elliot100 on 2013-01-28
+Hi - I recently rebuilt a Windows machine, putting Ubuntu on a new drive (dev/sda). The plan was to then add the old Windows drive as dev/sdb in order to access old data.
+
+However, I think what I ended up doing was installing Ubuntu on the new drive as sdb, made some other mistakes, then reinstalling it on the new drive as sda.
+
+Worked fine to start with, then I connected the old Windows drive and made some other hardware changes, and couldn't boot. Disconnected the old Windows drive and ran boot-repair from a LiveCD, accepting default options, and it now boots with the warning message "*Disk drive for /dev/mapper/server_swap-1 is not ready yet or not present*".
+
+I can skip mounting this and the system will start OK, and it's not mentioned in the boot-repair log -  I'm thinking this is something left over from my aborted initial Ubuntu install?
+
+The boot-repair log is here: [http://paste.ubuntu.com/1576652/](http://paste.ubuntu.com/1576652/) - (mod note:) or below now.
+
+
+```
+Ubuntu Pastebin
+
+Paste from boot-repair at Sun, 27 Jan 2013 14:46:49 +0000
+Download as text
+  
+    Boot Info Script 0.61.full + Boot-Repair extra info      [Boot-Info November 20th 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    for (,msdos1)/grub on this drive.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info: 
+
+sda5: __________________________________________________________________________
+
+    File system:       LVM2_member
+    Boot sector type:  -
+    Boot sector info: 
+
+volgroup-root': ________________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+
+volgroup-swap_1': ______________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+mount: unknown filesystem type ''
+
+volgroup-VirtualBoxVMs': _______________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+mount: unknown filesystem type ''
+mount: unknown filesystem type ''
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 123.7 GB, 123705843712 bytes
+255 heads, 63 sectors/track, 15039 cylinders, total 241612976 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048       499,711       497,664  83 Linux
+/dev/sda2             501,758   241,612,799   241,111,042   5 Extended
+/dev/sda5             501,760   241,612,799   241,111,040  8e Linux LVM
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/mapper/volgroup-VirtualBoxVMs 6bf9f556-55e8-428a-b1fd-1df0eb03dbbe   ext4       
+/dev/mapper/volgroup-root 21760adb-889b-4964-a2c6-7aeeee1b9c95   ext4       
+/dev/mapper/volgroup-swap_1 04572135-547a-479a-b9d7-c95b17e9bab4   swap       
+/dev/sda1        11f137f9-9f85-42f7-855c-2c4be0b79766   ext2       
+/dev/sda5        hIcp3i-1MVb-EbWg-QWe4-psVR-c1do-1CN8bI LVM2_member 
+/dev/sr0                                                iso9660    Ubuntu Secure 12.10 64bit
+
+========================= "ls -R /dev/mapper/" output: =========================
+
+/dev/mapper:
+control
+volgroup-VirtualBoxVMs
+volgroup-root
+volgroup-swap_1
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod lvm
+insmod part_msdos
+insmod ext2
+set root='(volgroup-root)'
+search --no-floppy --fs-uuid --set=root 21760adb-889b-4964-a2c6-7aeeee1b9c95
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  insmod part_msdos
+  insmod ext2
+  set root='(hd0,msdos1)'
+  search --no-floppy --fs-uuid --set=root 11f137f9-9f85-42f7-855c-2c4be0b79766
+  set locale_dir=($root)/grub/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+	set gfxpayload="${1}"
+	if [ "${1}" = "keep" ]; then
+		set vt_handoff=vt.handoff=7
+	else
+		set vt_handoff=
+	fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "${linux_gfx_mode}" != "text" ]; then load_video; fi
+menuentry 'Ubuntu, with Linux 3.2.0-36-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	gfxmode $linux_gfx_mode
+	insmod gzio
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 11f137f9-9f85-42f7-855c-2c4be0b79766
+	linux	/vmlinuz-3.2.0-36-generic root=/dev/mapper/volgroup-root ro   quiet splash $vt_handoff
+	initrd	/initrd.img-3.2.0-36-generic
+}
+menuentry 'Ubuntu, with Linux 3.2.0-36-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod gzio
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 11f137f9-9f85-42f7-855c-2c4be0b79766
+	echo	'Loading Linux 3.2.0-36-generic ...'
+	linux	/vmlinuz-3.2.0-36-generic root=/dev/mapper/volgroup-root ro recovery nomodeset 
+	echo	'Loading initial ramdisk ...'
+	initrd	/initrd.img-3.2.0-36-generic
+}
+submenu "Previous Linux versions" {
+menuentry 'Ubuntu, with Linux 3.2.0-29-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	gfxmode $linux_gfx_mode
+	insmod gzio
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 11f137f9-9f85-42f7-855c-2c4be0b79766
+	linux	/vmlinuz-3.2.0-29-generic root=/dev/mapper/volgroup-root ro   quiet splash $vt_handoff
+	initrd	/initrd.img-3.2.0-29-generic
+}
+menuentry 'Ubuntu, with Linux 3.2.0-29-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod gzio
+	insmod part_msdos
+	insmod ext2
+	set root='(hd0,msdos1)'
+	search --no-floppy --fs-uuid --set=root 11f137f9-9f85-42f7-855c-2c4be0b79766
+	echo	'Loading Linux 3.2.0-29-generic ...'
+	linux	/vmlinuz-3.2.0-29-generic root=/dev/mapper/volgroup-root ro recovery nomodeset 
+	echo	'Loading initial ramdisk ...'
+	initrd	/initrd.img-3.2.0-29-generic
+}
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.111084938 = 0.119276544    grub/core.img                                  2
+   0.111086845 = 0.119278592    grub/grub.cfg                                  3
+   0.045645714 = 0.049011712    initrd.img-3.2.0-29-generic                   62
+   0.063446999 = 0.068125696    initrd.img-3.2.0-36-generic                   61
+   0.015396118 = 0.016531456    vmlinuz-3.2.0-29-generic                      20
+   0.025910378 = 0.027821056    vmlinuz-3.2.0-36-generic                      21
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda1
+
+00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00000200
+
+Unknown BootLoader on sda2
+
+00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+000001b0  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff 00 3b  |...............;|
+000001c0  1d 1f 8e fe ff ff 02 00  00 00 00 10 5f 0e 00 00  |............_...|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+Unknown BootLoader on volgroup-root'
+
+
+Unknown BootLoader on volgroup-swap_1'
+
+
+Unknown BootLoader on volgroup-VirtualBoxVMs'
+
+
+
+=============================== StdErr Messages: ===============================
+
+File descriptor 8 (/proc/12646/mounts) leaked on lvscan invocation. Parent PID 3883: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvscan invocation. Parent PID 3883: bash
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3894: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3894: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3897: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3897: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvchange invocation. Parent PID 3380: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvchange invocation. Parent PID 3380: bash
+  One or more specified logical volume(s) not found.
+hexdump: /dev/mapper/volgroup-root': No such file or directory
+hexdump: /dev/mapper/volgroup-root': No such file or directory
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3937: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3937: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3944: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3944: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvchange invocation. Parent PID 3380: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvchange invocation. Parent PID 3380: bash
+  One or more specified logical volume(s) not found.
+hexdump: /dev/mapper/volgroup-swap_1': No such file or directory
+hexdump: /dev/mapper/volgroup-swap_1': No such file or directory
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3973: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3973: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvdisplay invocation. Parent PID 3977: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvdisplay invocation. Parent PID 3977: bash
+  One or more specified logical volume(s) not found.
+File descriptor 8 (/proc/12646/mounts) leaked on lvchange invocation. Parent PID 3380: bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvchange invocation. Parent PID 3380: bash
+  One or more specified logical volume(s) not found.
+hexdump: /dev/mapper/volgroup-VirtualBoxVMs': No such file or directory
+hexdump: /dev/mapper/volgroup-VirtualBoxVMs': No such file or directory
+mdadm: No arrays found in config file or automatically
+
+ADDITIONAL INFORMATION :
+=================== log of boot-repair 2013-01-27__14h42 ===================
+boot-repair version : 3.195~ppa26~quantal
+boot-sav version : 3.195~ppa26~quantal
+glade2script version : 3.2.2~ppa45~quantal
+boot-sav-extra version : 3.195~ppa26~quantal
+BLKID BEFORE LVM ACTIVATION:
+/dev/loop0: TYPE="squashfs"
+/dev/sr0: LABEL="Ubuntu Secure 12.10 64bit" TYPE="iso9660"
+/dev/sda1: UUID="11f137f9-9f85-42f7-855c-2c4be0b79766" TYPE="ext2"
+/dev/sda5: UUID="hIcp3i-1MVb-EbWg-QWe4-psVR-c1do-1CN8bI" TYPE="LVM2_member"
+/dev/mapper/volgroup-root: UUID="21760adb-889b-4964-a2c6-7aeeee1b9c95" TYPE="ext4"
+/dev/mapper/volgroup-swap_1: UUID="04572135-547a-479a-b9d7-c95b17e9bab4" TYPE="swap"
+/dev/mapper/volgroup-VirtualBoxVMs: UUID="6bf9f556-55e8-428a-b1fd-1df0eb03dbbe" TYPE="ext4"
+MODPROBE
+VGSCAN
+File descriptor 8 (/proc/12646/mounts) leaked on vgscan invocation. Parent PID 12669: /bin/bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on vgscan invocation. Parent PID 12669: /bin/bash
+Reading all physical volumes.  This may take a while...
+Found volume group "volgroup" using metadata type lvm2
+VGCHANGE
+File descriptor 8 (/proc/12646/mounts) leaked on vgchange invocation. Parent PID 12669: /bin/bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on vgchange invocation. Parent PID 12669: /bin/bash
+3 logical volume(s) in volume group "volgroup" now active
+File descriptor 8 (/proc/12646/mounts) leaked on lvscan invocation. Parent PID 12669: /bin/bash
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvscan invocation. Parent PID 12669: /bin/bash
+LVSCAN:
+ACTIVE            '/dev/volgroup/root' [8.32 GiB] inherit
+ACTIVE            '/dev/volgroup/swap_1' [1012.00 MiB] inherit
+ACTIVE            '/dev/volgroup/VirtualBoxVMs' [30.00 GiB] inherit
+
+BLKID BEFORE RAID ACTIVATION:
+/dev/loop0: TYPE="squashfs"
+/dev/sr0: LABEL="Ubuntu Secure 12.10 64bit" TYPE="iso9660"
+/dev/sda1: UUID="11f137f9-9f85-42f7-855c-2c4be0b79766" TYPE="ext2"
+/dev/sda5: UUID="hIcp3i-1MVb-EbWg-QWe4-psVR-c1do-1CN8bI" TYPE="LVM2_member"
+/dev/mapper/volgroup-root: UUID="21760adb-889b-4964-a2c6-7aeeee1b9c95" TYPE="ext4"
+/dev/mapper/volgroup-swap_1: UUID="04572135-547a-479a-b9d7-c95b17e9bab4" TYPE="swap"
+/dev/mapper/volgroup-VirtualBoxVMs: UUID="6bf9f556-55e8-428a-b1fd-1df0eb03dbbe" TYPE="ext4"
+dmraid -si -c: no raid disks
+No DMRAID disk.
+[dmraid] packages may interfer with MDraid. Do you want to remove them? yes
+apt-get remove -y --force-yes dmraid
+The following packages will be REMOVED:
+dmraid
+0 upgraded, 0 newly installed, 1 to remove and 260 not upgraded.
+(Reading database ... 156889 files and directories currently installed.)
+Removing dmraid ...
+update-initramfs is disabled since running on read-only media
+Processing triggers for man-db ...
+debconf: unable to initialize frontend: Dialog
+debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+Scanning MDraid Partitions
+mdadm: No arrays found in config file or automatically
+mdadm --detail --scan:
+Warning: no DMRAID nor MD_ARRAY.
+boot-repair is executed in live-session (Ubuntu-Secure-Remix 12.10 30nov2012, quantal, Ubuntu, x86_64)
+CPU op-mode(s):        32-bit, 64-bit
+file=/cdrom/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash -- maybe-ubiquity
+Set sda as corresponding disk of mapper/volgroup-root
+Set sda as corresponding disk of mapper/volgroup-VirtualBoxVMs
+Disk /dev/mapper/volgroup-root doesn't contain a valid partition table
+Disk /dev/mapper/volgroup-swap_1 doesn't contain a valid partition table
+Disk /dev/mapper/volgroup-VirtualBoxVMs doesn't contain a valid partition table
+
+=================== os-prober:
+/dev/mapper/volgroup-root:Ubuntu 12.04.1 LTS (12.04):Ubuntu:linux
+
+=================== blkid:
+/dev/loop0: TYPE="squashfs"
+/dev/sr0: LABEL="Ubuntu Secure 12.10 64bit" TYPE="iso9660"
+/dev/sda1: UUID="11f137f9-9f85-42f7-855c-2c4be0b79766" TYPE="ext2"
+/dev/sda5: UUID="hIcp3i-1MVb-EbWg-QWe4-psVR-c1do-1CN8bI" TYPE="LVM2_member"
+/dev/mapper/volgroup-root: UUID="21760adb-889b-4964-a2c6-7aeeee1b9c95" TYPE="ext4"
+/dev/mapper/volgroup-swap_1: UUID="04572135-547a-479a-b9d7-c95b17e9bab4" TYPE="swap"
+/dev/mapper/volgroup-VirtualBoxVMs: UUID="6bf9f556-55e8-428a-b1fd-1df0eb03dbbe" TYPE="ext4"
+
+Set sda as corresponding disk of mapper/volgroup-root
+
+1 disks with OS, 1 OS : 1 Linux, 0 MacOS, 0 Windows, 0 unknown type OS.
+
+Warning: extended partition does not start at a cylinder boundary.
+DOS and Linux will interpret the contents differently.
+
+=================== sda1recordfail=1/grub/grubenv :
+recordfail=1
+
+
+
+
+
+=================== mapper/volgroup-root/etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=2
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+
+=================== mapper/volgroup-root/etc/grub.d/ :
+drwxr-xr-x   2 root  root        4096 Jan 22 22:14 grub.d
+total 60
+-rwxr-xr-x 1 root root 6743 Dec 10 12:20 00_header
+-rwxr-xr-x 1 root root 5522 Dec 10 12:05 05_debian_theme
+-rwxr-xr-x 1 root root 7780 Dec 10 12:20 10_linux
+-rwxr-xr-x 1 root root 6335 Dec 10 12:20 20_linux_xen
+-rwxr-xr-x 1 root root 1588 Nov 27  2011 20_memtest86+
+-rwxr-xr-x 1 root root 7603 Dec 10 12:20 30_os-prober
+-rwxr-xr-x 1 root root 1388 Dec 10 12:20 30_uefi-firmware
+-rwxr-xr-x 1 root root  214 Dec 10 12:20 40_custom
+-rwxr-xr-x 1 root root   95 Dec 10 12:20 41_custom
+-rw-r--r-- 1 root root  483 Dec 10 12:20 README
+
+
+/boot detected in the fstab of mapper/volgroup-root: UUID=11f137f9-9f85-42f7-855c-2c4be0b79766	 (sda1)
+=================== UEFI/Legacy mode:
+This live-session is not in EFI-mode.
+SecureBoot maybe enabled.
+
+
+=================== PARTITIONS & DISKS:
+sda1	: sda,	is-sepboot,	grubenv-ng	nogrub,	no-docgrub,	no-update-grub,	32,	no-boot,	no-os,	not--efi--part,	part-has-no-fstab,	part-has-no-fstab,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot,	nopakmgr,	nogrubinstall,	no---usr,	part-has-no-fstab,	not-sep-usr,	standard,	not-far,	/mnt/boot-sav/sda1.
+mapper/volgroup-root	: sda,	not-sepboot,	no-grubenv	grub2,	grub-pc,	update-grub,	64,	no-boot,	is-os,	not--efi--part,	fstab-has-goodBOOT,	fstab-without-efi,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot,	apt-get,	grub-install,	with--usr,	fstab-without-usr,	not-sep-usr,	standard,	not-far,	/mnt/boot-sav/mapper/volgroup-root.
+mapper/volgroup-VirtualBoxVMs	: sda,	maybesepboot,	no-grubenv	nogrub,	no-docgrub,	no-update-grub,	32,	no-boot,	no-os,	not--efi--part,	part-has-no-fstab,	part-has-no-fstab,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot,	nopakmgr,	nogrubinstall,	no---usr,	part-has-no-fstab,	not-sep-usr,	standard,	not-far,	/mnt/boot-sav/mapper/volgroup-VirtualBoxVMs.
+
+sda	: not-GPT,	BIOSboot-not-needed,	has-no-EFIpart, 	not-usb,	has-os,	2048 sectors * 512 bytes
+
+
+=================== parted -l:
+
+Model: ATA OCZ-VERTEX PLUS (scsi)
+Disk /dev/sda: 124GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start   End    Size   Type      File system  Flags
+1      1049kB  256MB  255MB  primary   ext2         boot
+2      257MB   124GB  123GB  extended
+5      257MB   124GB  123GB  logical                lvm
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/volgroup-VirtualBoxVMs: 32.2GB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+
+Number  Start  End     Size    File system  Flags
+1      0.00B  32.2GB  32.2GB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/volgroup-swap_1: 1061MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+
+Number  Start  End     Size    File system     Flags
+1      0.00B  1061MB  1061MB  linux-swap(v1)
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/volgroup-root: 8934MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+
+Number  Start  End     Size    File system  Flags
+1      0.00B  8934MB  8934MB  ext4
+
+
+
+                                                                          
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+
+                                                                          
+Error: /dev/sr0: unrecognised disk label
+
+=================== parted -lm:
+
+BYT;
+/dev/sda:124GB:scsi:512:512:msdos:ATA OCZ-VERTEX PLUS;
+1:1049kB:256MB:255MB:ext2::boot;
+2:257MB:124GB:123GB:::;
+5:257MB:124GB:123GB:::lvm;
+
+BYT;
+/dev/mapper/volgroup-VirtualBoxVMs:32.2GB:dm:512:512:loop:Linux device-mapper (linear);
+1:0.00B:32.2GB:32.2GB:ext4::;
+
+BYT;
+/dev/mapper/volgroup-swap_1:1061MB:dm:512:512:loop:Linux device-mapper (linear);
+1:0.00B:1061MB:1061MB:linux-swap(v1)::;
+
+BYT;
+/dev/mapper/volgroup-root:8934MB:dm:512:512:loop:Linux device-mapper (linear);
+1:0.00B:8934MB:8934MB:ext4::;
+
+
+                                                                          
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+
+                                                                          
+Error: /dev/sr0: unrecognised disk label
+
+
+=================== mount:
+/cow on / type overlayfs (rw)
+proc on /proc type proc (rw,noexec,nosuid,nodev)
+sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+udev on /dev type devtmpfs (rw,mode=0755)
+devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+/dev/sr0 on /cdrom type iso9660 (ro,noatime)
+/dev/loop0 on /rofs type squashfs (ro,noatime)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev)
+none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+none on /run/shm type tmpfs (rw,nosuid,nodev)
+none on /run/user type tmpfs (rw,noexec,nosuid,nodev,size=104857600,mode=0755)
+gvfsd-fuse on /run/user/ubuntu/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,user=ubuntu)
+/dev/sda1 on /mnt/boot-sav/sda1 type ext2 (rw)
+/dev/mapper/volgroup-root on /mnt/boot-sav/mapper/volgroup-root type ext4 (rw)
+/dev/mapper/volgroup-VirtualBoxVMs on /mnt/boot-sav/mapper/volgroup-VirtualBoxVMs type ext4 (rw)
+
+
+=================== ls:
+/sys/block/dm-0 (filtered):  alignment_offset bdi capability dev discard_alignment dm ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/dm-1 (filtered):  alignment_offset bdi capability dev discard_alignment dm ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/dm-2 (filtered):  alignment_offset bdi capability dev discard_alignment dm ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/sys/block/sda (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight power queue range removable ro sda1 sda2 sda5 size slaves stat subsystem trace uevent
+/sys/block/sr0 (filtered):  alignment_offset bdi capability dev device discard_alignment events events_async events_poll_msecs ext_range holders inflight power queue range removable ro size slaves stat subsystem trace uevent
+/dev (filtered):  agpgart alarm ashmem autofs binder block bsg btrfs-control bus cdrom cdrw char console core cpu cpu_dma_latency disk dm-0 dm-1 dm-2 dri dvd dvdrw ecryptfs fb0 fd full fuse hidraw0 hidraw1 hidraw2 hpet input kmsg log lp0 mapper mcelog mem net network_latency network_throughput null oldmem parport0 port ppp psaux ptmx pts random rfkill rtc rtc0 sda sda1 sda2 sda5 sg0 sg1 shm snapshot snd sr0 stderr stdin stdout uinput urandom usb vga_arbiter vhost-net volgroup zero
+ls /dev/mapper:  control volgroup-root volgroup-swap_1 volgroup-VirtualBoxVMs
+Disk /dev/mapper/volgroup-root doesn't contain a valid partition table
+Disk /dev/mapper/volgroup-swap_1 doesn't contain a valid partition table
+Disk /dev/mapper/volgroup-VirtualBoxVMs doesn't contain a valid partition table
+
+=================== df -Th:
+
+Filesystem                         Type       Size  Used Avail Use% Mounted on
+/cow                               overlayfs  998M   79M  919M   8% /
+udev                               devtmpfs   988M   12K  988M   1% /dev
+tmpfs                              tmpfs      399M  824K  399M   1% /run
+/dev/sr0                           iso9660    761M  761M     0 100% /cdrom
+/dev/loop0                         squashfs   717M  717M     0 100% /rofs
+tmpfs                              tmpfs      998M   32K  998M   1% /tmp
+none                               tmpfs      5.0M  4.0K  5.0M   1% /run/lock
+none                               tmpfs      998M   76K  998M   1% /run/shm
+none                               tmpfs      100M   44K  100M   1% /run/user
+/dev/sda1                          ext2       228M   47M  169M  22% /mnt/boot-sav/sda1
+/dev/mapper/volgroup-root          ext4       8.2G  4.7G  3.2G  60% /mnt/boot-sav/mapper/volgroup-root
+/dev/mapper/volgroup-VirtualBoxVMs ext4        30G  172M   28G   1% /mnt/boot-sav/mapper/volgroup-VirtualBoxVMs
+
+=================== fdisk -l:
+
+Disk /dev/sda: 123.7 GB, 123705843712 bytes
+255 heads, 63 sectors/track, 15039 cylinders, total 241612976 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00049e30
+
+Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048      499711      248832   83  Linux
+/dev/sda2          501758   241612799   120555521    5  Extended
+/dev/sda5          501760   241612799   120555520   8e  Linux LVM
+
+Disk /dev/mapper/volgroup-root: 8933 MB, 8933867520 bytes
+255 heads, 63 sectors/track, 1086 cylinders, total 17448960 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/mapper/volgroup-swap_1: 1061 MB, 1061158912 bytes
+255 heads, 63 sectors/track, 129 cylinders, total 2072576 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/mapper/volgroup-VirtualBoxVMs: 32.2 GB, 32212254720 bytes
+255 heads, 63 sectors/track, 3916 cylinders, total 62914560 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+/boot detected. Please check the options.
+
+=================== Recommended repair
+Recommended-Repair
+This setting will purge (in order to enable-raid enable-lvm) and reinstall the grub2 of mapper/volgroup-root into the MBR of sda, using the following options:        sda1/boot,
+Additional repair will be performed: unhide-bootmenu-10s
+
+
+Mount sda1 on /mnt/boot-sav/mapper/volgroup-root/boot
+chroot /mnt/boot-sav/mapper/volgroup-root apt-get -y --force-yes update
+Purge the GRUB of mapper/volgroup-root
+grub-pc available
+
+0 upgraded, 0 newly installed, 1 reinstalled, 0 to remove and 0 not upgraded.
+DEBCHECK debOK, grub-pc
+DEBCHECK debOK
+shim-signed available
+linux-signed-generic NOT available (apt-cache policy  problem)
+Please type: sudo chroot "/mnt/boot-sav/mapper/volgroup-root" dpkg --configure -ansudo chroot "/mnt/boot-sav/mapper/volgroup-root" apt-get install -fynsudo chroot "/mnt/boot-sav/mapper/volgroup-root" apt-get install -y --force-yes mdadmnsudo chroot "/mnt/boot-sav/mapper/volgroup-root" mdadm --assemble --scannsudo chroot "/mnt/boot-sav/mapper/volgroup-root" apt-get install -y --force-yes lvm2nsudo chroot "/mnt/boot-sav/mapper/volgroup-root" apt-get purge -y --force-yes grub*-common shim*
+
+=================== mapper/volgroup-root/etc/grub.d/ :
+drwxr-xr-x   2 root  root        4096 Jan 27 14:44 grub.d
+total 4
+-rwxr-xr-x 1 root root 1588 Nov 27  2011 20_memtest86+
+
+
+/boot detected in the fstab of mapper/volgroup-root: UUID=11f137f9-9f85-42f7-855c-2c4be0b79766	 (sda1)
+
+=================== mapper/volgroup-root/etc/mdadm/mdadm.conf :
+# mdadm.conf
+#
+# Please refer to mdadm.conf(5) for information about this file.
+#
+
+# by default (built-in), scan all partitions (/proc/partitions) and all
+# containers for MD superblocks. alternatively, specify devices to scan, using
+# wildcards if desired.
+#DEVICE partitions containers
+
+# auto-create devices with Debian standard permissions
+CREATE owner=root group=disk mode=0660 auto=yes
+
+# automatically tag new arrays as belonging to the local system
+HOMEHOST <system>
+
+# instruct the monitoring daemon where to send mail alerts
+MAILADDR root
+
+# definitions of existing MD arrays
+
+# This file was auto-generated on Sun, 27 Jan 2013 14:43:32 +0000
+# by mkconf $Id$
+
+
+
+
+=================== mapper/volgroup-root/proc/mdstat :
+Personalities :
+unused devices: <none>
+
+
+
+Then type: sudo chroot "/mnt/boot-sav/mapper/volgroup-root" apt-get install -y --force-yes grub-pc
+
+
+=================== mapper/volgroup-root/etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+
+=================== mapper/volgroup-root/etc/grub.d/ :
+drwxr-xr-x   2 root  root        4096 Jan 27 14:45 grub.d
+drwxr-xr-x   2 root  root        4096 Jan 27 14:44 grub.d.bak
+total 56
+-rwxr-xr-x 1 root root 6743 Dec 10 12:20 00_header
+-rwxr-xr-x 1 root root 5522 Dec 10 12:05 05_debian_theme
+-rwxr-xr-x 1 root root 7780 Dec 10 12:20 10_linux
+-rwxr-xr-x 1 root root 6335 Dec 10 12:20 20_linux_xen
+-rwxr-xr-x 1 root root 7603 Dec 10 12:20 30_os-prober
+-rwxr-xr-x 1 root root 1388 Dec 10 12:20 30_uefi-firmware
+-rwxr-xr-x 1 root root  214 Dec 10 12:20 40_custom
+-rwxr-xr-x 1 root root   95 Dec 10 12:20 41_custom
+-rw-r--r-- 1 root root  483 Dec 10 12:20 README
+
+
+/boot detected in the fstab of mapper/volgroup-root: UUID=11f137f9-9f85-42f7-855c-2c4be0b79766	 (sda1)
+
+=================== mapper/volgroup-root/etc/mdadm/mdadm.conf :
+# mdadm.conf
+#
+# Please refer to mdadm.conf(5) for information about this file.
+#
+
+# by default (built-in), scan all partitions (/proc/partitions) and all
+# containers for MD superblocks. alternatively, specify devices to scan, using
+# wildcards if desired.
+#DEVICE partitions containers
+
+# auto-create devices with Debian standard permissions
+CREATE owner=root group=disk mode=0660 auto=yes
+
+# automatically tag new arrays as belonging to the local system
+HOMEHOST <system>
+
+# instruct the monitoring daemon where to send mail alerts
+MAILADDR root
+
+# definitions of existing MD arrays
+
+# This file was auto-generated on Sun, 27 Jan 2013 14:43:32 +0000
+# by mkconf $Id$
+
+
+
+
+=================== mapper/volgroup-root/proc/mdstat :
+Personalities :
+unused devices: <none>
+
+
+
+Unhide GRUB boot menu in mapper/volgroup-root/etc/default/grub
+
+
+=================== mapper/volgroup-root/etc/default/grub :
+
+# If you change this file, run 'update-grub' afterwards to update
+# /boot/grub/grub.cfg.
+# For full documentation of the options in this file, see:
+#   info -f grub -n 'Simple configuration'
+
+GRUB_DEFAULT=0
+#GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+GRUB_TIMEOUT=10
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+GRUB_CMDLINE_LINUX=""
+
+# Uncomment to enable BadRAM filtering, modify to suit your needs
+# This works with Linux (no patch required) and with any kernel that obtains
+# the memory map information from GRUB (GNU Mach, kernel of FreeBSD ...)
+#GRUB_BADRAM="0x01234567,0xfefefefe,0x89abcdef,0xefefefef"
+
+# Uncomment to disable graphical terminal (grub-pc only)
+#GRUB_TERMINAL=console
+
+# The resolution used on graphical terminal
+# note that you can use only modes which your graphic card supports via VBE
+# you can see them in real GRUB with the command `vbeinfo'
+#GRUB_GFXMODE=640x480
+
+# Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to Linux
+#GRUB_DISABLE_LINUX_UUID=true
+
+# Uncomment to disable generation of recovery mode menu entries
+#GRUB_DISABLE_RECOVERY="true"
+
+# Uncomment to get a beep at grub start
+#GRUB_INIT_TUNE="480 440 1"
+
+
+
+
+=================== mapper/volgroup-root/etc/grub.d/ :
+drwxr-xr-x   2 root  root        4096 Jan 27 14:45 grub.d
+drwxr-xr-x   2 root  root        4096 Jan 27 14:44 grub.d.bak
+total 56
+-rwxr-xr-x 1 root root 6743 Dec 10 12:20 00_header
+-rwxr-xr-x 1 root root 5522 Dec 10 12:05 05_debian_theme
+-rwxr-xr-x 1 root root 7780 Dec 10 12:20 10_linux
+-rwxr-xr-x 1 root root 6335 Dec 10 12:20 20_linux_xen
+-rwxr-xr-x 1 root root 7603 Dec 10 12:20 30_os-prober
+-rwxr-xr-x 1 root root 1388 Dec 10 12:20 30_uefi-firmware
+-rwxr-xr-x 1 root root  214 Dec 10 12:20 40_custom
+-rwxr-xr-x 1 root root   95 Dec 10 12:20 41_custom
+-rw-r--r-- 1 root root  483 Dec 10 12:20 README
+
+
+/boot detected in the fstab of mapper/volgroup-root: UUID=11f137f9-9f85-42f7-855c-2c4be0b79766	 (sda1)
+
+=================== mapper/volgroup-root/etc/mdadm/mdadm.conf :
+# mdadm.conf
+#
+# Please refer to mdadm.conf(5) for information about this file.
+#
+
+# by default (built-in), scan all partitions (/proc/partitions) and all
+# containers for MD superblocks. alternatively, specify devices to scan, using
+# wildcards if desired.
+#DEVICE partitions containers
+
+# auto-create devices with Debian standard permissions
+CREATE owner=root group=disk mode=0660 auto=yes
+
+# automatically tag new arrays as belonging to the local system
+HOMEHOST <system>
+
+# instruct the monitoring daemon where to send mail alerts
+MAILADDR root
+
+# definitions of existing MD arrays
+
+# This file was auto-generated on Sun, 27 Jan 2013 14:43:32 +0000
+# by mkconf $Id$
+
+
+
+
+=================== mapper/volgroup-root/proc/mdstat :
+Personalities :
+unused devices: <none>
+
+
+
+grub-install (GRUB) 1.99-21ubuntu3.7,grub-install (GRUB) 1.
+
+Reinstall the GRUB of mapper/volgroup-root into the MBR of sda
+grub-install /dev/sda: Installation finished. No error reported.
+exit code of grub-install /dev/sda:0
+
+chroot /mnt/boot-sav/mapper/volgroup-root update-grub
+Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-3.2.0-36-generic
+Found initrd image: /boot/initrd.img-3.2.0-36-generic
+Found linux image: /boot/vmlinuz-3.2.0-29-generic
+Found initrd image: /boot/initrd.img-3.2.0-29-generic
+File descriptor 8 (/proc/12646/mounts) leaked on lvs invocation. Parent PID 666: /bin/sh
+File descriptor 13 (/usr/share/icons/ubuntu-mono-dark/places/16/user-home.svg) leaked on lvs invocation. Parent PID 666: /bin/sh
+
+Boot successfully repaired.
+
+You can now reboot your computer.
+Download as text
+```
+
+There are also references to RAID - the machine did have a RAID card installed but not used so perhaps drivers were automatically installed with Ubuntu?
+
+I'm also confused by the reference to MSDOS in the summary:
+
+[I]=> Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    for (,msdos1)/grub on this drive.[/I]
+
+Any advice welcomed!
+
+---
+
+### Post by oldfred on 2013-01-28
+I do not know LVM nor VitualBox which it looks like you used to install. Not a typical desktop install for a beginner.
+
+You also only show sda, not any other drives.
+
+---
+
+### Post by elliot100 on 2013-01-29
+LVM = Logical Volume Management, which is defaulted to on installation (at least for 12.04 Server).
+
+So on sda I have a volume group 'volgroup' and a partition within that 'VirtualBoxVMs' which I will use for VMs. The machine itself is not virtual. 
+
+
+I do not have other drives attached currently, and want the machine to run OK with that setup. 
+
+I am new both to Linux and this forum, and the guidelines told me to post in Beginners. If this belongs elsewhere,  please could you or another moderator move it?
+
+---
+
+### Post by oldfred on 2013-01-29
+If not familiar with Ubuntu often best in Absolute Beginners. But your install is not a absolute beginners install. 
+Moved to server sub-forum.
+
+I do not know server installs with RAID, LVM or virtual box.
+I have installed server just to install it, but did not get LVM. Did you choose encryption? Perhaps other choices may also add LVM?
+
+---
+
