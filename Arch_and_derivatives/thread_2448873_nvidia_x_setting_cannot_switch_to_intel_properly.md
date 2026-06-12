@@ -1,0 +1,29 @@
+---
+title: "nvidia x setting cannot switch to intel properly"
+date: 2020-08-15
+forum: Arch and derivatives
+---
+
+### Post by mm1379 on 2020-08-15
+My laptop is an intel/nvidia hybrid graphic. I have installed nvidia390 driver but nvidia x setting can't switch to intel. Actually it shows it's changed but gpu(nvidia) is still hot.
+When I select nvidia if I don' do anything temp falls about 55c but if I move cursor, it starts to raise to about 90 and more to shutdown(video memory usage is low but gpu clock increase).formerly nvidia doesn't shutdown completely but there wasn't high clock problem while moving mouse or refreshing monitor.
+Now I have moved to manjaro and installed bumblebee with nvidia proprietary driver. The default gpu is intel and nvidia is turned off and system is much cooler.
+
+
+nvidia gt525m , intel hd3000
+
+
+
+
+I really appreciate your help
+
+---
+
+### Post by coffeecat on 2020-08-15
+> **mm1379 said:**
+> Now I have moved to manjaro
+
+*Thread moved to **Arch and derivatives** sub-forum.*
+
+---
+
