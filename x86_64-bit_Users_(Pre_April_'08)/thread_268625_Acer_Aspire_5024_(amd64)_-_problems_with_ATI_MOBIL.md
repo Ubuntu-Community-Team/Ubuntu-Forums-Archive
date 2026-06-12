@@ -1,0 +1,282 @@
+---
+title: "Acer Aspire 5024 (amd64) - problems with ATI MOBILITY RADEON X700 PCIE"
+date: 2006-09-30
+forum: x86 64-bit Users (Pre April '08)
+---
+
+### Post by pitrowech on 2006-09-30
+Hi guys, i've been trying to get my videocard 3d support working for almost 6 hours without any results =(((((((((.
+
+I followed this guide precisely:
+[URL="http://wiki.cchtml.com/index.php/Ubuntu_Dapper_Installation_Guide#Method_2:_Generating.2FInstalling_Ubuntu_packages_for_the_new_8.29.6_drivers_in_Ubuntu_Dapper_Manually[/URL]
+
+2d - acceleration seems to work fine.
+
+Here's the error log:
+```
+
+root@spooky-house:/usr/bin# cat /var/log/Xorg.0.log | grep EE
+Current Operating System: Linux spooky-house 2.6.15-27-amd64-generic #1 SMP PREEMPT Sat Sep 16 01:50:50 UTC 2006 x86_64
+        (WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(II) Loading extension MIT-SCREEN-SAVER
+(EE) fglrx(0): Hardware has already been locked.
+root@spooky-house:/usr/bin# cat /var/log/Xorg.0.log | grep WW
+        (WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(WW) The directory "/usr/share/X11/fonts/cyrillic" does not exist.
+(WW) The directory "/usr/share/X11/fonts/CID" does not exist.
+(WW) `fonts.dir' not found (or not valid) in "/var/lib/defoma/x-ttcidfont-conf.d/dirs/CID".
+(WW) fglrx(0): Failed to open DRM connection
+(WW) fglrx(0): board is an unknown third party board, chipset is supported
+(WW) fglrx(0): ***********************************************
+(WW) fglrx(0): * DRI initialization failed!                  *
+(WW) fglrx(0): * (maybe driver kernel module missing or bad) *
+(WW) fglrx(0): * 2D acceleraton available (MMIO)             *
+(WW) fglrx(0): * no 3D acceleration available                *
+(WW) fglrx(0): ********************************************* *
+(WW) fglrx(0): Option "(null)" is not used
+
+
+```
+
+
+xorg.conf:
+```
+
+Section "ServerLayout"
+
+#	Screen      0  "aticonfig-Screen[0]" 0 0
+	Identifier     "Default Layout"
+	Screen      0  "aticonfig Screen 0" 0 0
+	InputDevice    "Generic Keyboard"
+	InputDevice    "Configured Mouse"
+	InputDevice    "Synaptics Touchpad"
+EndSection
+
+Section "Files"
+
+        # paths to defoma fonts
+	FontPath     "/usr/share/X11/fonts/misc"
+	FontPath     "/usr/share/X11/fonts/cyrillic"
+	FontPath     "/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath     "/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath     "/usr/share/X11/fonts/Type1"
+	FontPath     "/usr/share/X11/fonts/CID"
+	FontPath     "/usr/share/X11/fonts/100dpi"
+	FontPath     "/usr/share/X11/fonts/75dpi"
+	FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+	FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/CID"
+EndSection
+
+Section "Module"
+
+#	Load  "GLcore"
+#	Load  "i2c"
+	Load  "bitmap"
+	Load  "ddc"
+	Load  "dri"
+	Load  "extmod"
+	Load  "freetype"
+	Load  "glx"
+	Load  "int10"
+	Load  "type1"
+	Load  "vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Generic Keyboard"
+	Driver      "kbd"
+	Option	    "CoreKeyboard"
+	Option	    "XkbRules" "xorg"
+	Option	    "XkbModel" "pc105"
+	Option	    "XkbLayout" "us,ru"
+	Option	    "XkbOptions" "grp:alt_shift_toggle"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Configured Mouse"
+	Driver      "mouse"
+	Option	    "CorePointer"
+	Option	    "Device" "/dev/input/mice"
+	Option	    "Protocol" "ImPS/2"
+	Option	    "Emulate3Buttons" "true"
+	Option	    "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Synaptics Touchpad"
+	Driver      "synaptics"
+	Option	    "SendCoreEvents" "true"
+	Option	    "Device" "/dev/psaux"
+	Option	    "Protocol" "auto-dev"
+	Option	    "HorizScrollDelta" "0"
+EndSection
+
+Section "Monitor"
+
+#	ModeLine     "1280x800@60" 83.9 1280 1312 1624 1656 800 816 824 841
+	Identifier   "Generic Monitor"
+	HorizSync    28.0 - 64.0
+	VertRefresh  43.0 - 60.0
+	Option	    "DPMS"
+EndSection
+
+Section "Monitor"
+
+#	Identifier   "aticonfig-Monitor[0]"
+#	Option	    "VendorName" "ATI Proprietary Driver"
+#	Option	    "ModelName" "Generic Autodetecting Monitor"
+#	Option	    "DPMS" "true"
+	Identifier   "aticonfig Monitor 0"
+EndSection
+
+Section "Device"
+ #"ati" #"vesa" #"fglrx" #"ati"
+#	Option	    "VideoOverlay" "on"
+#	Option	    "OpenGLOverlay" "off"
+	Identifier  "ATI Technologies, Inc. Radeon Mobility X700 (RV410)"
+	Driver      "radeon"
+	Option	    "UseFBDev" "true"
+	BusID       "PCI:1:0:0"
+EndSection
+
+Section "Device"
+
+#	Identifier  "aticonfig-Device[0]"
+	Identifier  "ATI Graphics Adapter 0"
+	Driver      "fglrx"
+	Option	    "(null)"
+	Option	    "VideoOverlay" "on"
+	Option	    "OpenGLOverlay" "off"
+	BusID       "PCI:1:0:0"
+EndSection
+
+Section "Screen"
+	Identifier "Default Screen"
+	Device     "ATI Technologies, Inc. Radeon Mobility X700 (RV410)"
+	Monitor    "Generic Monitor"
+	DefaultDepth     24
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     1
+		Modes    "1280x800"
+	EndSubSection
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     4
+		Modes    "1280x800"
+	EndSubSection
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     8
+		Modes    "1280x800"
+	EndSubSection
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     15
+		Modes    "1280x800"
+	EndSubSection
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     16
+		Modes    "1280x800"
+	EndSubSection
+	SubSection "Display"
+
+#		Modes    "1024x768" "1280x800" "1152x864" "1024x768" "800x600" "640x480"
+		Depth     24
+		Modes    "1280x800"
+	EndSubSection
+EndSection
+
+Section "Screen"
+
+#	Identifier "aticonfig-Screen[0]"
+#	Device     "aticonfig-Device[0]"
+#	Monitor    "aticonfig-Monitor[0]"
+	Identifier "aticonfig Screen 0"
+	Device     "ATI Graphics Adapter 0"
+	Monitor    "aticonfig Monitor 0"
+	DefaultDepth     24
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
+Section "DRI"
+	Mode         0666
+EndSection
+
+
+```
+
+crossposted:
+laptop support
+video & sound
+
+---
+
+### Post by ravenon on 2006-10-01
+Add the following
+
+Section "Extensions"
+Option "Composite" "Disable"
+EndSection
+
+
+after the modules section of xorg.conf.  The proprietary fglrx driver has composite enabled by default.
+
+---
+
+### Post by pitrowech on 2006-10-01
+> **ravenon said:**
+> Add the following
+
+Section "Extensions"
+Option "Composite" "Disable"
+EndSection
+
+
+after the modules section of xorg.conf.  The proprietary fglrx driver has composite enabled by default.
+
+That doesn't help - the same error messages appear.
+
+---
+
+### Post by amorgen on 2006-10-30
+Hello,
+I have the same problem with the same hardware (laptop asus with amd64 and radeon mobility 9700):
+> 
+(EE) fglrx(0): Hardware has already been locked.
+(II) fglrx(0): [drm] removed 1 reserved context for kernel
+(II) fglrx(0): [drm] unmapping 8192 bytes of SAREA 0xf0bfb000 at 0xb7964000
+(WW) fglrx(0): ***********************************************
+(WW) fglrx(0): * DRI initialization failed! *
+(WW) fglrx(0): * (maybe driver kernel module missing or bad) *
+(WW) fglrx(0): * 2D acceleraton available (MMIO) *
+(WW) fglrx(0): * no 3D acceleration available *
+(WW) fglrx(0): ********************************************* *
+
+The driver seems to be well installed and working without 3D.
+I work with the newly released Kubuntu edgy.
+Any idea ?
+
+---
+
+### Post by pitrowech on 2006-10-30
+> **amorgen said:**
+> Hello,
+The driver seems to be well installed and working without 3D.
+I work with the newly released Kubuntu edgy.
+Any idea ?
+
+Looks like this is fault of ATI driver.
+The best solution is to install 32-bit version of ubuntu. This improves gui speed, and system will be more faster overall, not mentioning that 64-bit version have many other problems.
+
+---
+

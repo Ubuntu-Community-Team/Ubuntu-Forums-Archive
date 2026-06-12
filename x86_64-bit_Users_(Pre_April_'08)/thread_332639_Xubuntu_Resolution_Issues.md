@@ -1,0 +1,172 @@
+---
+title: "Xubuntu Resolution Issues"
+date: 2007-01-06
+forum: x86 64-bit Users (Pre April '08)
+---
+
+### Post by RockoTDF on 2007-01-06
+I have a Geforce 7600GT, so I installed the drivers for it so I could up the resolution, and now I can't.  I did the dpkg reconfig thing, edited xorg.conf to add 1280x1024, and I am still unable to go about 1024x768.  There is one entry for 1152, but it is at a bad refresh rate.
+
+Any suggestions?
+
+Here is xorg.conf:
+
+```
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc104"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"NVIDIA Corporation NVIDIA Default Card"
+	Driver		"nv"
+	BusID		"PCI:2:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"DELL E773c"
+	Option		"DPMS"
+	HorizSync	30-70
+	VertRefresh	50-160
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"NVIDIA Corporation NVIDIA Default Card"
+	Monitor		"DELL E773c"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes	"1280x1024" "1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes	"1280x1024" "1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes	"1280x1024" "1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1152x864" "1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+```
+
+---
+
+### Post by jrcmuniz on 2007-01-06
+Did you try to replace "nv" to "nvidia" in Section "Device" option and remove Load "dri" in Section "Module" in you xorg.conf file? try it out and see what happen.
+
+Cheers
+
+Joao.
+
+---
+
+### Post by RockoTDF on 2007-01-06
+> **jrcmuniz said:**
+> Did you try to replace "nv" to "nvidia" in Section "Device" option and remove Load "dri" in Section "Module" in you xorg.conf file? try it out and see what happen.
+
+Cheers
+
+Joao.
+
+That got rid of a lot of other options, but its still stuck at 1024.  Im going to switch to fluxbuntu anyway since I'm also having fluxbox install problems out the wazoo.
+
+thanks anyway
+
+---
+

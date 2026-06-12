@@ -1,0 +1,19 @@
+---
+title: "Video mirror for an iBookG4"
+date: 2006-02-06
+forum: x86 64-bit Users (Pre April '08)
+---
+
+### Post by dashnak on 2006-02-06
+Hi:
+My girlfriend's computer is an iBookG4. Some time ago, she decided she wanted to try Ubuntu out and I installed it for her (I myself use Ubuntu in my x86 desktop), and she has been dual booting with MacOSX and using it on and off for the past few months, but nothing really serious yet, she was just "warming up" or something...
+Now, MacOS died, and we don't really have the time to fix it right now, probably not until thursday or friday, or even later, and she's "stuck" with Ubuntu for the time being....
+Now, she has to give some presentations in her class, and needs her laptop....
+How can I get the Video Out working? She needs to hook it up to a projector, a PC monitor and a TV.... If bad came to worse, we could just do with the monitor and the projector, and even just the projector, though I'd like to get everything working....
+I've tried every xorg.conf tweak I came across on the Internet with no success...
+Can anyone help me out here?
+We really need to get this working as soon as possible...
+Thanks
+
+---
+
