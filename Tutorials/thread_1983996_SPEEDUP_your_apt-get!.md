@@ -1,0 +1,74 @@
+---
+title: "SPEEDUP your apt-get!"
+date: 2012-05-21
+forum: Tutorials
+---
+
+### Post by xantian on 2012-05-21
+# apt-fast v1.5 by Matt Parnell [http://www.mattparnell.com](http://www.mattparnell.com), GNU GPLv3
+# Use this just like aptitude or apt-get for faster package downloading.
+
+====================
+About:
+====================
+
+apt-fast is a shellscript wrapper for apt-get that can drastically improve apt download
+times by downloading packages in parallel, with multiple connections per package.
+
+BE SURE to look at the tags in the repo, as some are distro specific, and may contain
+files you need for autocompletion.
+
+====================
+Setup/Install:
+====================
+
+Some distros, such as PCLinuxOS include apt-fast in their repos. For those of you
+who need to manually install it, download it and perform the following:
+
+cp ./apt-fast /usr/sbin/
+chmod +x /usr/sbin/apt-fast
+cp ./apt-fast.conf /etc
+chown root /etc/apt-fast.conf
+chown root /usr/sbin/apt-fast
+
+You need to have a good download manager installed - aria2c and axel are favorites
+for this script. Make sure and open /etc/apt-fast.conf in a text editor and uncomment the line
+for your download manager before using it, and configure the other options as well.
+
+apt-get install aria2c
+OR
+apt-get install axel
+
+Then, you should be ready to use it - simply run apt-fast instead of apt-get any time
+you find yourself needing to manage packages!
+
+Debian (and possibly others) autocompletion:
+
+cp ./apt-fast.comp /etc/bash_completion.d/apt-fast
+chown root /etc/bash_completion.d/apt-fast
+. /etc/bash_completion
+
+====================
+License:
+====================
+
+Consider apt-fast and all of it's derivatives licensed under the GNU GPLv3.
+
+====================
+Special thanks:
+====================
+
+Travis/travisn000 - support for complex apt-get commands
+Allan Hoffmeister - aria2c support
+Abhishek Sharma - aria2c with proxy support
+Luca Marchetti - improvements on the locking system and downloader execution
+Richard Klien - Autocompletion, Download Size Checking (made for on ubuntu, untested on other distros)
+Patrick Kramer Ruiz - suggestions
+Sergio Silva - test to see if axel is installed, root detection/sudo autorun, lock file check/creation
+Waldemar {BOB}{Burnfaker} Wetzel - lockfile improvements, separate config file
+
+
+You can get the script here: [https://github.com/ilikenwf/apt-fast](https://github.com/ilikenwf/apt-fast)
+
+---
+
