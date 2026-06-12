@@ -1,0 +1,104 @@
+---
+title: "fonts..."
+date: 2007-04-28
+forum: Desktop Environments
+---
+
+### Post by drop669 on 2007-04-28
+Here is how fonts looks like I have in Ubuntu:
+
+[IMG]http://oxytron.conus.info/screenshots/linux_I_have.png[/IMG]
+
+Here is what I want to have, non-smooth fonts, as in Windows XP:
+
+[IMG]http://oxytron.conus.info/screenshots/linux_I_want.png[/IMG]
+
+What should I do?
+
+---
+
+### Post by koshatnik on 2007-04-28
+Try playing with the font rendering in the preferences>theme>fonts. If that doesn't help, go [here]("http://ubuntuforums.org/showthread.php?t=235526&highlight=font+rendering+edgy") and follow the instructions - they work really well for me.
+
+---
+
+### Post by drop669 on 2007-04-28
+(sigh) I tried every option there..
+
+---
+
+### Post by kerry_s on 2007-04-28
+Try running in terminal-> sudo dpkg-reconfigure fontconfig-config
+select native, always and no
+
+---
+
+### Post by kerry_s on 2007-04-28
+Also you can try using a .fonts.conf i use 1 in debian to make my fonts darker.
+
+gedit .fonts.conf
+copy and paste->
+
+```
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+
+<fontconfig>
+
+<!-- Disable sub-pixel rendering. X detects it anyway, and if you set
+this as well, it just looks really horrible  -->
+<match target="font" >
+ <edit mode="assign" name="rgba" >
+  <const>none</const>
+ </edit>
+ </match>
+ <match target="font" >
+ <edit mode="assign" name="hinting">
+  <bool>true</bool>
+ </edit>
+ </match>
+ <match target="font" >
+ <edit mode="assign" name="hintstyle">
+  <const>hintfull</const>
+ </edit>
+ </match>
+
+<!-- The first part of the 'magic.' This makes the fonts start to look
+nice, but some of the shapes will be distorted, so hinting is needed
+still -->
+ <match target="font" >
+ <edit mode="assign" name="antialias">
+  <bool>true</bool>
+ </edit>
+ </match>
+
+<!-- Autohinter is not turned on automatically. Only disable this if
+you have recompiled Freetype with the bytecode interpreter, which is
+run automatically. Although to be honest, Freetype are right, there
+isn't much difference between the two. Note that OpenOffice is built
+against the bytecode interpreter, so even if you have compiled it and
+override it with the autohinter, OOo will still use the bytecode
+interpreter -->
+ <match target="pattern" >
+ <edit mode="assign" name="autohint">
+  <bool>true</bool>
+ </edit>
+ </match>
+
+<!-- Helvetica is a non true type font, and will look bad. This
+replaces it with whatever is the default sans-serif font -->
+ <match target="pattern" name="family" >
+ <test name="family" qual="any" >
+  <string>Helvetica</string>
+ </test>
+ <edit mode="assign" name="family" >
+  <string>sans-serif</string>
+ </edit>
+ </match>
+ <dir>~/.fonts</dir>
+</fontconfig>
+
+```
+
+---
+

@@ -1,0 +1,35 @@
+---
+title: "gdm-2.20 package killed my display!"
+date: 2010-02-03
+forum: Desktop Environments
+---
+
+### Post by squareff255 on 2010-02-03
+So, I wanted to change the look of my login screen, so I installed  gdm-2.20 thru the terminal (apt-get install) and then it asked me what I  wanted the default set as and gave me 2 choices:
+gdm
+gdm-2.20
+So,  I picked the latter. Then I restarted the compy and... text. It keeps  telling me that the X server is... not configured correctly and that I  need to restart GDM when it is. So, I need to know if there is any way  of rewriting the xorg.conf to work with my poc (piece of crap) video  card. I have a backup of the default xorg.conf for use with NO video  card... but then I wouldn't be able to use my video card... :)
+
+---
+
+### Post by pavi_elex on 2011-11-08
+Reconfigure xorg
+    ```
+sudo dpkg-reconfigure xserver-xorg
+```
+
+or
+
+Remove existing xorg
+```
+    sudo apt-get remove --purge xserver-xorg
+```
+
+Install xorg
+```
+    sudo apt-get install xserver-xorg
+    sudo apt-get install xserver-xorg-core
+```
+
+---
+

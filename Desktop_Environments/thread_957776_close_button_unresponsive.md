@@ -1,0 +1,19 @@
+---
+title: "close button unresponsive"
+date: 2008-10-24
+forum: Desktop Environments
+---
+
+### Post by chrisme52 on 2008-10-24
+I have Kubuntu 8.04 installed with mostly default settiings(no other themes etc...)
+
+For some reason my close, minimize, and maximize buttons on the window decoration won't work. Right clicking on the decoration is unresponsive as well. I used to be able to do all theese things.
+
+I can't think what changes I have made to any settings except I have installed lots of small programs and recently applied a full upgrade through Adept.
+
+????????????????????????????????????????????????????????????????????
+
+anyone came across this before?
+
+---
+

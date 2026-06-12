@@ -1,0 +1,345 @@
+---
+title: "Re: Dual screens not working properly Ubuntu 14.04 Nvidia 760M"
+date: 2016-01-29
+forum: Desktop Environments
+---
+
+### Post by Joaqun_Jos_Con on 2016-01-29
+Hello,
+
+I've recently done a fresh new install of Ubuntu because I got tired of my old Windows BSODs. I'm using a MSI GS70 laptop.
+
+The installation is finished and the system boots up perfectly after installing the nvidia drivers (the nouveau driver causes freezes). But the dual screen is not working properly.
+
+What I see is:
+
+- Nvidia X Server settings doesn't detect the laptop screen, only the one plugged on the HDMI output.
+- Under settings, it detects properly both screens but when I de-screen them to make them not show the same thing then it is like if it expands the desktop to the second screen but maintaning the total resolution as 1920x1080 instead of doubling that (because both screens are configured as 1920x1080).
+
+xrandr outputs (with the external monitor switched off on the ubuntu settings):
+```
+~$ xrandrScreen 0: minimum 8 x 8, current 1920 x 1080, maximum 16384 x 16384
+HDMI-0 connected (normal left inverted right x axis y axis)
+   1920x1080      60.0 +   59.9     50.0     60.0     50.0  
+   1680x1050      60.0  
+   1440x900       59.9  
+   1280x1024      75.0     60.0  
+   1280x960       60.0  
+   1280x720       60.0     59.9     50.0  
+   1024x768       75.0     70.1     60.0  
+   800x600        75.0     72.2     60.3     56.2  
+   720x576        50.0  
+   720x480        59.9  
+   640x480        75.0     72.8     59.9     59.9  
+DP-0 disconnected (normal left inverted right x axis y axis)
+DP-1 disconnected (normal left inverted right x axis y axis)
+DP-2 disconnected (normal left inverted right x axis y axis)
+DP-3 disconnected (normal left inverted right x axis y axis)
+eDP1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 382mm x 215mm
+   1920x1080      60.0*+   59.9  
+   1680x1050      60.0     59.9  
+   1600x1024      60.2  
+   1400x1050      60.0  
+   1280x1024      60.0  
+   1440x900       59.9  
+   1280x960       60.0  
+   1360x768       59.8     60.0  
+   1152x864       60.0  
+   1024x768       60.0  
+   800x600        60.3     56.2  
+   640x480        59.9  
+VGA1 disconnected (normal left inverted right x axis y axis)
+VIRTUAL1 disconnected (normal left inverted right x axis y axis)
+  1680x1050 (0x2cc)  146.2MHz
+        h: width  1680 start 1784 end 1960 total 2240 skew    0 clock   65.3KHz
+        v: height 1050 start 1053 end 1059 total 1089           clock   60.0Hz
+  1280x1024 (0x2cf)  108.0MHz
+        h: width  1280 start 1328 end 1440 total 1688 skew    0 clock   64.0KHz
+        v: height 1024 start 1025 end 1028 total 1066           clock   60.0Hz
+  1440x900 (0x2cd)  106.5MHz
+        h: width  1440 start 1520 end 1672 total 1904 skew    0 clock   55.9KHz
+        v: height  900 start  903 end  909 total  934           clock   59.9Hz
+  1280x960 (0x2d0)  108.0MHz
+        h: width  1280 start 1376 end 1488 total 1800 skew    0 clock   60.0KHz
+        v: height  960 start  961 end  964 total 1000           clock   60.0Hz
+  1024x768 (0x2d6)   65.0MHz
+        h: width  1024 start 1048 end 1184 total 1344 skew    0 clock   48.4KHz
+        v: height  768 start  771 end  777 total  806           clock   60.0Hz
+  800x600 (0x2d9)   40.0MHz
+        h: width   800 start  840 end  968 total 1056 skew    0 clock   37.9KHz
+        v: height  600 start  601 end  605 total  628           clock   60.3Hz
+  800x600 (0x2da)   36.0MHz
+        h: width   800 start  824 end  896 total 1024 skew    0 clock   35.2KHz
+        v: height  600 start  601 end  603 total  625           clock   56.2Hz
+  640x480 (0x2df)   25.2MHz
+        h: width   640 start  656 end  752 total  800 skew    0 clock   31.5KHz
+        v: height  480 start  490 end  492 total  525           clock   59.9Hz
+
+
+
+```
+
+And this is the current xorg.conf:
+
+```
+~$ cat /etc/X11/xorg.conf Section "ServerLayout"
+    Identifier "layout"
+    Screen 0 "nvidia"
+    Inactive "intel"
+EndSection
+
+
+Section "Device"
+    Identifier "intel"
+    Driver "intel"
+    BusID "PCI:0@0:2:0"
+    Option "AccelMethod" "SNA"
+EndSection
+
+
+Section "Screen"
+    Identifier "intel"
+    Device "intel"
+EndSection
+
+
+Section "Device"
+    Identifier "nvidia"
+    Driver "nvidia"
+    BusID "PCI:1@0:0:0"
+    Option "ConstrainCursor" "off"
+EndSection
+
+
+Section "Screen"
+    Identifier "nvidia"
+    Device "nvidia"
+    Option "AllowEmptyInitialConfiguration" "on"
+    Option "IgnoreDisplayDevices" "CRT"
+EndSection
+
+
+
+```
+
+Any tips or ideas?
+
+---
+
+### Post by Joaqun_Jos_Con on 2016-01-29
+Nothing? I'd really like very much getting my second screen working. Is this the right subforum to ask, by the way?
+
+Further updating, it works properly with the nouveau driver but the mouse flickers too much and the second screen doesn't work properly (even if the desktop is properly displayed).
+
+The nvidia X server settings gives me this xorg.conf file:
+
+```
+# nvidia-settings: X configuration file generated by nvidia-settings# nvidia-settings:  version 331.20  (buildd@roseapple)  Mon Feb  3 15:07:22 UTC 2014
+
+
+Section "ServerLayout"
+    Identifier     "layout"
+    Screen      0  "Screen0" 0 0
+    Inactive       "intel"
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+    Option         "Xinerama" "0"
+EndSection
+
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "AOC 2370"
+    HorizSync       30.0 - 83.0
+    VertRefresh     50.0 - 76.0
+    Option         "DPMS"
+EndSection
+
+
+Section "Device"
+    Identifier     "intel"
+    Driver         "intel"
+    Option         "AccelMethod" "SNA"
+    BusID          "PCI:0@0:2:0"
+EndSection
+
+
+Section "Device"
+    Identifier     "nvidia"
+    Driver         "nvidia"
+    Option         "ConstrainCursor" "off"
+    BusID          "PCI:1@0:0:0"
+EndSection
+
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GTX 765M"
+EndSection
+
+
+Section "Screen"
+    Identifier     "intel"
+    Device         "intel"
+    Monitor        "Monitor0"
+EndSection
+
+
+Section "Screen"
+    Identifier     "nvidia"
+    Device         "nvidia"
+    Monitor        "Monitor0"
+    Option         "AllowEmptyInitialConfiguration" "on"
+    Option         "IgnoreDisplayDevices" "CRT"
+EndSection
+
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "Stereo" "0"
+    Option         "metamodes" "1920x1080_60_0 +0+0"
+    Option         "SLI" "Off"
+    Option         "MultiGPU" "Off"
+    Option         "BaseMosaic" "off"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+```
+
+I believe this to be incorrect since on the layout appears the "intel" inactive. So I've tried toying with the xorg.conf, came up with the following but lightdm refuses to go past login with it. When I authenticate I get looped back in to log in screen.
+
+```
+# nvidia-settings: X configuration file generated by nvidia-settings# nvidia-settings:  version 331.20  (buildd@roseapple)  Mon Feb  3 15:07:22 UTC 2014
+
+
+Section "ServerLayout"
+    Identifier     "layout"
+    Screen      0  "Screen0" 0 0
+    Screen    1  "Screen1" RightOf "Screen0"
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+    Option         "Xinerama" "0"
+EndSection
+
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+
+Section "Device"
+    Identifier     "nvidia"
+    Driver         "nvidia"
+    Option         "ConstrainCursor" "off"
+    BusID          "PCI:1@0:0:0"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GTX 765M"
+EndSection
+
+
+Section "Monitor"
+    Identifier     "Monitor1"
+    VendorName     "Unknown"
+    ModelName      "AOC 2370"
+    HorizSync       30.0 - 83.0
+    VertRefresh     50.0 - 76.0
+    Option         "DPMS"
+EndSection
+
+
+Section "Screen"
+    Identifier     "Screen1"
+    Device         "nvidia"
+    Monitor        "Monitor1"
+    Option         "AllowEmptyInitialConfiguration" "on"
+    Option         "IgnoreDisplayDevices" "CRT"
+    DefaultDepth    24
+    Option         "Stereo" "0"
+    Option         "metamodes" "1920x1080_60_0 +0+0"
+    Option         "SLI" "Off"
+    Option         "MultiGPU" "Off"
+    Option         "BaseMosaic" "off"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+
+Section "Device"
+    Identifier     "intel"
+    Driver         "intel"
+    Option         "AccelMethod" "SNA"
+    BusID          "PCI:0@0:2:0"
+    Option         "DPMS"
+EndSection
+
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "eDP1"
+    HorizSync       30.0 - 83.0
+    VertRefresh     50.0 - 76.0
+    Option         "DPMS"
+EndSection
+
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "intel"
+    Monitor        "Monitor0"
+    Option         "AllowEmptyInitialConfiguration" "on"
+    Option         "IgnoreDisplayDevices" "CRT"
+    DefaultDepth    24
+    Option         "Stereo" "0"
+    Option         "metamodes" "1920x1080_60_0 +0+0"
+EndSection
+
+
+
+```
+
+I've read about other people being stuck on the log in screen but nothing seems related as deleting the .Xauthority didn't fix it. and the contents of .xsession-errors don't lead me anwhere.
+
+Please, help.
+
+---
+

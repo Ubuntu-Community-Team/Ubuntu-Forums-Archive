@@ -1,0 +1,197 @@
+---
+title: "Boot hangs (sometimes) after dual boot screen"
+date: 2010-05-25
+forum: Desktop Environments
+---
+
+### Post by TaoStar50 on 2010-05-25
+Okay, I'm running Ubuntu 10.04 and a small Windows 7 partition (cuz I can't get Ubuntu to run my MSI TV@nywhere plus card but that's another issue).
+
+I can log into Windows fine. If I choose Ubuntu, however, the boot process will go thru a few screen flickers. Then one of two things happens:
+1) I get a scrambled up pixelated image (not sure what it is) for about 3 second, then it goes into the login screen and I can log in normally.
+2) I get the scrambled up pixelated image and it hangs. This happens about 4 times out of 5 when rebooting.
+
+I do have an nVidia card and a beta driver (they published it the 21st, I believe, of this month) but this happened long before that. It's happened ever since I installed any of the drivers (I've tried a couple different versions, hoping to fix this) for my card.
+
+My system is a frankenputer:
+Phenom II quad core 3.0 cpu
+nVidia GeForce BFG 6600
+4G DDR3
+500G drive
+
+Note: I do have 3D rendering when I finally get into the desktop. Everything works great, except that when I'm playing my mmorpg, Regnum Online, it freezes the entire computer and I have to reboot (not sure if that has anything to do with it or not).
+
+In case it's needed, this is my grub:
+(Second note: I'm sorry for the length of the post but I don't know how to upload documents/files to show)
+
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+if loadfont /usr/share/grub/unicode.pf2 ; then
+set gfxmode=1024x768
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+    linux    /boot/vmlinuz-2.6.32-22-generic-pae root=UUID=7e3d7fba-e4f2-4625-9d89-19100d376f5d ro  splash vga=773  quiet splash
+    initrd    /boot/initrd.img-2.6.32-22-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-22-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+    echo    'Loading Linux 2.6.32-22-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-22-generic-pae root=UUID=7e3d7fba-e4f2-4625-9d89-19100d376f5d ro single  splash vga=773
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-22-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 7e3d7fba-e4f2-4625-9d89-19100d376f5d
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+    insmod ntfs
+    set root='(hd0,2)'
+    search --no-floppy --fs-uuid --set 55f7231927186e64
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+And this is my xorg.conf:
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 256.25  (buildmeister@builder100)  Tue May 18 21:07:47 PDT 2010
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    SubSection "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+Section "InputDevice"
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+    # generated from default
+EndSection
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+EndSection
+
+Section "ServerFlags"
+    Option    "DontZap"    "False"
+EndSection
+
+---
+
+### Post by TaoStar50 on 2010-05-29
+bump
+
+---
+

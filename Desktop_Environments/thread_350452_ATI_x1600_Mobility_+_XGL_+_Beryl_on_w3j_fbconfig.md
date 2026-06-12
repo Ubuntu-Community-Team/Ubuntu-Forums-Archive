@@ -1,0 +1,345 @@
+---
+title: "ATI x1600 Mobility + XGL + Beryl on w3j fbconfig"
+date: 2007-01-31
+forum: Desktop Environments
+---
+
+### Post by sdlvx on 2007-01-31
+Alright, I've been going insane over this.  I've been searching the forum for over a week, looking for the answer.  Maybe I'm using the wrong keywords, or maybe I'm just retarded.
+
+Anyways, I have XGL and FGLRX installed.  
+
+```
+ fglrxinfo
+display: :0.0  screen: 0
+OpenGL vendor string: ATI Technologies Inc.
+OpenGL renderer string: ATI Mobility Radeon X1600 Generic
+OpenGL version string: 2.0.6286 (8.33.6)
+
+sdlvx@Gillium:~$ glxinfo
+name of display: :1.0
+Xlib:  extension "XFree86-DRI" missing on display ":1.0".
+display: :1  screen: 0
+direct rendering: No
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_visual_info, GLX_EXT_visual_rating, 
+    GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, GLX_OML_swap_method, 
+    GLX_SGI_make_current_read, GLX_SGIS_multisample, GLX_SGIX_hyperpipe, 
+    GLX_SGIX_swap_barrier, GLX_SGIX_fbconfig
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_get_proc_address, GLX_SGI_video_sync, GLX_ARB_multisample, 
+    GLX_ATI_pixel_format_float, GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_multisample
+OpenGL vendor string: ATI Technologies Inc.
+OpenGL renderer string: ATI Mobility Radeon X1600 Generic
+OpenGL version string: 1.2 (2.0.6286 (8.33.6))
+OpenGL extensions:
+    GL_ARB_multitexture, GL_ARB_texture_border_clamp, GL_ARB_texture_cube_map, 
+    GL_ARB_texture_env_add, GL_ARB_texture_env_combine, 
+    GL_ARB_texture_env_dot3, GL_ARB_transpose_matrix, GL_EXT_abgr, 
+    GL_EXT_blend_color, GL_EXT_blend_minmax, GL_EXT_blend_subtract, 
+    GL_EXT_texture_env_add, GL_EXT_texture_env_combine, 
+    GL_EXT_texture_env_dot3, GL_EXT_texture_lod_bias
+glu version: 1.3
+glu extensions:
+    GLU_EXT_nurbs_tessellator, GLU_EXT_object_space_tess
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x2c 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x2d 24 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  1 0 None
+0x2e 32 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 Ncon
+0x2f 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  1 0 Ncon
+
+```
+
+glxinfo:
+
+```
+glxinfo
+name of display: :1.0
+Xlib:  extension "XFree86-DRI" missing on display ":1.0".
+display: :1  screen: 0
+direct rendering: No
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_visual_info, GLX_EXT_visual_rating, 
+    GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, GLX_OML_swap_method, 
+    GLX_SGI_make_current_read, GLX_SGIS_multisample, GLX_SGIX_hyperpipe, 
+    GLX_SGIX_swap_barrier, GLX_SGIX_fbconfig
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_get_proc_address, GLX_SGI_video_sync, GLX_ARB_multisample, 
+    GLX_ATI_pixel_format_float, GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_multisample
+OpenGL vendor string: ATI Technologies Inc.
+OpenGL renderer string: ATI Mobility Radeon X1600 Generic
+OpenGL version string: 1.2 (2.0.6286 (8.33.6))
+OpenGL extensions:
+    GL_ARB_multitexture, GL_ARB_texture_border_clamp, GL_ARB_texture_cube_map, 
+    GL_ARB_texture_env_add, GL_ARB_texture_env_combine, 
+    GL_ARB_texture_env_dot3, GL_ARB_transpose_matrix, GL_EXT_abgr, 
+    GL_EXT_blend_color, GL_EXT_blend_minmax, GL_EXT_blend_subtract, 
+    GL_EXT_texture_env_add, GL_EXT_texture_env_combine, 
+    GL_EXT_texture_env_dot3, GL_EXT_texture_lod_bias
+glu version: 1.3
+glu extensions:
+    GLU_EXT_nurbs_tessellator, GLU_EXT_object_space_tess
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x2c 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x2d 24 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  1 0 None
+0x2e 32 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 Ncon
+0x2f 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  1 0 Ncon
+
+```
+
+XGL is displayed in the System Monitor, and it occasionally uses CPU.
+
+Here is my xorg.conf file:
+
+```
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	FontPath	"/usr/share/fonts/X11/misc"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+	Option		"XkbOptions"	"lv3:ralt_switch"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Mobility Radeon x1600"
+	Driver		"fglrx"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-33
+	VertRefresh	43-72
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Mobility Radeon x1600"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1280x768" "1200x800" "1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+Section "Extensions"
+	Option "Composite"	"Disable"
+EndSection
+
+Section "ServerFlags"
+	Option "AIGLX"	"off"
+EndSection
+
+```
+
+I added beryl-manager to start up.  They tray icon shows up.  Beryl and Emerald are not loaded.  This is the most annoying thing, because I have gotten it to work after clean installs, BUT, it eventually dies on its own.  I tested this by just starting it up and instantly rebooting, just checking if Beryl ran.
+
+Now, beryl will not start, and neither will Emerald.  Attempting to run beryl from the terminal returns:
+
+```
+ beryl
+**************************************************************
+* Beryl system compatiblity check                            *
+**************************************************************
+
+Detected xserver                                : XGL
+
+Checking Display :1.0 ...
+
+Checking for XComposite extension               : passed (v0.3)
+Checking for XDamage extension                  : passed
+Checking for RandR extension                    : passed
+Checking for XSync extension                    : passed
+
+Checking Screen 0 ...
+
+Checking for GLX_SGIX_fbconfig                  : failed
+
+No GLX_SGIX_fbconfig
+
+```
+
+Now, I am wondering WHY fglrxinfo explicitly says it supports GLX_SGIX_fbconfig, yet, beryl wont detect it.  On top of this, my card is not detected as an x1600, it is detected as a generic ATI card.  It only appears this way in this post because i manually edited the Identifier in with dpkg-reconfigure.  
+
+This computer is an Asus w3j.  I think it kind of matters, because I've heard asus likes to change their Vendor and Device IDs on their Video Cards, and I am thinking perhaps this card in here is such a card.
+
+Anyways, I appreciate whatever help anyone gives.  I just got this laptop, and was looking VERY forward to using Linux over windows, but I'm growing so frusterated, I don't know anymore.  If there's anything else I can provide, I'd be more than willing to.
+
+---
+
+### Post by cephlon on 2007-02-01
+I have the same card on my Acer Aspire and have been searching the forum for better support also. I get the same error when I try to launch Beryl. 
+
+Has anyone been able to get Beryl working with an x1600 ATI card?
+
+---
+
+### Post by contro on 2007-09-06
+yes i have take a look here 
+
+[http://forum.notebookreview.com/showthread.php?t=118390](http://forum.notebookreview.com/showthread.php?t=118390)
+
+---
+
+### Post by sdlvx on 2007-09-16
+I have compiz fusion and XGL working.
+
+Next month, about this time, ATI should be releasing drivers with support for AIGLX.  This means you will not have to install XGL and create a session.  You will just have to simply install FGLRX 8.42 and then install compiz.
+
+I can't remember exactly what happened, but I think this was a bug in Beryl.  The problem was resolved by upgrading Beryl.
+
+I would make sure you have FGLRX 8.40 installed.  The ones in the repos are old.  I download them from amd/ati's site, and then use the --buildpkg thing.
+[http://wiki.cchtml.com/index.php/Ubuntu_Feisty_Installation_Guide](http://wiki.cchtml.com/index.php/Ubuntu_Feisty_Installation_Guide) 
+
+Follow method 2.  
+
+Make sure you are using trevino's repo.  It is what I use.  Make sure you are also using Compiz Fusion and not some other one that is dated.
+
+If you are having problems with the sound (as I was), you need to compile alsa drivers on your own, and do the ./configure thing with some special arguments.  The instructions can be found at [http://alsa-project.org](http://alsa-project.org).
+
+I wish you well.  This laptop has been pretty good to me with Linux, minus the ATI card, but ATI/AMD is supposedly going to fix it next month (I tried with the new driver (8.41) which is unsupported, and it crashed kicker.
+
+---
+

@@ -1,0 +1,25 @@
+---
+title: "Ubuntu 10.04 sound card bug"
+date: 2010-08-02
+forum: Desktop Environments
+---
+
+### Post by TheDrill1000 on 2010-08-02
+**5.1 speaker setup subwoofer problem**             
+                                                                Ubuntu 10.04 
+hardware:
+ard 0: NVidia [HDA NVidia], device 0: VT1708B Analog [VT1708B Analog]
+  Subdevices: 1/2
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+card 0: NVidia [HDA NVidia], device 1: VT1708B Digital [VT1708B Digital]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: NVidia [HDA NVidia], device 3: NVIDIA HDMI [NVIDIA HDMI]
+  Subdevices: 1/1
+
+ok,here is the bug:my 5.1 speakers work perfect until I stop or pause or   close RhythmBoxPlayer after that subwoofer is muted,than i  have to  open  system/preferences/sound and switch to another speaker (e.g.  7.1)setup and than  switch again to 5.1 setup and sound is enabled until  next play pause  command?
+P.S. update of ALSA driver to v.1.0.23 did not change anything.
+
+---
+

@@ -1,0 +1,121 @@
+---
+title: "Lucid: gnome-screensaver gltext blank screen"
+date: 2010-11-15
+forum: Desktop Environments
+---
+
+### Post by 1Geek&amp;3LittleLadies on 2010-11-15
+I have attempted to modify the GLText to display a digital clock as described in a number of previous forum posts. Using instructions shown here:
+[http://ubuntuforums.org/showthread.php?t=1476079&highlight=gltext]("http://ubuntuforums.org/showthread.php?t=1476079&highlight=gltext")
+
+and the man gltext doc, I created a .desktop entry with the following:
+```
+[Desktop Entry]
+Name=GLTime
+Exec=/usr/lib/xscreensaver/gltext -root -no-spin -no-wander -text "%l:%M:%S %p"
+TryExec=/usr/lib/xscreensaver/gltext
+Comment=Displays a few lines of text spinning around in a solid 3D font. The text can use strftime() escape codes to display the current date and time. Written by Jamie Zawinski.
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Screensaver
+OnlyShowIn=GNOME;
+
+```
+
+While the gnome-screensaver-preferences application displays a centered ticking clock in the small preview mode and large preview mode, when I try running the following with my GLTime screensaver activated:
+```
+gnome-screensaver-command -a 
+```
+I get a blank screen. What makes me thing it is a scripting problem is that activating the unmodified GLText screensaver with the above command does not cause a blank screen. Instead, I get the default {MachineName}{OS Kernel} string.
+
+Where's my syntax error?
+
+---
+
+### Post by gmargo on 2010-11-16
+Are you getting errors in your **$HOME/.xsession-errors** file when you try to run it?
+
+---
+
+### Post by 1Geek&amp;3LittleLadies on 2010-11-17
+> **gmargo said:**
+> Are you getting errors in your **$HOME/.xsession-errors** file when you try to run it?
+
+Hard to tell. The errors aren't timestamped. I don't know what I did right, but I eventually got the formatting correct for what I wanted to do. It's possible on reflection though that no error was generated because the string format I put in was resolving to a null value. Still puzzling how what should be the same code behaved differently though.
+
+Part of my confusion lay in the fact that I did not realize that files were sometimes being saved to my Home directory by the GUI and sometimes to the share directory (by me). Files with the same name saved to the local folder were overriding what was in share.  Makes sense I guess, but it cost me several hours of confusion and enduring some eye-rolling from the family before I was able  to climb the learning curve.
+
+Look for screensaver desktop configuration files here:
+  Location 1:  /usr/share/applications/screensavers
+and
+  Location 2:  ~/.local/share/applications/screensavers
+
+Remember that anything with the same filename put in the Location 2 will take precedence over what's in Location 1. If they have different filenames, both entries will appear in the gnome-screensaver-preferences application. (The gnome-scrensaver-preferences application is what runs when you go to System -> Preferences -> Screensaver on the GNOME menu in the GUI.)
+
+---
+
+### Post by 2B|~2B=FF on 2011-11-15
+> **1Geek&3LittleLadies said:**
+> I have attempted to modify the GLText to display a digital clock as described in a number of previous forum posts. Using instructions shown here:
+[http://ubuntuforums.org/showthread.php?t=1476079&highlight=gltext](http://ubuntuforums.org/showthread.php?t=1476079&highlight=gltext)
+
+and the man gltext doc, I created a .desktop entry with the following:
+```
+[Desktop Entry]
+Name=GLTime
+Exec=/usr/lib/xscreensaver/gltext -root -no-spin -no-wander -text "%l:%M:%S %p"
+TryExec=/usr/lib/xscreensaver/gltext
+Comment=Displays a few lines of text spinning around in a solid 3D font. The text can use strftime() escape codes to display the current date and time. Written by Jamie Zawinski.
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Screensaver
+OnlyShowIn=GNOME;
+
+```While the gnome-screensaver-preferences application displays a centered ticking clock in the small preview mode and large preview mode, when I try running the following with my GLTime screensaver activated:
+```
+gnome-screensaver-command -a 
+```I get a blank screen. What makes me thing it is a scripting problem is that activating the unmodified GLText screensaver with the above command does not cause a blank screen. Instead, I get the default {MachineName}{OS Kernel} string.
+
+Where's my syntax error?
+
+In gnome-screensaver, I guess )  
+
+Ran into the same problem recently ; it turns out that there are two more things to do to make the whole thing working : 
+
+1. Now there is a "cache" file 
+```
+/usr/share/applications/desktop.en_US.utf8.cache
+```( replace "en_US.utf8" with your locale(s) ). 
+
+It seems to be the actual file that defines the screensavers. Basically it is a text file that contains all the *.desktop stuff and could be edited directly. 
+
+It could also be regenerated by the following incantation:
+
+```
+sudo /usr/share/gnome-menus/update-gnome-menus-cache  /usr/share/applications >  /usr/share/applications/desktop.en_US.utf8.cache
+
+```AFAIR the GUI didn't even show me my changes in *.desktop files before I edited the file ; but it still gives the black screen for [FONT=Courier New]gnome-screensaver-command -a[/FONT] .  
+
+
+2. It looks like [FONT=Courier New]gnome-screensaver[/FONT] needs to be informed about the changes : 
+
+After a full search for 'gltext' in an attempt to find the right configuration or script file with no real luck I have finally simply tried to restart gnome-screensaver, and it worked for me:
+
+```
+ps auxw | grep screensaver
+
+```then
+```
+kill -HUP <gnome-screensaver id>
+
+```I am not sure this is the right way to do things, it just "worked for me" (tm) .  
+
+
+Refs:
+
+The [FONT=Courier New]update-gnome-menus-cache[/FONT] stuff originally comes from here: [http://mickcharlesbeaver.blogspot.com/2010/06/adding-screensaver-to-ubuntu-1004.html](http://mickcharlesbeaver.blogspot.com/2010/06/adding-screensaver-to-ubuntu-1004.html)
+
+---
+

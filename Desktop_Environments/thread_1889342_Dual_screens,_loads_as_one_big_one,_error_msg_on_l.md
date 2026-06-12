@@ -1,0 +1,329 @@
+---
+title: "Dual screens, loads as one big one, error msg on login, xorg conf"
+date: 2011-12-01
+forum: Desktop Environments
+---
+
+### Post by IanVaughan on 2011-12-01
+I get the following error after I login :-
+
+> Could not apply the stored configuration for monitors
+
+none of the selected modes were compatible with the possible modes:
+Trying modes for CRTC 351
+CRTC 351: trying mode 3360x1050@50Hz with output at 1680x1050@50Hz (pass 0)
+CRTC 351: trying mode 3360x1050@50Hz with output at 1680x1050@50Hz (pass 1)
+
+
+And when I goto Displays, it shows up as "Unknown" 3360x1050
+
+How can I get this to detect my two Dell screens correctly (driven via a NVIDIA card and driver)
+
+xorg.conf file attached.
+
+dmesg : NVRM: loading NVIDIA UNIX x86_64 Kernel Module  280.13  Wed Jul 27 16:53:56 PDT 2011
+
+---
+
+### Post by IanVaughan on 2011-12-05
+74 views, not one idea or reply!
+
+Bump, as I have to...
+
+---
+
+### Post by Mark Phelps on 2011-12-07
+OK ... so here's a reply ...
+
+You're probably not getting replies because you're not supplying needed details.
+
+What Ubuntu release are you running?
+
+If it's version 11.04 or newer, then rename the xorg.conf file to something else and reboot.  That file isn't needed in recent Ubuntu versions.
+
+---
+
+### Post by IanVaughan on 2011-12-07
+> **Mark Phelps said:**
+> OK ... so here's a reply ...
+
+You're probably not getting replies because you're not supplying needed details.
+
+What Ubuntu release are you running?
+
+If it's version 11.04 or newer, then rename the xorg.conf file to something else and reboot.  That file isn't needed in recent Ubuntu versions.
+
+If I knew what details were needed, I'd probably know a lot more about it, and therefore be able to fix it myself!
+
+So now that you've asked/prompted me, I am using 11.10, with Gnome.
+
+Thanks for your suggestion, I moved xorg.conf and lost one of my two monitors!
+Putting it back restored my setup, so im back to square one.
+I think we can safely say that it is used.
+
+Anyone else got any ideas??
+
+---
+
+### Post by thaelim on 2011-12-07
+You need to use the nvidia-settings program (started as root using sudo ndivia-settings) to configure the dual displays. Once you have done this, there is a button at the bottom right of the application to save the settings to xorg.conf. Reboot, and bob's your uncle.
+
+---
+
+### Post by IanVaughan on 2011-12-07
+> **thaelim said:**
+> You need to use the nvidia-settings program (started as root using sudo ndivia-settings) to configure the dual displays. Once you have done this, there is a button at the bottom right of the application to save the settings to xorg.conf. Reboot, and bob's your uncle.
+
+Using nvidia, I sorta of knew that. that doesnt really help answer the question.
+
+And :-
+```
+$ sudo ndivia-settings
+sudo: ndivia-settings: command not found
+```
+
+Thanks!
+
+---
+
+### Post by JasonFWard on 2011-12-07
+> **Mark Phelps said:**
+> If it's version 11.04 or newer, then rename the xorg.conf file to something else and reboot.  That file isn't needed in recent Ubuntu versions.
+
+You are kidding me?  Right?  Where's the documentation for this?
+
+---
+
+### Post by thaelim on 2011-12-07
+> **IanVaughan said:**
+> Using nvidia, I sorta of knew that. that doesnt really help answer the question.
+
+And :-
+```
+$ sudo ndivia-settings
+sudo: ndivia-settings: command not found
+```
+
+Thanks!
+
+Now come on... attitude check - people are trying to help you! I'm somewhat dyslexic and made a typo. I'm sure you can see that was meant to be 'sudo nvidia-settings'.
+
+If you look at the attachment below you will see how the settings page should look when you have correctly configured dual monitors.
+
+---
+
+### Post by IanVaughan on 2011-12-07
+> **thaelim said:**
+> Now come on... attitude check - people are trying to help you! I'm somewhat dyslexic and made a typo. I'm sure you can see that was meant to be 'sudo nvidia-settings'.
+
+If you look at the attachment below you will see how the settings page should look when you have correctly configured dual monitors.
+
+Ok, im sorry about the nvidia thing, that is really dumb of me not to double check what i've just put in!
+
+But as for when its open.. then what?
+
+---
+
+### Post by thaelim on 2011-12-07
+Check the screenshot attached to my last post - it shows everything re. how to correctly configure two monitors side-by-side
+
+---
+
+### Post by IanVaughan on 2011-12-08
+> **thaelim said:**
+> Check the screenshot attached to my last post - it shows everything re. how to correctly configure two monitors side-by-side
+
+Thanks, but I think it falls a little short of showing everything, its just one page, and I have the same setup as you've shown anyway.
+
+We really need to be talking in terms of xorg.conf, thats how to confirm settings, can you post yours please?
+
+---
+
+### Post by thaelim on 2011-12-08
+Here you go:
+
+```
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 280.13  (buildd@allspice)  Thu Aug 11 20:54:45 UTC 2011
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+    # HorizSync source: edid, VertRefresh source: edid
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "DELL E248WFP"
+    HorizSync       30.0 - 83.0
+    VertRefresh     56.0 - 76.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GTX 550 Ti"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "1"
+    Option         "TwinViewXineramaInfoOrder" "DFP-0"
+    Option         "metamodes" "DFP-0: nvidia-auto-select +0+0, DFP-2: nvidia-auto-select +1920+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+```
+
+---
+
+### Post by Clockmender on 2011-12-14
+Hi
+
+I have a similar problem but can find no resolution in the forum. When my laptop is connected to my TV (Using s-video until I get a new HD telly) The screen on the lappy shows the programme launcher but the TV does not (they are setup as twinview) How can I get the launcher on BOTH monitors so I can control the lappy when looking only at the TV screen. Oh by the way I am using a Rii 2.4Ghz Mini keyboard with touchpad (bought from Amazon £28 ish) to control it from over 5m away and this works well with Bunty Ocelot. I don't want to poke around too much in nvidia setup  without some advice - I also need to use the lappy on its own at times so cannot lose the LED panel screen settings.
+
+Lappy is a Vaio with 15" Bravia screen, twin 320Gb drives, loadsa RAM, etc.
+Running Bunty Ocelot/Gnome 3
+
+Thanks in anticipation
+
+Clock
+
+
+Oh by the way - why can I not edit my personal details on this forum any more - I need to update my Bunty version.....
+
+---
+
+### Post by IanVaughan on 2011-12-14
+> **thaelim said:**
+> Here you go:
+
+
+Thanks, but it didnt work!
+Im going to have to give up on this, and Ubuntu I think...
+
+---
+
+### Post by Clockmender on 2011-12-15
+> **IanVaughan said:**
+> Thanks, but it didnt work!
+Im going to have to give up on this, and Ubuntu I think...
+
+Don't give up just yet!
+
+I think you have to configure your second screen as a separate X screen rather than "Twinview" this requires you to restart X (log off and on again I think does this). It's worth a try anyway as you seem to be getting nowhere with Twinview.
+
+I cured my need for launchers on my second screen by following instructions here:
+
+[http://www.liberiangeek.net/2011/11/create-desktop-shortcuts-icons-in-ubuntu-11-10-oneiric-ocelot/](http://www.liberiangeek.net/2011/11/create-desktop-shortcuts-icons-in-ubuntu-11-10-oneiric-ocelot/)
+
+---
+
+### Post by drmuelr on 2011-12-21
+Thanks for the guidance on this issue, thaelim. I (was having) the same issue, but it was miraculously cured when I referenced your screenshot. My dual display is working as advertised now, but I'm still getting the error message on login/X Server restart.
+
+(I've been using Ubuntu for, ohhhhh 48 hours now, so feel free to correct my noobish)
+
+Sidenote: under system info, Graphics is listed as unknown. Any relation maybe?
+
+Additional sidenote: on the top panel, the User Login and Settings menus no longer stay open with a single mouse click. I now have to click and hold. No clue why that would be related.
+
+---
+
+### Post by drmuelr on 2011-12-21
+> **IanVaughan said:**
+> Thanks, but it didnt work!
+Im going to have to give up on this, and Ubuntu I think...
+
+IanVaughan, I was having your exact problem, and I've got mine completely resolved. try this:
+
+> **philip260897 said:**
+> Hello,
+
+i had the same problem, but found a solution that worked for me and my  two monitors are up and running. I thought i'd share this with you.
+
+I followed these steps and everything worked fine.
+
+Try to completely remove your nvidia drivers from your system:
+  sudo apt-get purge nvidia*   
+
+Remove your xorg.conf
+  sudo rm /etc/X11/xorg.conf 
+
+Reinstall xorg completely
+  sudo apt-get install --reinstall xserver-xorg-core  libgl1-mesa-glx:i386 libgl1-mesa-dri:i386 libgl1-mesa-glx:amd64  libgl1-mesa-dri:amd64 
+
+Re-configure Xorg
+  sudo dpkg-reconfigure xserver-xorg   
+
+Reboot
+  sudo reboo
+
+After the reboot my monitors were both displaying the same picture so i  opened the "Displays" Setting from System Settings and i uncheked the  "mirror displays" option.
+
+i hope this will help you guys.
+
+It worked the first shot, flawlessly for me. My graphics card is still listed as unknown, and I haven't tested it with any demanding graphics; the extent to which this will actually FIX the problem is still unknown to me. The entire thread this came from is about this problem, if you wish to look for other solutions. Good luck.
+
+---
+
+### Post by antonfh on 2012-01-22
+@drmuelr
+
+The steps as given by drmeuler (I had to remove the amd64 bits tho) is the only solution that worked for me. 
+
+I have tried so many options, after about a year of just using 2D unity or accepting my monitor as one big screen, I followed drmeulers steps ...and rebooted, then went back to my display/screen properties and removed mirror/duplicate monitors ...and viola ... suddenly both my monitors was now picked up ! 
+
+Great to have this finally sorted
+
+---
+
+### Post by Rasa1111 on 2012-12-12
+> **drmuelr said:**
+> IanVaughan, I was having your exact problem, and I've got mine completely resolved. try this:
+
+
+
+It worked the first shot, flawlessly for me. My graphics card is still listed as unknown, and I haven't tested it with any demanding graphics; the extent to which this will actually FIX the problem is still unknown to me. The entire thread this came from is about this problem, if you wish to look for other solutions. Good luck.
+
+Dude! Thank you!
+That worked flawlessly. :D 
+Been trying to fix a friend dual monitor setup for a few days, nothing has worked til this. You rock! :guitar:
+
+---
+
+### Post by drmuelr on 2012-12-22
+I'm glad this could help you guys out. Again, props go to **philip260897 **for this solution!
+
+---
+

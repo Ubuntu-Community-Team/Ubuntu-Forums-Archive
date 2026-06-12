@@ -1,0 +1,16 @@
+---
+title: "Disappearing icons in Lubuntu tray...."
+date: 2012-05-22
+forum: Desktop Environments
+---
+
+### Post by jeffus_il on 2012-05-22
+I had my Lubuntu tray icons disappearing... They were there, got the menus using right/left click etc. Have seen the problem on the Net and forum, don't remember where, so here is what I found..
+Lubuntu 12.04 nouveau driver....
+If I move the panel to the top instead of the bottom (default) using right click panel settings, the icons magically appear...
+If I use lxrandr to take the resolution off the top value and put it on the second highest, they magically appear again...
+I would suspect that the problem is with the Nouveau driver, since it was okay with the nvidia driver...
+I can't install the nvidia driver on my computer to compare now since the latest nvidia driver is the only driver that works with 12.04, the older ones (173 & 96) if I remember correctly, which I need for my ancient card are not compatible with the current Xorg ABI driver, so won't install, even though they appear in the repository... which is also a bug, because they appear but are not install-able... which can be confusing to the less experienced of us...
+
+---
+

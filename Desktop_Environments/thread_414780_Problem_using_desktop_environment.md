@@ -1,0 +1,289 @@
+---
+title: "Problem using desktop environment"
+date: 2007-04-20
+forum: Desktop Environments
+---
+
+### Post by arvizard on 2007-04-20
+i recently downloaded ubuntu and installed my nvidia drivers. When i use the Metacity (Gnomone window manager) , i am able to drag any window by just clicking on it and moving it around. I also get to see the minimize, maximise and close buttons. But when I switch to beryl or Compiz or enable desktop effects, I can't drag windows around anymore. The maximize, minimize and close buttons have also disappeared. Any Idea on how to fix it?
+
+---
+
+### Post by alohre on 2007-04-20
+check out this forum. There are lots of reasons why it doesn't work, it's probably covered there - [http://ubuntuforums.org/forumdisplay.php?f=223](http://ubuntuforums.org/forumdisplay.php?f=223)
+also - some beryl spesific help: [http://forum.beryl-project.org/viewtopic.php?f=35&t=1631](http://forum.beryl-project.org/viewtopic.php?f=35&t=1631)
+
+---
+
+### Post by Compyx on 2007-04-20
+```
+sudo nvidia-xconfig --add-argb-glx-visuals
+``` should do the trick.
+
+---
+
+### Post by regomodo on 2007-04-20
+I have the same problem. I tried that and nothing happened. Tried it with and without the effects turned on. You cannot see anything in the terminal when the effects are turned on though.
+
+EDIT: duhh. I forgot to ctrl+alt+backspace. GOt all the borders etc, but i cannot switch screens?
+
+---
+
+### Post by arvizard on 2007-04-20
+i tried doing this:
+sudo nvidia-xconfig --add-argb-glx-visuals 
+but it still doesnt work
+
+yes, when I open the terminal, it doesnt show anything but a blank window. 
+
+The effects all work fine except for the disappering buttons ( restore, maximize and close) and the inability to drag windows.
+
+---
+
+### Post by Compyx on 2007-04-20
+Run gconf-editor from a terminal and check that these options are enabled in /apps/compiz/general/allscreens/options/active_plugins:
+```
+gconf dbus svg decoration wobbly fade minimize zoom cube scale move resize place switcher water screenshot png annotate clone rotate
+```
+
+Make sure the values are in this order. I'm not sure if the svg option is necessary, but that's how my config looks like, and it works like a charm.While searching the web looking for a solution to the exact same problem you have, I found the above settings. This is the guide I (partially) followed: [https://help.ubuntu.com/community/CompositeManager/ConfiguringCompiz]("https://help.ubuntu.com/community/CompositeManager/ConfiguringCompiz")
+
+I hope this will help.
+
+---
+
+### Post by regomodo on 2007-04-20
+I found out how to sort it out
+
+> **digby280 said:**
+> I had that problem too.  You need to install the gnome-compiz-manager:
+
+```
+sudo apt-get install gnome-compiz-manager
+```
+
+And then go to System >> Preferences >> GL Desktop >> Workspaces
+
+and change the number of viewpoints.
+
+---
+
+### Post by arvizard on 2007-04-20
+Its still a no-no.... ! :( .....changing the number of viewports doesnt work .  running gconf and changing the values isn't working either ...
+
+---
+
+### Post by Compyx on 2007-04-20
+I assume you've restarted X after having added the argb-glx-visuals?
+
+Can you elaborate on what exactly isn't working? The window-decorations? The cube?
+I remember that I've read somewhere that anything else than setting viewports to 4 and the number of desktops in Gnome to 1 doesn't work properly, but this may have been fixed now. I'd have to check, but I've been using Xfce4 as my desktop for some time now, not Gnome.
+
+---
+
+### Post by arvizard on 2007-04-20
+OK, Heres the problem. I have two desktop environments installed - Beryl and Compiz and ofcourse the default Metacity environment. Metacity works just fine! But when I switch to Compiz or Beryl, I get problems. The title bar for every window disappears, along with the buttons that would let me to minimize , maximize and close a window. I also lose the ability to drag a window by just clicking on it. When I open the Terminal, all that shows up is a blank window. Everything else in Beryl and Compiz works just fine! Its just missing the title bars!  I looked through the forums but I couldnt find the right solution yet.
+
+Thnx for all the help!
+
+and yes, i did restart X.. i even restarted the whole computer
+
+---
+
+### Post by Compyx on 2007-04-20
+Check your /etc/X11/xorg.conf file, in the section "Screen", this should show up:
+```
+Option "AddARGBGLXVisuals" "True"
+```
+
+At least that's what I had to add to make compiz manage my windows' decorations (the title-bar and buttons). But `nvidia-xconfig --add-argb-glx-visuals` should have added this, I think.
+
+If that line is in your xorg.conf, perhaps you could post your entire xorg.conf here so I can compare it to mine?
+
+Hope this helps (at last a bit anyway)..
+
+---
+
+### Post by arvizard on 2007-04-20
+thnx a lot for your help! The line is  there in the xconf file. But heres the contents of it.
+
+
+
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder26)  Mon Feb 26 23:37:58 PST 2007
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+    Identifier     "Default Layout"
+    Screen         "Default Screen" 0 0
+    InputDevice    "Generic Keyboard"
+    InputDevice    "Configured Mouse"
+    InputDevice    "stylus" "SendCoreEvents"
+    InputDevice    "cursor" "SendCoreEvents"
+    InputDevice    "eraser" "SendCoreEvents"
+    InputDevice    "Synaptics Touchpad"
+EndSection
+
+Section "Files"
+
+	# path to defoma fonts
+    FontPath        "/usr/share/fonts/X11/misc"
+    FontPath        "/usr/share/fonts/X11/cyrillic"
+    FontPath        "/usr/share/fonts/X11/100dpi/:unscaled"
+    FontPath        "/usr/share/fonts/X11/75dpi/:unscaled"
+    FontPath        "/usr/share/fonts/X11/Type1"
+    FontPath        "/usr/share/fonts/X11/100dpi"
+    FontPath        "/usr/share/fonts/X11/75dpi"
+    FontPath        "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+    Load           "i2c"
+    Load           "bitmap"
+    Load           "ddc"
+    Load           "extmod"
+    Load           "freetype"
+    Load           "glx"
+    Load           "int10"
+    Load           "vbe"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Generic Keyboard"
+    Driver         "kbd"
+    Option         "CoreKeyboard"
+    Option         "XkbRules" "xorg"
+    Option         "XkbModel" "pc105"
+    Option         "XkbLayout" "us"
+    Option         "XkbOptions" "lv3:ralt_switch"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Configured Mouse"
+    Driver         "mouse"
+    Option         "CorePointer"
+    Option         "Device" "/dev/input/mice"
+    Option         "Protocol" "ImPS/2"
+    Option         "ZAxisMapping" "4 5"
+    Option         "Emulate3Buttons" "true"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Synaptics Touchpad"
+    Driver         "synaptics"
+    Option         "SendCoreEvents" "true"
+    Option         "Device" "/dev/psaux"
+    Option         "Protocol" "auto-dev"
+    Option         "HorizScrollDelta" "0"
+EndSection
+
+Section "InputDevice"
+
+							# /dev/input/event
+							# for USB
+    Identifier     "stylus"
+    Driver         "wacom"
+    Option         "Device" "/dev/wacom"	# Change to 
+    Option         "Type" "stylus"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+
+							# /dev/input/event
+							# for USB
+    Identifier     "eraser"
+    Driver         "wacom"
+    Option         "Device" "/dev/wacom"	# Change to 
+    Option         "Type" "eraser"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+
+							# /dev/input/event
+							# for USB
+    Identifier     "cursor"
+    Driver         "wacom"
+    Option         "Device" "/dev/wacom"	# Change to 
+    Option         "Type" "cursor"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Monitor"
+    Identifier     "Generic Monitor"
+    HorizSync       28.0 - 96.0
+    VertRefresh     43.0 - 60.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "nVidia Corporation GeForce Go 7900 GTX"
+    Driver         "nvidia"
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "nVidia Corporation GeForce Go 7900 GTX"
+    Monitor        "Generic Monitor"
+    DefaultDepth    16
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Depth       1
+        Modes      "1920x1200"
+    EndSubSection
+    SubSection     "Display"
+        Depth       4
+        Modes      "1920x1200"
+    EndSubSection
+    SubSection     "Display"
+        Depth       8
+        Modes      "1920x1200"
+    EndSubSection
+    SubSection     "Display"
+        Depth       15
+        Modes      "1920x1200"
+    EndSubSection
+    SubSection     "Display"
+        Depth       16
+        Modes      "1920x1200"
+    EndSubSection
+    SubSection     "Display"
+        Depth       24
+        Modes      "1920x1200"
+    EndSubSection
+EndSection
+
+---
+
+### Post by Compyx on 2007-04-20
+Your problem may lie in the "DefaultDepth 16", try setting it to 24, since RGB is usually a combination of 3 octets (ie. 24 bits).
+
+---
+
+### Post by arvizard on 2007-04-20
+WOW!!! Of the countless threads that I had to read without being able to get the right answer! Thank you `Compyx`!!!!!!!! This works!
+
+---
+
+### Post by Compyx on 2007-04-21
+Glad I could help :D
+
+---
+

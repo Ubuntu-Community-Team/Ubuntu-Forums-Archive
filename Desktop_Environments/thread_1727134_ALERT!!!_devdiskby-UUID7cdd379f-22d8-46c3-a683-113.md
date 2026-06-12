@@ -1,0 +1,378 @@
+---
+title: "ALERT!!! /dev/disk/by-UUID/7cdd379f-22d8-46c3-a683-113d17307fd7 does not exist"
+date: 2011-04-12
+forum: Desktop Environments
+---
+
+### Post by Fervour on 2011-04-12
+p { margin-bottom: 0.21cm; }                        pre.cjk { font-family: "DejaVu Sans",monospace; }p { margin-bottom: 0.21cm; }**Problem**
+
+ **Gave up waiting for root device..common problems..**
+
+**check root delay..**
+
+**check root...**
+
+**missing modules...&#8221;**
+
+&#8220;**ALERT!!! /dev/disk/by-UUID/7cdd379f-22d8-46c3-a683-113d17307fd7 does not exist&#8221;**
+
+**The boot process stops**  at &#8220;2-120023] usb 3-4: new low speed usb device using ohci-hcd &  address 2.&#8221; thenit goes to  - initramfs &#8211; flashing cursor but keyboard  inactive, (keyboard is microsoft, wireless)
+
+ Keyboard** is** active during post boot and available during grub menu.
+
+ I **can **boot using grub2 menu to older and present kernels.
+
+ **Tried gksu gedit /etc/default/grub &#8211; to change root delay**
+ 
+ Tried numerous other threads on different Ubuntu forums.
+
+ Was wondering if it is correct that Kernel is mounted on **ext4**  but when looking at grub, edit page it has insmod ext2, is this  relevant, Have tried to change to ext4 in grub edit menu, then after  boot - sudo update-grub, but reverts back to ext2, which might be a good  thing as i dont really know what im doing;)
+
+**Grub edit page for Kernel.**
+
+recordfail
+
+    insmod part_msdos
+    insmod ext2    ***(is this correct)***
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro   rootdelay=60
+    initrd    /boot/initrd.img-2.6.35-22-generic..
+ 
+**sudo blkid**
+
+/dev/sda1: UUID="7cdd379f-22d8-46c3-a683-113d17307fd7" TYPE="ext4"
+
+/dev/sda5: UUID="c88ae04a-a1ce-48bc-8304-bac4d3aa228d" TYPE="swap"
+
+ 
+**ls -l /dev/disk/by-uuid/**
+
+lrwxrwxrwx 1 root root 10 2011-04-11 17:17 7cdd379f-22d8-46c3-a683-113d17307fd7 -> ../../sda1
+
+lrwxrwxrwx 1 root root 10 2011-04-11 17:17 c88ae04a-a1ce-48bc-8304-bac4d3aa228d -> ../../sda5
+
+ 
+
+# **/etc/fstab: static file system information. **
+
+#
+
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+
+# for a device; this may be used with UUID= as a more robust way to name
+
+# devices that works even if disks are added and removed. See fstab(5).
+
+#
+
+# <file system> <mount point> <type> <options> <dump> <pass>
+
+proc /proc proc nodev,noexec,nosuid 0 0
+
+/dev/sda1 / **ext4 ** errors=remount-ro 0 1
+
+# swap was on /dev/sda5 during installation
+
+UUID=c88ae04a-a1ce-48bc-8304-bac4d3aa228d none swap
+
+ 
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048 1,931,263,999 1,931,261,952  83 Linux
+/dev/sda2       1,931,266,046 1,953,523,711    22,257,666   5 Extended
+/dev/sda5       1,931,266,048 1,953,523,711    22,257,664  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        7cdd379f-22d8-46c3-a683-113d17307fd7   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        c88ae04a-a1ce-48bc-8304-bac4d3aa228d   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro,commit=0)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-28-virtual' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux    /boot/vmlinuz-2.6.35-28-virtual root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro   rootdelay=60
+    initrd    /boot/initrd.img-2.6.35-28-virtual
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-virtual (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    echo    'Loading Linux 2.6.35-28-virtual ...'
+    linux    /boot/vmlinuz-2.6.35-28-virtual root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-virtual
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-server' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux    /boot/vmlinuz-2.6.35-28-server root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro   rootdelay=60
+    initrd    /boot/initrd.img-2.6.35-28-server
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-server (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    echo    'Loading Linux 2.6.35-28-server ...'
+    linux    /boot/vmlinuz-2.6.35-28-server root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-server
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro   rootdelay=60
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro   rootdelay=60
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=7cdd379f-22d8-46c3-a683-113d17307fd7 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 7cdd379f-22d8-46c3-a683-113d17307fd7
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sda1       /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=c88ae04a-a1ce-48bc-8304-bac4d3aa228d none            swap    sw              0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+ 734.5GB: boot/grub/core.img
+  45.5GB: boot/grub/grub.cfg
+    .1GB: boot/initrd.img-2.6.35-22-generic
+ 886.4GB: boot/initrd.img-2.6.35-28-generic
+ 290.2GB: boot/initrd.img-2.6.35-28-server
+ 734.7GB: boot/initrd.img-2.6.35-28-virtual
+ 734.7GB: boot/vmlinuz-2.6.35-22-generic
+  47.5GB: boot/vmlinuz-2.6.35-28-generic
+ 734.7GB: boot/vmlinuz-2.6.35-28-server
+ 734.7GB: boot/vmlinuz-2.6.35-28-virtual
+ 734.7GB: initrd.img
+ 290.2GB: initrd.img.old
+ 734.7GB: vmlinuz
+ 734.7GB: vmlinuz.old
+```
+
+Hope someone can help and that ive posted the correct info.
+
+---
+

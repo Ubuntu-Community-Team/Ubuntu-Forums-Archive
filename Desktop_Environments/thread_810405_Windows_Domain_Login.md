@@ -1,0 +1,178 @@
+---
+title: "Windows Domain Login"
+date: 2008-05-28
+forum: Desktop Environments
+---
+
+### Post by timnic on 2008-05-28
+Hi,
+
+Unfortunately the company I work for is about to require all staff to log in to their computers using Windows Domain Login verification. Is there anyway of getting KDE to check the login credentials with a Windows Domain Server and deal with password resets and the like because without it, it looks like I will be forced to use Windows to access the company network  :(
+
+I am running Hardy with KDE with XP available via VMware - It is a great way to work, but only if I can login to the company network.
+
+Regards
+
+
+Tim
+
+---
+
+### Post by SpreadFirefox on 2008-11-25
+Hello,
+I have similar problem. But I'm using Ubuntu for everyday work and Windows only to reset password. If someone know how to do that from Ubuntu it'll be great to share with us!
+
+---
+
+### Post by viikinki on 2008-11-25
+> **SpreadFirefox said:**
+> Hello,
+I have similar problem. But I'm using Ubuntu for everyday work and Windows only to reset password. If someone know how to do that from Ubuntu it'll be great to share with us!
+
+The universe repository is enabled by default, so here’s all you have to do:
+
+   1. sudo apt-get install likewise-open
+   2. sudo domainjoin-cli join yourdomain.com yourADusername
+   3. sudo update-rc.d likewise-open defaults
+   4. sudo /etc/init.d/likewise-open start
+
+Step one will prompt your for some info about your AD environment. After executing number two above, you’ll be prompted for your AD password for the user provided. Once this is done, you login by entering YOURDOMAIN\youruser at the login prompt.
+
+---
+
+### Post by SpreadFirefox on 2008-11-25
+May be there are some restrictions because this is what I have:
+> Error: Unable to join domain [code 0x0008000e]
+
+Domain join operation failed to create the computer account in Active Directory. Common causes are a bad administrator password, a bad OU
+name, or an existing computer account without modification permissions.
+
+---
+
+### Post by viikinki on 2008-11-25
+You have to have Domain Admin rights to join your ubuntu to ad.
+
+---
+
+### Post by SpreadFirefox on 2008-11-25
+Works great! Thank you again!
+
+---
+
+### Post by SpreadFirefox on 2008-11-25
+Sorry :(
+It seems that I can not change my domain password. Is there a way to do that?
+
+---
+
+### Post by ComputerHermit on 2008-11-26
+I hate to tag on to this but I'm haveing a problem like this one I get this error when I trying to join the domain at my work to access the database off my laptop I can join it fine with XP Pro on the other part-ion 
+anyway this is what it is telling me 
+```
+Error: Module not configured [code 0x00080042]
+
+Even though the configuration of 'hostname' was executed, the configuration is
+not complete. Please contact Likewise support.
+```
+
+---
+
+### Post by SpreadFirefox on 2008-11-26
+I think you are not part of the domain. Are you?
+
+---
+
+### Post by Kzin on 2009-03-23
+> **ComputerHermit said:**
+> I hate to tag on to this but I'm haveing a problem like this one I get this error when I trying to join the domain at my work to access the database off my laptop I can join it fine with XP Pro on the other part-ion 
+anyway this is what it is telling me 
+```
+Error: Module not configured [code 0x00080042]
+
+Even though the configuration of 'hostname' was executed, the configuration is
+not complete. Please contact Likewise support.
+```
+
+I know this is an oldish post, but I fixed this by adding --ou with the relevant organizational unit to the join command and it worked...
+
+```
+sudo domainjoin-cli join --ou OUName yourdomain.com yourADusername
+```
+
+---
+
+### Post by windwalker78 on 2009-03-26
+> **Kzin said:**
+> I know this is an oldish post, but I fixed this by adding --ou with the relevant organizational unit to the join command and it worked...
+
+```
+sudo domainjoin-cli join --ou OUName yourdomain.com yourADusername
+```
+
+Thanks for the posting this information :)
+
+Regards,
+Todor
+:P
+
+---
+
+### Post by rienesl on 2009-04-29
+Yea, thanks a lot!! It worked for me,too!
+Martin
+
+---
+
+### Post by Ahlan on 2009-08-12
+I had the same problem.
+Although the error message was "module not configured"
+the problem was actually caused by the domain not being written case sensitive.
+
+In my case our domain is Ultimate.White-Elephant.ch
+when I first used domainjoin-cli I entered join ultimate.white-elephant.ch
+
+Windows isn't case sensitive but Linux is! :-(
+
+Instead of saying that it can't find the domain
+(which it does if you badly mistype)
+it reports this very silly unhelp message.
+
+When I typed the name of the domain EXACTLY as it is defined under windows
+then I was able to join my Ubuntu machine to our AD domain.
+
+---
+
+### Post by RMTPriyantha on 2010-01-06
+change the following setting in /etc/resolv.conf file
+
+sudo gedit /etc/resolv.conf
+
+
+# Generated by NetworkManager
+nameserver 192.168.0.1(DNS server  Address)
+nameserver 0.0.0.0
+
+
+and sudo gedit /etc/dhcp3/dhclient.conf
+
+change the 
+
+
+prepend domain-name-servers 192,168,0,1;(DNS server Adress)
+
+this works for me :)
+
+---
+
+### Post by Domini0n on 2011-09-30
+It's an old topic, but for those who have not been able to solve this for themselves.
+
+The reason I got this error was because I forgot to enter a DNS name for this server in our DNS.
+
+After doing this I could join the domain without problems.
+Always make sure you use a user that has the rights to join a computer to the domain.
+
+HOWTO Delegate the rights on AD: [http://support.microsoft.com/kb/932455](http://support.microsoft.com/kb/932455)
+
+---
+

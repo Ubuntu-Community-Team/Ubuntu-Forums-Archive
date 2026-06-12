@@ -1,0 +1,569 @@
+---
+title: "Ubuntu 10.10 Desktop boots to server login prompt"
+date: 2011-04-10
+forum: Desktop Environments
+---
+
+### Post by Superslacker on 2011-04-10
+Hello,
+
+ After updating my system to kernel  2.6.35-28 via the update manager my system now boots to a sever tty terminal and asks to log in. Once I log in and type start x at the prompt the system will load the sign in screen and all is well. 
+
+I downloaded a boot info script from here
+
+```
+[http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/)
+```This produces a results text on the desktop
+
+paste
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+ => Windows is installed in the MBR of /dev/sdb
+ => Windows is installed in the MBR of /dev/sdc
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+sdc1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 640.1 GB, 640135028736 bytes
+255 heads, 63 sectors/track, 77825 cylinders, total 1250263728 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048 1,202,290,687 1,202,288,640  83 Linux
+/dev/sda2       1,202,292,734 1,250,263,039    47,970,306   5 Extended
+/dev/sda5       1,202,292,736 1,250,263,039    47,970,304  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 2000.4 GB, 2000398934016 bytes
+255 heads, 63 sectors/track, 243201 cylinders, total 3907029168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1                  63 3,907,024,064 3,907,024,002   7 HPFS/NTFS
+
+
+Drive: sdc ___________________ _____________________________________________________
+
+Disk /dev/sdc: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdc1                  63 1,953,520,064 1,953,520,002   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        2307cff2-4199-47be-accf-edbc3e6a6d04   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        faef0232-f9f5-4f57-895d-a1b32beb1f8c   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        55FC84DD7D8C9976                       ntfs       Share                         
+/dev/sdb: PTTYPE="dos" 
+/dev/sdc1        7A481D26481CE325                       ntfs       Local Drive                   
+/dev/sdc: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro,commit=0)
+/dev/sdc1        /media/Local_Drive       fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+/dev/sdb1        /media/Share             fuseblk    (rw,nosuid,nodev,allow_other,blksize=4096)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-28-generic ...'
+    linux    /boot/vmlinuz-2.6.35-28-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-28-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-27-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-27-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-27-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-27-generic ...'
+    linux    /boot/vmlinuz-2.6.35-27-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-27-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-25-generic ...'
+    linux    /boot/vmlinuz-2.6.35-25-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-24-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-24-generic ...'
+    linux    /boot/vmlinuz-2.6.35-24-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-24-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-23-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-23-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-23-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-23-generic ...'
+    linux    /boot/vmlinuz-2.6.35-23-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-23-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=2307cff2-4199-47be-accf-edbc3e6a6d04 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set 2307cff2-4199-47be-accf-edbc3e6a6d04
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+proc    /proc    proc    nodev,noexec,nosuid    0    0
+#Entry for /dev/sda1 :
+UUID=2307cff2-4199-47be-accf-edbc3e6a6d04    /    ext4    errors=remount-ro    0    1
+#Entry for /dev/sdc1 :
+UUID=7A481D26481CE325    /media/Local_Drive    ntfs-3g    defaults,locale=en_US.utf8    0    0
+#Entry for /dev/sdb1 :
+UUID=55FC84DD7D8C9976    /media/Share    ntfs-3g    defaults,locale=en_US.utf8    0    0
+#Entry for /dev/sda5 :
+UUID=faef0232-f9f5-4f57-895d-a1b32beb1f8c    none    swap    sw    0    0
+
+#/dev/scd0    /media/cdrom0    iso9660,udf    user,noauto,exec,utf8    0    0
+#/dev/scd1    /media/cdrom1    iso9660,udf    user,noauto,exec,utf8    0    0
+
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+ 599.2GB: boot/grub/core.img
+ 599.3GB: boot/grub/grub.cfg
+   1.7GB: boot/initrd.img-2.6.35-22-generic
+   1.7GB: boot/initrd.img-2.6.35-23-generic
+ 304.6GB: boot/initrd.img-2.6.35-24-generic
+  73.7GB: boot/initrd.img-2.6.35-25-generic
+ 439.7GB: boot/initrd.img-2.6.35-27-generic
+   1.7GB: boot/initrd.img-2.6.35-28-generic
+   1.0GB: boot/vmlinuz-2.6.35-22-generic
+ 599.2GB: boot/vmlinuz-2.6.35-23-generic
+ 599.3GB: boot/vmlinuz-2.6.35-24-generic
+ 599.3GB: boot/vmlinuz-2.6.35-25-generic
+ 599.4GB: boot/vmlinuz-2.6.35-27-generic
+   1.4GB: boot/vmlinuz-2.6.35-28-generic
+   1.7GB: initrd.img
+ 439.7GB: initrd.img.old
+   1.4GB: vmlinuz
+ 599.4GB: vmlinuz.old
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  67 99 da d8 58 b2 c6 db  cf b3 92 ad dc c3 5a d0  |g...X.........Z.|
+00000010  22 1c 10 f5 85 ad 28 94  94 8f 57 c7 2c 34 7d d7  |".....(...W.,4}.|
+00000020  79 39 d6 aa 4e dc bb 9b  de c0 30 60 c9 98 e0 61  |y9..N.....0`...a|
+00000030  86 c4 01 94 e7 02 59 1a  fc e2 15 9a 16 78 6c 14  |......Y......xl.|
+00000040  a6 a5 41 73 09 4c 23 09  93 10 11 d4 ef 5f bd c9  |..As.L#......_..|
+00000050  0a 9c 82 f0 ac 50 bb 46  0a 5c 9e d0 55 8e 42 65  |.....P.F.\..U.Be|
+00000060  30 df 82 a0 53 74 ef 21  5a bf a1 23 54 15 7a 9f  |0...St.!Z..#T.z.|
+00000070  13 05 b4 58 47 df ee 8a  30 e7 33 51 95 94 53 f9  |...XG...0.3Q..S.|
+00000080  cc 5e 69 50 b8 ce f0 a0  5d 52 ee 21 fb b1 96 e8  |.^iP....]R.!....|
+00000090  b5 10 38 94 8f df 4f 75  3e 2f 79 06 a3 6c 4c 37  |..8...Ou>/y..lL7|
+000000a0  37 27 7f ea 1a fd d9 c8  5b ba 2a 23 de f2 b6 20  |7'......[.*#... |
+000000b0  af 9b 61 34 69 8d 8c f1  ad 17 87 6d 5c 38 66 2d  |..a4i......m\8f-|
+000000c0  cd 99 c4 0d a3 18 35 cb  c5 3b 55 27 0d 93 69 fb  |......5..;U'..i.|
+000000d0  ee 45 c7 74 b3 78 83 8e  03 2a 41 4f 9c 63 85 8a  |.E.t.x...*AO.c..|
+000000e0  7a 74 c2 a9 e9 89 cc cd  76 80 c5 1c e8 a6 c1 1e  |zt......v.......|
+000000f0  21 2b 2b 1b 13 ea 84 92  c8 df f6 f1 0f 49 ee ce  |!++..........I..|
+00000100  72 23 6e 58 89 91 58 21  f2 7e 45 f7 1b c5 eb 56  |r#nX..X!.~E....V|
+00000110  9e aa bf a3 d6 f6 47 b2  07 b7 44 29 c6 4d 5f 08  |......G...D).M_.|
+00000120  a1 dd e3 9c 67 64 fb dc  95 71 84 86 57 42 d1 a0  |....gd...q..WB..|
+00000130  73 3b 01 49 fe 08 eb f3  85 29 8c f5 20 8e 52 ff  |s;.I.....).. .R.|
+00000140  4e 75 be 08 02 75 13 54  44 2c 03 19 21 33 ba 95  |Nu...u.TD,..!3..|
+00000150  26 b0 9a 62 e2 f4 f1 04  93 b3 79 84 15 9b ca d8  |&..b......y.....|
+00000160  be f6 dd d1 df 9a 63 28  e4 62 08 7b bf 76 08 f3  |......c(.b.{.v..|
+00000170  fd 1e 76 c4 17 f1 04 99  09 a5 e4 54 ac 0c 6d 69  |..v........T..mi|
+00000180  b9 45 74 6f 66 21 e6 b1  5b c1 a6 a6 cd 51 b9 86  |.Etof!..[....Q..|
+00000190  8c a6 b1 55 96 2a b9 cb  05 d3 ce 93 9e 28 5a 6e  |...U.*.......(Zn|
+000001a0  4c 22 b6 9d 06 29 a6 95  7b 36 74 75 d1 50 19 52  |L"...)..{6tu.P.R|
+000001b0  8b 06 60 57 67 38 9f a2  67 27 82 9f 53 b2 00 fe  |..`Wg8..g'..S...|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 f8 db 02 00 00  |................|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+```I know I have read how to fix this before, but I guess i am not searching for the correct terms
+
+
+Any help would be greatly appreciated
+
+SS
+
+PS:
+ I also tried holding the shift key at start up to use the recovery option. I tried dkpkg and update grub options and it made no difference in the boot to prompt problem
+
+---
+
+### Post by Dutch70 on 2011-04-10
+Have you tried updating your system since this happened? 
+
+Maintaining several different distro's this has happened to me a few times. Running...
+```
+sudo apt-get update && sudo apt-get upgrade
+``` 
+has always fixed it.
+
+I'm not one to diagnose a difficult boot info script, but I didn't see anything obviously wrong with yours. 
+I also think if there was, you'd never get to a tty.
+
+---
+
+### Post by Superslacker on 2011-04-10
+I did do apt-get update not upgrade as to not get the ver 11 beta version
+
+
+I am only a novice user who reads alot as you can see by my post count LOL
+
+I am assuming upgrade is to move the ubuntu version up
+
+UPDATE: 
+
+
+I am wrong on the command
+
+source:
+
+```
+https://help.ubuntu.com/community/AptGet/Howto#Commands
+```
+
+```
+
+
+[LIST]
+[*]apt-get update Run this command after changing */etc/apt/sources.list* or */etc/apt/preferences* . For information regarding */etc/apt/preferences*, see [PinningHowto]("https://help.ubuntu.com/community/PinningHowto").  Run this command periodically to make sure your source list is  up-to-date.  This is the equivalent of "Reload" in Synaptic or "Fetch  updates" in Adept.
+[*]apt-get upgrade This command upgrades all installed packages.  This is the equivalent of "Mark all upgrades" in Synaptic.
+[*]apt-get dist-upgrade  The same as the above, except add the "smart upgrade" checkbox. It  tells APT to use "smart" conflict resolution system, and it will attempt  to upgrade the most important packages at the expense of less important  ones if necessary.
+```
+[/LIST]
+I will try the commands as you said and post back after a reboot
+
+Thanks
+
+---
+
+### Post by Superslacker on 2011-04-10
+I did the commands as you said and here are the terminal results
+
+```
+Fetched 72B in 15s (5B/s)
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+```
+
+It did not make a difference. I believe this may be something wrong with xorg or the driver. I am going to try and remove the ATI driver and see if it makes a difference
+
+One again thanks for your input
+
+---
+
+### Post by Superslacker on 2011-04-10
+Removing the ATI proprietary driver worked just fine. I am not sure if it was something I did or the update did. 
+
+Before the update i did enable desktop cube effect. 
+
+I have 6 xorg.log file in /var/log
+
+1. xorg0.log
+2. xorg0.log.old
+3. xorg1.log
+4. xorg.1.log.old
+5. xorg.failfase.log
+6. xorg.failsafe.log.old
+
+All of them contain quite a bit of info fron 37k to 106.23 k . I am not quite sure what to make of them, or if this may qualify a a bug or not
+
+All in all the system boots properly now
+
+ubuntu 10.10 desktop 64  bit
+
+SS
+
+---
+
+### Post by Dutch70 on 2011-04-10
+Due to this line...
+> 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded
+
+I believe it was the driver. 
+
+btw, apt-get upgrade will not change your version of Ubuntu, I think that is "dist-upgrade" or something like that.
+
+---
+
+### Post by Superslacker on 2011-04-10
+Thanks Dutch70
+
+I appreciate you taking the time to help
+
+
+SS
+
+---
+
