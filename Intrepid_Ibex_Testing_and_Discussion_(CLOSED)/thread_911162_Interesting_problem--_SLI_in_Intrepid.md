@@ -1,0 +1,495 @@
+---
+title: "Interesting problem-- SLI in Intrepid"
+date: 2008-09-05
+forum: Intrepid Ibex Testing and Discussion (CLOSED)
+---
+
+### Post by autocrosser on 2008-09-05
+Well--I kind'a have my problem with Usplash solved, I upgraded to a EVGA nForce 750i motherboard :).
+
+Now to the next issue---it's a SLI board & I want to run both of my 8600 GT OC cards....To make a story short, it is not working in Intrepid---yet.
+
+Normal boot--even a Usplash!! Then it drops into bulletproof X.....Went back to Hardy & enabled SLI in the xconf--works well there with any mode enabled.
+
+Anyone running SLI in Intrepid? If not, ideas anyone?
+
+I've tried moving my known working xconf from Hardy to Intrepid, using the "no-frills" xconf & a couple of other shots at it---no go....
+
+---
+
+### Post by plun on 2008-09-05
+Nope I am not running SLI but this is the official manual
+
+[ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html](ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html)
+
+
+From the beginning
+[ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/index.html](ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/index.html)
+
+
+And the big challenge is probably Xorg 7.4 and a final version..... impossible for anyone downstream to make final solutions.
+
+---
+
+### Post by autocrosser on 2008-09-05
+Thanks!!  I'm at work right now--will try this eve....
+
+---
+
+### Post by autocrosser on 2008-09-05
+Hey Plun---
+
+I had looked at the page(s) you refer to--do you know anyone with a working SLI xorg that I could look at?
+
+I don't seem to be able to start X even with the Option SLI line commented out--was working with my Gigabyte motherboard & one card--won't work with the EVGA nForce & two cards.....I just edited my xorg in Hardy for "Option SLI auto" & it worked at once--also, it booted with one card operational before I edited the conf....
+
+I guess I'll try removing one card & try to boot Intrepid--still at work, will do it about 4 hours from now.......
+
+---
+
+### Post by plun on 2008-09-05
+No I dont know but this thread maybe can give you more facts
+
+[http://www.nvnews.net/vbulletin/showthread.php?t=114854](http://www.nvnews.net/vbulletin/showthread.php?t=114854)
+
+You probably can find more within nVidias forum
+
+---
+
+### Post by autocrosser on 2008-09-06
+Thanks for the info--I've posted in the nVidia forum, sent a bug to nVidia bugs & sent a bug to Xorg.....we'll see what will happen.
+
+---
+
+### Post by jlacroix on 2008-09-06
+I have two 8600GT cards in SLI as well, but I haven't went as far as to enable it yet. If you get it working, can you please let me know what you did? Other than my not enabling SLI yet, I do have a working X server, although not optimized for SLI. I can give you my xorg.conf if you want, I had a problem getting out of bulletproof X as well.
+
+Also, do you play Doom 3 or Quake 4? If you do, does SLI in Linux give you a boost in those games?
+
+Also, off topic, but do you have a Windows install? If so, please PM me I have some questions about it, I have a problem I'm trying to figure out.
+
+---
+
+### Post by autocrosser on 2008-09-06
+Interesting---I'm trying to get two BFG 8600 GT OC cards to work....running one of the EVGA nForce 750i boards. I'd like to see your xorg.conf to see if it's anything mine is not...or you could try adding the Option  SLI  AFR or SFR(one or the other) as per Aaron from nVidia to see if your SLI is alive....take a look at the page plun referenced for more info.
+
+Sorry, but this unit is Linux only--no Windows on it--I have seen on nVidia's site reference to Doom & Quake---Looks like you need to change the the way the game is called to force SLI with them. Next time I'm crusing thru the forum I'll look.....
+
+The forum link is: [http://www.nvnews.net/vbulletin/forumdisplay.php?f=14](http://www.nvnews.net/vbulletin/forumdisplay.php?f=14)
+
+---
+
+### Post by jlacroix on 2008-09-06
+> **autocrosser said:**
+> Interesting---I'm trying to get two BFG 8600 GT OC cards to work....running one of the EVGA nForce 750i boards. I'd like to see your xorg.conf to see if it's anything mine is not...or you could try adding the Option  SLI  AFR or SFR(one or the other) as per Aaron from nVidia to see if your SLI is alive....take a look at the page plun referenced for more info.
+
+Sorry, but this unit is Linux only--no Windows on it--I have seen on nVidia's site reference to Doom & Quake---Looks like you need to change the the way the game is called to force SLI with them. Next time I'm crusing thru the forum I'll look.....
+
+The forum link is: [http://www.nvnews.net/vbulletin/forumdisplay.php?f=14](http://www.nvnews.net/vbulletin/forumdisplay.php?f=14)
+
+I have Doom 3 and Quake 4 running natively on Ubuntu.
+
+Anyway, here is my xorg.conf. It's heavily customized combining several different sources into one and it works well for me.
+
+```
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildd@yellow)  Thu Aug 28 22:49:19 UTC 2008
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+#Section "Files"
+#    RgbPath         "/usr/X11R6/lib/X11/rgb"
+#EndSection
+
+Section "Module"
+    Load           "dbe"
+    Load           "extmod"
+    Load           "type1"
+    Load           "freetype"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+    # HorizSync source: edid, VertRefresh source: edid
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Envision LM-700"
+    HorizSync       30.0 - 80.0
+    VertRefresh     55.0 - 75.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Videocard0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 8600 GT"
+    BusID          "PCI:3:0:0"
+    Option         "NoLogo" "True"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Videocard0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "TwinViewXineramaInfoOrder" "CRT-0"
+    Option         "metamodes" "1280x1024_60 +0+0; nvidia-auto-select +0+0"
+    Option "PixmapCacheSize" "2000000"
+    Option "AllowSHMPixmaps" "0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+```
+
+As far as putting SLI in xorg.conf, can I see how you did that? If there are two SLI options, which one should I use?
+
+---
+
+### Post by autocrosser on 2008-09-06
+I'll post my SLI from Hardy (working)--Currently I'm in Hardy until I can run SLI in Intrepid or have to disable one of the cards....SLI seems to work better with SFR (split-frame render) than AFR (alternating-frame render)--I was getting flicker in some things with AFR.
+
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildmeister@builder3)  Mon Feb 26 23:39:38 PST 2007
+
+Section "Screen"
+    Identifier    "Screen0"
+    Device        "Videocard0"
+    Monitor        "Monitor0"
+    Option        "metamodes"    "1920x1200_60; 1680x1050_60; 1600x1200_60; 1440x900_60; 1280x1024_75; 1024x768_75; 1024x768_60"
+    SubSection "Display"
+        Depth    24
+        Modes        "1920x1200_60"    "1680x1050_60"    "1600x1200_60"    "1440x900_60"    "1280x1024_75"    "1280x1024_60"    "1024x768_75"    "1024x768_60"
+    EndSubSection
+    Defaultdepth    24
+EndSection
+
+Section "Device"
+    Identifier    "Videocard0"
+    Driver        "nvidia"
+    Vendorname    "NVIDIA Corporation"
+    Boardname    "GeForce 8600 GT"
+    Option        "CursorShadow"    "true"
+    Option        "Backingstore"    "true"
+    Option        "RandRRotation"    "true"
+    Option        "Coolbits"    "1"
+    Option        "TripleBuffer"    "true"
+    Option        "IncludeImplicitMetaModes"    "true"
+    Option        "FlatPanelProperties"    "Scaling = aspect-scaled"
+    #Enable 32-bit ARGB GLX Visuals
+    Option        "AddARGBGLXVisuals"    "true"
+    Option        "NoLogo"    "True"
+    Option          "SLI"           "SFR"
+    #Option         "HWcursor" "false"
+    #Option         "SWcursor" "true"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Eclipse2 Keyboard"
+    Driver        "kbd"
+    Option        "CoreKeyboard"
+    Option        "XkbRules"    "xorg"
+    Option        "XkbModel"    "macintosh"
+    Option        "XkbLayout"    "us"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Logitech USB Mouse"
+    Driver        "mouse"
+    Option        "CorePointer"
+    Option        "Name"    "Logitech USB Mouse"
+EndSection
+
+Section "ServerLayout"
+    Identifier    "Single-Monitor"
+  screen "Screen0"
+    Inputdevice    "Eclipse2 Keyboard"
+    Inputdevice    "Logitech USB Mouse"
+EndSection
+
+Section "Module"
+    Load        "dbe"
+    Load        "extmod"
+    Load        "int10"
+    Load        "vbe"
+    Load        "freetype"
+    Load        "glx"
+    Load        "bitmap"
+    Load        "v4l"
+EndSection
+
+Section "Monitor"
+    # HorizSync source: edid, VertRefresh source: edid
+    Displaysize    593.28    370.8
+    Identifier    "Monitor0"
+    Vendorname    "HannsG"
+    Modelname    "HG-281DPB"
+    Horizsync    24.0    -    80.0
+    Vertrefresh    56.0    -    75.0
+    Option        "DPMS"    "true"
+EndSection
+
+Section "Extensions"
+    Option        "Composite"    "Enable"
+EndSection
+
+---
+
+### Post by jlacroix on 2008-09-06
+> **autocrosser said:**
+> I'll post my SLI from Hardy (working)--Currently I'm in Hardy until I can run SLI in Intrepid or have to disable one of the cards....SLI seems to work better with SFR (split-frame render) than AFR (alternating-frame render)--I was getting flicker in some things with AFR.
+
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildmeister@builder3)  Mon Feb 26 23:39:38 PST 2007
+
+Section "Screen"
+    Identifier    "Screen0"
+    Device        "Videocard0"
+    Monitor        "Monitor0"
+    Option        "metamodes"    "1920x1200_60; 1680x1050_60; 1600x1200_60; 1440x900_60; 1280x1024_75; 1024x768_75; 1024x768_60"
+    SubSection "Display"
+        Depth    24
+        Modes        "1920x1200_60"    "1680x1050_60"    "1600x1200_60"    "1440x900_60"    "1280x1024_75"    "1280x1024_60"    "1024x768_75"    "1024x768_60"
+    EndSubSection
+    Defaultdepth    24
+EndSection
+
+Section "Device"
+    Identifier    "Videocard0"
+    Driver        "nvidia"
+    Vendorname    "NVIDIA Corporation"
+    Boardname    "GeForce 8600 GT"
+    Option        "CursorShadow"    "true"
+    Option        "Backingstore"    "true"
+    Option        "RandRRotation"    "true"
+    Option        "Coolbits"    "1"
+    Option        "TripleBuffer"    "true"
+    Option        "IncludeImplicitMetaModes"    "true"
+    Option        "FlatPanelProperties"    "Scaling = aspect-scaled"
+    #Enable 32-bit ARGB GLX Visuals
+    Option        "AddARGBGLXVisuals"    "true"
+    Option        "NoLogo"    "True"
+    Option          "SLI"           "SFR"
+    #Option         "HWcursor" "false"
+    #Option         "SWcursor" "true"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Eclipse2 Keyboard"
+    Driver        "kbd"
+    Option        "CoreKeyboard"
+    Option        "XkbRules"    "xorg"
+    Option        "XkbModel"    "macintosh"
+    Option        "XkbLayout"    "us"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Logitech USB Mouse"
+    Driver        "mouse"
+    Option        "CorePointer"
+    Option        "Name"    "Logitech USB Mouse"
+EndSection
+
+Section "ServerLayout"
+    Identifier    "Single-Monitor"
+  screen "Screen0"
+    Inputdevice    "Eclipse2 Keyboard"
+    Inputdevice    "Logitech USB Mouse"
+EndSection
+
+Section "Module"
+    Load        "dbe"
+    Load        "extmod"
+    Load        "int10"
+    Load        "vbe"
+    Load        "freetype"
+    Load        "glx"
+    Load        "bitmap"
+    Load        "v4l"
+EndSection
+
+Section "Monitor"
+    # HorizSync source: edid, VertRefresh source: edid
+    Displaysize    593.28    370.8
+    Identifier    "Monitor0"
+    Vendorname    "HannsG"
+    Modelname    "HG-281DPB"
+    Horizsync    24.0    -    80.0
+    Vertrefresh    56.0    -    75.0
+    Option        "DPMS"    "true"
+EndSection
+
+Section "Extensions"
+    Option        "Composite"    "Enable"
+EndSection
+
+Did you try my xorg.conf yet? I'm curious if it fixes your issues. I'll try yours soon.
+
+---
+
+### Post by jlacroix on 2008-09-06
+Actually I just tried to enable SLI as you did, and OHMYGOD that was some crazy distortion! I could barely see anything!
+
+I tried both options and they make it like there is some sort of hurricane going accross my screen!
+
+---
+
+### Post by autocrosser on 2008-09-06
+I'll try yours soon--at least you got SLI :(  I just get a Xserver non-start....Sounds like a bugreport is starting to look like it--I'm waiting on info from Xorg-dev-list & Aaron from nVidia---If you could, look at:  [http://www.nvnews.net/vbulletin/showthread.php?t=46678](http://www.nvnews.net/vbulletin/showthread.php?t=46678)  & then try to get a bug trace--it will help any reports I make....
+
+
+Also--try "auto" & see what it works like...... Did you enable triple-buffer?
+
+Do you have Hardy installed? If so, also try it there.....
+
+---
+
+### Post by jlacroix on 2008-09-06
+> **autocrosser said:**
+> I'll try yours soon--at least you got SLI :(  I just get a Xserver non-start....Sounds like a bugreport is starting to look like it--I'm waiting on info from Xorg-dev-list & Aaron from nVidia---If you could, look at:  [http://www.nvnews.net/vbulletin/showthread.php?t=46678](http://www.nvnews.net/vbulletin/showthread.php?t=46678)  & then try to get a bug trace--it will help any reports I make....
+
+
+Also--try "auto" & see what it works like...... Did you enable triple-buffer?
+
+Do you have Hardy installed? If so, also try it there.....
+
+No Hardy installed. I haven't tried Auto yet. What is triple-buffer?
+
+---
+
+### Post by jlacroix on 2008-09-06
+Just tried the SLI Auto thing, same problem.
+
+---
+
+### Post by autocrosser on 2008-09-06
+Triple-buffer adds one more buffer in the pipeline--made things smooth up for me---goes in the device section.
+
+---
+
+### Post by jlacroix on 2008-09-06
+> **autocrosser said:**
+> Triple-buffer adds one more buffer in the pipeline--made things smooth up for me---goes in the device section.
+
+Does that solve the distortion? 
+
+Also, have you noticed any increases in performance at all? Back in Hardy I set the SLI option and not a single game had a single FPS increase, and glxgears was exactly the same as before.
+
+---
+
+### Post by autocrosser on 2008-09-06
+Well-I don't have any in Hardy with it enabled---I don't know about Intrepid due to my problem ;)
+
+According to nVidia--glxgears won't give a true picture (and glxgears is just a toy anyway)--as far as the games go, you need to make non-aware games use SLI--see nVidia forums for the answers about those questions.....
+
+---
+
+### Post by jlacroix on 2008-09-06
+> **autocrosser said:**
+> Well-I don't have any in Hardy with it enabled---I don't know about Intrepid due to my problem ;)
+
+According to nVidia--glxgears won't give a true picture (and glxgears is just a toy anyway)--as far as the games go, you need to make non-aware games use SLI--see nVidia forums for the answers about those questions.....
+
+In that case I'll probably not bother with it, I'm not aware of a single Linux game that utilizes SLI.
+
+---
+
+### Post by autocrosser on 2008-09-07
+Well-nothing yet...
+
+I've opened a Xorg bugreport & am going to Launchpad to open a report there after I post this....
+
+Xorg report: [https://bugs.freedesktop.org/show_bug.cgi?id=17472](https://bugs.freedesktop.org/show_bug.cgi?id=17472)
+
+nVidia forums report: [http://www.nvnews.net/vbulletin/showthread.php?t=119006](http://www.nvnews.net/vbulletin/showthread.php?t=119006)
+
+[https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/267525](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/267525)
+
+Would be helpful if you goto the Launchpad bugreport & confirm it.....Also, if you could report your results & post some info that would be great.....
+
+---
+
+### Post by autocrosser on 2008-09-07
+Take a look at: [ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html](ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html)
+
+Shows how to enable SLI in Doom 3--I would guess that Quake 4 is very similar.
+
+
+> **jlacroix said:**
+> In that case I'll probably not bother with it, I'm not aware of a single Linux game that utilizes SLI.
+
+---
+
+### Post by jlacroix on 2008-09-07
+> **autocrosser said:**
+> Take a look at: [ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html](ftp://download.nvidia.com/XFree86/Linux-x86/177.70/README/chapter-25.html)
+
+Shows how to enable SLI in Doom 3--I would guess that Quake 4 is very similar.
+
+Thanks, I'll take a look at that later on.
+
+---
+
+### Post by autocrosser on 2008-09-07
+Talked to Alberto Milone---
+
+He pinpointed the answer & whipped up a xorg.conf that works super--You might try it--check that your buss id is the same.....
+
+---
+
+### Post by jlacroix on 2008-09-07
+> **autocrosser said:**
+> Talked to Alberto Milone---
+
+He pinpointed the answer & whipped up a xorg.conf that works super--You might try it--check that your buss id is the same.....
+
+I had a look at that xorg file and it seems it would do more harm than good, as it seems to be customized for a specific monitor and keyboard. Other than that, there isn't any difference as far as SLI is concerned.
+
+---
+
+### Post by autocrosser on 2008-09-07
+Sorry--I just realized that your xorg.conf was already set in the way that Alberto made the change in mine (buss id)--you might try SFR instead of AFR--I got much better framerates & very stable output with that enabled.
+
+---
+
+### Post by jlacroix on 2008-09-07
+> **autocrosser said:**
+> Sorry--I just realized that your xorg.conf was already set in the way that Alberto made the change in mine (buss id)--you might try SFR instead of AFR--I got much better framerates & very stable output with that enabled.
+
+I've tried SFR, AFR, and Auto, and each give me screen distortion. :(
+
+---
+
+### Post by autocrosser on 2008-09-08
+Bummer---you could goto nVidia forums & take up the bug I reported..Aaron will most likely be looking at it this week.....
+
+---
+
