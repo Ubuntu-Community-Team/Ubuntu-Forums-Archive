@@ -1,0 +1,370 @@
+---
+title: "Ubuntu Weekly News: Issue #56"
+date: 2007-09-09
+forum: Weekly Newsletter
+---
+
+### Post by beuno on 2007-09-09
+Welcome to the Ubuntu Weekly Newsletter, Issue #56 for the week September 2nd - September 8th, 2007. In this issue we cover new Ubuntu and MOTU members, the Tribe 6 milestone, an Ubuntu get-together, the one year anniversary of French UWN translations, and, as always, much much more!
+
+[LIST]
+[*]Deutsch - [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/De](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/De)
+[*]Español - [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Es](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Es)
+[*]Français - Start one! [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Fr](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Fr)
+[*]Italiano - [http://wiki.ubuntu-it.org/NewsletterItaliana](http://wiki.ubuntu-it.org/NewsletterItaliana)
+[*]Português - [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Pt](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue56/Pt)
+[/LIST]
+
+**[size="5"]In This Issue[/size]**
+[LIST]
+[*]Welcome New Ubuntu Members
+[*]Tribe 6 Milestone to Focus on Fixing Bugs instead
+[*]New MOTU Members
+[*]Fredericton, NB, Canada - A Ubuntu Get-Together
+[*]In The Press and In the Blogosphere
+[*]Meetings and Events
+[*]Joyeux Anniversaire LHU (Happy Birthday LHU)
+[*]Updates and security for 6.06, 6.10, and 7.04
+[*]Translation stats
+[*]Bug Stats
+[/LIST]
+
+**[size="5"]General Community News[/size]**
+
+***[size="3"]Welcome New Ubuntu Members![/size]***
+
+[LIST]
+[*]Hilario Montoliu - Hilario is an active member of the MozillaTeam since almost its creation where he triages the mozilla related reports. Apart from triaging, Hilario has been working in the "Firefox Apport Hook", and helping in the "Firefox Add-On Support" blueprint. Hilario is also a member of the Ubuntu QA Team. [https://wiki.ubuntu.com/HMontoliu](https://wiki.ubuntu.com/HMontoliu) and [https://launchpad.net/~hmontoliu](https://launchpad.net/~hmontoliu)
+[/LIST]
+
+[LIST]
+[*]Myriam Schweingruber - Myriam is an active member of Ubuntu-Women and the Swiss Team. She continues to build, admin, mentor and moderate Swiss Team. Myriam is part of the French translation team and has helped organize several release parties along with giving an interview to a local IT magazine.  [https://wiki.ubuntu.com/MyriamSchweingruber](https://wiki.ubuntu.com/MyriamSchweingruber) and [https://launchpad.net/~myriam](https://launchpad.net/~myriam)
+[/LIST]
+
+[LIST]
+[*]Hassan El Jacifi - Hassan El Jacifi founded the Switzerland and Moroccan teams, is a member of Bugsquad and Laptop Testing Team. [https://wiki.ubuntu.com/HassanElJacifi](https://wiki.ubuntu.com/HassanElJacifi) and [http://launchpad.net/people/waver](http://launchpad.net/people/waver)
+[/LIST]
+
+[LIST]
+[*]Dan Shufelt - Dan Shufelt started the Oregon US and Pacific Northwest US teams. He has contributed material to DIY Marketing, organized the PNW Team's involvement in LinuxFest Northwest 2007, and given a speech at Western Washington University. [https://wiki.ubuntu.com/DanShufelt](https://wiki.ubuntu.com/DanShufelt) and [https://launchpad.net/~dshufelt](https://launchpad.net/~dshufelt)
+[/LIST]
+
+[LIST]
+[*]David Overcash - David Overcash is the leader of the Colorado LoCo. He was interviewed for the "Castellini on Computers" radio show and attended the Technology in Education conference to present Ubuntu to teachers, administrators, and school technology specialists. David is working on a program to help people find the best support solutions through the Colorado website. [https://wiki.ubuntu.com/DavidOvercash](https://wiki.ubuntu.com/DavidOvercash) and [https://launchpad.net/people/funnylookinhat](https://launchpad.net/people/funnylookinhat)
+[/LIST]
+
+[LIST]
+[*]Jim Hutchinson - Jim Hutchinson was instrumental in getting a Linux thin-client lab set up in a high school that will be using Edubuntu starting this fall. He was the organizer of the Ubuntu presence at the Technology in Education Colorado 2007 conference and held a three hour presentation on teaching with open source. Jim has been working with the open source community to help in the creation of these lesson plans and the new Education Enthusiasts team is now the point of contact for these and other efforts. [https://wiki.ubuntu.com/JimHutchinson](https://wiki.ubuntu.com/JimHutchinson) and [https://launchpad.net/~jimhutchinson](https://launchpad.net/~jimhutchinson)
+[/LIST]
+
+[LIST]
+[*]Luis de Bethencourt - Luis is most active in Ubuntu Studio, Derivate Team and Packaging. He also contributes to freemix, gnome, and the launchpad beta testers team. He is also working toward MOTU membership. [https://wiki.ubuntu.com/LuisdeBethencourt](https://wiki.ubuntu.com/LuisdeBethencourt) and [https://launchpad.net/~luisbg](https://launchpad.net/~luisbg)
+[/LIST]
+
+[LIST]
+[*]Mariano Mara - Mariano is most active in the ubuntu-ar LoCo, Translations in Spanish and Beginners Support. He has been working with the Argentinian team from the first day. He moderates all posts necessary to the forums and mail lists. [https://wiki.ubuntu.com/Marplatense](https://wiki.ubuntu.com/Marplatense) and [https://launchpad.net/~marplatense](https://launchpad.net/~marplatense)
+[/LIST]
+
+[LIST]
+[*]Isabelle Duchatelle - Isabelle is most active in the Forums, Ubuntu Women, Translations to French and UWN. In addition to being moderator on the Ubuntu Forums, bapoumba also is a member of the French Translation Team for the UWN, and is a contributor to the Ubuntu-Women Team. Known by all to be an extremely hard worker for Ubuntu. [https://wiki.ubuntu.com/bapoumba](https://wiki.ubuntu.com/bapoumba) and [https://launchpad.net/~bapoumba](https://launchpad.net/~bapoumba)
+[/LIST]
+
+[LIST]
+[*]Jonathan Marsaud - Jonathan is most active in ubuntu-fr Loco, IRC Moderator and promoting Ubuntu. He also is one of the main organizers of Ubuntu events in Paris: "Ubuntu Dapper Party", "Ubuntu Edgy Party", "Ubuntu Feistyvités, "Ubuntu Feistyvités second edition". He is also involved in IRC French Ubuntu channels and of course in #ubuntu-fr-classroom, and helping beginners to package in Ubuntu with the presence of french MOTU/core-dev. [https://wiki.ubuntu.com/JonathanMarsaud](https://wiki.ubuntu.com/JonathanMarsaud) and [https://launchpad.net/~zic](https://launchpad.net/~zic)
+[/LIST]
+
+[LIST]
+[*]Cyril Lavier - Cyril is most active in ubuntu-fr LoCo team, Packaging and Translations. He's also involved in #ubuntu-fr-classroom, along with some MOTU/Coredev. Work on the ubuntu-fr-party team conferences and install parties take up some of his time. He considers packaging as a kind of art, and would like to help people to learn it.  [https://wiki.ubuntu.com/Davromaniak](https://wiki.ubuntu.com/Davromaniak) [https://launchpad.net/~davromaniak](https://launchpad.net/~davromaniak)
+[/LIST]
+
+[LIST]
+[*]Laurent Bigonville - Laurent is active with Bugsquad, QA Team and Packaging. He started using Debian in 2002 and Ubuntu in 2004 with Warty. [https://wiki.ubuntu.com/LaurentBigonville](https://wiki.ubuntu.com/LaurentBigonville) and [https://launchpad.net/~bigon](https://launchpad.net/~bigon)
+[/LIST]
+
+[LIST]
+[*]Philipp Kern - Philipp is most active as a Debian Developer but his pet package in Debian and Ubuntu is Gobby, a collaborative editor. He is also also involved in the Utunbu backmerging project. His would like to get a MOTU in the near future, contribute as a REVU reviewer and fix selected bugs upstream and for Ubuntu (likely GNOME enhancements). [https://wiki.ubuntu.com/PhilippKern](https://wiki.ubuntu.com/PhilippKern) and [https://launchpad.net/~pkern](https://launchpad.net/~pkern)
+[/LIST]
+
+[LIST]
+[*]Neal Bussett - Neal is mostly active in the California Loco and IRC. He took over and helped reactivate the California loco a few months ago and has been instrumental in getting the team organized and active. Sometime in the near future he hopes to become a developer, although he's not sure what he would like to help with in that area. [https://wiki.ubuntu.com/NealBussett](https://wiki.ubuntu.com/NealBussett) and [https://launchpad.net/people/nealbussett](https://launchpad.net/people/nealbussett)
+[/LIST]
+
+***[size="3"]Tribe 6 Milestone to Focus on Fixing Bugs instead[/size]***
+
+Following discussion with the QA, GNOME, Linux, installer and other teams we have decided not to make a formal release for Tribe 6, but rather to use it as a milestone for bugfixing.
+
+[LIST]
+[*]Please take a look at the bugs targeted for Tribe 6: [https://launchpad.net/ubuntu/+milestone/tribe-6](https://launchpad.net/ubuntu/+milestone/tribe-6)
+[/LIST]
+
+If you are assigned bugs please make them your priority for the week, if you want to help please take a look at one of the unassigned bugs.[https://lists.ubuntu.com/archives/ubuntu-devel-announce/2007-September/000337.html](https://lists.ubuntu.com/archives/ubuntu-devel-announce/2007-September/000337.html)
+
+***[size="3"]New MOTU Members[/size]***
+
+The MOTU team is happy to announce that Mathias Gug joined the MOTU team. He did amazing work as a member of the Server team and integrating apparmor in Ubuntu. ROCK ON, Mathias! [https://launchpad.net/~mathiaz](https://launchpad.net/~mathiaz)
+
+Also we'd like to congratulate Chris Halse Rogers, who became member of the team, after tremendous work in the MOTU community. [http://launchpad.net/~raof](http://launchpad.net/~raof)
+
+**[size="5"]LoCo News[/size]**
+
+***[size="3"]Fredericton, NB, Canada - A Ubuntu Get-Together[/size]***
+
+The folks in Fredericton, New Brunswick, Canada were happy to report that a get together organized by Richard Seguin and Cody A.W. Somerville on August 23rd was a success. A small group of Ubuntu members gathered at Reid's, a popular coffee shop, to discuss how they could promote a Ubuntu presence in the greater Fredericton area. You can expect to hear more in the upcoming months as they work to start a satellite Loco Team in their area.
+
+**[size="5"]In The Press[/size]**
+
+[LIST]
+[*]German Discounter selling low-price PCs for Office use with Ubuntu preinstalled - Ubuntu seems to attract more and more attention. The German Discounter Plus now offers Office-PCs with Ubuntu 7.04 preinstalled in some of their stores. As you may learn from the specs the PC is intended for office use only. The graphics card for example isn't that powerful but should be sufficient enough for normal office-use. The offer has been seen in the local stores of Kevelaer, Bonn, Cologne, Aachen, Neuss, Erftstadt,... [http://ubuntuusers.de/ikhaya/685/](http://ubuntuusers.de/ikhaya/685/)
+[/LIST]
+
+[LIST]
+[*]Mindbridge switches to Linux, saves "bunches of money" - Mindbridge didn't start out as an open source company -- far from it. "We had a predominantly Microsoft-oriented shop," says David Christian, Mindbridge CTO. But the company, which at the time offered an "intranet in a box" application, began hosting the software for its clients. "That required us to get a good handle on Linux, because Linux was the only inexpensive, cost-efficient way of handling that in a scaled environment," Christian says. "And I didn't want to add Microsoft to our customers' overhead." Today, Mindbridge has re-purposed itself as an open-source-friendly company, and revamped its infrastructure to run completely on Linux and other open source software. "Having deployed [Linux servers] to our customers, we turned around and said, we can do the same thing internally and save bunches of money. We began a systematic but slow flipping of servers from the Microsoft world over to predominantly Linux -- although there are a few BSD boxes around as well," Christian says. "It's to the point that today I only have two production Windows servers left, out of 15 or so." [http://www.linux.com/feature/119020](http://www.linux.com/feature/119020)
+[/LIST]
+
+[LIST]
+[*]Moving from Windows to Linux? Here's how to take the good stuff with you - So you're switching from Windows to Linux? Great. Like other users and organizations who've taken the plunge, it's likely you're making the move to take advantage of Linux's stability and reliance on open standards. Now all you have to do is prepare carefully for your move. In this case, careful prep means not just installing Linux on your system -- either on your existing computer or a whole new machine -- but also transferring your documents, bookmarks, preferences and system settings, and in some cases finding equivalent open-source applications for the Windows applications you were using before. Three Roads to Data Migration: 1.Let Ubuntu Linux do it for you. Ubuntu is one of the most popular Linux distributions out there and, as of right now, the only major distribution that has migration tools built in as part of its setup process. 2.Use a third-party application. 3.Do it yourself. Whatever approach you take, the very first thing you should do before attempting a migration is make a full backup of any data that you can't replace. [http://tinyurl.com/2utbnf](http://tinyurl.com/2utbnf)
+[/LIST]
+
+[LIST]
+[*]Microwulf (Tiny Supercomputer) runs Ubuntu - In January 2007, two of us (professor Joel Adams and student Tim Brom) decided to build a personal, portable Beowulf cluster. Like a personal computer, the cost had to be low -- our budget was $2500 -- and its size had to be small enough to sit on a person's desk. For various reasons, we have been a Gentoo shop for a while. So it would seem fairly obvious that we would use Gentoo. But over time we had found Gentoo to be something of an administrative hassle. Since we wanted to keep Microwulf relatively simple (as simple as possible but not overly simple). and we had experience with Ubuntu, we decided to give that a try first. We installed Ubuntu Desktop on the head node. We used Ubuntu 6.10 (Edgy) as it was the latest stable release of Ubuntu at the time. It had a 2.6.17 kernel. It was a very easy installation except for one thing - the driver for the on-board NIC was not included in the kernel until 2.6.18. So for the first two months of Microwulf's young life, we used an alpha version of Ubuntu 7.04 (Fiesty) with had a 2.6.20 kernel and the drivers that we needed. 7.04 finally went stable in April, but we never had any trouble with the alpha version. [http://www.clustermonkey.net/content/view/211/1/1/0/](http://www.clustermonkey.net/content/view/211/1/1/0/) (see [https://lists.ubuntu.com/archives/ubuntu-marketing-submissions/2007-September/000079.html](https://lists.ubuntu.com/archives/ubuntu-marketing-submissions/2007-September/000079.html))
+[/LIST]
+
+[LIST]
+[*]Mark Shuttleworth Talks On ATI's New Linux Drivers - What does Mark think about AMD's announcements this week with the 8.41 display driver and the just-announced program where AMD will be handing out specifications under NDA and helping out the open-source community? "I'm really pleased to see this announcement from ATI. Intel is to be congratulated on setting the pace, and ATI for showing that this approach can make sense in the consumer desktop space." There were initially some thoughts that the ATI fglrx 8.41 driver would end up making its way into the Ubuntu 7.10 default package set, however, that will not be the case. Ubuntu 7.10 "Gutsy Gibbon" is already in a feature freeze for its October release and this schedule does not allow the fglrx 8.41 driver to be included. The fglrx 8.41 also lacks FireGL workstation support and AIGLX support will not arrive until October in the fglrx 8.42 driver. However, Canonical will be looking at ways to make this fglrx driver available as an update once the driver has been released and tested. Alternatively, users of Ubuntu 7.04 Feisty Fawn and Ubuntu 7.10 Gutsy Gibbon can just build the Ubuntu packages from ATI's official Linux installer. As would be expected, the new ATI driver will be included in the Ubuntu 8.04 LTS release known as "Hardy Heron". Mark also stated: "We do expect our next release, in April 2008, to have fully integrated ATI's new work. That will be an LTS release, with Long Term Support, so ATI's timing is excellent for enterprise customers considering Ubuntu desktop deployments in call centers or engineering labs." [http://www.phoronix.com/scan.php?page=article&item=827&num=1](http://www.phoronix.com/scan.php?page=article&item=827&num=1)
+[/LIST]
+
+[LIST]
+[*]On a Dutch news site, there is an article with complaints about Vista at an organization called Consumenten Bond which is similar to Consumer Reports. Most complaints are about hardware and software that's not functioning under Vista. "Consumers should only buy Vista if they know for sure their hardware and software will still work", is the advice of the "Consumenten Bond". The organization also advices buyers to look at alternatives like Apple's Mac OS x or Ubuntu Linux. [http://www.nu.nl/news/1226269/50/Klachtenregen_over_Windows_Vista.html](http://www.nu.nl/news/1226269/50/Klachtenregen_over_Windows_Vista.html)
+[/LIST]
+
+**[size="5"]In The Blogosphere[/size]**
+
+[LIST]
+[*]Edubuntu to the rescue again: by Christopher Dawson - I finally had a chance to meet with our new librarian today. After being without an actual librarian for so long, it was incredibly cool to talk with someone who knew something more about academic research than how to Google. She even has quite a vision for how the library should run, the types of periodicals that will get kids reading something more than My Space postings, and how to make use of all the new technology we’ve dumped into our school. Better yet, she’s already looking into partnerships with the local library and our regional library system to save money on library management software and leverage the collections and databases to which they have access. When I asked her how she felt about spending big chunks of her budget on commercial library software like Follett’s Destiny, vs. potentially more labor-intensive but free open-source solutions, she said, “I’m not afraid of learning new things. Why don’t you set up a server with one of the open source systems and I’ll give it a shot.” While I could have installed any number of Linux distributions, it’s hard to go wrong with Ubuntu, so I’m installing Edubuntu as I write this. Edubuntu now has an add-on CD, as well, with a variety of software that doesn’t fit on the main distribution image. [http://education.zdnet.com/?p=1212](http://education.zdnet.com/?p=1212)
+[/LIST]
+
+**[size="5"]Meetings and Events[/size]**
+
+***[size="3"]Monday, September 10, 2007[/size]***
+
+==== Screencast Team Meeting ====
+[LIST]
+[*]Start: 19:00 UTC
+[*]End: 20:00 UTC
+[*]Location: IRC channel #ubuntu-meeting
+[*]Agenda: [https://wiki.ubuntu.com/ScreencastTeam/Meeting20070910](https://wiki.ubuntu.com/ScreencastTeam/Meeting20070910)
+[/LIST]
+
+***[size="3"]Tuesday, September 11, 2007[/size]***
+
+==== Server Team Meeting ====
+[LIST]
+[*]Start: 15:00 UTC
+[*]End: 16:00 UTC
+[*]Location: IRC channel #ubuntu-meeting
+[*]Agenda: [https://wiki.ubuntu.com/ServerTeam/Meeting](https://wiki.ubuntu.com/ServerTeam/Meeting)
+[/LIST]
+
+==== Technical Board Meeting ====
+[LIST]
+[*]Start: 19:00 UTC
+[*]End: 21:00 UTC
+[*]Location: IRC channel #ubuntu-meeting
+[*]Agenda: [https://wiki.ubuntu.com/TechnicalBoardAgenda](https://wiki.ubuntu.com/TechnicalBoardAgenda)
+[/LIST]
+
+***[size="3"]Wednesday, September 12, 2007[/size]***
+
+==== Edubuntu Meeting ====
+[LIST]
+[*]Start: 20:00 UTC
+[*]End: 22:00 UTC
+[*]Location: IRC channel #ubuntu-meeting
+[*]Agenda: [https://wiki.edubuntu.org/EdubuntuMeetingAgenda](https://wiki.edubuntu.org/EdubuntuMeetingAgenda)
+[/LIST]
+
+***[size="3"]Thursday, September 13, 2007[/size]***
+
+==== Canonical Desktop Team Meeting ====
+[LIST]
+[*]Start: 12:00 UTC
+[*]End: 13:00 UTC
+[*]Location: IRC channel #ubuntu-meeting
+[*]Agenda: No agenda set as of this publication
+[/LIST]
+
+==== Nebraska Loco Meeting ====
+[LIST]
+[*]Start: 21:00 US CST
+[*]End: 22:00 US CST
+[*]Location: IRC channel #ubuntu-nebraska
+[*]Agenda: [https://wiki.ubuntu.com/NebraskaTeam/Meetings](https://wiki.ubuntu.com/NebraskaTeam/Meetings)
+[/LIST]
+
+**[size="5"]Community Spotlight[/size]**
+
+***[size="3"]Joyeux Anniversaire LHU (Happy Birthday LHU)[/size]***
+
+This issue will celebrate one year of translations by the French UWN Translation Team. All issues subsequent to UWN#14 have
+been translated by the Team first initialized by Michel D'Hooge ([https://launchpad.net/~michel-dhooge](https://launchpad.net/~michel-dhooge)). In French, UWN becomes LHU, Lettre Hebdomadaire Ubuntu. For more information on the French UWN Translation team, see [https://launchpad.net/~lhu](https://launchpad.net/~lhu).
+
+Let's look at some figures. One year  translating UWN is:
+[LIST]
+[*]41 issues translated
+[*]42 nights spent proof reading our translations
+[*]23335 lines of text
+[*]134578 words translated
+[*]1038058 characters
+[*]a team of about 20 persons
+[*]a sobby server
+[/LIST]
+
+The translation work consists in copying the UWN issue on our sobby server. Each translator is free to translate any part of the UWN, depending on personal schedules and  likings. When the translation is complete, a mail is sent on the french translator mailing-list to organize proof reading on sobby, usually on Wednesday nights, French
+timezone. This is the last step before the publication on the  French users mailing-list ([https://lists.ubuntu.com/mailman/listinfo/ubuntu-fr](https://lists.ubuntu.com/mailman/listinfo/ubuntu-fr)) and on the French LoCo Team web server ([http://www.ubuntu-fr.org/lettre/](http://www.ubuntu-fr.org/lettre/)). We make an extensive use of gobby which is our main tool. We also use txt2tags to get both a text version (for sending to the mailing list) and an HTML version (for the website).
+
+For more info on how to join and get started (in French), see [http://doc.ubuntu-fr.org/lettre_hebdo](http://doc.ubuntu-fr.org/lettre_hebdo).
+
+**[size="5"]Updates and security for 6.06, 6.10, and 7.04[/size]**
+
+***[size="3"]Security Updates[/size]***
+
+[LIST]
+[*]USN-511-1 Kerberos vulnerability: [https://lists.ubuntu.com/archives/ubuntu-security-announce/2007-September/000587.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2007-September/000587.html)
+[*]USN-511-2 Kerberos vulnerability: [https://lists.ubuntu.com/archives/ubuntu-security-announce/2007-September/000588.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2007-September/000588.html)
+[/LIST]
+
+***[size="3"]Ubuntu 6.06 LTS Updates[/size]***
+
+[LIST]
+[*]Accepted pkgstriptranslations 27.2 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012500.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012500.html)
+[*]Accepted krb5 1.4.3-5ubuntu0.5 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012501.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012501.html)
+[*]Accepted librpcsecgss 0.7-0ubuntu1.1 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012502.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012502.html)
+[*]Accepted sylpheed-claws-gtk2 2.1.1-1ubuntu1.1 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012503.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012503.html)
+[*]Accepted sylpheed-claws 1.0.5-2ubuntu0.1 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012504.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012504.html)
+[*]Accepted sylpheed 2.2.4-1ubuntu1.1 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012505.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012505.html)
+[*]Accepted krb5 1.4.3-5ubuntu0.6 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012506.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012506.html)
+[*]Accepted librpcsecgss 0.7-0ubuntu1.2 (source): [https://lists.ubuntu.com/archives/dapper-changes/2007-September/012507.html](https://lists.ubuntu.com/archives/dapper-changes/2007-September/012507.html)
+[/LIST]
+
+***[size="3"]Ubuntu 6.10 Updates[/size]***
+
+[LIST]
+[*]Accepted pkgbinarymangler 31.2 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008399.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008399.html)
+[*]Accepted krb5 1.4.3-9ubuntu1.4 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008400.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008400.html)
+[*]Accepted librpcsecgss 0.13-2ubuntu0.1 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008401.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008401.html)
+[*]Accepted mythtv 0.20.2-0ubuntu0.6.10 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008402.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008402.html)
+[*]Accepted mythtv 0.20.2-0ubuntu0.6.10.1 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008403.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008403.html)
+[*]Accepted sylpheed-claws-gtk2 2.5.0~rc3-1ubuntu0.1 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008404.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008404.html)
+[*]Accepted sylpheed-claws 1.0.5-4ubuntu0.1 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008405.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008405.html)
+[*]Accepted sylpheed 2.2.7-1ubuntu0.1 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008406.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008406.html)
+[*]Accepted krb5 1.4.3-9ubuntu1.5 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008407.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008407.html)
+[*]Accepted librpcsecgss 0.13-2ubuntu0.2 (source): [https://lists.ubuntu.com/archives/edgy-changes/2007-September/008408.html](https://lists.ubuntu.com/archives/edgy-changes/2007-September/008408.html)
+[/LIST]
+
+***[size="3"]Ubuntu 7.04 Updates[/size]***
+
+[LIST]
+[*]Accepted pkgbinarymangler 39.2 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008712.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008712.html)
+[*]Accepted postfix-policyd 1.80-2.1ubuntu0.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008713.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008713.html)
+[*]Accepted krb5 1.4.4-5ubuntu3.2 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008714.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008714.html)
+[*]Accepted librpcsecgss 0.14-2ubuntu1.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008715.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008715.html)
+[*]Accepted mythtv 0.20.2-0ubuntu0.7.04.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008716.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008716.html)
+[*]Accepted commit-tool 0.4-3ubuntu0.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008717.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008717.html)
+[*]Accepted mod-cband 0.9.7.4-2build1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008718.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008718.html)
+[*]Accepted drupal 5.1-0ubuntu2.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008719.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008719.html)
+[*]Accepted sylpheed-claws-gtk2 2.6.0-1.1ubuntu1.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008720.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008720.html)
+[*]Accepted sylpheed-claws 1.0.5-5.1ubuntu0.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008721.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008721.html)
+[*]Accepted sylpheed 2.3.1-1~ubuntu1.1 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008722.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008722.html)
+[*]Accepted krb5 1.4.4-5ubuntu3.3 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008723.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008723.html)
+[*]Accepted librpcsecgss 0.14-2ubuntu1.2 (source): [https://lists.ubuntu.com/archives/feisty-changes/2007-September/008724.html](https://lists.ubuntu.com/archives/feisty-changes/2007-September/008724.html)
+[/LIST]
+
+**[size="5"]Bug Stats[/size]**
+
+[LIST]
+[*]Open (32235) +63 # over last week
+[*]Critical (19) +2 # over last week
+[*]Unconfirmed (15718) -271 # over last week
+[*]Unassigned (24335) +76 # over last week
+[*]All bugs ever reported (118746)  +1183 # over last week
+[/LIST]
+
+As always, the Bug Squad needs more help. If you want to get started, please see  [https://wiki.ubuntu.com/BugSquad](https://wiki.ubuntu.com/BugSquad)
+
+**[size="5"]Translation Stats[/size]**
+
+ 1. Spanish (20413) +512 # over last week
+ 2. French (40291) +440 # over last week
+ 3. English-UK (51764) +1458 # over last week
+ 4. Swedish (55081) +227 # over last week
+ 5. German (64046) -667 # over last week
+
+Remaining string to translate in Ubuntu 7.10 "Gutsy Gibbon", see more at: [https://translations.launchpad.net/ubuntu/gutsy/](https://translations.launchpad.net/ubuntu/gutsy/)
+
+**[size="5"]Archives and RSS Feed[/size]**
+
+You can always find older Ubuntu Weekly Newsletter issues at: [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter)
+
+You can subscribe to the Ubuntu Weekly News via RSS at:
+[http://fridge.ubuntu.com/uwn/feed](http://fridge.ubuntu.com/uwn/feed)
+
+**[size="5"]Additional Ubuntu News[/size]**
+
+As always you can find more news and announcements at:
+
+ [http://www.ubuntu.com/news](http://www.ubuntu.com/news)
+
+and
+
+ [http://fridge.ubuntu.com/](http://fridge.ubuntu.com/)
+
+**[size="5"]Conclusion[/size]**
+
+Thank you for reading the Ubuntu Weekly Newsletter.
+
+See you next week!
+
+**[size="5"]Credits[/size]**
+
+The Ubuntu Weekly Newsletter is brought to you by:
+
+[LIST]
+[*]Martin Albisetti
+[*]Cody A.W. Somerville
+[*]Nick Ali
+[*]Lionel Porcheron
+[*]John Crawford
+[*]And many others
+[/LIST]
+
+**[size="5"]RSS[/size]**
+
+You can subscribe to the UWN feed at: [http://fridge.ubuntu.com/uwn/feed](http://fridge.ubuntu.com/uwn/feed)
+
+**[size="5"]Feedback[/size]**
+
+If you would like to submit an idea or story you think is worth appearing on the UWN, please send them to [email]ubuntu-marketing-submissions@lists.ubuntu.com[/email].
+This document is maintained by the Ubuntu Marketing Team. Please feel free to contact us regarding any concerns or suggestions by either sending an email to [email]ubuntu-marketing@lists.ubuntu.com[/email] or by using any of the other methods on the Ubuntu Marketing Team Contact Information Page ([https://wiki.ubuntu.com/MarketingTeam](https://wiki.ubuntu.com/MarketingTeam)). If you'd like to contribute to a future issue of the Ubuntu Weekly Newsletter, please feel free to edit the appropriate wiki page. If you have any technical support questions, please send then [email]ubuntu-users@lists.ubuntu.com[/email].
+
+---
+
+### Post by anemptygun on 2007-09-26
+Where is issue number 57??
+
+---
+
+### Post by Sain on 2007-10-01
+For some reason, weekly newsletters are being posted [ HERE]("http://ubuntuforums.org/forumdisplay.php?f=122").
+
+ You can find issue #57, #58 and #59 there. Why in the Fridge discussion instead of here, I really don't know...
+
+---
+
+### Post by boredandblogging.com on 2007-10-22
+> **anemptygun said:**
+> Where is issue number 57??
+
+We dropped the ball on posting the UWNs here. I've posted all the missing UWNs and new ones will be posted as they are released.
+
+---
+

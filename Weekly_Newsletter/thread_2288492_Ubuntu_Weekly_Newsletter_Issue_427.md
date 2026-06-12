@@ -1,0 +1,553 @@
+---
+title: "Ubuntu Weekly Newsletter Issue 427"
+date: 2015-07-27
+forum: Weekly Newsletter
+---
+
+### Post by elizabeth on 2015-07-27
+[IMG]http://fridge.ubuntu.com/wp-content/uploads/2011/07/newspaper-icon4.jpg[/IMG]
+Welcome to the Ubuntu Weekly Newsletter, Issue 427 for the week July 20 - 26, 2015.
+
+***[size="5"]Links to UWN[/size]***
+[LIST]
+[*] Wiki page: [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue427 ](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Issue427 )
+[/LIST]
+**[size="5"]In This Issue[/size]**
+
+[LIST]
+[*]Ubuntu 14.10 (Utopic Unicorn) End of Life reached on July 23, 2015
+[*]Ubuntu Stats
+[*]Really getting there
+[*]How UbuConLA 2015 evolved in the past months
+[*]LoCo Events
+[*]Zygmunt Krynicki: Using Snappy Ubuntu Core to test-boot anything
+[*]Didier Roche: Arduino support and various fixes in Ubuntu Make 0.9
+[*]Elizabeth K. Joseph: Community Leadership Summit 2015
+[*]Benjamin Kerensa: Ubuntu Trends: Part 1
+[*]Ubuntu App Developer Blog: Announcing UbuContest 2015
+[*]Aaron Honeycutt: Akademy Day 1 & 2
+[*]Ubuntu Cloud News
+[*]Ubuntu Phone News
+[*]Canonical News
+[*]I used this crazy alternative 'Ubuntu' phone for a month and ended up liking it more than Android
+[*]GCC 5 Is One Week Away From Landing In Ubuntu 15.10
+[*]HP ProBook 455 Ubuntu review
+[*]Other Articles of Interest
+[*]Featured Audio and Video
+[*]Weekly Ubuntu Development Team Meetings
+[*]Monthly Team Reports: June 2015
+[*]Upcoming Meetings and Events
+[*]Updates and Security for 12.04, 14.04 and 15.04
+[*]And much more!
+[/LIST]
+
+**[size="5"]General Community News[/size]**
+
+***[size="3"]Ubuntu 14.10 (Utopic Unicorn) End of Life reached on July 23, 2015[/size]***
+
+Adam Conrad issues a follow up to an earlier warning that as of July 23, 2015 Ubuntu 14.10 reached its End-of-Life, thus no longer receiving updates. He says that it will be archived to old-releases.ubuntu.com in the coming weeks, having been supported for nine-months.
+
+[https://lists.ubuntu.com/archives/ubuntu-announce/2015-July/000198.html](https://lists.ubuntu.com/archives/ubuntu-announce/2015-July/000198.html)
+
+**[size="5"]Ubuntu Stats[/size]**
+
+***[size="3"]Bug Stats[/size]***
+
+[LIST]
+[*]Open (118790) -196 over last week
+[*]Critical (297) -3 over last week
+[*]Unconfirmed (59230) -139 over last week
+[/LIST]
+
+As always, the Bug Squad needs more help. If you want to get started, please see  [https://wiki.ubuntu.com/BugSquad](https://wiki.ubuntu.com/BugSquad)
+
+***[size="3"]Ask Ubuntu Top 5 Questions this week[/size]***
+
+==== Most Active Questions ====
+
+[LIST]
+[*]How to kill all processes apart from specific one [http://askubuntu.com/questions/652139/how-to-kill-all-processes-apart-from-specific-one](http://askubuntu.com/questions/652139/how-to-kill-all-processes-apart-from-specific-one)
+[*]How do you output the filename in find command while using -exec? [http://askubuntu.com/questions/651315/how-do-you-output-the-filename-in-find-command-while-using-exec](http://askubuntu.com/questions/651315/how-do-you-output-the-filename-in-find-command-while-using-exec)
+[*]I accidentally deleted the network-manager and don't have access to internet anymore [http://askubuntu.com/questions/652401/i-accidentally-deleted-the-network-manager-and-dont-have-access-to-internet-any](http://askubuntu.com/questions/652401/i-accidentally-deleted-the-network-manager-and-dont-have-access-to-internet-any)
+[*]Why the PID values are not continuous? [http://askubuntu.com/questions/651646/why-the-pid-values-are-not-continuous](http://askubuntu.com/questions/651646/why-the-pid-values-are-not-continuous)
+[*]What happens if you use @reboot reboot in crontab file? [http://askubuntu.com/questions/650896/what-happens-if-you-use-reboot-reboot-in-crontab-file](http://askubuntu.com/questions/650896/what-happens-if-you-use-reboot-reboot-in-crontab-file)
+[/LIST]
+
+==== Top Voted New Questions ====
+
+[LIST]
+[*]What happens if you use @reboot reboot in crontab file? [http://askubuntu.com/questions/650896/](http://askubuntu.com/questions/650896/)
+[*]How to kill all processes apart from specific one [http://askubuntu.com/questions/652139/](http://askubuntu.com/questions/652139/)
+[*]Why the PID values are not continuous? [http://askubuntu.com/questions/651646/](http://askubuntu.com/questions/651646/)
+[*]I accidentally deleted the network-manager and don't have access to internet anymore [http://askubuntu.com/questions/652401/](http://askubuntu.com/questions/652401/)
+[*]How do you output the filename in find command while using -exec? [http://askubuntu.com/questions/651315/](http://askubuntu.com/questions/651315/)
+[/LIST]
+
+People Contributing the best questions and answers this week: A.B. ([http://askubuntu.com/users/367165/a-b](http://askubuntu.com/users/367165/a-b)), Pilot6 ([http://askubuntu.com/users/167850/pilot6](http://askubuntu.com/users/167850/pilot6)), heemayl ([http://askubuntu.com/users/216503/heemayl](http://askubuntu.com/users/216503/heemayl)), muru ([http://askubuntu.com/users/158442/muru](http://askubuntu.com/users/158442/muru)) and Rinzwind ([http://askubuntu.com/users/15811/rinzwind](http://askubuntu.com/users/15811/rinzwind))
+
+Ask (and answer!) questions at [http://askubuntu.com](http://askubuntu.com)
+
+**[size="5"]LoCo News[/size]**
+
+***[size="3"]Really getting there[/size]***
+
+Miles Sharpe writes that 15 out of 18 countries in Africa have joined the Ubuntu Africa team. He says that the first brainstorming meeting will be on the 29th of July at 20:30 Africa time (UTC+2) and makes clear that all are welcome to attend. The wiki page has been improved thanks to a helper from Tunisia.
+
+[http://kilosubuntu.blogspot.com/2015/07/really-getting-there.html](http://kilosubuntu.blogspot.com/2015/07/really-getting-there.html)
+
+***[size="3"]How UbuConLA 2015 evolved in the past months[/size]***
+
+Jose Antonio Rey writes that he is impressed and excited with how the upcoming UbuConLA (Latin America) is shaping up. Name badges and banners have arrived but the online Registration form however has been closed, as pre-registrations exceeded the size of the auditorium. Jose writes that the registration basis is first-come, first-serve so to keep an eye out for more information on social media, and concludes by saying: "Hope to see you in August, can't wait for UbuConLA to happen!"
+
+[https://joseeantonior.wordpress.com/2015/07/24/how-ubuconla-2015-evolved-in-the-past-months/](https://joseeantonior.wordpress.com/2015/07/24/how-ubuconla-2015-evolved-in-the-past-months/)
+
+**[size="5"]LoCo Events[/size]**
+
+Want to learn whether there is an event upcoming in your area? Visit the LoCo Team Portal to browse upcoming events around the world:
+
+[http://loco.ubuntu.com/events/](http://loco.ubuntu.com/events/)
+
+
+**[size="5"]The Planet[/size]**
+
+***[size="3"]Zygmunt Krynicki: Using Snappy Ubuntu Core to test-boot anything[/size]***
+
+Zygmunt Krynicki shares that Inception OS is a small Ubuntu Snappy Core based system with programmable boot-process control, and allows any x86/amd64 to be converted into a remotely controlled web API. He says that anyone can reflash the OS and reboot a fresh image (once). Details of installing and using Inception OS are provided, and it will boot non-Linux code.
+
+[http://www.zygoon.pl/2015/07/using-snappy-ubuntu-core-to-test-boot.html](http://www.zygoon.pl/2015/07/using-snappy-ubuntu-core-to-test-boot.html)
+
+***[size="3"]Didier Roche: Arduino support and various fixes in Ubuntu Make 0.9[/size]***
+
+Didier Roche informs us that the Ubuntu Make team have continued to make improvements, and outlines some of what is new in the latest release. He says that Arduino support has been added, the Dart Editor has been replaced by the Dart SDK, and that the 32-bit Visual Studio Code page has been fixed.
+
+[http://blog.didrocks.fr/post/Arduino-support-and-various-fix-in-Ubuntu-Make-0.9](http://blog.didrocks.fr/post/Arduino-support-and-various-fix-in-Ubuntu-Make-0.9)
+
+***[size="3"]Elizabeth K. Joseph: Community Leadership Summit 2015[/size]***
+
+Elizabeth K. Joseph shares details from the Community Leadership Summit (CLS) July 18th-19th where she met with other Ubuntu Community Council and team members to discuss some of the current concerns in the Ubuntu community. In a series of four sessions, the group discussed the following with other CLS attendees: Lack of new generation of leaders, making lasting friendships that are bigger than the project, declining Community Participation and barriers related to single-vendor control and development of a project. She shares feedback from each session in the form of feedback and recommendations.
+
+[http://princessleia.com/journal/?p=10442](http://princessleia.com/journal/?p=10442)
+
+In a follow up post, Elizabeth also talks about her participation at OSCON, including details about Jono Bacon's Community leadership workshop: [http://princessleia.com/journal/?p=10451](http://princessleia.com/journal/?p=10451)
+
+***[size="3"]Benjamin Kerensa: Ubuntu Trends: Part 1[/size]***
+
+Benjamin Kerensa provides graphs of "Ubuntu LoCo's Trend" (by region over years), and "Ubuntu Membership Trends" (by year). He notes that statistics should not be considered to reflect to Ubuntu overall losing popularity, as data from Google Trends shows an overall downtrend for other desktop OS's likely correlating to end-users spending more time on mobiles. Benjamin also warns that whilst 2015 is included; its data is obviously incomplete.
+
+[http://benjaminkerensa.com/2015/07/21/ubuntu-trends](http://benjaminkerensa.com/2015/07/21/ubuntu-trends)
+
+***[size="3"]Ubuntu App Developer Blog: Announcing UbuContest 2015[/size]***
+
+Daniel Holbach informs us that Canonical, the Ubucon Germany 2015 team, and UbuContest 2015 team have announced the first UbuContest, and that you have until September 18, 2015 to build and publish apps and scopes using Ubuntu SDK (for Ubuntu). He says that new projects don't have to be created, just submit what you have and improve it over the next two months, and that the work of other community members can be submitted, in the following categories: Best Team Entry, Best Individual Entry, Outstanding Technical Contribution, Outstanding Non-Technical Contribution, and Convergence Hero.
+
+[http://developer.ubuntu.com/en/blog/2015/07/23/announcing-the-ubucontest-2015/](http://developer.ubuntu.com/en/blog/2015/07/23/announcing-the-ubucontest-2015/)
+
+***[size="3"]Aaron Honeycutt: Akademy Day 1 & 2[/size]***
+
+Aaron Honeycutt writes a pair of posts covering sessions attended, photos and work done at Akademy, the annual KDE conference. He covers work the Kubuntu team has been doing and shares excitement and gratitude at being among the contributors who are able to attend from Kubuntu.
+
+[http://usefoss.com/index.php/2015/07/26/akademy-day-1/](http://usefoss.com/index.php/2015/07/26/akademy-day-1/)
+
+[http://usefoss.com/index.php/2015/07/26/akademy-day-2/](http://usefoss.com/index.php/2015/07/26/akademy-day-2/)
+
+**[size="5"]Ubuntu Cloud News[/size]**
+
+[LIST]
+[*]Introducing Kubernetes version 1.0! - [http://insights.ubuntu.com/2015/07/21/introducing-kubernetes-version-1-0/](http://insights.ubuntu.com/2015/07/21/introducing-kubernetes-version-1-0/)
+[*]Launch the newly released kubernetes 1.0.0 with juju - [http://blog.dasroot.net/2015-launch-kubernetes-with-juju.html](http://blog.dasroot.net/2015-launch-kubernetes-with-juju.html)
+[*]Kubernetes v1.0 is released! -  [http://bruzer.net/2015/07/21/kubernetes-v1-0-is-released/](http://bruzer.net/2015/07/21/kubernetes-v1-0-is-released/)
+[*]Vedams joins the Charm Partner Programme -  [http://insights.ubuntu.com/2015/07/21/vedams-joins-the-charm-partner-programme/](http://insights.ubuntu.com/2015/07/21/vedams-joins-the-charm-partner-programme/)
+[*]Deploy a Kubernetes development cluster with Juju! - [http://insights.ubuntu.com/2015/07/23/deploy-a-kubernetes-development-cluster-with-juju-2/](http://insights.ubuntu.com/2015/07/23/deploy-a-kubernetes-development-cluster-with-juju-2/)
+[*]Juju for Telcos and Service Providers Pt. 2 - [http://insights.ubuntu.com/2015/07/23/juju-for-telcos-and-service-providers-pt-2/](http://insights.ubuntu.com/2015/07/23/juju-for-telcos-and-service-providers-pt-2/)
+[*]More Juju, Big Data and Snappy Beauty from Dataart - [http://insights.ubuntu.com/2015/07/23/more-juju-big-data-and-snappy-beauty-from-dataart/](http://insights.ubuntu.com/2015/07/23/more-juju-big-data-and-snappy-beauty-from-dataart/)
+[*]Azul Systems joins Canonical's Charm Partner Programme - [http://insights.ubuntu.com/2015/07/23/azul-systems-joins-canonicals-charm-partner-programme/](http://insights.ubuntu.com/2015/07/23/azul-systems-joins-canonicals-charm-partner-programme/)
+[*]Canonical Cloud Chatter: July 2015 Newsletter - [http://insights.ubuntu.com/2015/07/24/canonical-cloud-chatter-july-2015-newsletter/](http://insights.ubuntu.com/2015/07/24/canonical-cloud-chatter-july-2015-newsletter/)
+[/LIST]
+
+**[size="5"]Ubuntu Phone News[/size]**
+
+***[size="3"]Wireless File Transfer on Ubuntu phones[/size]***
+
+Ronnie Tucker of Full Circle Magazine shows us a short video of his Ubuntu phone connecting to his PC using the "wifitransfer" app which is available in the Ubuntu App Store.
+
+[http://fullcirclemagazine.org/2015/07/20/wireless-file-transfer-on-ubuntu-phones/](http://fullcirclemagazine.org/2015/07/20/wireless-file-transfer-on-ubuntu-phones/)
+
+***[size="3"]Meizu MX4 Ubuntu Edition now available for direct purchase[/size]***
+
+Canonical announces that after a successful launch period where thousands interacted with a digital origami wall, the Meizu MX4 Ubuntu Edition phone is now available directly from Meizu's online store for those based in the EU.
+
+[http://insights.ubuntu.com/2015/07/20/meizu-mx4-ubuntu-edition-now-available-for-direct-purchase-2/](http://insights.ubuntu.com/2015/07/20/meizu-mx4-ubuntu-edition-now-available-for-direct-purchase-2/)
+
+***[size="3"]Meizu MX4 is awesome after OTA-5[/size]***
+
+Riccardo Padovani writes that with OTA-5, he now believes the Meizu MX4 is working as it always should have. He notes that some bad reviews have probably been published which highlight problems real problems have now been fixed and goes on to describe improvements to battery life, the introduction of shell rotation, and some new icons which he says look much clearer.
+
+[http://rpadovani.com/arale-ota5](http://rpadovani.com/arale-ota5)
+
+***[size="3"]Let's test Ubuntu Phone's Wi-Fi Hotspots (internet tethering) feature[/size]***
+
+Carla Sella shows us, with the aid of some screenshots, how to test the Wi-Fi hotspots feature that will land in the next Ubuntu phone update, OTA-6. She says that Ubuntu 15.04 or 15.10 based phone images are required and that Developer Mode needs to be set on the phone.
+
+[http://carla-sella.blogspot.com/2015/07/lets-test-ubuntu-phones-wi-fi-hotspots.html](http://carla-sella.blogspot.com/2015/07/lets-test-ubuntu-phones-wi-fi-hotspots.html)
+
+***[size="3"]Driving with my Ubuntu Phone [video][/size]***
+
+Marcos Costales  writes that uNAV is a turn-by-turn GPS navigation app for the Ubuntu Phone, 100% GPL powered by OpenStreetMap and OSRM. He embeds a short video in his post of a short route being driven that shows uNav in operation.
+
+[http://thinkonbytes.blogspot.com/2015/07/driving-with-my-ubuntu-phone-video.html](http://thinkonbytes.blogspot.com/2015/07/driving-with-my-ubuntu-phone-video.html)
+
+***[size="3"][Kubuntu] Plasma Mobile Launched[/size]***
+
+Marco Parillo, on behalf of the Kubuntu and KDE teams, invites us to watch a video demonstration of Plasma Mobile.
+
+[http://wire.kubuntu.org/?p=358](http://wire.kubuntu.org/?p=358)
+
+The following articles expand on the announcement of the release:
+[LIST]
+[*]Embracing Mobile - [http://vizzzion.org/blog/2015/07/embracing-mobile/](http://vizzzion.org/blog/2015/07/embracing-mobile/)
+[*]Kubuntu Team Launches Plasma Mobile References Images - [http://www.kubuntu.org/news/kubuntu-team-launches-plasma-mobile-references-images](http://www.kubuntu.org/news/kubuntu-team-launches-plasma-mobile-references-images)
+[/LIST]
+
+
+**[size="5"]Canonical News[/size]**
+
+***[size="3"]Converting old guidelines to vanilla[/size]***
+
+Richard McCartney writes about the conversion of styling away Guidelines, the framework developed by the Canonical design team with an array of tools to create consistent Ubuntu themed websites. He writes that Guidelines had many shortcomings (no build system for one), and introduces the Vanilla project. The main goal of Vanilla is to make generic extendable and easy changes possible. He walks through usage of the new Sass "mixins" and shares an example of the Ubuntu vanilla theme available via GitHub.
+
+[http://design.canonical.com/2015/07/converting-old-guidelines-to-vanilla/](http://design.canonical.com/2015/07/converting-old-guidelines-to-vanilla/)
+
+**[size="5"]In The Press[/size]**
+
+***[size="3"]I used this crazy alternative 'Ubuntu' phone for a month and ended up liking it more than Android[/size]***
+
+Alastair Stevenson of Business Insider reviews the Meizu MX4 Ubuntu Edition phone finding it to be the most unique and alien mobile operating system that he'd ever experienced. He describes the operation of the phone saying that he found himself looking for dedicated apps rather than scopes but the he eventually adjusted to the Ubuntu way of doing things. Alastair says that his biggest criticism of the phone is that it is not yet smart enough, many key services are missing but that he would definitely urge "tech savvy buyers or developers interested in trying something new" to buy an Ubuntu phone.
+
+[http://www.businessinsider.com/meizu-mx4-ubuntu-edition-review-2015-7](http://www.businessinsider.com/meizu-mx4-ubuntu-edition-review-2015-7)
+
+**[size="5"]In The Blogosphere[/size]**
+
+***[size="3"]GCC 5 Is One Week Away From Landing In Ubuntu 15.10[/size]***
+
+Michael Larabel of Phoronix writes that both Debian Unstable and Ubuntu 15.10 are switching to GCC 5. He relays the news that an update issued by Matthias Klose says that more than 3,000 packages are having to be rebuilt.
+
+[http://www.phoronix.com/scan.php?page=news_item&px=GCC-5-Ubuntu-15.10-Step-2](http://www.phoronix.com/scan.php?page=news_item&px=GCC-5-Ubuntu-15.10-Step-2)
+
+***[size="3"]HP ProBook 455 Ubuntu review[/size]***
+
+James Archer, writing for V3, reviews the HP ProBook 455 Ubuntu which is one of a series of low-budget laptops produced by HP who joined forces with Canonical and eBuyer. With the aid of some photographs, James looks at the display, the design, the performance and the battery of the machines. Despite some good features he says in his conclusion: "We believe that Ubuntu, with its frequent updates and top-notch security, has the potential to break into the business laptop space in spite of Windows' dominance. But it needs the right machine, and this, sadly, just isn't it."
+
+[http://www.v3.co.uk/v3-uk/review/2418077/hp-probook-455-ubuntu-review](http://www.v3.co.uk/v3-uk/review/2418077/hp-probook-455-ubuntu-review)
+
+**[size="5"]Other Articles of Interest[/size]**
+
+[LIST]
+[*]The only remaining barrier to entry for Linux - [http://www.techrepublic.com/article/the-only-remaining-barrier-to-entry-for-linux/](http://www.techrepublic.com/article/the-only-remaining-barrier-to-entry-for-linux/)
+[/LIST]
+
+**[size="5"]Featured Audio and Video[/size]**
+
+***[size="3"]Ubuntu Community Q&A - 21st July 2015[/size]***
+
+Alan Pope is joined by Daniel Holbach for another regular Q&A session in which they answer viewers' questions put to them on IRC. This week the guests are Sujeevan Vijayakumaran, Richard Gaskin and Jose Antonio Rey who talk about upcoming UbuCon events.
+
+[https://youtu.be/cWtDmcyOOV0](https://youtu.be/cWtDmcyOOV0)
+
+***[size="3"]Ubuntu Podcast from the UK LoCo: S08E20 - Who's Your Caddy? - Ubuntu Podcast[/size]***
+
+It's Episode Twenty of Season Eight of the Ubuntu Podcast! Mark Johnson, Laura Cowen, and Martin Wimpress are together with guest presenter Joe Ressington and speaking to your brain.
+
+In this week's show:
+[LIST]
+[*]We discuss Google Cardboard.
+[*]We go over your feedback.
+[*]We have a GUI love, LauncherFolders sent in by Rich. T.
+[*]We chat about all the podcasts Joe presents on: Linux Luddites, mintCast, and JoeRess podcast.
+[*]We also chat about Windows 8.1, Garmin 220 sports watch, and the MATE 1.10 release.
+[/LIST]
+
+That's all for this week, please send your comments and suggestions to: [email]show@ubuntupodcast.org[/email]
+
+[http://ubuntupodcast.org/2015/07/23/s08e20-whos-your-caddy/](http://ubuntupodcast.org/2015/07/23/s08e20-whos-your-caddy/)
+
+**[size="5"]Weekly Ubuntu Development Team Meetings[/size]**
+
+[LIST]
+[*]Kernel Team - July 21, 2015 - [https://wiki.ubuntu.com/KernelTeam/Meeting/2015-07-21](https://wiki.ubuntu.com/KernelTeam/Meeting/2015-07-21)
+[*]Security Team - July 20, 2015 - [https://wiki.ubuntu.com/MeetingLogs/Security/20150720](https://wiki.ubuntu.com/MeetingLogs/Security/20150720)
+[*]Server Team - July 21, 2015 -  [https://wiki.ubuntu.com/MeetingLogs/Server/20150721](https://wiki.ubuntu.com/MeetingLogs/Server/20150721)
+[/LIST]
+
+**[size="5"]Monthly Team Reports: June 2015[/size]**
+
+See here for the team report for June 2015: [https://wiki.ubuntu.com/TeamReports/June2015](https://wiki.ubuntu.com/TeamReports/June2015)
+
+If your team is not producing monthly reports, see this page to get your team started: [https://wiki.ubuntu.com/BuildingCommunity/TeamReporting](https://wiki.ubuntu.com/BuildingCommunity/TeamReporting)
+
+**[size="5"]Upcoming Meetings and Events[/size]**
+
+For upcoming meetings and events please visit the calendars at fridge.ubuntu.com: [http://fridge.ubuntu.com/calendars/](http://fridge.ubuntu.com/calendars/)
+
+**[size="5"]Updates and Security for 12.04, 14.04 and 15.04[/size]**
+
+***[size="3"]Security Updates[/size]***
+
+[LIST]
+[*][USN-2673-1] Thunderbird vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003042.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003042.html)
+[*][USN-2674-1] MySQL vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003043.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003043.html)
+[*][USN-2675-1] LXC vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003044.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003044.html)
+[*][USN-2676-1] NBD vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003045.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003045.html)
+[*][USN-2678-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003047.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003047.html)
+[*][USN-2679-1] Linux kernel (OMAP4) vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003048.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003048.html)
+[*][USN-2680-1] Linux kernel (Trusty HWE) vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003049.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003049.html)
+[*][USN-2681-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003050.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003050.html)
+[*][USN-2682-1] Linux kernel (Utopic HWE) vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003051.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003051.html)
+[*][USN-2683-1] Linux kernel (Vivid HWE) vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003052.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003052.html)
+[*][USN-2684-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003053.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003053.html)
+[*][USN-2685-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003054.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2015-July/003054.html)
+[/LIST]
+
+***[size="3"]Ubuntu 12.04 Updates[/size]***
+
+[LIST]
+[*]nginx 1.1.19-1ubuntu0.8 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024148.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024148.html)
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.12.04.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024149.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024149.html)
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.12.04.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024150.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024150.html)
+[*]mysql-5.5 5.5.44-0ubuntu0.12.04.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024151.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024151.html)
+[*]mysql-5.5 5.5.44-0ubuntu0.12.04.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024152.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024152.html)
+[*]debian-installer-utils 1.88ubuntu2.3 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024153.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024153.html)
+[*]debian-installer 20101020ubuntu136.21 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024154.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024154.html)
+[*]linux-meta 3.2.0.88.102 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024155.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024155.html)
+[*]linux-meta 3.2.0.88.102 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024156.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024156.html)
+[*]linux-backports-modules-3.2.0 3.2.0-88.80 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024157.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024157.html)
+[*]linux-backports-modules-3.2.0 3.2.0-88.80 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024158.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024158.html)
+[*]linux 3.2.0-88.126 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024159.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024159.html)
+[*]linux 3.2.0-88.126 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024160.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024160.html)
+[*]linux-meta-ti-omap4 3.2.0.1468.63 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024161.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024161.html)
+[*]linux-meta-ti-omap4 3.2.0.1468.63 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024162.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024162.html)
+[*]linux-ti-omap4 3.2.0-1468.89 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024163.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024163.html)
+[*]linux-ti-omap4 3.2.0-1468.89 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024164.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024164.html)
+[*]linux-meta-lts-trusty 3.13.0.58.50 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024165.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024165.html)
+[*]linux-meta-lts-trusty 3.13.0.58.50 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024166.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024166.html)
+[*]linux-signed-lts-trusty 3.13.0-58.97~precise1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024167.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024167.html)
+[*]linux-lts-trusty 3.13.0-58.97~precise1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024168.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024168.html)
+[*]linux-signed-lts-trusty 3.13.0-58.97~precise1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024169.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024169.html)
+[*]linux-lts-trusty 3.13.0-58.97~precise1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024170.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024170.html)
+[*]linux-meta-armadaxp 3.2.0.1654.61 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024171.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024171.html)
+[*]linux-meta-armadaxp 3.2.0.1654.61 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024172.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024172.html)
+[*]linux-armadaxp 3.2.0-1654.75 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024173.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024173.html)
+[*]linux-armadaxp 3.2.0-1654.75 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024174.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024174.html)
+[*]linux-lts-trusty_3.13.0-58.97~precise1_amd64.tar.gz - - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024175.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024175.html)
+[*]nbd 1:2.9.25-2ubuntu1.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024176.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024176.html)
+[*]nbd 1:2.9.25-2ubuntu1.1 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024177.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024177.html)
+[*]apt 0.8.16~exp12ubuntu10.25 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024178.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024178.html)
+[*]cloud-init 0.6.3-0ubuntu1.18 - [https://lists.ubuntu.com/archives/precise-changes/2015-July/024179.html](https://lists.ubuntu.com/archives/precise-changes/2015-July/024179.html)
+[/LIST]
+
+End of Life - April 2017
+
+***[size="3"]Ubuntu 14.04 Updates[/size]***
+
+[LIST]
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019349.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019349.html)
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019350.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019350.html)
+[*]mysql-5.5 5.5.44-0ubuntu0.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019351.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019351.html)
+[*]mysql-5.5 5.5.44-0ubuntu0.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019352.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019352.html)
+[*]live-build 3.0~a57-1ubuntu11.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019353.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019353.html)
+[*]debian-installer-utils 1.105ubuntu1.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019354.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019354.html)
+[*]debian-installer 20101020ubuntu318.26 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019355.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019355.html)
+[*]linux-firmware 1.127.14 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019356.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019356.html)
+[*]python-tx-tftp 0.1~bzr38-0ubuntu4~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019357.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019357.html)
+[*]partman-auto 118ubuntu3.14.04.2 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019358.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019358.html)
+[*]lxc 1.0.7-0ubuntu0.2 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019359.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019359.html)
+[*]lxc 1.0.7-0ubuntu0.2 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019360.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019360.html)
+[*]linux-meta 3.13.0.58.65 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019361.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019361.html)
+[*]linux-meta 3.13.0.58.65 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019363.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019363.html)
+[*]linux-signed 3.13.0-58.97 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019365.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019365.html)
+[*]linux-signed 3.13.0-58.97 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019366.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019366.html)
+[*]linux 3.13.0-58.97 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019362.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019362.html)
+[*]linux 3.13.0-58.97 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019364.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019364.html)
+[*]linux-meta-lts-vivid 3.19.0.23.10 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019367.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019367.html)
+[*]linux-meta-lts-vivid 3.19.0.23.10 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019368.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019368.html)
+[*]linux-signed-lts-vivid 3.19.0-23.24~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019369.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019369.html)
+[*]linux-signed-lts-vivid 3.19.0-23.24~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019370.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019370.html)
+[*]linux-lts-vivid 3.19.0-23.24~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019371.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019371.html)
+[*]linux-lts-vivid 3.19.0-23.24~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019372.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019372.html)
+[*]linux-meta-lts-utopic 3.16.0.44.35 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019373.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019373.html)
+[*]linux-meta-lts-utopic 3.16.0.44.35 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019374.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019374.html)
+[*]linux-signed-lts-utopic 3.16.0-44.59~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019376.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019376.html)
+[*]linux-signed-lts-utopic 3.16.0-44.59~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019377.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019377.html)
+[*]linux-lts-utopic 3.16.0-44.59~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019375.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019375.html)
+[*]linux-lts-utopic 3.16.0-44.59~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019378.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019378.html)
+[*]linux-meta-keystone 3.13.0.33.31 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019379.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019379.html)
+[*]linux-meta-keystone 3.13.0.33.31 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019380.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019380.html)
+[*]linux-keystone 3.13.0-33.51 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019381.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019381.html)
+[*]linux-keystone 3.13.0-33.51 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019382.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019382.html)
+[*]live-build 3.0~a57-1ubuntu11.2 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019383.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019383.html)
+[*]linux-lts-utopic_3.16.0-44.59~14.04.1_amd64.tar.gz - - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019386.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019386.html)
+[*]linux-lts-vivid_3.19.0-23.24~14.04.1_amd64.tar.gz - - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019385.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019385.html)
+[*]linux_3.13.0-58.97_amd64.tar.gz - - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019384.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019384.html)
+[*]nbd 1:3.7-1ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019387.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019387.html)
+[*]nbd 1:3.7-1ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019388.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019388.html)
+[*]linux-firmware 1.127.14 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019389.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019389.html)
+[*]xserver-xorg-video-intel-lts-utopic 2:2.99.914-1~exp1ubuntu4.5~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019390.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019390.html)
+[*]cloud-init 0.7.5-0ubuntu1.7 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019391.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019391.html)
+[*]iproute2 3.12.0-2ubuntu1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019392.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019392.html)
+[*]haproxy 1.4.24-2ubuntu0.2 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019393.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019393.html)
+[*]parted 2.3-19ubuntu1.14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019394.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019394.html)
+[*]network-manager-applet 0.9.8.8-0ubuntu4.4 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019395.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019395.html)
+[*]blktap-dkms 2.0.93-0.3ubuntu4~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019396.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019396.html)
+[*]mesa-lts-vivid 10.5.2-0ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019397.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019397.html)
+[*]xorg-server-lts-vivid 2:1.17.1-0ubuntu3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019398.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019398.html)
+[*]xserver-xorg-input-evdev-lts-vivid 1:2.9.0-1ubuntu2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019399.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019399.html)
+[*]xserver-xorg-input-mouse-lts-vivid 1:1.9.1-1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019400.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019400.html)
+[*]xserver-xorg-input-void-lts-vivid 1:1.4.0-1build4~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019401.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019401.html)
+[*]xserver-xorg-input-vmmouse-lts-vivid 1:13.0.0-1ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019402.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019402.html)
+[*]xserver-xorg-input-joystick-lts-vivid 1:1.6.2-1build2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019403.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019403.html)
+[*]xserver-xorg-input-synaptics-lts-vivid 1.8.1-1ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019404.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019404.html)
+[*]xserver-xorg-input-keyboard-lts-vivid 1:1.8.0-1build2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019405.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019405.html)
+[*]xserver-xorg-video-tdfx-lts-vivid 1:1.4.6-0ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019406.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019406.html)
+[*]xserver-xorg-video-sisusb-lts-vivid 1:0.9.6-2build3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019407.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019407.html)
+[*]xserver-xorg-video-siliconmotion-lts-vivid 1:1.7.7-2ubuntu2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019408.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019408.html)
+[*]xserver-xorg-video-vmware-lts-vivid 1:13.1.0-0ubuntu1build1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019409.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019409.html)
+[*]xserver-xorg-video-vesa-lts-vivid 1:2.3.3-1build3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019410.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019410.html)
+[*]xserver-xorg-video-s3-lts-vivid 1:0.6.5-0ubuntu5build1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019411.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019411.html)
+[*]xserver-xorg-video-trident-lts-vivid 1:1.3.6-0ubuntu6build1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019412.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019412.html)
+[*]xserver-xorg-video-savage-lts-vivid 1:2.3.7-2ubuntu4~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019413.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019413.html)
+[*]xserver-xorg-video-mach64-lts-vivid 6.9.4-2ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019414.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019414.html)
+[*]xserver-xorg-video-ati-lts-vivid 1:7.5.0-1ubuntu2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019415.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019415.html)
+[*]xserver-xorg-video-fbdev-lts-vivid 1:0.4.4-1build3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019416.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019416.html)
+[*]xserver-xorg-video-neomagic-lts-vivid 1:1.2.8-1ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019417.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019417.html)
+[*]xserver-xorg-video-dummy-lts-vivid 1:0.3.7-1build3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019418.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019418.html)
+[*]xserver-xorg-video-freedreno-lts-vivid 1.3.0-1build1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019419.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019419.html)
+[*]xf86-input-wacom-lts-vivid 1:0.25.0-0ubuntu1.1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019420.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019420.html)
+[*]xserver-xorg-video-r128-lts-vivid 6.9.2-1ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019421.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019421.html)
+[*]xserver-xorg-video-nouveau-lts-vivid 1:1.0.11-1ubuntu2build1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019422.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019422.html)
+[*]xserver-xorg-video-geode-lts-vivid 2.11.16-7ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019423.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019423.html)
+[*]xserver-xorg-video-openchrome-lts-vivid 1:0.3.3-1ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019424.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019424.html)
+[*]xserver-xorg-video-mga-lts-vivid 1:1.6.3-2ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019425.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019425.html)
+[*]xf86-input-mtrack-lts-vivid 0.3.0-1build3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019426.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019426.html)
+[*]xserver-xorg-video-cirrus-lts-vivid 1:1.5.2-2ubuntu1~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019427.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019427.html)
+[*]xserver-xorg-video-qxl-lts-vivid 0.1.1-0ubuntu6~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019428.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019428.html)
+[*]xorg-lts-vivid 1:7.7+7ubuntu3~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019429.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019429.html)
+[*]xserver-xorg-video-intel-lts-vivid 2:2.99.917-1~exp1ubuntu2.2~trusty1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019430.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019430.html)
+[*]nvidia-graphics-drivers-346 346.82-0ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019431.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019431.html)
+[*]nvidia-graphics-drivers-346-updates 346.82-0ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019432.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019432.html)
+[*]nvidia-graphics-drivers-340 340.76-0ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019433.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019433.html)
+[*]nvidia-graphics-drivers-340-updates 340.76-0ubuntu0.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019434.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019434.html)
+[*]ubuntu-fan 0.3.0~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019435.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019435.html)
+[*]linux-meta-lts-vivid 3.19.0.24.11 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019436.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019436.html)
+[*]linux-lts-vivid 3.19.0-24.25~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019438.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019438.html)
+[*]linux-signed-lts-vivid 3.19.0-24.25~14.04.1 - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019437.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019437.html)
+[*]linux-lts-vivid_3.19.0-24.25~14.04.1_amd64.tar.gz - - [https://lists.ubuntu.com/archives/trusty-changes/2015-July/019439.html](https://lists.ubuntu.com/archives/trusty-changes/2015-July/019439.html)
+[/LIST]
+
+End of Life - April 2019
+
+***[size="3"]Ubuntu 15.04 Updates[/size]***
+
+[LIST]
+[*]nginx 1.6.2-5ubuntu3.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008938.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008938.html)
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008939.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008939.html)
+[*]thunderbird 1:31.8.0+build1-0ubuntu0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008940.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008940.html)
+[*]mysql-5.6 5.6.25-0ubuntu0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008941.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008941.html)
+[*]mysql-5.6 5.6.25-0ubuntu0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008942.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008942.html)
+[*]live-build 3.0~a57-1ubuntu16.2 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008943.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008943.html)
+[*]linux-firmware 1.143.2 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008944.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008944.html)
+[*]python-tx-tftp 0.1~bzr38-0ubuntu4~15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008945.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008945.html)
+[*]unbound 1.4.22-1ubuntu5.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008946.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008946.html)
+[*]shadow 1:4.1.5.1-1.1ubuntu4.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008947.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008947.html)
+[*]openldap 2.4.31-1+nmu2ubuntu12.2 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008948.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008948.html)
+[*]oslo.messaging 1.8.3-0ubuntu0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008949.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008949.html)
+[*]lxc 1.1.2-0ubuntu3.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008950.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008950.html)
+[*]lxc 1.1.2-0ubuntu3.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008951.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008951.html)
+[*]linux-meta 3.19.0.23.22 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008952.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008952.html)
+[*]linux-meta 3.19.0.23.22 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008953.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008953.html)
+[*]linux-signed 3.19.0-23.24 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008954.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008954.html)
+[*]linux-signed 3.19.0-23.24 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008955.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008955.html)
+[*]linux 3.19.0-23.24 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008956.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008956.html)
+[*]linux 3.19.0-23.24 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008957.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008957.html)
+[*]live-build 3.0~a57-1ubuntu16.3 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008958.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008958.html)
+[*]linux_3.19.0-23.24_amd64.tar.gz - - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008959.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008959.html)
+[*]libibverbs 1.1.8-1ubuntu1.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008960.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008960.html)
+[*]libmlx4 1.0.6-1ubuntu0.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008961.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008961.html)
+[*]tgt 1:1.0.43-0ubuntu4.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008962.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008962.html)
+[*]nbd 1:3.8-4ubuntu0.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008963.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008963.html)
+[*]nbd 1:3.8-4ubuntu0.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008964.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008964.html)
+[*]linux 3.19.0-24.25 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008965.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008965.html)
+[*]linux_3.19.0-24.25_amd64.tar.gz - - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008966.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008966.html)
+[*]linux-meta 3.19.0.24.23 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008967.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008967.html)
+[*]linux-signed 3.19.0-24.25 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008968.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008968.html)
+[*]linux-firmware 1.143.2 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008969.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008969.html)
+[*]cloud-init 0.7.7~bzr1091-0ubuntu4 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008970.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008970.html)
+[*]cacti 0.8.8b+dfsg-8+deb8u2build0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008971.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008971.html)
+[*]pdns-recursor 3.6.2-2+deb8u2build0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008972.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008972.html)
+[*]pdns-recursor 3.6.2-2+deb8u2build0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008973.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008973.html)
+[*]cacti 0.8.8b+dfsg-8+deb8u2build0.15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008974.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008974.html)
+[*]iproute2 3.16.0-2ubuntu1.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008975.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008975.html)
+[*]media-hub 3.0.0+15.04.20150402-0ubuntu1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008976.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008976.html)
+[*]process-cpp 2.0.0+14.10.20140718-0ubuntu3 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008977.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008977.html)
+[*]telepathy-qt5 0.9.3-0ubuntu18 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008978.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008978.html)
+[*]dbus-cpp 4.3.0+15.04.20150415-0ubuntu1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008979.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008979.html)
+[*]ubuntu-fan 0.3.0~15.04.1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008980.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008980.html)
+[*]telepathy-qt5 0.9.3-0ubuntu18 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008981.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008981.html)
+[*]process-cpp 2.0.0+14.10.20140718-0ubuntu3 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008983.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008983.html)
+[*]media-hub 3.0.0+15.04.20150402-0ubuntu1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008982.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008982.html)
+[*]dbus-cpp 4.3.0+15.04.20150415-0ubuntu1 - [https://lists.ubuntu.com/archives/vivid-changes/2015-July/008984.html](https://lists.ubuntu.com/archives/vivid-changes/2015-July/008984.html)
+[/LIST]
+
+End of Life - January 2016
+
+**[size="5"]Subscribe[/size]**
+
+Get your copy of the Ubuntu Weekly Newsletter delivered each week to you via email at: [https://lists.ubuntu.com/mailman/listinfo/ubuntu-news](https://lists.ubuntu.com/mailman/listinfo/ubuntu-news)
+
+**[size="5"]Archives[/size]**
+
+You can always find older Ubuntu Weekly Newsletter issues at: [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter)
+
+**[size="5"]Additional Ubuntu News[/size]**
+
+As always you can find more news and announcements at:
+
+ [http://www.ubuntu.com/news](http://www.ubuntu.com/news)
+
+and
+
+ [http://fridge.ubuntu.com/](http://fridge.ubuntu.com/)
+
+**[size="5"]Conclusion[/size]**
+
+Thank you for reading the Ubuntu Weekly Newsletter.
+
+See you next week!
+
+**[size="5"]Credits[/size]**
+
+The Ubuntu Weekly Newsletter is brought to you by:
+
+[LIST]
+[*]Paul White
+[*]Elizabeth K. Joseph
+[*]Chris Guiver
+[*]And many others
+[/LIST]
+
+**[size="5"]Glossary of Terms[/size]**
+
+Other acronyms can be found at [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/glossary](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/glossary)
+
+**[size="5"]Ubuntu - Get Involved[/size]**
+
+The Ubuntu community consists of individuals and teams, working on different aspects of the distribution, giving advice and technical support, and helping to promote Ubuntu to a wider audience. No contribution is too small, and anyone can help. It's your chance to get in on all the community fun associated with developing and promoting Ubuntu. [http://community.ubuntu.com/contribute/](http://community.ubuntu.com/contribute/)
+
+Or get involved with the Ubuntu Weekly Newsletter team! We always need summary writers and editors, if you're interested, learn more at: [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Join](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Join)
+
+**[size="5"]Feedback[/size]**
+
+This document is maintained by the Ubuntu Weekly News Team. If you have a story idea or suggestions for the Weekly Newsletter, join the Ubuntu News Team mailing list at [https://lists.ubuntu.com/mailman/listinfo/Ubuntu-news-team](https://lists.ubuntu.com/mailman/listinfo/Ubuntu-news-team) and submit it. Ideas can also be added to the wiki at [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Ideas](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Ideas). If you'd like to contribute to a future issue of the Ubuntu Weekly Newsletter, please feel free to edit the appropriate wiki page. If you have any technical support questions, please check [http://community.ubuntu.com/help-information/](http://community.ubuntu.com/help-information/) for more information on where to get help.
+
+[IMG]http://fridge.ubuntu.com/wp-content/uploads/2011/07/CCL.png[/IMG]Except where otherwise noted, content in this issue is licensed under a Creative Commons Attribution 3.0 License - [http://creativecommons.org/licenses/by-sa/3.0/](http://creativecommons.org/licenses/by-sa/3.0/)
+
+---
+

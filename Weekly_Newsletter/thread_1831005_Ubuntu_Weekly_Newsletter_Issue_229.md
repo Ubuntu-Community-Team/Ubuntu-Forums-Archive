@@ -1,0 +1,421 @@
+---
+title: "Ubuntu Weekly Newsletter Issue 229"
+date: 2011-08-22
+forum: Weekly Newsletter
+---
+
+### Post by akgraner on 2011-08-22
+[IMG]http://fridge.ubuntu.com/wp-content/uploads/2011/07/newspaper-icon4.jpg[/IMG]
+Welcome to the Ubuntu Weekly Newsletter, Issue 229 for the week August 15 -21, 2011.
+
+**[size="5"]In This Issue[/size]**
+
+[LIST]
+[*]Dash takes shape for 11.10 Unity
+[*]Ubuntu 11.10 Development update
+[*]Ubuntu Stats
+[*]LoCo News
+[*]Randall Ross: Unity. Simplify Your Life.
+[*]Elizabeth Krumbach: News is hard, but we're making it easier
+[*]Mark Shuttleworth: Corporate desktops and Ubuntu
+[*]Jono Bacon: Ubuntu Membership and Developer Surveys
+[*]Canonical ARMs Ubuntu for microserver wars
+[*]Screenshots and Video: New Improved Unity Interface Lands in Ubuntu 11.10
+[*]After 20 Years, Linux Looks Better Than Ever
+[*]Featured Podcasts
+[*]Weekly Ubuntu Development Team Meetings
+[*]Upcoming Meetings and Events
+[*]Updates and Security for 8.04, 10.04, 10.10 and 11.04
+[*]And much more!
+[/LIST]
+
+**[size="5"]General Community News[/size]**
+
+***[size="3"]Unity Contributor Report: So long Feature Freeze![/size]***
+
+As far as features are concerned, 11.10 is now, for all intents and purposes, set in stone. Now it is all bug fixes and polish, which the contributors have been working very hard at, as can be seen in this Unity Contributor Report.
+
+[http://fridge.ubuntu.com/2011/08/16/so-long-feature-freeze/](http://fridge.ubuntu.com/2011/08/16/so-long-feature-freeze/)
+
+***[size="3"]Dash takes shape for 11.10 Unity[/size]***
+
+Mark Shuttleworth gives his thoughts on the look and feel of the up and coming Ubuntu release 11.10. Included is a screenshot showing of the latest rendering of the Dash.
+
+[http://www.markshuttleworth.com/archives/717](http://www.markshuttleworth.com/archives/717)
+
+***[size="3"]Ubuntu 11.10 Development update[/size]***
+
+Oneiric Ocelot has hit feature freeze, with UI and imminent. Dave Walker from the Server Team talks about Ensemble, the introduction of OpenStack into the project, and calls for assistance.
+
+[http://fridge.ubuntu.com/2011/08/18/ubuntu-11-10-development-update-6/on](http://fridge.ubuntu.com/2011/08/18/ubuntu-11-10-development-update-6/on)
+
+**[size="5"]Ubuntu Stats[/size]**
+
+***[size="3"]Bug Stats[/size]***
+
+[LIST]
+[*]Open (89202) +340 over last week
+[*]Critical (196) +8 over last week
+[*]Unconfirmed (46585) -538 over last week
+[/LIST]
+
+As always, the Bug Squad needs more help. If you want to get started, please see  [https://wiki.ubuntu.com/BugSquad](https://wiki.ubuntu.com/BugSquad)
+
+***[size="3"]Translation Stats Oneiric[/size]***
+
+[LIST]
+[*]Spanish (12127) +1373 over last week
+[*]Brazilian Portuguese (61878) +9795 over last week
+[*]English (United Kingdom) (63767) +10301 over last week
+[*]German (80756) +1926 over last week
+[*]French (84987) +8480 over last week
+[/LIST]
+
+Remaining strings to translate in Ubuntu 11.10 "Oneiric Oncelot", see more at: [https://translations.launchpad.net/ubuntu/oneiric/](https://translations.launchpad.net/ubuntu/oneiric/) and [https://wiki.ubuntu.com/Translations](https://wiki.ubuntu.com/Translations)
+
+***[size="3"]Ubuntu Brainstorm Top 5 this week[/size]***
+
+[LIST]
+[*]RTFM split view - [http://brainstorm.ubuntu.com/idea/28433/](http://brainstorm.ubuntu.com/idea/28433/)
+[*]New features on application's autostart - [http://brainstorm.ubuntu.com/idea/28411/](http://brainstorm.ubuntu.com/idea/28411/)
+[*]Extend display onto networked devices. - [http://brainstorm.ubuntu.com/idea/28417/](http://brainstorm.ubuntu.com/idea/28417/)
+[*]A wiki page for each ubuntu release describing known issues and workarounds - [http://brainstorm.ubuntu.com/idea/28415/](http://brainstorm.ubuntu.com/idea/28415/)
+[*]Include a "hide" icon function for a crowded panel - [http://brainstorm.ubuntu.com/idea/28412/](http://brainstorm.ubuntu.com/idea/28412/)
+[/LIST]
+
+Ubuntu Brainstorm is a community site geared toward letting you add your ideas for Ubuntu. You can submit your own idea, or vote for or against another idea. [http://brainstorm.ubuntu.com/](http://brainstorm.ubuntu.com/)
+
+***[size="3"]Ask Ubuntu Top 5 Questions this week[/size]***
+
+[LIST]
+[*]Why has /var/run been migrated to /run? - [http://askubuntu.com/questions/57297/why-has-var-run-been-migrated-to-run](http://askubuntu.com/questions/57297/why-has-var-run-been-migrated-to-run)
+[*]How to enter to the directory with 'cd' command if it has 700 permission - [http://askubuntu.com/questions/57789/how-to-enter-to-the-directory-with-cd-command-if-it-has-700-permission](http://askubuntu.com/questions/57789/how-to-enter-to-the-directory-with-cd-command-if-it-has-700-permission)
+[*]What is the 'popularity-contest' package for? - [http://askubuntu.com/questions/57808/what-is-the-popularity-contest-package-for](http://askubuntu.com/questions/57808/what-is-the-popularity-contest-package-for)
+[*]Deleting a file(s) in secure manner - [http://askubuntu.com/questions/57572/deleting-a-files-in-secure-manner](http://askubuntu.com/questions/57572/deleting-a-files-in-secure-manner)
+[*]How to automatically fetch missing dependencies when installing software from .deb? - [http://askubuntu.com/questions/58202/how-to-automatically-fetch-missing-dependencies-when-installing-software-from-de](http://askubuntu.com/questions/58202/how-to-automatically-fetch-missing-dependencies-when-installing-software-from-de)
+[/LIST]
+
+Ask (and answer!) your own questions at [http://askubuntu.com](http://askubuntu.com)
+
+**[size="5"]LoCo News[/size]**
+
+***[size="3"]Ubuntu-ca LoCo Project for Global Jam in September 2011[/size]***
+
+Ralph Janke from the Kitchener/Waterloo chapter of the Ubuntu-ca LoCo proposes collaborative development of a tool during the Global Jam that could allow more people to get involved with the community by helping to automate the packaging process.
+
+[http://drupal.txwikinger.me.uk/content/ubuntu-ca-loco-project-global-jam-september-2011](http://drupal.txwikinger.me.uk/content/ubuntu-ca-loco-project-global-jam-september-2011)
+
+***[size="3"]Ubuntu LoCo Council: Ubuntu Global Jam coming soon[/size]***
+
+Laura Czajkowski of the LoCo Council reminds us that the Ubuntu Global Jam takes place between the 2nd and the 4th of September. At this post on the Ubuntu LoCo Council blog we can get a clear idea of what the Jam is all about.
+
+[http://lococouncil.ubuntu.com/2011/08/16/ubuntu-global-jam-coming-soon/](http://lococouncil.ubuntu.com/2011/08/16/ubuntu-global-jam-coming-soon/)
+
+***[size="3"]Sergio Meneses: Se viene la Ubuntu Global Jam![/size]***
+
+It is the Ubuntu Global Jam, Sergio writes about how the Ubuntu Columbia LoCo team is planning for the upcoming Global Jam. In this post find out how the South American Teams are gearing up for this community event.
+
+Orginal post in Spanish: [http://sergioandresmeneses.wordpress.com/2011/08/16/se-viene-la-ubuntu-global-jam/](http://sergioandresmeneses.wordpress.com/2011/08/16/se-viene-la-ubuntu-global-jam/)
+
+***[size="3"]Nizar Kerkeni: Ubuntu Global Jam Tunisia[/size]***
+
+The Ubuntu Tunisia LoCo Team will be hosting its first Global Jam next month.  This post explains how interested individuals in Tunisia can join in and participate in this Global community event.
+
+Original Post in French: [http://blog.nizarus.org/2011/08/ubuntu-global-jam-tunisia](http://blog.nizarus.org/2011/08/ubuntu-global-jam-tunisia)
+
+**[size="5"]Launchpad News[/size]**
+
+***[size="3"]Users can now move bugs between projects and distros[/size]***
+
+Users in Launchpad can now change what projects or distributions a bug affects in a similar fashion to the way they could re-target questions.
+
+[http://blog.launchpad.net/general/users-can-now-move-bugs-between-projects-and-distros](http://blog.launchpad.net/general/users-can-now-move-bugs-between-projects-and-distros)
+
+**[size="5"]The Planet[/size]**
+
+***[size="3"]Randall Ross: Unity. Simplify Your Life.[/size]***
+
+Pritpaul Bains and Charlene Tessier of the Ubuntu Vancouver Local Community announce a guide to using Unity, Ubuntu's new user interface and offer it for download.
+
+[http://randall.executiv.es/unity_simplify_your_life](http://randall.executiv.es/unity_simplify_your_life)
+
+***[size="3"]Elizabeth Krumbach: News is hard, but we're making it easier[/size]***
+
+Elizabeth Krumbach discusses proposed changes to the Ubuntu Weekly Newsletter (UWN) workflow in order to better balance the workload and avoid outages like the recent one from February to May. There are many changes, including getting help from summary writers.
+
+[http://princessleia.com/journal/?p=4859](http://princessleia.com/journal/?p=4859)
+
+***[size="3"]Collin Pruitt: Ubuntu Oneiric Ocelot (11.10)[/size]***
+
+Collin Pruitt offers his opinion into the big changes for 11.10 -- Thunderbird beating out Evolution, LightDM replacing GDM, Unity 2D ousting Gnome Classic, and Deja Dup as the new backup solution.
+
+[http://collinp.com/wordpress/2011/08/14/ubuntu-oneiric-ocelot-11-10/](http://collinp.com/wordpress/2011/08/14/ubuntu-oneiric-ocelot-11-10/)
+
+***[size="3"]Ubuntu Arabic, in print![/size]***
+
+Paul Sladen announces that the beta version of Ubuntu Font Family Arabic is now in print in a tri-lingual magazine published in Germany.
+
+[http://design.canonical.com/2011/08/ubuntu-arabic-in-print/](http://design.canonical.com/2011/08/ubuntu-arabic-in-print/)
+
+***[size="3"]Sebastian Kugler: Release Team Changes[/size]***
+
+The recent Desktop Summit session in Berlin focused on now the KDE release team performs. This post talks about changes which are being implemented to make development easier.
+
+[http://vizzzion.org/blog/2011/08/release-team-changes/](http://vizzzion.org/blog/2011/08/release-team-changes/)
+
+***[size="3"]Mark Shuttleworth: Corporate desktops and Ubuntu[/size]***
+
+In this post Mark Shuttleworth made at his blog, he reminds us that the corporate desktop is currently being reinvented, and Ubuntu is leading the market and largely defining these changes.
+
+[http://www.markshuttleworth.com/archives/738](http://www.markshuttleworth.com/archives/738)
+
+***[size="3"]Jono Bacon: Ubuntu Membership and Developer Surveys[/size]***
+
+Jono Bacon, Ubuntu community manager at Canonical, is working on two surveys to better understand where both Ubuntu Member and Ubuntu Developer applicants see where the processes and areas can improve.
+
+[http://www.jonobacon.org/2011/08/15/ubuntu-membership-and-developer-surveys/](http://www.jonobacon.org/2011/08/15/ubuntu-membership-and-developer-surveys/)
+
+***[size="3"]Victor Tuson Palau: Ubuntu Server Certification - Improving SRU Testing[/size]***
+
+In an effort to improve the Ubuntu Server SRU testing process Victor Palau, Director of Platform Services at Canonical, asks for feedback from the server community. "If you are running Ubuntu Server, I would like to hear from you about your experience with SRUs and any serious hardware-specific regressions that you may have encounter?", writes Palau.
+
+[http://victorpalau.net/2011/08/16/ubuntu-server-certification-improving-sru-testing/](http://victorpalau.net/2011/08/16/ubuntu-server-certification-improving-sru-testing/)
+
+***[size="3"]You In Ubuntu: Interview: Kate Stewart, Ubuntu Release Manager at Canonical[/size]***
+
+Amber Graner at Ubuntu User magazine interviews Kate Stewart, the Ubuntu Release Manager at Canonical. Kate Stewart discusses what she does, her open source background, challenges, and more.
+
+[http://www.ubuntu-user.com/Online/Blogs/Amber-Graner-You-in-Ubuntu/Interview-Kate-Stewart-Ubuntu-Release-Manager-at-Canonical](http://www.ubuntu-user.com/Online/Blogs/Amber-Graner-You-in-Ubuntu/Interview-Kate-Stewart-Ubuntu-Release-Manager-at-Canonical)
+
+***[size="3"]Canonical Design Team: Quick wallpaper update[/size]***
+
+Iain Ferrell updates the community on the what wallpaper the community could be seeing in Oneiric. The final selections haven't been made yet but should be soon.  Check out this post to get a sneak peek at the possibilities.
+
+[http://design.canonical.com/2011/08/quick-wallpaper-update/](http://design.canonical.com/2011/08/quick-wallpaper-update/)
+
+**[size="5"]In The Press[/size]**
+
+***[size="3"]Natty Narwhal netbook: The ultimate network administrator toolkit[/size]***
+
+In this article Carla Schroder explores the symbiosis of using a netbook and Ubuntu to create a must have tool for network administrators.
+
+[http://www.itworld.com/data-centerservers/192873/natty-narwhal-netbook-ultimate-network-administrator-toolkit](http://www.itworld.com/data-centerservers/192873/natty-narwhal-netbook-ultimate-network-administrator-toolkit)
+
+***[size="3"]Ubuntu's Next Unity Begins to Take Shape[/size]***
+
+As the article explains, "Whatever your thoughts about the current Unity, however, be prepared to change them..." It goes on to explore the recent blog post of Mark Shuttleworth about the changes in Unity coming in 11.10.
+
+[http://www.pcworld.com/businesscenter/article/238352/ubuntus_next_unity_begins_to_take_shape.html](http://www.pcworld.com/businesscenter/article/238352/ubuntus_next_unity_begins_to_take_shape.html)
+
+***[size="3"]Canonical ARMs Ubuntu for microserver wars[/size]***
+
+Ubuntu Server 11.10 will be able to run on ARM processors, and plans for it to  be included in the LTS release 12.04 coming in April of next year.
+
+[http://www.theregister.co.uk/2011/08/18/canonical_ubuntu_server_arm/](http://www.theregister.co.uk/2011/08/18/canonical_ubuntu_server_arm/)
+
+**[size="5"]In The Blogosphere[/size]**
+
+***[size="3"]Spending the day with an Ocelot[/size]***
+
+Larry the Free Software Guy "doesn't" do a review of the current Alpha release of Oneiric Ocelot, but he does give us his thoughts on it.
+
+[http://larrythefreesoftwareguy.wordpress.com/2011/08/14/spending-the-day-with-an-ocelot/](http://larrythefreesoftwareguy.wordpress.com/2011/08/14/spending-the-day-with-an-ocelot/)
+
+***[size="3"][Screenshots and Video] New Improved Unity Interface Lands in Ubuntu 11.10[/size]***
+
+The Unity interface has gotten a lot of attention in the up-and-coming Ubuntu 11.04 release.  This blog entry features screenshots and a screen cast showing off the new interface.
+
+[http://www.ubuntuvibes.com/2011/08/screenshots-and-video-new-improved.html](http://www.ubuntuvibes.com/2011/08/screenshots-and-video-new-improved.html)
+
+***[size="3"]Ubuntu 11.10 Oneric Ocelot Alpha 3 Quick Review[/size]***
+
+Manual Jose took the plunge and installed the Ubuntu 11.04 Alpha 3 on his machine to give us a review after trying it out for the last two weeks.
+
+[http://www.techdrivein.com/2011/08/ubuntu-1110-oneric-ocelot-alpha-3-quick.html](http://www.techdrivein.com/2011/08/ubuntu-1110-oneric-ocelot-alpha-3-quick.html)
+
+***[size="3"]Is Canonical Weighing Other E-Mail Options with Thunderbird?[/size]***
+
+A while ago Canonical commissioned an external usability analysis of Thunderbird and Evolution to help them decide the default mail client that would ship with Ubuntu 11.10.  In this article the merit of the two clients are discussed as well as they question if off-line e-mail clients may becoming obsolete.
+
+[http://www.thevarguy.com/2011/08/09/is-canonical-weighing-other-e-mail-options-with-thunderbird/](http://www.thevarguy.com/2011/08/09/is-canonical-weighing-other-e-mail-options-with-thunderbird/)
+
+***[size="3"]Introduction To The Ubuntu Unity Desktop[/size]***
+
+HowtoForge takes a quick tour of the Unity interface giving some tips and tricks on how to increase productivity while using it.
+
+[http://www.howtoforge.com/introduction-to-the-ubuntu-unity-desktop](http://www.howtoforge.com/introduction-to-the-ubuntu-unity-desktop)
+
+***[size="3"]Will Ubuntu lead the next generation of Desktop computing?[/size]***
+
+In this article Ubuntu and the change it is trying to bring to desktop computing is considered in a broader context and identifies several levels on which Ubuntu is building "the true open source experience whether for personal use or at enterprise level".
+
+[http://www.unixmen.com/linux-tutorials/linux-distributions/linux-distributions4-ubuntu/1860-will-ubuntu-lead-the-next-generation-of-desktop-computing](http://www.unixmen.com/linux-tutorials/linux-distributions/linux-distributions4-ubuntu/1860-will-ubuntu-lead-the-next-generation-of-desktop-computing)
+
+***[size="3"]Behold The Power Cog [Minor Oneiric update alert][/size]***
+
+Combine the power and settings icon (and functionality) in Oneiric and you get the latest change to the Unity interface, the Power Cog.
+
+[http://www.omgubuntu.co.uk/2011/08/power-cog-icon-oneiric/](http://www.omgubuntu.co.uk/2011/08/power-cog-icon-oneiric/)
+
+**[size="5"]In Other News[/size]**
+
+***[size="3"]10 Great Free Open-Source Software Advancements In The Past Year[/size]***
+
+As the title suggestions, this article explores FOSS advancements in the past year, including the launch of Unity, the boot speed improvements to Ubuntu, and more.
+
+[http://www.crn.com/slide-shows/applications-os/231400086/10-great-free-open-source-software-advancements-in-the-past-year.htm](http://www.crn.com/slide-shows/applications-os/231400086/10-great-free-open-source-software-advancements-in-the-past-year.htm)
+
+***[size="3"]After 20 Years, Linux Looks Better Than Ever[/size]***
+
+Katherine-Noyes of PCWorld reflects on the past 20 years of Linux, discusses a "Linux-based world" and mentions that currently Ubuntu has come to account for the majority of the Linux distributions used and the challenges that Linux faces.
+
+[http://www.pcworld.com/businesscenter/article/238321/after_20_years_linux_looks_better_than_ever.html](http://www.pcworld.com/businesscenter/article/238321/after_20_years_linux_looks_better_than_ever.html)
+
+***[size="3"]11 Milestones In Linux History[/size]***
+
+Robert Strohmeyer at InformationWeek discusses some of the major moments in the history of Linux in celebration of its 20th birthday this year, the first release of Ubuntu is among them.
+
+[http://www.informationweek.com/news/development/open-source/231500285](http://www.informationweek.com/news/development/open-source/231500285)
+
+**[size="5"]Featured Podcasts[/size]**
+
+***[size="3"]Ubuntu Podcast from the UK LoCo: S04E13 - When Two Worlds Collide[/size]***
+
+Ubuntu UK podcast team combined forces with Linux Outlaws podcast at OggCamp 11, and recorded a joint podcast at the end of the first day of the unconference.
+
+[http://podcast.ubuntu-uk.org/2011/08/17/s04e13-when-two-worlds-collide/](http://podcast.ubuntu-uk.org/2011/08/17/s04e13-when-two-worlds-collide/)
+
+***[size="3"]Full Circle Podcast 23: OGGCamp Part One[/size]***
+
+Listen to Robin Catling reporting some highlights from the first day of the two-day open-source (and more) unconference OGGCamp 11.
+
+[http://fullcirclemagazine.org/2011/08/19/full-circle-podcast-23-oggcamp-part-one/](http://fullcirclemagazine.org/2011/08/19/full-circle-podcast-23-oggcamp-part-one/)
+
+**[size="5"]Weekly Ubuntu Development Team Meetings[/size]**
+
+[LIST]
+[*]Ubuntu Desktop Team Meeting Minutes for August 16th, 2011: [https://wiki.ubuntu.com/DesktopTeam/Meeting/2011-08-16](https://wiki.ubuntu.com/DesktopTeam/Meeting/2011-08-16)
+[*]Ubuntu Kernel Team Meeting Minutes for August 16th, 2011: [https://wiki.ubuntu.com/KernelTeam/Meeting/2011-08-16](https://wiki.ubuntu.com/KernelTeam/Meeting/2011-08-16)
+[*]Ubuntu Release Team Meeting Minutes for August 19th, 2011: [https://wiki.ubuntu.com/ReleaseTeam/Meeting/2011-08-19](https://wiki.ubuntu.com/ReleaseTeam/Meeting/2011-08-19)
+[*]Ubuntu ARM Team Meeting Minutes for August 18th, 2011: [https://wiki.ubuntu.com/ARM/Meeting/2011/20110818](https://wiki.ubuntu.com/ARM/Meeting/2011/20110818)
+[/LIST]
+
+**[size="5"]Upcoming Meetings and Events[/size]**
+
+For upcoming meetings and events please visit the calendars at fridge.ubuntu.com: [http://fridge.ubuntu.com/calendars/](http://fridge.ubuntu.com/calendars/)
+
+**[size="5"]Updates and Security for 8.04, 10.04, 10.10 and 11.04[/size]**
+
+***[size="3"]Security Updates[/size]***
+
+[LIST]
+[*][USN-1190-1] DHCP vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001393.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001393.html)
+[*][USN-1191-1] libXfont vulnerability - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001394.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001394.html)
+[*][USN-1192-1] Firefox vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001395.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001395.html)
+[*][USN-1192-2] Mozvoikko update - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001396.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001396.html)
+[*][USN-1184-1] Firefox and Xulrunner vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001397.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001397.html)
+[*][USN-1189-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001398.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001398.html)
+[*][USN-1193-1] Linux kernel vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001399.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001399.html)
+[*][USN-1194-1] Foomatic filters vulnerabilities - [https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001400.html](https://lists.ubuntu.com/archives/ubuntu-security-announce/2011-August/001400.html)
+[/LIST]
+
+***[size="3"]Ubuntu 8.04 Updates[/size]***
+
+[LIST]
+[*]samba_3.0.28a-1ubuntu4.15_hppa_translations.tar.gz - [https://lists.ubuntu.com/archives/hardy-changes/2011-August/012675.html](https://lists.ubuntu.com/archives/hardy-changes/2011-August/012675.html)
+[*]dhcp3 - [https://lists.ubuntu.com/archives/hardy-changes/2011-August/012676.html](https://lists.ubuntu.com/archives/hardy-changes/2011-August/012676.html)
+[*]base-installer 1.86ubuntu2.4 - [https://lists.ubuntu.com/archives/hardy-changes/2011-August/012677.html](https://lists.ubuntu.com/archives/hardy-changes/2011-August/012677.html)
+[*]foomatic-filters - [https://lists.ubuntu.com/archives/hardy-changes/2011-August/012678.html](https://lists.ubuntu.com/archives/hardy-changes/2011-August/012678.html)
+[/LIST]
+
+***[size="3"]Ubuntu 10.04 Updates[/size]***
+
+[LIST]
+[*]libxfont 1:1.4.1-1ubuntu0.1 - [https://lists.ubuntu.com/archives/lucid-changes/2011-August/012435.html](https://lists.ubuntu.com/archives/lucid-changes/2011-August/012435.html)
+[*]dhcp3 - [https://lists.ubuntu.com/archives/lucid-changes/2011-August/012436.html](https://lists.ubuntu.com/archives/lucid-changes/2011-August/012436.html)
+[*]base-installer 1.103ubuntu8 - [https://lists.ubuntu.com/archives/lucid-changes/2011-August/012437.html](https://lists.ubuntu.com/archives/lucid-changes/2011-August/012437.html)
+[*]foomatic-filters_4.0.4-0ubuntu1.1_armel_translations.tar.gz - [https://lists.ubuntu.com/archives/lucid-changes/2011-August/012438.html](https://lists.ubuntu.com/archives/lucid-changes/2011-August/012438.html)
+[/LIST]
+
+***[size="3"]Ubuntu 10.10 Updates[/size]***
+
+[LIST]
+[*]libxfont 1:1.4.2-1ubuntu0.1 - [https://lists.ubuntu.com/archives/maverick-changes/2011-August/009566.html](https://lists.ubuntu.com/archives/maverick-changes/2011-August/009566.html)
+[*]dhcp3_3.1.3-2ubuntu6.3_powerpc_translations.tar.gz - [https://lists.ubuntu.com/archives/maverick-changes/2011-August/009567.html](https://lists.ubuntu.com/archives/maverick-changes/2011-August/009567.html)
+[*]base-installer 1.107ubuntu4 - [https://lists.ubuntu.com/archives/maverick-changes/2011-August/009568.html](https://lists.ubuntu.com/archives/maverick-changes/2011-August/009568.html)
+[*]foomatic-filters - [https://lists.ubuntu.com/archives/maverick-changes/2011-August/009569.html](https://lists.ubuntu.com/archives/maverick-changes/2011-August/009569.html)
+[/LIST]
+
+***[size="3"]Ubuntu 11.04 Updates[/size]***
+
+[LIST]
+[*]libxfont 1:1.4.3-2ubuntu0.1 - [https://lists.ubuntu.com/archives/natty-changes/2011-August/012079.html](https://lists.ubuntu.com/archives/natty-changes/2011-August/012079.html)
+[*]isc-dhcp_4.1.1-P1-15ubuntu9.1_powerpc_translations.tar.gz- [https://lists.ubuntu.com/archives/natty-changes/2011-August/012080.html](https://lists.ubuntu.com/archives/natty-changes/2011-August/012080.html)
+[*]clamav 0.97.2+dfsg-1ubuntu0.11.04 - [https://lists.ubuntu.com/archives/natty-changes/2011-August/012081.html](https://lists.ubuntu.com/archives/natty-changes/2011-August/012081.html)
+[*]base-installer 1.116ubuntu3 - [https://lists.ubuntu.com/archives/natty-changes/2011-August/012082.html](https://lists.ubuntu.com/archives/natty-changes/2011-August/012082.html)
+[*]foomatic-filters- [https://lists.ubuntu.com/archives/natty-changes/2011-August/012083.html](https://lists.ubuntu.com/archives/natty-changes/2011-August/012083.html)
+[/LIST]
+
+**[size="5"]UWN Translations[/size]**
+
+[LIST]
+[*]Note to translators and our readers please follow the link below for the information you need.
+[/LIST]
+
+[https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Translations](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Translations)
+
+**[size="5"]Subscribe[/size]**
+
+Get your copy of the Ubuntu Weekly Newsletter delivered each week to you via email at: [https://lists.ubuntu.com/mailman/listinfo/ubuntu-news](https://lists.ubuntu.com/mailman/listinfo/ubuntu-news)
+
+**[size="5"]Archives[/size]**
+
+You can always find older Ubuntu Weekly Newsletter issues at: [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter)
+
+**[size="5"]Additional Ubuntu News[/size]**
+
+As always you can find more news and announcements at:
+
+ [http://www.ubuntu.com/news](http://www.ubuntu.com/news)
+
+and
+
+ [http://fridge.ubuntu.com/](http://fridge.ubuntu.com/)
+
+**[size="5"]Conclusion[/size]**
+
+Thank you for reading the Ubuntu Weekly Newsletter.
+
+See you next week!
+
+**[size="5"]Credits[/size]**
+
+The Ubuntu Weekly Newsletter is brought to you by:
+
+[LIST]
+[*]Elizabeth Krumbach
+[*]Jessica Ledbetter
+[*]Miia Ranta
+[*]Neil Oosthuizen
+[*]Daniel Bo
+[*]holstein
+[*]Amber Graner
+[*]And many others
+[/LIST]
+
+**[size="5"]Glossary of Terms[/size]**
+
+Other acronyms can be found at [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/glossary](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/glossary)
+
+**[size="5"]Ubuntu - Get Involved[/size]**
+
+The Ubuntu community consists of individuals and teams, working on different aspects of the distribution, giving advice and technical support, and helping to promote Ubuntu to a wider audience. No contribution is too small, and anyone can help. It's your chance to get in on all the community fun associated with developing and promoting Ubuntu. [http://www.ubuntu.com/community/participate](http://www.ubuntu.com/community/participate)
+
+**[size="5"]Feedback[/size]**
+
+This document is maintained by the Ubuntu Weekly News Team. If you have a story idea or suggestions for the Weekly Newsletter, join the Ubuntu News Team mailing list at [https://lists.ubuntu.com/mailman/listinfo/Ubuntu-news-team](https://lists.ubuntu.com/mailman/listinfo/Ubuntu-news-team) and submit it. Ideas can also be added to the wiki at [https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Ideas](https://wiki.ubuntu.com/UbuntuWeeklyNewsletter/Ideas). If you'd like to contribute to a future issue of the Ubuntu Weekly Newsletter, please feel free to edit the appropriate wiki page. If you have any technical support questions, please send them to [email]ubuntu-users@lists.ubuntu.com[/email].
+
+[IMG]http://fridge.ubuntu.com/wp-content/uploads/2011/07/CCL.png[/IMG]Except where otherwise noted, content in this issue is licensed under a Creative Commons Attribution 3.0 License - [http://creativecommons.org/licenses/by-sa/3.0/](http://creativecommons.org/licenses/by-sa/3.0/)
+
+---
+
