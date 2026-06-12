@@ -1,0 +1,102 @@
+---
+title: "QmFzZTY0IHRoZSBiaWcgYnJvdGhlciB0byBiaW5hcnkgZW5jb2 RkaW5nLg=="
+date: 2008-01-24
+forum: Cafe Games
+---
+
+### Post by Lostincyberspace on 2008-01-24
+011010000111010001110100011100000011101000101111001011110111011101110111011101110010111001101101011011110111010001101111011000100110100101110100001011100110001101101111011011010010111101110101011101000110100101101100001011110110001001100001011100110110010100110110001101000010110101100100011001010110001101101111011001000110010101110010001011010110010101101110011000110110111101100100011001010111001000101110011000010111001101110000
+
+SGVyZSB3ZSBjYW4gY2hhdCBpbiBiYXNlIDY0IGFuZCBub3QgaGF2ZSBhbnkgcHJvYmxlbXMgb2Yg
+cGVvcGxlIGJlaW5nIGVhc2lseSBhYmxlIHRvIGZpZ3VyZSBvdXQgd2hhdCB3ZSBhcmUgc2F5aW5n
+Lg0KDQpUaGlzIHRocmVhZCBpcyBhYm91dCBsaWtlIHRoZSBiaW5hcnkgb25lIG9ubHkgaW4gYmFz
+ZTY0
+
+---
+
+### Post by p_quarles on 2008-01-24
+VW1tLCBsZWV0a2V5IG1ha2VzIGl0IHByZXR0eSBlYXN5LCBhY3R1YWxseS4gDQ==
+
+---
+
+### Post by savagenator on 2008-01-24
+V293LCBhdCBmaXJzdCBpIHRyaWVkIHRvIHJlYWQgdGhlIHRleHQgYXMgbGVldCwgYnV0IG5vdyBpIGp1c3QgdHJhbnNsYXRlIGl0LiBXaGF0IGlzIGxlZXRrZXkgYW55d2F5Pw==
+
+---
+
+### Post by dynamethod on 2008-01-24
+fair enough too
+
+---
+
+### Post by dynamethod on 2008-01-24
+b3Igc2hvdWxkIGkgc2F5LCBmYWlyIGVub3VnaA==
+
+---
+
+### Post by dynamethod on 2008-01-24
+876ed06c78775293d23fb4794db3506a9de695b0
+
+---
+
+### Post by p_quarles on 2008-01-24
+> **savagenator said:**
+> V293LCBhdCBmaXJzdCBpIHRyaWVkIHRvIHJlYWQgdGhlIHRleHQgYXMgbGVldCwgYnV0IG5vdyBpIGp1c3QgdHJhbnNsYXRlIGl0LiBXaGF0IGlzIGxlZXRrZXkgYW55d2F5Pw==
+SXQncyBhbiBleHRlbnNpb24gZm9yIEZpcmVmb3ggdGhhdCBhbGxvd3MgeW91IHRvIGVhc2lseSBj b252ZXJ0IHRleHQgdG8gYW5kIGZyb20gYSBudW1iZXIgb2YgY29kZXMuDQ==
+
+---
+
+### Post by PurposeOfReason on 2008-01-24
+VGhlIGJpbmFyeSB0aHJlYWQganVzdCB3YXNuJ3QgZW5vdWdoIG5vdyB3YXMgaXQ/
+
+---
+
+### Post by Lostincyberspace on 2008-01-24
+> **PurposeOfReason said:**
+> VGhlIGJpbmFyeSB0aHJlYWQganVzdCB3YXNuJ3QgZW5vdWdoIG5vdyB3YXMgaXQ/
+Tm9wZSEgSSBwb3N0ZWQgdGhlcmUgdHJ5aW5nIHRvIGdldCBpbnRlcmVzdCBvdXQgYWJvdXQgdGhp
+cyE=
+
+---
+
+### Post by PurposeOfReason on 2008-01-24
+> **Lostincyberspace said:**
+> Tm9wZSEgSSBwb3N0ZWQgdGhlcmUgdHJ5aW5nIHRvIGdldCBpbnRlcmVzdCBvdXQgYWJvdXQgdGhp
+cyE=
+V2VsbCBpbiB0aGF0IGNhc2UsIGhvdyAnYm91dCB0aGF0IHdlYXRoZXI/
+
+---
+
+### Post by FuturePilot on 2008-01-24
+VGhlIDEzMzcga2V5IGV4dGVuc2lvbiBjYW4gZG8gZXZlcnl0aGluZy4gWW91IHNob3VsZCB0cnkg
+aXQgOyk=
+
+---
+
+### Post by Lostincyberspace on 2008-01-24
+> **PurposeOfReason said:**
+> V2VsbCBpbiB0aGF0IGNhc2UsIGhvdyAnYm91dCB0aGF0IHdlYXRoZXI/
+Tm90IHRvIHNoYWJieSBJIHRoaW5rLiBBIExpdHRsZSBjb2xkIGhlcmUgZm9yIG15IHRhc3RlcyB0
+aG91Z2gu
+
+---
+
+### Post by dynamethod on 2008-01-24
+Lrnu ohg vg'f abg ernyyl gung tbbq sbe nalguvat, jung jbhyq lbh arrq n gbby yvxr gung sbe?
+
+---
+
+### Post by PurposeOfReason on 2008-01-24
+> **Lostincyberspace said:**
+> Tm90IHRvIHNoYWJieSBJIHRoaW5rLiBBIExpdHRsZSBjb2xkIGhlcmUgZm9yIG15IHRhc3RlcyB0
+aG91Z2gu
+WWVhaCwgSSdtIGF0IDI4IG92ZXIgaGVyZS4gSSB3YW50IHN1bW1lci4KCkJ1dCB0aGF0IDEzMzcg
+ZXh0ZW5zaW9uIGlzIHdoZXJlIGl0J3MgYXQ=
+
+---
+
+### Post by FuturePilot on 2008-01-24
+aHR0cHM6Ly9hZGRvbnMubW96aWxsYS5vcmcvZW4tVVMvZmlyZWZveC9hZGRvbi83NzA=
+
+---
+
