@@ -1,0 +1,19 @@
+---
+title: "First Impression of gNewSense from a Distro Whore"
+date: 2008-05-07
+forum: Other OS Talk
+---
+
+### Post by Scheater5 on 2008-05-07
+I've done one of these on [OSX]("http://ubuntuforums.org/showthread.php?t=585921"), [PCBSD]("http://ubuntuforums.org/showthread.php?t=566063"), [DesktopBSD]("http://ubuntuforums.org/showthread.php?t=491664"), [Fedora]("http://ubuntuforums.org/showthread.php?t=339995"), and it all started with a review of [Sabayon]("http://ubuntuforums.org/showthread.php?t=356570").  Now, my latest distro tryout is gNewSense.
+    The ideals of open source software was one of the first things that attracted my to Ubuntu when I first came to Linux.  However, while I value the ideas of software libre and open society, in practice I tend to be more of a "Linus" than a "Stallman" - pragmaticism wins over ideals everytime.  But I *do* still have ideals.  So when the new version of gNewSense was hot on the heels of Hardy, I decided to give it a whirl.
+    And to be perfectly honest, I wasn't disappointed.  Free software has come a long way in a few short years.  When I first started using Ubuntu there wasn't even an open source drivers for my wireless card, much less was it detected correctly by default - I was using ndswrapper until Edgy.  My monitor didn't have full resolution without proprietary drivers, and the open source driver for my graphics card didn't support direct rendering.  Now, all of those things work out of the box, with nothing but *software libre* drivers.  So, gNewSense booted up without a hitch, I played around with the live CD, and decided to install in a virtual machine.
+   gNewSense played nice with VirtualBox, and in about a half an hour I had a working install.  Everything worked exactly the way it was supposed to.  
+  But something was bugging me.  gNewSense wasn't really anything new.  It's Ubuntu, minus.  The only aesthetic changes I can find are the logo, the wallpaper and the GDM.  Which, one of the things that REALLY bugged me is that they didn't even bother to change the background on the GDM.  So, you boot into this nice  blue-green login screen, and then you're smacked with Ubuntu brown, before the desktop loads and you're back to blue-green.  It may be a small detail, but it just screams lack of polish to me.  
+   This, and a several more details like the fact that it still uses the Human theme despite clashing with the wallpaper ugly logo, just don't do it for me.  I understand it's an idealist distribution, and that the idea is to make Ubuntu free and not fork it - but even Linux Mint and Ubuntu Ultimate changed the theme.  
+   Before you start screaming, "but you're missing the point!" let me say that I think gNewSense is missing the point.  If we're going to get wider adoption for free software, it has to be attractive.  There has to be a reason someone would want to use it.  And right now the only argument Stallman has given for gNewSense that I buy is that open source means less vulnerable.  But right now I don't see that as making a practical, appreciable difference.  What DOES make a difference is that my graphics card can't be used to it's full potential (although it will run Compiz now, which it wouldn't two years ago) and gnash is horrible.  
+   Integration, I have come to believe, is the single greatest factor to what makes a desktop look amazing or lackluster.  It's why your average Windows desktop, with 500 myriad non-related icons, looks like poo compared to your average Mac desktop.  Start by making the bootup and login process seamless, at least tweak the theme a little and consider a different icon set - and THEN we'll be talking about some serious coolness coming out of free software.  
+   Personally, I care more about ethics than legalities - and I find nothing ethically wrong with running Ubuntu.
+
+---
+
