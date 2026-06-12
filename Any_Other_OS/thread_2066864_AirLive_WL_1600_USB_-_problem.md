@@ -1,0 +1,475 @@
+---
+title: "AirLive WL 1600 USB - problem"
+date: 2012-10-05
+forum: Any Other OS
+---
+
+### Post by Vandamir on 2012-10-05
+Hi everyone,
+I am using a Linux Mint 13 x64 KDE.The drivers which are included in this system does not work properly so I decided to install ndiswrapper. I installed driver, added rtl8187 to black list but when I try to load ndiswrapper nothing happens.
+
+```
+dmesg | grep ndis [   19.313646] ndiswrapper version 1.57 loaded (smp=yes, preempt=no)
+
+[  241.332299]  [<ffffffffa01b2d48>] load_wrap_driver+0x138/0x1f0 [ndiswrapper]
+
+[  241.332338]  [<ffffffffa01c2377>] wrap_pnp_start_device+0x37/0x1e0 [ndiswrapper]
+
+[  241.332394]  [<ffffffffa01c2e1f>] wrap_pnp_start_usb_device+0xef/0x120 [ndiswrapper]
+
+[  241.332555]  [<ffffffffa01b42ab>] loader_init+0xbb/0x150 [ndiswrapper]
+
+[  241.332580]  [<ffffffffa0158073>] wrapper_init+0x73/0x1000 [ndiswrapper]
+
+[  361.332298]  [<ffffffffa01b2d48>] load_wrap_driver+0x138/0x1f0 [ndiswrapper]
+
+[  361.332337]  [<ffffffffa01c2377>] wrap_pnp_start_device+0x37/0x1e0 [ndiswrapper]
+
+[  361.332393]  [<ffffffffa01c2e1f>] wrap_pnp_start_usb_device+0xef/0x120 [ndiswrapper]
+
+[  361.332554]  [<ffffffffa01b42ab>] loader_init+0xbb/0x150 [ndiswrapper]
+
+[  361.332580]  [<ffffffffa0158073>] wrapper_init+0x73/0x1000 [ndiswrapper]
+```
+Could you help me ?
+
+---
+
+### Post by Perfect Storm on 2012-10-06
+Moved to Other OS/Distro Talk.
+
+---
+
+### Post by chili555 on 2012-10-06
+Let's have a look at some additional diagnostics:```
+lsusb
+ndiswrapper -l
+ls /etc/ndiswrapper
+```Thanks.
+
+---
+
+### Post by Vandamir on 2012-10-06
+```
+lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 006 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 001 Device 003: ID 1b75:8187 Ovislink Corp. AirLive WL-1600USB 802.11g Adapter [Realtek RTL8187L]
+Bus 003 Device 002: ID 04f3:0210 Elan Microelectronics Corp. AM-400 Hama Optical Mouse
+Bus 002 Device 002: ID 04f2:b071 Chicony Electronics Co., Ltd 2.0M UVC Webcam / CNF7129
+
+ndiswrapper -l
+netrtuw_x64 : driver installed
+        device (1B75:8187) present (alternate driver: rtl8187)
+
+ls /etc/ndiswrapper
+netrtuw_x64
+
+```
+
+---
+
+### Post by chili555 on 2012-10-06
+Let's make sure rtl8187 is indeed not loaded and therefor properly blacklisted:```
+lsmod | grep 818
+```I assume you do have a 64-bit system:```
+arch
+```Where did the .inf file come from? Is it a Windows ***XP*** file?
+
+---
+
+### Post by Vandamir on 2012-10-06
+The *.inf file comes from AirLive page and it's Windows XP file.
+```
+arch
+x86_64
+```
+When I wrote in console ```
+lsmod | grep 818
+``` nothing showed up.
+
+---
+
+### Post by chili555 on 2012-10-07
+My favorite kind of problem: everything looks perfect except it doesn't work!
+
+Let's be sure ndiswrapper loads on boot.```
+sudo gedit /etc/modules
+```If ndiswrapper isn't already in there, add it as a single word at the end. Proofread, save and close gedit. Reboot. Now run:```
+dmesg | grep -e 818 -e ndis 
+iwconfig
+```Thanks.
+
+---
+
+### Post by Vandamir on 2012-10-08
+I opened /etc/modules by 
+```
+nano /etc/modules
+``` and ndiswrapper was already there.
+
+```
+grep -e 818 -e ndis
+[    0.239818] pci_root PNP0A03:00: host bridge window [mem 0x000d0000-0x000dffff]
+[    0.276207] hpet0: 4 comparators, 32-bit 14.318180 MHz counter
+[    0.287818] pnp 00:01: [mem 0x00000000-0xffffffffffffffff disabled]
+[    0.288184] pnp 00:03: Plug and Play ACPI device, IDs PNP0b00 (active)
+[    1.378181] ACPI: Lid Switch [LID]
+[    2.441818] [drm] Detected VRAM RAM=512M, BAR=256M
+[    2.497818] input: PS/2+USB Mouse as /devices/pci0000:00/0000:00:12.0/usb3/3-1/3-1:1.0/input/input6
+[   19.362815] ndiswrapper version 1.57 loaded (smp=yes, preempt=no)
+```
+
+```
+lo        no wireless extensions.
+
+wlan0     IEEE 802.11bgn  ESSID:off/any  
+          Mode:Managed  Access Point: Not-Associated   Tx-Power=14 dBm   
+          Retry  long limit:7   RTS thr:off   Fragment thr:off
+          Encryption key:off
+          Power Management:off
+          
+eth0      no wireless extensions.
+```
+It seems that my card isn't loaded because it's wlan1.
+
+---
+
+### Post by chili555 on 2012-10-08
+> It seems that my card isn't loaded because it's wlan1.What?? If wlan**0** is showing up, and you think it's your internal device, then it could only be that rtl8187 is loading and not effectively blacklisted. However, we don't see that in dmesg. Let's dig even deeper in the warp core. Please let us see:```
+cat /etc/udev/rules.d/70-persistent-net.rules
+sudo lshw -C network
+```
+
+---
+
+### Post by Vandamir on 2012-10-08
+I have one WiFi card in my laptop but I need to install the AirLive.
+```
+cat /etc/udev/rules.d/70-persistent-net.rules
+# This file was automatically generated by the /lib/udev/write_net_rules
+# program, run by the persistent-net-generator.rules rules file.
+#
+# You can modify it, as long as you keep each rule on a single
+# line, and change only the value of the NAME= key.
+
+# PCI device 0x10ec:/sys/devices/pci0000:00/0000:00:05.0/0000:02:00.0 (r8169)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:26:18:2b:1f:f6", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
+
+# PCI device 0x168c:/sys/devices/pci0000:00/0000:00:06.0/0000:03:00.0 (ath9k)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:22:43:9c:80:c2", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
+
+# USB device 0x1b75:0x8187 (usb)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:4f:78:00:2d:c0", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan1"
+
+# USB device 0x1b75:0x8187 (usb)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:4f:78:00:2d:c1", KERNEL=="wlan*", NAME="wlan2"
+```
+```
+sudo lshw -C network
+PCI (sysfs)  
+  *-network               
+       description: Ethernet interface
+       product: RTL8111/8168B PCI Express Gigabit Ethernet controller
+       vendor: Realtek Semiconductor Co., Ltd.
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eth0
+       version: 01
+       serial: 00:26:18:2b:1f:f6
+       size: 10Mbit/s
+       capacity: 1Gbit/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm vpd msi pciexpress bus_master cap_list rom ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=half firmware=N/A latency=0 link=no multicast=yes port=MII speed=10Mbit/s
+       resources: irq:43 ioport:e800(size=256) memory:fbeff000-fbefffff memory:fbec0000-fbedffff
+  *-network
+       description: Wireless interface
+       product: AR9285 Wireless Network Adapter (PCI-Express)
+       vendor: Atheros Communications Inc.
+       physical id: 0
+       bus info: pci@0000:03:00.0
+       logical name: wlan0
+       version: 01
+       serial: 00:22:43:9c:80:c2
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi pciexpress bus_master cap_list ethernet physical wireless
+       configuration: broadcast=yes driver=ath9k driverversion=3.2.0-23-generic firmware=N/A latency=0 link=no multicast=yes wireless=IEEE 802.11bgn
+       resources: irq:18 memory:fbff0000-fbffffff
+
+```
+
+---
+
+### Post by chili555 on 2012-10-08
+Your internal uses ath9k. I wonder what didn't work so well with it. ath9k is usually solid.
+
+If you want to disable the internal, please do:```
+sudo su
+echo "blacklist ath9k" >> /etc/modprobe.d/blacklist.conf
+exit
+```Reboot and show me:```
+iwconfig
+dmesg | grep ndis
+```
+
+---
+
+### Post by Vandamir on 2012-10-08
+```
+iwconfig
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+```
+```
+dmesg | grep ndis
+[   19.188452] ndiswrapper version 1.57 loaded (smp=yes, preempt=no)
+```
+
+---
+
+### Post by chili555 on 2012-10-09
+Something is very wrong. There is not any clue in dmesg about what's going on. Let's create a diagnostic file I can examine for more information:```
+ls /etc/ndiswrapper/netrtuw_x64 > vandamir.txt
+cat /etc/ndiswrapper/netrtuw_x64/netrtuw_x64.inf | head -n20 >> vandamir.txt
+lsmod >> vandamir.txt
+dmesg >> vandamir.txt
+zip vandamir.zip vandamir.txt
+```Please find the file vandamir.zip in your user directory and attach it to your reply using the paperclip tool at the top of the reply box.
+
+Are you sure you wouldn't like to troubleshoot the ath9k internal device???
+
+---
+
+### Post by Vandamir on 2012-10-09
+> **chili555 said:**
+> 
+Are you sure you wouldn't like to troubleshoot the ath9k internal device???
+I don't understand.
+
+---
+
+### Post by chili555 on 2012-10-09
+> **Vandamir said:**
+> I don't understand.I mean that you have an internal wireless device using the now blacklisted ath9k. Why isn't it working for you? Wouldn't it be far easier to troubleshoot it than to try to coax ndiswrapper to work your USB device?
+
+I see this:> [    0.259741] ACPI: PCI Interrupt Link [LNKA] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.259793] ACPI: PCI Interrupt Link [LNKB] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.259842] ACPI: PCI Interrupt Link [LNKC] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.259892] ACPI: PCI Interrupt Link [LNKD] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.259941] ACPI: PCI Interrupt Link [LNKE] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.259988] ACPI: PCI Interrupt Link [LNKF] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.260069] ACPI: PCI Interrupt Link [LNKG] (IRQs 10 11 12 14 15) *0, disabled.
+[    0.260119] ACPI: PCI Interrupt Link [LNKH] (IRQs 4 7 10 11 12 14 15) *0, disabled.That suggests that all the IRQs are set to disabled. I suggest you reset the BIOS to defaults, reboot and see if things improve:```
+dmesg > vandamir2.txt
+zip vandamir2.zip vandamir2.txt
+```
+
+---
+
+### Post by Vandamir on 2012-10-10
+I think that IRQs are disabled because of my second graphic card which is in my laptop and this card is turned off.
+But if it's necessary I can reset BIOS.
+
+---
+
+### Post by chili555 on 2012-10-10
+> **Vandamir said:**
+> I think that IRQs are disabled because of my second graphic card which is in my laptop and this card is turned off.
+But if it's necessary I can reset BIOS.I'd certainly try. You can always revert if the graphics won't work.
+
+---
+
+### Post by Vandamir on 2012-10-10
+I did what You said.
+
+---
+
+### Post by chili555 on 2012-10-10
+> [    0.260728] ACPI _OSC control for PCIe not granted, disabling ASPM
+[    0.270416] ACPI: PCI Interrupt Link [LNKA] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270475] ACPI: PCI Interrupt Link [LNKB] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270531] ACPI: PCI Interrupt Link [LNKC] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270587] ACPI: PCI Interrupt Link [LNKD] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270643] ACPI: PCI Interrupt Link [LNKE] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270698] ACPI: PCI Interrupt Link [LNKF] (IRQs 4 7 10 11 12 14 15) *0, disabled.
+[    0.270753] ACPI: PCI Interrupt Link [LNKG] (IRQs 10 11 12 14 15) *0, disabled.
+[    0.270807] ACPI: PCI Interrupt Link [LNKH] (IRQs 4 7 10 11 12 14 15) [COLOR="Red"]*0, disabled.[/COLOR]I don't see much change.
+
+Is this in a virtual machine? Wireless networking is generally not possible.
+
+---
+
+### Post by Vandamir on 2012-10-11
+Nope, I installed Linux Mint next to Windows 7
+
+---
+
+### Post by chili555 on 2012-10-11
+> [    1.536273] hub 1-0:1.0: [COLOR="Red"]USB hub found[/COLOR]
+[    1.536282] hub 1-0:1.0: 6 ports detectedIs your AirLive attached to a hub? Have you tried with it attached directly to the USB port?
+
+---
+
+### Post by Vandamir on 2012-10-12
+Nope, AirLive is attached directly to the USB port.
+
+---
+
+### Post by chili555 on 2012-10-12
+I'm sorry. I haven't a single further idea. There is nothing, aside from the iRQs, that I can see wrong to fix. If you'd care to troubleshoot the native driver rtl8187 or use the internal device, I'd be glad to continue.
+
+---
+
+### Post by Vandamir on 2012-10-13
+Ok, what do you say to reinstall Mint and try to fix native driver ?
+
+---
+
+### Post by chili555 on 2012-10-13
+I doubt there is any need to reinstall. I'd remove the ndiswrapper file:```
+sudo ndiswrapper -e netrtuw_x64
+```Then I'd amend the blacklist file to remove rtl8187:```
+sudo gedit /etc/modprobe.d/blacklist.conf
+```Reboot and see what you get:```
+iwconfig
+```If neither the internal Atheros works, nor the USB with either rtl8187 or ndiswrapper, then there is a bigger problem at work here: IRQs?
+
+---
+
+### Post by Vandamir on 2012-10-13
+I did what You said. I rebooted and my card wasn't working.
+I wrote in console : ```
+modprobe rtl8187
+``` and the card started working.
+```
+lo        no wireless extensions.
+
+wlan1     IEEE 802.11bg  ESSID:"masteras-Chuck"  
+          Mode:Managed  Frequency:2.432 GHz  Access Point: 00:90:CC:D7:09:FA   
+          Bit Rate=36 Mb/s   Tx-Power=20 dBm   
+          Retry  long limit:7   RTS thr:off   Fragment thr:off
+          Power Management:off
+          Link Quality=40/70  Signal level=-70 dBm  
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:37  Invalid misc:24   Missed beacon:0
+
+eth0      no wireless extensions.
+
+```
+
+---
+
+### Post by chili555 on 2012-10-13
+Awesome! Let's get rtl8187 to load automatically.```
+sudo su
+echo rtl8187 >> /etc/modules
+exit
+```Is everything working as expected now?
+
+---
+
+### Post by Vandamir on 2012-10-14
+The pages are loading very long or I got an error. I cannot download files because speed falls to 0kb/s. That's why I wanted to install windows driver.
+
+---
+
+### Post by chili555 on 2012-10-15
+Let's see:```
+lsmd | grep -e ndis -e 818
+dmesg | grep 818
+```Thanks.
+
+---
+
+### Post by Vandamir on 2012-10-15
+```
+lsmod | grep -e ndis -e 818
+rtl8187                57035  0 
+mac80211              506816  1 rtl8187
+cfg80211              205544  2 rtl8187,mac80211
+eeprom_93cx6           12725  1 rtl8187
+ndiswrapper           282628  0 
+```
+```
+dmesg | grep 818
+[    0.271818] PCI: pci_cache_line_size set to 64 bytes
+[    0.272226] hpet0: 4 comparators, 32-bit 14.318180 MHz counter
+[   20.026762] ieee80211 phy0: hwaddr 00:4f:78:00:2d:c0, RTL8187vB (default) V1 + rtl8225z2, rfkill mask 2
+[   20.038760] rtl8187: Customer ID is 0xFF
+[   20.038814] Registered led device: rtl8187-phy0::radio
+[   20.038839] Registered led device: rtl8187-phy0::tx
+[   20.038861] Registered led device: rtl8187-phy0::rx
+[   20.039229] rtl8187: wireless switch is on
+[   20.039283] usbcore: registered new interface driver rtl8187
+
+```
+
+---
+
+### Post by chili555 on 2012-10-15
+> lsmod | grep -e ndis -e 818
+rtl8187                57035  0 
+mac80211              506816  1 rtl8187
+cfg80211              205544  2 rtl8187,mac80211
+eeprom_93cx6           12725  1 rtl8187
+[COLOR="Red"]ndiswrapper           282628  0[/COLOR]We need to stop ndiswrapper from loading. Please do:```
+sudo gedit /etc/modules
+```I suspect 'ndiswrapper' is in there; remove it, save and close gedit. Reboot. Has your performance improved?
+
+---
+
+### Post by Vandamir on 2012-10-17
+No, it hasn't.
+May I should install the 32bit edition of Mint and then install driver from Realtek ?
+
+---
+
+### Post by chili555 on 2012-10-17
+> **Vandamir said:**
+> No, it hasn't.
+May I should install the 32bit edition of Mint and then install driver from Realtek ?Certainly worth a try.
+
+---
+
+### Post by Vandamir on 2012-10-17
+After 33 posts I've got good news. 
+I found the solution :D.
+I installed 32 bit of Mint then Realtek driver.
+It hasn't improved my performance so I was searching for solution in the Net.
+I found something very interesting - when I wrote in terminal :
+```
+iwconfig wlan0 rate 5.5M auto
+```
+```
+iwconfig wlan0 rate 5.5M fixed 
+```
+everything works perfect. 
+But how to make that this settings will load automatically when system starts ?
+
+---
+
+### Post by chili555 on 2012-10-17
+> But how to make that this settings will load automatically when system starts ?Please do:```
+sudo gedit /etc/rc.local
+```Right above exit 0, write:```
+iwconfig wlan0 rate 5.5M fixed
+```Proofread carefully, save and close gedit. When you restart, it should be in place.
+
+---
+
+### Post by Vandamir on 2012-10-18
+It works :).
+@chili555 thank you for your advices and support.
+
+Topic can be closed now.
+
+---
+
