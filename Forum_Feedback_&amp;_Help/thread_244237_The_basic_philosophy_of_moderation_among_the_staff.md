@@ -1,0 +1,27 @@
+---
+title: "The basic philosophy of moderation among the staff"
+date: 2006-08-26
+forum: Forum Feedback &amp; Help
+---
+
+### Post by matthew on 2006-08-26
+This is being written solely by me, but I feel it adequately expresses the philosophy of the staff in general regarding our work and goals in serving the Ubuntu Forums. Note: for a full job description and staff guidelines please see the [URL="http://ubuntuforums.org/misc.php?do=showrules"forum policy[/URL], section III.
+
+The Ubuntu Forums are intended to be technical support forums and a community gathering place for users of Ubuntu Linux. As such, it was decided from the beginning that everything posted here should be completely safe for work and school, i.e. if a boss or principal was looking over your shoulder, she would believe that you are doing some research that could be reasonably construed as work or school related. 
+
+Because we are interested in being a community, the Cafe was created. Essentially the same logic applies, but with less stringent guidelines for posting--it is a social area for fun. 
+
+When posts in threads are reported to moderators we receive a notice showing which post was reported, by whom, and with whatever explanation they chose to write to us. We read them all and take them very seriously. In an average day we have less than 10 non-spam posts reported. Out of those, all are read by as many of us as are able and about 4 or 5 require some sort of action--usually we are informed that a user posted in the wrong forum so we simply move the thread to the proper location. If you find a post that you feel is in violation of the spirit or the letter of the forums policy or the [Ubuntu Code of Conduct]("http://www.ubuntu.com/community/conduct"), please use the report post function next to the post number. Please include a clear note describing the problem, this could be one word, "spam," or a couple of sentences explaining a situation.
+
+The moderators' and admins' time is spent primarily trying to do tech-support, keeping the forums running and clear of spam and such, and moderating discussions that are off topic. We are all volunteers and the time we have to spend in these forums varies greatly. Some of us are here for several hours daily, some are here less often, some have great technical skills, others are more skillful at interpersonal communication than with fixing bugs and such. We vary in age from teenagers to people in their 50's (and 60's? I should check...). The admins and staff keep a careful watch for people who are consistently helpful in their posts with tech support and who regularly demonstrate kindness, patience and good manners and on occasion we issue invitations for those people to join the staff. The big downside is that our time is limited and these forums do not pay us to be here, we all have outside responsibilities that call us away, sometimes for days or even weeks at a time with little to no interaction here. As a result, there is always a juggling act going on among the staff...how do we take care of the needs of such a large, growing community with our limited resources. The answer: we do our best and hope it works.
+
+When we find things that violate the forum policy, either because we stumble on them or because they are reported, we generally issue either an infraction or an infraction warning. In either case the user receives a private message with comments written by the moderator who issued it. When we are able, we like to send a personal private message, but we are a rapidly growing (and very large) community and our time/resources are limited. This solution isn't as personal as we would prefer, but it generally works. In cases needing more direct involvement we may edit posts or move them to the jail. Sometimes we blow it and make mistakes...either because we were distracted, we misunderstood (English isn't the first language of all of the staff members), or we just had a bad day. If you notice or believe we made a mistake, please inform us (preferably in the most polite way possible) of the problem in the Resolution Center and an admin will jump in to help. If it's just a small thing, feel free to send any of us a private message or just hit the "report post" button and type up a description of the problem.
+
+We don't want a lot of impoliteness or rude behavior, and we generally try to steer conversations to stay to tech support related topics except in the Cafe, and even in that place there are limits--there are lots of other internet forums available for the sorts of conversations we don't allow here. Yet, community is very important to us, so we want to have a place for that to develop as well...it's kind of like the break room at work, only without the donuts.
+
+Posts are not deleted except by the request/permission of the original poster or in especially egregious cases like posting of porn, etc. In general, offensive posts and spam are put into a section called the jail where staff and the original poster can peruse them, and are only modified to remove stuff like spam links or really offensive things. 
+
+When the users posting in the Ubuntu Forums police themselves and avoid rules infractions (which is most of the time) the forums run smoothly and are a very pleasant place to hang out and receive good help, and that's how we want it. When users choose not to play nice, that's when we step in--solely to try to ease tensions, eliminate bad attitudes, remove spam, and let the forums fulfill their design and purpose.
+
+---
+
