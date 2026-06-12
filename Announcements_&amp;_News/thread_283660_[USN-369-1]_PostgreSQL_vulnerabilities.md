@@ -1,0 +1,196 @@
+---
+title: "[USN-369-1] PostgreSQL vulnerabilities"
+date: 2006-10-24
+forum: Announcements &amp; News
+---
+
+### Post by Martin Pitt on 2006-10-24
+=========================================================== 
+Ubuntu Security Notice USN-369-1           October 24, 2006
+postgresql-8.1 vulnerabilities
+[http://www.postgresql.org/about/news.664](http://www.postgresql.org/about/news.664)
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 6.06 LTS
+
+This advisory also applies to the corresponding versions of
+Kubuntu, Edubuntu, and Xubuntu.
+
+The problem can be corrected by upgrading your system to the
+following package versions:
+
+Ubuntu 6.06 LTS:
+  postgresql-8.1                           8.1.4-0ubuntu1.1
+
+In general, a standard system upgrade is sufficient to effect the
+necessary changes.
+
+Details follow:
+
+Michael Fuhr discovered an incorrect type check when handling unknown
+literals. By attempting to coerce such a literal to the ANYARRAY type,
+a local authenticated attacker could cause a server crash.
+
+Josh Drake and Alvaro Herrera reported a crash when using aggregate
+functions in UPDATE statements. A local authenticated attacker could
+exploit this to crash the server backend. This update disables this
+construct, since it is not very well defined and forbidden by the SQL
+standard.
+
+Sergey Koposov discovered a flaw in the duration logging. This could
+cause a server crash under certain circumstances.
+
+Please note that these flaws can usually not be exploited through web
+and other applications that use a database and are exposed to
+untrusted input, so these flaws do not pose a threat in usual setups.
+
+
+Updated packages for Ubuntu 6.06 LTS:
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1.diff.gz)
+      Size/MD5:    27049 3275e9b9ba9270f02f6d71171b85b770
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1.dsc)
+      Size/MD5:     1115 26f7be0a7abbf8d2dd43fcecb2e68c03
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4.orig.tar.gz)
+      Size/MD5: 11312643 c6554a0ef948ab2b18b617954e1788fe
+
+  Architecture independent packages:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-doc-8.1_8.1.4-0ubuntu1.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-doc-8.1_8.1.4-0ubuntu1.1_all.deb)
+      Size/MD5:  1441006 6d07fb48179222edcddb101cfa38bdd0
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   151896 205c5bdfaa12cd1aa742f8a60175d53d
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   343924 057a190fd02625da8233ea8c0bbffd6d
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   172408 77edbd84b4aa4a01a47228f56d7ea964
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   174232 00f4dbac0e143d9838d956369a506902
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   307126 fa5f041925179d150007ca2c69cebad1
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   205670 01d775b51f26406da91c6a520afe98dd
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:  3219066 e7194032e664f5ff0461a03daedb4b5e
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   757916 68b70373e91ca1b8ba79c6af8903d79f
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   612178 11c0024eeeaa10a493dc7a93fab4c8af
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   168686 4481591c9c1546ac1e9c9469f72c01f9
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   162830 3ecd7f7ce9d4557e2b5a1a10426f03e4
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   162864 309430e8b0429106fe0e45c75367844c
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_amd64.deb)
+      Size/MD5:   595544 b11942b89fa3b2ad608647d8a98a2be0
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   150812 4bac344dce1360a88d264f6a71872e69
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   333798 1907cd200c5976e80af2bd729ea026ac
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   169958 0b827b9d91f57be097338a0fea176992
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   172324 2b084295d3e060182a15ce1560ac966c
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   295620 f0e9ebf62066a7c50ee5f52683e0bf40
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   198984 2d576dafba8b5c32ed51863595bfb003
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:  3023812 d8ec704219963643050a2db8aea2c691
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   685892 a66a8c0ed87d16d3b7cda2c0c70928df
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   566660 85ad72f78a8044ba700f582543bb6170
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   166876 34fc0f26fc0edf0153f6c81c18583e60
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   160064 39a68acfc3280d5829f33ce75bdd8b80
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   161452 bc0e65eb341e682b9e0b2ed1a3fbebd2
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_i386.deb)
+      Size/MD5:   595526 0aed210b381749b051e80b717d61b2a1
+
+  powerpc architecture (Apple Macintosh G3/G4/G5)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   152698 f7497bf93146c5c96b707970fdb4cb54
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   339584 384ecc6a67f51f869b18e85ef92cf25c
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   173074 3cb3df27521b1a1f7b402487648586a2
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   176582 8770577b4479a99ed20aa8476d81fa44
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   301524 723e9dd51237bfee94e113c672f00213
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   202536 cf33010091ffc82019caf03ecee1bbdf
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:  3514204 8e41d7895a09d422722ed8d2c8dc1816
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   758032 7ca3df1a2ecc194b4dba7fbb0a31814e
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   628182 7a56a1d399c822658f7c92fcd7068ef3
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   168388 24bd465dec5e84e72dfe714eb687d21b
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   162798 620146d96fc475504312ee2291a906d2
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   163734 df2db1a9405a386ba3493f1bd0df5909
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_powerpc.deb)
+      Size/MD5:   595558 2ff367dbfe47b1cdc81ebd856c06eb2c
+
+  sparc architecture (Sun SPARC/UltraSPARC)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-compat2_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   150634 f21b1b3637bfe947f917f376cdb37ad1
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg-dev_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   331060 7edee20954baed134ffdbef3622f6ba0
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libecpg5_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   170658 3cc784c7f7ce1f606120415e8c87f22e
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpgtypes2_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   171980 9825f5f79bffa6c3ec9e2f927f8e719c
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq-dev_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   297644 e4423f6757eb6763b9130845f52ad5f5
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/libpq4_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   199242 178738d21528c67c6efe7c40c7e2ac5a
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:  3391734 d822c2dc6f3889c7846e37c8aa56160a
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-client-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   714210 8a91f05633f484f125fce2627c7b7555
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-contrib-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   586882 68c7bd5efa38e01fc9ff94ae73235688
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plperl-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   166952 4d0cb8ac8169e9c1b5d9ba711d87ec73
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-plpython-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   161250 9de70bd33c8a135e4b9f0b2648597507
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-pltcl-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   161886 b9ade5652dd304fcc2201a4c817d9f7a
+    [http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_sparc.deb](http://security.ubuntu.com/ubuntu/pool/main/p/postgresql-8.1/postgresql-server-dev-8.1_8.1.4-0ubuntu1.1_sparc.deb)
+      Size/MD5:   595528 e25414b48356a0dade4e680adbb00ad7
+
+-- 
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce (AT) lists (DOT) ubuntu.com[/email]
+[https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQFFPlUQDecnbV4Fd/IRAi5yAJ9XUq7eX9zNK//0F9x7B0mefVmokgCg6Pw1
+aGjjvw7qUxtA1oFiJ1Me1fM=
+=kl6b
+-----END PGP SIGNATURE-----
+
+---
+

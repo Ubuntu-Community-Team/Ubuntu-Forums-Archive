@@ -1,0 +1,71 @@
+---
+title: "[USN-8-1] gaim vulnerabilities"
+date: 2004-10-26
+forum: Announcements &amp; News
+---
+
+### Post by Martin Pitt on 2004-10-26
+===========================================================
+Ubuntu Security Notice USN-8-1             October 27, 2004
+gaim vulnerabilities
+CAN-2004-0891
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 4.10 (Warty Warthog)
+
+The following packages are affected:
+
+gaim
+
+The problem can be corrected by upgrading the affected package to
+version 1:1.0.0-1ubuntu1.1. In general, a standard system upgrade is
+sufficient to effect the necessary changes.
+
+Details follow:
+
+A buffer overflow and two remote crashes were recently discovered in
+gaim's MSN protocol handler. An attacker could potentially execute
+arbitrary code with the user's privileges by crafting and sending a
+particular MSN message.
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1.diff.gz)
+      Size/MD5:    40716 a1cd244a1d9197c9a4855706f857ede2
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1.dsc)
+      Size/MD5:      853 dbd5a82e0fa2c33df8fc26d636a2f9f1
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0.orig.tar.gz)
+      Size/MD5:  6985979 7dde686aace751a49dce734fd0cb7ace
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_amd64.deb)
+      Size/MD5:  3443672 0a2a22b071c0256a2d68d20b474fdddc
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_i386.deb)
+      Size/MD5:  3353616 1b825ce8a2cbba5fa2171fa089f71112
+
+  powerpc architecture (Apple Macintosh G3/G4/G5)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gaim/gaim_1.0.0-1ubuntu1.1_powerpc.deb)
+      Size/MD5:  3417684 bae36e86bcf49722af6497d55a2de5fc
+
+-- 
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce@lists.ubuntu.com[/email]
+[http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFBfvGCDecnbV4Fd/IRAr3eAJ9EkWwjOmcrhPFDxRCO+iB6Jj8sLQCgsQsa
+xOYdKjDCqSd1EO9f+IfaT8Y=
+=Bf36
+-----END PGP SIGNATURE-----
+
+---
+

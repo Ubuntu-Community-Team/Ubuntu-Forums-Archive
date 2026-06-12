@@ -1,0 +1,85 @@
+---
+title: "[SOLVED] [USN-5-1] gettext vulnerabilities"
+date: 2004-10-26
+forum: Announcements &amp; News
+---
+
+### Post by Martin Pitt on 2004-10-26
+===========================================================
+Ubuntu Security Notice USN-5-1             October 27, 2004
+gettext vulnerabilities
+CAN-2004-0966
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 4.10 (Warty Warthog)
+
+The following packages are affected:
+
+gettext
+
+The problem can be corrected by upgrading the affected package to
+version 0.14.1-2ubuntu0.1. In general, a standard system upgrade is
+sufficient to effect the necessary changes.
+
+Details follow:
+
+Recently, Trustix Secure Linux discovered some vulnerabilities in the
+gettext package. The programs "autopoint" and "gettextize" created
+temporary files in an insecure way, which allowed a symlink attack to
+create or overwrite arbitrary files with the privileges of the user
+invoking the program.
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1.diff.gz)
+      Size/MD5:    82347 e172d137c397dc88ca545acebd40b423
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1.dsc)
+      Size/MD5:      789 d273a3e94446d89f603d16ed9587d00b
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1.orig.tar.gz)
+      Size/MD5:  6550874 78f4b862510beb2e5d43223dd610e77d
+
+  Architecture independent packages:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-doc_0.14.1-2ubuntu0.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-doc_0.14.1-2ubuntu0.1_all.deb)
+      Size/MD5:   638924 610bd9c00f7971f9d359f7a3902db2e4
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-el_0.14.1-2ubuntu0.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-el_0.14.1-2ubuntu0.1_all.deb)
+      Size/MD5:    45340 cf1fc64a65b38622fdbd29e63b538b69
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_amd64.deb)
+      Size/MD5:    92890 581e614d3c390a0b0c4b52752e03cf75
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_amd64.deb)
+      Size/MD5:  1576278 a3240029c897fcfac68be7eda1f638bb
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_i386.deb)
+      Size/MD5:    91066 df2857a4dd7be300743c4e8ec7990997
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_i386.deb)
+      Size/MD5:  1549186 d16f720d7ef6e031afab70263394c70a
+
+  powerpc architecture (Apple Macintosh G3/G4/G5)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext-base_0.14.1-2ubuntu0.1_powerpc.deb)
+      Size/MD5:    94174 9f849ed93f64d80fe669603b581b9df3
+    [http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/g/gettext/gettext_0.14.1-2ubuntu0.1_powerpc.deb)
+      Size/MD5:  1590102 cba3d457ded8697c018b3e3ac6853f94
+
+-- 
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce@lists.ubuntu.com[/email]
+[http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFBfu/DDecnbV4Fd/IRAq4+AJ9LTRY8swzj377mKIHs1qct5/gyzgCeOsrr
++38D1w4un36PM4Gb6yEtP5I=
+=nFLJ
+-----END PGP SIGNATURE-----
+
+---
+

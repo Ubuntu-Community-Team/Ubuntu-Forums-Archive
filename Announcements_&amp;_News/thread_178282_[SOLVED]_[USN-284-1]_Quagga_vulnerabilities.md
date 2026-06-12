@@ -1,0 +1,119 @@
+---
+title: "[SOLVED] [USN-284-1] Quagga vulnerabilities"
+date: 2006-05-17
+forum: Announcements &amp; News
+---
+
+### Post by Martin Pitt on 2006-05-17
+===========================================================
+Ubuntu Security Notice USN-284-1	       May 15, 2006
+quagga vulnerabilities
+CVE-2006-2223, CVE-2006-2224, CVE-2006-2276
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 5.04 (Hoary Hedgehog)
+Ubuntu 5.10 (Breezy Badger)
+
+The following packages are affected:
+
+quagga
+
+The problem can be corrected by upgrading the affected package to
+version 0.97.3-1ubuntu1.1 (for Ubuntu 5.04), or 0.99.1-1ubuntu1.1 (for
+Ubuntu 5.10).  In general, a standard system upgrade is sufficient to
+effect the necessary changes.
+
+Details follow:
+
+Paul Jakma discovered that Quagga's ripd daemon did not properly
+handle authentication of RIPv1 requests. If the RIPv1 protocol had
+been disabled, or authentication for RIPv2 had been enabled, ripd
+still replied to RIPv1 requests, which could lead to information
+disclosure. (CVE-2006-2223)
+
+Paul Jakma also noticed that ripd accepted unauthenticated RIPv1
+response packets if RIPv2 was configured to require authentication and
+both protocols were allowed. A remote attacker could exploit this to
+inject arbitrary routes. (CVE-2006-2224)
+
+Fredrik Widell discovered that Quagga did not properly handle certain
+invalid 'sh ip bgp' commands. By sending special commands to Quagga, a
+remote attacker with telnet access to the Quagga server could exploit
+this to trigger an endless loop in the daemon (Denial of Service).
+(CVE-2006-2276)
+
+
+Updated packages for Ubuntu 5.04:
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1.diff.gz)
+      Size/MD5:    38413 eda4c03884896ba450f16ee70f8c082a
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1.dsc)
+      Size/MD5:      714 22a7196923c807617fcd995c01c340b1
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3.orig.tar.gz)
+      Size/MD5:  1964834 9015a5c61b22dc4e51b07fdc9bdadfd1
+
+  Architecture independent packages:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga-doc_0.97.3-1ubuntu1.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga-doc_0.97.3-1ubuntu1.1_all.deb)
+      Size/MD5:   477692 15527f6d3580a5327a31a6244cfc78f7
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_amd64.deb)
+      Size/MD5:  1345612 75b7044e62475f2b4b6bf4a2c682f681
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_i386.deb)
+      Size/MD5:  1124086 9ff534e9d6a717b340d448b486f5a8de
+
+  powerpc architecture (Apple Macintosh G3/G4/G5)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.97.3-1ubuntu1.1_powerpc.deb)
+      Size/MD5:  1245250 acaa9feaf12f20e42407d25103b698bd
+
+Updated packages for Ubuntu 5.10:
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1.diff.gz)
+      Size/MD5:    27760 5577e4835dca7dce5d857ca843c43358
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1.dsc)
+      Size/MD5:      722 f2690f9ed75e966362870c591e4e5a72
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1.orig.tar.gz)
+      Size/MD5:  2107583 afd8c23a32050be76e55c28ec9dcff73
+
+  Architecture independent packages:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga-doc_0.99.1-1ubuntu1.1_all.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga-doc_0.99.1-1ubuntu1.1_all.deb)
+      Size/MD5:   580362 af8e02b1ef292dc9e883a24b644d3e3f
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1_amd64.deb)
+      Size/MD5:  1418614 6d36f2bc13d16f87d8bed040dfdfcc0d
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/q/quagga/quagga_0.99.1-1ubuntu1.1_i386.deb)
+      Size/MD5:  1204568 39d90181e76908dabf23d4bee37c220e
+
+-- 
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce (AT) lists (DOT) ubuntu.com[/email]
+[https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2.2 (GNU/Linux)
+
+iD8DBQFEaK06DecnbV4Fd/IRAhZoAKDcQBRPETY0W53gBqrXnqOjoezrJwCgoles
+Sx7cpJFC3D+6KzYV/ljzIcw=
+=nzzR
+-----END PGP SIGNATURE-----
+
+---
+

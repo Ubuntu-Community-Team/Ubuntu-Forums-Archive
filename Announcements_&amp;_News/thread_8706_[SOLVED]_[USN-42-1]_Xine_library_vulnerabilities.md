@@ -1,0 +1,79 @@
+---
+title: "[SOLVED] [USN-42-1] Xine library vulnerabilities"
+date: 2004-12-20
+forum: Announcements &amp; News
+---
+
+### Post by Martin Pitt on 2004-12-20
+===========================================================
+Ubuntu Security Notice USN-42-1		  December 20, 2004
+xine-lib vulnerabilities
+[https://sourceforge.net/project/shownotes.php?group_id=9655&release_id=290099](https://sourceforge.net/project/shownotes.php?group_id=9655&release_id=290099)
+===========================================================
+
+A security issue affects the following Ubuntu releases:
+
+Ubuntu 4.10 (Warty Warthog)
+
+The following packages are affected:
+
+libxine1
+
+The problem can be corrected by upgrading the affected package to
+version 1-rc5-1ubuntu2.1.  In general, a standard system upgrade is
+sufficient to effect the necessary changes.
+
+Details follow:
+
+Several buffer overflows have been discovered in xine-lib, the
+video/audio codec library for Xine frontends (xine-ui, totem-xine,
+kaffeine, and others). If an attacker tricked a user into loading a
+malicious RTSP stream or a stream with specially crafted AIFF audio or
+PNM image data, they could exploit this to execute arbitrary code with
+the privileges of the user opening the audio/video file.
+
+  Source archives:
+
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5-1ubuntu2.1.diff.gz](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5-1ubuntu2.1.diff.gz)
+      Size/MD5:   220103 36088cafe1ebf980e974121c75509342
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5-1ubuntu2.1.dsc](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5-1ubuntu2.1.dsc)
+      Size/MD5:      950 b91b838d1e93be1d6dbaf4e25fdcc0a2
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5.orig.tar.gz](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/xine-lib_1-rc5.orig.tar.gz)
+      Size/MD5:  7052663 703c3e68d60524598d4d9e527fe38286
+
+  amd64 architecture (Athlon64, Opteron, EM64T Xeon)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_amd64.deb)
+      Size/MD5:   101304 3924c05126efb642a3a4caeb76fa103f
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_amd64.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_amd64.deb)
+      Size/MD5:  3542990 2b49a83c4ac8aee07480cbe4f0639802
+
+  i386 architecture (x86 compatible Intel/AMD)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_i386.deb)
+      Size/MD5:   101282 650241599ab0b2b95e87e4ea998392ca
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_i386.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_i386.deb)
+      Size/MD5:  3728702 b5aabac9ef7413d59ed599589876c5ab
+
+  powerpc architecture (Apple Macintosh G3/G4/G5)
+
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine-dev_1-rc5-1ubuntu2.1_powerpc.deb)
+      Size/MD5:   101296 604e0163adfa10406d729321977de6d5
+    [http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_powerpc.deb](http://security.ubuntu.com/ubuntu/pool/main/x/xine-lib/libxine1_1-rc5-1ubuntu2.1_powerpc.deb)
+      Size/MD5:  3886558 4aa25f9823981361dd44ec1f4a53f62f
+
+-- 
+ubuntu-security-announce mailing list
+[email]ubuntu-security-announce@lists.ubuntu.com[/email]
+[http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce](http://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFBxvENDecnbV4Fd/IRAoKFAKDWbk2G+LXbLWaEjTFjD4OeKOHosgCeJAo+
+r8ovpURYRgpdBFE6Iocg1yg=
+=gnOD
+-----END PGP SIGNATURE-----
+
+---
+
