@@ -1,0 +1,282 @@
+---
+title: "Textures in halo not showing"
+date: 2008-12-30
+forum: Wine
+---
+
+### Post by Dark_Sabre on 2008-12-30
+I have wine 1.0.1 installed, and installed halo by following the guide [here](http://ubuntuforums.org/showthread.php?t=486986) and still get pretty major graphics bugs. Rarely it also crashes the system, the mouse moves but nothing happens when I click or scroll.
+
+I have a Radeon 9200 pro gfx card, 3.00ghz intel p4 (although it says I have two the person who put it together says theres only one), and as I said wine 1.0.1. this is what terminal shows (although I can't go any higher so this is all it shows)
+
+```
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_strided Didn't expect the destination to have a normal
+fixme:d3d:process_vertices_sdarksabre@darksabre-desktop:~/.wine/drive_c/Program Files/Microsoft Games/Halo$  
+```
+
+I'm using it as Windows XP, and have no dll overides. I am running it in a virtual desktop and am using the drivers that come with ubuntu.
+
+and here is a screenshot of halo in blood gulch (made a lan game to see what in game looked like)
+[img]http://darksabre.site40.net/uploader/haloscreenshot.png[/img]
+
+---
+
+### Post by OrbJinzo on 2009-01-01
+[http://appdb.winehq.org/objectManager.php?sClass=version&iId=2720](http://appdb.winehq.org/objectManager.php?sClass=version&iId=2720)
+
+---
+

@@ -1,0 +1,287 @@
+---
+title: "I'm trying to install Wine 1.1.9 but get an error"
+date: 2009-05-22
+forum: Wine
+---
+
+### Post by BigB25 on 2009-05-22
+barrett@barrett-desktop:~/Desktop$ cd wine*
+barrett@barrett-desktop:~/Desktop/wine-1.1.9$ ./tools/wineinstall
+Wine Installer v1.0
+
+hash: 73: rpm: not found
+Running configure...
+
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc -m32
+checking for C compiler default output file name... 
+configure: error: in `/home/barrett/Desktop/wine-1.1.9':
+configure: error: C compiler cannot create executables
+See `config.log' for more details.
+
+Configure failed, aborting install.
+barrett@barrett-desktop:~/Desktop/wine-1.1.9$ 
+
+
+
+
+This is the error I get could someone please tell me how to fix this I am running Ubuntu 64bit 9.04.
+
+
+
+P.S Any help with this would be greatly appreciated!
+
+---
+
+### Post by YokoZar on 2009-05-22
+Don't do this.  It's hard and won't help.
+
+Just get a packaged version: [http://winehq.org/site/download-deb](http://winehq.org/site/download-deb)
+
+Also 1.1.9 is about 13 versions out of date now (that is, 8 months)
+
+---
+
+### Post by BigB25 on 2009-05-22
+Thank you for your quick reply I appreciate that. When I install it using that link even with the updated third party source it install an older version. I nee to install the newest beta version in order to be able to install Microsoft Office without editing and messing with dll files. I am trying to use the installer that it tells me to use I follow these steps:
+
+1. INTRODUCTION
+
+Wine is a program which allows running Microsoft Windows programs
+(including DOS, Windows 3.x and Win32 executables) on Unix.  It
+consists of a program loader which loads and executes a Microsoft
+Windows binary, and a library (called Winelib) that implements Windows
+API calls using their Unix or X11 equivalents.  The library may also
+be used for porting Win32 code into native Unix executables.
+
+Wine is free software, released under the GNU LGPL; see the file
+LICENSE for the details.
+
+
+2. QUICK START
+
+Whenever you compile from source, it is recommended to use the Wine
+Installer to build and install Wine.  From the top-level directory
+of the Wine source (which contains this file), run:
+
+./tools/wineinstall
+
+Run programs as "wine program".  For more information and problem
+resolution, read the rest of this file, the Wine man page, and
+especially the wealth of information found at [http://www.winehq.org](http://www.winehq.org).
+
+
+3. REQUIREMENTS
+
+To compile and run Wine, you must have one of the following:
+
+  Linux version 2.0.36 or above
+  FreeBSD 7.0 or later
+  Solaris x86 9 or later
+  NetBSD-current
+  Mac OS X 10.4 or later
+
+As Wine requires kernel-level thread support to run, only the operating
+systems mentioned above are supported.  Other operating systems which
+support kernel threads may be supported in the future.
+
+Linux info:
+  While Linux 2.2.x should still work and Linux 2.0.x may still work
+  (older 2.0.x versions had thread-related crashes),
+  it's best to have a current kernel such as 2.4.x or 2.6.x.
+
+FreeBSD info:
+  Wine will generally not work properly on versions before FreeBSD
+  7.0. FreeBSD 6.3 has patches available to allow Wine to run. See
+  <http://wiki.freebsd.org/Wine> for more information.
+
+Solaris info:
+  You will most likely need to build Wine with the GNU toolchain
+  (gcc, gas, etc.). Warning : installing gas does *not* ensure that it
+  will be used by gcc. Recompiling gcc after installing gas or
+  symlinking cc, as and ld to the gnu tools is said to be necessary.
+
+NetBSD info:
+  Make sure you have the USER_LDT, SYSVSHM, SYSVSEM, and SYSVMSG options
+  turned on in your kernel.
+
+Mac OS X info:
+  You need Xcode 2.4 or later to build properly on x86.
+
+
+Supported file systems:
+  Wine should run on most file systems. A few compatibility problems
+  have also been reported using files accessed through Samba. Also,
+  NTFS does not provide all the file system features needed by some
+  applications.  Using a native Linux file system such as ext3 is
+  recommended.
+
+Basic requirements:
+  You need to have the X11 development include files installed
+  (called xlib6g-dev in Debian and XFree86-devel in Red Hat).
+
+  Of course you also need "make" (most likely GNU make).
+
+  You also need flex version 2.5 or later and bison.
+
+Optional support libraries:
+  Configure will display notices when optional libraries are not found
+  on your system. See [http://wiki.winehq.org/Recommended_Packages](http://wiki.winehq.org/Recommended_Packages) for
+  hints about the packages you should install.
+
+  On 64-bit platforms you have to make sure to install the 32-bit
+  versions of these libraries; see [http://wiki.winehq.org/WineOn64bit](http://wiki.winehq.org/WineOn64bit)
+  for details.
+
+4. COMPILATION
+
+In case you chose to not use wineinstall, run the following commands
+to build Wine:
+
+./configure
+make depend
+make
+
+This will build the program "wine" and numerous support libraries/binaries.
+The program "wine" will load and run Windows executables.
+The library "libwine" ("Winelib") can be used to compile and link
+Windows source code under Unix.
+
+To see compile configuration options, do ./configure --help.
+
+To upgrade to a new release by using a patch file, first cd to the
+top-level directory of the release (the one containing this README
+file). Then do a "make clean", and patch the release with:
+
+    bunzip2 -c patch-file | patch -p1
+
+where "patch-file" is the name of the patch file (something like
+wine-1.0.x.diff.bz2). You can then re-run "./configure", and then
+run "make depend && make".
+
+
+5. SETUP
+
+Once Wine has been built correctly, you can do "make install"; this
+will install the wine executable, the Wine man page, and a few other
+needed files.
+
+Don't forget to uninstall any conflicting previous Wine installation
+first.  Try either "dpkg -r wine" or "rpm -e wine" or "make uninstall"
+before installing.
+
+Once installed, you can run the "winecfg" configuration tool. See the
+Support area at [http://www.winehq.org/](http://www.winehq.org/) for configuration hints.
+
+
+6. RUNNING PROGRAMS
+
+When invoking Wine, you may specify the entire path to the executable,
+or a filename only.
+
+For example: to run Notepad:
+
+    wine notepad           (using the search Path as specified in
+    wine notepad.exe        the config file to locate the file)
+
+    wine c:\\windows\\notepad.exe  (using DOS filename syntax)
+
+    wine ~/.wine/drive_c/windows/notepad.exe  (using Unix filename syntax)
+
+        wine notepad.exe /parameter1 -parameter2 parameter3
+                   (calling program with parameters)
+
+Wine is not yet complete, so several programs may crash. In that crash
+you will be dropped into the debugger so that you can investigate and
+fix the problem.  For more information on how to do this, please check
+the debugging section of the Wine Developer's Guide.
+
+
+7. GETTING MORE INFORMATION
+
+WWW:    A great deal of information about Wine is available from WineHQ at
+    [http://www.winehq.org/](http://www.winehq.org/) : various Wine Guides, application database,
+    bug tracking. This is probably the best starting point.
+
+FAQ:    The Wine FAQ is located at [http://www.winehq.org/FAQ](http://www.winehq.org/FAQ)
+
+Usenet:    You can discuss Wine-related issues and get help
+    on comp.emulators.ms-windows.wine.
+
+Bugs:    Report bugs to Wine Bugzilla at [http://bugs.winehq.org](http://bugs.winehq.org)
+    Please search the bugzilla database to check whether your
+    problem is already found before posting a bug report.  You can
+    also post bug reports to comp.emulators.ms-windows.wine.
+
+IRC:    Online help is available at channel #WineHQ on irc.freenode.net.
+
+GIT:    The current Wine development tree is available through GIT.
+    Go to [http://www.winehq.org/site/git](http://www.winehq.org/site/git) for more information.
+
+Mailing lists:
+    There are several mailing lists for Wine users and developers;
+    see [http://www.winehq.org/forums](http://www.winehq.org/forums) for more information.
+
+Wiki:    The Wine Wiki is located at [http://wiki.winehq.org](http://wiki.winehq.org)
+
+If you add something, or fix a bug, please send a patch (in 'diff -u'
+format) to [email]wine-patches@winehq.org[/email] list for inclusion in the next
+release.
+
+--
+Alexandre Julliard
+[email]julliard@winehq.org[/email]
+
+
+
+
+
+And I can't complete the 2nd step because I get the error that I listed previously.
+
+
+
+Again any help would be greatly appreciated
+
+---
+
+### Post by ALIENDUDE5300 on 2009-05-22
+You're probably missing necessary dependencies. Try typing this in the terminal:
+```
+sudo apt-get build-dep wine
+```
+
+---
+
+### Post by BigB25 on 2009-05-22
+I tried the above and got this error 
+
+
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+E: Unable to find a source package for wine
+barrett@barrett-desktop:~$
+
+---
+
+### Post by cogadh on 2009-05-22
+If you are installing following the instruction YokoZar linked to, it is not installing an older version, it is (or should be) installing the latest available version, 1.1.21. The 1.1.9 version is much older and definitely not the latest version, as those instructions are telling you to get.
+
+---
+
+### Post by jacksaff on 2009-05-23
+Open synaptic.
+Add the following to settings>>repositories>>software sources>>third party>>ADD
+
+deb [http://wine.budgetdedicated.com/apt](http://wine.budgetdedicated.com/apt) jaunty main
+
+Click reload to reload the repository data.
+You should now be able to install the latest wine 1.1.21
+Whenever there is a newer version it will appear as an update (well, 2-5 days after release when someone has packaged it :)
+
+At some point you'll want to go to the wine website and find their apt key which will get rid of messages about installing untrusted software.
+
+---
+
