@@ -1,0 +1,199 @@
+---
+title: "Nvidia / Untiy default question"
+date: 2011-04-10
+forum: Natty Narwhal Testing and Discussion (CLOSED)
+---
+
+### Post by MAFoElffen on 2011-04-10
+Okay, after install on a box with an nvidia card, the initial boot on natty said that it dodn't see any 3D cards present to run Unity and that it would default to the Classic Ubuntu.
+
+I didn't think much of that as with my past experience with earlier versions and nvidia cards-- I always had to install the nvidia drivers after the intitial boot = no biggy.  It went on and immediately found a "new" nvidia driver, that was 3D capable and was different and newer than the one that was there just days before.
+
+I still didn't think much about it, rebooting and... well?  I think it's still in the classic desktop, because I don't notice anything different in the desktops.  I've looked through all the menu's and I don't see anywhere yet where Untiy or Classic would be an option to change as default or not.
+
+The bootup login screen has all the options, but it doesn't seem to change in appearance for me... Anything I'm overlooking there?
+
+---
+
+### Post by terry_gardener on 2011-04-10
+when you installed the nvidia driver which one did you select. 
+
+nvidia version current (recommended) or nvidia experimental. 
+
+because i know with my nvidia card if i install the nvidia experimental i get this problem. 
+
+if you have installed the experimental one then remove it, reboot and then install the nvidia version current one. reboot again and you should have unity. 
+
+also what nvidia card do you have.
+
+---
+
+### Post by MAFoElffen on 2011-04-10
+> **terry_gardener said:**
+> when you installed the nvidia driver which one did you select. 
+
+nvidia version current (recommended) or nvidia experimental. 
+
+because i know with my nvidia card if i install the nvidia experimental i get this problem. 
+
+if you have installed the experimental one then remove it, reboot and then install the nvidia version current one. reboot again and you should have unity. 
+
+also what nvidia card do you have.
+You were correct > It was the "Experimental 3D support for Nvidia cards" driver.  Going back to the NV driver and recheck it. On that testbox, it's an nVidia NV20 Geoforce3 T1 200 ultra. If it doesn't come up on that one, I could always throw together something with some higher end / newer graphics to test that...
+
+---
+
+### Post by MAFoElffen on 2011-04-10
+Okay > Now frustrated (and now a challenge.)  
+
+Removed the experimental driver > Rebooted > Brang it back up... Additional drivers showed 4 drivers,  and it recommended one it was said to was the "current". Installed that one but...
+
+When it rebooted, it reported that it was the "experimental" was again installed? Since then, no longer will it bring up the other driver versions.  
+
+Talk about frustrating = I could see (before) that there "were" other drivers available there!
+
+---
+
+### Post by cariboo on 2011-04-10
+When you install nvidia-current, nouveau should be blacklisted in /etc/modprobe.d, this is what the file looks like on my system:
+
+```
+cat nvidia-graphics-drivers.conf
+blacklist nouveau
+blacklist lbm-nouveau
+blacklist nvidia-173
+blacklist nvidia-96
+```
+
+---
+
+### Post by MAFoElffen on 2011-04-10
+> **cariboo907 said:**
+> When you install nvidia-current, nouveau should be blacklisted in /etc/modprobe.d, this is what the file looks like on my system:
+
+```
+cat nvidia-graphics-drivers.conf
+blacklist nouveau
+blacklist lbm-nouveau
+blacklist nvidia-173
+blacklist nvidia-96
+```
+Maybe this is where my first problem lies... Is it a problem that nvidia-graphics-drivers.conf does not exist in \etc\modprobe.d?
+```
+-$ ls /etc/modprobe.d
+blacklist-base.conf
+blacklist-ath_pci.conf
+blacklist-firewire.conf
+blacklist-framebuffer.conf
+blacklist-modem.conf
+blacklist-oss.conf
+blacklist-rare-network.conf
+blacklist-watchdog.conf
+
+```That is with the "expermental driver" loaded that now is the only one that shows up...
+
+aptitude says that nvidia-common and  xserver-xorg-video-nouveau (experimental) are installed from the ubuntu xswat, so I know it isn't blacklisted anywhere. Since that is such and the |System > Administration > Additional Drivers is confused-- what happens if I purge the ppa away from the experimental, remove both nvidia-common and xserver-xorg-video-nouveau and start over with a little more direction and control through synaptic, aptitude or apt-get?
+
+---
+
+### Post by RomeReactor on 2011-04-10
+Hi. On my system I have the same files as you on /etc/modprobe.d, with the addition of:
+```
+romereactor@ubuntu:/etc/modprobe.d$ ls
+alsa-base.conf              blacklist-modem.conf
+blacklist-ath_pci.conf      blacklist-oss.conf
+blacklist.conf              blacklist-rare-network.conf
+blacklist-firewire.conf     blacklist-watchdog.conf
+blacklist-framebuffer.conf  **nvidia-installer-disable-nouveau.conf**
+```
+```
+romereactor@ubuntu:/etc/modprobe.d$ cat nvidia-installer-disable-nouveau.conf 
+# generated by nvidia-installer
+blacklist nouveau
+options nouveau modeset=0
+```
+
+Not sure if this helps though. As you say, maybe removing the xswat ppa and it's packages can help. Caveat: I was previously using a GeForce 6200, but as of last night changed it to a Radeon X1300 Pro.
+
+---
+
+### Post by MAFoElffen on 2011-04-11
+Well, it has been an adventure and the saga continues... 
+
+I turned on the "Software Sources" applet in the Ubuntu menu's... but it somehow hadn't picked up the right permissions for it to start or run? 
+
+No problem, commandline was fine.  I thought I had backed out in a logical manner:
+```
+
+sudo apt-get --purge remove xserver-xorg-video-nouveau
+sudo apt-get --purge remove nvidia-current
+sudo apt-get --purge remove nvidia-current-modaliases
+sudo apt-get --purge remove nvidia-settings
+sudo ppa-purge ppa:ubuntu-x-swat/x-updates
+
+```Then rebooted... Noticed the fallback video was gone but xsession started.  Additional Driver's showed no choices = blank for drivers available.  Well back to commandline:
+```
+
+sudo apt-get install nvidia-current
+sudo nvidia-xconfig
+```and rebooted...  No xsession.  Looked at the xorg.conf.  It was using nvidia as a driver.  Changed it to nv... same result.
+
+Starting xsession
+```
+sudo start gdm
+```says that it has started a process and is running... Of course - not graphically.  and 
+```
+sudo stop gdm
+``` reports that gdm is stopped/waiting (not as actually stopped?)
+
+Hmmm... Guess I blew this out again.  I could either reinstall the desktops again (on a server base) or "reinstall" everything again fresh (was getting this annoying "cannot reserve MMIO region message on startup).  Guess I'll try a few other things before that and see.where it leads.
+
+Edit-- .xseesion-errors says that it's crashing while initilizing the nautilus-gdu extension.... and blew out all the new features for the server console display settings... Can't seem to get back to default so... Starting over and marking this solved just to close it out.  Guess I have all the text config files I modified on my main box.
+
+---
+
+### Post by cariboo on 2011-04-11
+@MAFoElffen, You are doing several wrong, you shouldn't need an/etc/X11/xorg.conf file any more unless your monitor isn't detected and setup properly. To start and stop gdm, you need to be in a console the use the following commands:
+
+```
+sudo service gdm stop
+```
+
+and
+
+```
+sudo service gdm start
+```
+
+I'd suggest you remove /etc/X11/xorg.conf, and give it a try.
+
+---
+
+### Post by MAFoElffen on 2011-04-11
+> **cariboo907 said:**
+> @MAFoElffen, You are doing several wrong, you shouldn't need an/etc/X11/xorg.conf file any more unless your monitor isn't detected and setup properly. To start and stop gdm, you need to be in a console the use the following commands:
+
+```
+sudo service gdm stop
+```and
+
+```
+sudo service gdm start
+```I'd suggest you remove /etc/X11/xorg.conf, and give it a try.
+Ah / Well- xorg.conf is definitely gone at the moment!  :: visual of big poof and mushroom cloud! ::
+
+And so far it has no problems on a new natty server install with an ultra tnt2 9932 as the primary and that nv20 as a secondary.  Have all my server packages reconfig'ed back to where they were, grub2 back to where it was being challenged (for that LP bug), my changes  back for my server consoles and in the process of adding the desktop packages back in...
+
+Note- If my main box wasn't committed for something else, I'd see how natty is w/ SLI.
+
+On "stop" and "start" techniques... will try that.  With the upstart changes of past, my way had/has been working also...
+
+---
+
+### Post by MAFoElffen on 2011-04-11
+Now at least I'm back to where I was before this thread.  Now the TNT2 is geoforce2 and the NV20 is Geofrce3...  Graphics look "fair" at the moment.
+
+I really need to get on to other fires with natty.
+
+---
+
