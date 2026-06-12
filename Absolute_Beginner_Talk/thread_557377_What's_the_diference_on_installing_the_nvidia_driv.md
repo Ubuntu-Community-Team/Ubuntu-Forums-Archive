@@ -1,0 +1,415 @@
+---
+title: "What's the diference on installing the nvidia drivers and the predefined ones?"
+date: 2007-09-22
+forum: Absolute Beginner Talk
+---
+
+### Post by ili on 2007-09-22
+Well after reinstall again feisty thanks to the problems on installing the nvidia drivers i arrived at a point where i asked myself :¿what is the deal of having the nvidia drivers and the ¿generic ones of feisty fawn?. If my screen is a Sony HMD-A240R do i need drivers for that or i must install the nvidia drivers or how can i understand the difference between this 2 concepts (my 32 NVIDIA GeForce2 MX Integrated Graphics card or my screen Sony:confused::confused:
+
+---
+
+### Post by RomeReactor on 2007-09-22
+Hi. The difference would be that the open source **nv** driver does not offer you direct rendering, so you can't use desktop effects or play 3D games on your system. The proprietary **nvidia** driver does offer you that functionality.
+
+Which method did you use to install the drivers?
+
+---
+
+### Post by ili on 2007-09-22
+hey i'm from mexico too!!!
+well i tried several times to install the legacy drivers 9639 on feisty fawn but always gave me errors after the installation like glitches and stuff so i'm using the generic ones...:mad:
+I used this guide : [http://albertomilone.com/latest_nvidia_udsf_feisty.html](http://albertomilone.com/latest_nvidia_udsf_feisty.html), but didn't work it
+
+---
+
+### Post by RomeReactor on 2007-09-22
+Did you try running **sudo dpkg-reconfigure -phigh xserver-xorg** to see if that corrected the problems? Have you tried installing the **nvidia-glx-legacy** drivers from the repositories?:
+```
+sudo apt-get install nvidia-glx-legacy
+```
+and
+```
+sudo nvidia-glx-config enable
+```
+
+Otherwise, the only thing that comes to mind is that it's hardware failure; if using the **nvidia-glx-legacy** drivers don't work correctly for your card, and you don't plan on playing 3D games or using desktop effects, then the **nv** driver will work well for you--although a little slower.
+
+And welcome to the forums! :popcorn:
+
+---
+
+### Post by ili on 2007-09-22
+of course i want to play games  and use desktop effects but like i'm a noob i jsut don get it all how get it to work!!
+maybe you can help me
+
+---
+
+### Post by RomeReactor on 2007-09-22
+Considering your card, you probably won't get much performance out of it; in any case, try installing the drivers like this:
+```
+sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf.backup
+```
+This will make a backup of your xorg.conf file, so you can revert to it in case the installation doesn't work correctly; then
+
+```
+sudo apt-get update
+```
+to update the repository information on the package managers;
+
+```
+sudo apt-get install nvidia-glx-legacy
+```
+to install the drivers; and
+
+```
+sudo nvidia-glx-config enable
+```
+to enable the drivers.
+
+In case the installation doesn't work and you're dumped to the command line when you log in again, run this command to restore the xorg.conf backup:
+```
+sudo cp /etc/X11/xorg.conf.backup /etc/X11/xorg.conf
+```
+and then:
+```
+start x
+```
+or
+```
+sudo /etc/init.d/gdm start
+```
+to start the display.
+
+If that doesn't get you to the graphical desktop, try rebooting like so:
+```
+sudo reboot
+```
+
+---
+
+### Post by ili on 2007-09-22
+I got this :"Error: your X configuration has been altered.
+This script cannot proceed automatically. If you believe that this
+not correct, you can update the md5sum entry executing the following
+command:
+md5sum /etc/X11/xorg.conf | sudo tee /var/lib/x11/xorg.conf.md5sum
+otherwise edit manually /etc/X11/xorg.conf to change the Driver section
+from nv to nvidia."
+Now what?
+
+---
+
+### Post by RomeReactor on 2007-09-22
+In my experience that's always been more of a notification than an error, so you shouldn't run the command it suggests, unless you find the display isn't working.
+
+You'll know you have direct rendering enabled when you run this command:
+```
+glxinfo | grep direct
+```
+and  it shows: "Yes".
+
+---
+
+### Post by ili on 2007-09-22
+Arggghhh
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Error: couldn't find RGB GLX visual
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+
+Ubuntu restarts and all was fine even in the Screen Resolution it add more resolutions...
+If itype the glxgears get this :Xlib:  extension "GLX" missing on display ":0.0".
+Error: couldn't get an RGB, Double-buffered visual
+
+---
+
+### Post by RomeReactor on 2007-09-22
+Please post the output of this command:
+```
+cat /etc/X11/xorg.conf
+```
+
+---
+
+### Post by ili on 2007-09-25
+Here is the output:
+```
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+        FontPath        "/usr/share/fonts/X11/misc"
+        FontPath        "/usr/share/fonts/X11/cyrillic"
+        FontPath        "/usr/share/fonts/X11/100dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/75dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/Type1"
+        FontPath        "/usr/share/fonts/X11/100dpi"
+        FontPath        "/usr/share/fonts/X11/75dpi"
+        # path to defoma fonts
+        FontPath        "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+        Load    "i2c"
+        Load    "bitmap"
+        Load    "ddc"
+        Load    "dri"
+        Load    "extmod"
+        Load    "freetype"
+        Load    "glx"
+        Load    "int10"
+        Load    "vbe"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "CoreKeyboard"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc105"
+        Option          "XkbLayout"     "latam"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+        Option          "Device"                "/dev/input/mice"
+        Option          "Protocol"              "ImPS/2"
+        Option          "ZAxisMapping"          "4 5"
+        Option          "Emulate3Buttons"       "true"
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "stylus"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "stylus"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "eraser"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "eraser"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "cursor"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "cursor"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "Device"
+        Identifier      "nVidia Corporation NVCrush11 [GeForce2 MX Integrated Graphics]"
+        Driver          "nv"
+        BusID           "PCI:2:0:0"
+EndSection
+
+Section "Monitor"
+        Identifier      "Generic Monitor"
+        Option          "DPMS"
+        HorizSync       30-70
+        VertRefresh     48-120
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "nVidia Corporation NVCrush11 [GeForce2 MX Integrated Graphics]"
+        Monitor         "Generic Monitor"
+        DefaultDepth    24
+        SubSection "Display"
+                Depth           1
+                Modes           "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           4
+                Modes           "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           8
+                Modes           "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           15
+                Modes           "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           16
+                Modes            "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           24
+                Modes            "1280x960" "1024x768" "800x600" "640x480"
+        EndSubSection
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+        Screen          "Default Screen"
+        InputDevice     "Generic Keyboard"
+        InputDevice     "Configured Mouse"
+        InputDevice     "stylus"        "SendCoreEvents"
+        InputDevice     "cursor"        "SendCoreEvents"
+        InputDevice     "eraser"        "SendCoreEvents"
+EndSection
+
+Section "DRI"
+        Mode    0666
+EndSection
+
+```
+
+---
+
+### Post by mysticmatrix on 2007-09-25
+Assuming you have correctly installed nvidia's driver, change
+
+
+```
+Section "Device"
+        Identifier      "nVidia Corporation NVCrush11 [GeForce2 MX Integrated Graphics]"
+        Driver          "[COLOR="Red"]nv[/COLOR]"
+        BusID           "PCI:2:0:0"
+EndSection
+
+```
+
+to
+
+```
+Section "Device"
+        Identifier      "nVidia Corporation NVCrush11 [GeForce2 MX Integrated Graphics]"
+        Driver          "[COLOR="Red"]nvidia[/COLOR]"
+        BusID           "PCI:2:0:0"
+EndSection
+```
+
+This should make your nvidia drivers working.
+
+PS: If you have installed nvidia drivers, you might be seeing nvidia setting's option under Application --> System Tools
+
+---
+
+### Post by ili on 2007-09-25
+> **mysticmatrix said:**
+> 
+
+
+PS: If you have installed nvidia drivers, you might be seeing nvidia setting's option under Application --> System Tools
+
+No i don't see that...so it's wrong:-k:-k
+
+---
+
+### Post by mysticmatrix on 2007-09-25
+> **ili said:**
+> No i don't see that...so it's wrong:-k:-k
+
+Ok I'll advise you to try that anyways. Just make a backup first
+
+```
+sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf.backup1
+```
+
+Then, make the change( 'nv' to 'nvidia' ) and reboot. Most probably this would work if you followed RomeReactor's instructions carefully.
+
+ If everything fails, you will be on comand line.(Try booting in safe mode if you don't get command line).
+
+When in command line, type this and reboot to revert to old settings.
+
+```
+sudo mv /etc/X11/xorg.conf.backup1 /etc/X11/xorg.conf
+```
+
+---
+
+### Post by ili on 2007-09-25
+it&#347; done , so whit this i'm using the nvidia controllers?
+but what about the glxgears output: "Xlib:  extension "GLX" missing on display ":0.0".
+Error: couldn't get an RGB, Double-buffered visual"
+
+---
+
+### Post by RomeReactor on 2007-09-25
+I would suggest you reconfigure the X server; press CTRL+ALT+F1 to go to the console, and then enter:
+```
+sudo /etc/init.d/gdm stop
+```
+and:
+```
+sudo dpkg-reconfigure -phigh xserver-xorg
+```
+it will ask you some questions; if you don't know the answer, go with the defaults by pressing ENTER. However, when it asks you which driver to use, choose **nvidia**. After it finishes, if your display doesn't start aoutomatically, enter:
+```
+sudo /etc/init.d/gdm start
+```
+
+---
+
+### Post by ili on 2007-09-26
+but the last time i edit that file my keyboard changed to usa and i have it in latin
+
+---
+
+### Post by nikoPSK on 2007-09-26
+Usually generic drivers end up in a lot more files than you need and don't give the best quality (in this case video output) as the ones designed for the card. I would recommend envy for your graphics card. It has TI and Nvidia drivers. So, hope that helped!:KS
+
+---
+
+### Post by ili on 2007-09-26
+i'm getting this :"xserver-xorg postinst warning: overwriting possibly-customised configuration file;backup in /etc/x11/xorg.conf.20070926110201"
+and then it kicks me out
+
+---
+
+### Post by RomeReactor on 2007-09-26
+Did that error come up after you ran the **dpkg-reconfigure** command? and did you run **sudo /etc/init.d/gdm start** afterwards?
+
+---
+
+### Post by ili on 2007-09-27
+yeah that was what happend....
+
+---
+
+### Post by RomeReactor on 2007-09-27
+When you say it "kicks you out", do you mean the display doesn't start? or something else?
+
+In case the display doesn't start, and whenever you boot up you're dumped to the console, enter the following command after logging in:
+```
+sudo nano /etc/X11/xorg.conf
+```
+scroll down to **Section "Device"**, and change the driver from **nvidia** to **nv**. Press CTRL+O to save, CTRL+X to exit the text editor, and
+```
+sudo /etc/init.d/gdm start
+```
+to start the display.
+
+---
+

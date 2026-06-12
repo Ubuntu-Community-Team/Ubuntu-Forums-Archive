@@ -1,0 +1,29 @@
+---
+title: "Problem with Compiz-Fusion on Intel Graphics Media Accelerator"
+date: 2007-11-07
+forum: Absolute Beginner Talk
+---
+
+### Post by icelechi on 2007-11-07
+Ok so I got a new laptop (HP Pavilion dv2617us) and it runs quite well with Ubuntu 7.10. The only problem lies with compiz-fusion.
+
+It tells me that it cannot start compiz. :( 
+
+I asked for help on this forum and was told to comment out a line on /usr/bin/compiz (Line 60 to be exact) which lists blacklisted graphics cards and it worked!! (HURRAY!!! :D)
+
+But every now and then it freezes right after I enter the login information after I turn on the PC.
+
+Is there any way to get around this??
+
+Thanks
+
+PS:
+Here is some info on the PC
+
+14.1"-diagonal widescreen WXGA (1280 x 800) BrightView LCD screen
+Intel Graphics Media Accelerator X3100 with up to 384MB shared memory
+2.0GB of RAM
+1.50GHz Intel Core 2 Duo processor
+
+---
+

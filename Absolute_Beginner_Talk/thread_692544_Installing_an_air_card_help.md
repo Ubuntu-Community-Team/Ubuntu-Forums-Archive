@@ -1,0 +1,88 @@
+---
+title: "Installing an air card help"
+date: 2008-02-09
+forum: Absolute Beginner Talk
+---
+
+### Post by Lisa Y on 2008-02-09
+Hello i was trying to install my aircard ( AirCard® 595U by Sierra Wireless by sprint )
+I have the CD here and everything else....just wanted to know how i could install it in my 7.10 gusty..
+any help would be great...thanks!
+
+---
+
+### Post by Presto123 on 2008-02-09
+Internal or external? Does it show up in System/Administration/Restricted Drivers Manager?
+
+Post the output of this (Enter into Terminal):
+```
+lspci
+```
+
+---
+
+### Post by Lisa Y on 2008-02-09
+This is the output that i got...
+
+00:00.0 Host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and 945GT Express Memory Controller Hub (rev 03)
+00:02.0 VGA compatible controller: Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:02.1 Display controller: Intel Corporation Mobile 945GM/GMS/GME, 943/940GML Express Integrated Graphics Controller (rev 03)
+00:1b.0 Audio device: Intel Corporation 82801G (ICH7 Family) High Definition Audio Controller (rev 02)
+00:1c.0 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 1 (rev 02)
+00:1c.1 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 2 (rev 02)
+00:1c.2 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 3 (rev 02)
+00:1d.0 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #1 (rev 02)
+00:1d.1 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #2 (rev 02)
+00:1d.2 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #3 (rev 02)
+00:1d.7 USB Controller: Intel Corporation 82801G (ICH7 Family) USB2 EHCI Controller (rev 02)
+00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev e2)
+00:1f.0 ISA bridge: Intel Corporation 82801GBM (ICH7-M) LPC Interface Bridge (rev 02)
+00:1f.1 IDE interface: Intel Corporation 82801G (ICH7 Family) IDE Controller (rev 02)
+00:1f.2 IDE interface: Intel Corporation 82801GBM/GHM (ICH7 Family) SATA IDE Controller (rev 02)
+00:1f.3 SMBus: Intel Corporation 82801G (ICH7 Family) SMBus Controller (rev 02)
+02:00.0 Ethernet controller: Marvell Technology Group Ltd. 88E8036 PCI-E Fast Ethernet Controller (rev 16)
+06:00.0 Ethernet controller: Atheros Communications, Inc. AR5006EG 802.11 b/g Wireless PCI Express Adapter (rev 01)
+08:03.0 CardBus bridge: Texas Instruments PCIxx12 Cardbus Controller
+08:03.1 FireWire (IEEE 1394): Texas Instruments PCIxx12 OHCI Compliant IEEE 1394 Host Controller
+08:03.2 Mass storage controller: Texas Instruments 5-in-1 Multimedia Card Reader (SD/MMC/MS/MS PRO/xD)
+
+---
+
+### Post by Presto123 on 2008-02-09
+That's a good sign so far: ```
+Atheros Communications, Inc. AR5006EG 802.11 b/g Wireless PCI Express Adapter
+```
+
+Your aircard is by Atheros unless this is an erroneous/additional driver.
+
+Could you post the answer about the second question I asked? (Restricted Drivers Manager)
+
+---
+
+### Post by Lisa Y on 2008-02-09
+oh yea sorry...but no it doest show it up in restricted drivers..the only driver that is present and working is the " Atheros Hardware Access Layer(HAL)" and i believe the AR5006EG  would be my wifi's driver that i installed...
+
+---
+
+### Post by Presto123 on 2008-02-09
+That's fine. ;)
+
+I might suggest using Ndiswrapper at this point, but wait a little while and see if someone else has a possible fix before going this route.
+
+Read their installation instructions and it should be pretty easy to follow.
+[http://ndiswrapper.sourceforge.net/joomla/](http://ndiswrapper.sourceforge.net/joomla/)
+
+And for the Atheros card, see here:
+
+[http://ndiswrapper.sourceforge.net/joomla/index.php?/component/option,com_openwiki/Itemid,33/id,list_a/](http://ndiswrapper.sourceforge.net/joomla/index.php?/component/option,com_openwiki/Itemid,33/id,list_a/)
+
+Try the driver for Atheros AR2413 / AR5005G OR use your disk to get the driver.
+
+---
+
+### Post by Presto123 on 2008-02-09
+An alternative to what I have posted is to try following what Anewguy has posted in this thread:
+[http://ubuntuforums.org/showthread.php?t=692550](http://ubuntuforums.org/showthread.php?t=692550)
+
+---
+

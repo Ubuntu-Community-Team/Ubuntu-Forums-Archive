@@ -1,0 +1,64 @@
+---
+title: "script to execute while shutting down"
+date: 2007-10-09
+forum: Absolute Beginner Talk
+---
+
+### Post by tambidude on 2007-10-09
+just like there are scripts like rc.local which gets executed at start time, which script gets executed before the machine is shutdown or rebooted. I want to put some custom code there. thanks.
+
+---
+
+### Post by Overbyte on 2007-10-10
+rc.shutdown?
+
+---
+
+### Post by az on 2007-10-10
+Look in /etc/init.d/
+
+The scripts that start with an S get run at startup and the ones with K at shutdown (actually, when you leave the runlevel)
+
+The scripts that get run per runlevel are in
+/etc/rc*.d/
+
+---
+
+### Post by az on 2007-10-10
+cat /etc/init.d/README 
+        Configuration of System V init under Debian GNU/Linux
+
+Most Unix versions have a file here that describes how the scripts
+in this directory work, and how the links in the /etc/rc?.d/ directories
+influence system startup/shutdown.
+
+For Debian, this information is contained in the policy manual, chapter 
+"System run levels and init.d scripts".  The Debian Policy Manual is 
+available at:
+
+    [http://www.debian.org/doc/debian-policy/#contents](http://www.debian.org/doc/debian-policy/#contents)
+
+The Debian Policy Manual is also available in the Debian package
+"debian-policy".  When this package is installed, the policy manual can be
+found in directory /usr/share/doc/debian-policy. If you have a browser
+installed you can probably read it at
+
+    file://localhost/usr/share/doc/debian-policy/
+
+Some more detailed information can also be found in the files in the
+/usr/share/doc/sysv-rc directory.
+
+Debian Policy dictates that /etc/init.d/*.sh scripts must work properly
+when sourced.  The following additional rules apply:
+
+* /etc/init.d/*.sh scripts may not rely for their correct functioning
+  on their being sourced rather than executed.  That is, they must work
+  properly when executed too. They must include "#!/bin/sh" at the top.
+
+* /etc/init.d/*.sh scripts must conform to the rules for sh scripts as
+  spelled out in the Debian policy section entitled "Scripts" (§10.4).
+
+andy@emma-desktop:~$
+
+---
+

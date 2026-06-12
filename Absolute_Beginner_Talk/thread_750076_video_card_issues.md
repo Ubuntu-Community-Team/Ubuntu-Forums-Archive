@@ -1,0 +1,314 @@
+---
+title: "video card issues"
+date: 2008-04-09
+forum: Absolute Beginner Talk
+---
+
+### Post by Yoruichi on 2008-04-09
+I cant find how much ram my video card has, its a  630/730 PCI/AGP VGA Display Adapter. and i cant getmy resolution  above 800x600. is there anything that i can do to fix this problem
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+> **Yoruichi said:**
+> I cant find how much ram my video card has, its a  630/730 PCI/AGP VGA Display Adapter. and i cant getmy resolution  above 800x600. is there anything that i can do to fix this problem
+
+Post the following output:
+```
+glxinfo
+```
+
+---
+
+### Post by Yoruichi on 2008-04-09
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: Yes
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_OML_swap_method, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: SGI
+client glx version string: 1.4
+client glx extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_allocate_memory, 
+    GLX_MESA_copy_sub_buffer, GLX_MESA_swap_control, 
+    GLX_MESA_swap_frame_usage, GLX_OML_swap_method, GLX_OML_sync_control, 
+    GLX_SGI_make_current_read, GLX_SGI_swap_control, GLX_SGI_video_sync, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_pbuffer, 
+    GLX_SGIX_visual_select_group, GLX_EXT_texture_from_pixmap
+GLX version: 1.2
+GLX extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_OML_swap_method, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+OpenGL vendor string: Eric Anholt
+OpenGL renderer string: Mesa DRI SiS 20060710 AGP 1x x86/MMX+/3DNow!+/SSE
+OpenGL version string: 1.2 Mesa 6.5.2
+OpenGL extensions:
+    GL_ARB_multisample, GL_ARB_multitexture, GL_ARB_texture_border_clamp, 
+    GL_ARB_texture_compression, GL_ARB_texture_mirrored_repeat, 
+    GL_ARB_transpose_matrix, GL_ARB_window_pos, GL_EXT_abgr, GL_EXT_bgra, 
+    GL_EXT_clip_volume_hint, GL_EXT_compiled_vertex_array, 
+    GL_EXT_copy_texture, GL_EXT_draw_range_elements, GL_EXT_packed_pixels, 
+    GL_EXT_polygon_offset, GL_EXT_rescale_normal, GL_EXT_secondary_color, 
+    GL_EXT_separate_specular_color, GL_EXT_stencil_wrap, GL_EXT_subtexture, 
+    GL_EXT_texture, GL_EXT_texture3D, GL_EXT_texture_edge_clamp, 
+    GL_EXT_texture_lod_bias, GL_EXT_texture_object, GL_EXT_vertex_array, 
+    GL_APPLE_packed_pixels, GL_IBM_rasterpos_clip, 
+    GL_IBM_texture_mirrored_repeat, GL_MESA_ycbcr_texture, GL_MESA_window_pos, 
+    GL_NV_blend_square, GL_NV_light_max_exponent, GL_NV_texgen_reflection, 
+    GL_OES_read_format, GL_SGIS_texture_border_clamp, 
+    GL_SGIS_texture_edge_clamp, GL_SGIS_texture_lod
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x22 24 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  0 0 None
+0x23 24 tc  0 32  0 r  y  .  8  8  8  8  0  0  0  0  0  0  0  0 0 None
+0x24 24 tc  0 32  0 r  .  .  8  8  8  8  0 16  0  0  0  0  0  0 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 16  0  0  0  0  0  0 0 None
+0x26 24 tc  0 32  0 r  .  .  8  8  8  8  0 32  0  0  0  0  0  0 0 None
+0x27 24 tc  0 32  0 r  y  .  8  8  8  8  0 32  0  0  0  0  0  0 0 None
+0x28 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x29 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x2a 24 tc  0 32  0 r  .  .  8  8  8  8  0  0  0 16 16 16 16  0 0 Slow
+0x2b 24 tc  0 32  0 r  y  .  8  8  8  8  0  0  0 16 16 16 16  0 0 Slow
+0x2c 24 tc  0 32  0 r  .  .  8  8  8  8  0 16  0 16 16 16 16  0 0 Slow
+0x2d 24 tc  0 32  0 r  y  .  8  8  8  8  0 16  0 16 16 16 16  0 0 Slow
+0x2e 24 tc  0 32  0 r  .  .  8  8  8  8  0 32  0 16 16 16 16  0 0 Slow
+0x2f 24 tc  0 32  0 r  y  .  8  8  8  8  0 32  0 16 16 16 16  0 0 Slow
+0x30 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x31 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x4a 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  0 0 Ncon
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+Have you tried manually editing your resolution?
+
+---
+
+### Post by Yoruichi on 2008-04-09
+how do i do that
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+> **Yoruichi said:**
+> how do i do that
+
+I'm pretty sure you can do it by doing the following:
+```
+sudo gedit /etc/X11/xorg.conf
+```
+You might want to post that too.
+
+---
+
+### Post by Yoruichi on 2008-04-09
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Silicon Integrated Systems [SiS] 630/730 PCI/AGP VGA Display Adapter"
+	Driver		"sis"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-40
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Silicon Integrated Systems [SiS] 630/730 PCI/AGP VGA Display Adapter"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"800x600" "720x400" "1x1"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+Since you have direct rendering enabled, I'm pretty sure you could go 1024x780, you might want to edit your Xorg.
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+You may also want to backup your X before you edit anything:
+```
+cp /etc/X11/xorg.conf ~/my-xorg-backup
+```
+
+---
+
+### Post by Yoruichi on 2008-04-09
+how do i access the backup
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+> **Yoruichi said:**
+> how do i access the backup
+
+I'm pretty sure it's:
+
+```
+sudo cp /etc/X11/xorg.conf.backup /etc/X11/xorg.conf
+```
+
+---
+
+### Post by Yoruichi on 2008-04-09
+what if something goes wrong
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+> **Yoruichi said:**
+> what if something goes wrong
+
+You can access the backup xorg, or if something goes wrong with that, your last resort would be this:
+```
+sudo dpkg-reconfigure xserver-xorg
+```
+
+---
+
+### Post by Yoruichi on 2008-04-09
+thnx a lot
+
+---
+
+### Post by Crafty Kisses on 2008-04-09
+> **Yoruichi said:**
+> thnx a lot
+
+No problem man, if you have anymore troubles, remember post back. :)
+
+---
+

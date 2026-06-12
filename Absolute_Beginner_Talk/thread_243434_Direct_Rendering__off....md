@@ -1,0 +1,110 @@
+---
+title: "Direct Rendering:  off..."
+date: 2006-08-25
+forum: Absolute Beginner Talk
+---
+
+### Post by greatmetal on 2006-08-25
+I really want to install xgl and compiz but there is a dilemma with my Radeon 9550 card
+
+greatmetal@greatmetal:~$ glxinfo
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: No <------------------HERE!!!!!
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_visual_info, GLX_EXT_visual_rating,
+    GLX_EXT_import_context, GLX_OML_swap_method, GLX_SGI_make_current_read,
+    GLX_SGIS_multisample, GLX_SGIX_hyperpipe, GLX_SGIX_swap_barrier,
+    GLX_SGIX_fbconfig
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context,
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_ATI_pixel_format_float,
+    GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context,
+    GLX_ARB_multisample
+OpenGL vendor string: Mesa project: [www.mesa3d.org](www.mesa3d.org)
+OpenGL renderer string: Mesa GLX Indirect
+OpenGL version string: 1.2 (1.5 Mesa 6.4.1)
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multitexture, GL_ARB_texture_border_clamp,
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add,
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3,
+    GL_ARB_transpose_matrix, GL_EXT_abgr, GL_EXT_blend_color,
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_texture_env_add,
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3,
+    GL_EXT_texture_lod_bias
+glu version: 1.3
+glu extensions:
+    GLU_EXT_nurbs_tessellator, GLU_EXT_object_space_tess
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x23 24 tc  0 24  0 r  y  .  8  8  8  0  0 16  0  0  0  0  0  1 0 None
+0x24 24 tc  0 24  0 r  y  .  8  8  8  0  0 16  8 16 16 16  0  1 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 16  8 16 16 16 16  1 0 None
+0x26 24 tc  0 32  0 r  .  .  8  8  8  8  0 16  8 16 16 16 16  1 0 None
+0x27 24 dc  0 24  0 r  y  .  8  8  8  0  0 16  0  0  0  0  0  1 0 None
+0x28 24 dc  0 24  0 r  y  .  8  8  8  0  0 16  8 16 16 16  0  1 0 None
+0x29 24 dc  0 32  0 r  y  .  8  8  8  8  0 16  8 16 16 16 16  1 0 None
+0x2a 24 dc  0 32  0 r  .  .  8  8  8  8  0 16  8 16 16 16 16  1 0 None
+
+And i think this may be a problem too since I read somthing about it supposed to be ATI
+
+greatmetal@greatmetal:~$ fglrxinfo
+display: :0.0  screen: 0
+OpenGL vendor string: Mesa project: [www.mesa3d.org](www.mesa3d.org)
+OpenGL renderer string: Mesa GLX Indirect
+OpenGL version string: 1.2 (1.5 Mesa 6.4.1)
+
+---
+
+### Post by Greycloak on 2006-08-25
+Which fglrx driver do you have installed, the one from the repo or the one from ATI?
+
+---
+
+### Post by greatmetal on 2006-08-25
+The one from the repository
+
+---
+
+### Post by Greycloak on 2006-08-25
+Does the 'Device' section of xorg.conf mention fglrx (under 'driver')?
+
+I had some problems setting up my radeon 9200, so I know where you are coming from.  Ultimately I ended up using the 8.28.8 drivers from ATI.
+
+Have a look here for more info on both drivers:
+
+[http://wiki.cchtml.com/index.php?title=Ubuntu_Dapper_Installation_Guide&redirect=no](http://wiki.cchtml.com/index.php?title=Ubuntu_Dapper_Installation_Guide&redirect=no)
+
+---
+
+### Post by greatmetal on 2006-08-25
+Yep it refrences it
+Section "Device"
+	Identifier  "aticonfig-Device[0]"
+	Driver      "fglrx"
+	Option	    "VideoOverlay" "on"
+	Option	    "OpenGLOverlay" "off"
+EndSection
+
+---
+
+### Post by Greycloak on 2006-08-25
+Try this:
+
+```
+sudo ln -s /usr/lib/dri /usr/lib/xorg/modules/dri
+```
+
+It creates a symlink that might resolve the issue for you. When I used the repo drivers I had to do something similar.
+
+---
+

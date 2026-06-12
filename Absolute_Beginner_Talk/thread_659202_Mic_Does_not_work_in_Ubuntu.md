@@ -1,0 +1,168 @@
+---
+title: "Mic Does not work in Ubuntu"
+date: 2008-01-05
+forum: Absolute Beginner Talk
+---
+
+### Post by yeehi on 2008-01-05
+It works fine dual booted into windows, though. I hear things from speakers without problem. When I try and speak into the[ mic]("http://www.logitech.com/index.cfm/480/3407&cl=us,en"), nothing is recorded. The mic is a logitech webcam with an integrated sound receiver.
+
+Here is the outfput 
+
+What can I do?
+
+Available Sound card: ICH5
+
+Simple mixer control 'Master',0
+  Capabilities: pvolume pswitch pswitch-joined
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 26 [84%] [-7.50dB] [on]
+  Front Right: Playback 26 [84%] [-7.50dB] [on]
+Simple mixer control 'Master Mono',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined
+  Playback channels: Mono
+  Limits: Playback 0 - 31
+  Mono: Playback 25 [81%] [-9.00dB] [on]
+Simple mixer control 'PCM',0
+  Capabilities: pvolume pswitch pswitch-joined
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 25 [81%] [3.00dB] [on]
+  Front Right: Playback 25 [81%] [3.00dB] [on]
+Simple mixer control 'Surround',0
+  Capabilities: pvolume pswitch
+  Playback channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono:
+  Front Left: Playback 0 [0%] [-46.50dB] [off]
+  Front Right: Playback 0 [0%] [-46.50dB] [off]
+Simple mixer control 'Surround Jack Mode',0
+  Capabilities: enum
+  Items: 'Shared' 'Independent'
+  Item0: 'Shared'
+Simple mixer control 'Center',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined
+  Playback channels: Mono
+  Limits: Playback 0 - 31
+  Mono: Playback 31 [100%] [0.00dB] [off]
+Simple mixer control 'LFE',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined
+  Playback channels: Mono
+  Limits: Playback 0 - 31
+  Mono: Playback 0 [0%] [-46.50dB] [off]
+Simple mixer control 'Line',0
+  Capabilities: pvolume pswitch pswitch-joined cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Playback channels: Front Left - Front Right
+  Capture channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Front Left: Playback 0 [0%] [-34.50dB] [off] Capture [off]
+  Front Right: Playback 0 [0%] [-34.50dB] [off] Capture [off]
+Simple mixer control 'CD',0
+  Capabilities: pvolume pswitch pswitch-joined cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Playback channels: Front Left - Front Right
+  Capture channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Front Left: Playback 25 [81%] [3.00dB] [on] Capture [off]
+  Front Right: Playback 25 [81%] [3.00dB] [on] Capture [off]
+Simple mixer control 'Mic',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Playback channels: Mono
+  Capture channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono: Playback 0 [0%] [-34.50dB] [off]
+  Front Left: Capture [on]
+  Front Right: Capture [on]
+Simple mixer control 'Mic Boost (+20dB)',0
+  Capabilities: pswitch pswitch-joined
+  Playback channels: Mono
+  Mono: Playback [off]
+Simple mixer control 'Mic Select',0
+  Capabilities: enum
+  Items: 'Mic1' 'Mic2'
+  Item0: 'Mic1'
+Simple mixer control 'Video',0
+  Capabilities: cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Capture channels: Front Left - Front Right
+  Front Left: Capture [off]
+  Front Right: Capture [off]
+Simple mixer control 'Phone',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Playback channels: Mono
+  Capture channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Mono: Playback 0 [0%] [-34.50dB] [off]
+  Front Left: Capture [off]
+  Front Right: Capture [off]
+Simple mixer control 'IEC958',0
+  Capabilities: pswitch pswitch-joined cswitch cswitch-joined
+  Playback channels: Mono
+  Capture channels: Mono
+  Mono: Playback [off] Capture [off]
+Simple mixer control 'IEC958 Playback AC97-SPSA',0
+  Capabilities: volume volume-joined
+  Playback channels: Mono
+  Capture channels: Mono
+  Limits: 0 - 3
+  Mono: 0 [0%]
+Simple mixer control 'IEC958 Playback Source',0
+  Capabilities: enum
+  Items: 'PCM' 'Analog In' 'IEC958 In'
+  Item0: 'PCM'
+Simple mixer control 'PC Speaker',0
+  Capabilities: pvolume pvolume-joined pswitch pswitch-joined
+  Playback channels: Mono
+  Limits: Playback 0 - 15
+  Mono: Playback 0 [0%] [-45.00dB] [off]
+Simple mixer control 'Aux',0
+  Capabilities: pvolume pswitch pswitch-joined cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Playback channels: Front Left - Front Right
+  Capture channels: Front Left - Front Right
+  Limits: Playback 0 - 31
+  Front Left: Playback 0 [0%] [-34.50dB] [off] Capture [off]
+  Front Right: Playback 0 [0%] [-34.50dB] [off] Capture [off]
+Simple mixer control 'Mono Output Select',0
+  Capabilities: enum
+  Items: 'Mix' 'Mic'
+  Item0: 'Mix'
+Simple mixer control 'Capture',0
+  Capabilities: cvolume cswitch cswitch-joined
+  Capture channels: Front Left - Front Right
+  Limits: Capture 0 - 15
+  Front Left: Capture 0 [0%] [0.00dB] [on]
+  Front Right: Capture 0 [0%] [0.00dB] [on]
+Simple mixer control 'Mix',0
+  Capabilities: cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Capture channels: Front Left - Front Right
+  Front Left: Capture [off]
+  Front Right: Capture [off]
+Simple mixer control 'Mix Mono',0
+  Capabilities: cswitch cswitch-exclusive
+  Capture exclusive group: 0
+  Capture channels: Front Left - Front Right
+  Front Left: Capture [off]
+  Front Right: Capture [off]
+Simple mixer control 'Channel Mode',0
+  Capabilities: enum
+  Items: '2ch' '4ch' '6ch'
+  Item0: '2ch'
+Simple mixer control 'Duplicate Front',0
+  Capabilities: pswitch pswitch-joined
+  Playback channels: Mono
+  Mono: Playback [off]
+Simple mixer control 'External Amplifier',0
+  Capabilities: pswitch pswitch-joined
+  Playback channels: Mono
+  Mono: Playback [on]
+
+---
+

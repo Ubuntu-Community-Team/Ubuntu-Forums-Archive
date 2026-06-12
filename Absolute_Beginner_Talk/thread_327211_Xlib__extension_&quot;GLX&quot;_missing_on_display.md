@@ -1,0 +1,289 @@
+---
+title: "Xlib:  extension &quot;GLX&quot; missing on display &quot;:0.0&quot;"
+date: 2006-12-28
+forum: Absolute Beginner Talk
+---
+
+### Post by stevand on 2006-12-28
+I tried to install something afew days ago and messed up so that when i run paraview the following pops up 
+
+Xlib:  extension "GLX" missing on display ":0.0"
+
+my  glxinfo looks like this
+
+stevand@stevand-laptop:~$ glxinfo
+name of display: :0.0
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Error: couldn't find RGB GLX visual
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+0x21 16 tc  1  0  0 c  .  .  0  0  0  0  0  0  0  0  0  0  0  0 0 None
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+0x22 16 dc  1  0  0 c  .  .  0  0  0  0  0  0  0  0  0  0  0  0 0 None
+
+
+and the file 
+
+
+# GDM Configuration Customization file.
+#
+# This file is the appropriate place for specifying your customizations to the
+# GDM configuration.   If you run gdmsetup, it will automatically edit this
+# file for you and will cause the daemon and any running GDM GUI programs to
+# automatically update with the new configuration.  Not all configuration
+# options are supported by gdmsetup, so to modify some values it may be
+# necessary to modify this file directly by hand.
+#
+# To hand-edit this file, simply add or modify the key=value combination in
+# the appropriate section in the template below.  Refer to the comments in the
+# gdm.conf file for information about each option.  Also refer to the reference
+# documentation.
+#
+# If you hand edit a GDM configuration file, you should run the following
+# command to get the GDM daemon to notice the change.  Any running GDM GUI
+# programs will also be notified to update with the new configuration.
+#
+# gdmflexiserver --command="UPDATE_CONFIG <configuration key>"
+#
+# For example, the "Enable" key in the "[debug]" section would be specified by
+# "debug/Enable".
+#
+# You can also run gdm-restart or gdm-safe-restart to cause GDM to restart and
+# re-read the new configuration settings.  You can also restart GDM by sending
+# a HUP or USR1 signal to the daemon.  HUP behaves like gdm-restart and causes
+# any user session started by GDM to exit immediately while USR1 behaves like
+# gdm-safe-restart and will wait until all users log out before restarting GDM.
+#
+# For full reference documentation see the gnome help browser under
+# GNOME|System category.  You can also find the docs in HTML form on
+# [http://www.gnome.org/projects/gdm/](http://www.gnome.org/projects/gdm/)
+#
+# NOTE: Lines that begin with "#" are considered comments.
+#
+# Have fun!
+
+[daemon]
+
+[security]
+
+[xdmcp]
+
+[gui]
+
+[greeter]
+
+[chooser]
+
+[debug]
+
+#[servers]
+#0=Xgl
+
+#[server-Xgl]
+#name=Xgl server
+#command=/usr/bin/Xgl :0 -fullscreen -ac -accel glx:pbuffer -accel xv:fbo -kb
+#flexible=true
+
+
+Does anyone knows what to do exactly to correct this problem?
+
+---
+
+### Post by po0f on 2006-12-28
+stevand,
+
+Don't use XGL/(Compiz,Beryl) on Dapper.  XGL == dirty hack.  Upgrade to Edgy and you get built-in AIGLX.  After that, Compiz/Beryl is just an install away.
+
+[EDIT]
+
+Do you have accelerated drivers installed for your video card?  Browse the [Ubuntu Document Storage Facility](http://doc.gwos.org/index.php/Main_Page) for pages about everything to do with Ubuntu.
+
+---
+
+### Post by stevand on 2006-12-29
+Frankly,
+I do not know hot to upgrade to Edgy and Dapper I do not know what I have ... my friend installed ubuntu for me ... and I fall in love with this leaving Windows forever .... however I am puzled with a lot of terminology .....  that I do not understand and I have not learhned completely ..... I am reading extensively ubuntu forums .... but still this does not give my right to say that I know what I am doing ... except sudo apt-get install  ....
+
+your question Do you have accelerated drivers installed for your video card? -- I do not know .... 
+
+I already was in a trouble with some things trying to install ...... and I ended up with the black screen ... typing from the line .....
+
+it seems that I should do the following process 
+
+[http://doc.gwos.org/index.php/ATI_AMD_fglrx_Edgy](http://doc.gwos.org/index.php/ATI_AMD_fglrx_Edgy)
+
+by the way I have laptop IBMT30 and I installed (my friend) stable version of ubuntu 6.06 LTS .. he said it is stable ... 
+
+thanks
+
+---
+
+### Post by stevand on 2006-12-29
+And my  xorg.conf looks like this right now 
+
+
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc104"
+	Option		"XkbLayout"	"us"
+	Option		"XkbOptions"	"ctrl:nocaps"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies, Inc. Radeon Mobility M7 LW [Radeon Mobility 9000]"
+	Driver		"ati"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies, Inc. Radeon Mobility M7 LW [Radeon Mobility 9000]"
+	Monitor		"Generic Monitor"
+	DefaultDepth	16
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+---
+

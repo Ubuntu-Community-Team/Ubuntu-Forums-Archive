@@ -1,0 +1,288 @@
+---
+title: "Virtualbox has broken Synaptic"
+date: 2007-04-19
+forum: Absolute Beginner Talk
+---
+
+### Post by RustyWyatt on 2007-04-19
+Hi Folks,
+
+First, I am an absolute newbee! I have been running Ubuntu 6.10 for a month or so and have been pretty successful at getting up to speed.  Unfortunately, I tried to install "Virtualbox" about a week ago.
+
+Now, when I try to run Synaptic Package Manger I get the following error:
+
+---
+E: The package virtualbox needs to be reinstalled, but I can't find an archive for it.
+E: Internal error opening cache (1). Please report.
+---
+
+I have tried every solution that I have found in these forums...
+
+After repeated attempts, &#8220;Virtualbox" always hangs at the blue &#8220;acceptance&#8221; screen.
+
+Here are a few repair examples:
+
+sudo aptitude install build-essential
+
+3tom@DesktopPC:~$ sudo aptitude install build-essential
+Password:
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Reading extended state information       
+Initializing package states... Done
+Building tag database... Done      
+The following packages have been automatically kept back:
+  kdelibs-data kdelibs4c2a libmysqlclient15off libqt3-mt linux-libc-dev 
+  mysql-common 
+The following packages have been kept back:
+  evolution evolution-data-server evolution-data-server-common 
+  evolution-plugins file firefox firefox-gnome-support gnome-hearts 
+  language-pack-en language-pack-gnome-en libaudio2 libcamel1.2-8 
+  libebook1.2-9 libecal1.2-7 libedata-book1.2-2 libedata-cal1.2-6 
+  libedataserver1.2-7 libedataserverui1.2-8 libegroupwise1.2-12 
+  libexchange-storage1.2-2 libfreetype6 libkrb53 libmagic1 
+  libnautilus-extension1 libnspr4 libnss3 libwpd8c2a libx11-6 libx11-data 
+  libxfont1 linux-headers-2.6.17-11 linux-headers-2.6.17-11-generic 
+  linux-image-2.6.17-11-generic nautilus nautilus-data openoffice.org 
+  openoffice.org-base openoffice.org-calc openoffice.org-common 
+  openoffice.org-core openoffice.org-draw openoffice.org-evolution 
+  openoffice.org-gnome openoffice.org-gtk openoffice.org-impress 
+  openoffice.org-java-common openoffice.org-math 
+  openoffice.org-style-default openoffice.org-style-industrial 
+  openoffice.org-writer opera popularity-contest python-uno ttf-opensymbol 
+  update-notifier xmms xserver-xorg-core xserver-xorg-dev 
+0 packages upgraded, 0 newly installed, 0 to remove and 64 not upgraded.
+Need to get 0B of archives. After unpacking 0B will be used.
+Writing extended state information... Error!
+E: I wasn't able to locate a file for the virtualbox package. This might mean you need to manually fix this package. (due to missing arch)
+E: Couldn't lock list directory..are you root?
+
+Then we had
+
+tom@DesktopPC:~$ sudo aptitude update && sudo aptitude upgrade
+
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Reading extended state information       
+Initializing package states... Done
+Building tag database... Done      
+Get:1 [http://archive.canonical.com](http://archive.canonical.com) edgy-commercial Release.gpg [191B]
+Ign [http://archive.canonical.com](http://archive.canonical.com) edgy-commercial/main Translation-en_US
+Hit [http://archive.canonical.com](http://archive.canonical.com) edgy-commercial Release                        
+Hit [http://archive.canonical.com](http://archive.canonical.com) edgy-commercial/main Packages                  
+Get:2 [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security Release.gpg [191B]               
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/main Translation-en_US
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/restricted Translation-en_US
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/multiverse Translation-en_US
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/universe Translation-en_US
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security Release
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/main Packages
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/restricted Packages
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/main Sources
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/restricted Sources
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/multiverse Packages
+Hit [http://security.ubuntu.com](http://security.ubuntu.com) edgy-security/universe Packages
+Get:3 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy Release.gpg [191B]                      
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/main Translation-en_US                    
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/restricted Translation-en_US              
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/multiverse Translation-en_US              
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/universe Translation-en_US                
+Get:4 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates Release.gpg [191B]              
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/main Translation-en_US            
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/restricted Translation-en_US      
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/multiverse Translation-en_US      
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/universe Translation-en_US        
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy Release                                   
+Get:5 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates Release [38.4kB]                
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/main Packages                             
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/restricted Packages                       
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/main Sources                              
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/restricted Sources                        
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/multiverse Packages                       
+Hit [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy/universe Packages                         
+Get:6 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/main Packages [79.3kB]          
+Get:7 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/restricted Packages [14B]       
+Get:8 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/main Sources [24.0kB]           
+Get:9 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/restricted Sources [14B]        
+Get:10 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/multiverse Packages [14B]      
+Get:11 [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) edgy-updates/universe Packages [21.3kB]     
+Fetched 163kB in 29s (5560B/s)                                                  
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Reading extended state information       
+Initializing package states... Done
+Building tag database... Done      
+The following packages have been kept back:
+  opera 
+The following packages will be upgraded:
+  digikam evolution evolution-data-server evolution-data-server-common 
+  evolution-plugins file firefox firefox-gnome-support gnome-hearts 
+  kdelibs-data kdelibs4c2a language-pack-en language-pack-gnome-en 
+  libaudio2 libcamel1.2-8 libebook1.2-9 libecal1.2-7 libedata-book1.2-2 
+  libedata-cal1.2-6 libedataserver1.2-7 libedataserverui1.2-8 
+  libegroupwise1.2-12 libexchange-storage1.2-2 libfreetype6 libkrb53 
+  libmagic1 libmysqlclient15off libnautilus-extension1 libnspr4 libnss3 
+  libqt3-mt libwpd8c2a libx11-6 libx11-data libxfont1 
+  linux-headers-2.6.17-11 linux-headers-2.6.17-11-generic 
+  linux-image-2.6.17-11-generic linux-libc-dev mysql-common nautilus 
+  nautilus-data openoffice.org openoffice.org-base openoffice.org-calc 
+  openoffice.org-common openoffice.org-core openoffice.org-draw 
+  openoffice.org-evolution openoffice.org-gnome openoffice.org-gtk 
+  openoffice.org-impress openoffice.org-java-common openoffice.org-math 
+  openoffice.org-style-default openoffice.org-style-industrial 
+  openoffice.org-writer popularity-contest python-uno ttf-opensymbol tzdata 
+  update-notifier xmms xserver-xorg-core xserver-xorg-dev 
+65 packages upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+Need to get 0B of archives. After unpacking 1049kB will be used.
+Do you want to continue? [Y/n/?]                     
+E: I wasn't able to locate a file for the virtualbox package. This might mean you need to manually fix this package. (due to missing arch)
+E: Couldn't lock list directory..are you root?
+tom@DesktopPC:~$ 
+
+I have also tried removing virtualbox via the command line which also failed. I have tried rebooting between all of these attempts.
+
+In the end, I'm still broken...
+
+All help greatly appreciated!!
+
+Tom
+
+---
+
+### Post by 4ebees on 2007-04-22
+Hi Tom,
+How are you starting Synaptic?
+
+Are you choosing it from the menu, or using alt+f2 to bring up a 'run command' box, or some other way?
+
+Try the following in a terminal:
+
+dpkg -l virtualbox
+
+the '-l' is actually a hyphen followed immediately by a lower case 'L'.
+
+This should tell you which version you have installed.
+
+If Synaptic GUI does not open, you could try:
+
+dpkg -r virtualbox
+
+to remove V'box manually - is this what you have already used in your attempts to fix the problem?
+
+Am I correct in reading that you're actually using Aptitude and not Synaptic?
+
+Regards,
+
+4ebees
+
+
+> **RustyWyatt said:**
+> Hi Folks,
+
+First, I am an absolute newbee! I have been running Ubuntu 6.10 for a month or so and have been pretty successful at getting up to speed.  Unfortunately, I tried to install "Virtualbox" about a week ago.
+
+Now, when I try to run Synaptic Package Manger I get the following error:
+
+---
+E: The package virtualbox needs to be reinstalled, but I can't find an archive for it.
+E: Internal error opening cache (1). Please report.
+---
+<snip>
+Writing extended state information... Error!
+E: I wasn't able to locate a file for the virtualbox package. This might mean you need to manually fix this package. (due to missing arch)
+E: Couldn't lock list directory..are you root?
+<snip>
+
+I have also tried removing virtualbox via the command line which also failed. I have tried rebooting between all of these attempts.
+
+In the end, I'm still broken...
+
+All help greatly appreciated!!
+
+Tom
+
+---
+
+### Post by RustyWyatt on 2007-04-22
+Re: Virtualbox has broken Synaptic
+
+[B]Hi 4ebees,
+
+Thanks for the response!  Below are my responses:[/B]
+
+
+How are you starting Synaptic?  Are you choosing it from the menu, or using alt+f2 to bring up a 'run command' box, or some other way?
+
+[B]Left Clicking on the icon,  Right clicking on the icon and selecting "start package manager" & selecting from the menu.  When I try to start Snyaptic by clicking on the icon it starts and then aborts.  When I right click or select from the menu it starts and then I get the following error:
+
+E: The package virtualbox needs to be reinstalled, but I can't find an archive for it.
+E: Internal error opening cache (1). Please report.[/B]
+
+
+
+Try the following in a terminal:
+
+dpkg -l virtualbox
+
+the '-l' is actually a hyphen followed immediately by a lower case 'L'.
+
+This should tell you which version you have installed.
+
+[B]tom@DesktopPC:~$ sudo dpkg -l virtualbox
+Password:
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Installed/Config-files/Unpacked/Failed-config/Half-installed
+|/ Err?=(none)/Hold/Reinst-required/X=both-problems (Status,Err: uppercase=bad)
+||/ Name           Version        Description
++++-==============-==============-============================================
+iHR virtualbox     1.3.6_Ubuntu_e [/B]
+
+
+
+If Synaptic GUI does not open, you could try:
+
+dpkg -r virtualbox
+
+to remove V'box manually - is this what you have already used in your attempts to fix the problem?
+
+[B]tom@DesktopPC:~$ sudo dpkg -r virtualbox
+dpkg: error processing virtualbox (--remove):
+ Package is in a very bad inconsistent state - you should
+ reinstall it before attempting a removal.
+Errors were encountered while processing:
+ virtualbox
+tom@DesktopPC:~$[/B]
+
+Am I correct in reading that you're actually using Aptitude and not Synaptic?
+
+[B]No I'm using Synaptic.
+
+I have now tried so many thing (not really understanding all of what I have been doing) my system has become very unstable.  The video so flaky and it randomly shuts down...  Fortunately I have my data backed up and I think I will probably just start over, maybe with 7.x in a week or so.  I also received a number of responses when I reposted this topic under "Installation and Upgrades". Unfortunately, nothing has worked so far...
+
+Thanks VERY much for your help.
+Tom
+[/B]
+
+---
+
+### Post by 4ebees on 2007-04-26
+Hi there,
+
+Sorry for the delay in writing back - I subscribed to the thread but got no notification that you'd replied.
+
+I'm afraid I'd have to say that your solution sounds best. I have to say that Dapper has been perfectly fine on my desktop.
+
+I'm leery of 7 because it's soooooooo new... I like to let the early hackers get on to it first and then come in later when they've resolved many of the probs :)
+
+My apologies that I can't offer a simpler solution.
+
+Regards,
+
+4ebees
+
+---
+

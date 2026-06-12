@@ -1,0 +1,1145 @@
+---
+title: "[SOLVED] fglrx not working after hours of tinkering"
+date: 2007-07-18
+forum: Absolute Beginner Talk
+---
+
+### Post by Chonnawonga on 2007-07-18
+Hi folks,
+
+I've been reading how-to's up and down, and tried everything I could think of. My problem is that when I run fglrxinfo I get this:
+
+```
+$ fglrxinfo
+display: :0.0  screen: 0
+OpenGL vendor string: Mesa project: www.mesa3d.org
+OpenGL renderer string: Mesa GLX Indirect
+OpenGL version string: 1.4 (1.5 Mesa 6.5.2)
+
+```
+
+The annoying thing is that I had it working before! It used to load the fglrx drivers properly, but after trying to use a how-to to set up Beryl, I found that the XGL session just screwed up my screen, so I went back to regular Gnome, and now I can't get fglrx to load again. I've uninstalled and reinstalled about three different versions of the driver, as well as mucking about with my xorg.conf literally for hours and updating my BIOS. Now my xorg.conf looks like this:
+
+```
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+	Identifier     "Default Layout"
+	Screen      0  "aticonfig-Screen[0]" 0 0
+	InputDevice    "Generic Keyboard"
+	InputDevice    "Configured Mouse"
+EndSection
+
+Section "Files"
+
+	# path to defoma fonts
+	FontPath     "/usr/share/fonts/X11/misc"
+	FontPath     "/usr/share/fonts/X11/cyrillic"
+	FontPath     "/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath     "/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath     "/usr/share/fonts/X11/Type1"
+	FontPath     "/usr/share/fonts/X11/100dpi"
+	FontPath     "/usr/share/fonts/X11/75dpi"
+	FontPath     "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load  "i2c"
+	Load  "bitmap"
+	Load  "ddc"
+	Load  "dri"
+	Load  "extmod"
+	Load  "freetype"
+	Load  "glx"
+	Load  "int10"
+	Load  "vbe"
+EndSection
+
+Section "ServerFlags"
+	Option	    "AIGLX" "off"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Generic Keyboard"
+	Driver      "kbd"
+	Option	    "CoreKeyboard"
+	Option	    "XkbRules" "xorg"
+	Option	    "XkbModel" "pc105"
+	Option	    "XkbLayout" "dvorak"
+EndSection
+
+Section "InputDevice"
+	Identifier  "Configured Mouse"
+	Driver      "mouse"
+	Option	    "CorePointer"
+	Option	    "Device" "/dev/input/mice"
+	Option	    "Protocol" "ImPS/2"
+	Option	    "ZAxisMapping" "4 5"
+	Option	    "Emulate3Buttons" "true"
+EndSection
+
+Section "Monitor"
+	Identifier   "aticonfig-Monitor[0]"
+	Option	    "VendorName" "ATI Proprietary Driver"
+	Option	    "ModelName" "Generic Autodetecting Monitor"
+	Option	    "DPMS" "true"
+EndSection
+
+Section "Device"
+	Identifier  "aticonfig-Device[0]"
+	Driver      "fglrx"
+	Option	    "VideoOverlay" "on"
+	Option	    "OpenGLOverlay" "off"
+	Option	    "OverlayOnCRTC2" "0"
+	Option	    "TVOverscan" "off"
+EndSection
+
+Section "Screen"
+	Identifier "aticonfig-Screen[0]"
+	Device     "aticonfig-Device[0]"
+	Monitor    "aticonfig-Monitor[0]"
+	DefaultDepth     24
+	SubSection "Display"
+		Viewport   0 0
+		Depth     24
+	EndSubSection
+EndSection
+
+Section "DRI"
+	Mode         0666
+EndSection
+
+Section "Extensions"
+	Option	    "Composite" "Disable"
+EndSection
+```
+
+...and my /var/log/Xorg.0.log looks like this:
+```
+
+X Window System Version 7.2.0
+Release Date: 22 January 2007
+X Protocol Version 11, Revision 0, Release 7.2
+Build Operating System: Linux Ubuntu
+Current Operating System: Linux Genghis 2.6.20-16-generic #2 SMP Thu Jun 7 20:19:32 UTC 2007 i686
+Build Date: 04 April 2007
+	Before reporting problems, check http://wiki.x.org
+	to make sure that you have the latest version.
+Module Loader present
+Markers: (--) probed, (**) from config file, (==) default setting,
+	(++) from command line, (!!) notice, (II) informational,
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(==) Log file: "/var/log/Xorg.0.log", Time: Wed Jul 18 16:29:35 2007
+(==) Using config file: "/etc/X11/xorg.conf"
+(==) ServerLayout "Default Layout"
+(**) |-->Screen "aticonfig-Screen[0]" (0)
+(**) |   |-->Monitor "aticonfig-Monitor[0]"
+(**) |   |-->Device "aticonfig-Device[0]"
+(**) |-->Input Device "Generic Keyboard"
+(**) |-->Input Device "Configured Mouse"
+(WW) The directory "/usr/share/fonts/X11/cyrillic" does not exist.
+	Entry deleted from font path.
+(**) FontPath set to:
+	/usr/share/fonts/X11/misc,
+	/usr/share/fonts/X11/100dpi/:unscaled,
+	/usr/share/fonts/X11/75dpi/:unscaled,
+	/usr/share/fonts/X11/Type1,
+	/usr/share/fonts/X11/100dpi,
+	/usr/share/fonts/X11/75dpi,
+	/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType,
+	/usr/share/fonts/X11/misc,
+	/usr/X11R6/lib/X11/fonts/misc,
+	/usr/share/fonts/X11/cyrillic,
+	/usr/share/fonts/X11/100dpi/:unscaled,
+	/usr/share/fonts/X11/75dpi/:unscaled,
+	/usr/share/fonts/X11/Type1,
+	/usr/X11R6/lib/X11/fonts/Type1,
+	/usr/share/fonts/X11/100dpi,
+	/usr/share/fonts/X11/75dpi,
+	/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType
+(==) RgbPath set to "/etc/X11/rgb"
+(==) ModulePath set to "/usr/lib/xorg/modules"
+(**) Option "AIGLX" "off"
+(**) Extension "Composite" is disabled
+(II) Open ACPI successful (/var/run/acpid.socket)
+(II) Loader magic: 0x81c92e0
+(II) Module ABI versions:
+	X.Org ANSI C Emulation: 0.3
+	X.Org Video Driver: 1.1
+	X.Org XInput driver : 0.7
+	X.Org Server Extension : 0.3
+	X.Org Font Renderer : 0.5
+(II) Loader running on linux
+(II) LoadModule: "pcidata"
+(II) Loading /usr/lib/xorg/modules//libpcidata.so
+(II) Module pcidata: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.1
+(++) using VT number 7
+
+(II) PCI: PCI scan (all values are in hex)
+(II) PCI: 00:00:0: chip 10de,00e1 card 1043,813f rev a1 class 06,00,00 hdr 00
+(II) PCI: 00:01:0: chip 10de,00e0 card 1043,813f rev a2 class 06,01,00 hdr 80
+(II) PCI: 00:01:1: chip 10de,00e4 card 1043,813f rev a1 class 0c,05,00 hdr 80
+(II) PCI: 00:02:0: chip 10de,00e7 card 1043,813f rev a1 class 0c,03,10 hdr 80
+(II) PCI: 00:02:1: chip 10de,00e7 card 1043,813f rev a1 class 0c,03,10 hdr 80
+(II) PCI: 00:02:2: chip 10de,00e8 card 1043,813f rev a2 class 0c,03,20 hdr 80
+(II) PCI: 00:05:0: chip 10de,00df card 1043,80a7 rev a2 class 06,80,00 hdr 00
+(II) PCI: 00:06:0: chip 10de,00ea card 1043,812a rev a1 class 04,01,00 hdr 00
+(II) PCI: 00:08:0: chip 10de,00e5 card 1043,813f rev a2 class 01,01,8a hdr 00
+(II) PCI: 00:0a:0: chip 10de,00e3 card 1043,813f rev a2 class 01,01,85 hdr 00
+(II) PCI: 00:0b:0: chip 10de,00e2 card 0000,0000 rev a2 class 06,04,00 hdr 01
+(II) PCI: 00:0e:0: chip 10de,00ed card 0000,0000 rev a2 class 06,04,00 hdr 01
+(II) PCI: 00:18:0: chip 1022,1100 card 0000,0000 rev 00 class 06,00,00 hdr 80
+(II) PCI: 00:18:1: chip 1022,1101 card 0000,0000 rev 00 class 06,00,00 hdr 80
+(II) PCI: 00:18:2: chip 1022,1102 card 0000,0000 rev 00 class 06,00,00 hdr 80
+(II) PCI: 00:18:3: chip 1022,1103 card 0000,0000 rev 00 class 06,00,00 hdr 80
+(II) PCI: 01:00:0: chip 1002,4150 card 174b,0200 rev 00 class 03,00,00 hdr 80
+(II) PCI: 01:00:1: chip 1002,4170 card 174b,0201 rev 00 class 03,80,00 hdr 00
+(II) PCI: 02:06:0: chip 109e,0350 card 0000,0000 rev 12 class 04,00,00 hdr 00
+(II) PCI: 02:07:0: chip 168c,0013 card 1385,5a00 rev 01 class 02,00,00 hdr 00
+(II) PCI: End of PCI scan
+(II) Host-to-PCI bridge:
+(II) Bus 0: bridge is at (0:0:0), (0,0,2), BCTRL: 0x0008 (VGA_EN is set)
+(II) Bus 0 I/O range:
+	[0] -1	0	0x00000000 - 0x0000ffff (0x10000) IX[B]
+(II) Bus 0 non-prefetchable memory range:
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+(II) Bus 0 prefetchable memory range:
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+(II) PCI-to-ISA bridge:
+(II) Bus -1: bridge is at (0:1:0), (0,-1,-1), BCTRL: 0x0008 (VGA_EN is set)
+(II) PCI-to-PCI bridge:
+(II) Bus 1: bridge is at (0:11:0), (0,1,1), BCTRL: 0x000b (VGA_EN is set)
+(II) Bus 1 I/O range:
+	[0] -1	0	0x0000b000 - 0x0000bfff (0x1000) IX[B]
+(II) Bus 1 non-prefetchable memory range:
+	[0] -1	0	0xff400000 - 0xff4fffff (0x100000) MX[B]
+(II) Bus 1 prefetchable memory range:
+	[0] -1	0	0xcea00000 - 0xee9fffff (0x20000000) MX[B]
+(II) PCI-to-PCI bridge:
+(II) Bus 2: bridge is at (0:14:0), (0,2,2), BCTRL: 0x0003 (VGA_EN is cleared)
+(II) Bus 2 non-prefetchable memory range:
+	[0] -1	0	0xff500000 - 0xff5fffff (0x100000) MX[B]
+(II) Bus 2 prefetchable memory range:
+	[0] -1	0	0xeea00000 - 0xeeafffff (0x100000) MX[B]
+(--) PCI:*(1:0:0) ATI Technologies Inc RV350 AP [Radeon 9600] rev 0, Mem @ 0xe0000000/27, 0xff4f0000/16, I/O @ 0xb800/8, BIOS @ 0xff4c0000/17
+(--) PCI: (1:0:1) ATI Technologies Inc RV350 AP [Radeon 9600] (Secondary) rev 0, Mem @ 0xd8000000/27, 0xff4e0000/16
+(--) PCI: (2:6:0) Brooktree Corporation Bt848 Video Capture rev 18, Mem @ 0xeeaff000/12
+(II) Addressable bus resource ranges are
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+	[1] -1	0	0x00000000 - 0x0000ffff (0x10000) IX[B]
+(II) OS-reported resource ranges:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[5] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+(II) PCI Memory resource overlap reduced 0xf0000000 from 0xf7ffffff to 0xefffffff
+(II) Active PCI resource ranges:
+	[0] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[1] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[2] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[3] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[4] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[5] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[6] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[7] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[8] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[9] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[10] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[11] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[12] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[13] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[14] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[15] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[16] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[17] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[18] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[19] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[20] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[21] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[22] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[23] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[24] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[25] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[26] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+(II) Active PCI resource ranges after removing overlaps:
+	[0] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[1] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[2] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[3] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[4] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[5] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[6] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[7] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[8] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[9] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[10] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[11] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[12] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[13] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[14] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[15] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[16] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[17] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[18] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[19] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[20] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[21] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[22] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[23] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[24] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[25] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[26] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+(II) OS-reported resource ranges after removing overlaps with PCI:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[5] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+(II) All system resource ranges:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[5] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[6] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[7] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[8] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[9] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[10] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[11] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[12] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[13] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[14] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[15] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[16] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[17] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[18] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[19] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[20] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[21] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[22] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[23] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[24] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[25] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[26] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[27] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[28] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[29] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[30] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[31] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[32] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+(II) LoadModule: "i2c"
+(II) Loading /usr/lib/xorg/modules//libi2c.so
+(II) Module i2c: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.2.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) LoadModule: "ddc"
+(II) Loading /usr/lib/xorg/modules//libddc.so
+(II) Module ddc: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) LoadModule: "dri"
+(II) Loading /usr/lib/xorg/modules/extensions//libdri.so
+(II) Module dri: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension XFree86-DRI
+(II) LoadModule: "extmod"
+(II) Loading /usr/lib/xorg/modules/extensions//libextmod.so
+(II) Module extmod: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	Module class: X.Org Server Extension
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension SHAPE
+(II) Loading extension MIT-SUNDRY-NONSTANDARD
+(II) Loading extension BIG-REQUESTS
+(II) Loading extension SYNC
+(II) Loading extension MIT-SCREEN-SAVER
+(II) Loading extension XC-MISC
+(II) Loading extension XFree86-VidModeExtension
+(II) Loading extension XFree86-Misc
+(II) Loading extension XFree86-DGA
+(II) Loading extension DPMS
+(II) Loading extension TOG-CUP
+(II) Loading extension Extended-Visual-Information
+(II) Loading extension XVideo
+(II) Loading extension XVideo-MotionCompensation
+(II) Loading extension X-Resource
+(II) LoadModule: "freetype"
+(II) Loading /usr/lib/xorg/modules//fonts/libfreetype.so
+(II) Module freetype: vendor="X.Org Foundation & the After X-TT Project"
+	compiled for 7.2.0, module version = 2.1.0
+	Module class: X.Org Font Renderer
+	ABI class: X.Org Font Renderer, version 0.5
+(II) Loading font FreeType
+(II) LoadModule: "glx"
+(II) Loading /usr/lib/xorg/modules/extensions//libglx.so
+(II) Module glx: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(**) AIGLX disabled
+(II) Loading extension GLX
+(II) LoadModule: "int10"
+(II) Loading /usr/lib/xorg/modules//libint10.so
+(II) Module int10: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) LoadModule: "vbe"
+(II) Loading /usr/lib/xorg/modules//libvbe.so
+(II) Module vbe: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.1.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) LoadModule: "fglrx"
+(II) Loading /usr/lib/xorg/modules/drivers//fglrx_drv.so
+(II) Module fglrx: vendor="FireGL - ATI Technologies Inc."
+	compiled for 7.1.0, module version = 8.38.7
+	Module class: X.Org Video Driver
+	ABI class: X.Org Video Driver, version 1.0
+(II) LoadModule: "kbd"
+(II) Loading /usr/lib/xorg/modules/input//kbd_drv.so
+(II) Module kbd: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.1.0
+	Module class: X.Org XInput Driver
+	ABI class: X.Org XInput driver, version 0.7
+(II) LoadModule: "mouse"
+(II) Loading /usr/lib/xorg/modules/input//mouse_drv.so
+(II) Module mouse: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.1.1
+	Module class: X.Org XInput Driver
+	ABI class: X.Org XInput driver, version 0.7
+(II) Primary Device is: PCI 01:00:0
+(II) ATI Proprietary Linux Driver Version Identifier:8.38.7
+(II) ATI Proprietary Linux Driver Release Identifier: LGDr8.38g2                           
+(II) ATI Proprietary Linux Driver Build Date: Jun 26 2007 15:24:52
+(II) ATI Proprietary Linux Driver Build Information: autobuild-rel-r6-8.38.1.1.2.3-driver-lnx-x86-x86_64-352139
+(--) Assigning device section with no busID to primary device
+(WW) fglrx: No matching Device section for instance (BusID PCI:1:0:1) found
+(--) Chipset Supported AMD Graphics Processor (0x4150) found
+(II) resource ranges after xf86ClaimFixedResources() call:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[5] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[6] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[7] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[8] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[9] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[10] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[11] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[12] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[13] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[14] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[15] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[16] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[17] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[18] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[19] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[20] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[21] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[22] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[23] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[24] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[25] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[26] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[27] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[28] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[29] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[30] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[31] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[32] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+(II) fglrx(0): pEnt->device->identifier=0x81e4c28
+(II) resource ranges after probing:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[5] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[6] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[7] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[8] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[9] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[10] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[11] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[12] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[13] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[14] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[15] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[16] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[17] 0	0	0x000a0000 - 0x000affff (0x10000) MS[B]
+	[18] 0	0	0x000b0000 - 0x000b7fff (0x8000) MS[B]
+	[19] 0	0	0x000b8000 - 0x000bffff (0x8000) MS[B]
+	[20] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[21] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[22] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[23] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[24] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[25] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[26] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[27] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[28] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[29] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[30] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[31] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[32] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[33] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[34] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[35] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+	[36] 0	0	0x000003b0 - 0x000003bb (0xc) IS[B]
+	[37] 0	0	0x000003c0 - 0x000003df (0x20) IS[B]
+(II) Setting vga for screen 0.
+(II) fglrx(0): === [atiddxPreInit] === begin, [x]
+(II) Loading sub module "vgahw"
+(II) LoadModule: "vgahw"
+(II) Loading /usr/lib/xorg/modules//libvgahw.so
+(II) Module vgahw: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 0.1.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) fglrx(0): PCI bus 1 card 0 func 0
+(**) fglrx(0): Depth 24, (--) framebuffer bpp 32
+(II) fglrx(0): Pixel depth = 24 bits stored in 4 bytes (32 bpp pixmaps)
+(==) fglrx(0): Default visual is TrueColor
+(**) fglrx(0): Option "OpenGLOverlay" "off"
+(**) fglrx(0): Option "VideoOverlay" "on"
+(**) fglrx(0): Option "OverlayOnCRTC2" "0"
+(**) fglrx(0): Option "TVOverscan" "off"
+(**) fglrx(0): Option "DPMS" "true"
+(==) fglrx(0): RGB weight 888
+(II) fglrx(0): Using 8 bits per RGB (8 bit DAC)
+(==) fglrx(0): Gamma Correction for I is 0x06419064
+(==) fglrx(0): Gamma Correction for II is 0x06419064
+(==) fglrx(0): Buffer Tiling is ON
+(II) Loading sub module "int10"
+(II) LoadModule: "int10"
+(II) Reloading /usr/lib/xorg/modules//libint10.so
+(II) Loading sub module "vm86"
+(II) LoadModule: "vm86"
+(II) Loading /usr/lib/xorg/modules//libvm86.so
+(II) Module vm86: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.1
+(II) fglrx(0): Primary V_BIOS segment is: 0xc000
+(--) fglrx(0): Chipset: "ATI RADEON 9600 Series" (Chipset = 0x4150)
+(--) fglrx(0): (PciSubVendor = 0x174b, PciSubDevice = 0x0200)
+(--) fglrx(0): board vendor info: third party graphics adapter - NOT original ATI
+(--) fglrx(0): Linear framebuffer (phys) at 0xe0000000
+(--) fglrx(0): MMIO registers at 0xff4f0000
+(==) fglrx(0): ROM-BIOS at 0x000c0000
+(II) Loading sub module "vbe"
+(II) LoadModule: "vbe"
+(II) Reloading /usr/lib/xorg/modules//libvbe.so
+(II) fglrx(0): VESA BIOS detected
+(II) fglrx(0): VESA VBE Version 2.0
+(II) fglrx(0): VESA VBE Total Mem: 16384 kB
+(II) fglrx(0): VESA VBE OEM: ATI RADEON 9600 PRO
+(II) fglrx(0): VESA VBE OEM Software Rev: 1.0
+(II) fglrx(0): VESA VBE OEM Vendor: ATI Technologies Inc.
+(II) fglrx(0): VESA VBE OEM Product: V350
+(II) fglrx(0): VESA VBE OEM Product Rev: 01.00
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmGetBusid returned ''
+(II) Loading sub module "fglrxdrm"
+(II) LoadModule: "fglrxdrm"
+(II) Loading /usr/lib/xorg/modules/linux//libfglrxdrm.so
+(II) Module fglrxdrm: vendor="FireGL - ATI Technologies Inc."
+	compiled for 7.1.0, module version = 8.38.7
+	ABI class: X.Org Server Extension, version 0.3
+(--) fglrx(0): VideoRAM: 131072 kByte, Type: DDR SGRAM / SDRAM
+(II) fglrx(0): AGP card detected
+(WW) fglrx(0): board is an unknown third party board, chipset is supported
+(II) Loading sub module "ddc"
+(II) LoadModule: "ddc"
+(II) Reloading /usr/lib/xorg/modules//libddc.so
+(II) fglrx(0): Connected Display1: TV on TVDAC [tv]
+(II) fglrx(0):  Display1: No EDID information from DDC.
+(II) fglrx(0): Derived EDID from BIOS and internal tables for Display1:
+(II) fglrx(0): Display1 EDID data ---------------------------
+(II) fglrx(0): Manufacturer: PNP  Model: 9fe  Serial#: 0
+(II) fglrx(0): Year: 1990  Week: 0
+(II) fglrx(0): EDID Version: 1.3
+(II) fglrx(0): Analog Display Input,  Input Voltage Level: 0.700/0.300 V
+(II) fglrx(0): Sync:
+(II) fglrx(0): Max H-Image Size [cm]: H-Size may change,  V-Size may change
+(II) fglrx(0): Gamma: 1.00
+(II) fglrx(0): DPMS capabilities: StandBy Suspend Off; Non RGB Multicolor Display
+(II) fglrx(0): First detailed timing not preferred mode in violation of standard!(II) fglrx(0): redX: 0.000 redY: 0.000   greenX: 0.000 greenY: 0.000
+(II) fglrx(0): blueX: 0.000 blueY: 0.000   whiteX: 0.000 whiteY: 0.000
+(II) fglrx(0): Supported VESA Video Modes:
+(II) fglrx(0): 640x480@60Hz
+(II) fglrx(0): 800x600@60Hz
+(II) fglrx(0): 1024x768@60Hz
+(II) fglrx(0): Manufacturer's mask: 0
+(II) fglrx(0): EDID (in hex):
+(II) fglrx(0): 	00ffffffffffff0041d0fe0900000000
+(II) fglrx(0): 	0000010300000000f000000000000000
+(II) fglrx(0): 	00000021080000000000000000000000
+(II) fglrx(0): 	00000000000000000000000000000000
+(II) fglrx(0): 	00000000000000000000000000000000
+(II) fglrx(0): 	00000000000000000000000000000000
+(II) fglrx(0): 	00000000000000000000000000000000
+(II) fglrx(0): 	000000000000000000000000000000d1
+(II) fglrx(0): End of Display1 EDID data --------------------
+(II) fglrx(0): Connected Display2: DFP on internal TMDS [tmds1]
+(II) fglrx(0): Display2 EDID data ---------------------------
+(II) fglrx(0): Manufacturer: SAM  Model: 274  Serial#: 1296380217
+(II) fglrx(0): Year: 2007  Week: 6
+(II) fglrx(0): EDID Version: 1.3
+(II) fglrx(0): Digital Display Input
+(II) fglrx(0): Max H-Image Size [cm]: horiz.: 41  vert.: 26
+(II) fglrx(0): Gamma: 2.35
+(II) fglrx(0): DPMS capabilities: Off; RGB/Color Display
+(II) fglrx(0): First detailed timing is preferred mode
+(II) fglrx(0): redX: 0.640 redY: 0.329   greenX: 0.300 greenY: 0.600
+(II) fglrx(0): blueX: 0.150 blueY: 0.060   whiteX: 0.313 whiteY: 0.329
+(II) fglrx(0): Supported VESA Video Modes:
+(II) fglrx(0): 720x400@70Hz
+(II) fglrx(0): 640x480@60Hz
+(II) fglrx(0): 640x480@67Hz
+(II) fglrx(0): 640x480@72Hz
+(II) fglrx(0): 640x480@75Hz
+(II) fglrx(0): 800x600@56Hz
+(II) fglrx(0): 800x600@60Hz
+(II) fglrx(0): 800x600@72Hz
+(II) fglrx(0): 800x600@75Hz
+(II) fglrx(0): 832x624@75Hz
+(II) fglrx(0): 1024x768@60Hz
+(II) fglrx(0): 1024x768@70Hz
+(II) fglrx(0): 1024x768@75Hz
+(II) fglrx(0): 1280x1024@75Hz
+(II) fglrx(0): 1152x870@75Hz
+(II) fglrx(0): Manufacturer's mask: 0
+(II) fglrx(0): Supported Future Video Modes:
+(II) fglrx(0): #0: hsize: 1440  vsize 900  refresh: 60  vid: 149
+(II) fglrx(0): #1: hsize: 1440  vsize 900  refresh: 75  vid: 3989
+(II) fglrx(0): #2: hsize: 1280  vsize 1024  refresh: 60  vid: 32897
+(II) fglrx(0): #3: hsize: 1280  vsize 960  refresh: 60  vid: 16513
+(II) fglrx(0): #4: hsize: 1152  vsize 864  refresh: 75  vid: 20337
+(II) fglrx(0): Supported additional Video Mode:
+(II) fglrx(0): clock: 106.5 MHz   Image Size:  410 x 257 mm
+(II) fglrx(0): h_active: 1440  h_sync: 1520  h_sync_end 1672 h_blank_end 1904 h_border: 0
+(II) fglrx(0): v_active: 900  v_sync: 903  v_sync_end 909 v_blanking: 934 v_border: 0
+(II) fglrx(0): Ranges: V min: 56  V max: 75 Hz, H min: 30  H max: 81 kHz, PixClock max 140 MHz
+(II) fglrx(0): Monitor name: SyncMaster
+(II) fglrx(0): Serial No: HMEP208394
+(II) fglrx(0): EDID (in hex):
+(II) fglrx(0): 	00ffffffffffff004c2d74023931454d
+(II) fglrx(0): 	0611010380291a872ade95a3544c9926
+(II) fglrx(0): 	0f5054bfef809500950f81808140714f
+(II) fglrx(0): 	0101010101019a29a0d0518422305098
+(II) fglrx(0): 	36009a011100001c000000fd00384b1e
+(II) fglrx(0): 	510e000a202020202020000000fc0053
+(II) fglrx(0): 	796e634d61737465720a2020000000ff
+(II) fglrx(0): 	00484d45503230383339340a20200072
+(II) fglrx(0): End of Display2 EDID data --------------------
+(II) fglrx(0): Primary Controller - DFP on internal TMDS
+(II) fglrx(0): Secondary Controller - TV on TVDAC
+(II) fglrx(0): Internal Desktop Setting: 0x00000008
+(II) fglrx(0): POWERplay version 3.  1 power state available:
+(II) fglrx(0):   1. 398/223MHz @ 50Hz [enable load balancing]
+(==) fglrx(0): Qbs disabled
+(==) fglrx(0): FAST_SWAP disabled
+(==) fglrx(0):  PseudoColor visuals disabled
+(==) fglrx(0): Using gamma correction (1.0, 1.0, 1.0)
+(==) fglrx(0): Center Mode is disabled 
+(==) fglrx(0): TMDS coherent mode is enabled 
+(II) fglrx(0): Total of 32 modes found for primary display.
+(--) fglrx(0): Virtual size is 1440x900 (pitch 0)
+(**) fglrx(0): *Mode "1440x900": 106.5 MHz (scaled from 0.0 MHz), 55.9 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1440x900"  106.50  1440 1520 1672 1904  900 903 909 934 +hsync
+(**) fglrx(0): *Mode "1280x1024": 135.0 MHz (scaled from 0.0 MHz), 80.0 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  135.00  1280 1296 1440 1688  1024 1025 1028 1066
+(**) fglrx(0):  Default mode "1280x1024": 128.9 MHz (scaled from 0.0 MHz), 74.6 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  128.94  1280 1368 1504 1728  1024 1025 1028 1066 +hsync
+(**) fglrx(0):  Default mode "1280x1024": 108.0 MHz (scaled from 0.0 MHz), 64.0 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  108.00  1280 1328 1440 1688  1024 1025 1028 1066
+(**) fglrx(0): *Mode "1152x864": 108.0 MHz (scaled from 0.0 MHz), 67.5 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1152x864"  108.00  1152 1216 1344 1600  864 865 868 900
+(**) fglrx(0):  Default mode "1152x864": 96.8 MHz (scaled from 0.0 MHz), 63.0 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1152x864"   96.76  1152 1224 1344 1536  864 865 868 900 +hsync
+(**) fglrx(0):  Default mode "1152x864": 81.6 MHz (scaled from 0.0 MHz), 53.7 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1152x864"   81.62  1152 1216 1336 1520  864 865 868 895 +hsync
+(**) fglrx(0): *Mode "1024x768": 78.8 MHz (scaled from 0.0 MHz), 60.0 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1024x768"   78.75  1024 1040 1136 1312  768 769 772 800
+(**) fglrx(0):  Default mode "1024x768": 78.4 MHz (scaled from 0.0 MHz), 57.7 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "1024x768"   78.43  1024 1080 1192 1360  768 769 772 801 +hsync
+(**) fglrx(0):  Default mode "1024x768": 75.0 MHz (scaled from 0.0 MHz), 56.5 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1024x768"   75.00  1024 1048 1184 1328  768 771 777 806 +hsync +vsync
+(**) fglrx(0):  Default mode "1024x768": 65.0 MHz (scaled from 0.0 MHz), 48.4 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1024x768"   65.00  1024 1048 1184 1344  768 771 777 806 +hsync +vsync
+(**) fglrx(0): *Mode "1024x480": 38.2 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1024x480"   38.16  1024 1048 1152 1280  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "848x480": 31.5 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "848x480"   31.48  848 864 952 1056  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "800x600": 49.5 MHz (scaled from 0.0 MHz), 46.9 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "800x600"   49.50  800 816 896 1056  600 601 604 625
+(**) fglrx(0):  Default mode "800x600": 50.0 MHz (scaled from 0.0 MHz), 48.1 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "800x600"   50.00  800 856 976 1040  600 637 643 666
+(**) fglrx(0):  Default mode "800x600": 45.5 MHz (scaled from 0.0 MHz), 43.8 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "800x600"   45.50  800 840 920 1040  600 601 604 625 +hsync
+(**) fglrx(0):  Default mode "800x600": 40.0 MHz (scaled from 0.0 MHz), 37.9 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "800x600"   40.00  800 840 968 1056  600 601 605 628
+(**) fglrx(0):  Default mode "800x600": 36.0 MHz (scaled from 0.0 MHz), 35.2 kHz, 56.0 Hz
+(II) fglrx(0): Modeline "800x600"   36.00  800 824 896 1024  600 601 603 625
+(**) fglrx(0): *Mode "720x576": 32.7 MHz (scaled from 0.0 MHz), 35.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "720x576"   32.66  720 744 816 912  576 577 580 597 +hsync
+(**) fglrx(0): *Mode "720x480": 26.7 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "720x480"   26.71  720 736 808 896  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "640x480": 31.5 MHz (scaled from 0.0 MHz), 37.5 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "640x480"   31.50  640 656 720 840  480 481 484 500 +hsync +vsync
+(**) fglrx(0):  Default mode "640x480": 31.5 MHz (scaled from 0.0 MHz), 37.9 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "640x480"   31.50  640 664 704 832  480 489 492 520 +hsync +vsync
+(**) fglrx(0):  Default mode "640x480": 25.2 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "640x480"   25.18  640 656 752 800  480 490 492 525 +hsync +vsync
+(**) fglrx(0):  Default mode "640x400": 28.1 MHz (scaled from 0.0 MHz), 33.7 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "640x400"   28.07  640 696 736 832  400 413 415 449
+(**) fglrx(0):  Default mode "640x400": 24.9 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "640x400"   24.92  640 664 760 792  400 460 462 525
+(**) fglrx(0):  Default mode "512x384": 19.8 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "512x384"   19.81  512 544 624 664  384 451 453 497
+(**) fglrx(0):  Default mode "400x300": 24.8 MHz (scaled from 0.0 MHz), 46.9 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "400x300"   24.75  400 408 448 528  300 601 602 625 doublescan
+(**) fglrx(0):  Default mode "400x300": 22.3 MHz (scaled from 0.0 MHz), 45.0 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "400x300"   22.33  400 416 480 496  300 601 605 742 doublescan
+(**) fglrx(0):  Default mode "320x240": 15.8 MHz (scaled from 0.0 MHz), 37.9 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "320x240"   15.75  320 328 360 416  240 481 482 501 doublescan
+(**) fglrx(0):  Default mode "320x240": 12.6 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "320x240"   12.59  320 328 376 400  240 491 493 525 doublescan
+(**) fglrx(0):  Default mode "320x200": 13.1 MHz (scaled from 0.0 MHz), 31.5 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "320x200"   13.10  320 352 368 416  200 406 407 417 doublescan
+(**) fglrx(0):  Default mode "320x200": 12.6 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "320x200"   12.59  320 336 384 400  200 457 459 524 doublescan
+(II) fglrx(0): Total of 12 modes found for secondary display.
+(--) fglrx(0): Virtual size is 1440x900 (pitch 0)
+(**) fglrx(0): *Mode "1024x768": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "1024x768"   53.20  1024 2852 2884 3405  768 582 586 625 interlace
+(**) fglrx(0): *Mode "1024x480": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "1024x480"   53.20  1024 2852 2884 3405  480 582 586 625 interlace
+(**) fglrx(0): *Mode "848x480": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "848x480"   53.20  848 2852 2884 3405  480 582 586 625 interlace
+(**) fglrx(0): *Mode "800x600": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "800x600"   53.20  800 2852 2884 3405  600 582 586 625 interlace
+(**) fglrx(0): *Mode "720x576": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "720x576"   53.20  720 2852 2884 3405  576 582 586 625 interlace
+(**) fglrx(0): *Mode "720x480": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "720x480"   53.20  720 2852 2884 3405  480 582 586 625 interlace
+(**) fglrx(0): *Mode "640x480": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "640x480"   53.20  640 2852 2884 3405  480 582 586 625 interlace
+(**) fglrx(0):  Default mode "640x400": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "640x400"   53.20  640 2852 2884 3405  400 582 586 625 interlace
+(**) fglrx(0):  Default mode "512x384": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "512x384"   53.20  512 2852 2884 3405  384 582 586 625 interlace
+(**) fglrx(0):  Default mode "400x300": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "400x300"   53.20  400 2852 2884 3405  300 582 586 625 interlace
+(**) fglrx(0):  Default mode "320x240": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "320x240"   53.20  320 2852 2884 3405  240 582 586 625 interlace
+(**) fglrx(0):  Default mode "320x200": 53.2 MHz (scaled from 0.0 MHz), 15.6 kHz, 60.0 Hz (I)
+(II) fglrx(0): Modeline "320x200"   53.20  320 2852 2884 3405  200 582 586 625 interlace
+(--) fglrx(0): Display dimensions: (410, 260) mm
+(--) fglrx(0): DPI set to (89, 87)
+(--) fglrx(0): Virtual size is 1440x900 (pitch 1472)
+(**) fglrx(0): *Mode "1440x900": 106.5 MHz (scaled from 0.0 MHz), 55.9 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1440x900"  106.50  1440 1520 1672 1904  900 903 909 934 +hsync
+(**) fglrx(0): *Mode "1280x1024": 135.0 MHz (scaled from 0.0 MHz), 80.0 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  135.00  1280 1296 1440 1688  1024 1025 1028 1066
+(**) fglrx(0):  Default mode "1280x1024": 128.9 MHz (scaled from 0.0 MHz), 74.6 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  128.94  1280 1368 1504 1728  1024 1025 1028 1066 +hsync
+(**) fglrx(0):  Default mode "1280x1024": 108.0 MHz (scaled from 0.0 MHz), 64.0 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1280x1024"  108.00  1280 1328 1440 1688  1024 1025 1028 1066
+(**) fglrx(0): *Mode "1152x864": 108.0 MHz (scaled from 0.0 MHz), 67.5 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1152x864"  108.00  1152 1216 1344 1600  864 865 868 900
+(**) fglrx(0):  Default mode "1152x864": 96.8 MHz (scaled from 0.0 MHz), 63.0 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1152x864"   96.76  1152 1224 1344 1536  864 865 868 900 +hsync
+(**) fglrx(0):  Default mode "1152x864": 81.6 MHz (scaled from 0.0 MHz), 53.7 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1152x864"   81.62  1152 1216 1336 1520  864 865 868 895 +hsync
+(**) fglrx(0): *Mode "1024x768": 78.8 MHz (scaled from 0.0 MHz), 60.0 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "1024x768"   78.75  1024 1040 1136 1312  768 769 772 800
+(**) fglrx(0):  Default mode "1024x768": 78.4 MHz (scaled from 0.0 MHz), 57.7 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "1024x768"   78.43  1024 1080 1192 1360  768 769 772 801 +hsync
+(**) fglrx(0):  Default mode "1024x768": 75.0 MHz (scaled from 0.0 MHz), 56.5 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "1024x768"   75.00  1024 1048 1184 1328  768 771 777 806 +hsync +vsync
+(**) fglrx(0):  Default mode "1024x768": 65.0 MHz (scaled from 0.0 MHz), 48.4 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1024x768"   65.00  1024 1048 1184 1344  768 771 777 806 +hsync +vsync
+(**) fglrx(0): *Mode "1024x480": 38.2 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "1024x480"   38.16  1024 1048 1152 1280  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "848x480": 31.5 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "848x480"   31.48  848 864 952 1056  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "800x600": 49.5 MHz (scaled from 0.0 MHz), 46.9 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "800x600"   49.50  800 816 896 1056  600 601 604 625
+(**) fglrx(0):  Default mode "800x600": 50.0 MHz (scaled from 0.0 MHz), 48.1 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "800x600"   50.00  800 856 976 1040  600 637 643 666
+(**) fglrx(0):  Default mode "800x600": 45.5 MHz (scaled from 0.0 MHz), 43.8 kHz, 70.0 Hz
+(II) fglrx(0): Modeline "800x600"   45.50  800 840 920 1040  600 601 604 625 +hsync
+(**) fglrx(0):  Default mode "800x600": 40.0 MHz (scaled from 0.0 MHz), 37.9 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "800x600"   40.00  800 840 968 1056  600 601 605 628
+(**) fglrx(0):  Default mode "800x600": 36.0 MHz (scaled from 0.0 MHz), 35.2 kHz, 56.0 Hz
+(II) fglrx(0): Modeline "800x600"   36.00  800 824 896 1024  600 601 603 625
+(**) fglrx(0): *Mode "720x576": 32.7 MHz (scaled from 0.0 MHz), 35.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "720x576"   32.66  720 744 816 912  576 577 580 597 +hsync
+(**) fglrx(0): *Mode "720x480": 26.7 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "720x480"   26.71  720 736 808 896  480 481 484 497 +hsync
+(**) fglrx(0): *Mode "640x480": 31.5 MHz (scaled from 0.0 MHz), 37.5 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "640x480"   31.50  640 656 720 840  480 481 484 500 +hsync +vsync
+(**) fglrx(0):  Default mode "640x480": 31.5 MHz (scaled from 0.0 MHz), 37.9 kHz, 72.0 Hz
+(II) fglrx(0): Modeline "640x480"   31.50  640 664 704 832  480 489 492 520 +hsync +vsync
+(**) fglrx(0):  Default mode "640x480": 25.2 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "640x480"   25.18  640 656 752 800  480 490 492 525 +hsync +vsync
+(**) fglrx(0):  Default mode "640x400": 28.1 MHz (scaled from 0.0 MHz), 33.7 kHz, 75.0 Hz
+(II) fglrx(0): Modeline "640x400"   28.07  640 696 736 832  400 413 415 449
+(**) fglrx(0):  Default mode "640x400": 24.9 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "640x400"   24.92  640 664 760 792  400 460 462 525
+(**) fglrx(0):  Default mode "512x384": 19.8 MHz (scaled from 0.0 MHz), 29.8 kHz, 60.0 Hz
+(II) fglrx(0): Modeline "512x384"   19.81  512 544 624 664  384 451 453 497
+(**) fglrx(0):  Default mode "400x300": 24.8 MHz (scaled from 0.0 MHz), 46.9 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "400x300"   24.75  400 408 448 528  300 601 602 625 doublescan
+(**) fglrx(0):  Default mode "400x300": 22.3 MHz (scaled from 0.0 MHz), 45.0 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "400x300"   22.33  400 416 480 496  300 601 605 742 doublescan
+(**) fglrx(0):  Default mode "320x240": 15.8 MHz (scaled from 0.0 MHz), 37.9 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "320x240"   15.75  320 328 360 416  240 481 482 501 doublescan
+(**) fglrx(0):  Default mode "320x240": 12.6 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "320x240"   12.59  320 328 376 400  240 491 493 525 doublescan
+(**) fglrx(0):  Default mode "320x200": 13.1 MHz (scaled from 0.0 MHz), 31.5 kHz, 75.0 Hz (D)
+(II) fglrx(0): Modeline "320x200"   13.10  320 352 368 416  200 406 407 417 doublescan
+(**) fglrx(0):  Default mode "320x200": 12.6 MHz (scaled from 0.0 MHz), 31.5 kHz, 60.0 Hz (D)
+(II) fglrx(0): Modeline "320x200"   12.59  320 336 384 400  200 457 459 524 doublescan
+(II) Loading sub module "fb"
+(II) LoadModule: "fb"
+(II) Loading /usr/lib/xorg/modules//libfb.so
+(II) Module fb: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org ANSI C Emulation, version 0.3
+(II) Loading sub module "ramdac"
+(II) LoadModule: "ramdac"
+(II) Loading /usr/lib/xorg/modules//libramdac.so
+(II) Module ramdac: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 0.1.0
+	ABI class: X.Org Video Driver, version 1.1
+(==) fglrx(0): NoAccel = NO
+(II) Loading sub module "xaa"
+(II) LoadModule: "xaa"
+(II) Loading /usr/lib/xorg/modules//libxaa.so
+(II) Module xaa: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.2.0
+	ABI class: X.Org Video Driver, version 1.1
+(==) fglrx(0): HPV inactive
+(==) fglrx(0): FSAA enabled: NO
+(==) fglrx(0): FSAA Gamma enabled
+(==) fglrx(0): FSAA Multisample Position is fix
+(==) fglrx(0): NoDRI = NO
+(II) Loading sub module "fglrxdrm"
+(II) LoadModule: "fglrxdrm"
+(II) Reloading /usr/lib/xorg/modules/linux//libfglrxdrm.so
+(II) fglrx(0): Depth moves disabled by default
+(==) fglrx(0): Capabilities: 0x00000000
+(==) fglrx(0): CapabilitiesEx: 0x00000000
+(==) fglrx(0): cpuFlags: 0x4000001f
+(==) fglrx(0): OpenGL ClientDriverName: "fglrx_dri.so"
+(II) fglrx(0): [drm] DRM buffer queue setup: nbufs = 100 bufsize = 65536
+(==) fglrx(0): UseFastTLS=0
+(==) fglrx(0): BlockSignalsOnLock=1
+(==) fglrx(0): EnablePrivateBackZ = NO
+(II) LoadModule: "glesx.so" (glesx)
+(WW) LoadModule: given non-canonical module name "glesx.so"
+(II) Loading /usr/lib/xorg/modules//glesx.so
+(II) Module glesx: vendor="X.Org Foundation"
+	compiled for 7.1.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension GLESX
+(--) Depth 24 pixmap format is 32 bpp
+(II) do I need RAC?  No, I don't.
+(II) resource ranges after preInit:
+	[0] 0	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B]
+	[1] 0	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B]
+	[2] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[3] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[4] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[5] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[6] -1	0	0xff5f0000 - 0xff5fffff (0x10000) MX[B]
+	[7] -1	0	0xff6fb000 - 0xff6fbfff (0x1000) MX[B]
+	[8] -1	0	0xff6fc000 - 0xff6fcfff (0x1000) MX[B]
+	[9] -1	0	0xff6ffc00 - 0xff6ffcff (0x100) MX[B]
+	[10] -1	0	0xff6fe000 - 0xff6fefff (0x1000) MX[B]
+	[11] -1	0	0xff6fd000 - 0xff6fdfff (0x1000) MX[B]
+	[12] -1	0	0xf0000000 - 0xefffffff (0x0) MX[B]O
+	[13] -1	0	0xeeaff000 - 0xeeafffff (0x1000) MX[B](B)
+	[14] -1	0	0xff4e0000 - 0xff4effff (0x10000) MX[B](B)
+	[15] -1	0	0xd8000000 - 0xdfffffff (0x8000000) MX[B](B)
+	[16] -1	0	0xff4c0000 - 0xff4dffff (0x20000) MX[B](B)
+	[17] -1	0	0xff4f0000 - 0xff4fffff (0x10000) MX[B](B)
+	[18] -1	0	0xe0000000 - 0xe7ffffff (0x8000000) MX[B](B)
+	[19] 0	0	0x000a0000 - 0x000affff (0x10000) MS[B](OprU)
+	[20] 0	0	0x000b0000 - 0x000b7fff (0x8000) MS[B](OprU)
+	[21] 0	0	0x000b8000 - 0x000bffff (0x8000) MS[B](OprU)
+	[22] 0	0	0x0000b800 - 0x0000b8ff (0x100) IX[B]
+	[23] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[24] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[25] -1	0	0x0000c400 - 0x0000c47f (0x80) IX[B]
+	[26] -1	0	0x0000c800 - 0x0000c80f (0x10) IX[B]
+	[27] -1	0	0x00000b70 - 0x00000b73 (0x4) IX[B]
+	[28] -1	0	0x00000970 - 0x00000977 (0x8) IX[B]
+	[29] -1	0	0x00000bf0 - 0x00000bf3 (0x4) IX[B]
+	[30] -1	0	0x000009f0 - 0x000009f7 (0x8) IX[B]
+	[31] -1	0	0x0000ffa0 - 0x0000ffaf (0x10) IX[B]
+	[32] -1	0	0x0000e400 - 0x0000e47f (0x80) IX[B]
+	[33] -1	0	0x0000e800 - 0x0000e8ff (0x100) IX[B]
+	[34] -1	0	0x0000ec00 - 0x0000ec07 (0x8) IX[B]
+	[35] -1	0	0x00005040 - 0x0000507f (0x40) IX[B]
+	[36] -1	0	0x00005000 - 0x0000503f (0x40) IX[B]
+	[37] -1	0	0x00005080 - 0x0000509f (0x20) IX[B]
+	[38] -1	0	0x0000b800 - 0x0000b8ff (0x100) IX[B](B)
+	[39] 0	0	0x000003b0 - 0x000003bb (0xc) IS[B](OprU)
+	[40] 0	0	0x000003c0 - 0x000003df (0x20) IS[B](OprU)
+(II) fglrx(0): driver needs X.org 7.1.x.y with x.y >= 0.0
+(II) fglrx(0): detected X.org 7.1.0.0
+(II) Loading extension ATIFGLRXDRI
+(II) fglrx(0): doing DRIScreenInit
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenByBusid: Searching for BusID PCI:1:0:0
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenByBusid: drmOpenMinor returns 7
+drmOpenByBusid: drmGetBusid reports 
+drmOpenDevice: node name is /dev/dri/card1
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card2
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card3
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card4
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card5
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card6
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card7
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card8
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card9
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card10
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card11
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card12
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card13
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card14
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: open result is -1, (No such device)
+drmOpenDevice: Open failed
+drmOpenByBusid: drmOpenMinor returns -19
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmGetBusid returned ''
+(II) fglrx(0): [drm] DRM interface version 1.0
+(II) fglrx(0): [drm] created "fglrx" driver at busid "PCI:1:0:0"
+(II) fglrx(0): [drm] added 8192 byte SAREA at 0x8000
+(II) fglrx(0): [drm] mapped SAREA 0x8000 to 0xb7f50000
+(II) fglrx(0): [drm] framebuffer handle = 0x9000
+(II) fglrx(0): [drm] added 1 reserved context for kernel
+(II) fglrx(0): DRIScreenInit done
+(II) fglrx(0): Kernel Module Version Information:
+(II) fglrx(0):     Name: fglrx
+(II) fglrx(0):     Version: 8.34.8
+(II) fglrx(0):     Date: Feb 20 2007
+(II) fglrx(0):     Desc: ATI FireGL DRM kernel module
+(WW) fglrx(0): Kernel Module version does *not* match driver.
+(EE) fglrx(0): incompatible kernel module detected - HW accelerated OpenGL will not work
+(II) fglrx(0): [drm] removed 1 reserved context for kernel
+(II) fglrx(0): [drm] unmapping 8192 bytes of SAREA 0x8000 at 0xb7f50000
+(WW) fglrx(0): ***********************************************
+(WW) fglrx(0): * DRI initialization failed!                  *
+(WW) fglrx(0): * (maybe driver kernel module missing or bad) *
+(WW) fglrx(0): * 2D acceleraton available (MMIO)             *
+(WW) fglrx(0): * no 3D acceleration available                *
+(WW) fglrx(0): ********************************************* *
+(II) fglrx(0): FBADPhys: 0xe0000000 FBMappedSize: 0x08000000
+(**) fglrx(0): Change to Configured TV Format NTSC-M
+(==) fglrx(0): Write-combining range (0xe0000000,0x8000000)
+(II) fglrx(0): FBMM initialized for area (0,0)-(1472,8191)
+(II) fglrx(0): FBMM auto alloc for area (0,0)-(1472,900) (front color buffer - assumption)
+(II) fglrx(0): Largest offscreen area available: 1472 x 7291
+(==) fglrx(0): Backing store disabled
+(==) fglrx(0): Silken mouse enabled
+(II) Loading extension FGLRXEXTENSION
+(II) Loading extension ATITVOUT
+(**) fglrx(0): DPMS enabled
+(**) fglrx(0): Video overlay enabled on CRTC1
+(II) fglrx(0): GLESX enableFlags = 0
+(II) fglrx(0): Using XFree86 Acceleration Architecture (XAA)
+	Screen to screen bit blits
+	Solid filled rectangles
+	Solid Horizontal and Vertical Lines
+	Offscreen Pixmaps
+	Setting up tile and stipple cache:
+		32 128x128 slots
+		32 256x256 slots
+		16 512x512 slots
+(II) fglrx(0): Acceleration enabled
+(WW) fglrx(0): Option "VendorName" is not used
+(WW) fglrx(0): Option "ModelName" is not used
+(II) fglrx(0): Direct rendering disabled
+(==) fglrx(0): Using hardware cursor
+fbarea0->box.x1 0x00000000, fbarea0->box.y1 0x00000387
+fbarea0->box.x2 0x000005c0, fbarea0->box.y2 0x00000389
+icon[0].start=0x513000
+fbarea1->box.x1 0x00000000, fbarea1->box.y1 0x00000389
+fbarea1->box.x2 0x000005c0, fbarea1->box.y2 0x0000038b
+icon[1].start=0x515000
+(==) RandR enabled
+(II) Initializing built-in extension MIT-SHM
+(II) Initializing built-in extension XInputExtension
+(II) Initializing built-in extension XTEST
+(II) Initializing built-in extension XKEYBOARD
+(II) Initializing built-in extension XC-APPGROUP
+(II) Initializing built-in extension XAccessControlExtension
+(II) Initializing built-in extension SECURITY
+(II) Initializing built-in extension XINERAMA
+(II) Initializing built-in extension XFIXES
+(II) Initializing built-in extension XFree86-Bigfont
+(II) Initializing built-in extension RENDER
+(II) Initializing built-in extension RANDR
+(II) Initializing built-in extension COMPOSITE
+(II) Initializing built-in extension DAMAGE
+(II) Initializing built-in extension XEVIE
+(II) Loading local sub module "GLcore"
+(II) LoadModule: "GLcore"
+(II) Loading /usr/lib/xorg/modules/extensions//libGLcore.so
+(II) Module GLcore: vendor="X.Org Foundation"
+	compiled for 7.2.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(II) GLX: Initialized MESA-PROXY GL provider for screen 0
+[glesx] __glESXExtensionInit: No GL ES2.0 capable screen found!
+(**) Option "CoreKeyboard"
+(**) Generic Keyboard: Core Keyboard
+(**) Option "Protocol" "standard"
+(**) Generic Keyboard: Protocol: standard
+(**) Option "AutoRepeat" "500 30"
+(**) Option "XkbRules" "xorg"
+(**) Generic Keyboard: XkbRules: "xorg"
+(**) Option "XkbModel" "pc105"
+(**) Generic Keyboard: XkbModel: "pc105"
+(**) Option "XkbLayout" "dvorak"
+(**) Generic Keyboard: XkbLayout: "dvorak"
+(**) Option "CustomKeycodes" "off"
+(**) Generic Keyboard: CustomKeycodes disabled
+(**) Option "Protocol" "ImPS/2"
+(**) Configured Mouse: Device: "/dev/input/mice"
+(**) Configured Mouse: Protocol: "ImPS/2"
+(**) Option "CorePointer"
+(**) Configured Mouse: Core Pointer
+(**) Option "Device" "/dev/input/mice"
+(**) Option "Emulate3Buttons" "true"
+(**) Configured Mouse: Emulate3Buttons, Emulate3Timeout: 50
+(**) Option "ZAxisMapping" "4 5"
+(**) Configured Mouse: ZAxisMapping: buttons 4 and 5
+(**) Configured Mouse: Buttons: 9
+(II) XINPUT: Adding extended input device "Configured Mouse" (type: MOUSE)
+(II) XINPUT: Adding extended input device "Generic Keyboard" (type: KEYBOARD)
+(II) Configured Mouse: ps2EnableDataReporting: succeeded
+Could not init font path element /usr/X11R6/lib/X11/fonts/misc, removing from list!
+Could not init font path element /usr/share/fonts/X11/cyrillic, removing from list!
+Could not init font path element /usr/X11R6/lib/X11/fonts/Type1, removing from list!
+```
+
+Does anyone have any idea what's wrong here? I'm completely stumped!
+
+Thank you!
+
+---
+
+### Post by hamburglar6 on 2007-07-19
+You might want to start with a fresh xorg.conf- try running this
+```
+sudo dpkg-reconfigure -phigh xserver-xorg
+```
+and it will ask you a few simple questions.
+
+If it still doesn't work you could try reinstalling the drivers using Envy which can be found here: [http://albertomilone.com/nvidia_scripts1.html](http://albertomilone.com/nvidia_scripts1.html)
+
+---
+
+### Post by Chonnawonga on 2007-07-28
+Thanks, Hamburglar.
+
+I've been trying to rebuild my xorg.conf with dpkg-reconfigure as well as aticonfigure, and I've tried making some manual adjustments, but I still can't get it. Also, my last install of the drivers was using envy. Anyone else have any ideas?
+
+---
+
+### Post by superyounan1 on 2007-08-23
+[http://wiki.cchtml.com/index.php/Ubuntu_Feisty_Installation_Guide](http://wiki.cchtml.com/index.php/Ubuntu_Feisty_Installation_Guide)
+
+follow this install guide, or visit the troubleshooting and FAQ sections to fix the Mesa issue
+
+---
+
+### Post by Chonnawonga on 2007-11-06
+OK, the problems ran pretty deep. See this thread:
+
+[http://ubuntuforums.org/showthread.php?t=587290]("http://ubuntuforums.org/showthread.php?t=587290")
+
+---
+

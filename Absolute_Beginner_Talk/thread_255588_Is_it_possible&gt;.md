@@ -1,0 +1,21 @@
+---
+title: "Is it possible?&gt;"
+date: 2006-09-11
+forum: Absolute Beginner Talk
+---
+
+### Post by lordvolo on 2006-09-11
+my pc is old, and the BIOS doesnt have a CD drive option to boot from.  Is there any possible way to boot the CD drive using a floppy or somehting?
+
+---
+
+### Post by JNowka on 2006-09-11
+You might want to check to see if you can get a bios update for you paticular motherboard.  Might help.
+
+---
+
+### Post by madmetal on 2006-09-11
+update bios or try this one [http://ubuntuforums.org/showthread.php?t=246486](http://ubuntuforums.org/showthread.php?t=246486)
+
+---
+

@@ -1,0 +1,12 @@
+---
+title: "PCMCIA modem not working.."
+date: 2006-07-25
+forum: Absolute Beginner Talk
+---
+
+### Post by kitt on 2006-07-25
+hello everyone,
+My PCMCIA modem is not working in Ubuntu. It works well in Knoppix ( a really _old_ knoppix version, too). In knoppix..i just use KPPP and set the modem port to /dev/ttyS3 (or something like that). But ubuntu doesnt recognize it as a modem - autodetection fails.
+
+---
+

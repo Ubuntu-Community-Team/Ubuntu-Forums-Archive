@@ -1,0 +1,353 @@
+---
+title: "How to install a more stable ATI driver?"
+date: 2006-09-05
+forum: Absolute Beginner Talk
+---
+
+### Post by SearchingBearCub on 2006-09-05
+I've searched the forum for this problem, but have not found a resolution. I have a previous post on this topic, but it just kind of petered out with no resolution. [http://www.ubuntuforums.org/showthread.php?t=250525]("http://www.ubuntuforums.org/showthread.php?t=250525")I'll try explaining my problem better here, it may yield more help.
+
+I have an "ATI Technologies Inc Radeon Mobility M6 LY" graphics adapter in my notebook. Apparently, the standard Ubuntu driver is not 100% stable, since I experience periodic, random crashes on the LiveCD and clean HD install, but not in Windows.
+
+I am peripherally aware that ATI does provide Linux drivers, but am totally clueless about how I might find the approprite driver, let alone install it. I searched ATI's web site, and all they pretty much had were "Catalyst" drivers. I'm not sure about Linux, but I can say that the Windows Catalyst drivers refused to install on this system, bailing out of setup with a message stating that the drivers were not correct for my adapter.
+
+If a patient soul out there could please provide me with step by step instructions, I would appreciate it very much.
+
+---
+
+### Post by powder on 2006-09-05
+There are up to date step by step instructions for dapper at the following:
+
+[http://wiki.cchtml.com/index.php/Ubuntu_Dapper_Installation_Guide](http://wiki.cchtml.com/index.php/Ubuntu_Dapper_Installation_Guide)
+
+Use Method 2 on that page to download and install the official ati fglrx driver.
+
+---
+
+### Post by SearchingBearCub on 2006-09-06
+Apologies, but that guide is not clear to me from the point of view of a Linux newbie.
+
+Specifically, the following parts are unclear. I'll only quote a few words of the section in question, to keep the post size down.
+
+Firstly, at the beginning of method 2:
+
+"Important Change: Installation of this driver no longer requires removing.."
+
+and then right below that..
+
+"Blacklist old fglrx module from linux-restricted-modules"
+
+Should I follow that part or not?
+
+Next part that I don't quite understand..
+
+After downloading the driver..
+
+"Change to the download directory. Make sure that you have the universe and multiverse.."
+
+I know how to navigate folders in the GUI, but not in the terminal. And I have absolutely no idea of what repositories are enabled, or how to tinker with them.
+
+Once I can work out these kinks, I'll hopefully be on my way to fixing this problem.
+
+---
+
+### Post by powder on 2006-09-06
+1.  Blacklist old fglrx module.
+
+Yes you need to do this.  It's much simpler than it seems.  All you have to do is modify this file with this command in terminal:
+
+```
+sudo gedit /etc/default/linux-restricted-modules-common
+```
+
+Now, just type in "fglrx" inbetween the quotes.  Save and exit.
+
+Old fglrx module is now blacklisted.
+
+2.  Add Universe and Multiverse.
+
+Backup sources.list
+
+```
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_backup
+```
+
+Edit sources.list
+
+```
+gksudo gedit /etc/apt/sources.list
+```
+
+Uncomment the following lines (remove the # in front of each line)
+
+```
+# deb http://us.archive.ubuntu.com/ubuntu/ dapper universe
+# deb-src http://us.archive.ubuntu.com/ubuntu/ dapper universe
+
+# deb http://us.archive.ubuntu.com/ubuntu/ dapper-backports main restricted universe multiverse
+# deb-src http://us.archive.ubuntu.com/ubuntu/ dapper-backports main restricted universe multiverse
+
+# deb http://security.ubuntu.com/ubuntu dapper-security universe
+# deb-src http://security.ubuntu.com/ubuntu dapper-security universe
+```
+
+Now run these three commands:
+
+```
+sudo apt-get update
+sudo apt-get install module-assistant build-essential 
+sudo apt-get install fakeroot dh-make debconf libstdc++5 linux-headers-$(uname -r)
+```
+
+3.  Just download the ati driver and drop it in your home directory.  Your terminal will open up to your home directory so you won't have to navigate anywhere.
+
+---
+
+### Post by SearchingBearCub on 2006-09-06
+I followed all the instructions in this thread and the linked HOWTO.
+
+Had no errors until I reached the step where I rebooted the system.
+
+Upon reboot, I was greeted with a text-mode error msg complaining about not being able to start X.
+
+I have a sinking feeling that this means that the linked ATI driver is NOT COMPATIBLE with my system, as I originally thought.
+
+Where do I go from here? Currently, I am running off the LiveCD.
+
+---
+
+### Post by powder on 2006-09-06
+This is most likely a problem with your xorg.conf.  Please copy the contents of your xorg.conf file here.
+
+```
+gedit /etc/X11/xorg.conf
+```
+
+Copy contents and paste here.
+
+---
+
+### Post by SearchingBearCub on 2006-09-06
+<========== Begin xorg.conf ==========>
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc104"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies, Inc. Radeon Mobility M6 LY [Radeon Mobility 9000]"
+	Driver		"ati"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies, Inc. Radeon Mobility M6 LY [Radeon Mobility 9000]"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+<========== End xorg.conf ==========>
+
+I'm betting that this file is simply what is stored on/loaded from the LiveCD though.
+
+I attempted to find the file on my Ubuntu HD installation, but when I went to 'Computer' in the 'Places' menu, I was unable to mount my Ubuntu partition to access its files. The exact error message I received was "Unable to mount the selected volume. error: device /dev/hda2 is not removable
+. error: could not execute pmount."
+
+(Ubuntu is the second OS on my system, hence why it is at /dev/hda2)
+
+What should I try next?
+
+---
+
+### Post by powder on 2006-09-06
+Log into your system without the live CD, log in and run this command:
+
+```
+sudo dpkg-reconfigure xserver-xorg
+```
+
+That should walk you through fixing your xorg.conf so you don't have to log in with the live CD.  After you do this run:
+
+```
+startx
+```
+
+You should now have your graphical desktop back.  Now backup your xorg.conf with:
+
+```
+sudo cp /etc/X11/xorg.conf /etc/X11/xorg.conf_backup
+```
+
+Now run these commands again:
+
+```
+sudo aticonfig --initial
+sudo aticonfig --overlay-type=Xv
+```
+
+Now reboot.
+
+---
+
+### Post by SearchingBearCub on 2006-09-06
+All commands, up to and including "startx" went fine, however, I received a few error messages for the commands that followed. Here is a cut & paste of my terminal window with the relevant output:
+
+<========== Begin terminal window cut & paste ==========>
+searchingbearcub@searchingbearcub:~$ sudo cp /etc/x11/xorg.conf /etc/x11/xorg.conf_backup
+Password:
+cp: cannot stat `/etc/x11/xorg.conf': No such file or directory
+searchingbearcub@searchingbearcub:~$ sudo aticonfig --initial
+Uninitialised file found, configuring.
+Using /etc/X11/xorg.conf
+Saved back-up to /etc/X11/xorg.conf.original-1
+searchingbearcub@searchingbearcub:~$ sudo aticonfig --overlay-type=Xv
+Warning: Option 'VideoOverlay' doesn't affect running session.
+Warning: Option 'OpenGLOverlay' doesn't affect running session.
+Using /etc/X11/xorg.conf
+Saved back-up to /etc/X11/xorg.conf.fglrx-1
+<========== End terminal window cut & paste ==========>
+
+What did these commands do? I'm guessing that they restored the default ATI driver that Ubuntu ships with. If that is the case, what more can I do for correcting these maddening crashes? My HD install crashes far less than the LiveCD, but still quite frequently. In less than 2 hours of use, the LiveCD crashed 3 times.
+
+Thanks for all your help so far!
+
+---
+
