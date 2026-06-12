@@ -1,0 +1,1319 @@
+---
+title: "no bootable medium found"
+date: 2016-01-30
+forum: MINT
+---
+
+### Post by andreas93j on 2016-01-30
+Dear folks
+
+I recently installed Linux Mint on my Computer on a blank 1 TB disk.
+I mounted my old HDD, on which I had Ubuntu 14.04 and Win 7 installed, to copy my data back. This worked pretty well for a few weeks, but suddenly when I rebooted my system I got the message "No bootable device found". After a second the computer booted into grub, where Linux Mint, Memcheck and Ubuntu 14.04/Win7 from my previous HDD. Then I unplugged the USB HDD and tried to reboot again. Still the same boot message & grub menu.
+
+It's possible to select Linux Mint via the keyboard, but it's really annoying.
+Is there any way to fix this?
+
+
+Some infos about my current system:
+Linux Mint 17.3 x64
+I enabled the LUKS encryption on the setup of mint.
+
+Boot Info Script Log
+```
+                  Boot Info Script 0.61      [1 April 2012]
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    in partition 112 for .
+ => Windows is installed in the MBR of /dev/sdb.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext2
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        /grub/grub.cfg
+
+sda2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info: 
+
+sda5: __________________________________________________________________________
+
+    File system:       crypto_LUKS
+    Boot sector type:  Unknown
+    Boot sector info: 
+
+sdb1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP: NTFS
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+mint-vg-root': _________________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+
+mint-vg-swap_1': _______________________________________________________________
+
+    File system:       
+    Boot sector type:  Unknown
+    Boot sector info: 
+    Mounting failed:   mount: unknown filesystem type ''
+mount: unknown filesystem type ''
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *          2,048       499,711       497,664  83 Linux
+/dev/sda2             501,758 1,953,523,711 1,953,021,954   5 Extended
+/dev/sda5             501,760 1,953,523,711 1,953,021,952  83 Linux
+
+
+Drive: sdb _____________________________________________________________________
+
+Disk /dev/sdb: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sdb1                  63   976,768,064   976,768,002   7 NTFS / exFAT / HPFS
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/mapper/mint--vg-root 7eb77651-c270-4816-8063-205a00eb85e2   ext4       
+/dev/mapper/mint--vg-swap_1 b3edb6a7-22bd-47c1-8573-af1cb2886edf   swap       
+/dev/mapper/sda5_crypt xtSEud-CVDG-wYvZ-kCIr-37Rd-yMFz-XsfcPv LVM2_member 
+/dev/sda1        1e1b10fb-1ffc-4546-8ae9-295ebf77b61a   ext2       
+/dev/sda5        92bbda6d-ec14-40a7-97af-ce62372d1ebe   crypto_LUKS 
+/dev/sdb1        F4CCC205CCC1C25A                       ntfs       PHILIPS External Hard Disk
+
+========================= "ls -R /dev/mapper/" output: =========================
+
+/dev/mapper:
+control
+mint--vg-root
+mint--vg-swap_1
+sda5_crypt
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/mapper/mint--vg-root /                        ext4       (rw,errors=remount-ro)
+/dev/sda1        /boot                    ext2       (rw)
+
+
+============================= sda1/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod ext2
+set root='hd0,msdos1'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+else
+  search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+fi
+    font="/grub/unicode.pf2"
+fi
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=30
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=0
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 0 ; then
+    set timeout=0
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/06_mint_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=white/light-gray
+### END /etc/grub.d/06_mint_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+set linux_gfx_mode=wxh
+export linux_gfx_mode
+menuentry 'Linux Mint 17.3 Cinnamon 64-bit' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-7eb77651-c270-4816-8063-205a00eb85e2' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    else
+      search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    fi
+    linux    /vmlinuz-3.19.0-32-generic root=/dev/mapper/mint--vg-root ro  quiet splash $vt_handoff
+    initrd    /initrd.img-3.19.0-32-generic
+}
+submenu 'Advanced options for Linux Mint 17.3 Cinnamon 64-bit' $menuentry_id_option 'gnulinux-advanced-7eb77651-c270-4816-8063-205a00eb85e2' {
+    menuentry 'Linux Mint 17.3 Cinnamon 64-bit, with Linux 3.19.0-32-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.19.0-32-generic-advanced-7eb77651-c270-4816-8063-205a00eb85e2' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+        else
+          search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+        fi
+        echo    'Loading Linux 3.19.0-32-generic ...'
+        linux    /vmlinuz-3.19.0-32-generic root=/dev/mapper/mint--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.19.0-32-generic
+    }
+    menuentry 'Linux Mint 17.3 Cinnamon 64-bit, with Linux 3.19.0-32-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.19.0-32-generic-recovery-7eb77651-c270-4816-8063-205a00eb85e2' {
+        recordfail
+        load_video
+        insmod gzio
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+        else
+          search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+        fi
+        echo    'Loading Linux 3.19.0-32-generic ...'
+        linux    /vmlinuz-3.19.0-32-generic root=/dev/mapper/mint--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.19.0-32-generic
+    }
+}
+
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry 'Memory test (memtest86+)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    else
+      search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    fi
+    knetbsd    /memtest86+.elf
+}
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    else
+      search --no-floppy --fs-uuid --set=root 1e1b10fb-1ffc-4546-8ae9-295ebf77b61a
+    fi
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Windows 7 (loader) (on /dev/sdb1)' --class windows --class os $menuentry_id_option 'osprober-chain-E41AD0F51AD0C5A8' {
+    insmod part_msdos
+    insmod ntfs
+    set root='hd1,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos1 --hint-efi=hd1,msdos1 --hint-baremetal=ahci1,msdos1  E41AD0F51AD0C5A8
+    else
+      search --no-floppy --fs-uuid --set=root E41AD0F51AD0C5A8
+    fi
+    parttool ${root} hidden-
+    chainloader +1
+}
+menuentry 'Ubuntu 14.04.3 LTS (14.04) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-simple-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd1,msdos6'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+    else
+      search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+    fi
+    linux /boot/vmlinuz-3.13.0-74-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+    initrd /boot/initrd.img-3.13.0-74-generic
+}
+submenu 'Advanced options for Ubuntu 14.04.3 LTS (14.04) (on /dev/sdb6)' $menuentry_id_option 'osprober-gnulinux-advanced-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+    menuentry 'Ubuntu (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-74-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-74-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-74-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-74-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-74-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-74-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-74-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-74-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-74-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-74-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-74-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-73-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-73-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-73-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-73-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-73-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-73-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-73-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-73-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-71-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-71-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-71-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-71-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-71-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-71-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-71-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-71-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-70-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-70-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-70-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-70-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-70-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-70-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-70-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-70-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-68-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-68-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-68-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-68-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-68-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-68-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-68-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-68-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-67-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-67-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-67-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-67-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-67-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-67-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-67-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-67-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-66-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-66-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-66-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-66-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-66-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-66-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-66-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-66-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-65-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-65-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-65-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-65-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-65-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-65-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-65-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-65-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-63-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-63-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-63-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-63-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-63-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-63-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-63-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-63-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-62-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-62-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-62-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-62-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-62-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-62-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-62-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-62-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-61-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-61-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-61-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-61-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-61-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-61-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-61-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-61-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-59-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-59-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-59-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-59-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-59-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-59-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-59-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-59-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-57-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-57-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-57-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-57-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-57-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-57-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-57-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-57-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-55-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-55-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-55-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-55-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-55-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-55-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-55-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-55-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-54-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-54-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-54-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-54-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-54-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-54-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-54-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-54-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-53-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-53-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-53-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-53-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-53-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-53-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-53-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-53-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-52-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-52-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-52-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-52-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-52-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-52-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-52-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-52-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-49-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-49-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-49-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-49-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-49-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-49-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-49-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-49-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-46-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-46-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-46-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-46-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-46-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-46-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-46-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-46-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-45-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-45-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-45-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-45-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-45-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-45-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-45-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-45-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-44-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-44-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-44-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-44-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-44-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-44-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-44-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-44-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-43-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-43-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-43-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-43-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-43-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-43-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-43-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-43-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-40-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-40-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-40-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-40-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-40-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-40-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-40-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-40-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-39-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-39-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-39-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-39-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-39-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-39-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-39-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-39-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-37-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-37-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-37-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-37-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-37-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-37-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-37-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-37-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-36-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-36-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-36-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-36-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-36-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-36-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-36-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-36-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-35-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-35-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-35-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-35-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-35-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-35-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-35-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-35-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-34-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-34-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-34-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-34-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-34-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-34-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-34-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-34-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-32-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-32-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-32-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-32-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-32-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-32-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-32-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-30-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-30-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-30-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-30-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-30-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-30-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-30-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-30-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-29-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-29-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-29-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-29-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-29-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-29-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-29-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-29-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-27-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-27-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-27-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-27-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-27-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-27-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-27-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-27-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-24-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-24-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-24-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.13.0-24-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-24-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.13.0-24-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.13.0-24-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.13.0-24-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.8.0-39-generic (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.8.0-39-generic--1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.8.0-39-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro quiet splash $vt_handoff
+        initrd /boot/initrd.img-3.8.0-39-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.8.0-39-generic (recovery mode) (on /dev/sdb6)' --class gnu-linux --class gnu --class os $menuentry_id_option 'osprober-gnulinux-/boot/vmlinuz-3.8.0-39-generic-root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset-1405e629-223a-444e-bd3a-bae7228eb1ee' {
+        insmod part_msdos
+        insmod ext2
+        set root='hd1,msdos6'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd1,msdos6 --hint-efi=hd1,msdos6 --hint-baremetal=ahci1,msdos6  1405e629-223a-444e-bd3a-bae7228eb1ee
+        else
+          search --no-floppy --fs-uuid --set=root 1405e629-223a-444e-bd3a-bae7228eb1ee
+        fi
+        linux /boot/vmlinuz-3.8.0-39-generic root=UUID=1405e629-223a-444e-bd3a-bae7228eb1ee ro recovery nomodeset
+        initrd /boot/initrd.img-3.8.0-39-generic
+    }
+}
+
+set timeout_style=menu
+if [ "${timeout}" = 0 ]; then
+  set timeout=10
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda5
+
+00000000  4c 55 4b 53 ba be 00 01  61 65 73 00 00 00 00 00  |LUKS....aes.....|
+00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000020  00 00 00 00 00 00 00 00  78 74 73 2d 70 6c 61 69  |........xts-plai|
+00000030  6e 36 34 00 00 00 00 00  00 00 00 00 00 00 00 00  |n64.............|
+00000040  00 00 00 00 00 00 00 00  73 68 61 31 00 00 00 00  |........sha1....|
+00000050  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000060  00 00 00 00 00 00 00 00  00 00 10 00 00 00 00 40  |...............@|
+00000070  ac cb 5a 8d d8 58 ff 6c  07 3d e3 b1 03 bb 81 3a  |..Z..X.l.=.....:|
+00000080  92 b2 b7 0b 8e 7d 2d 7f  e8 26 99 85 5f 64 90 50  |.....}-..&.._d.P|
+00000090  3b 29 d5 eb 45 87 4e ea  43 a4 1e 55 27 07 2b ef  |;)..E.N.C..U'.+.|
+000000a0  c7 52 45 f4 00 00 b9 8c  39 32 62 62 64 61 36 64  |.RE.....92bbda6d|
+000000b0  2d 65 63 31 34 2d 34 30  61 37 2d 39 37 61 66 2d  |-ec14-40a7-97af-|
+000000c0  63 65 36 32 33 37 32 64  31 65 62 65 00 00 00 00  |ce62372d1ebe....|
+000000d0  00 ac 71 f3 00 02 ec 80  04 e4 7f 44 72 f7 7a d4  |..q........Dr.z.|
+000000e0  35 74 00 c2 86 15 53 72  72 16 19 2e 8a 23 49 ab  |5t....Srr....#I.|
+000000f0  1a 01 7a 14 7c bc 25 bf  00 00 00 08 00 00 0f a0  |..z.|.%.........|
+00000100  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000110  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000120  00 00 00 00 00 00 00 00  00 00 02 00 00 00 0f a0  |................|
+00000130  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000150  00 00 00 00 00 00 00 00  00 00 03 f8 00 00 0f a0  |................|
+00000160  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000180  00 00 00 00 00 00 00 00  00 00 05 f0 00 00 0f a0  |................|
+00000190  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001a0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001b0  00 00 00 00 00 00 00 00  00 00 07 e8 00 00 0f a0  |................|
+000001c0  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001e0  00 00 00 00 00 00 00 00  00 00 09 e0 00 00 0f a0  |................|
+000001f0  00 00 de ad 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000200
+
+Unknown BootLoader on mint-vg-root'
+
+
+Unknown BootLoader on mint-vg-swap_1'
+
+
+
+=============================== StdErr Messages: ===============================
+
+cat: /tmp/BootInfo-ZMLst0DJ/Tmp_Log: No such file or directory
+  skip_dev_dir: Couldn't split up device name mint-vg-root'
+  Volume group name mint-vg-root' has invalid characters
+  Skipping volume group mint-vg-root'
+  skip_dev_dir: Couldn't split up device name mint-vg-root'
+  Volume group name mint-vg-root' has invalid characters
+  Skipping volume group mint-vg-root'
+  skip_dev_dir: Couldn't split up device name mint-vg-root'
+  Volume group name mint-vg-root' has invalid characters
+  Skipping volume group mint-vg-root'
+hexdump: /dev/mapper/mint-vg-root': No such file or directory
+hexdump: /dev/mapper/mint-vg-root': No such file or directory
+  skip_dev_dir: Couldn't split up device name mint-vg-swap_1'
+  Volume group name mint-vg-swap_1' has invalid characters
+  Skipping volume group mint-vg-swap_1'
+  skip_dev_dir: Couldn't split up device name mint-vg-swap_1'
+  Volume group name mint-vg-swap_1' has invalid characters
+  Skipping volume group mint-vg-swap_1'
+  skip_dev_dir: Couldn't split up device name mint-vg-swap_1'
+  Volume group name mint-vg-swap_1' has invalid characters
+  Skipping volume group mint-vg-swap_1'
+hexdump: /dev/mapper/mint-vg-swap_1': No such file or directory
+hexdump: /dev/mapper/mint-vg-swap_1': No such file or directory
+
+
+```
+
+Thanks
+and greetings from austria!
+
+---
+
+### Post by howefield on 2016-01-30
+Thread moved to the "*MINT*" forum.
+
+---
+
+### Post by andreas93j on 2016-01-30
+Sorry, I didn't knew where I should post this, since there is Ubuntu & Mint involved ;-)
+
+---
+
+### Post by andreas93j on 2016-01-30
+Thanks to the linux mint IRC channel I've fixed the grub menu bug. # sudo update-grub But the message "no bootable medium found" still pops up on boot, maybe it's a BIOS issue.
+
+---
+
