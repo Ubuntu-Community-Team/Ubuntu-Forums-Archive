@@ -1,0 +1,3675 @@
+---
+title: "Programming Challenge 9: Vigenère cipher"
+date: 2008-04-28
+forum: Programming Talk
+---
+
+### Post by bobdob20 on 2008-04-28
+**Task**
+
+[INDENT]Implementing the *[Vigenère cipher]("http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher")*.
+Example:
+```
+
+Plaintext: ATTACKATDAWN
+Key:       LEMONLEMONLE
+Cipertext: LXFOPVEFRNHR
+
+```
+[/INDENT]
+
+
+
+**Possible Ideas**
+[INDENT]Cipher/Decipher a file.
+Generation of a key.[/INDENT]
+
+
+**Rules**
+
+[INDENT]No use of libraries which implement this cipher.[/INDENT]
+
+**Due Date**
+
+[INDENT]Winner will be decided next monday.[/INDENT]
+
+**Final Notes**
+
+[INDENT]By creative and have fun.[/INDENT]
+
+---
+
+### Post by achelis on 2008-04-28
+Hi mate.
+Seems that you switched plain text and key around.
+
+ATTACKATDAWN is the plain text, while LEMON is the key used to encrypt the plain text.
+
+Nice challenge, I may have a look at that. Is there any restriction to programming language?
+
+---
+
+### Post by pedro_orange on 2008-04-28
+> **achelis said:**
+> Hi mate.
+Seems that you switched plain text and key around.
+
+ATTACKATDAWN is the plain text, while LEMON is the key used to encrypt the plain text.
+
+Nice challenge, I may have a look at that. Is there any restriction to programming language?
+
+Nope, you can write it in whatever you want. 
+See the sticky regarding the rules of the Programming challenges.
+
+Good luck!
+
+---
+
+### Post by LaRoza on 2008-04-28
+> **achelis said:**
+> 
+Nice challenge, I may have a look at that. Is there any restriction to programming language?
+
+Not really, but since the person who started the challenge has to run it to see it work it is best to use non proprietary languages.
+
+---
+
+### Post by POW R TOC H on 2008-04-28
+Let me see if I got this right from Wiki : 
+Only capital letters, no spaces, or anything?
+
+---
+
+### Post by Zugzwang on 2008-04-28
+Here's a solution in Java featuring a SWING gui:
+
+[php]
+/*
+ * GUI.java
+ *
+ * Created on 28. April 2008, 13:18
+ */
+
+package challenge;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+/**
+ * GUI for the Vinegere cipher class & the class (as private class)
+ *
+ * @author Zugzwang
+ */
+public class GUI extends javax.swing.JFrame {
+    
+    public static final String messageTitle = "Vinagère cipher";
+    
+    /**
+     * Class for performing the Vigenere cipher
+     *
+     * @author "Zugzwang"
+     */
+    public class Vigenere {
+        
+        public class IllegalCodeException extends Exception {};
+        
+        public char[] code;
+        
+        public Vigenere(char[] givenCode) throws IllegalCodeException {
+            code = new char[givenCode.length];
+            for (int i=0;i<givenCode.length;i++) {
+                char c = givenCode[i];
+                if (isSpecialChar(c)) throw new IllegalCodeException();
+                if ((c>='A') && (c<='Z'))
+                    code[i] = (char)(c-'A');
+                else
+                    code[i] = (char)(c-'a');
+            }
+        }
+        
+        /**
+         * Encodes a string
+         */
+        public String code(boolean encode, String input) {
+            
+            StringBuffer result = new StringBuffer();
+            int pos = 0;
+            for (int i=0;i<input.length();i++) {
+                char in = input.charAt(i);
+                if (isSpecialChar(in)) {
+                    result.append(in);
+                } else {
+                    result.append(code(encode,in,code[pos]));
+                    pos = (pos + 1) % code.length;
+                }
+            }
+            
+            return result.toString();
+        }
+        
+        /**
+         * This procedure performs the encoding and decoding of a single character using the Vigenère cipher.
+         * @param encode If this boolean value is set to true, encoding will be performed, decoding otherwise
+         * @param input The input character
+         * @param code The code character to be used
+         * @return The coded character
+         */
+        private char code(boolean encode, char input, char code) {
+            int usage = (encode)?code:26-code;
+            
+            if ((input>='A') && (input<='Z'))
+                return (char)(((input-'A'+usage) % 26)+'A');
+            else
+                return (char)(((input-'a'+usage) % 26)+'a');
+        }
+        
+        private boolean isSpecialChar(char c) {
+            return ((c<'A') || (c>'Z')) && ((c<'a') || (c>'z'));
+        }
+        
+    }
+    
+    
+    /** Creates new form GUI */
+    public GUI() {
+        initComponents();
+        jPanelResult.setVisible(false);
+    }
+    
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">                          
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jPanelSettings = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPasswordFieldCode = new javax.swing.JPasswordField();
+        jTextFieldInputFile = new javax.swing.JTextField();
+        jComboBoxMode = new javax.swing.JComboBox();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonLoad = new javax.swing.JButton();
+        jButtonAction = new javax.swing.JButton();
+        jPanelResult = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPaneResult = new javax.swing.JTextPane();
+        jButtonSave = new javax.swing.JButton();
+
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Vinag\u00e8re cipher - by Zugzwang");
+        jPanelSettings.setLayout(new java.awt.GridBagLayout());
+
+        jPanelSettings.setBorder(javax.swing.BorderFactory.createTitledBorder("Input and Output"));
+        jLabel1.setText("Input file:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanelSettings.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setText("Password:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanelSettings.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setText("Mode:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        jPanelSettings.add(jLabel3, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 3, 2, 0);
+        jPanelSettings.add(jPasswordFieldCode, gridBagConstraints);
+
+        jTextFieldInputFile.setEditable(false);
+        jTextFieldInputFile.setText("- none loaded -");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 3, 2, 0);
+        jPanelSettings.add(jTextFieldInputFile, gridBagConstraints);
+
+        jComboBoxMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Encoding", "Decoding" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 3, 2, 0);
+        jPanelSettings.add(jComboBoxMode, gridBagConstraints);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanelSettings.add(jPanel1, gridBagConstraints);
+
+        jButtonLoad.setText("Load...");
+        jButtonLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoadActionPerformed(evt);
+            }
+        });
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanelSettings.add(jButtonLoad, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(jPanelSettings, gridBagConstraints);
+
+        jButtonAction.setText("OK");
+        jButtonAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActionActionPerformed(evt);
+            }
+        });
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(jButtonAction, gridBagConstraints);
+
+        jPanelResult.setLayout(new java.awt.GridBagLayout());
+
+        jPanelResult.setBorder(javax.swing.BorderFactory.createTitledBorder("Result"));
+        jScrollPane1.setViewportView(jTextPaneResult);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanelResult.add(jScrollPane1, gridBagConstraints);
+
+        jButtonSave.setText("Save results....");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanelResult.add(jButtonSave, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        getContentPane().add(jPanelResult, gridBagConstraints);
+
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-448)/2, (screenSize.height-260)/2, 448, 260);
+    }// </editor-fold>                        
+    
+    /**
+     * Save functions
+     */
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        final JFileChooser fc = new JFileChooser();
+        
+        //In response to a button click:
+        int returnVal = fc.showSaveDialog(this);
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            
+            File file = fc.getSelectedFile();
+            
+            if (file.exists()) {
+                int answer = JOptionPane.showConfirmDialog(null,
+                        "There is already a file with this name. Do you want to overwrite it?",messageTitle,
+                        JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+                if (answer==JOptionPane.CANCEL_OPTION) return;
+            }
+            
+            try {
+                
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                try {
+                    writer.write(jTextPaneResult.getText());
+                    JOptionPane.showMessageDialog(this,"File successfully written: "+file.getAbsolutePath(),messageTitle,JOptionPane.INFORMATION_MESSAGE);
+                } finally {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,"Couldn't write to output file: "+file.getAbsolutePath()+"\n\n Maybe you do not have the rights to read it?",messageTitle,JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }                                           
+    
+    /***
+     * User has pressed the "load button"
+     */
+    private void jButtonLoadActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        //Create a file chooser
+        final JFileChooser fc = new JFileChooser();
+        
+        //In response to a button click:
+        int returnVal = fc.showOpenDialog(this);
+        
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            jTextFieldInputFile.setText(fc.getSelectedFile().getAbsolutePath());
+        }
+    }                                           
+    
+    
+    private void jButtonActionActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        
+        // Get the encoding
+        char[] code = jPasswordFieldCode.getPassword();
+        if ((code==null) || (code.length==0)) {
+            JOptionPane.showMessageDialog(this,"You need to specify a password.",messageTitle,JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Get the file
+        String filename = jTextFieldInputFile.getText();
+        
+        if ((filename==null) || (filename.length()==0)) {
+            JOptionPane.showMessageDialog(this,"You need to specify an input file.",messageTitle,JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            
+            // Try to read.
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            try {
+                StringBuffer message = new StringBuffer();
+                String nextline = reader.readLine();
+                while (nextline!=null) {
+                    if (message.length()!=0) message.append('\n');
+                    message.append(nextline);
+                    nextline = reader.readLine();
+                }
+                
+                // OK? Then decode....
+                Vigenere coder = new Vigenere(code);
+                String result = coder.code(jComboBoxMode.getSelectedIndex()==0,message.toString());
+                
+                jTextPaneResult.setText(result);
+                jPanelResult.setVisible(true);
+                jPanelSettings.setVisible(false);
+                jButtonAction.setVisible(false);
+            } finally {
+                reader.close();
+            }
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this,"Couldn't read input file: "+filename+"\n\n Maybe you do not have the rights to read it?",messageTitle,JOptionPane.ERROR_MESSAGE);
+        } catch (Vigenere.IllegalCodeException e) {
+            JOptionPane.showMessageDialog(this,"The password used may only contain of letters between A and Z.",messageTitle,JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        
+    }                                             
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI().setVisible(true);
+            }
+        });
+    }
+    
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton jButtonAction;
+    private javax.swing.JButton jButtonLoad;
+    private javax.swing.JButton jButtonSave;
+    private javax.swing.JComboBox jComboBoxMode;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelResult;
+    private javax.swing.JPanel jPanelSettings;
+    private javax.swing.JPasswordField jPasswordFieldCode;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldInputFile;
+    private javax.swing.JTextPane jTextPaneResult;
+    // End of variables declaration                   
+    
+}
+
+[/php]
+
+Instrunctions for getting it running:
+[LIST]
+[*]Install the Sun JDK 5.0 or above. Lower versions might work.
+[*]Create a new directory called "challenge"
+[*]Copy the given source into "GUI.java" in that directory.
+[*]run "javac challenge/GUI.java"
+[*]run "java challenge/gui"
+[/LIST]
+
+The interpretation wrt. capital letters here is: Capitalize the password/key and keep the capitalization of the text to encode/decode.
+
+Have fun!
+
+---
+
+### Post by bobdob20 on 2008-04-28
+> **achelis said:**
+> Hi mate.
+Seems that you switched plain text and key around.
+
+ATTACKATDAWN is the plain text, while LEMON is the key used to encrypt the plain text.
+
+Nice challenge, I may have a look at that. Is there any restriction to programming language?
+
+Your right, I will change it now. I was in a bit of a rush this morning. Thanks for spotting it.
+
+---
+
+### Post by Alasdair on 2008-04-28
+Here's a really simple lisp implementation.
+```
+
+(defun vigenere (plain-text key-text &key decrypt)
+  "encrypt or decrypt plain-text string using key-text"
+  (let ((key-cycle (make-cycler key-text)))
+    (map 'string
+	 (lambda (c)
+	   (if decrypt
+	       (decrypt-char c (funcall key-cycle))
+	       (encrypt-char c (funcall key-cycle))))
+	 plain-text)))
+
+(defun make-cycler (seq)
+  "returns a function that cycles through a sequence"
+  (let ((len (length seq))
+	(i -1))
+    (lambda ()
+      (incf i)
+      (elt seq (mod i len)))))
+
+(defun encrypt-char (plain-char key-char)
+  "return an encrypted char"
+  (num-letter (mod (+ (letter-num plain-char) 
+		      (letter-num key-char))
+		   26)))
+
+(defun decrypt-char (cipher-char key-char)
+  "return an decrypted char"
+  (num-letter (mod (- (letter-num cipher-char) 
+		      (letter-num key-char))
+		   26)))
+
+(defun num-letter (n)
+  "returns the char that corresponds to a number"
+  (code-char (+ n (char-code #\A))))
+
+(defun letter-num (char)
+  "returns the number that corresponds to a char"
+  (- (char-code char) (char-code #\A)))
+
+```
+Examples:
+```
+
+CL-USER> (vigenere "ATTACKATDAWN" "LEMON")
+"LXFOPVEFRNHR"
+CL-USER> (vigenere "LXFOPVEFRNHR" "LEMON" :decrypt t)
+"ATTACKATDAWN"
+
+```
+Just save it as a file and load it into your favorite common lisp implementation.
+
+---
+
+### Post by Wybiral on 2008-04-28
+```
+
+from itertools import cycle
+from operator import add, sub
+from optparse import OptionParser
+
+class Cypher:
+
+    def __init__(self):
+        toi = lambda x: ord(x) - ord('A')
+        toc = lambda x: chr(x + ord('A'))
+        self.apply = lambda f, p, k: toc(f(toi(p), toi(k)) % 26)
+
+    def encrypt(self, data, key):
+        zipped = zip(data, cycle(key))
+        return "".join(self.apply(add, p, k) for p, k in zipped)
+
+    def decrypt(self, data, key):
+        zipped = zip(data, cycle(key))
+        return "".join(self.apply(sub, p, k) for p, k in zipped)
+
+if __name__ == "__main__":
+    parser = OptionParser()
+    parser.add_option("-i", "--input", dest="data",
+                      help="Data to be encrypted/decrypted", type="string")
+    parser.add_option("-k", "--key", dest="key",
+                      help="Key for encrypting/decrypting", type="string")
+    parser.add_option("-e", "--encrypt", action="store_true",
+                      help="Encrypt data [default]", dest="encrypt",
+                      default=True)
+    parser.add_option("-d", "--decrypt", action="store_false",
+                      help="Decrypt data", dest="encrypt")
+
+    (options, args) = parser.parse_args()
+
+    errors = []
+
+    if not options.key:
+        errors.append("No key provided!")
+    if not options.data:
+        errors.append("No input provided!")
+
+    if errors:
+        print "The following error(s) occured:"
+        for error in errors:
+            print ">>> %s" % error
+        print "Use --help flag for instructions!"
+    else:
+        cypher = Cypher()
+        key = options.key.replace(' ', '').upper()
+        data = options.data.replace(' ', '').upper()
+        if options.encrypt:
+            print cypher.encrypt(data, key)
+        else:
+            print cypher.decrypt(data, key)
+
+```
+
+Most of this is for the command line options, the "Cipher" class is the actual implementation.
+
+```
+
+python cipher.py -i ATTACKATDAWN -k LEMON
+>>> LXFOPVEFRNHR
+python cipher.py -i LXFOPVEFRNHR -k LEMON --d
+>>> ATTACKATDAWN
+
+```
+
+Use "python cipher.py --help" for help.
+
+---
+
+### Post by nvteighen on 2008-04-28
+I see my little personal project has become a programing challenge.
+
+I've managed to create a simpler version of my actual C code which doesn't read from a file. From the other thread, you know I'm corrupting files with my original code while trying it, so it may even be dangerous to publish it.
+
+[PHP]
+/*Vigenère Simple Version by me in C*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+void CallArgError(char *appname)
+{
+	printf("Usage: %s MODE\n\n", appname);
+	puts("MODE: e = encrypt/d = decrypt");
+	exit(1);
+}
+
+int ReadVar(char *Var)
+{
+	fgets(Var, 258, stdin);
+	fflush(stdin);
+
+	int length = strlen(Var);
+	
+	int i;
+	for(i = 0; i < length; i++)
+		Var[i] = tolower(Var[i]);
+
+	return length - 1;
+}
+
+void EnDecrypt(char *PlainText, int PlainTextLength, char *Key, int KeyLength, char option)
+{
+	int i, a = 0;
+	char buf = 0;
+	for(i = 0; i < PlainTextLength; i++)
+	{
+		if(option == 'e')
+			buf = ((PlainText[i] - 97) + (Key[a] - 97)) % 26;
+		else if(option == 'd')
+			buf = ((PlainText[i] - 97) - (Key[a] - 97)) % 26;
+
+		buf += 97;
+		if(isalpha(buf))
+			printf("%c", tolower(buf));
+
+		a++;
+		if(a > KeyLength)
+			a = 0;
+	}
+}
+
+int main(int argc, char **argv)
+{
+	char PlainText[258];
+	printf("Enter a 256-length Plaintext:");
+	int PlainTextLength = ReadVar(PlainText);
+
+	puts("");
+
+	char Key[258];
+	printf("Enter a 256-length key:");
+	int KeyLength = ReadVar(Key);
+
+	puts("");
+
+	if((strcmp("e", argv[1]) == 0) || (strcmp("d", argv[1]) == 0))
+		EnDecrypt(PlainText, PlainTextLength, Key, KeyLength, argv[1][0]);
+	else
+		CallArgError(argv[0]);
+	
+	puts("");
+
+	return 0;
+}
+[/PHP]
+
+---
+
+### Post by bobdob20 on 2008-04-28
+Its nice to see so many submits already. :)
+
+Wybiral your solution works nicely.
+
+nvteighen yours compiles, but gives me a Segmentation fault after typing in the values which can't be good.
+
+Zugzwang I would like to see yours, but can't get it to compile. It gives me swing errors. Any suggestions?
+
+Alasdair im not familiar with lisp would you be able to post a compile/run command.
+
+---
+
+### Post by Alasdair on 2008-04-28
+If you have CLISP installed and you saved the code in /home/your-user-name/cipher.lisp you should be able to load it with the command "clisp -i /home/your-user-name/cipher.lisp". Then just type the following commands:
+
+> 
+(vigenere "ATTACKATDAWN" "LEMON")
+(vigenere "LXFOPVEFRNHR" "LEMON" :decrypt t)
+
+
+---
+
+### Post by bobdob20 on 2008-04-28
+Thanks, worked like a charm. :)
+
+---
+
+### Post by conehead77 on 2008-04-28
+Some Haskell code:
+```
+
+import Char
+import System
+
+main :: IO ()
+main = do[CODE]
+```
+    args <- getArgs
+    if length args < 2 then
+        putStrLn "I need more arguments!"
+        else
+            putStrLn $ encrypt (head args) (head $ tail args)
+
+encrypt :: String -> String -> String
+encrypt [] _ = []
+encrypt _ [] = []
+encrypt (x:xs) (y:ys) = (chr $ mod (ord x + ord y) 26 + 65) : encrypt xs ys
+[/CODE]
+Its 1AM here, lets see if i can add some more functionality this week.
+
+You will need a Haskell compiler:
+```
+sudo apt-get install ghc
+```
+To run the program:
+```
+runhaskell vigenere.hs "ATTACKATDAWN" "LEMONLEMONLEPEINS"
+```
+edit: obviously, vigenere.hs is the file name where you saved the code :)
+
+---
+
+### Post by mssever on 2008-04-28
+Here's a library written in Ruby.
+
+Features:
+
+[LIST]
+[*]Accepts the text and the key in any format. It automatically converts to uppercase and discards non-alphanumeric characters
+[*]Can read the text from a string or a file
+[*]Can generate pseudorandom keys. According to [Wikipedia]("http://en.wikipedia.org/wiki/Caesar_cipher#History_and_usage"), Vigenère with a truly random key the same length as the plain text that's only used once is an unbreakable encryption form. Alas, the best source of randomness I have available is /dev/random (which is better than most programming languages provide). In addition, there's an option to provide a seed to get repeatable keys. So, for example, you could distribute the key 91_534_256_345_327_534_563_457_908 and (separately) tell the recipient to use that as the seed, then use the 11th generated key. Not terribly secure, but perhaps better than a standard key.
+[*]Can use non-English alphabets. An example is below using the Greek alphabet. Note that it can only auto-uppercase letters occurring in the English alphabet.
+[*]Optionally groups output into groups of n letters
+[*]Exposes a full API
+[/LIST]
+vigenère.rb:[php]#!/usr/bin/env ruby
+
+# This is a library to implement the Vigenère Cipher.
+
+require 'enumerator'
+$KCODE = 'UTF-8'
+
+# Exception raised if the key is set before the text.
+class NoTextError < StandardError
+end
+
+# This class handles encoding and decoding text using the
+# Vigenère Cipher.
+class Vigenere
+  
+  # For convenience, you can set the options in the constructor. All
+  # values are optional (though they need to be specified eventually).
+  # 
+  # Arguments:
+  # key:             The cipher key
+  # text:            The text to be encoded or decoded
+  # chars_per_group: If non-nil, output will be grouped into groups of
+  #                    this many characters.
+  # 
+  # When setting the text and the key, this class will automatically
+  # convert its input to uppercase and strip all non-alphabetic
+  # characters.
+  def initialize(key = nil, text = nil, chars_per_group = nil)
+    @letter_set = %w[A B C D E F G H I J K L M N O P Q R S T U V W X Y Z]
+    @table, @letter_indices = make_tabula_recta
+    @chars_per_group = chars_per_group
+    self.text = text unless text.nil?
+    self.key = key unless key.nil?
+    @seeded = nil
+  end
+  
+  # Reader methods for various instance variables.
+  attr_reader :chars_per_group, :cipher_text, :letter_set, :plain_text, :seed, :table
+  
+  # Set the number of characters per output group. It is an error to set
+  # this to 0. Set to nil to disable grouping.
+  def chars_per_group=(n)
+    raise ArgumentError, "Can't have 0 characters per group; set to nil to disable" if n == 0
+    @chars_per_group = n
+  end
+  
+  # Decode the stored text using the stored key. Of course, both must be
+  # set prior to calling this method.
+  def decode
+    transform :decode
+  end
+  
+  # Encode the stored text using the stored key. Of course, both must be
+  # set prior to calling this method.
+  def encode
+    transform :encode   
+  end
+  
+  # Opens the specified file and sets it as the text.
+  def file=(filename)
+    File.open(filename) do |f|
+      self.text = f.read
+    end
+    self.text
+  end
+  
+  # Provides sensible output on inspect and when running in irb.
+  def inspect
+    "<Vigenere: @text=%s, @key=%s, @seed=%s>" % [
+      (@text) ? @text.inspect : 'nil',
+      (@key)  ? @key.inspect  : 'nil',
+      (@seed) ? @seed.inspect : 'nil',
+    ]
+  end
+  
+  # Returns the current key.
+  def key
+    add_spaces(@key, chars_per_group)
+  end
+  
+  # Sets the key. Raises NoTextError unless the text is set first.
+  # Automatically converts the key to uppercase and discards
+  # non-alphabetic characters.
+  def key=(key)
+    begin
+      txt_len = @text.split('').length # A bug in Ruby 1.8 sometimes causes String#length to return an incorrect value
+    rescue NoMethodError
+      raise NoTextError, "You must set the text before setting a key."
+    end
+    @original_key = key
+    key = normalize_text(key).split('')
+    until key.length >= txt_len
+      key += key
+    end
+    @key = key[0...txt_len].join('')
+    @key
+  end
+  
+  # Sets the alphabet to use. Takes an array of uppercase (if
+  # applicable) letters. Note: normalize_text can only auto-uppercase
+  # the letters of the English alphabet. That means that if you use a
+  # non-English alphabet, you'll have to manually convert your text and
+  # key to uppercase.
+  def letter_set=(array)
+    @letter_set = array
+    @table, @letter_indices = make_tabula_recta
+  end
+  
+  # Makes the tabula_recta--the cipher table. Returns an array of the
+  # table itself and a hash mapping letters to indices.
+  def make_tabula_recta
+    letters = @letter_set.dup
+    table = []
+    letters.length.times do
+      table.push letters.dup
+      letters.push letters.shift
+    end
+    indices = {}
+    letters = letters.each_with_index { |letter, i| indices[letter] = i }
+    [table, indices]
+  end
+  
+  # Generates a pseudorandom key the same length as the text. Sets and
+  # returns the key.
+  # 
+  # If a seed has been set via the seed= method, then this method
+  # generates a repeatable pseudorandom number based on the seed. If the
+  # seed has not been set, or has been explicitly set to nil, then this
+  # method generates the most random number possible on the system.
+  def random_key
+    text_length = @text.split('').length # See explanation in method key=.
+    if @seed
+      key = []
+      text_length.times do
+        key.push(@table[0][rand(@letter_set.length)])
+      end
+    else
+      cmd = "dd if=/dev/random bs=1 count=#{text_length}"
+      key = `#{cmd} 2>/dev/null`.chomp.unpack("C#{text_length}")
+      key.collect! { |i| @table[0][i % @letter_set.length] }
+    end
+    self.key = key.join ''
+  end
+  
+  # To use a seeded random number for a random key (so that the key can
+  # be replayed, call this method with an Integer. To use a more random
+  # key, call it with nil.
+  def seed=(value)
+    srand(value) if value.kind_of? Integer
+    @seed = value
+  end
+  
+  # Returns the current text.
+  def text
+    add_spaces(@text, @chars_per_group)
+  end
+  
+  # Sets the text. Automatically converts text to uppercase and discards
+  # non-alphabetic characters.
+  def text=(text)
+    @text = normalize_text text
+    self.key= @original_key if @original_key
+  end
+  
+  # Handles conversion to a string. Returns the text. Text is in
+  # whichever state it was last converted to.
+  def to_s
+    text
+  end
+  
+  # The following methods are private.
+  private
+  
+  # Adds spaces to str every chars_per_group characters.
+  def add_spaces(str, chars_per_group = nil)
+    return str if chars_per_group.nil?
+    str = str.split ''
+    out = []
+    str.each_slice(chars_per_group) do |group|
+      group.push ' '
+      out.push group.join('')
+    end
+    out.join('').strip
+  end
+  
+  # Converts text to uppercase and discards non-alphabetic characters.
+  def normalize_text(text)
+    letters = text.upcase.split ''
+    letters.delete_if { |x| ! @table[0].include?(x) }
+    letters.join ''
+  end
+  
+  # Performs the actual encoding or decoding. The argument direction is
+  # one of :encode or :decode.
+  def transform(direction)
+    text_letters = @text.split ''
+    key_letters = @key.split ''
+    transformed = []
+    case direction
+      when :encode
+        text_letters.each_with_index do |letter, i|
+          index1 = @letter_indices.fetch(key_letters.fetch(i))
+          index2 = @letter_indices.fetch(letter)
+          transformed.push @table.fetch(index1).fetch(index2)
+        end
+        @plain_text = @text
+        @cipher_text = add_spaces(transformed.join(''), @chars_per_group)
+        @text = normalize_text @cipher_text
+        @cipher_text
+      when :decode
+        text_letters.each_with_index do |letter, i|
+          index = @letter_indices.fetch(letter) - @letter_indices.fetch(key_letters.fetch(i))
+          transformed.push @table[0].fetch(index)
+        end
+        @plain_text = add_spaces(transformed.join(''), @chars_per_group)
+        @cipher_text = self.text
+        @text = normalize_text @plain_text
+        @plain_text
+      else
+        raise ArgumentError, "direction must be either :encode or :decode"
+    end
+  end
+end
+
+# Testing code. Only executed if this file is executed directly. If this
+# file is require'd, this code doesn't run.
+# 
+# To run the testing code:
+#     ./vigenère.rb text key [chars-per-group]
+if $0 == __FILE__
+  raise "Must supply at least 2 command line arguments" if ARGV.length < 2
+  a = Vigenere.new
+  a.text = ARGV[0]
+  a.key = ARGV[1]
+  a.chars_per_group = ARGV[2].to_i if ARGV.length >= 3
+  
+  puts "Using supplied key:"
+  puts "      Plain text : #{a}"
+  puts "    Supplied key : #{a.key}"
+  puts "    Encoded text : #{a.encode}"
+  puts "    Decoded text : #{a.decode}"
+  
+  a.seed = 7629384752639857236945827346952837652938752392938742837462598
+  a.random_key
+  
+  puts "\nUsing random (seeded) key:"
+  puts "      Plain text : #{a}"
+  puts "      Random key : #{a.key}"
+  puts "    Encoded text : #{a.encode}"
+  puts "    Decoded text : #{a.decode}"
+end[/php]The classes Vigenere and NoTextError are the actual implementation. The rest is a test stub.
+
+To run the test code: ```
+~:$ ruby vigenère.rb 'Attack at dawn!' Lemon   ## Which produces:
+Using supplied key:
+      Plain text : ATTACKATDAWN
+    Supplied key : LEMONLEMONLE
+    Encoded text : LXFOPVEFRNHR
+    Decoded text : ATTACKATDAWN
+
+Using random (seeded) key:
+      Plain text : ATTACKATDAWN
+      Random key : MGOCMGYHJJEJ
+    Encoded text : MZHCOQYAMJAW
+    Decoded text : ATTACKATDAWN
+```(Of course, the random key will vary.)
+
+To test this as a library (the test code doesn't test reading from a file):
+```
+~:$ irb
+>> require 'vigenère'
+=> true
+>> Vigenere.new('lemon', 'attack at dawn', 5).encode
+=> "LXFOP VEFRN HR"
+>> a = Vigenere.new
+=> <Vigenere: @text=nil, @key=nil, @seed=nil>
+>> a.file = 'test.txt'
+=> "test.txt"
+>> a.key = 'this is a key'
+=> "this is a key"
+>> a
+=> <Vigenere: @text="THISISATESTFILE", @key="THISISAKEYTHISI", @seed=nil>
+>> a.encode
+=> "MOQKQKADIQMMQDM"
+>> a.decode
+=> "THISISATESTFILE"
+>> b = Vigenere.new
+=> <Vigenere: @text=nil, @key=nil, @seed=nil>
+>> b.letter_set = %w[&#913; &#914; &#915; &#916; &#917; &#918; &#919; &#920; &#921; &#922; &#923; &#924; &#925; &#926; &#927; &#928; &#929; &#931; &#932; &#933; &#934; &#935; &#934; &#937;]
+=> ["&#913;", "&#914;", "&#915;", "&#916;", "&#917;", "&#918;", "&#919;", "&#920;", "&#921;", "&#922;", "&#923;", "&#924;", "&#925;", "&#926;", "&#927;", "&#928;", "&#929;", "&#931;", "&#932;", "&#933;", "&#934;", "&#935;", "&#934;", "&#937;"]
+>> b.text = "&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;"
+=> "&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;"
+>> b.key = "&#913;&#925;&#919;&#929;"
+=> "&#913;&#925;&#919;&#929;"
+>> b
+=> <Vigenere: @text="&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;", @key="&#913;&#925;&#919;&#929;&#913;&#925;&#919;&#929;", @seed=nil>
+>> b.encode
+=> "&#913;&#913;&#926;&#921;&#927;&#916;&#934;&#922;"
+>> b.decode
+=> "&#913;&#925;&#920;&#929;&#927;&#928;&#929;&#931;"
+>> b.seed = 1337
+=> 1337
+>> b
+=> <Vigenere: @text="&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;", @key="&#913;&#925;&#919;&#929;&#913;&#925;&#919;&#929;", @seed=1337>
+>> b.random_key
+=> "&#937;&#921;&#920;&#920;&#932;&#932;&#934;&#921;"
+>> b.random_key
+=> "&#922;&#919;&#934;&#937;&#914;&#919;&#934;&#932;"
+>> b.random_key
+=> "&#915;&#922;&#921;&#924;&#914;&#937;&#933;&#927;"
+>> b.seed = 1337
+=> 1337
+>> b.random_key
+=> "&#937;&#921;&#920;&#920;&#932;&#932;&#934;&#921;"
+>> b.random_key
+=> "&#922;&#919;&#934;&#937;&#914;&#919;&#934;&#932;"
+>> b.random_key
+=> "&#915;&#922;&#921;&#924;&#914;&#937;&#933;&#927;"
+>> b
+=> <Vigenere: @text="&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;", @key="&#915;&#922;&#921;&#924;&#914;&#937;&#933;&#927;", @seed=1337>
+>> b.encode
+=> "&#915;&#935;&#928;&#916;&#928;&#927;&#922;&#920;"
+>> b.decode
+=> "&#913;&#925;&#920;&#929;&#927;&#928;&#927;&#931;"
+>> exit
+```
+
+---
+
+### Post by Zugzwang on 2008-04-29
+> **bobdob20 said:**
+> Zugzwang I would like to see yours, but can't get it to compile. It gives me swing errors. Any suggestions?
+
+Please paste the full output of the compiler run here since I can only guess what's wrong otherwise. Did you configure your system to use the Sun-JDK? What's the output of "javac -version" and "java -version"?
+
+---
+
+### Post by bobdob20 on 2008-04-29
+From javac GUI.java:
+```
+GUI.java:23: warning: The serializable class GUI does not declare a static final serialVersionUID field of type long
+	public class GUI extends javax.swing.JFrame {
+	             ^^^
+GUI.java:34: warning: The serializable class IllegalCodeException does not declare a static final serialVersionUID field of type long
+	public class IllegalCodeException extends Exception {};
+	             ^^^^^^^^^^^^^^^^^^^^
+GUI.java:177: error: javax.swing.GroupLayout cannot be resolved to a type
+	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+	^^^^^^^^^^^^^^^^^^^^^^^
+GUI.java:177: error: javax.swing.GroupLayout cannot be resolved to a type
+	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+	                                            ^^^^^^^^^^^^^^^^^^^^^^^
+GUI.java:180: error: javax.swing.GroupLayout cannot be resolved
+	jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                                  ^^^^^^^^^^^^^^^^^^^^^^^
+GUI.java:184: error: javax.swing.GroupLayout cannot be resolved
+	jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                                  ^^^^^^^^^^^^^^^^^^^^^^^
+GUI.java:273: warning: The parameter evt is never read
+	private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {                                            
+	                                                                   ^^^
+GUI.java:308: warning: The parameter evt is never read
+	private void jButtonLoadActionPerformed(java.awt.event.ActionEvent evt) {                                            
+	                                                                   ^^^
+GUI.java:321: warning: The parameter evt is never read
+	private void jButtonActionActionPerformed(java.awt.event.ActionEvent evt) {                                              
+	                                                                     ^^^
+9 problems (4 errors, 5 warnings)
+
+```
+
+javac -version
+```
+gcj-4.2 (GCC) 4.2.3 (Ubuntu 4.2.3-2ubuntu6)
+Copyright (C) 2007 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+
+java -version
+```
+java version "1.6.0"
+OpenJDK Runtime Environment (build 1.6.0-b09)
+OpenJDK 64-Bit Server VM (build 1.6.0-b09, mixed mode)java-1.5.0-sun
+
+```
+
+Even after changing the default java version to java-1.5.0-sun i still get the same errors. Also 'gcj GUI.java' gives the same errors, just less warnings.
+
+---
+
+### Post by Npl on 2008-04-29
+> **mssever said:**
+> Vigenère with a truly random key the same length as the plain text that's only used once is an unbreakable encryption form. Alas, the best source of randomness I have available is /dev/random (which is better than most programming languages provideThe problem is that the recipient needs to know the key, else you just did a random-number-generator :)
+Since you`d either need to agree on a key before or transmit the random key to the recipient alongside the encrypted message this aint a viable approach (instead of securely transmitting a message you now need to securely transmitt a key of the same length). You need a deterministic pseudo-random-number generator, like a Linear Feedback Shift Register, then you can generate long keys from seed-values
+
+---
+
+### Post by Zugzwang on 2008-04-29
+It looks quite suspicious to me that "javac" refers to "gcj" on your computer. 
+
+However, I've removed the need for the GroupLayout class (didn't know that that was the new default layout for the GUI builder in later versions of Netbeans although this only works for Java6 and above), it might work now.
+
+Eventually, you might need to perform a "sudo update-alternatives --config javac" as well to use Sun's compiler.
+
+---
+
+### Post by nvteighen on 2008-04-29
+I'm proud to tell you I got my original Vigenère code to work! This reads data from file, not from user's input as the previous.
+
+Sorry for malloc & friends.
+
+UPDATE: Improved some things. 
+1) Now it ignores non-alphabetic data leaving it untouched, instead of deleting it. That solves a little bug regarding file-length.
+2) Noticed that I forgot to initialize malloc'ed arrays... (in simple words: my code could have lead to "undefined behaivor")
+
+[PHP]
+/*Vigenère Cipher Implementation in C*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+void Init(char *toinit, int n)
+{
+	int i;
+	for(i = 0; i < n; i++)
+		toinit[i] = 0;
+} 
+
+void CallArgError(char *appname)
+{
+	printf("Usage: %s FILE KEY-FILE MODE\n\n", appname);
+	puts("FILE: Input file to be encrypted/decrypted.");
+	puts("KEY-FILE: File to be used as key.");
+	puts("MODE: e = encrypt/d = decrypt");
+	exit(1);
+}
+
+int ReadFile(FILE **SourceFile, char **OutputStream, char *path)
+{
+	*SourceFile = fopen(path, "r+");
+	if(*SourceFile == NULL)
+	{
+		puts("Error reading file");
+		exit(2);
+    }
+
+	int length = 0;
+	fseek(*SourceFile, 0, SEEK_END);
+	length = ftell(*SourceFile) - 1;
+	rewind(*SourceFile);
+	*OutputStream = malloc(length * sizeof(*OutputStream));
+	if(*OutputStream == NULL)
+	{
+		puts("Internal error! Exiting");
+		exit(2);
+	}
+	Init(*OutputStream, length);
+
+	char c = 0;
+	int i = 0;
+	while(!feof(*SourceFile))
+	{
+			fscanf(*SourceFile, "%c", &c);
+			if(isalpha(c))
+				(*OutputStream)[i] = toupper(c);
+			else
+				(*OutputStream)[i] = c;
+			i++;
+	}
+
+	return length;
+}
+
+void EnDecrypt(FILE *SourceFile, char *PlainText,
+				int PlainTextLength, char *Key,
+				int KeyLength, char option)
+{
+	rewind(SourceFile);
+	int i, a = 0;
+	char buf = 0;
+	for(i = 0; i < PlainTextLength; i++)
+	{
+		if(isalpha(PlainText[i]) && isalpha(Key[a]))
+		{
+			if(option == 'e')
+				buf = ((PlainText[i] - 65) + (Key[a] - 65)) % 26;
+			else if(option == 'd')
+			{
+				buf = ((PlainText[i] - 65) - (Key[a] - 65)) % 26;
+				if(buf < 0)
+					buf += 26;
+			}
+	
+			buf += 65;
+		}
+		else
+			buf = PlainText[i];
+		
+		fprintf(SourceFile, "%c", buf);
+
+		a++;
+		if(a >= KeyLength)
+			a = 0;
+	}
+}
+
+int main(int argc, char **argv)
+{
+	if(argc != 4)
+		CallArgError(argv[0]);
+
+	FILE *SourceFile = NULL;
+	char *PlainText = NULL;
+	int PlainTextLength = ReadFile(&SourceFile, &PlainText, argv[1]);
+
+	FILE *KeyFile = NULL;
+	char *Key = NULL;
+	int KeyLength = ReadFile(&KeyFile, &Key, argv[2]);
+	fclose(KeyFile);
+	KeyFile = NULL;
+
+	if((strcmp("e", argv[3]) == 0) || (strcmp("d", argv[3]) == 0))
+		EnDecrypt(SourceFile, PlainText, PlainTextLength, Key, KeyLength, argv[3][0]);
+	else
+		CallArgError(argv[0]);
+
+	fclose(SourceFile);
+	SourceFile = NULL;
+	free(Key);
+	Key = NULL;
+	free(PlainText);
+	PlainText = NULL;
+	return 0;
+}
+[/PHP]
+
+---
+
+### Post by StevesVR4 on 2008-04-29
+Here is a Java implementation of the cipher.
+
+This implementation will:
+[LIST]
+[*]allow you to encode/decode a string or any input stream (but the included test program will only work with strings from the command line)
+[*]generate a pseudo-random key based on a seed provided by the user
+[*]optionally group the output
+[/LIST]
+
+```
+
+package challenge;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Random;
+
+public class VigenereCipher
+{
+	private String key;
+
+	/**
+	 * Constructs a new encoder/decoder using the Vigenere Cipher.
+	 *
+	 * @param key the value to use for the key
+	 * @author StevesVR4
+	 */
+	public VigenereCipher(CharSequence key)
+	{
+		this.key = sanitizeValue(key);
+	}
+
+	/**
+	 * Constructs a new encoder/decoder using the Vigenere Cipher with a pseudo-random key.
+	 * The generated key will be the same for all instances which use the same seed and length.
+	 *
+	 * @param seed starting value for the random character generation
+	 * @param length the length of key to generate
+	 * @author StevesVR4
+	 */
+	public VigenereCipher(long seed, int length)
+	{
+		StringBuilder key = new StringBuilder();
+		Random rand = new Random(seed);
+
+		for (int i = 0; i < length; i++)
+		{
+			int nextValue = rand.nextInt(26);
+			key.append((char)(nextValue + 'A'));
+		}
+
+		this.key = key.toString();
+	}
+
+	private int sanitizeCharacter(char value)
+	{
+		// a negative one signifies an invalid character that should not be used
+		int returnValue = -1;
+
+		// make sure only 'A' through 'Z' are acceptable.
+		if (((value >= 'A') && (value <= 'Z')) || ((value >= 'a') && (value <= 'z')))
+		{
+			returnValue = Character.toUpperCase(value);
+		}
+
+		return returnValue;
+	}
+
+	private String sanitizeValue(CharSequence value)
+	{
+		StringBuilder newValue = new StringBuilder();
+
+		// go through and "sanitize" the string.
+		// make sure only 'A' through 'Z' are in the string.  strip out any invalid characters.
+		for (int i = 0; i < value.length(); i++)
+		{
+			int newChar = sanitizeCharacter(value.charAt(i));
+			if (newChar != -1)
+			{
+				newValue.append((char)newChar);
+			}
+		}
+
+		return newValue.toString();
+	}
+
+	/**
+	 * Returns the key used to encode/decode the text.
+	 *
+	 * @return the key
+	 * @author StevesVR4
+	 */
+	public String getKey()
+	{
+		return key;
+	}
+
+	private char getKeyIndex(int index)
+	{
+		int keyLength = key.length();
+		int keyOffset = index % keyLength;
+		return key.charAt(keyOffset);
+	}
+
+	/**
+	 * Encodes the string using the Vigenere Cipher.
+	 *
+	 * @param message the value to encode
+	 * @param the encrypted message
+	 * @author StevesVR4
+	 */
+	public String encode(String message)
+	{
+		return encode(message, 0);
+	}
+
+	/**
+	 * Encodes the string using the Vigenere Cipher.
+	 *
+	 * @param message the value to encode
+	 * @param groupLength the number of characters to group in the output
+	 * @return the encrypted message
+	 * @author StevesVR4
+	 */
+	public String encode(String message, int groupLength)
+	{
+		String value = null;
+
+		try
+		{
+			value = encode(new StringReader(message), groupLength);
+		}
+		catch (IOException ioe)
+		{
+			// this should NEVER happen with a StringReader
+			assert(false);
+			ioe.printStackTrace();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Encodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param input the stream to encode
+	 * @return the encrypted message
+	 * @author StevesVR4
+	 */
+	public String encode(Reader input) throws IOException
+	{
+		return encode(input, 0);
+	}
+
+	/**
+	 * Encodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param input the stream to encode
+	 * @param groupLength the number of characters to group in the output
+	 * @return the encrypted message
+	 * @author StevesVR4
+	 */
+	public String encode(Reader input, int groupLength) throws IOException
+	{
+		return transform(input, groupLength, true);
+	}
+
+	/**
+	 * Decodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param message the string to decode
+	 * @return the decrypted message
+	 * @author StevesVR4
+	 */
+	public String decode(String message)
+	{
+		return decode(message, 0);
+	}
+
+	/**
+	 * Decodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param message the string to decode
+	 * @param groupLength the number of characters to group in the output
+	 * @return the decrypted message
+	 * @author StevesVR4
+	 */
+	public String decode(String message, int groupLength)
+	{
+		String value = null;
+
+		try
+		{
+			value = decode(new StringReader(message), groupLength);
+		}
+		catch (IOException ioe)
+		{
+			// this should NEVER happen with a StringReader
+			assert(false);
+			ioe.printStackTrace();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Decodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param input the stream to decode
+	 * @return the decrypted message
+	 * @author StevesVR4
+	 */
+	public String decode(Reader input) throws IOException
+	{
+		return decode(input, 0);
+	}
+
+	/**
+	 * Decodes the contents of the input stream using the Vigenere Cipher.
+	 *
+	 * @param input the stream to decode
+	 * @param groupLength the number of characters to group in the output
+	 * @return the decrypted message
+	 * @author StevesVR4
+	 */
+	public String decode(Reader input, int groupLength) throws IOException
+	{
+		return transform(input, groupLength, false);
+	}
+
+	private String transform(Reader input, int groupLength, boolean encode) throws IOException
+	{
+		StringBuilder output = new StringBuilder();
+		int counter = 0;
+		int curChar;
+
+		while ((curChar = input.read()) != -1)
+		{
+			int newValue = sanitizeCharacter((char)curChar);
+			if (newValue != -1)
+			{
+				int keyChar = getKeyIndex(counter) - 'A';
+				int prevChar = newValue - 'A';
+				int newChar;
+				if (encode)
+				{
+					newChar = (keyChar + prevChar) % 26;
+				}
+				else
+				{
+					newChar = (prevChar - keyChar + 26) % 26;
+				}
+				output.append((char)(newChar + 'A'));
+
+				counter++;
+
+				// now check to see if a blank space should be added to the string
+				// (by waiting until after the counter has been incremented, there is no need
+				// for a special check to prevent padding after the first character)
+				if ((groupLength > 0) && (counter % groupLength == 0))
+				{
+					output.append(' ');
+				}
+			}
+		}
+
+		return output.toString();
+	}
+
+	public static void main(String[] args)
+	{
+		if ((args.length == 3) || (args.length == 4))
+		{
+			boolean encode;
+			boolean randomKey;
+			if (args[0].equals("E"))
+			{
+				encode = true;
+				randomKey = false;
+			}
+			else if (args[0].equals("ER"))
+			{
+				encode = true;
+				randomKey = true;
+			}
+			else if (args[0].equals("D"))
+			{
+				encode = false;
+				randomKey = false;
+			}
+			else if (args[0].equals("DR"))
+			{
+				encode = false;
+				randomKey = true;
+			}
+			else
+			{
+				throw new IllegalArgumentException("The first parameter must be either 'E' or 'ER' to encode a string or 'D' or 'DR' to decode a string.");
+			}
+
+			System.out.println("Operation: " + (encode ? "Encode string" : "Decode string"));
+			VigenereCipher c;
+			if (randomKey == false)
+			{
+				c = new VigenereCipher(args[1]);
+			}
+			else
+			{
+				long seed = Long.parseLong(args[1]);
+				c = new VigenereCipher(seed, args[2].length());
+			}
+			System.out.println("Key: " + c.getKey());
+			System.out.println();
+
+			int group = 0;
+			if (args.length == 4)
+			{
+				group = Integer.parseInt(args[3]);
+			}
+
+			if (encode)
+			{
+				System.out.println("Text to encode: " + args[2]);
+				System.out.println("Encoded text  : " + c.encode(args[2], group));
+			}
+			else
+			{
+				System.out.println("Text to decode: " + args[2]);
+				System.out.println("Decoded text  : " + c.decode(args[2], group));
+			}
+		}
+		else
+		{
+			System.out.println("Three parameters are required: operation, key/seed, text to encode/decode, and (optionally) an output group length.");
+		}
+	}
+}
+
+```
+
+To run the test program:
+```
+
+java challenge.VigenereCipher <option> <key | seed> <text> [ <group length> ]
+
+```
+Available options are:
+[list]
+[*]E - encode string
+[*]ER - encode string with pseudo-random key
+[*]D - decode string
+[*]DR - decode string with pseudo-random key
+[/list]
+
+Examples:
+```
+
+java challenge.VigenereCipher E LEMON ATTACKATDAWN
+Operation: Encode string
+Key: LEMON
+
+Text to encode: ATTACKATDAWN
+Encoded text  : LXFOPVEFRNHR
+
+java challenge.VigenereCipher ER 467782435 ATTACKATDAWN
+Operation: Encode string
+Key: MDBOKOUJVIEJ
+
+Text to encode: ATTACKATDAWN
+Encoded text  : MWUOMYUCYIAW
+
+java challenge.VigenereCipher DR 467782435 MWUOMYUCYIAW
+Operation: Decode string
+Key: MDBOKOUJVIEJ
+
+Text to decode: MWUOMYUCYIAW
+Decoded text  : ATTACKATDAWN
+
+java challenge.VigenereCipher E LEMON ATTACKATDAWN 5
+Operation: Encode string
+Key: LEMON
+
+Text to encode: ATTACKATDAWN
+Encoded text  : LXFOP VEFRN HR
+
+```
+
+---
+
+### Post by amar on 2008-04-29
+I enjoyed this one (and lost another few hours of revision)
+
+my python version takes an input file (ie in.txt) and either prints result to the screen or to an output file if specified
+
+The key will be converted to uppercase but the input text will be converted regardless of case. Punctuation and odd characters (ie è) will remain unchanged
+
+```
+
+#! /usr/bin/python
+# vigenere.py by Amar (2008)
+import getopt, sys
+
+def usage():
+    print ' vigenere.py -k key -i file.in [-o file.out, -v,-d] '
+    print
+    print ' -i, --input ',
+    print '    input file (Required)'
+    print ' -o, --output',
+    print '    output file'
+    print ' -k, --key   ',
+    print '    key (Required)'
+    print ' -d          ',
+    print '    decript'
+    print ' -v          ',
+    print '    verbose'
+
+def enc(lin,k):    
+    out = ord(lin) + ord(k)-ord('A')
+    if (ord(lin)<=ord('Z') and out > ord('Z')) or (out > ord('z')):
+        out = out - 26
+    return chr(out)
+
+def dec(lin,k):
+    out = ord(lin) - ord(k)+ord('A')
+    if (out < ord('A')) or (out < ord('a') and ord('a')<=ord(lin)):
+        out = out + 26
+    return chr(out)
+
+def main():
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "dhi:k:o:v",
+                                    ["help","key=","input=","output="])
+    except getopt.GetoptError, err:
+        # print help information and exit:
+        print str(err) # will print something like "option -a not recognized"
+        usage()
+        sys.exit(2)
+    output = feed = key = None
+    verbose = decode= False
+    for o, a in opts:
+        if o == "-v":
+            verbose = True
+        elif o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif o == '-d':
+            decode= True
+        elif o in ("-k", "--key"):
+            key = a
+        elif o in ("-i", "--input"):
+            feed = a
+        elif o in ("-o", "--output"):
+            output = a
+        else:
+            assert False, "unhandled option"
+    if feed:
+        filein = open(feed,'r')
+        data = filein.readlines()
+    else:
+        print 'No input file'
+        usage()
+        sys.exit()
+    if key:
+        key = key.upper()
+    else:
+        print 'No key'
+        usage()
+        sys.exit()
+    if verbose:
+        print 'encoding with key-',key
+
+    if output:
+        fileout = open(output,'w')
+
+    i=0
+    for ln in data:
+        line = ''
+        for x in range(len(ln)):
+            if (ord('a')<=ord(ln[x])<=ord('z')) or (ord('A')<=ord(ln[x])<=ord('Z')):
+                if decode:
+                    line += dec(ln[x],key[(i+x)%len(key)])
+                else:
+                    line += enc(ln[x],key[(i+x)%len(key)])
+            else:
+                line += ln[x]
+        i=(i+len(ln))%len(key)
+        if output:
+            fileout.write(line)
+        elif not verbose:
+            print line,
+        if verbose:
+            print 'in >',ln,'out>',line
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+to encrypt filein.txt using key 'woot' and output to screen:
+```
+./vigenere.py -i filein.txt -k woot
+```
+
+
+to encrypt filein.txt using key 'woot' and output to file fileout.txt:
+```
+./vigenere.py -i filein.txt -k woot -o fileout.txt
+```
+
+to decrypt filein.txt using key 'woot' and output to screen:
+```
+./vigenere.py -i filein.txt -k woot -d
+```
+
+I haven't fully tested this thing for robustness - I hear my fluid dynamics notes calling me
+
+/me mutters something unpleasant about exams
+
+---
+
+### Post by Martin Witte on 2008-04-29
+Just made one in ksh - as I have to use this in my job it was a nice exercise. It is very basic, e.g. all inputs are hardcoded
+```
+
+#!/bin/ksh
+
+function chr
+{
+	# converts decimal value to its ASCII character representation
+	printf \\$(printf '%03o' $1)
+}
+
+function ord
+{
+	# converts ASCII character to its decimal value
+	printf '%d' "'$1"
+}
+
+function string_to_array
+{
+	typeset -i length=$(echo $1|wc -c)
+	typeset -i i=1
+	typeset ret
+	while [[ $i -lt $length ]]; do
+		ret[$i]=$(echo $1|cut -c$i)
+		i=$(($i+1))
+	done
+	echo ${ret[*]}
+}
+
+
+K=LEMONLEMONLE
+set -A K $(string_to_array $K)
+
+function encrypt
+{
+	typeset C ret i
+	typeset -i j=0
+	for i in $1; do
+		C=$(($(($(ord $i)+$(ord ${K[$j]})-2*$(ord A)))%26))
+		ret[$j]=$(chr $(($C+$(ord A))))
+		j=$(($j+1))
+	done
+
+	echo ${ret[*]}
+}
+
+function decrypt
+{
+	typeset P ret i
+	typeset -i j=0
+	for i in $1; do
+		P=$(($(ord $i)-$(ord ${K[$j]})))
+		if [[ $P -lt 0 ]]; then
+			P=$(($P+26))
+		fi
+		P=$(($P%26))
+		ret[$j]=$(chr $(($P+$(ord A))))
+		j=$(($j+1))
+	done
+
+	echo ${ret[*]}
+}
+
+p=ATTACKATDAWN
+set -A P $(string_to_array $p)
+encrypt "${P[*]}"
+
+c=LXFOPVEFRNHR
+set -A C $(string_to_array $c)
+decrypt "${C[*]}"
+
+```
+
+---
+
+### Post by ibuclaw on 2008-04-29
+BASH Cures Cancer
+
+```
+
+#!/bin/bash
+
+sanity()
+{
+    usage()
+    {
+        echo "Usage: $strzero -c|-d WORD KEY"
+        echo "Other Options: --viewsrc"
+        exit 1
+    }
+    case $method in
+        -c) export cipher="0";;
+        -d) export cipher="1";;
+         *) usage;; esac
+    if   [ "$word" == "" ]
+    then usage
+    elif [ "$key" == "" ]
+    then usage; fi
+}
+
+vigen()
+{
+    encrypt()
+    {
+        let crypt=$numword+$numkey-$A
+    }
+    adjust()
+    {
+        if   [ $crypt -gt 90 ]
+        then let crypt=$crypt-26
+        elif [ $crypt -lt 65 ]
+        then let crypt=$crypt+26; fi
+    }
+    len=${#word}
+    klen=$((${#key} - 1))
+    i="0"
+    k="0"
+
+    while [ $i -lt $len ]
+    do
+        export A="65"
+        export ch=${word:$i:1}
+        export kch=${key:$k:1}
+        export numword=`printf '%d' "'$ch"`
+        export numkey=`printf '%d' "'$kch"`
+        if   [ $numkey -gt "96" ]
+        then let numkey=$numkey-32; fi
+        if   [ $cipher = "1" ]
+        then let numkey=-$numkey
+             let A=-$A; fi
+        case $numword in
+             48|49|50|51|52|53|54|55|56|57)
+                let numword=$numword+17
+                encrypt
+                let crypt=$crypt-17
+                while [ $crypt -gt "57" ]
+                do    let crypt=$crypt-10; done
+                while [ $crypt -lt "48" ]
+                do    let crypt=$crypt+10; done
+                printf \\$(printf '%03o' $crypt)
+                ;;
+10|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|58|59|60|61|62|63|64|91|92|93|94|95|96|123|124|125|126)
+                printf \\$(printf '%03o' $numword)
+                let 'k--'
+                ;;
+              9)
+                echo -ne "\t"
+                let 'k--'
+                ;;
+            -62)
+                echo -n "$"
+                let 'k--'
+                ;;
+            *)
+                if   [ $numword -gt "96" ]
+                then let numword=$numword-32
+                     encrypt
+                     adjust
+                     let crypt=$crypt+32
+                else encrypt
+                     adjust; fi
+                printf \\$(printf '%03o' $crypt)
+                ;;
+        esac
+        let 'i++'
+        if   [ $k -lt $klen ]
+        then let 'k++'
+        else export k="0"; fi
+    done
+    echo
+}
+
+if   [ "$1" = "--viewsrc" ]
+then cat $0 | less
+else export strzero="$0"
+     export method="$1"
+     if [ -f "$2" ]
+     then export word=`cat $2`
+     else export word="$2"; fi
+     export key="$3"
+     sanity
+     vigen
+fi
+exit 0
+
+```
+It's written so it ignores differences in cases, but prints the case of the word you give it anyway!
+
+Save the source in a file called **vigen**. And mark it executable (**chmod +x vigen**).
+
+And showing it in action:
+[PHP]
+$ ./vigen -c ATTACKATDAWN LEMON
+LXFOPVEFRNHR
+$ ./vigen -d LXFOPVEFRNHR lemon
+ATTACKATDAWN
+[/PHP]
+
+Generally speaking.
+"vigen -c" Ciphers the text.
+"vigen -d" Deciphers the text.
+Though this is not strictly true, as the algorithm could go either way.
+
+Features added since its original erection: 
+[LIST]
+[*] "Phrases".
+[*] **All** Non-Alphabet standard keys (on a generic 105-PC Keyboard) are ported.
+[*] The symbols: **$**, **!**, **\** and **`** can be put into the input arguments.
+Although, the backslash symbol is required before them. ie: ./vigen -c \**$**\**!**\**\**\**`** LEMON
+[*] Numbers are encrypted along with the text.
+[*] The **£** symbol is ported. (With the use of the **£** sign, or the **¬** sign).
+[*] Symbols and Numbers can be included in the key to increase security of encryption.
+[*] Files are supported now too. All output is printed at the screen unless you tell the command prompt to redirect it using the "**>**" or "**>>**" symbols.
+ie: **./vigen -c foo.txt LEMON > encrypt-foo.txt** will save the encrypted (or decrypted) text to a file.
+[/LIST]
+[PHP]
+$ ./vigen -c "ATTACK AT DAWN" LEMON
+LXFOPV EF RNHR
+$ ./vigen -d "LXFOPV EF RNHR" LEMON
+ATTACK AT DAWN
+
+$ ./vigen -d "Lxfopv ef Rnhr, 22:31ey" LEMON
+Attack at Dawn, 08:00am
+
+$ ./vigen -d "EWZCGO EW JCAR" +*-C++
+ATTACK AT DAWN
+
+[/PHP]
+Also, don't forget to view the source!
+[PHP]
+$ ./vigen --viewsrc
+[/PHP]
+
+Enjoy!
+
+Regards
+Iain
+
+---
+
+### Post by mssever on 2008-04-30
+> **Npl said:**
+> The problem is that the recipient needs to know the key, else you just did a random-number-generator :)
+Since you`d either need to agree on a key before or transmit the random key to the recipient alongside the encrypted message this aint a viable approach (instead of securely transmitting a message you now need to securely transmitt a key of the same length). You need a deterministic pseudo-random-number generator, like a Linear Feedback Shift Register, then you can generate long keys from seed-values
+Thanks for the feedback. Secure key exchange is a problem. If I implement a seeded pseudorandom key, then the seed simply becomes the key. Nevertheless, I'll add that feature when I get a chance.
+
+---
+
+### Post by tom66 on 2008-04-30
+This is a really short Vigenere cipher written in Perl. I was going for size not functionality, so it doesn't decrypt, or work on files yet.
+
+```
+
+#!/usr/bin/perl
+# Really short Vigenere cipher
+
+$input  = "ATTACKATDAWN";
+$cipher = "LEMONLEMONLE";
+
+$buffer = ""; while($i  < 
+length($input)){  $buffer 
+.=      chr(((ord(substr(
+$input, $i)) + ord(substr
+($cipher, $i)))   % 26) + 
+ord('A')); $i++;  } print 
+$buffer . "\n";
+
+```
+
+---
+
+### Post by nebu on 2008-04-30
+I am really new with python..... so there may be scope to reduce no of lines of the program using the same algorithm..... if i find something.... ill post it here.... 
+
+```
+
+#!/usr/bin/env python
+
+"""Encode and decode data using the Vigenere Cipher"""
+
+
+#Make key of correct length
+def makekey(key_input,no_char):
+    key = []
+    i = 0
+    x = 0
+    while i < no_char:
+        key.append(key_input[x])
+        i = i + 1
+        x = x + 1
+        if x == (key_input.__len__()):
+            x = 0
+    return key
+
+#Find code for alphabets(0-25)
+def giveNO(char):
+    no = ord(char)
+    return (no-ord('A'))
+
+#Find alphabets for code
+def giveCHAR(no):
+    if no>=0 and no<=25:
+        return chr(no+ord('A'))
+    elif no>25:
+        return chr(no+ord('A')-26)
+    elif no<0:
+        return chr(no+ord('A')+26)
+
+#Encode data
+def encode(key_input,data):
+    key = makekey(key_input,data.__len__())
+    i = 0
+    enSTR = ""
+    while i < data.__len__():
+        if data[i] == " ":
+            enSTR = enSTR + " "
+        else:
+            no = giveNO(data[i]) + giveNO(key[i])
+            enSTR = enSTR + giveCHAR(no)
+        i = i + 1
+    print "\n\nEncrypted data: %s"%enSTR
+
+#Decode data
+def decode(key_input,data):
+    key = makekey(key_input,data.__len__())
+    i = 0
+    deSTR = ""
+    while i< data.__len__():
+        if data[i] == " ":
+            deSTR = deSTR + " "
+        else:
+            no = giveNO(data[i]) - giveNO(key[i])
+            deSTR = deSTR + giveCHAR(no)
+        i = i + 1
+    print "\n\nDecrypted data: %s"%deSTR
+
+
+
+
+
+#Run program
+if __name__ == "__main__":
+    ch = 1
+    while ch:
+         #import os
+        #os.system("clear")
+        print "\n\n1. Encode"
+        print "2. Decode"
+        print "0. Exit"
+        choice = raw_input("Options? ")
+        if choice == "1":
+            key = raw_input("\nKey? ")
+            data = raw_input("Data? ")
+            encode(key,data)
+        elif choice == "2":
+            key = raw_input("\nKey? ")
+            data = raw_input("Data? ")
+            decode(key,data)
+        elif choice == "0":
+            ch = 0
+        else:
+            print "\n\nIncorrect Input"
+
+```
+
+---
+
+### Post by bobbocanfly on 2008-04-30
+Here is my version, written in sloppy Python. Took forever to get encryption working last night (tbh i was doing it at some stupid time in the morning).
+
+*python vigenere.py -e -i ATTACKATDAWN -k LEMONLEMONLE*
+
+Also works with files:
+
+*python vigenere.py -e -f input -k LEMONLEMONLE*
+
+It can also generate a key for a piece of text (useful for thing anything > than 1 line as creating your own key for a 150 line message would take forever):
+
+*python vigenere.py -g -i ATTACKATDAWN*
+
+
+```
+#Vigenere Cipher in Python
+#David Futcher ('bobbo') <bobbocanfly@gmail.com>
+
+import sys, random
+from optparse import OptionParser
+
+#Actual Vigenere Cipher implementation
+class Vigenere:
+
+    #Encrypt the string using Vigenere
+    def encrypt(self, string, key):
+        dec = ""
+
+        for i in range(len(string)):
+            pbyte = ord(string[i]) - 65
+            kbyte = ord(key[i]) - 65
+            index = pbyte + kbyte
+            byte = 65
+
+            for k in range(0, index):
+                byte += 1
+                if byte <65:
+                    byte = 90
+                if byte >90:
+                    byte = 65
+
+            dec += chr(byte)
+
+        return dec 
+
+    #Decrypt the string using Vigenere
+    def decrypt(self, string, key):
+        dec = ""
+
+        for i in range(len(string)):
+            pbyte = ord(string[i]) - 65
+            kbyte = ord(key[i]) - 65
+            index = pbyte - kbyte
+            if index < 0:
+                new = int(str(index).lstrip('-'))
+                index = 26 - new
+            byte = 65
+
+            for k in range(0, index):
+                byte += 1
+                if byte <65:
+                    byte = 90
+                if byte >90:
+                    byte = 65
+
+            dec += chr(byte)
+
+        return dec
+
+    #Generates a key based on the length of the input string
+    def gen_key(self, string):
+        key = ""
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+        for i in range(len(string)):
+            key += random.choice(chars)
+
+        return key
+
+if __name__ == "__main__":
+    
+    #Parse the command line options
+    parser = OptionParser()
+    parser.add_option("-f", "--file", dest="filename",
+                      help="write report to FILE", metavar="FILE")
+    parser.add_option("-i", "--input", dest="string",
+                      help="input to be encrypted/decrypted")
+    parser.add_option("-k", "--key", dest="key",
+                      help="key to be used in encryption/decryption")
+    parser.add_option("-g", "--gen", dest="gen", action="store_true", 
+                      default=False, help="option to generate a key (Useful for enciphering more than a line of text")
+    parser.add_option("-e", "--encrypt", action="store_true",
+                      help="encrypt input", dest="encrypt")
+    parser.add_option("-d", "--decrypt", action="store_true",
+                      help="decrypt input", dest="decrypt")
+
+
+    (options, args) = parser.parse_args()
+        
+    if options.filename and options.string:
+        print "Cannot use -f and -i (--file, --input) switches at the same time"
+        sys.exit(1)
+
+    if not options.key and not options.gen:
+        print "No key given"
+        sys.exit(1)
+
+    if not options.string and not options.filename:
+        print "No input string or filename given"
+        sys.exit(1)
+
+    if not options.encrypt and not options.decrypt and not options.gen:
+        print "encryption, decryption or key generation not selected (-e/-d/-g)"
+
+    #user is sane, get on with enciphering/deciphering
+    if options.filename:
+        file = open(options.filename)
+        string = file.read()
+        string = string.rstrip()
+    else:
+        string = options.string
+
+    if not options.gen:
+        key = options.key
+
+    #Check key/string is right length, this can only handle keys the exact length of the string
+    if not options.gen and len(key) != len(string):
+        print "Invalid input or key length. The key must be the exact length of the input data"
+        sys.exit(1)
+
+    vig = Vigenere()
+    if options.encrypt:
+        print vig.encrypt(string, key)
+    elif options.decrypt:
+        print vig.decrypt(string, key)
+    elif options.gen:
+        print vig.gen_key(string)
+    else:
+        print "Unspecified error. Please check your command line input"       
+        
+
+```
+
+---
+
+### Post by samjh on 2008-04-30
+In an example of using the WRONG tool for the job, here's an attempt using Ada. :)  [UPDATE] Now includes fairly robust error checking.[/UPDATE]
+
+There is some duplication of code, but I think it's OK for the sake of clarity.  The greatest obstacle was Ada's greatest strength: extremely strong type-checking.  String-handling was the most difficult, as Ada is very rigid in that area.  I used fixed-length strings (a string can't be larger or smaller than the predefined length), because of it can be manipulated like arrays which helps when ciphering/deciphering text.  Unbounded-length strings (length can vary to whatever size necessary) are easier for general text, but can't be modified as arrays, lacked functionality for this particular application, and is much slower than fixed-length strings.
+
+
+Compile by installing gnat:```
+sudo apt-get install gnat
+```
+Invoke this command to compile:```
+gnat make vigenere.adb
+```(Take note that gnat will complain if the source file is not vigenere.adb.)
+
+```
+with Ada.Text_IO;
+with Ada.Characters.Handling;
+with Ada.Exceptions;
+
+use Ada.Text_IO;
+use Ada.Characters.Handling;
+use Ada.Exceptions;
+
+procedure Vigenere is
+	In_Text, Out_Text, Key : String(1..51);
+	Opt_Text : String(1..7);
+	Menu : Character;
+	Quit : Boolean;
+	L_In, L_Key : Integer;
+	
+	procedure Get_Text is
+		Valid_Input : Boolean;
+	begin
+		Put_Line("Beware: All text is limited to 50 characters.");
+		loop
+			Valid_Input := True;
+			Put("Type the text to " & Opt_Text & ": ");
+			Get_Line(In_Text, L_In);
+			Put("Type the key: ");
+			Get_Line(Key, L_Key);
+			if L_In > 50 or L_Key > 50 then
+				Put_Line("Input is limited to 50 characters. Your input was longer.");
+				Put_Line("Please try again");
+				Valid_Input := False;
+			end if;
+			exit when Valid_Input = True;
+		end loop;
+		Put_Line("Starting " & Opt_Text & "ion...");
+	end;
+	
+	function Code (Ch_In, Key_Ch : Character; Opt : Integer) return Character is
+		type Char_Index is mod 26;
+		Val_Plain, Val_Crypt, Offset : Char_Index;
+		Ch_Out : Character;
+	begin
+		if Opt = 1 then
+			Val_Plain := Char_Index(Character'Pos(Ch_In) - 65);
+			Offset := Char_Index(Character'Pos(Key_Ch) - 65);
+			Val_Crypt := Val_Plain + Offset;
+			Ch_Out := Character'Val(Integer(Val_Crypt) + 65);
+		elsif Opt = 0 then
+			Val_Crypt := Char_Index(Character'Pos(Ch_In) - 65);
+			Offset := Char_Index(Character'Pos(Key_Ch) - 65);
+			Val_Plain := Val_Crypt - Offset;
+			Ch_Out := Character'Val(Integer(Val_Plain) + 65);
+		end if;
+		return Ch_Out;
+	end Code;
+	
+	procedure Process_Text is
+		Count_Key, LU_End : Integer;
+		Temp : Character;
+	begin
+		LU_End := L_In;
+		Count_Key := 1;
+		for I in Integer range 1..L_Key loop
+			Temp := Key(I);
+			Key(I) := To_Upper(Temp);
+		end loop;
+		for I in Integer range 1..L_In loop
+			Temp := In_Text(I);
+			In_Text(I) := To_Upper(Temp);
+			if Menu = 'E' then
+				Out_Text(I) := Code(In_Text(I), Key(Count_Key), 1);
+			elsif Menu = 'D' then
+				Out_Text(I) := Code(In_Text(I), Key(Count_Key), 0);
+			end if;
+			Count_Key := Count_Key + 1;
+			if Count_Key = 0 or Count_Key > L_Key then
+				Count_Key := 1;
+			end if;
+		end loop;
+	end Process_Text;
+	
+begin
+	Quit := False;
+	loop
+		Put("[E]ncrypt, [D]ecrypt, or [Q]uit? ");
+		Get(Menu);
+		Menu := To_Upper(Menu);
+		Skip_Line(1);
+		if Menu = 'E' then
+			Opt_Text := "encrypt";
+			Get_Text;
+			Process_Text;
+			Put_Line("Encrypted text: " & Out_Text(1..L_In));
+		elsif Menu = 'D' then
+			Opt_Text := "decrypt";
+			Get_Text;
+			Process_Text;
+			Put_Line("Decrypted text: " & Out_Text(1..L_In));
+		elsif Menu = 'Q' then
+			Quit := True;
+		else
+			Put_Line("Invalid choice!");
+			Quit := True;
+		end if;
+		exit when Quit = True;
+	end loop;
+exception
+	when Constraint_Error =>
+		Put_Line("A number or other non-alphabet character has been detected.");
+		Put_Line("I can only cipher and decipher alphabet characters. Sorry.");
+		Vigenere;
+end Vigenere;
+```
+
+---
+
+### Post by mssever on 2008-05-01
+> **mssever said:**
+> Thanks for the feedback. Secure key exchange is a problem. If I implement a seeded pseudorandom key, then the seed simply becomes the key. Nevertheless, I'll add that feature when I get a chance.
+
+Done. I've updated my entry accordingly. I also discovered a bug in Ruby 1.8's String class. "A".length returns 1 as expected. However, "Ä".length returns 2. I've worked around this bug by splitting the text and key strings into arrays anytime the length is important.
+
+---
+
+### Post by Zugzwang on 2008-05-01
+> **bobdob20 said:**
+> Even after changing the default java version to java-1.5.0-sun i still get the same errors. Also 'gcj GUI.java' gives the same errors, just less warnings.
+
+So did you managed to get it running?
+
+---
+
+### Post by ibuclaw on 2008-05-01
+> **samjh said:**
+> In an example of using the WRONG tool for the job, here's an attempt using Ada. :)  Almost no optimisation, no exception handling, and only one error-check.  So beware.
+
+
+Erm... You think that's the wrong tool...
+Look at this!!!
+COBOL!!!:popcorn:
+[PHP]
+000100 IDENTIFICATION DIVISION.
+000200 PROGRAM-ID. COBVIGEN.
+000300 ENVIRONMENT DIVISION.
+000400 DATA DIVISION.
+000500  WORKING-STORAGE SECTION.
+000600 01 THEWORD   PIC X(12)  VALUE 'ATTACKATDAWN'.
+000700 01 THEKEY    PIC X(12)  VALUE 'LEMON'.
+000800 01 X         PIC 99     VALUE 1.
+000900 01 Y         PIC 99     VALUE 1.
+001000 01 CHARWORD  PIC X.
+001100 01 CHARKEY   PIC X.
+001200 
+001300 PROCEDURE DIVISION.
+001400 PROGRAM-START.
+001500   DISPLAY "Before: " THEWORD.
+001600   DISPLAY "Key   : " THEKEY.
+001700  PERFORM 11 TIMES
+001800     PERFORM DO-CIPHER
+001900  END-PERFORM.
+002000
+002100 DO-CIPHER.
+002200   MOVE THEWORD(X:1) TO CHARWORD.
+002300   MOVE THEKEY (Y:1) TO CHARKEY.
+002400  
+002500   EVALUATE CHARKEY
+002600     WHEN 'L' PERFORM L-CONVERT
+002700     WHEN 'E' PERFORM E-CONVERT
+002800     WHEN 'M' PERFORM M-CONVERT
+002900     WHEN 'O' PERFORM O-CONVERT
+003000     WHEN 'N' PERFORM N-CONVERT
+003100   END-EVALUATE.
+003200   
+003300   MOVE CHARWORD(1:1) TO THEWORD(X:1).
+003400   ADD 1 TO X.
+003500   ADD 1 TO Y.
+003600   
+003700   IF Y = 6 THEN
+003800     COMPUTE Y = 1
+003900   END-IF.
+004000  
+004100 E-CONVERT.
+004200   INSPECT CHARWORD
+004300     CONVERTING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+004400             TO "EFGHIJKLMNOPQRSTUVWXYZABCD".
+004500  
+004600 L-CONVERT.
+004700   INSPECT CHARWORD
+004800     CONVERTING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+004900             TO "LMNOPQRSTUVWXYZABCDEFGHIJK".
+005000  
+005100 M-CONVERT.  
+005200   INSPECT CHARWORD
+005300     CONVERTING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+005400             TO "MNOPQRSTUVWXYZABCDEFGHIJKL".
+005500  
+005600 N-CONVERT.
+005700   INSPECT CHARWORD
+005800     CONVERTING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  
+005900             TO "NOPQRSTUVWXYZABCDEFGHIJKLM".
+006000  
+006100 O-CONVERT.
+006200   INSPECT CHARWORD
+006300     CONVERTING "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+006400             TO "OPQRSTUVWXYZABCDEFGHIJKLMN".
+006500  
+006600 PROGRAM-DONE. 
+006700   DISPLAY "After : " THEWORD.
+006800   STOP RUN.
+006900
+
+[/PHP]
+
+You need **open-cobol** to compile (version 0.33 is in the repos. But I compiled this using version 1.0 found [at their sourceforge page here.]("https://sourceforge.net/project/showfiles.php?group_id=34923")
+
+Save the code to a text file named **cobvigen.cbl**, add a blank line at the end.
+And use this how to compile and run.
+[PHP]
+$ export PATH=$PATH
+$ cobc -x cobvigen.cbl -o cobvigen
+$ ./cobvigen
+Before: ATTACKATDAWN
+Key   : LEMON       
+After : LXFOPVEFRNHR
+[/PHP]
+
+Code is embedded. But as you can see, it uses a true algorithm to encrypt (It's just implemented only for the word "LEMON")
+
+How it works...
+---snip---
+```
+[B]CONVERTING "ABC"
+        TO "EFG".[/B]
+```
+---snip---
+Simply put, if the letter is **A** it is converted to **E**, if it is **B** it's converted to **F** and so on in a vertical manner.
+
+Ingenious!
+Regards
+Iain
+
+PS: How's my COBOL Programming?
+
+---
+
+### Post by samjh on 2008-05-02
+> **tinivole said:**
+> Erm... You think that's the wrong tool...
+Look at this!!!
+COBOL!!!:popcorn:
+
+...
+
+Code is embedded. But as you can see, it uses a true algorithm to encrypt (It's just implemented only for the word "LEMON")
+
+...
+
+PS: How's my COBOL Programming?I've no idea about COBOL, so can't pass judgment except to say COBOL code looks horrible! :p
+
+---
+
+### Post by ibuclaw on 2008-05-02
+> **samjh said:**
+> I've no idea about COBOL, so can't pass judgment except to say COBOL code looks horrible! :p
+
+What gets you the most?
+
+A - The numbering along the left hand hand.
+OR
+B - The over-verbose-ness of the language?
+
+A) Nowadays the numbering isn't required, and all what's needed is that you add 7 blank spaces (or press TAB) for each new line of code. I just prefer to number to keep it looking old-skool. 8)
+
+B) Over-Verbose-ness... It's a gift and a curse... A love and hate Marmite situation.
+
+Regards
+Iain
+
+---
+
+### Post by samjh on 2008-05-02
+> **tinivole said:**
+> What gets you the most?
+
+A - The numbering along the left hand hand.
+OR
+B - The over-verbose-ness of the language?
+
+A) Nowadays the numbering isn't required, and all what's needed is that you add 7 blank spaces (or press TAB) for each new line of code. I just prefer to number to keep it looking old-skool. 8)
+
+B) Over-Verbose-ness... It's a gift and a curse... A love and hate Marmite situation.
+
+Regards
+IainBoth A and B.  I like verbose-ness if it aids readability.  But I think COBOL is so verbose that it is more stifling than helpful.  The numbering reminds me of GW-BASIC, which I loath.
+
+---
+
+### Post by ibuclaw on 2008-05-02
+> **samjh said:**
+> Both A and B.  I like verbose-ness if it aids readability.  But I think COBOL is so verbose that it is more stifling than helpful.  The numbering reminds me of GW-BASIC, which I loath.
+
+Gee-Wizz... Wow! Haven't seen that in a while.
+
+All of BASIC is horrible! You have my vote there!
+
+Hmm... I wonder what else we could hack the vigenere cipher into...
+A Makefile?:lolflag:
+
+[PHP]
+#Spoof Idea of it...
+$ make ATTACKATDAWN LEMON
+LXFOPVEFRNHR
+[/PHP]
+
+I'd **love** to see that work!!!
+
+[EDIT]
+It probably just needs a hacked version of [my BASH code]("http://ubuntuforums.org/showthread.php?p=4836803#post4836803"). Hmm... Now how do I go about getting it into a Makefile format...
+That is the daunting question... 
+
+Regards
+Iain
+
+---
+
+### Post by WW on 2008-05-02
+Javascript + HTML.  Save the attached file as **vigenere.html**, then open it in Firefox.
+
+---
+
+### Post by nvteighen on 2008-05-02
+Wow, how many competitors!
+
+---
+
+### Post by ibuclaw on 2008-05-02
+> **nvteighen said:**
+> Wow, how many competitors!
+
+It's not the number of competitors... It's number of implemented languages that count ;)
+
+I count Twelve so far...
+[LIST]
+[*] Ada
+[*] BASH
+[*] C
+[*] COBOL
+[*] Haskell
+[*] HTML
+[*] KSH
+[*] Java
+[*] Lisp
+[*] Perl
+[*] Python
+[*] Ruby
+[/LIST]
+
+Now that is something to wow over!
+
+Regards
+Iain
+
+---
+
+### Post by nvteighen on 2008-05-02
+Let me do some self-promotion :) and tell you I've improved my code a bit. It's post #20 and changes are detailed there (basically improved parsing making it less restricted and fixed a memory management bug)
+
+---
+
+### Post by WW on 2008-05-02
+> **tinivole said:**
+> It's not the number of competitors... It's number of implemented languages that count ;)
+
+Where are the entries in C++? Fortran 77? Basic?  Any Forth programmers out there?
+
+---
+
+### Post by Wybiral on 2008-05-02
+> **WW said:**
+> Where are the entries in C++? Fortran 77? Basic?  Any Forth programmers out there?
+
+In the past ;)
+
+---
+
+### Post by WW on 2008-05-02
+> **Wybiral said:**
+> In the past ;)
+Like me :)
+
+OK, how about Erlang, D, brainf*ck, whitespace, Lua, or... nevermind, just take your pick from [here](http://en.wikipedia.org/wiki/Alphabetical_list_of_programming_languages).
+
+---
+
+### Post by ibuclaw on 2008-05-02
+> **WW said:**
+> Like me :)
+
+OK, how about Erlang, D, brainf*ck, whitespace, Lua, or... nevermind, just take your pick from [here](http://en.wikipedia.org/wiki/Alphabetical_list_of_programming_languages).
+
+Hmm... which language shall I take a 1 day crash course on just to please you...
+
+Shall I attempt **[LOVE]("http://love.sourceforge.net/")** or **[JOY]("http://appforge.apc.edu.ph/projects/joyj/")**?
+
+Regards
+Iain
+
+---
+
+### Post by WW on 2008-05-02
+> **tinivole said:**
+> Hmm... which language shall I take a 1 day crash course on just to please you...
+You need a whole day? :)
+> **tinivole said:**
+> 
+Shall I attempt **[LOVE]("http://love.sourceforge.net/")** or **[JOY]("http://appforge.apc.edu.ph/projects/joyj/")**?
+
+Either would be just *[groovy](http://groovy.codehaus.org/)*.
+
+---
+
+### Post by Lux Perpetua on 2008-05-02
+> **tinivole said:**
+> Hmm... which language shall I take a 1 day crash course on just to please you...
+
+Shall I attempt **[LOVE]("http://love.sourceforge.net/")** or **[JOY]("http://appforge.apc.edu.ph/projects/joyj/")**?
+
+Regards
+IainI've read material on Joy, and I wasn't very impressed, but I might change my opinion after seeing a real program written in it. 
+
+A language that seemed more interesting to me is [Factor](http://factorcode.org/). 
+
+It's probably not in the cards for me to submit an entry for this challenge...pity; I had something special in mind. :-(
+
+---
+
+### Post by aamukahvi on 2008-05-02
+C#, yay! (no deciphering)
+
+[PHP]using System;
+using System.Text;
+
+namespace Vigenère
+{
+	class MainClass
+	{
+		public static void Main(string[] args)
+		{
+			V v = new V();
+			Console.WriteLine("Give plaintext> ");
+			v.Plaintext = Console.ReadLine();
+
+			Console.WriteLine("Give key> ");
+			v.Key = Console.ReadLine();
+			Console.WriteLine(v.Encode());
+		}
+	}
+	
+	class V
+	{
+		string plaintext = string.Empty;		
+		string key = string.Empty;
+		const string abc = "abcdefghijklmnopqrstuvwxyz";
+		
+		public string Plaintext {
+			get {
+				return plaintext;
+			}
+			set {
+				plaintext = value;
+			}
+		}
+
+		public string Key {
+			get {
+				return key;
+			}
+			set {
+				key = value;
+			}
+		}
+		
+		protected string CreateKey()
+		{
+			string newkey = "";
+			while (newkey.Length < plaintext.Length)
+			{
+				newkey += key;
+			}
+			return newkey.Substring(0, plaintext.Length);
+		}
+		
+		public string Encode()
+		{
+			Console.WriteLine("Plaintext: '" + plaintext + "' ... Key: '" + key + "'");
+			string keytext = CreateKey();
+			StringBuilder cipher = new StringBuilder();
+			for (int i = 0; i < plaintext.Length; i++)
+			{
+				int p_i = abc.IndexOf(plaintext[i]); 
+				int k_i = abc.IndexOf(keytext[i]);
+				int c_i = (p_i + k_i) % 26;
+				cipher.Append(abc[c_i]);
+			}
+			return cipher.ToString();
+		}
+	}
+}[/PHP]
+
+---
+
+### Post by uzusan on 2008-05-02
+Had an attempt in perl (without using regular expressions as im rubbish at them).
+
+```
+#!/usr/bin/perl
+
+use Getopt::Long;
+
+GetOptions( 'dec'     => \$decopt,
+             'enc' => \$encopt );
+if($decopt == 1) {
+print "Enter Encrypted Text:";
+}
+if($encopt == 1) {
+print "Enter Plain Text:";
+}
+
+chomp($enc = <STDIN>);
+
+print "Enter Key Text:";
+chomp($key = <STDIN>);
+
+$decres = "";
+$enc = uc $enc;
+$key = uc $key;
+
+for ($count=0;$count < length ($enc);$count++) 
+{
+$cur = substr($enc,$count,1);
+$curkey = substr($key,$count % length($key),1);
+
+$curval = ord($cur) - 65;
+$keyval = ord($curkey) - 65;
+
+if($decopt == 1) {
+$decval = ($curval - $keyval) % 26;
+}
+if($encopt == 1) {
+$decval = ($curval + $keyval) % 26;
+}
+
+$decchr = chr($decval + 65);
+
+$decres = $decres.$decchr;
+
+}
+if($decopt == 1) {
+print("Decrypted Text is $decres\n");
+}
+if($encopt == 1) {
+print("Encrypted Text is $decres\n");
+}
+
+
+
+```
+
+Usage and output:
+
+```
+
+uzusan@Icarium:~/perl$ perl vig.pl -enc
+Enter Plain Text:attackatdawn
+Enter Key Text:lemon
+Encrypted Text is LXFOPVEFRNHR
+uzusan@Icarium:~/perl$ perl vig.pl -dec
+Enter Encrypted Text:LXFOPVEFRNHR
+Enter Key Text:lemon
+Decrypted Text is ATTACKATDAWN
+uzusan@Icarium:~/perl$ 
+
+```
+
+---
+
+### Post by ibuclaw on 2008-05-02
+> **WW said:**
+> You need a whole day? :)
+
+Either would be just *[groovy](http://groovy.codehaus.org/)*.
+
+OK!
+One day later...:lolflag:
+
+Here is the core of the love-script (Turns out to just be lua)
+The rest of the code I'll leave you to find out what it is... ;)
+```
+
+function load()
+	word = "ATTACKATDAWN"
+	key = "LEMONLEMONLE"
+	i = 1
+	cipher = ""
+	while i <= 12 do
+		w = string.byte(word, i)
+		k = string.byte(key, i)
+		n = ((w + k) - 65)
+		if n > 90 then
+			n = n - 26
+		end
+		cipher = cipher .. string.char(n)
+		i = i + 1
+	end
+end
+
+```
+And the end result in the variable **cipher** becomes the answer.
+
+Get the **[LOVE deb file]("http://sourceforge.net/project/showfiles.php?group_id=174065&package_id=199534&release_id=588086")** and use **sudo dpkg -i love*.deb** to install it.
+
+Download the attached zip file and rename it to **vigenere.love**.
+
+To run, type in **love vigenere.love** and a nice 800x600 window will pop.
+
+Oh, and by the way, I left some little goodies in the package too while I was picking up the language (as learning should always be fun!)
+
+I hope that someone takes this code and makes it better...
+
+Regards
+Iain
+
+---
+
+### Post by Siph0n on 2008-05-02
+My C# submission:
+```
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ProgramChallenge9
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string key = "";
+            string text = "";
+            string ciph = "";
+
+            Console.WriteLine("What is the cipher?");
+            ciph = Console.ReadLine();
+            Console.WriteLine("What is the plain text?");
+            text = Console.ReadLine();
+            Console.WriteLine("What is the key?");
+            key = Console.ReadLine();
+
+/*
+            Console.Write("Encrypt: ");
+            Console.WriteLine(Encrypt("ATTACKATDAWN", "LEMONLEMONLE"));
+            Console.Write("Decrypt: ");
+            Console.WriteLine(Decrypt("LXFOPVEFRNHR", "LEMONLEMONLE"));
+*/            
+            Console.WriteLine(Encrypt(text.ToUpper(), key.ToUpper()));
+            Console.WriteLine(Decrypt(ciph.ToUpper(), key.ToUpper()));
+        }
+
+        static string Encrypt(string text, string key)
+        {
+            string ciph = "";
+            int keyInt;
+            int textInt;
+            int ciphInt;
+
+            for (int i = 0; i < key.Length; i++)
+            {
+                keyInt = ChartoInt(key[i]);
+                textInt = ChartoInt(text[i]);
+                ciphInt = (keyInt + textInt) % 26;
+                ciph += InttoChar(ciphInt);
+            }
+            return ciph;
+        }
+
+        static string Decrypt(string ciph, string key)
+        {
+            string text = "";
+            int keyInt;
+            int textInt;
+            int ciphInt;
+
+            for (int i = 0; i < key.Length; i++)
+            {
+                keyInt = ChartoInt(key[i]);
+                ciphInt = ChartoInt(ciph[i]);
+                textInt = (ciphInt - keyInt) % 26;
+                if (textInt < 0)
+                {
+                    textInt += 26;
+                }
+                text += InttoChar(textInt);
+            }
+            return text;
+        }
+
+        static int ChartoInt(char C)
+        {
+            switch (C)
+            {
+                case 'A': return 0;
+                case 'B': return 1;
+                case 'C': return 2;
+                case 'D': return 3;
+                case 'E': return 4;
+                case 'F': return 5;
+                case 'G': return 6;
+                case 'H': return 7;
+                case 'I': return 8;
+                case 'J': return 9;
+                case 'K': return 10;
+                case 'L': return 11;
+                case 'M': return 12;
+                case 'N': return 13;
+                case 'O': return 14;
+                case 'P': return 15;
+                case 'Q': return 16;
+                case 'R': return 17;
+                case 'S': return 18;
+                case 'T': return 19;
+                case 'U': return 20;
+                case 'V': return 21;
+                case 'W': return 22;
+                case 'X': return 23;
+                case 'Y': return 24;
+                case 'Z': return 25;
+                default: return -1;
+            }
+        }
+        static char InttoChar(int I)
+        {
+            switch (I)
+            {
+                case 0: return 'A';
+                case 1: return 'B';
+                case 2: return 'C';
+                case 3: return 'D';
+                case 4: return 'E';
+                case 5: return 'F';
+                case 6: return 'G';
+                case 7: return 'H';
+                case 8: return 'I';
+                case 9: return 'J';
+                case 10: return 'K';
+                case 11: return 'L';
+                case 12: return 'M';
+                case 13: return 'N';
+                case 14: return 'O';
+                case 15: return 'P';
+                case 16: return 'Q';
+                case 17: return 'R';
+                case 18: return 'S';
+                case 19: return 'T';
+                case 20: return 'U';
+                case 21: return 'V';
+                case 22: return 'W';
+                case 23: return 'X';
+                case 24: return 'Y';
+                case 25: return 'Z';
+                default: return 'A';
+            }
+        }
+    }
+}
+
+
+```
+
+---
+
+### Post by reacocard on 2008-05-03
+Straight python, does encrypt and decrypt with input sanitization as well:
+
+```
+plaintext   = raw_input("Input String: ").upper()
+key         = raw_input("Key: ").upper()
+
+if len(key) == 0:
+    print "Key must be of length 1 or more."; exit()
+if not plaintext.isalpha() or not key.isalpha():
+    print "Input and key must be composed of letters only."; exit()
+
+crypt = ''
+decrypt = ''
+for n in range(0, len(plaintext)):
+    new = ord(plaintext[n]) + ord(key[n%len(key)]) - 65
+    if new > 90:
+        new -= 26
+    crypt += chr(new)
+    new = ord(plaintext[n]) - ord(key[n%len(key)]) + 65
+    if new < 65:
+        new += 26
+    decrypt += chr(new)
+
+print "Crypt: " + crypt
+print "Decrypt: " + decrypt
+```
+
+EDIT: minor update to add isalpha() check.
+
+EDIT2: cleaner way of handling keys with a different length.
+
+---
+
+### Post by samjh on 2008-05-03
+I've updated my entry in [post #29](http://ubuntuforums.org/showpost.php?p=4848757&postcount=29).  The program now includes fairly robust error-checking and I've removed comments of old code.
+
+---
+
+### Post by Martin Witte on 2008-05-03
+> **tinivole said:**
+> It's not the number of competitors... It's number of implemented languages that count ;)
+
+I count Twelve so far...
+[LIST]
+[*] Ada
+[*] BASH
+[*] C
+[*] COBOL
+[*] Haskell
+[*] HTML
+[*] KSH
+[*] Java
+[*] Lisp
+[*] Perl
+[*] Python
+[*] Ruby
+[/LIST]
+
+Now that is something to wow over!
+
+Regards
+Iain
+
+As an oldtimer I felt the need to fill the void of a missing c++ entry I reworked the idea of my [ksh]("http://ubuntuforums.org/showpost.php?p=4836352&postcount=23") entry to C++, not very fancy, but it encrypts and decrypts
+```
+
+#include <iostream>
+#include <string>
+
+class  Vigenere
+{
+	public:
+		Vigenere() {}
+		Vigenere(const std::string& p, const std::string& k):plain(p), key(k) {}
+		void setplain(const std::string& p) { plain = p; }
+		void setcrypt(const std::string& c) { crypt = c; }
+		void setkey(const std::string& k) { key = k; }
+		friend std::ostream& operator<< (std::ostream &out, Vigenere &v);
+		void encrypt();
+		void decrypt();
+	private:
+		std::string plain;
+		std::string key;
+		std::string crypt;
+};
+
+std::ostream& operator<< (std::ostream &out, Vigenere &v)  
+{  
+	out << "plain " << v.plain << ", key " << v.key << ", crypt " << v.crypt;
+	return out;  
+}
+
+void Vigenere::encrypt()
+{
+	std::string::iterator it;
+	std::string x_key;
+	char c, k;
+	int i(0), len(key.length());
+	for (it = plain.begin(); it != plain.end(); ++it)
+	{
+		c = *it;
+		k = key.at(i%len);
+		x_key.append(1, k);
+		k = x_key.at(i);
+		crypt.append(1, ((int)c + (int)k- 2*(int)'A')%26 + (int)'A');
+		i++;
+	}
+
+}
+
+void Vigenere::decrypt()
+{
+	std::string::iterator it;
+	std::string x_key;
+	char p, k;
+	int i(0), len(key.length());
+	for (it = crypt.begin(); it != crypt.end(); ++it)
+	{
+		p = *it;
+		k = key.at(i%len);
+		x_key.append(1, k);
+		k = x_key.at(i);
+		if (((int)p - (int)k) < 0 ) p+= 26;
+		plain.append(1, ((int)p - (int)k)%26 + (int)'A');
+		i++;
+	}
+}
+
+
+int main()
+{
+	Vigenere v("ATTACKATDAWN", "LEMON");
+	v.encrypt();
+	std::cout << v << std::endl;
+
+	Vigenere w;
+	w.setcrypt("LXFOPVEFRNHR");
+	w.setkey("LEMON");
+	w.decrypt();
+	std::cout << w << std::endl;
+	return 0;
+}
+```
+
+---
+
+### Post by red_Marvin on 2008-05-03
+A very simple python implementation which relies on a user definable alphabet, so you can add/remove upper/lower case or non alpha characters to your hearts delight.
+```
+#!/usr/bin/env python
+
+def encrypt(plaintext, key, alphabet = "abcdefghijklmnopqrstuvwxyz"):
+	"""Encrypts and returns the plaintext encrypted with the key and alphabet given
+	using the Vigenere cipher."""
+	lk = len(key)
+	la = len(alphabet)
+	ciphertext = ""
+	for pi in range(len(plaintext)):
+		pj  = alphabet.index(plaintext[pi])
+		ki = pi%lk
+		kj = alphabet.index(key[ki])
+		cj = (pj+kj)%la
+		ciphertext += alphabet[cj]
+	return ciphertext
+
+def decrypt(ciphertext, key, alphabet = "abcdefghijklmnopqrstuvwxyz"):
+	"""Decrypts and returns the ciphertext decrypted with the key and alphabet given
+	using the Vigenere cipher."""
+	lk = len(key)
+	la = len(alphabet)
+	plaintext = ""
+	for ci in range(len(ciphertext)):
+		cj  = alphabet.index(ciphertext[ci])
+		ki = ci%lk
+		kj = alphabet.index(key[ki])
+		pj = (cj-kj)%la
+		plaintext += alphabet[pj]
+	return plaintext
+
+if __name__ == "__main__":
+	plaintext = "attackatdawn"
+	key = "lemonlemonle"
+	ciphertext = encrypt(plaintext, key)
+	deciphtext = decrypt(ciphertext, key)
+	print 'Our plaintext: "%s"\nOur ciphertext: "%s"\n(generated with the key "%s")\nOur deciphered text: "%s"'%(plaintext, ciphertext, key, deciphtext)
+```
+
+---
+
+### Post by amar on 2008-05-04
+Lets add another language to the mix: javascript!
+embeded within the same simple html file you can view it:
+[over here]("http://www.tardis.ed.ac.uk/~amar/vigenere.html") or download to view the source.
+
+I also decided to add it as a [google gadget]("http://www.google.co.uk/ig/directory?url=hosting.gmodules.com/ig/gadgets/file/113823653341283417695/vigenere.xml") just for kicks
+
+well what else are you going to do on a Sunday morning ;)
+
+EDIT - Dam, just noticed WW beet me to it with post #37
+*grumbles to self*
+
+---
+
+### Post by bobdob20 on 2008-05-04
+Sorry i havent replied in a while, its been a busy week. Ill look through all the entries today and decide the winner tomorrow.Its nice to see so many entries, so it might take awhile to sort through. 
+
+> **Zugzwang said:**
+> So did you managed to get it running?
+With the java entries i think its something to do with my set up because i couldnt get any of the to work yeah yet. Yours compiles but wont run and i cant get the other entry to compile, but ill give it another go in a minute and see if i can fix it.
+
+---
+
+### Post by grulos on 2008-05-04
+No options to cipher..
+or -d to decipher
+
+using LEMON or LEMONLEMONLE makes no difference for a string with 12 characters such as ATTACKATDAWN
+
+```
+
+#!/bin/bash
+# vigenere.sh
+# http://grulos.blogspot.com
+
+a="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+[[ "${*/-d/}" != "" ]] &&
+echo "Usage: $0 [-d]" && exit 1
+m=${1:+-}
+
+printf "string: ";read t
+printf "keyphrase: ";read -s k
+printf "\n"
+for ((i=0;i<${#t};i++)); do
+  p1=${a%%${t:$i:1}*}
+  p2=${a%%${k:$((i%${#k})):1}*}
+  d="${d}${a:$(((${#p1}${m:-+}${#p2})%${#a})):1}"
+done
+echo "$d"
+
+```
+
+---
+
+### Post by theta4 on 2008-05-04
+Oh, hai!
+
+It seems that everyone's uploading source code as part of a post, so...
+
+```
+
+#!/usr/bin/python
+
+# Copyright (C) 2008 Alex Iadicicco
+
+# vigenere cipher / decipher
+
+import sys
+import string
+
+def usage():
+    print "Usage:"
+    print "  python " + sys.argv[0] + " [de]cipher [message/cipher] [key]"
+    print ""
+    print "The message or cipher should only contain letters. Likewise for the key"
+
+def teststr(str, what):
+    for i in message:
+        if not i in string.ascii_uppercase:
+            print what + " must only contain letters"
+            exit(1)
+
+def decipher (message, key):
+    keysize = len(key)
+    cip = ""
+    cnt = 0
+    for i in message:
+        currmess = string.ascii_uppercase.index(i)
+        currkey = string.ascii_uppercase.index(key[cnt % keysize])
+        cip += string.ascii_lowercase[(currmess - currkey) % 26]
+        cnt += 1
+    print cip
+
+def cipher (message, key):
+    keysize = len(key)
+    cip = ""
+    cnt = 0
+    for i in message:
+        currmess = string.ascii_uppercase.index(i)
+        currkey = string.ascii_uppercase.index(key[cnt % keysize])
+        cip += string.ascii_lowercase[(currmess + currkey) % 26]
+        cnt += 1
+    print cip
+
+if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        usage()
+        exit(1)
+
+    message = sys.argv[2].upper()
+    key = sys.argv[3].upper()
+
+    teststr (message, "Message/Cipher")
+    teststr (key, "Key")
+
+    if sys.argv[1] == "decipher":
+        decipher (message, key)
+    elif sys.argv[1] == "cipher":
+        cipher (message, key)
+    else:
+        usage()
+        exit(1)
+
+```
+
+yeh...it's not the best implementation, but it works. it was intended more to be a command line interpretation, not an importable library. but it can be imported.
+
+also, i'm new to python. i've been using it exclusively for about...two weeks, but i come from a strong c background and i'm used to parsing arguments by hand, so i usually take the short way out and use static arguments (i actually have a program with like 6 static arguments. it can be a pain to remember them). it's a lot like writing a lojban bridi. :(
+
+also, i haven't learned all of python's little tips and tricks (like map, apply, multiple inheritance, class everything, list stuff, etc (the lisp stuff (by the way lisp is a good language (but the parens can be a pain (still...i like it. elegant. (python stole from lisp))))))
+
+anywayzez, if you wanted to download it in a tarred gzipped archive, i've attached that too.
+
+---
+
+### Post by xelapond on 2008-05-05
+Hello all, 
+
+This is the first programming challenge I have entered, so without further a due here is my little Python effort.  I did not use any external libraries except the standard types like list and int, for I thought it would be good practice.  Following this suit I did all shifting and encrypting by hand.
+
+StringOperations.py:
+
+[php]def string(List):
+    String = ''
+    for x in range(0, len(List)):
+        String = String + List.pop(0)
+
+    return String
+
+def repeat_string(String, Characters):
+    for x in range(0, Characters + 1):
+        String = String + String
+
+    String = String[:Characters - len(String)]
+    return String
+
+def shift_string_right(String, Number):
+    List = list(String)
+    for x in range(0, Number):
+        List.insert(0, List.pop())
+
+    return string(List)
+
+def shift_string_left(String, Number):
+    List = list(String)
+    for x in range(0, Number):
+        List.append(List.pop(0))
+
+    return string(List)
+[/php]Vigenere.py(The main one):
+
+[php]import StringOperations
+
+Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+AlphabetCorrospondance = list(Alphabet)
+ShiftAlphabet = Alphabet
+
+def adjust_key_length(Key, PlainText):
+    if len(PlainText) > len(Key):
+        Key = StringOperations.repeat_string(Key, len(PlainText))
+    elif len(PlainText) < len(Key):
+        Key = Key[:(len(PlainText) - len(Key))]
+    elif len(PlainText) == len(Key):
+        pass
+    
+    return Key, PlainText
+
+def encrypt():
+    PlainText = raw_input('Enter Plain Text(All Caps, No Spaces or Numbers):')
+    Key = raw_input('Enter Key:')
+    CipherText = []
+
+    Key, PlainText = adjust_key_length(Key, PlainText)
+
+    PlainText = list(PlainText)
+    Key = list(Key)
+
+    for x in range(0, len(PlainText)):
+        ShiftAlphabet = Alphabet
+        KeyChar = Key.pop(0)
+        PlainChar = PlainText.pop(0)
+        Row = AlphabetCorrospondance.index(KeyChar)
+        Column = AlphabetCorrospondance.index(PlainChar)
+        ShiftAlphabet = StringOperations.shift_string_left(ShiftAlphabet, Row)
+        ShiftAlphabet = list(ShiftAlphabet)
+        CipherText.append(ShiftAlphabet.pop(Column))
+
+    print StringOperations.string(CipherText)
+
+def decrypt():
+    CipherText = raw_input('Enter Cipher Text:')
+    Key = raw_input('Enter Key:')
+    PlainText = []
+
+    Key, CipherText = adjust_key_length(Key, CipherText)
+
+    CipherText = list(CipherText)
+    Key = list(Key)
+
+    for x in range(0, len(CipherText)):
+        ShiftAlphabet = Alphabet
+        KeyChar = Key.pop(0)
+        CipherChar = CipherText.pop(0)
+        Row = AlphabetCorrospondance.index(KeyChar)
+        ShiftAlphabet = StringOperations.shift_string_left(ShiftAlphabet, Row)
+        ShiftAlphabet = list(ShiftAlphabet)
+        Column = ShiftAlphabet.index(CipherChar)
+        PlainChar = AlphabetCorrospondance[Column]
+        PlainText.append(PlainChar)
+
+    print StringOperations.string(PlainText)
+
+Mode = raw_input('What would you like to do?  Encrypt, Decrypt, Exit(e, d, x):')
+if Mode == 'e':
+    encrypt()
+elif Mode == 'd':
+    decrypt()
+elif Mode == 'x':
+    exit()
+else:
+    print 'Unrecognized Command'
+    exit()
+[/php]
+
+---
+
+### Post by bobdob20 on 2008-05-05
+In the end there was:
+27 entries,
+22 coders,
+and 16 languages.
+
+The winner of this challenge is **mssever** with his Ruby implementation featuring file encryption/decryption, pseudorandom keys and support of non-english alphabets.
+
+And well done to everyone who enter.
+
+---
+
+### Post by nvteighen on 2008-05-05
+Congrats, **msserver**!
+
+---
+
+### Post by amar on 2008-05-05
+Congrats to msserver
+
+and welldone bobdob20 for such a sucessful challenge
+
+---
+
+### Post by Lster on 2008-05-05
+Yes, congrats msserver - nice solution.
+
+But also, this must be one of the most popular challenges so far! :)
+
+---
+
+### Post by mssever on 2008-05-05
+Thanks, bobdob20! I'll post the new challenge this evening. I already know what it'll be, I just have to write it up.
+
+@others: By the way, my nick only has one *R* in it. I don't have anything to do with Microsoft servers.
+
+---
+
+### Post by amar on 2008-05-05
+woops - sorry about that
+*Amar pulls out the dyslexia card and hides behind it*
+
+---
+
+### Post by samjh on 2008-05-05
+Congratulations, mssever! :D
+
+---
+
+### Post by ibuclaw on 2008-05-05
+> **mssever said:**
+> Thanks, bobdob20! I'll post the new challenge this evening. I already know what it'll be, I just have to write it up.
+
+@others: By the way, my nick only has one *R* in it. I don't have anything to do with Microsoft servers.
+
+Congrats...
+
+I look forward to your challenge!
+
+Regards
+Iain
+
+---
+
+### Post by Lux Perpetua on 2008-05-05
+Congratulations, mssever!
+
+I was a bit disappointed that nobody submitted an assembly language entry, given the simplicity of this challenge. My "something special" alluded to earlier would have involved assembly. (I won't say what exactly it would have been in case I get another chance to use the idea. ;-))
+
+---
+

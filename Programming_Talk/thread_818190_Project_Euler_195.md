@@ -1,0 +1,613 @@
+---
+title: "Project Euler: 195"
+date: 2008-06-04
+forum: Programming Talk
+---
+
+### Post by Lster on 2008-06-04
+Hi! :)
+
+I'm seriously addicted to Project Euler; recently with much success - even with the later puzzles. But now I'm stuck on problem 195 and can't see how to continue. Let me explain what I've done so far:
+
+[http://projecteuler.net/index.php?section=problems&id=195](http://projecteuler.net/index.php?section=problems&id=195)
+
+A triangle is unambiguous when defined with two side lengths and the angle in between them. As we know the angle has to be 60°, we only have to decide the length of the two sides next to it.
+
+So in the diagram, only A and B need to be decided, then we can work out C by using the cosine rule. For that I get:
+
+c^2 = a^2 + b^2 - 2*a*b*cos(60)
+c = &#8730;(a^2 + b^2 - a*b)
+
+c must be a whole number so a^2 + b^2 - a*b must be square.
+
+Not just that, but the radius of the inscribed circle must also be less than or equal to 100, let's say - as they give us that. Wikipedia gives us an easy equation for working out the radius in terms of a, b and c. See [http://en.wikipedia.org/wiki/Inscribed_circle](http://en.wikipedia.org/wiki/Inscribed_circle). With a few changes it becomes:
+
+r = &#8730;[(b+c-a)*(a+c-b)*(a+b-c)/(a+b+c)/4]
+
+With this information I made a simple C program to bruteforce it:
+
+[PHP]
+
+#include "stdlib.h"
+#include "stdio.h"
+#include "math.h"
+#include "string.h"
+
+
+int main ( void )
+{
+	long count = 0;
+	long double a , b , c;
+	long double r;
+	
+	long double lim = 100.0 * 100.0 * 4.0;
+	
+	for ( a = 1 ; a <= 50000.0 ; a ++ )
+	{
+		for ( b = 1 ; b < a ; b ++ )
+		{
+			c = sqrt ( a * a + b * b - a * b );
+			r = ( b + c - a ) * ( a + c - b ) * ( a + b - c ) / ( a + b + c );
+			
+			if ( r > lim ) break;
+			
+			if ( a <= c || c <= b ) continue;
+			if ( c != floor ( c ) ) continue;
+			
+			count ++;
+			//printf ( "%.0Lf %.0Lf %.0Lf gives %.0Lf\n" , a , b , c , r );
+		}
+	}
+	
+	printf ( "Answer = %li\n" , count );
+	
+	return 0;
+}
+[/PHP]
+
+But, in true Project-Euler-style, this doesn't scale to high values well. I think this must require being able to generate values of a and b for which a^2 + b^2 - a*b is square quickly. Can this be done or are there other tricks I would need to use?
+
+I've tried lots of trick rearranging of a^2 + b^2 - a*b, but found almost nothing useful (except for the obvious: if a^2 + b^2 - a*b is square then so is the same but with 2a and 2b).
+
+Any ideas? :)
+
+Thank you,
+Lster
+
+---
+
+### Post by Lster on 2008-06-04
+*Bump*
+
+---
+
+### Post by descendency on 2008-06-04
+I don't know if it will be faster, but 
+
+A^2 + B^2 - AB = (A-B)^2 + AB
+
+---
+
+### Post by Lster on 2008-06-04
+I really need a rule to calculate different a, b pairs. I do agree with that working though...
+
+---
+
+### Post by Bichromat on 2008-06-04
+I can't help you with the pairs, but this line:
+```
+
+if ( a <= c || c <= b ) continue;
+
+```
+is useless.
+a <= c means a^2 <= c^2 which is equivalent to b^2 -ab >= 0 which is impossible because a > b. A similar reasoning excludes the case c <= b.
+
+---
+
+### Post by Lster on 2008-06-04
+Good point, thanks! I changed things around a bit before posting - that's left over from earlier!
+
+One thing I've noticed about a, b pairs for which a < b, is that if a, b is correct than a, a - b is also a solution. Very weird. That rule might break down for larger values (than I've tried), I haven't proved it...
+
+---
+
+### Post by DavidBell on 2008-06-04
+Two things,
+
+First you only need to find the high boundaries of the (A,B) space, everything smaller must fit also. To do this I would try ...
+
+   1. Start by finding largest isosoles(A=B, =equalateral) triangle that fits, you can do this with a simple formula, no testing required.
+   2. increase A one unit at a time, till you go over your r-limit
+   3. then decrease b by one unit at a time until you are back inside your r-limit
+   4. sum current value of A * B to total for every value of A,B that fits in 2., 3.
+   5. go back to 2-4 until 3. goes to 0
+
+I think this would work in O(n) time
+
+Second, not sure if it would really gain you anything but the boundaries for r = 100 should be one a line (curve?) that is estimated by the r = 10 result, so maybe you could save a little bit of testing by interpolating the r = 10 result as starting points for algorithm above.
+
+DB
+
+---
+
+### Post by Lster on 2008-06-04
+Thanks. That's a great idea (from what I understand) but I'm not sure if I understand it wholly. I'll try it tomorrow but could you clarify this:
+
+> 5. go back to 2-4 until 3. goes to 0
+
+Do you mean repeat steps 2-4 until b &#8804; 0?
+
+---
+
+### Post by DavidBell on 2008-06-04
+> **Lster said:**
+> Do you mean repeat steps 2-4 until b &#8804; 0?
+
+Yes, that's what I would try
+
+---
+
+### Post by Lux Perpetua on 2008-06-04
+Interesting...
+
+Triples a, b, c satisfying a^2 - ab + b^2 = c^2 can be generated by the rule 
+
+a = u^2 - v^2
+b = 2uv - v^2
+c = u^2 - uv + v^2
+
+where u and v are integers. Moreover, you can multiply any triple (a, b, c) by any integer d to obtain another triple (ad, bd, cd). However, I'm not sure whether this yields all triples.
+
+---
+
+### Post by DavidBell on 2008-06-05
+Actually I thought a bit more, suggested algoritm should be more like
+
+1. Start by finding largest isosoles(A=B, =equalateral) triangle that fits, you can do this with a simple formula, no testing required.
+2. increase A one unit at a time, till you go over your r-limit
+3a. then decrease B by one unit at a time until you are back inside your r-limit
+3b. test all Bs <= B in 3a if they form an integer triangle and add to total
+5. I'm not sure how to stop this, you need to figure out when to stop incrementing A. The problem with previous suggestion was that it would never decrement B < 2r (because there would be a radius that fited there), so it would never stop.
+
+Sorry not O(n) time anymore :( DB
+
+---
+
+### Post by Lster on 2008-06-05
+[QUOTE=Lux Perpetua]...
+a = u^2 - v^2
+b = 2uv - v^2
+c = u^2 - uv + v^2
+...[/QUOTE]
+
+Wow, that's brilliant! :) I think I can use that generator to get a reasonably fast algorithm! I am at wonder how you managed to find the generating function, though.
+
+DavidBell: Thanks for the revision. I will be messing about with that as well! :)
+
+---
+
+### Post by Lster on 2008-06-05
+Well, using the generator is *extremely* fast! But appears to miss 443 solutions (as it only gets 791 out of the 1234 in total). I'm now going to attempt to find which ones are missed and maybe work out a way of finding them.
+
+[PHP]
+#include "stdlib.h"
+#include "stdio.h"
+#include "math.h"
+#include "string.h"
+
+
+int main ( void )
+{
+	long count = 0;
+	long double a , b , c;
+	long double u , v , d;
+	long double r;
+	
+	long lim = 100L * 100L * 4L;
+	
+	for ( u = 1 ; u < 300 ; u ++ )
+	{
+		for ( v = 1 ; v < u ; v ++ )
+		{
+			a = u*u - v*v;
+			b = 2*u*v - v*v;
+			c = u*u + v*v - u*v;
+			
+			for ( d = 1 ; ; d ++ )
+			{
+				if ( a >= c || b <= c ) break;
+				
+				r = d * d * ( b + c - a ) * ( a + c - b ) * ( a + b - c ) / ( a + b + c );
+				if ( r > lim ) break;
+				
+				//printf ( "%Lf %Lf %Lf\t give %Lf\n" , a , b , c , r );
+				count ++;
+			}
+		}
+	}
+	
+	printf ( "Answer = %li\n" , count );
+	
+	return 0;
+}
+[/PHP]
+
+---
+
+### Post by Lster on 2008-06-05
+Well, I'm getting some nice patterns in the triples I'm generating. Using Lux Perpetua's generator to find a, b, c triples where a < b < c &#8804; 100 and ignoring triples that are multiples of ealier found triples, we get (16 triples):
+
+> 5 7 8
+7 13 15
+16 19 21
+9 21 24
+11 31 35
+33 37 40
+24 39 45
+13 43 48
+39 49 55
+15 57 63
+56 61 65
+32 67 77
+17 73 80
+51 79 91
+19 91 99
+85 91 96
+
+
+But there are in fact 26 triples that meet the criteria mentioned above:
+
+> 3 7 8
+5 7 8
+7 13 15
+8 13 15
+5 19 21
+16 19 21
+11 31 35
+24 31 35
+7 37 40
+33 37 40
+13 43 48
+35 43 48
+16 49 55
+39 49 55
+9 61 65
+56 61 65
+32 67 77
+45 67 77
+17 73 80
+63 73 80
+40 79 91
+51 79 91
+11 91 96
+85 91 96
+19 91 99
+80 91 99
+
+These are the ones that were missed (13 of them):
+
+> 3 7 8
+8 13 15
+5 19 21
+24 31 35
+7 37 40
+35 43 48
+16 49 55
+9 61 65
+45 67 77
+63 73 80
+40 79 91
+11 91 96
+80 91 99
+
+
+As you see there are in fact 13 values it misses. The generated list contained 3 values which were not primitive (but were relatively prime to other list values).
+
+---
+
+### Post by Lux Perpetua on 2008-06-07
+> **Lster said:**
+> I am at wonder how you managed to find the generating function, though.Put everything in the complex plane: let the 60-degree vertex be at zero, with one of the sides along the positive real axis and the other incident side 60 degrees counterclockwise from it. If the lengths of the two sides are respectively positive integers a and b, then the second endpoint of the first side is at the point a in the complex plane, and the second endpoint of the second side is at b*f, where f = cos(60 deg.) + i*sin(60 deg.) = (1 + i*sqrt(3))/2. We need the third side also to have integer length, which is equivalent to saying the complex number b*f - a has integer absolute value. 
+
+All of that is pretty natural, but the next part is sort of ad hoc: note that |x + y*f| = sqrt(x^2 + xy + y^2), so |(x + y*f)^2| = |x + y*f|^2 (since |rs| = |r||s|) = x^2 + xy + y^2, which is always an integer provided that x and y are integers. Moreover, since f^2 - f + 1 = 0, 
+
+(x + y*f)^2 = x^2 + 2xy*f + y^2*(f-1) = (x^2 - y^2) + (2xy + y^2)*f = b*f - a,
+
+where b = 2xy + y^2 and a = y^2 - x^2 are integers. As long as a and b are positive, these along with the third side c = |b*f - a| = x^2 + xy + y^2 define a 60-degree triangle. (One can also directly verify that a^2 - ab + b^2 = c^2.)
+
+This is slightly different from the formulas I wrote earlier; to get those formulas, negate a and b and also negate either x or y. I used a slightly different method first before seeing this more natural explanation. (The ad hoc portion is the same in both methods.) Unfortunately, since the method is ad hoc, there's no clear reason to expect that every primitive triple (one that isn't a multiple of another one) can be obtained by this. 
+
+Regarding the "missing" triples: using the original formulas (a = u^2 - v^2, b = 2uv - v^2, c = u^2 - uv + v^2), if we take u = 1, v = 3, then we get a = -8, b = -3, c = 7: (-8, -3, 7). This is the first missing triple on Lster's list after negating a and b. Moreover, taking u = -1, v = 3, we get a = -8, b = -15, c = 13: (-8, -15, 13), the second missing triple. Generally, any generated integer triple (a, b, c) is okay as long as a and b end up with the same sign because negating both a and b in a^2 - ab + b^2 - c^2 does not change its value. (If a and b have different signs, however, then we actually have a 120-degree triangle, not a 60-degree triangle.) So I wonder if this recovers all the missing triples...
+
+Regarding the nonprimitive triples: I didn't notice this initially. If u and v are congruent to 1 and 2 (in some order) mod 3, then the triple (a, b, c) will be divisible by 3. So for example, if u mod 3 = 1, then one need not consider any v congruent to 2 mod 3. 
+
+I think we're homing in on a solution, but we still need a rigorous proof that we can get all the right triples.
+
+---
+
+### Post by Lster on 2008-06-08
+That's some nice maths! I think I'm going to have to read that through a few times to extract all of that. ;)
+
+Taking what you've said, I applied the changes and it now generates all base triples less than 100 correctly but also generates non-primitive ones. Disregarding triples generated with a u and v where u % 3 + v % 3 = 3 if not enough to remove all non-primitive triples. These still get through (a b c : u v):
+
+> 32 28 12  :  2 6
+60 52 32  :  2 8
+72 63 27  :  3 9
+84 76 20  :  4 10
+32 28 20  :  6 2
+60 52 28  :  8 2
+72 63 45  :  9 3
+84 76 64  :  10 4
+
+
+I can, of course, just check that the gcd ( a , b , c ) = 1 which is what I'm doing at the moment.
+
+---
+
+### Post by Lster on 2008-06-08
+I think I can almost complete it now! :)
+
+EDIT: I was completely wrong... ;)
+
+---
+
+### Post by Lster on 2008-06-08
+No... I still can't generate them fast enough. If I could generate all the primitive triples fast enough, the answer is easy to find.
+
+---
+
+### Post by Lux Perpetua on 2008-06-08
+Ah, yes, I should have mentioned that any common prime factors of u and v must also be factors of a, b, and c. Thus, you should not consider any u, v pairs that are not coprime. 
+
+Argh...after glancing at [this](http://www.math.sjsu.edu/~alperin/pt.pdf), I see there's an easy proof that my generators give all the triples: 
+
+a = u^2 - v^2
+b = 2uv - v^2
+c = u^2 - uv + v^2
+
+First, we'll show that we get at least one multiple of each primitive triple; then we can worry about whether that multiple is primitive itself.
+
+As I said in my last post, we're looking for complex numbers of the form b*f - a with integer length, where b and a are positive integers and f = (1 + i*sqrt(3))/2. By dividing b*f - a by its integer length c, we obtain a complex number (-a/c) + (b/c)*f = r + s*f of unit length, where r = -a/c and s = b/c, which are now *rational* numbers. Given such r + s*f, we can multiply (-r, s, 1) by any common denominator c of r and s to get back to our integer triples (a, b, c) = (-rc, sc, c). If c is the least common denominator, then we get a primitive triple; otherwise, we get a nonprimitive triple. 
+
+Note that the length of b*f - a is sqrt(a^2 - ab + b^2), so if a^2 - ab + b^2 = c^2, as it is with the generators, then c is the length of b*f - a. Thus, we have 
+
+r + s*f = (-a/c) + (b/c)*f = -(u^2 - v^2)/(u^2 - uv + v^2) + (2uv - v^2)/(u^2 - uv + v^2) * f
+= [(1 - (u/v)^2) + (2(u/v) - 1)*f]/[(u/v)^2 - (u/v) + 1]
+= [(1 - q^2) + (2q - 1)*f]/[q^2 - q + 1],
+
+where q = u/v is a rational number. Thus, r + s*f is a function of q = u/v. Let's call this function F(q): 
+
+F(q) = r + s*f = [(1 - q^2) + (2q - 1)*f]/[q^2 - q + 1].
+
+The next part is a bit tricky, but it's probably the key step: F(q) is in fact equal to (f - q)/(f - 1 + q). (Proof: take (f - q)/(f - 1 + q) and rationalize the denominator by multiplying the top and bottom by the conjugate of the denominator, which is q - f. Simplify, making sure to use the fact that f^2 = f - 1.) 
+
+In summary: 
+
+r + s*f = F(u/v) = F(q) = (f - q)/(f - 1 + q). 
+
+If we now briefly look at F as a complex-valued function of a complex argument, then it's not hard to see that F has an inverse G: set p = (f - q)/(f - 1 + q) and solve for q in terms of p:
+
+G(p) = q = ((1-f)p + f)/(p + 1).
+
+The significance of this is that F(u/v) = r + s*f is the function that takes our parameters u and v and lets us generate triples (a, b, c) = (-rc, sc, c) (where c is any common denominator of r and s). The *inverse* G is thus the function that takes this r and s and gives us u and v back! So for all r and s, there is a corresponding u and v. We just have to check that when r and s are rational, G(r + s*f) = q is also a rational number, so it can be expressed as u/v for some integers u and v. But this is straightforward: if p is of the form r + s*f, where r and s are rational, then so is G(p): G(p) = r' + s'*f, where r' and s' are rational. (This just involves rationalizing the denominator of G(p) again.) Moreover, if p has unit length, then G(p) is a real number. (Computation omitted. Sorry, I'm skipping a lot of steps. However, this fact should not be hard to believe, since G is the inverse of F, and we know that F gives us complex numbers of unit length when we feed it real numbers.) Put these together: if p = r + s*f, where r and s are rational and p has unit length, then G(p) = r' + s'*f, where r' and s' are rational, and moreover, G(p) is real. This can only happen if s' = 0, since f has a nonzero imaginary component. Thus, G(p) = r', which is a rational number u/v for some integers u and v, QED.
+
+Thus, for all primitive triples (a, b, c), if we define the corresponding number r + s*f  = (-a/c) + (b/c)*f of unit length, where r and s are rational, then there are integers u and v such that F(u/v) = r + s*f. Thus, for this u and v, we have -a'/c' = r = -a/c and b'/c' = s = b/c, where a', b', and c' are defined by the generators in terms of u and v. Therefore, this (a', b', c') must be a multiple of the primitive triple (a, b, c). Thus, the generators give at least one multiple of every primitive triple, QED. 
+
+Now taking u and v to be coprime: do we get the primitive triple itself or some other multiple of it? It turns out that the triple is always primitive unless u + v is a multiple of 3. Proof: if a, b, and c are obtained by the generators, then we have
+
+3u^2 = a + b + 2c,
+3v^2 = -2a + b + 2c.
+
+Thus, any common prime factor of a, b, and c is also a common prime factor of u and v, unless that prime happens to be 3. Since u and v are assumed to be coprime, the only possible common prime factor of a, b, and c is 3. Now if u and v are not both divisible by 3, then a = u^2 - v^2 = (u + v)(u - v) is not divisible by 3 unless u + v or u - v is a multiple of 3, and b = 2uv - v^2 = (2u - v)v = -(u + v)v (mod 3) is not 0 mod 3 unless u + v or v is 0 mod 3. If v is 0, then u must also be 0 (since u + v or u - v is 0), which is false, since u and v are coprime. Thus, u + v is 0 mod 3, QED. 
+
+Finally - can we safely discard (u, v) with (u + v) mod 3 = 0, i. e., are those triples duplicates of ones obtained by other (u, v) pairs? Yes. If (u + v) mod 3 = 0, then both u - 2v and 2u - v are divisible by 3, so define 
+
+u' = (u - 2v)/3,
+v' = (2u - v)/3.
+
+Feed these as parameters to the generators to get a new triple:
+a' = u'^2 - v'^2 = (u' - v')(u' + v') = (-u - v)(3u - 3v)/9 = -(u^2 - v^2)/3 = -a/3,
+b' = 2u'v' - v'^2 = (2u' - v')v' = -3v(2u - v)/9 = -(2uv - v^2)/3 = -b/3,
+and
+c' = c/3 (no other choice, since c' is determined by a' and b', using c'^2 = a'^2 - a'b' + b'^2).
+
+Thus, if we generate a nonprimitive triple (a, b, c) using coprime u and v, then we already have the equivalent smaller triple (-a/3, -b/3, c/3). 
+
+Whew...I think that finally puts my generating formulas on firm mathematical footing.
+
+---
+
+### Post by Lux Perpetua on 2008-06-08
+Okay, I solved this problem. This problem is surprising. My final program is 32 lines of C++ and runs in about 0.4 seconds on my computer. It is completely based on the previous discussion in this thread, but it's hard to see any of it in the code. I was able to avoid explicitly generating any triples because the inradius formula simplifies *a lot* when you substitute the generators. (Don't try to simplify the complicated inradius formula; work with 2*Area/(a + b + c) and get the area another way.) It simplifies so much, in fact, that I basically just iterated over all possible (primitive) inradii and computed the number of corresponding triples for each. 
+
+To confirm the validity of my program: T(10000000) = 923795682 (computed in about 5.7 seconds). (I'm assuming my program didn't overflow; otherwise, that's the answer modulo 2^32. :-))
+
+---
+
+### Post by Lster on 2008-06-09
+Wow! Nice one!
+
+I must admit that I'm still struggling to comprehend all of that! From the bits I understand, I have managed to simplify the problem to:
+
+...Code removed!...
+
+But I'm sure I'm missing the main point! I feel pretty close, however! :)
+
+I also can't see how I can simplify ½&#8730;[(a + b + c)(b + c - a)(a + c - b)(a + b - c)] / (a + b + c). I can reduce (b + c - a)(a + c - b)(a + b - c) to -a³-b³-c³ + ac²+bc²+ab²+a²b+b²c+a²c + 2abc. But I really need to find a factor of (a + b + c) in it. If I could do that, assuming it contains it, I could simplify it loads...
+
+---
+
+### Post by Lux Perpetua on 2008-06-09
+Yes...I'd say there's essentially one thing you're missing, which I sort of vaguely indicated in my last post. What I meant was to try eliminating a, b, and c from the inradius computation completely and have everything in terms of the parameters u and v. (This is a pretty natural thing to try in such a problem, even if just to streamline the computation.) 
+
+Also, by "get the area another way," I meant without using Heron's formula. ;-) That'll lead you right back to your original expression. There's a much easier formula when you know two sides of a triangle and the included angle. 
+
+That's not the end of the problem, but I'd say it's at least 3/4 of the way to the end, and the last part is fairly easy details, nothing fundamental.
+
+---
+
+### Post by Lster on 2008-06-10
+It does seem to cancel nicely. I haven't finished yet but s = (u+v)² / 2 is far more concise than I thought it would go! I'm just putting everything together and seeing if I can cancel it more!
+
+---
+
+### Post by Lster on 2008-06-10
+Here's my progress - am I on the right track?
+
+a+b+c = (u + v)²
+q = (a + b - c)(b + c - a)(c + a - b)
+
+area = ¼(a+b+c)&#8730;(q)
+
+r = ½area / (a+b+c)
+r = ½*¼(a+b+c)&#8730;(q) / (a+b+c)
+r = &#8730;(q) / 8
+
+Is this right?
+
+---
+
+### Post by Lster on 2008-06-10
+I make q = 3(u²v² - v²²)(2u² + v² -uv) but I guess that needs simplifying more. Or its alternate form: 3*(2*u^4*v^2 - v^6 - u*v^5 - u^2*v^4 - u^3*v^3)...
+
+---
+
+### Post by Lux Perpetua on 2008-06-10
+Check your math (on all counts).
+
+---
+
+### Post by Lster on 2008-06-11
+Yes, I must have been quite dead in my head last night! I think I have what you mean:
+
+a+b+c = (2u-v)(u+v)
+a+b-c = 3v(u-v)
+b+c-a = v(u+v)
+c+a-b = (2u-v)(u-v)
+
+A = ¼&#8730;[(a+b+c)(a+b-c)(b+c-a)(c+a-b)]
+A = ¼[&#8730;3v²(u-v)(u+v)(2u-v)]
+A = ¼&#8730;3v²(u-v)(u+v)(2u-v)
+
+r = 2A / [(2u-v)(u+v)]
+r = 1.5v(u-v)
+
+So
+
+v(u-v) &#8804; 2max/&#8730;3
+
+Wow! I hope that's correct! :)
+
+---
+
+### Post by Lster on 2008-06-11
+Using this I can produce some very compact code:
+
+...
+
+Now to find out the different values of k.
+
+---
+
+### Post by Lster on 2008-06-11
+I don't seem to be able to generate triples fast enough still. Can you give me a hint? :)
+
+...
+
+Thank you,
+Lster
+
+---
+
+### Post by Lux Perpetua on 2008-06-12
+Sure:
+
+The main point is that (u-v)*v is an integer. For each integer, figure out how many (u,v) pairs give that integer. Just make sure you count every primitive triangle exactly once. This is not trivial but doesn't require any big new ideas (that I can remember); it's mainly an exercise in good organization. 
+
+I also found it easier at this point to change parameters from (u,v) to (w,v), where w = u-v, but it's only a matter of perspective. (There is no mention of u, v, or w in my program.)
+
+---
+
+### Post by Lster on 2008-06-12
+I've done it! :popcorn:
+
+Wow! In the end it took 1.9 seconds on my Core2 T7300. I can't thank you enough for all your guidance Lux! Thank you very much!
+
+My final solution just involved switching two of the continues to breaks. I realized this what what I needed to do when I thought about reducing it from O(n²) to O(n).
+
+...As requested, code removed!...
+
+May I see your code Lux?
+
+---
+
+### Post by funktio on 2008-06-12
+I found this thread when searching for information on 60-degree triangles. Lux Perpetua's explanations were a very interesting read, thanks for sharing! I ended up using the generators described [here](http://www.geocities.com/fredlb37/node9.html).
+
+Discussing general approaches to solving the problems is ok, but I think that exact solutions (or code that calculates them) shouldn't be posted publicly. Lster, could you consider editing your post and removing the code? (I'm just another Project Euler fan, and this is only my personal opinion; feel free to leave the code if you disagree with me. Just a friendly request.)
+
+---
+
+### Post by Lster on 2008-06-12
+funktio, code has now been removed as I agree - it allows people who don't care about learning, a simple way to boost their "rating". I don't think that's what Project Euler is about. I was going to remove it later, in maybe a few days leaving a very narrow time frame for cheating.
+
+I will PM my solution to you, Lux.
+
+---
+
+### Post by Lux Perpetua on 2008-06-12
+> **funktio said:**
+> I found this thread when searching for information on 60-degree triangles. Lux Perpetua's explanations were a very interesting read, thanks for sharing! I ended up using the generators described [here](http://www.geocities.com/fredlb37/node9.html).
+I eventually settled on those as well (the substitution I gave in my last post along with my original generators results in those). Those are definitely the best that I've found: the symmetry between the two sides is reflected in the parameters, and they only use addition and multiplication. 
+> **Lster said:**
+> funktio, code has now been removed as I agree - it allows people who don't care about learning, a simple way to boost their "rating". I don't think that's what Project Euler is about. I was going to remove it later, in maybe a few days leaving a very narrow time frame for cheating.
+
+I will PM my solution to you, Lux.Thanks, I was going to ask for yours. I just sent mine to you. 
+
+There should be a good way to use the solution to the problem as a key to encrypt one's code and post it; that way, anybody with the right solution would be able to get your code, and hopefully people who hadn't solved it would not be able to crack it. The first thing that came to mind was Vigenere-type encryption, but I think that would be broken very easily.
+
+P. S. Another thing I thought of (assuming the solution is known to be a positive integer N) is to XOR the fractional bits of 1/N with the ASCII representation of the code. I think that would be harder to crack; you could probably get an idea of the size of N pretty easily, but it would be harder to find the exact value (assuming N isn't something stupid like a power of 2).
+
+---
+
+### Post by ed_r on 2008-06-15
+Why don't you just share code on the Project Euler solution forum?
+
+Solutions to PE#195 are <[here](http://projecteuler.net/index.php?section=forum&id=195)> for example (locked until you solve the problem).
+
+---
+
+### Post by Lster on 2008-06-15
+I often do.
+
+---
+
+### Post by ed_r on 2008-06-15
+I meant: *only* share code on the main PE site ...
+
+The suggestion was aimed more at Lux than at you.
+
+---
+
+### Post by funktio on 2008-06-15
+> **Lster said:**
+> funktio, code has now been removed as I agree
+Thanks, I appreciate that.
+
+> **Lux Perpetua said:**
+> There should be a good way to use the solution to the problem as a key to encrypt one's code and post it; that way, anybody with the right solution would be able to get your code, and hopefully people who hadn't solved it would not be able to crack it.
+I've actually seen one website that does that, it used the MD5 of the solution IIRC. If the solutions are short, even a rather simple encryption should make it very difficult to crack. I haven't thought much about it, though, because I like using the Project Euler forum. One possible drawback is that only threads for the most recent problems are active and the oldest ones are locked, but there's usually enough information on the first couple of pages to answer all questions I've had.
+
+---
+
+### Post by ed_r on 2008-06-15
+.
+
+---
+
+### Post by funktio on 2008-06-16
+[deleted]
+
+---
+

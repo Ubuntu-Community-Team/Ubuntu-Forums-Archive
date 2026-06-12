@@ -1,0 +1,76 @@
+---
+title: "help needed with pyqt program..."
+date: 2009-12-12
+forum: Programming Talk
+---
+
+### Post by python.noob on 2009-12-12
+Hai friends,
+
+The problem here(in the code below) is i want to catch the minimize and close event of QTabWidget(by default this widget do not have any slot named close or minimize) to hide the widget.. so the only way the user can quit the application is by clicking exit from the tray icon menu..
+```
+
+
+[LIST=1]
+[*]from PyQt4 import QtCore, QtGui
+[*]import sys
+[*] 
+[*]class Ui_TabWidget(object):
+[*]    def setupUi(self, TabWidget):
+[*]        TabWidget.setObjectName("TabWidget")
+[*]        TabWidget.resize(400, 300)
+[*]        self.tab = QtGui.QWidget()
+[*]        self.tab.setObjectName("tab")
+[*]        TabWidget.addTab(self.tab, "")
+[*]        self.tab1 = QtGui.QWidget()
+[*]        self.tab1.setObjectName("tab1")
+[*]        TabWidget.addTab(self.tab1, "")
+[*] 
+[*]        self.retranslateUi(TabWidget)
+[*]        QtCore.QMetaObject.connectSlotsByName(TabWidget)
+[*] 
+[*]    def retranslateUi(self, TabWidget):
+[*]        TabWidget.setWindowTitle(QtGui.QApplication.translate("TabWidget", "TabWidget", None, QtGui.QApplication.UnicodeUTF8))
+[*]        TabWidget.setTabText(TabWidget.indexOf(self.tab), QtGui.QApplication.translate("TabWidget", "Tab 1", None, QtGui.QApplication.UnicodeUTF8))
+[*]        TabWidget.setTabText(TabWidget.indexOf(self.tab1), QtGui.QApplication.translate("TabWidget", "Tab 2", None, QtGui.QApplication.UnicodeUTF8))
+[*] 
+[*]class Trayicon(QtGui.QSystemTrayIcon):
+[*]    def __init__(self,parent=None):
+[*]        QtGui.QSystemTrayIcon.__init__(self,parent)
+[*]        self.setIcon(QtGui.QIcon("icons/blockattack32.xpm"))
+[*]        self.show()
+[*] 
+[*]        self.menu=QtGui.QMenu()
+[*] 
+[*]        preference=self.menu.addAction("Preferences")
+[*]        exit=self.menu.addAction("Exit")
+[*] 
+[*]        self.setContextMenu(self.menu)
+[*] 
+[*]        self.TabWidget = QtGui.QTabWidget()
+[*]        ui = Ui_TabWidget()
+[*]        ui.setupUi(self.TabWidget)
+[*] 
+[*]        self.connect(exit,QtCore.SIGNAL('triggered()'),self.menuExit)
+[*] 
+[*]        self.connect(preference,QtCore.SIGNAL('triggered()'),self.showWidget)
+[*] 
+[*] 
+[*]    def menuExit(self):
+[*]        app.exit()
+[*] 
+[*]    def showWidget(self):
+[*]        self.TabWidget.show()
+[*] 
+[*]app = QtGui.QApplication(sys.argv)
+[*]cd=Trayicon()
+[*]cd.show()
+[*]sys.exit(app.exec_())
+[/LIST]
+
+
+```
+Your help would be much appreciated!!!!!
+
+---
+

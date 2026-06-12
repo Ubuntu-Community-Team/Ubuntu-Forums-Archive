@@ -1,0 +1,2645 @@
+---
+title: "busybox &quot;httpd&quot; help needed: hacking a router"
+date: 2012-02-04
+forum: Programming Talk
+---
+
+### Post by nikonian on 2012-02-04
+Hey guys!
+
+I am hacking an adsl router, and I am looking to replace the built-in web UI they use, with a custom one, to make a mini web server. The UI seems to send http "POST" methods, but I am unsure how these are executed...
+
+I have tried injecting a ";" semi-colon in the adsl "username" field, followed by "telnetd", to make it execute telnetd (it certainly has telnetd, as I can start it from a console, connected to the serial port of the router, internally), but the semi-colon method just caused the router to boot loop, so I had to hard reset it. I just want to be able to exploit the web UI, and start "telnetd" without needing a serial connection, internally.
+
+Now, when the web interface sends data back to the router, it appears to use some kind of CGI commands... but there don't seem to be ANY CGI files inside the /www/ folder, except for javascript ones. The httpd server it uses, is called "arc_httpd", which I have attached, along with a ZIP containing the web UI files. If anyone can work out what is happening when the user submits data, please do tell me.
+
+Also, I have run "strings" on the "arc_httpd" executable, and get:
+
+```
+
+/lib/ld-uClibc.so.0
+_init
+_fini
+__uClibc_main
+_Jv_RegisterClasses
+libarc_osix.so
+_DYNAMIC_LINKING
+__RLD_MAP
+_GLOBAL_OFFSET_TABLE_
+__dso_handle
+libmapi_mid_core.so
+libmapi_sys.so
+libmapi_sw.so
+libmapi_ccfg.so
+libmapi_xdsl.so
+libmapi_wlan.so
+libmapi_nat.so
+libmapi_lan.so
+libmapi_atm.so
+libmapi_3g.so
+libmapi_wan.so
+libmapi_vlan.so
+libmapi_fw.so
+libmapi_iptables.so
+libmapi_nas.so
+libpthread.so.0
+libbcm_ethswctl.so
+libarc_hal.so
+libmhdl_sys.so
+libmhdl_sw.so
+libmhdl_ccfg.so
+libmhdl_xdsl.so
+libmhdl_wlan.so
+libmhdl_nat.so
+libmhdl_lan.so
+libmhdl_atm.so
+libmhdl_3g.so
+libmhdl_wan.so
+libmhdl_vlan.so
+libmhdl_fw.so
+libmhdl_nas.so
+libmhdl_iptables.so
+libmhdl_mid_core.so
+libmhdl_clientmon.so
+strlen
+strncpy
+sscanf
+hsearch_r
+hdestroy_r
+strsep
+hcreate_r
+strpbrk
+set_cgi
+strchr
+unlink
+stdout
+fprintf
+exit
+strcpy
+fcntl
+fgets
+fputs
+memset
+sprintf
+fflush
+fopen
+fclose
+snprintf
+inet_ntoa
+atoi
+accept
+__errno_location
+perror
+strcmp
+strtoul
+strstr
+strncmp
+chdir
+signal
+socket
+setsockopt
+bind
+listen
+stderr
+getpid
+fork
+userinfo
+strcspn
+str2arglist
+init_check_list
+fileno
+fgetc
+__fgetc_unlocked
+Slurp_buf_buf
+gmtime
+strftime
+no_cache
+send_not_found
+send_ok
+fputc
+__fputc_unlocked
+sysinfo
+CFG_get
+inet_addr
+init_user_config
+user_logout
+user_islogin
+fdopen
+strncasecmp
+strspn
+strcasecmp
+HTTP_INDEX
+mime_handlers
+HTTP_HIDDEN_PAGES
+HTTP_HIDDEN_PAGE_NUM
+match_urn
+bypass_check
+HTTP_LOGIN
+HTTP_LOGIN_ERR
+HTTP_LOGIN_DUP
+send_redirect
+shutdown
+HTTP_SERVER_PORT
+HTTP_NEEDNT_AUTH
+init_bypass_list
+daemon
+childProcessHandler
+MD5Update
+MD5Init
+MD5Final
+__ctype_b
+script_handlers
+Osix_osSystem
+system
+mapi_fw_cmdctl
+sleep
+strcat
+user_list
+_CB_CGI_CFG_ARY
+admin_ip
+user_escape
+CFG_str2id
+CFG_list
+str_escape
+CFG_get_str
+script_Args
+cgi_show_result
+post_buf
+init_cgi
+get_cgi
+user_name
+user_login
+HTTP_LOGIN_OK
+ps_cgi_cmds
+str_unescape
+CFG_set_str
+as_cgi_cmds
+ftok
+msgget
+msgsnd
+Tr69Rpcmethod_SendMsg
+clearerr
+ferror
+select
+cgi_safe_fread
+cgi_waitfor
+feof
+cgi_safe_fwrite
+CFG_id2str
+do_script
+do_auth
+do_file
+attach
+CGI_do_DSL_CONF_ps
+CGI_do_DSL_RETRAIN_ps
+CGI_do_DNS_CONF_ps
+CGI_do_DDNS_CONF_ps
+CGI_do_LAN_CONF_ps
+CGI_do_LAN_DHCP_REV_CONF_ps
+CGI_do_LAN_DHCP_REV_DEL_CONF_ps
+CGI_do_SYS_CONF_ps
+CGI_do_SYS_RESET_ps
+CGI_do_SYS_MFRESET_ps
+CGI_do_SYS_BOOT_ps
+CGI_do_SYS_RMT_MGMT_ps
+CGI_do_WIFI_CONF_ps
+CGI_do_WIFI_WEP_CONF_ps
+CGI_do_WIFI_SSID_CONF_ps
+CGI_do_WIFI_SSID_SEC_ps
+CGI_do_WIFI_SSID_QOS_CONF_ps
+CGI_do_WIFI_ADV_CONF_ps
+CGI_do_WIFI_MAC_CONF_ps
+CGI_do_WIFI_WPA_CONF_ps
+CGI_do_WIFI_WPS_CONF_ps
+CGI_do_WIFI_WPS_ENROLL_CONF_ps
+CGI_do_WIFI_WPS_STARTPBC_CONF_ps
+CGI_do_WIFI_DOT1X_CONF_ps
+CGI_do_WAN_ATM_CONF_ps
+CGI_do_WAN_ADSL_ETH_CONF_ps
+CGI_do_WAN_CONN_ps
+CGI_do_WAN_DISC_ps
+CGI_do_NAT_CONF_ps
+CGI_do_NAT_ADDRMAP_ps
+CGI_do_NAT_VIRTUALSERVER_ps
+CGI_do_NAT_APP_ps
+CGI_do_NTP_CONF_ps
+CGI_do_WANETH_CONN_ps
+CGI_do_WANETH_DISC_ps
+CGI_do_LOG_CLR_ps
+CGI_do_TR69_CONF_ps
+CGI_do_FW_CONF_ps
+CGI_do_FW_FILTER_CONF_ps
+CGI_do_FW_FILTER_DEL_ps
+CGI_do_FW_SCHEDULE_CONF_ps
+CGI_do_FW_SCHEDULE_DEL_ps
+CGI_do_FW_URL_LIST_CONF_ps
+CGI_do_FW_URL_LIST_CLEAR_ps
+CGI_do_FW_MAC_CONF_ps
+CGI_do_FW_DMZ_CONF_ps
+CGI_do_FW_SPI_CONF_ps
+CGI_do_UPNP_CONF_ps
+CGI_do_QOS_CONF_ps
+CGI_do_QOS_RULE_CONF_ps
+CGI_do_QOS_RULE_EDIT_CONF_ps
+CGI_do_NAS_USER_CONF_ps
+CGI_do_UMTS_PINCODE_CONF_ps
+CGI_do_NAS_CONF_ps
+CGI_do_NAS_BASIC_CONF_ps
+CGI_do_DSL_CONF_as
+CGI_do_DSL_RETRAIN_as
+CGI_do_DNS_CONF_as
+CGI_do_DDNS_CONF_as
+CGI_do_LAN_CONF_as
+CGI_do_LAN_DHCP_REV_CONF_as
+CGI_do_LAN_DHCP_REV_DEL_CONF_as
+CGI_do_SYS_CONF_as
+CGI_do_SYS_RESET_as
+CGI_do_SYS_MFRESET_as
+CGI_do_SYS_BOOT_as
+CGI_do_SYS_RMT_MGMT_as
+CGI_do_WIFI_CONF_as
+CGI_do_WIFI_WEP_CONF_as
+CGI_do_WIFI_SSID_CONF_as
+CGI_do_WIFI_SSID_SEC_as
+CGI_do_WIFI_SSID_QOS_CONF_as
+CGI_do_WIFI_ADV_CONF_as
+CGI_do_WIFI_MAC_CONF_as
+CGI_do_WIFI_WPA_CONF_as
+CGI_do_WIFI_WPS_CONF_as
+CGI_do_WIFI_WPS_ENROLL_CONF_as
+CGI_do_WIFI_WPS_STARTPBC_CONF_as
+CGI_do_WIFI_DOT1X_CONF_as
+CGI_do_WAN_ATM_CONF_as
+CGI_do_WAN_ADSL_ETH_CONF_as
+CGI_do_WAN_CONN_as
+CGI_do_WAN_DISC_as
+CGI_do_NAT_CONF_as
+CGI_do_NAT_ADDRMAP_as
+CGI_do_NAT_VIRTUALSERVER_as
+CGI_do_NAT_APP_as
+CGI_do_NTP_CONF_as
+CGI_do_WANETH_CONN_as
+CGI_do_WANETH_DISC_as
+CGI_do_LOG_CLR_as
+CGI_do_TR69_CONF_as
+CGI_do_FW_CONF_as
+CGI_do_FW_FILTER_CONF_as
+CGI_do_FW_FILTER_DEL_as
+CGI_do_FW_SCHEDULE_CONF_as
+CGI_do_FW_SCHEDULE_DEL_as
+CGI_do_FW_URL_LIST_CONF_as
+CGI_do_FW_URL_LIST_CLEAR_as
+CGI_do_FW_MAC_CONF_as
+CGI_do_FW_DMZ_CONF_as
+CGI_do_FW_SPI_CONF_as
+CGI_do_UPNP_CONF_as
+CGI_do_QOS_CONF_as
+CGI_do_QOS_RULE_CONF_as
+CGI_do_QOS_RULE_EDIT_CONF_as
+CGI_do_NAS_USER_CONF_as
+CGI_do_NAS_USER_DEL_CONF_as
+CGI_do_USB_MOUNT_DEL_CONF_as
+CGI_do_USB_SHARED_CONF_as
+CGI_do_USB_SHARED_DEL_CONF_as
+CGI_do_UMTS_PINCODE_CONF_as
+CGI_do_NAS_CONF_as
+CGI_do_NAS_BASIC_CONF_as
+ioctl
+waitpid
+setsid
+dup2
+setenv
+alarm
+execvp
+_cfg_get
+_cfg_set
+LAN_IP4ADDR_set
+LAN_DHCP_LOG_100_LST_get
+LAN_DHCP_CLIENT_NUM_get
+LAN_PORT_STATUS_004_LST_get
+LAN_DHCP_REV_024_LST_get
+WANETH_PROTO_set
+WANETH_VLAN_get
+WANETH_VLAN_set
+WANETH_PASSWORD_get
+WANETH_PASSWORD_set
+WANETH_STATIC_DNS_set
+WANETH_PRI_DNS_set
+WANETH_SEC_DNS_set
+WANETH_TYPE_get
+WANETH_STATUS_get
+WANETH_STATUS_MAC_get
+WANETH_STATUS_IP_get
+WANETH_STATUS_MASK_get
+WANETH_STATUS_GW_get
+WANETH_STATUS_DNS_PRI_get
+WANETH_STATUS_DNS_SEC_get
+WANETH_STATUS_RATE_get
+WAN_PROTO_set
+WAN_VLAN_get
+WAN_VLAN_set
+WAN_PASSWORD_get
+WAN_PASSWORD_set
+WAN_STATIC_DNS_set
+WAN_PRI_DNS_set
+WAN_SEC_DNS_set
+WAN_PVC_STATUS_008_LST_get
+WAN_PPP_STATUS_get
+WAN_PPP_CON_TIME_get
+WAN_STATUS_IP_get
+SYSTEM_LANG_CODE_get
+SYSTEM_LANG_CODE_set
+SYSTEM_TIME_ZONE_get
+SYSTEM_TIME_ZONE_set
+SYSTEM_GUI_STYLE_get
+SYSTEM_GUI_STYLE_set
+SYSTEM_HOST_NAME_get
+SYSTEM_HOST_NAME_set
+SYSTEM_WAN_TYPE_get
+SYSTEM_WAN_TYPE_set
+SYSTEM_ACTIVE_WAN_TYPE_get
+SYSTEM_ACTIVE_WAN_TYPE_set
+SYSTEM_PPP_PASS_THRU_get
+SYSTEM_PPP_PASS_THRU_set
+SYSTEM_CURRENT_TIME_get
+SYSTEM_RUNTIME_CODE_VER_get
+SYSTEM_BOOT_CODE_VER_get
+SYSTEM_SERIAL_NUM_get
+SYSTEM_LAN_MAC_002_LST_get
+SYSTEM_WAN_MAC_008_LST_get
+SYSTEM_WLAN_MAC_002_LST_get
+SYSTEM_HARDWARE_VER_get
+SYSTEM_SECURITY_LOG_100_LST_get
+WIRELESS_WPS_PCB_get
+WIRELESS_WPS_PCB_set
+WIRELESS_CHAN_LST_get
+WIRELESS_WPS_STATUS_get
+WIRELESS_CHANBOND_LST_get
+WIRELESS_PWS_TYPE_get
+WIRELESS_PWS_ENCRTYPE_get
+WIRELESS_AP_PIN_get
+WIRELESS_SEC_KEY_get
+WIFISSID_WLAN_STATUS_002_LST_get
+WIFIMACFILTER_FILTER_ENABLE_get
+WIFIMACFILTER_FILTER_ENABLE_set
+WIFIMACFILTER_FILTER_ACCESS_get
+WIFIMACFILTER_FILTER_ACCESS_set
+WIFIMACFILTERADDR_MACFILTER_ADDR_get
+WIFIMACFILTERADDR_MACFILTER_ADDR_set
+DOT1X_CYPHER_SUITE_get
+DOT1X_CYPHER_SUITE_set
+DOT1X_DOT1XREKEYSECONDS_get
+DOT1X_DOT1XREKEYSECONDS_set
+DOT1X_DOT1XREKEYPACKETS_get
+DOT1X_DOT1XREKEYPACKETS_set
+DOT1X_SSNREKEYSECONDS_get
+DOT1X_SSNREKEYSECONDS_set
+DOT1X_SSNREKEYPACKETS_get
+DOT1X_SSNREKEYPACKETS_set
+DOT1X_DOT1XREKEYING_get
+DOT1X_DOT1XREKEYING_set
+DOT1X_SSNREKEYING_get
+DOT1X_SSNREKEYING_set
+DOT1X_STRICTUPDATE_get
+DOT1X_STRICTUPDATE_set
+DOT1X_ENABLEOS_get
+DOT1X_ENABLEOS_set
+DOT1X_ENABLEWEP_get
+DOT1X_ENABLEWEP_set
+DOT1X_ENABLEACL_get
+DOT1X_ENABLEACL_set
+DOT1X_ENABLESSN_get
+DOT1X_ENABLESSN_set
+DOT1X_WPA2FLAG_get
+DOT1X_WPA2FLAG_set
+DOT1X_ENABLESSNPSK_get
+DOT1X_ENABLESSNPSK_set
+DOT1X_SSNPSK256KEYFILED_get
+DOT1X_SSNPSK256KEYFILED_set
+DOT1X_WEPKEYSIZE_get
+DOT1X_WEPKEYSIZE_set
+DOT1X_DEFAULTKEYID_get
+DOT1X_DEFAULTKEYID_set
+DOT1X_SSNPSKASCIIKEY_get
+DOT1X_SSNPSKASCIIKEY_set
+DOT1X_SSNPSK256KEY_get
+DOT1X_SSNPSK256KEY_set
+DOT1X_SRV_TYPE_get
+DOT1X_SRV_TYPE_set
+DOT1X_ACC_SRV_PORT_get
+DOT1X_ACC_SRV_PORT_set
+DOT1X_TXPERIOD_get
+DOT1X_TXPERIOD_set
+DOT1X_SUPPTIMEOUT_get
+DOT1X_SUPPTIMEOUT_set
+DOT1X_REAUTHCOUNT_get
+DOT1X_REAUTHCOUNT_set
+DOT1X_ENABLE1XAUTHEN_get
+DOT1X_ENABLE1XAUTHEN_set
+DOT1X_ROLE_get
+DOT1X_ROLE_set
+HTTPD_WAIT_TIMEOUT_get
+HTTPD_WAIT_TIMEOUT_set
+HTTPD_REMOTE_MGNT_get
+HTTPD_REMOTE_MGNT_set
+HTTPD_HTTP_BROWSE_SERVICE_get
+HTTPD_HTTP_BROWSE_SERVICE_set
+HTTPD_HTTP_BROWSE_PORT_get
+HTTPD_HTTP_BROWSE_PORT_set
+PVC_PVC_LST_get
+USB_MAXSUPPORTNUM_get
+USB_MAXSUPPORTNUM_set
+USB_ENABLE_get
+USB_ENABLE_set
+USB_MAXNUM_get
+USB_MAXNUM_set
+DRIVE_NOW_DRIVE_NUM_get
+DRIVE_NOW_DRIVE_NUM_set
+DRIVE_NOW_DRIVEINFOA_get
+DRIVE_NOW_DRIVEINFOA_set
+DRIVE_NOW_VOLUMEA_get
+DRIVE_NOW_VOLUMEA_set
+DRIVE_NOW_DRIVEINFOB_get
+DRIVE_NOW_DRIVEINFOB_set
+DRIVE_NOW_VOLUMEB_get
+DRIVE_NOW_VOLUMEB_set
+PRINTER_NOW_NUM_get
+PRINTER_NOW_NUM_set
+PRINTER_NOW_MODEL_get
+PRINTER_NOW_MODEL_set
+UMTS_NOW_NUM_get
+UMTS_NOW_NUM_set
+UMTS_NOW_MANUFACTURER_get
+UMTS_NOW_MANUFACTURER_set
+UMTS_NOW_MODEL_get
+UMTS_NOW_MODEL_set
+SAMBA_HISTORY_DRIVE1_get
+SAMBA_HISTORY_DRIVE1_set
+SAMBA_HISTORY_DRIVE2_get
+SAMBA_HISTORY_DRIVE2_set
+SAMBA_HISTORY_DRIVE3_get
+SAMBA_HISTORY_DRIVE3_set
+SAMBA_HISTORY_DRIVE4_get
+SAMBA_HISTORY_DRIVE4_set
+SAMBA_HISTORY_DRIVE5_get
+SAMBA_HISTORY_DRIVE5_set
+SAMBA_HISTORY_DRIVE6_get
+SAMBA_HISTORY_DRIVE6_set
+SAMBA_HISTORY_DRIVE7_get
+SAMBA_HISTORY_DRIVE7_set
+SAMBA_HISTORY_DRIVE8_get
+SAMBA_HISTORY_DRIVE8_set
+SAMBA_HISTORY_HISTORY_get
+SAMBA_HISTORY_HISTORY_set
+SAMBA_SHARELIST_DRIVE1_get
+SAMBA_SHARELIST_DRIVE1_set
+SAMBA_SHARELIST_DRIVE2_get
+SAMBA_SHARELIST_DRIVE2_set
+SAMBA_ENABLE_get
+SAMBA_ENABLE_set
+SAMBA_PRESMBENB_get
+SAMBA_PRESMBENB_set
+SAMBA_DEF_SMBENABLE_get
+SAMBA_DEF_SMBENABLE_set
+SAMBA_DEF_COMPUTERNAME_get
+SAMBA_DEF_COMPUTERNAME_set
+SAMBA_DEF_COMPUTERDESCRIPTION_get
+SAMBA_DEF_COMPUTERDESCRIPTION_set
+SAMBA_DEF_GROUPNAME_get
+SAMBA_DEF_GROUPNAME_set
+SAMBA_DEF_REMOTEENABLE_get
+SAMBA_DEF_REMOTEENABLE_set
+SAMBA_SMBENABLE_get
+SAMBA_SMBENABLE_set
+SAMBA_COMPUTERNAME_get
+SAMBA_COMPUTERNAME_set
+SAMBA_COMPUTERDESCRIPTION_get
+SAMBA_COMPUTERDESCRIPTION_set
+SAMBA_GROUPNAME_get
+SAMBA_GROUPNAME_set
+SAMBA_REMOTEENABLE_get
+SAMBA_REMOTEENABLE_set
+PRINTER_ENABLE_get
+PRINTER_ENABLE_set
+PRINTER_QUEUENAME_get
+PRINTER_QUEUENAME_set
+UPNP_ENABLE_get
+UPNP_ENABLE_set
+LOG_CATEGORY_get
+LOG_CATEGORY_set
+QOS_DFT_TOTAL_FWG_NUM_get
+QOS_DFT_TOTAL_FWG_NUM_set
+QOS_DFT_DFT_FWG_get
+QOS_DFT_DFT_FWG_set
+QOS_DFT_LNK_NUM_get
+QOS_DFT_LNK_NUM_set
+QOS_DFT_LNK0_get
+QOS_DFT_LNK0_set
+QOS_DFT_VIF0_0_get
+QOS_DFT_VIF0_0_set
+QOS_DFT_FWG00_0_get
+QOS_DFT_FWG00_0_set
+QOS_DFT_FWG00_1_get
+QOS_DFT_FWG00_1_set
+QOS_DFT_FWG00_2_get
+QOS_DFT_FWG00_2_set
+QOS_DFT_FWG00_3_get
+QOS_DFT_FWG00_3_set
+QOS_DFT_FWG00_4_get
+QOS_DFT_FWG00_4_set
+QOS_DFT_FWG00_5_get
+QOS_DFT_FWG00_5_set
+QOS_DFT_FWG00_6_get
+QOS_DFT_FWG00_6_set
+QOS_DFT_FWG00_7_get
+QOS_DFT_FWG00_7_set
+QOS_DFT_CLSFY_SEQ_get
+QOS_DFT_CLSFY_SEQ_set
+QOS_DFT_RU00_MAC_get
+QOS_DFT_RU00_MAC_set
+QOS_DFT_RU00_INIF_get
+QOS_DFT_RU00_INIF_set
+QOS_DFT_RU00_INPHYIF_get
+QOS_DFT_RU00_INPHYIF_set
+QOS_DFT_RU00_SRCIP_get
+QOS_DFT_RU00_SRCIP_set
+QOS_DFT_RU00_DSTIP_get
+QOS_DFT_RU00_DSTIP_set
+QOS_DFT_RU00_APORPROTO_get
+QOS_DFT_RU00_APORPROTO_set
+QOS_DFT_RU00_SPORT_get
+QOS_DFT_RU00_SPORT_set
+QOS_DFT_RU00_DPORT_get
+QOS_DFT_RU00_DPORT_set
+QOS_DFT_RU00_TOS_get
+QOS_DFT_RU00_TOS_set
+QOS_DFT_RU00_8021P_get
+QOS_DFT_RU00_8021P_set
+QOS_DFT_RU00_ETHTYPE_get
+QOS_DFT_RU00_ETHTYPE_set
+QOS_DFT_RU00_PKTLEN_get
+QOS_DFT_RU00_PKTLEN_set
+QOS_DFT_RU00_ACT_get
+QOS_DFT_RU00_ACT_set
+QOS_DFT_RU01_MAC_get
+QOS_DFT_RU01_MAC_set
+QOS_DFT_RU01_INIF_get
+QOS_DFT_RU01_INIF_set
+QOS_DFT_RU01_INPHYIF_get
+QOS_DFT_RU01_INPHYIF_set
+QOS_DFT_RU01_SRCIP_get
+QOS_DFT_RU01_SRCIP_set
+QOS_DFT_RU01_DSTIP_get
+QOS_DFT_RU01_DSTIP_set
+QOS_DFT_RU01_APORPROTO_get
+QOS_DFT_RU01_APORPROTO_set
+QOS_DFT_RU01_SPORT_get
+QOS_DFT_RU01_SPORT_set
+QOS_DFT_RU01_DPORT_get
+QOS_DFT_RU01_DPORT_set
+QOS_DFT_RU01_TOS_get
+QOS_DFT_RU01_TOS_set
+QOS_DFT_RU01_8021P_get
+QOS_DFT_RU01_8021P_set
+QOS_DFT_RU01_ETHTYPE_get
+QOS_DFT_RU01_ETHTYPE_set
+QOS_DFT_RU01_PKTLEN_get
+QOS_DFT_RU01_PKTLEN_set
+QOS_DFT_RU01_ACT_get
+QOS_DFT_RU01_ACT_set
+PWRSAVE_ENABLE_get
+PWRSAVE_ENABLE_set
+PWRSAVE_MAX_PERIOD_get
+PWRSAVE_MAX_PERIOD_set
+PWRSAVE_PERIOD1_B_get
+PWRSAVE_PERIOD1_B_set
+PWRSAVE_PERIOD1_E_get
+PWRSAVE_PERIOD1_E_set
+PWRSAVE_PERIOD2_B_get
+PWRSAVE_PERIOD2_B_set
+PWRSAVE_PERIOD2_E_get
+PWRSAVE_PERIOD2_E_set
+PWRSAVE_PERIOD3_B_get
+PWRSAVE_PERIOD3_B_set
+PWRSAVE_PERIOD3_E_get
+PWRSAVE_PERIOD3_E_set
+FWACCESSCONTROL_BLOCK_SERVICE_get
+FWACCESSCONTROL_BLOCK_SERVICE_set
+FWACCESSCONTROL_USER_PROTOCOL_get
+FWACCESSCONTROL_USER_PROTOCOL_set
+FWACCESSCONTROL_USER_PORT_get
+FWACCESSCONTROL_USER_PORT_set
+FWACCESSCONTROL_AVAIL_IDX_get
+FWSCHEDULE_AVAIL_IDX_get
+FWMACFILTER_DHCP_CLIENT_LIST_get
+NAT_MAPPING_254_LST_get
+DLNAS_UPNP_AV_get
+DLNAS_UPNP_AV_set
+DLNAS_UPNP_DEFAULT_AV_get
+DLNAS_UPNP_DEFAULT_AV_set
+DLNAS_MUSIC_NUM_get
+DLNAS_MUSIC_NUM_set
+DLNAS_VIDEO_NUM_get
+DLNAS_VIDEO_NUM_set
+DLNAS_PICTURE_NUM_get
+DLNAS_PICTURE_NUM_set
+DLNAS_DLNA_SCANNING_get
+DLNAS_DLNA_SCANNING_set
+DLNAS_WEB_UPNP_AV_get
+DLNAS_WEB_UPNP_AV_set
+ADSL_CFG_LINESTATUS_get
+ADSL_CUR_LINESTATUS_get
+ADSL_CFG_LINKTYPE_get
+ADSL_CUR_LINKTYPE_get
+ADSL_UP_RATE_get
+ADSL_DN_RATE_get
+ADSL_UP_NOISEMARGIN_get
+ADSL_DN_NOISEMARGIN_get
+ADSL_UP_ATTEN_get
+ADSL_DN_ATTEN_get
+ADSL_NR_OUTPUTPWR_get
+ADSL_FE_OUTPUTPWR_get
+ADSL_NR_FAST_FEC_get
+ADSL_FE_FAST_FEC_get
+ADSL_NR_INTER_FEC_get
+ADSL_FE_INTER_FEC_get
+ADSL_NR_FAST_CRC_get
+ADSL_FE_FAST_CRC_get
+ADSL_NR_INTER_CRC_get
+ADSL_FE_INTER_CRC_get
+ADSL_NR_LOS_DFT_get
+ADSL_FE_LOS_DFT_get
+ADSL_NR_FAST_HEC_get
+ADSL_FE_FAST_HEC_get
+ADSL_NR_INTER_HEC_get
+ADSL_FE_INTER_HEC_get
+ADSL_NR_ERR_PSEC_get
+ADSL_FE_ERR_PSEC_get
+ADSL_REC_CELLS_get
+ADSL_TX_CELLS_get
+ADSL_CODE_VER_get
+ADSL_CFG_OPMODE_get
+ADSL_CUR_OPMODE_get
+ADSL_UP_SATTEN_get
+ADSL_DN_SATTEN_get
+SNMP_AGENT_get
+SNMP_AGENT_set
+SNMP_TRAP_get
+SNMP_TRAP_set
+SNMP_COMMUNITYCNT_get
+SNMP_COMMUNITYCNT_set
+SNMP_COMMUNITY1_get
+SNMP_COMMUNITY1_set
+SNMP_COMMUNITY2_get
+SNMP_COMMUNITY2_set
+SNMP_SERVERCNT_get
+SNMP_SERVERCNT_set
+SNMP_SERVER1_get
+SNMP_SERVER1_set
+NAS_MOUNTED_008_LST_get
+NAS_SHARED_008_LST_get
+NAS_SHARED_008_LST_set
+NAS_USER_004_LIST_get
+NAS_USER_004_LIST_set
+NAS_ACCESS_004_LIST_get
+UMTS_STAUS_get
+UMTS_STATUS_IP_get
+UMTS_STATUS_MASK_get
+UMTS_STATUS_GW_get
+UMTS_STATUS_DNS_PRI_get
+UMTS_STATUS_DNS_SEC_get
+FW_ACCESS_CONTROL_010_LST_get
+FW_SCHEDULE_NAME_010_LST_get
+FW_SCHEDULE_010_LST_get
+DHCP_REV_ITEM_get
+DHCP_REV_ITEM_set
+inet_aton
+memcpy
+memcmp
+cfgid_str_table
+cfgid_str_table_sz
+cfg_table
+CFG_set_event
+_CFG_clean
+_CFG_commit
+CFG_save
+_cfg_del
+cfg_del_event
+cfg_str2list
+ether_aton
+NULL_Str
+CFG_str2val
+parseMarco
+CFG_set_str_event
+CFG_val2str
+mapi_ccfg_commit
+strtol
+mapi_ccfg_set
+mapi_ccfg_get
+Get_MD5_Str
+_CFG_unset
+CFG_id2cfgEntry
+_CFG_getValue
+_CFG_setValue
+__floatsidf
+__divdf3
+mapi_xdsl_cmdctl
+adslModeString
+dsl_status
+dsl_statistics
+getAdslTypeString
+stat
+dhcp_reserved_record
+mapi_fw_access_control_blksvc_cfg2struct
+mapi_fw_access_control_user_port_cfg2struct
+mapi_fw_access_control_blksvc_struct2cfg
+mapi_lan_cmdctl
+mapi_sw_cmdctl
+fseek
+ftell
+Osix_malloc
+Osix_free
+localtime
+asctime
+mapi_wlan_cmdctl
+strtok
+strlcpy
+__extendsfdf2
+__muldf3
+mapi_nas_cmdctl
+CFG_set
+__floatsisf
+mapi_nat_cmdctl
+mapi_sys_cmdctl
+mapi_wan_cmdctl
+mapi_3g_cmdctl
+mapi_wan_get_connected_status
+Osix_GetSysUpTime
+adsl_util
+mapi_fw_update_dmz
+mapi_fw_schedule_start_time_cfg2struct
+mapi_fw_schedule_end_time_cfg2struct
+wl_bwctl_util
+mapi_iptables_cmdctl
+Osix_send_msg_to_osix_syscmd_service_thread
+toBypassWanAction
+mapi_vlan_cmdctl
+mapi_atm_cmdctl
+mapi_wlan_update_lan
+wlan_wsconf_util
+wlan_util
+wlan_bwctl_util
+vlan_util
+__pack_f
+libc.so.0
+_ftext
+_fdata
+_edata
+__bss_start
+_fbss
+_end
+ '9F
+ $R)
+L$H)
+@0!&9
+ (!&
+$BQ,
+@ !$
+Q$'9
+` !$
+` !$
+{$BR
+` !$
+$BRx
+` !$
+ (!$
+  !,D
+` !$
+8!$BQ
+@ !$
+    &$O
+D !&1
+    &$O
+24BTv
+gE4B#
+$ 4Bp
+04BF
+y4BC
+%4B%b
+&^4BZQ
+EZ4B
+go4B
+*4BL
+&4B9B
+&4Ba"
+&4B8
+&4BK`
+&4B~
+&4B'
+&4B0
+&4B|
+&4BVe
+&4B"D
+&4B#
+&4BY
+&4B]
+&4B~O
+&4BC
+&4B~
+(!&R
+F0#$
+ 0!'
+@!$H
+@ !&
+@ !$
+`(!$
+`0!$c
+@(!&1
+(!'9
+@0!<
+`0!$c
+ $BU 
+ (!$
+  !r
+  !r
+@ !$
+pH!$
+ $$h
+@8!$
+*$DU 
+*$DU 
+ #0B
+@ !'
+  !$
+  !$
+@0!(B
+@8!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+ 0!$
+@8!$
+@8!$
+@(!$
+@ !0C
+@8!$
+ 8!$
+`8!$
+ (!'
+`0!'
+  !$
+` !$d
+'9UD
+!$S*L
+$R*4
+$Q*@
+'9UD
+@ !$B
+$B*@
+$B*L
+$B*4
+$P*@
+$R*L
+$Q*4
+$B*L
+@ !$
+$P*`
+$B*`$B
+ $U*`
+#$c*`
+ff4Bfg0
+`0!$
+`8!$
+P0!(B
+.4BE
+ #4B
+` !$
+  !'9
+.4BE
+ #4B
+@ !'9
+@8!$
+@8!$
+ @!$
+@ !$
+ @!$
+@ !$
+ 0!$
+  !&
+ 8!$
+ 8!$
+@ !$
+ 8!$
+@ !$
+ 0!$
+@ !&
+  !&
+` !$
+@0!$
+ 0!$
+`8!$
+  !$
+  !$
+  !$
+  !$
+ 8!$
+@8!$
+@8!$
+  !0C
+  !0C
+@(!$
+@ !$
+\$Q0p
+    &%U 
+    &%U 
+    &%U 
+    &%U 
+    &%U 
+@(!<
+ !$C
+ !&ei0
+d&ei0
+  !0C
+  !0B
+@ !0C
+@ !0B
+@8!$
+  !$
+@ !0C
+@ !0B
+@8!$
+@8!$
+@ !'
+`8!$
+  !$
+/var/run/httpd.pid
+httpd exit() %x
+allocate for bypass file list failed %d bytes
+%s %d %s
+HTTP/1.0
+Server: %s
+httpd
+%a, %d %b %Y %H:%M:%S GMT
+Date: %s
+Content-Type: %s
+Cookie: %s
+Connection: close
+text/html
+<HTML><HEAD><TITLE>%d %s</TITLE></HEAD>
+<BODY BGCOLOR="#cc9999"><H4>%d %s</H4>
+</BODY></HTML>
+Not Found
+File not found.
+Location: %s
+ip=%s
+cannot find ip
+userinfo[servidx][i].urn=%d
+matched!!!
+accept
+fdopen
+%d.%d.%d.%d
+Bad Request
+No request found.
+Not Implemented
+That method is not implemented.
+Can't parse request.
+Authorization:
+Content-Length:
+boundary=
+User-Agent:
+Cookie:
+post
+Bad filename.
+/../
+Illegal filename.
+index.htm
+urn=
+Not Found!
+httpd process %d exit...
+/www
+HTTPD: %s(%d) 
+socket
+setsockopt
+setsockopt RCVTIMEO
+bind
+listen
+%s:can't bind to any address
+daemon
+fork
+%s(%d): I am child for HTTPD SVR %d
+%s(%d): Start HTTPD SVR %d
+httpd normal exit...
+images/* **.css **.js login*.* top*.* index*.*
+login_guest.htm
+login.htm
+loginerr.htm
+login_guest_err.htm
+loginduperr.htm
+login_guest_ok.htm
+u132xzp32aai.htm
+xc324m12sdlo.htm
+yds32u872vld.htm
+z983erv3210ba.htm
+main
+SET%d
+SET[%d] %x=[%s]
+!!!!!!!!!we do reboot=%d
+Content-Type:text/html
+<html>
+<script langugae="javascript">
+if('undefined'!=typeof(top.G_prog))top.G_prog=99;
+if('undefined'!=typeof(top.G_err))top.G_err=%d;
+</script>
+</html>
+Insufficient args
+'%s'
+%s %s %d %d
+%s("%s%d",%u,'%s');
+addCfg
+%s("%s%d",%u,'');
+%s %s
+%s("%s",%u,'%s');
+%s("%s",%u,'');
+/usr/sbin/sh_dnld_state_cfg.sh S PASS
+util_sys_cli bgCmd "/usr/sbin/sh_reboot.sh"
+cp -f %s %s%s
+/etc/config/
+backup.bin
+/usr/sbin/sh_cfg_store.sh R %s
+%s[%d] Command Execution Error: cmd_buf [%s]
+!!!!!!!!!CGI restore return rc=%d
+/usr/sbin/sh_dnld_state_cfg.sh S FAIL
+/usr/sbin/sh_img_upgrade.sh %d %s 0
+!!!!!!!!!CGI upgrade rc=%d
+/usr/sbin/sh_cfg_store.sh B %s
+%s[%d]: cmd: %s
+%s timeout from %s
+%s logout from %s
+Failed to set log!!!
+%s login success from %s
+%s login duplicate from %s
+%s login error from %s
+cp /tmp/log_for_tr69 /tmp/%s
+rm -f /tmp/log_for_tr69
+/tmp
+get key fail
+Message queue get fail %d
+Messgae send fail %d
+%s(%d): fail to send IPC msg to TR69
+%s(%d): msg sent ok.
+/usr/sbin/sh_dnld_state_cfg.sh C
+/usr/sbin/sh_dnld_state_cfg.sh S IN_PROGRESS
+Content-Disposition:
+name="devtag"
+name="upfile"
+%s[%d]: Upload Waiting TimeOut!!
+%s[%d]: Retry_count (Reading with zero length) exceed (%d) times!!
+result error: %d
+**.asp
+**.txt
+text/plain
+**.htm
+**.html
+**.xml
+text/xml
+**.ico
+image/icon
+**.css
+text/css
+**.gif
+image/gif
+**.jpg
+image/jpeg
+**.png
+image/png
+**.js
+text/javascript
+**.bin
+application/octet-stream
+**.conf
+log/log_for_tr69.log
+log/security_log
+**.log
+apply.cgi
+login.cgi
+logout.cgi
+upgrade.cgi
+restore.cgi
+cpe/cpe.cgi
+CFG_MAP
+CFG_MAP_ARY
+CFG_GET
+CFG_ARY
+CGI_LOGIN_STAT
+CGI_LOGIN_ESCAPE
+CGI_LOGIN_ADMIN
+CGI_LOGIN_MAC
+CGI_LOGIN_LST
+CGI_LOGIN_KEEP
+DSL_CONF
+DSL_RETRAIN
+DNS_CONF
+DDNS_CONF
+LAN_CONF
+LAN_DHCP_REV_CONF
+LAN_DHCP_REV_DEL_CONF
+SYS_CONF
+SYS_RESET
+SYS_MFRESET
+SYS_BOOT
+SYS_RMT_MGMT
+WIFI_CONF
+WIFI_WEP_CONF
+WIFI_SSID_CONF
+WIFI_SSID_SEC
+WIFI_SSID_QOS_CONF
+WIFI_ADV_CONF
+WIFI_MAC_CONF
+WIFI_WPA_CONF
+WIFI_WPS_CONF
+WIFI_WPS_ENROLL_CONF
+WIFI_WPS_STARTPBC_CONF
+WIFI_DOT1X_CONF
+WAN_ATM_CONF
+WAN_ADSL_ETH_CONF
+WAN_CONN
+WAN_DISC
+NAT_CONF
+NAT_ADDRMAP
+NAT_VIRTUALSERVER
+NAT_APP
+NTP_CONF
+WANETH_CONN
+WANETH_DISC
+LOG_CLR
+TR69_CONF
+FW_CONF
+FW_FILTER_CONF
+FW_FILTER_DEL
+FW_SCHEDULE_CONF
+FW_SCHEDULE_DEL
+FW_URL_LIST_CONF
+FW_URL_LIST_CLEAR
+FW_MAC_CONF
+FW_DMZ_CONF
+FW_SPI_CONF
+UPNP_CONF
+QOS_CONF
+QOS_RULE_CONF
+QOS_RULE_EDIT_CONF
+NAS_USER_CONF
+UMTS_PINCODE_CONF
+NAS_CONF
+NAS_BASIC_CONF
+NAS_USER_DEL_CONF
+USB_MOUNT_DEL_CONF
+USB_SHARED_CONF
+USB_SHARED_DEL_CONF
+1,2,3,4,5,6,7,8,9,10,11,
+1,2,3,4,5,6,7,8,9,10,11,12,13,
+10,11,
+10,11,12,13,
+1,2,3,4,5,6,7,8,9,10,11,12,13,14,
+3,4,5,6,7,8,9,
+/tmp/
+do_cpecgi_post
+do_restore_cgi
+do_upload_post
+do_get_cfg
+PATH
+/sbin:/bin:/usr/sbin:/usr/bin
+waitpid
+%%%02X
+MANUF_PHASE
+manuf
+phase
+MGMTACCOUNT_USERNAME
+mgmtAccount
+username
+MGMTACCOUNT_PASSWORD
+password
+LAN_NETSECTION
+netsection
+LAN_IFNAME
+ifname
+LAN_IP4ADDR
+ip4addr
+LAN_IP4MASK
+ip4mask
+LAN_PROTO
+proto
+LAN_DHCP4S_EB
+dhcp4s_eb
+LAN_DHCP4POOL_S
+dhcp4pool_s
+LAN_DHCP4POOL_E
+dhcp4pool_e
+LAN_DHCP4LEASE
+dhcp4lease
+LAN_DHCP_VENDOR_OPTION
+dhcp_vendor_option
+LAN_DOMAINNAME
+domainname
+LAN_DEFAULTROUTE
+defaultroute
+LAN_VLAN
+vlan
+LAN_DHCP_RESERVED_CLIENT_001
+dhcp_reserved_client_001
+LAN_DHCP_RESERVED_CLIENT_002
+dhcp_reserved_client_002
+LAN_DHCP_RESERVED_CLIENT_003
+dhcp_reserved_client_003
+LAN_DHCP_RESERVED_CLIENT_004
+dhcp_reserved_client_004
+LAN_DHCP_RESERVED_CLIENT_005
+dhcp_reserved_client_005
+LAN_DHCP_RESERVED_CLIENT_006
+dhcp_reserved_client_006
+LAN_DHCP_RESERVED_CLIENT_007
+dhcp_reserved_client_007
+LAN_DHCP_RESERVED_CLIENT_008
+dhcp_reserved_client_008
+LAN_DHCP_LOG_100_LST
+LAN_DHCP_CLIENT_NUM
+LAN_PORT_STATUS_004_LST
+LAN_DHCP_REV_024_LST
+WANCTL_TYPE
+wanctl
+WANETH_IFNAME
+wanETH
+WANETH_PROTO
+WANETH_VLAN
+WANETH_IPASSIGNED
+ipassigned
+WANETH_IP4ADDR
+WANETH_IP4MASK
+WANETH_IP4GATEWAY
+ip4gateway
+WANETH_AUTHPROTOCOL
+authprotocol
+WANETH_USERNAME
+WANETH_PASSWORD
+WANETH_IDLETIME
+idletime
+WANETH_RETRYTIME
+retrytime
+WANETH_KEEPALIVETIME
+keepalivetime
+WANETH_MTU
+WANETH_CONNECTTYPE
+connecttype
+WANETH_STATIC_DNS
+static_dns
+WANETH_PRI_DNS
+pri_dns
+WANETH_SEC_DNS
+sec_dns
+WANETH_TYPE
+WANETH_STATUS
+WANETH_STATUS_MAC
+STATUS_MAC
+WANETH_STATUS_IP
+WANETH_STATUS_MASK
+STATUS_MASK
+WANETH_STATUS_GW
+STATUS_GW
+WANETH_STATUS_DNS_PRI
+STATUS_DNS_PRI
+WANETH_STATUS_DNS_SEC
+STATUS_DNS_SEC
+WANETH_STATUS_RATE
+STATUS_RATE
+WAN_IFNAME
+WAN_PROTO
+WAN_VLAN
+WAN_IPASSIGNED
+WAN_IP4ADDR
+WAN_IP4MASK
+WAN_IP4GATEWAY
+WAN_AUTHPROTOCOL
+WAN_USERNAME
+WAN_PASSWORD
+WAN_IDLETIME
+WAN_RETRYTIME
+WAN_KEEPALIVETIME
+WAN_MTU
+WAN_CONNECTTYPE
+WAN_STATIC_DNS
+WAN_PRI_DNS
+WAN_SEC_DNS
+WAN_PVC_STATUS_008_LST
+WAN_PPP_STATUS
+WAN_PPP_CON_TIME
+WAN_STATUS_IP
+SYSTEM_LANG_CODE
+system
+lang_code
+SYSTEM_TIME_ZONE
+time_zone
+SYSTEM_GUI_STYLE
+gui_style
+SYSTEM_REMOTE_MGMT_EN
+remote_mgmt_en
+SYSTEM_REMOTE_MGMT_START_IP
+remote_mgmt_start_ip
+SYSTEM_REMOTE_MGMT_END_IP
+remote_mgmt_end_ip
+SYSTEM_HOST_NAME
+host_name
+SYSTEM_WAN_TYPE
+wan_type
+SYSTEM_ACTIVE_WAN_TYPE
+active_wan_type
+SYSTEM_PPP_PASS_THRU
+ppp_pass_thru
+SYSTEM_DEFAULT_IP
+default_ip
+SYSTEM_CCFG_BK_FNAME
+ccfg_bk_fname
+SYSTEM_CURRENT_TIME
+CURRENT_TIME
+SYSTEM_RUNTIME_CODE_VER
+RUNTIME_CODE_VER
+SYSTEM_BOOT_CODE_VER
+BOOT_CODE_VER
+SYSTEM_SERIAL_NUM
+SERIAL_NUM
+SYSTEM_LAN_MAC_002_LST
+SYSTEM_WAN_MAC_008_LST
+WAN_MAC_008_LST
+SYSTEM_WLAN_MAC_002_LST
+WLAN_MAC_002_LST
+SYSTEM_HARDWARE_VER
+HARDWARE_VER
+SYSTEM_SECURITY_LOG_100_LST
+SECURITY_LOG_100_LST
+DNS_PRI_DNS_SERVER_IP
+pri_dns_server_ip
+DNS_PRI_DNS_BIND_TO_IF
+pri_dns_bind_to_if
+DNS_SEC_DNS_SERVER_IP
+sec_dns_server_ip
+DNS_SEC_DNS_BIND_TO_IF
+sec_dns_bind_to_if
+DNS_THIRD_DNS_SERVER_IP
+third_dns_server_ip
+DNS_THIRD_DNS_BIND_TO_IF
+third_dns_bind_to_if
+WIRELESS_WIRELESS_ENABLE
+wireless
+WIRELESS_ENABLE
+WIRELESS_AP_CHMODE
+AP_CHMODE
+WIRELESS_AP_PRIMARY_CH
+AP_PRIMARY_CH
+WIRELESS_CTRY_CODE
+CTRY_CODE
+WIRELESS_DTIM_PERIOD
+DTIM_PERIOD
+WIRELESS_BEACON_INTERVAL
+BEACON_INTERVAL
+WIRELESS_FRAG_THRESH
+FRAG_THRESH
+WIRELESS_RTS_THRESH
+RTS_THRESH
+WIRELESS_WMM_MODE
+WMM_MODE
+WIRELESS_WPS_MODE
+WPS_MODE
+WIRELESS_WPS_PIN
+WPS_PIN
+WIRELESS_WPS_PCB
+WPS_PCB
+WIRELESS_POWER_SAVING
+POWER_SAVING
+WIRELESS_CHAN_LST
+CHAN_LST
+WIRELESS_WPS_STATUS
+WPS_STATUS
+WIRELESS_CHANBOND_LST
+CHANBOND_LST
+WIRELESS_PWS_TYPE
+PWS_TYPE
+WIRELESS_PWS_ENCRTYPE
+PWS_ENCRTYPE
+WIRELESS_AP_PIN
+AP_PIN
+WIRELESS_SEC_KEY
+SEC_KEY
+WIFISSID_AP_SSID
+wifissid
+AP_SSID
+WIFISSID_BSS_ENABLE
+BSS_ENABLE
+WIFISSID_MAX_ASSOC
+MAX_ASSOC
+WIFISSID_AP_SECMODE
+AP_SECMODE
+WIFISSID_AP_CYPHER
+AP_CYPHER
+WIFISSID_AP_WPA
+AP_WPA
+WIFISSID_AP_WPA_AUTH
+AP_WPA_AUTH
+WIFISSID_BROADCAST
+broadcast
+WIFISSID_PSK_KEY
+PSK_KEY
+WIFISSID_WEP_KEYA
+WEP_KEYA
+WIFISSID_WEP_KEYB
+WEP_KEYB
+WIFISSID_WEP_KEYC
+WEP_KEYC
+WIFISSID_WEP_KEYD
+WEP_KEYD
+WIFISSID_AP_PRIMARY_KEY
+AP_PRIMARY_KEY
+WIFISSID_VLAN
+WIFISSID_UP_BW_ENABLE
+up_bw_enable
+WIFISSID_DN_BW_ENABLE
+dn_bw_enable
+WIFISSID_UPSTREAM_BW
+upstream_bw
+WIFISSID_DNSTREAM_BW
+dnstream_bw
+WIFISSID_WLAN_STATUS_002_LST
+WLAN_STATUS_002_LST
+WIFIMACFILTER_FILTER_ENABLE
+wifimacfilter
+FILTER_ENABLE
+WIFIMACFILTER_FILTER_ACCESS
+FILTER_ACCESS
+WIFIMACFILTERADDR_MACFILTER_ADDR
+wifimacfilteraddr
+MACFILTER_ADDR
+DOT1X_CYPHER_SUITE
+dot1x
+cypher_suite
+DOT1X_DOT1XREKEYSECONDS
+dot1XRekeySeconds
+DOT1X_DOT1XREKEYPACKETS
+dot1XRekeyPackets
+DOT1X_SSNREKEYSECONDS
+ssnRekeySeconds
+DOT1X_SSNREKEYPACKETS
+ssnRekeyPackets
+DOT1X_DOT1XREKEYING
+dot1XRekeying
+DOT1X_SSNREKEYING
+ssnRekeying
+DOT1X_STRICTUPDATE
+strictUpdate
+DOT1X_ENABLEOS
+enableOS
+DOT1X_ENABLEWEP
+enableWEP
+DOT1X_ENABLE1X
+enable1X
+DOT1X_ENABLEACL
+enableACL
+DOT1X_ENABLESSN
+enableSSN
+DOT1X_WPA2FLAG
+wpa2flag
+DOT1X_ENABLESSNPSK
+enableSSNPSK
+DOT1X_SSNPSK256KEYFILED
+ssnpsk256keyfiled
+DOT1X_WEPKEYSIZE
+WEPKeySize
+DOT1X_DEFAULTKEYID
+DefaultKeyId
+DOT1X_SSNPSKASCIIKEY
+ssnpskASCIIkey
+DOT1X_SSNPSK256KEY
+ssnpsk256key
+DOT1X_SRV_IP
+srv_ip
+DOT1X_SECRET_KEY
+secret_key
+DOT1X_NAS_ID
+nas_id
+DOT1X_SRV_TYPE
+srv_type
+DOT1X_SRV_PORT
+DOT1X_ACC_SRV_PORT
+acc_srv_port
+DOT1X_IDLE_SESSION_TIMEOUT
+idle_session_timeout
+DOT1X_REAUTHPERIOD
+reAuthPeriod
+DOT1X_QUIETPERIOD
+quietPeriod
+DOT1X_TXPERIOD
+txPeriod
+DOT1X_SUPPTIMEOUT
+suppTimeout
+DOT1X_REAUTHCOUNT
+reAuthCount
+DOT1X_ENABLE1XAUTHEN
+enable1Xauthen
+DOT1X_ROLE
+role
+HTTPD_LOGIN_TIMEOUT
+login_timeout
+HTTPD_WAIT_TIMEOUT
+wait_timeout
+HTTPD_REMOTE_MGNT
+remote_mgnt
+HTTPD_HTTP_BROWSE_SERVICE
+http_browse_service
+HTTPD_HTTP_BROWSE_PORT
+http_browse_port
+TR69_ENABLE
+tr69
+Enable
+TR69_FIRSTUSEDATE
+FirstUseDate
+TR69_URL
+TR69_USERNAME
+Username
+TR69_PASSWORD
+Password
+TR69_PERIODICINFORMENABLE
+PeriodicInformEnable
+TR69_PERIODICINFORMINTERVAL
+PeriodicInformInterval
+TR69_PERIODICINFORMTIME
+PeriodicInformTime
+TR69_PARAMETERKEY
+ParameterKey
+TR69_COMMANDKEY
+CommandKey
+TR69_PROVISIONINGCODE
+ProvisioningCode
+TR69_CONNREQURL
+ConnReqURL
+TR69_CONNREQUSERNAME
+ConnReqUsername
+TR69_CONNREQPASSWORD
+ConnReqPassword
+TR69_TR69_M_REBOOT
+Tr69_m_reboot
+TR69_TRANSFERFAULTCODE
+TransferFaultCode
+TR69_TRANSFERSTARTTIME
+TransferStartTime
+TR69_TRANSFERENDTIME
+TransferEndTime
+TR69_LOGENABLE
+LogEnable
+PVC_NETSECTION
+PVC_ENCAPS
+encaps
+PVC_VPI
+PVC_VCI
+PVC_QOS
+PVC_PCR
+PVC_SCR
+PVC_MBS
+PVC_PVC_LST
+USB_MAXSUPPORTNUM
+maxSupportNum
+USB_ENABLE
+USB_MAXNUM
+maxnum
+DRIVE_NOW_DRIVE_NUM
+drive_now
+drive_num
+DRIVE_NOW_DRIVEINFOA
+driveinfoa
+DRIVE_NOW_VOLUMEA
+volumea
+DRIVE_NOW_DRIVEINFOB
+driveinfob
+DRIVE_NOW_VOLUMEB
+volumeb
+PRINTER_NOW_NUM
+printer_now
+PRINTER_NOW_MODEL
+model
+UMTS_NOW_NUM
+umts_now
+UMTS_NOW_MANUFACTURER
+Manufacturer
+UMTS_NOW_MODEL
+SAMBA_HISTORY_DRIVE1
+samba_history
+drive1
+SAMBA_HISTORY_DRIVE2
+drive2
+SAMBA_HISTORY_DRIVE3
+drive3
+SAMBA_HISTORY_DRIVE4
+drive4
+SAMBA_HISTORY_DRIVE5
+drive5
+SAMBA_HISTORY_DRIVE6
+drive6
+SAMBA_HISTORY_DRIVE7
+drive7
+SAMBA_HISTORY_DRIVE8
+drive8
+SAMBA_HISTORY_HISTORY
+history
+SAMBA_SHARELIST_DRIVE1
+samba_sharelist
+SAMBA_SHARELIST_DRIVE2
+SAMBA_ENABLE
+samba
+SAMBA_PRESMBENB
+preSmbEnb
+SAMBA_DEF_SMBENABLE
+def_smbEnable
+SAMBA_DEF_COMPUTERNAME
+def_computerName
+SAMBA_DEF_COMPUTERDESCRIPTION
+def_computerDescription
+SAMBA_DEF_GROUPNAME
+def_groupName
+SAMBA_DEF_REMOTEENABLE
+def_remoteEnable
+SAMBA_SMBENABLE
+SAMBA_COMPUTERNAME
+SAMBA_COMPUTERDESCRIPTION
+SAMBA_GROUPNAME
+SAMBA_REMOTEENABLE
+PRINTER_ENABLE
+printer
+PRINTER_QUEUENAME
+queuename
+UPNP_ENABLE
+upnp
+NTP_ENABLE
+NTP_TZ
+NTP_INTERVAL
+interval
+NTP_SERVERCNT
+servercnt
+NTP_SERVER_PRI
+server_pri
+NTP_SERVER_SEC
+server_sec
+NTP_DLS
+NTP_YEAR
+year
+NTP_MONTH
+month
+NTP_DAY
+NTP_HOUR
+hour
+NTP_MINUTE
+NTP_SECOND
+second
+LOG_CATEGORY
+category
+QOS_DFT_TOTAL_FWG_NUM
+qos_dft
+total_fwg_num
+QOS_DFT_DFT_FWG
+dft_fwg
+QOS_DFT_LNK_NUM
+lnk_num
+QOS_DFT_LNK0
+lnk0
+QOS_DFT_VIF0_0
+vif0_0
+QOS_DFT_FWG00_0
+fwg00_0
+QOS_DFT_FWG00_1
+fwg00_1
+QOS_DFT_FWG00_2
+fwg00_2
+QOS_DFT_FWG00_3
+fwg00_3
+QOS_DFT_FWG00_4
+fwg00_4
+QOS_DFT_FWG00_5
+fwg00_5
+QOS_DFT_FWG00_6
+fwg00_6
+QOS_DFT_FWG00_7
+fwg00_7
+QOS_DFT_CLSFY_SEQ
+clsfy_seq
+QOS_DFT_RU00_MAC
+ru00_mac
+QOS_DFT_RU00_INIF
+ru00_inif
+QOS_DFT_RU00_INPHYIF
+ru00_inphyif
+QOS_DFT_RU00_SRCIP
+ru00_srcip
+QOS_DFT_RU00_DSTIP
+ru00_dstip
+QOS_DFT_RU00_APORPROTO
+ru00_aporproto
+QOS_DFT_RU00_SPORT
+ru00_sport
+QOS_DFT_RU00_DPORT
+ru00_dport
+QOS_DFT_RU00_TOS
+ru00_tos
+QOS_DFT_RU00_8021P
+ru00_8021p
+QOS_DFT_RU00_ETHTYPE
+ru00_ethtype
+QOS_DFT_RU00_PKTLEN
+ru00_pktlen
+QOS_DFT_RU00_ACT
+ru00_act
+QOS_DFT_RU01_MAC
+ru01_mac
+QOS_DFT_RU01_INIF
+ru01_inif
+QOS_DFT_RU01_INPHYIF
+ru01_inphyif
+QOS_DFT_RU01_SRCIP
+ru01_srcip
+QOS_DFT_RU01_DSTIP
+ru01_dstip
+QOS_DFT_RU01_APORPROTO
+ru01_aporproto
+QOS_DFT_RU01_SPORT
+ru01_sport
+QOS_DFT_RU01_DPORT
+ru01_dport
+QOS_DFT_RU01_TOS
+ru01_tos
+QOS_DFT_RU01_8021P
+ru01_8021p
+QOS_DFT_RU01_ETHTYPE
+ru01_ethtype
+QOS_DFT_RU01_PKTLEN
+ru01_pktlen
+QOS_DFT_RU01_ACT
+ru01_act
+PWRSAVE_ENABLE
+pwrsave
+PWRSAVE_MAX_PERIOD
+max_period
+PWRSAVE_PERIOD1_B
+period1_b
+PWRSAVE_PERIOD1_E
+period1_e
+PWRSAVE_PERIOD2_B
+period2_b
+PWRSAVE_PERIOD2_E
+period2_e
+PWRSAVE_PERIOD3_B
+period3_b
+PWRSAVE_PERIOD3_E
+period3_e
+DDNS_ENABLE
+ddns
+DDNS_PROVIDER
+provider
+DDNS_USERNAME
+DDNS_PASSWORD
+DDNS_HOSTNAME
+hostname
+FIREWALL_FIREWALL_ENABLE
+Firewall
+firewall_enable
+FIREWALL_FILTER_ENABLE
+FIREWALL_MAC_FILTER_ENABLE
+mac_filter_enable
+FIREWALL_DMZ_ENABLE
+dmz_enable
+FIREWALL_DOS_FUNC
+dos_func
+FIREWALL_PINGWAN
+pingWAN
+FIREWALL_RIPDEF
+ripDef
+FIREWALL_PKT_FRAG_ENABLE
+pkt_frag_enable
+FIREWALL_TCP_CONN_ENABLE
+tcp_conn_enable
+FIREWALL_UDP_SESSION_ENABLE
+udp_session_enable
+FIREWALL_FTP_SRV_ENABLE
+ftp_srv_enable
+FIREWALL_H323_SRV_ENABLE
+h323_srv_enable
+FIREWALL_TFTP_SRV_ENABLE
+tftp_srv_enable
+FIREWALL_SIP_SRV_ENABLE
+sip_srv_enable
+FIREWALL_RTSP_SRV_ENABLE
+rtsp_srv_enable
+FIREWALL_L2TP_SRV_ENABLE
+l2tp_srv_enable
+FIREWALL_PPTP_SRV_ENABLE
+pptp_srv_enable
+FIREWALL_IPSEC_SRV_ENABLE
+ipsec_srv_enable
+FIREWALL_FRAG_WAIT
+frag_wait
+FIREWALL_TCP_SYN_WAIT
+tcp_syn_wait
+FIREWALL_TCP_FIN_WAIT
+tcp_fin_wait
+FIREWALL_TCP_CONN_IDLE
+tcp_conn_idle
+FIREWALL_UDP_SESSION_IDLE
+udp_session_idle
+FIREWALL_H323_IDLE
+h323_idle
+FIREWALL_DOS_SESSION
+dos_session
+FIREWALL_DOS_SESSION_MINUTE
+dos_session_minute
+FWACCESSCONTROL_DESCRIPTION
+FWAccessControl
+description
+FWACCESSCONTROL_START_IP
+FWACCESSCONTROL_END_IP
+FWACCESSCONTROL_BLOCK_SERVICE
+block_service
+FWACCESSCONTROL_USER_PROTOCOL
+user_protocol
+FWACCESSCONTROL_USER_PORT
+user_port
+FWACCESSCONTROL_SCHEDULE_ID
+schedule_id
+FWACCESSCONTROL_AVAIL_IDX
+FWSCHEDULE_NAME
+FWSchedule
+FWSCHEDULE_COMMENT
+comment
+FWSCHEDULE_START_TIME
+start_time
+FWSCHEDULE_END_TIME
+end_time
+FWSCHEDULE_AVAIL_IDX
+FWMACFILTER_MAC01N
+FWMACFilter
+mac01n
+FWMACFILTER_MAC02N
+mac02n
+FWMACFILTER_MAC03N
+mac03n
+FWMACFILTER_MAC04N
+mac04n
+FWMACFILTER_MAC05N
+mac05n
+FWMACFILTER_MAC06N
+mac06n
+FWMACFILTER_MAC07N
+mac07n
+FWMACFILTER_MAC08N
+mac08n
+FWMACFILTER_MAC09N
+mac09n
+FWMACFILTER_MAC10N
+mac10n
+FWMACFILTER_MAC11N
+mac11n
+FWMACFILTER_MAC12N
+mac12n
+FWMACFILTER_MAC13N
+mac13n
+FWMACFILTER_MAC14N
+mac14n
+FWMACFILTER_MAC15N
+mac15n
+FWMACFILTER_MAC16N
+mac16n
+FWMACFILTER_MAC17N
+mac17n
+FWMACFILTER_MAC18N
+mac18n
+FWMACFILTER_MAC19N
+mac19n
+FWMACFILTER_MAC20N
+mac20n
+FWMACFILTER_MAC21N
+mac21n
+FWMACFILTER_MAC22N
+mac22n
+FWMACFILTER_MAC23N
+mac23n
+FWMACFILTER_MAC24N
+mac24n
+FWMACFILTER_MAC25N
+mac25n
+FWMACFILTER_MAC26N
+mac26n
+FWMACFILTER_MAC27N
+mac27n
+FWMACFILTER_MAC28N
+mac28n
+FWMACFILTER_MAC29N
+mac29n
+FWMACFILTER_MAC30N
+mac30n
+FWMACFILTER_MAC31N
+mac31n
+FWMACFILTER_MAC32N
+mac32n
+FWMACFILTER_DHCP_CLIENT_LIST
+FWURLBLOCKING_URL01N
+FWURLBlocking
+url01n
+FWURLBLOCKING_URL02N
+url02n
+FWURLBLOCKING_URL03N
+url03n
+FWURLBLOCKING_URL04N
+url04n
+FWURLBLOCKING_URL05N
+url05n
+FWURLBLOCKING_URL06N
+url06n
+FWURLBLOCKING_URL07N
+url07n
+FWURLBLOCKING_URL08N
+url08n
+FWURLBLOCKING_URL09N
+url09n
+FWURLBLOCKING_URL10N
+url10n
+FWURLBLOCKING_URL11N
+url11n
+FWURLBLOCKING_URL12N
+url12n
+FWURLBLOCKING_URL13N
+url13n
+FWURLBLOCKING_URL14N
+url14n
+FWURLBLOCKING_URL15N
+url15n
+FWURLBLOCKING_URL16N
+url16n
+FWURLBLOCKING_URL17N
+url17n
+FWURLBLOCKING_URL18N
+url18n
+FWURLBLOCKING_URL19N
+url19n
+FWURLBLOCKING_URL20N
+url20n
+FWURLBLOCKING_URL21N
+url21n
+FWURLBLOCKING_URL22N
+url22n
+FWURLBLOCKING_URL23N
+url23n
+FWURLBLOCKING_URL24N
+url24n
+FWURLBLOCKING_URL25N
+url25n
+FWURLBLOCKING_URL26N
+url26n
+FWURLBLOCKING_URL27N
+url27n
+FWURLBLOCKING_URL28N
+url28n
+FWURLBLOCKING_URL29N
+url29n
+FWURLBLOCKING_URL30N
+url30n
+FWDMZ_PUBLIC_IP
+FWDMZ
+public_ip
+FWDMZ_CLIENT_IP
+client_ip
+NAT_FUNC
+NAT_MAPPING_254_LST
+NATADDRESSMAPPING_SRCIP
+NATAddressMapping
+srcip
+NATADDRESSMAPPING_DSTIPB
+dstipb
+NATADDRESSMAPPING_DSTIPE
+dstipe
+NATSPECIALAPP_GLOBAL_PORT
+NATSpecialApp
+Global_Port
+NATSPECIALAPP_TRIGGER_PORT
+Trigger_Port
+NATSPECIALAPP_PPROTOCOL
+pProtocol
+NATSPECIALAPP_TPROTOCOL
+tProtocol
+NATSPECIALAPP_EFLAG
+eFlag
+NATPUBSERV_GLOBAL_PORT
+NATPubServ
+NATPUBSERV_PROTOCOL
+Protocol
+NATPUBSERV_PRIVATE_IP
+Private_IP
+NATPUBSERV_PRIVATE_PORT
+Private_Port
+NATPUBSERV_FUNC
+UPNPD_UPNP_DEFAULT_ENABLE
+UPNPD
+upnp_default_enable
+UPNPD_UPNP_DEFAULT_UPNP_IGD
+upnp_default_upnp_igd
+UPNPD_UPNP_ENABLE
+upnp_enable
+UPNPD_UPNP_IGD
+upnp_igd
+UPNPD_TR64_ENABLE
+tr64_enable
+UPNPD_PTR_ENABLE
+ptr_enable
+UPNPD_DEBUG_LOG
+debug_log
+DLNAS_UPNP_AV
+DLNAS
+DLNAS_UPNP_DEFAULT_AV
+upnp_default_av
+DLNAS_MUSIC_NUM
+music_num
+DLNAS_VIDEO_NUM
+video_num
+DLNAS_PICTURE_NUM
+picture_num
+DLNAS_DLNA_SCANNING
+dlna_scanning
+DLNAS_WEB_UPNP_AV
+web_upnp_av
+ADSL_OP_MODE
+adsl
+op_mode
+ADSL_BIT_SWAP_EN
+bit_swap_en
+ADSL_SRA_EN
+SRA_en
+ADSL_CFG_LINESTATUS
+CFG_LINESTATUS
+ADSL_CUR_LINESTATUS
+CUR_LINESTATUS
+ADSL_CFG_LINKTYPE
+CFG_LINKTYPE
+ADSL_CUR_LINKTYPE
+CUR_LINKTYPE
+ADSL_UP_RATE
+UP_RATE
+ADSL_DN_RATE
+DN_RATE
+ADSL_UP_NOISEMARGIN
+UP_NOISEMARGIN
+ADSL_DN_NOISEMARGIN
+DN_NOISEMARGIN
+ADSL_UP_ATTEN
+UP_ATTEN
+ADSL_DN_ATTEN
+DN_ATTEN
+ADSL_NR_OUTPUTPWR
+NR_OUTPUTPWR
+ADSL_FE_OUTPUTPWR
+FE_OUTPUTPWR
+ADSL_NR_FAST_FEC
+NR_FAST_FEC
+ADSL_FE_FAST_FEC
+FE_FAST_FEC
+ADSL_NR_INTER_FEC
+NR_INTER_FEC
+ADSL_FE_INTER_FEC
+FE_INTER_FEC
+ADSL_NR_FAST_CRC
+NR_FAST_CRC
+ADSL_FE_FAST_CRC
+FE_FAST_CRC
+ADSL_NR_INTER_CRC
+NR_INTER_CRC
+ADSL_FE_INTER_CRC
+FE_INTER_CRC
+ADSL_NR_LOS_DFT
+NR_LOS_DFT
+ADSL_FE_LOS_DFT
+FE_LOS_DFT
+ADSL_NR_FAST_HEC
+NR_FAST_HEC
+ADSL_FE_FAST_HEC
+FE_FAST_HEC
+ADSL_NR_INTER_HEC
+NR_INTER_HEC
+ADSL_FE_INTER_HEC
+FE_INTER_HEC
+ADSL_NR_ERR_PSEC
+NR_ERR_PSEC
+ADSL_FE_ERR_PSEC
+FE_ERR_PSEC
+ADSL_REC_CELLS
+REC_CELLS
+ADSL_TX_CELLS
+TX_CELLS
+ADSL_CODE_VER
+ADSL_CFG_OPMODE
+CFG_OPMODE
+ADSL_CUR_OPMODE
+CUR_OPMODE
+ADSL_UP_SATTEN
+UP_SATTEN
+ADSL_DN_SATTEN
+DN_SATTEN
+SNMP_AGENT
+snmp
+agent
+SNMP_TRAP
+trap
+SNMP_COMMUNITYCNT
+communitycnt
+SNMP_COMMUNITY1
+community1
+SNMP_COMMUNITY2
+community2
+SNMP_SERVERCNT
+SNMP_SERVER1
+server1
+QOS_ENABLE
+QOS_BW_HS
+bw_hs
+QOS_BW_HS_MORE
+bw_hs_more
+QOS_BW_HR
+bw_hr
+QOS_BW_HR_MORE
+bw_hr_more
+QOS_BW_H
+bw_h
+QOS_BW_H_MORE
+bw_h_more
+QOS_BW_M
+bw_m
+QOS_BW_M_MORE
+bw_m_more
+QOS_BW_N
+bw_n
+QOS_BW_N_MORE
+bw_n_more
+QOS_BW_L
+bw_l
+QOS_BW_L_MORE
+bw_l_more
+QOS_BW_LR
+bw_lr
+QOS_BW_LR_MORE
+bw_lr_more
+QOS_BW_LS
+bw_ls
+QOS_BW_LS_MORE
+bw_ls_more
+QOS_RULE1N
+rule1n
+QOS_RULE2N
+rule2n
+QOS_RULE3N
+rule3n
+QOS_RULE4N
+rule4n
+QOS_RULE5N
+rule5n
+QOS_RULE6N
+rule6n
+QOS_RULE7N
+rule7n
+QOS_RULE8N
+rule8n
+QOS_RULE9N
+rule9n
+QOS_RULE10N
+rule10n
+QOS_RULE11N
+rule11n
+QOS_RULE12N
+rule12n
+QOS_RULE13N
+rule13n
+QOS_RULE14N
+rule14n
+QOS_RULE15N
+rule15n
+QOS_RULE16N
+rule16n
+NAS_FTPD_ENABLE
+ftpd_enable
+NAS_FTPD_PORT
+ftpd_port
+NAS_SMBD_ENABLE
+smbd_enable
+NAS_SMBD_WORKGROUP
+smbd_workgroup
+NAS_AUTOSHARE_ENABLE
+autoshare
+NAS_SECURITY_ENABLE
+security
+NAS_AUTOSHARE_USERNAME
+autoshare_username
+NAS_AUTOSHARE_PASSWORD
+autoshare_password
+NAS_AUTOSHARE_PRIV
+autoshare_priv
+NAS_MOUNTED_008_LST
+NAS_SHARED_008_LST
+NAS_USER_004_LIST
+NAS_ACCESS_004_LIST
+NASUSERS_USERNAME
+NASUSERS
+NASUSERS_PASSWORD
+NASUSERS_PRIV
+priv
+NASSHARES_NAME
+NASSHARES
+NASSHARES_PATH
+path
+NASSHARES_UUID
+uuid
+NASSHARES_USERS
+users
+NASSHARES_COMMENT
+UMTS_FUNC
+UMTS
+UMTS_OPERATOR
+operator
+UMTS_APN
+UMTS_PIN_CODE
+pin_code
+UMTS_ATD_NO
+atd_no
+UMTS_STAUS
+STAUS
+UMTS_STATUS_IP
+UMTS_STATUS_MASK
+UMTS_STATUS_GW
+UMTS_STATUS_DNS_PRI
+UMTS_STATUS_DNS_SEC
+FW_ACCESS_CONTROL_010_LST
+ACCESS_CONTROL_010_LST
+FW_SCHEDULE_NAME_010_LST
+SCHEDULE_NAME_010_LST
+FW_SCHEDULE_010_LST
+SCHEDULE_010_LST
+DHCP_REV_ITEM
+DHCP
+REV_ITEM
+%s: End CFG_init
+%s: CFG_set_event: invalid id: %08x
+%s: CFG_get: Error use  list:%08x
+%s: CFG_get: No cid:%08x
+%s: cfg_del_event: cid=%08x, rc=%d
+%s: CFG_get:not found cid:%x
+%s: len > CFG_MAX_OBJ_SZ
+Error open profile: %s
+[%d]
+Error Set CFG %s = %s
+Load profile Total: %d
+%02x%02x
+%02X:%02X:%02X:%02X:%02X:%02X
+%04d-%02d-%02d %02d:%02d:%02d
+%s%d
+CFG_init
+cfg_del_event
+CFG_set_event
+CFG_get
+CFG_str2val
+CFG_val2str
+%s#%03d
+%s[%d]: %s@%s (%s)
+%s[%d]: error to set %s@%s (%s)
+%s[%d]: error to get %s@%s
+_CFG_setValue
+_CFG_getValue
+none
+%4.1f
+%s[%d]Get DSL status fail: %d
+%s[%d]Get DSL statistics fail: %d
+%s[%d] get ccfg error !!
+%s[%d]Get DSL info fail: %d
+Interleaved Path
+Fast Path
+SHOWTIME
+IDLE
+TRAINING
+UNKNOWN
+Automatic
+G992.1(G.DMT)
+G992.3(ADSL2)
+G992.5(ADSL2+)
+G992.3(Annex-M)
+G992.5(Annex-M)
+NONE
+AUTO
+G992.3(Annex-I)
+G992.3(Annex-L)
+G992.5(Annex-I)
+G992.2(G.LITE)T1413
+ADSL_CUR_OPMODE_get
+ADSL_CFG_OPMODE_get
+ADSL_CODE_VER_get
+ADSL_CUR_LINESTATUS_get
+%s_%d
+/tmp/dhcp_rev_record
+fopen error
+%s[%d] get ccfg error!!
+%s[%d] set ccfg error!!
+%s[%d] parse ccfg error!!
+%s[%d] convert ccfg error!!
+FWACCESSCONTROL_AVAIL_IDX_get
+FWACCESSCONTROL_USER_PORT_set
+FWACCESSCONTROL_USER_PORT_get
+FWACCESSCONTROL_USER_PROTOCOL_set
+FWACCESSCONTROL_USER_PROTOCOL_get
+FWACCESSCONTROL_BLOCK_SERVICE_set
+FWACCESSCONTROL_BLOCK_SERVICE_get
+%s;%s;%d
+['%s','%d']
+%s[%d] get invalid ccfg!!
+%s-%s
+Always Blocking
+%d;%s;%s;%s;%s
+FW_SCHEDULE_010_LST_get
+FW_SCHEDULE_NAME_010_LST_get
+FW_ACCESS_CONTROL_010_LST_get
+lan#001
+/tmp/udhcpd.leases%d_%d
+Failed to get LAN configuration!!!
+Failed to get UDHCPD lease file!!!
+Failed to open UDHCPD lease file!!!
+Incorrect DHCPD lease file content!!!
+00:00:00:00:00:00
+FWSCHEDULE_AVAIL_IDX_get
+['%s','%s','%s','%d']
+ETHERNET
+HALF
+DOWN
+FULL
+['%d','%s','%d','%s']
+lan#%03d
+dhcp4s_eb Error !!
+MAPI LAN Obtain Leases File Errrors !! 
+%x:%x:%x:%x:%x:%x
+['%s','%s','%s','%s','%d','%d']
+dhcp_reserved_client_%03d
+['%s']
+%s,['%s']
+%s;%s;%s;%s;%s
+NTFS
+%s;%s;%4.3f GB;%4.3f GB;%d;%s;%s
+%s[%d]: Failed to get NAT mapping table!!!
+['%s','%s','%d','%s','%d','%s','%d'],
+NAT_MAPPING_254_LST_get
+['%d','VC%d','-/-','---','---']
+VC MUX
+Unknown
+Disable
+1483 Bridging
+PPPOA
+1483 Routing
+PPPOE
+MAC Encapsulated Routing
+['%d','VC%d','%s/%s','%s','%s']
+PVC_PVC_LST_get
+Failed to get log!!!
+['%s']
+%02X
+['%02X-%02X-%02X-%02X-%02X-%02X']
+ %s-OT (%s)
+umts
+%2d day 
+%2d days 
+"%d;%d;%s;%s %2d:%02d:%02d;%d.%03d(KBps);%d.%03d(KBps)"
+['%d/%d','%s','%s','%s','%s','%s','%s','%s','%s','%d','%d']
+Failed to get connected WAN status!
+mistyview
+ADSL
+eth3
+atm0
+days
+%d %s %02d:%02d:%02d
+%02d:%02d:%02d
+--:--:--
+DISCONNECTED
+CONNECTED
+PPPoA
+PPPoE
+atm%d
+0.0.0.0
+/usr/sbin/util_sys_cli addDNSNameServer %d 1 %s
+/usr/sbin/util_sys_cli addDNSNameServer %d 0 %s
+/usr/sbin/util_sys_cli clearDNSShadow %d
+value=%d
+wan%03d
+ getCurWanPppIface
+WAN_PVC_STATUS_008_LST_get
+Failed to get port status!!!
+1000
+%02x:%02x:%02x:%02x:%02x:%02x
+DISABLED
+/bin/bcm_ethctl eth3 linkstate &> /tmp/linkstate4eth3
+/tmp/linkstate4eth3
+rm -f /tmp/linkstate4eth3
+/usr/sbin/util_sys_cli addDNSNameServer 8 1 %s
+/usr/sbin/util_sys_cli addDNSNameServer 8 0 %s
+/usr/sbin/util_sys_cli clearDNSShadow 8
+TKIP
+TKIP+AES
+%s[%d] mapi error !!
+%s(%s)
+['%s','%s','%d, %d','%s','%s','%s'],
+['%s','%s','%d','%s','%s','%s'],
+WPA-WPA2
+None
+WIFISSID_WLAN_STATUS_002_LST_get
+wps_device_pin
+'%d','%d','%d','%d'
+wps_proc_status
+'%d'
+'%d',
+WIRELESS_SEC_KEY_get
+WIRELESS_PWS_ENCRTYPE_get
+WIRELESS_PWS_TYPE_get
+WIRELESS_CHANBOND_LST_get
+WIRELESS_CHAN_LST_get
+/usr/sbin/util_sys_cli restartDDNS
+/usr/sbin/util_sys_cli restartDNS 0
+/usr/sbin/util_sys_cli restartDNS 1
+/usr/sbin/util_sys_cli restartDNS 2
+/usr/sbin/util_sys_cli updateResolvConf
+%s retrain
+%s down
+%s bitswap %s sra %s mode %s
+%s up
+. /usr/sbin/sh_xdsl_init.sh
+CGI_do_DSL_CONF_as
+Failed to get firewall MAC filter status!!!
+Failed to update firewall MAC filter!!!
+Failed to get firewall status!!!
+Failed to set firewall status!!!
+%s%02dn
+Failed to get URL blocking rule!!!
+Failed to set URL blocking!!!
+Clear configuration - Firewall URL blocking
+    URL %d: ""
+    URL %d: failed!!!
+Failed to clear URL blocking!!!
+Delete configuration - Firewall schedule rule %d
+    Name: ""
+    Name: failed!!!
+    Comment: ""
+    Comment: failed!!!
+    Start time: ""
+    Start time: failed!!!
+    End time: ""
+    End time: failed!!!
+Failed to delete schedule rule!!!
+Delete configuration - Firewall access control rule %d
+    Description: ""
+    Description: failed!!!
+    Start IP: ""
+    Start IP: failed!!!
+    End IP: ""
+    End IP: failed!!!
+    Schedule ID: 0
+    Schedule ID: failed!!!
+    Blocking services: ""
+    Blocking services: failed!!!
+    User defined protocol: ""
+    User defined protocol: failed!!!
+    User defined port: ""
+    User defined port: failed!!!
+Failed to delete access control rule!!!
+Failed to get firewall filter status!!!
+Failed to update firewall filter!!!
+/usr/sbin/util_lan_cli delRDHCPEntry %d %d
+/usr/sbin/util_lan_cli config %d
+/usr/sbin/util_sys_cli restartDNS %d
+/usr/sbin/util_sys_cli bgCmd "/usr/sbin/util_lan_cli config 0"
+/usr/sbin/util_sys_cli bgCmd "/usr/sbin/util_lan_cli config 1"
+/usr/sbin/util_sys_cli bgCmd "/usr/sbin/util_lan_cli config 2"
+%s(%d): Parsing Error
+/usr/sbin/util_lan_cli addRDHCPEntry "%s" "%s" "%s" "%s"
+/usr/sbin/util_lan_cli config %s
+/usr/sbin/util_sys_cli restartDNS %s
+CGI_do_LAN_DHCP_REV_CONF_as
+Failed to clear log!!!
+Failed to del NAS user(%s)!
+Failed to restart NAS!
+Failed to get mounted entries!
+Failed to del NAS mount-point(%s)!
+Failed to add NAS user(%s)!
+Failed to restart NAS service!
+/usr/sbin/util_sys_cli restartSNTP
+arc_qos stop
+arc_qos start
+%s restart
+arc_qos bwctl
+arc_qos bwctl wl
+. /usr/sbin/sh_upstream_bwalloc.sh
+. /usr/sbin/sh_wlan_bwctl.sh
+./etc/rc.d/S351wlanBwCtl_init
+%s[%d] 
+ %s[%d]
+Failed to get remote management status!!!
+cfgIptRmtMgmt.isEnable = %d
+Failed to get remote management start IP!!!
+cfgIptRmtMgmt.startIp = %x
+Failed to get remote management end IP!!!
+cfgIptRmtMgmt.endIp = %x
+Failed to set remote management!!!
+/usr/sbin/sh_cfg_store.sh M
+/usr/sbin/sh_cfg_store.sh F
+CGI_do_SYS_BOOT_as
+CGI_do_SYS_BOOT_ps
+CGI_do_SYS_MFRESET_as
+CGI_do_SYS_MFRESET_ps
+CGI_do_SYS_RESET_as
+CGI_do_SYS_RESET_ps
+CGI_do_SYS_CONF_as
+CGI_do_SYS_CONF_ps
+%s(%d): Can not get configuration: status!!!
+sh_tr69_init.sh restart
+sh_tr69_init.sh stop
+CGI_do_TR69_CONF_as
+/usr/sbin/sh_3g_stop.sh
+/usr/sbin/sh_wan_reinit.sh
+%s[%d]: UPnP Restart
+/usr/sbin/util_sys_cli restartUPNPD
+CGI_do_UPNP_CONF_as
+%s#001
+Failed to disconnect WAN!!!
+Failed to connect WAN!!!
+/usr/sbin/util_sys_cli bgCmd "/usr/sbin/sh_wan_reinit.sh"
+Failed to remove VLAN member!!!
+Failed to disable WAN interface!!!
+Failed to set ATM PVC!!!
+Failed to set WAN interface!!!
+/usr/sbin/sh_pppd_update_dns.sh %d %s 0.0.0.0
+1.1.1.1
+Failed to add VLAN member!!!
+/usr/sbin/util_wan_cli updateQos
+%s stop
+%s start
+%s wpspbc
+%s wpspin %s
+%s wl 0
+%s wmm %s
+%s wl 1
+%s rmvMbr 1 %s rmvMbr 2 %s rmvMbr 3 %s
+%s addMbr %s %s
+. /usr/sbin/sh_wlan_init.sh
+. /usr/sbin/sh_vlan_init.sh
+./etc/rc.d/S350wlan_bringup
+wl0.1
+wl0.2
+CGI_do_WIFI_WPS_ENROLL_CONF_as
+CGI_do_WIFI_SSID_QOS_CONF_as
+CGI_do_WIFI_SSID_CONF_as
+Pragma: no-cache
+Cache-Control: no-cache,no-store,must-revalidate, post-check=0,pre-check=0
+Expires: 0
+application/x-unknown
+Content-Disposition: attachment; filename=%s
+%s%s%06d
+Bm8    
+Bmx    
+Bn0    
+BnX    
+Bnx        
+Bo8    
+BoX    
+Bo|    
+Bk(,#
+Ba,0
+BaP0
+Bg,2    
+BgL2
+Bgp2
+
+```
+
+There seems to be a TON of CGI stuff inside... and I cannot work out what is what, and why it is in there...
+
+Also, here is a link to the backup of all MTDs, used in this router:
+
+[https://rapidshare.com/files/194681363/backup_of_BrightBox_MTDs.zip](https://rapidshare.com/files/194681363/backup_of_BrightBox_MTDs.zip)
+
+
+Thank you
+
+---
+
+### Post by uRock on 2012-02-04
+It doesn't appear that you own the system which is being hacked.
+
+Thread Closed.
+
+---
+
