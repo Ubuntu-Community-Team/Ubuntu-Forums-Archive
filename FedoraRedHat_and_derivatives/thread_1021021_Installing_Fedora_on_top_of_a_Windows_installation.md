@@ -1,0 +1,120 @@
+---
+title: "Installing Fedora on top of a Windows installation"
+date: 2008-12-24
+forum: Fedora/RedHat and derivatives
+---
+
+### Post by PCessna on 2008-12-24
+Now, I'm sure this impossible, But does Fedora's disk partitioning app allow resizing a disk using FULLY a NTFS partition. 
+
+I have 160GB free, (of a 250GB disk) and wanted to dedicate 60GB to fedora core 10 GNOME 64-bit, and have the CD ready anyways, If it was possible, Can I just tell it to just hda0 or whatever is calls partitions into hda0 + hda1, and have grub on the master boot partition?
+
+MY OS: WINDOWS XP
+
+---
+
+### Post by PCessna on 2008-12-25
+> **PCessna said:**
+> Now, I'm sure this impossible, But does Fedora's disk partitioning app allow resizing a disk using FULLY a NTFS partition. 
+
+I have 160GB free, (of a 250GB disk) and wanted to dedicate 60GB to fedora core 10 GNOME 64-bit, and have the CD ready anyways, but I saw how in Vista you can "shrink the disk" which if the disk is fragmented as hell, I don't know how it manages to do that in under 10 hours, but anyways, If it was possible, Can I just tell it to just hda0 or whatever is calls partitions into hda0 + hda1, and have grub on the master boot partition?
+
+BumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBumpBump
+
+Sorry, But I have to bump too many times a month
+
+---
+
+### Post by Elfy on 2008-12-25
+I would use the vista tool to shrink it's disk.
+
+It's likley that you can create a partition in the resulting empty space, last time I installed fedora there was a linux partition I could use.
+
+If it's a livecd you'll be able to get online from it and check further.
+
+---
+
+### Post by PCessna on 2008-12-25
+> **forestpixie said:**
+> I would use the vista tool to shrink it's disk.
+
+It's likley that you can create a partition in the resulting empty space, last time I installed fedora there was a linux partition I could use.
+
+If it's a livecd you'll be able to get online from it and check further.
+
+Where did I say I had Vista? Got rid of the garbage months ago.
+
+---
+
+### Post by Elfy on 2008-12-25
+Tell you what - reword the first post so that is actully makes some sense then we can all have another go.
+
+Might be best not to talk about vista in it I'd say.
+
+---
+
+### Post by dmizer on 2008-12-25
+The partition manager in [Knoppix](http://www.knopper.net/knoppix/index-en.html) can handle NTFS.
+
+Regarding Fedora, you might get better information if you ask on their forums instead of here: [http://fedoraforum.org/](http://fedoraforum.org/)
+
+---
+
+### Post by mikjp on 2008-12-25
+Use [GParted](http://gparted.sourceforge.net/).
+
+---
+
+### Post by PCessna on 2008-12-26
+> **mikjp said:**
+> Use [GParted](http://gparted.sourceforge.net/).
+
+I am running Windows, NOT GNOME. I have Ubuntu through wubi, I have uneasy feelings about trying to run that through Ubuntu.
+
+---
+
+### Post by Elfy on 2008-12-26
+It's a livecd - burn it and boot with it.
+
+---
+
+### Post by PCessna on 2008-12-26
+> **forestpixie said:**
+> It's a livecd - burn it and boot with it.
+
+Again - I feel uneasy about using a live CD
+
+---
+
+### Post by Elfy on 2008-12-27
+You have ubuntu installed on wubi on a virtual partition so you can't resize it form there as far as I know. You will have to either use a partition editor on an install disc - like you're ubuntu or the fedora one, you've been advised to use knoppix and gparted. I don't know that there are any options left if you don't want to use a livecd.
+
+---
+
+### Post by PCessna on 2008-12-27
+> **PCessna said:**
+> Again - I feel uneasy about using a live CD
+
+There are other ways, But obviously no one wants to speak up -- Fine, I'll go try Fedora's forums about their installer, forget you people then.
+
+---
+
+### Post by bodhi.zazen on 2008-12-27
+First, in general, it is best to manage your partitions from a live CD.
+
+This is because you can not resize the root partition while it is running from hard drive.
+
+In regards to Fedora, yes Fedora, and in fact almost every distro, uses gparted.
+
+gparted can resize most partitions including both ntfs and vfat.
+
+If for some reason Fedora fails, you can use any distro that includes gparted including your Ubuntu CD.
+
+Take care in that Fedora will replace your boot loader and the installer may not recognize windows.
+
+Also Fedora by default uses LVM. If you do not know what that is either do not use it or read up on LVM before you install.
+
+Last => Moved to other OS talk ...
+
+---
+
