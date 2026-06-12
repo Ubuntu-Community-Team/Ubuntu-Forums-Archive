@@ -1,0 +1,29 @@
+---
+title: "Updating Drivers...."
+date: 2008-04-05
+forum: Desktop Effects &amp; Customization
+---
+
+### Post by netranger84 on 2008-04-05
+Updating Drivers....
+Hii...all...
+Can u please help me ....my prob is that i want the highly animated desktop feature (Compiz Fusion) working on my PC....my System is Intel P4 1.5 GB RAM NVidia Geforce 8600gt (512 mb) GPU...etc....
+
+I know the procedure to do it..
+my prob is when i go to desktop features and try to enable extra effects ... it says to enable my nvidia card...which when done it asks for the ubuntu live cd to be inserted...
+but the cd which i have is a bit faulty...it fails to read ... this was the prob even in my windows vista...
+i installed ubuntu 7.10 from this cd itself but it took many attempts for tht cd to read...
+In linux also the cd is read sometimes.... but when mounted and tried to enable the video card it fails to update the drivers which are to be read from the cd .....
+The cd which m havin is the digit cd which they issued wid dre december edition last year....that had ubuntu 7.10 installer(bootable)...
+
+Please ne one help me on this ... and kindly forgive me if ne mistakes coz m new to LINUX.......
+
+---
+
+### Post by james_bandido on 2008-04-06
+I had encountered the same problem with my workstation before wherein I thought the live cd seems to be faulty, but when our technician inspected my system he suggested to replace the cd drive with a new one ... after that my problem just went away :D
+
+cheers !!!
+
+---
+

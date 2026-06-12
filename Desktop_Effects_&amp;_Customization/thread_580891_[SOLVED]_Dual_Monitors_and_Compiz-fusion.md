@@ -1,0 +1,562 @@
+---
+title: "[SOLVED] Dual Monitors and Compiz-fusion"
+date: 2007-10-19
+forum: Desktop Effects &amp; Customization
+---
+
+### Post by evissecx on 2007-10-19
+Hi everyone!
+
+I just made a fresh install of ubuntu gutsy. The copiz-fusion effects worked from the start, 
+but the thing is that I have dual monitors. After I had config my xorg.conf for xinerama 2 screens, 
+compiz-fusion wont load anymore.
+
+Ive red on the forum and it seems to work for people using twinview. But I would prefer xinerama.
+With twinview, i got 2 monitors but still just 1 screen, therefor I can not maximize windows on one monitor, it stretches over both monitors.
+
+How could I get compiz-fusion to work with xinerama?
+or
+How could I have twinview using 2 screens on 2 monitors?
+
+Thanks in advance,
+
+evissecx
+
+---
+
+### Post by bogoliubov on 2007-10-19
+> **evissecx said:**
+> Hi everyone!
+
+I just made a fresh install of ubuntu gutsy. The copiz-fusion effects worked from the start, 
+but the thing is that I have dual monitors. After I had config my xorg.conf for xinerama 2 screens, 
+compiz-fusion wont load anymore.
+
+Ive red on the forum and it seems to work for people using twinview. But I would prefer xinerama.
+With twinview, i got 2 monitors but still just 1 screen, therefor I can not maximize windows on one monitor, it stretches over both monitors.
+
+How could I get compiz-fusion to work with xinerama?
+or
+How could I have twinview using 2 screens on 2 monitors?
+
+Thanks in advance,
+
+evissecx
+
+If I remember correctly Xinerama breaks 3D acceleration, which would mean no Compiz.
+Depending on the type of card you have you can use MergedFramebuffer or something similar.
+On my laptop with Intel GMA945 I use xrandr to set up dual monitors with working 3D and Compiz.
+
+---
+
+### Post by evissecx on 2007-10-19
+Thank you, I'll take a look at that soon. The card I got is Nvidia 8800gts. 
+One more thing that might be interessting to know is that the dualview I want has different resolutions.
+
+screen 1: 1600x1200
+screen 2: 1280x1024
+
+Twinview seems to be the best as it is available in the nvidia settings and all. and I have red that people have got 2 screens on 2 monitors with twinview.
+
+HOW?!? :/
+
+---
+
+### Post by CC_machine on 2007-10-20
+i have a laptop with integrated intel 950 on a 945 board... what is the proper way to get compiz running on dual monitors? i guess i need to edit xorg.conf manually, the "screens and graphics" in compiz doesnt pick up my external monitor... if i press my hardware switch for CRT/LCD switch it just mirrors my laptop screen... not useful :(
+
+---
+
+### Post by bogoliubov on 2007-10-21
+> **CC_machine said:**
+> i have a laptop with integrated intel 950 on a 945 board... what is the proper way to get compiz running on dual monitors? i guess i need to edit xorg.conf manually, the "screens and graphics" in compiz doesnt pick up my external monitor... if i press my hardware switch for CRT/LCD switch it just mirrors my laptop screen... not useful :(
+
+You should really ask that in a separate thread. But if you are running Ubuntu 7.10, you should set up your system so that you have compiz working on one screen. Then restart with the second monitor connected. Once you've logged in, open a terminal and type
+xrandr -q
+That will give you the possible configurations. Note what the "maximum" says! That's the max resolution you can have on both screens. If it's not large enough, you can add a line in the Screen section, under the display subsection: 
+Virtual 2048    2048
+
+Note that with Intel GMA 945, you can't have 3D acceleration working if you set Virtual larger than 2048x2048.
+
+Ok, once this is working, you can set up dual screens with, for instance
+xrandr --output VGA --left-of LVDS
+
+Hope it works!
+
+---
+
+### Post by Vil on 2007-10-21
+> **evissecx said:**
+> Thank you, I'll take a look at that soon. The card I got is Nvidia 8800gts. 
+One more thing that might be interessting to know is that the dualview I want has different resolutions.
+
+screen 1: 1600x1200
+screen 2: 1280x1024
+
+Twinview seems to be the best as it is available in the nvidia settings and all. and I have red that people have got 2 screens on 2 monitors with twinview.
+
+HOW?!? :/
+
+You can have two screens (one per monitor) easily with twinview. I don't know anything about using a different resolution on each (its never been a concern of mine, 2x LCD panels for a total of 2560x1024).
+
+Here's my xorg.conf for Gutsy (it includes some stuff from the new autoconfiguration utility rearranged a bit plus my old fiesty/edgy config additions and tweaks as well as things to make compiz-fusion happy). Most of the stuff that is commented it out stuff I either didn't need or was left over from Fiesty (or Edgy, for that matter)... I wouldn't use mine outright if I were anyone but me. lol
+
+```
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+## Default Mouse Configuration, uncomment if there are mouse problems
+#Section "InputDevice"
+#       Identifier      "Configured Mouse"
+#       Driver          "mouse"
+#       Option          "CorePointer"
+#       Option          "Device"                "/dev/input/mice"
+#       Option          "Buttons"               "12"
+#       Option          "Protocol"              "ExplorerPS/2"
+##      Option          "ZAxisMapping"          "4 5"
+#       Option          "Emulate3Buttons"       "true"
+#EndSection
+## Logitech MX1000 Mouse Configuration, comment out if there are mouse problems & uncomment above section
+##Uncomment for wacom tablet#############
+#Section "InputDevice"
+#  Driver        "wacom"
+#  Identifier    "stylus"
+#  Option        "Device"        "/dev/wacom"          # Change to 
+#                                                      # /dev/input/event
+#                                                      # for USB
+#  Option        "Type"          "stylus"
+#  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+#EndSection
+#Section "InputDevice"
+#  Driver        "wacom"
+#  Identifier    "eraser"
+#  Option        "Device"        "/dev/wacom"          # Change to 
+#                                                      # /dev/input/event
+#                                                      # for USB
+#  Option        "Type"          "eraser"
+#  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+#EndSection
+#Section "InputDevice"
+#  Driver        "wacom"
+#  Identifier    "cursor"
+#  Option        "Device"        "/dev/wacom"          # Change to 
+#                                                      # /dev/input/event
+#                                                      # for USB
+#  Option        "Type"          "cursor"
+#  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+#EndSection
+##Uncomment for wacom tablet#############
+#Section "Monitor"
+#       Identifier      "Sceptre X9G-"
+#       Option          "DPMS"
+#EndSection
+
+Section "ServerLayout"
+
+#       InputDevice     "stylus" "SendCoreEvents"
+#       InputDevice     "cursor" "SendCoreEvents"
+#       InputDevice     "eraser" "SendCoreEvents"
+    Identifier     "TwinView Configuration"
+    Screen      0  "Default Screen" 0 0
+    Screen      1  "Screen 2" 0 0
+    InputDevice    "Generic Keyboard"
+    InputDevice    "Configured Mouse"
+    Option         "Xenerama" "Off"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "Module"
+#    Load           "i2c"
+#    Load           "bitmap"
+#    Load           "ddc"
+#       Load    "dri"
+#    Load           "extmod"
+#    Load           "freetype"
+#    Load           "glx"
+#    Load           "int10"
+#    Load           "type1"
+#    Load           "vbe"
+#    Load           "dbe"
+
+        Load    "glx"
+        Load    "v4l"
+
+EndSection
+
+Section "InputDevice"
+    Identifier     "Generic Keyboard"
+    Driver         "kbd"
+    Option         "CoreKeyboard"
+    Option         "XkbRules" "xorg"
+    Option         "XkbModel" "pc104"
+    Option         "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Configured Mouse"
+    Driver         "evdev"
+    Option         "CorePointer"
+    Option         "Buttons" "12"
+    Option         "Name" "Logitech USB RECEIVER"
+    Option         "ZAxisMapping" "4 5 6 7"
+EndSection
+
+Section "Monitor"
+    Identifier     "Sceptre X9G- Naga IV"
+    Option         "DPMS"
+EndSection
+
+Section "Monitor"
+    Identifier     "Sceptre X9G- Naga V"
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "NVIDIA Corporation 6800 XT"
+    Driver         "nvidia"
+    VendorName     "XFX"
+    BoardName      "NVIDIA GeForce 6800 XT"
+    BusID          "PCI:1:0:0"
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "NVIDIA Corporation 6800 XT"
+    Monitor        "Sceptre X9G- Naga IV"
+    DefaultDepth    24
+    Option         "NvAGP" "2"
+    Option         "NoLogo" "1"
+    Option         "RenderAccel" "1"
+    Option         "CursorShadow" "1"
+    Option         "Coolbits" "0"
+    Option         "ConnectedMonitor" "dfp, dfp"
+    Option         "NoPowerConnectorCheck"
+    Option         "TwinView" "1"
+    Option         "TwinviewOrientation" "RightOf"
+    Option         "Metamodes" "1280x1024,1280x1024; 800x600,800x600; 1024x768,1024x768; 1280x1024,NULL; 1024x768,NULL; 800x600,NULL; 640x480,NULL"
+    Option         "SecondMonitorHorizSync" "UseEdidFreqs"
+    Option         "SecondMonitorVertRefresh" "UseEdidFreqs"
+        # Option        "NoTwinViewXineramaInfo"
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       1
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       4
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       8
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       15
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       16
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       24
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen 2"
+    Device         "NVIDIA Corporation 6800 XT"
+    Monitor        "Sceptre X9G- Naga V"
+    DefaultDepth    24
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       1
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       4
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       8
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       15
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       16
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+    SubSection     "Display"
+        Viewport    1 0
+        Depth       24
+        Modes      "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+```
+
+---
+
+### Post by evissecx on 2007-10-21
+Thanks Vil and bogoliubov!
+I'm gonna test this out now. 
+Wish me luck!
+
+---
+
+### Post by evissecx on 2007-10-21
+Hmm, it didn't turn out so well.
+Vil, I looked at your config and tried to apply your settings in my config.
+What i got was nothing at all. The monitors turned off when in graphic mode.
+I started over again and same thing happened again.
+Maybe it is the frequency that messes up.
+If it can't find EDIDfreqs. Tried to write the freq numbers intead but I'm unsure if I did write it right
+
+---
+
+### Post by evissecx on 2007-10-22
+Ok, I have no idea what I just did. But i Got it working now.
+2 screens and 2 monitors in twinview mode.
+I have been testing around a bit. But most recent. I have hade my xorg configured for dual monitors with xinerama. And after that, I used nvidia setting to configure a fresh twinview.
+And this time, it worked. I got 2 screens just like that.
+
+Thanks for your answers. I'll mark this is solved now. Because it is... somehow :)
+
+I'll post my config here so you can see.I don't feel like cleaning it up without knowing what everything is and how it got to work this time.
+
+```
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildmeister@builder3)  Wed Sep 12 14:30:30 PDT 2007
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder3)  Wed Sep 12 14:29:35 PDT 2007
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "ServerLayout"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+    Identifier     "Default Layout"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Generic Keyboard"
+    InputDevice    "Configured Mouse"
+    Option         "Xenerama" "Off"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "Module"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+
+# Removed Option "Xinerama" "1"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Generic Keyboard"
+    Driver         "kbd"
+    Option         "CoreKeyboard"
+    Option         "XkbRules" "xorg"
+    Option         "XkbModel" "pc105"
+    Option         "XkbLayout" "se"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Configured Mouse"
+    Driver         "mouse"
+    Option         "CorePointer"
+    Option         "Device" "/dev/input/mice"
+    Option         "Protocol" "ImPS/2"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    Identifier     "stylus"
+    Driver         "wacom"
+    Option         "Device" "/dev/input/wacom"
+    Option         "Type" "stylus"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+    Identifier     "eraser"
+    Driver         "wacom"
+    Option         "Device" "/dev/input/wacom"
+    Option         "Type" "eraser"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+    Identifier     "cursor"
+    Driver         "wacom"
+    Option         "Device" "/dev/input/wacom"
+    Option         "Type" "cursor"
+    Option         "ForceDevice" "ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Monitor"
+    Identifier     "LG901b"
+    Option         "DPMS"
+EndSection
+
+Section "Monitor"
+    Identifier     "Viewsonic"
+    VendorName     "Unknown"
+    ModelName      "ViewSonic VA903-3Series"
+    HorizSync       30.0 - 82.0
+    VertRefresh     50.0 - 85.0
+    Option         "DPMS"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor1"
+    VendorName     "Unknown"
+    ModelName      "LG 901B"
+    HorizSync       30.0 - 98.0
+    VertRefresh     50.0 - 160.0
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "ViewSonic VA903-3Series"
+    HorizSync       30.0 - 82.0
+    VertRefresh     50.0 - 85.0
+EndSection
+
+Section "Device"
+    Identifier     "GeForce 8800 GTS"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 8800 GTS"
+EndSection
+
+Section "Device"
+    Identifier     "Videocard0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 8800 GTS"
+EndSection
+
+Section "Device"
+    Identifier     "Videocard1"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 8800 GTS"
+    BusID          "PCI:4:0:0"
+    Screen          1
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "GeForce 8800 GTS"
+    Monitor        "LG901b"
+    DefaultDepth    24
+    Option         "ConnectedMonitor" "crt, crt"
+    Option         "TwinView" "1"
+    Option         "TwinviewOrientation" "RightOf"
+    Option         "Metamodes" "1600x1200,1280x1024; 1280x1024,1280x1024"
+    Option         "SecondMonitorHorizSync" "UseEdidFreqs"
+    Option         "SecondMonitorVertRefresh" "UseEdidFreqs"
+#   Option         "NoTwinViewXineramaInfo"
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       24
+        Modes      "1600x1200" "1280x1024"
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen 2"
+    Device         "GeForce 8800 GTS"
+    Monitor        "Viewsonic"
+    DefaultDepth    24
+    Option         "AddARGBGLXVisuals" "True"
+    SubSection     "Display"
+        Viewport    0 0
+        Depth       24
+        Modes      "1280x1024"
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen1"
+    Device         "Videocard0"
+    Monitor        "Monitor1"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "CRT-1: 1600x1200_75 +0+0"
+EndSection
+
+Section "Screen"
+
+# Removed Option "TwinView" "0"
+# Removed Option "metamodes" "CRT-0: 1280x1024_75 +0+0"
+    Identifier     "Screen0"
+    Device         "Videocard0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "1"
+    Option         "metamodes" "CRT-0: 1280x1024_75 +0+0, CRT-1: 1600x1200_75 +1280+0"
+EndSection
+
+Section "Extensions"
+    Option         "Composite" "Enable"
+EndSection
+
+
+```
+
+---
+

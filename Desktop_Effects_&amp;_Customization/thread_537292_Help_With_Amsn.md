@@ -1,0 +1,30 @@
+---
+title: "Help With Amsn"
+date: 2007-08-28
+forum: Desktop Effects &amp; Customization
+---
+
+### Post by light-angel on 2007-08-28
+How can i install the Tile extension so i can use the Chameleon pluggin in amsn 0.96 on Kubuntu Feisty Fawn.
+
+i tried coping the extracted Tile folder on the chameleon folder but nothing happend :S. How can i make chameleon to detect the tile extension?
+
+By the way i have the Tile 0.7.8 version, it says it needs the 0.7.2 but i think it doesn't mather  since its a newer version.
+
+You can find the Pluggin in 
+
+[http://sourceforge.net/project/downloading.php?groupname=amsn&filename=chameleon-0.5.zip&use_mirror=ufpr](http://sourceforge.net/project/downloading.php?groupname=amsn&filename=chameleon-0.5.zip&use_mirror=ufpr)
+
+[http://www.amsn-project.net/plugins.php](http://www.amsn-project.net/plugins.php)
+
+PLEASE Answer
+
+---
+
+### Post by st33med on 2007-08-28
+This really isn't the right forum. Desktop Effects are for stuff like Compiz and Beryl, not plugins in programs. You will get more answers in Absolute Begginers Forum.
+
+And, I have no experience with amsn, so... yeah.
+
+---
+

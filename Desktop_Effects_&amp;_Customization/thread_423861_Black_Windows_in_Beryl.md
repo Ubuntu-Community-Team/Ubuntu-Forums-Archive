@@ -1,0 +1,424 @@
+---
+title: "Black Windows in Beryl"
+date: 2007-04-26
+forum: Desktop Effects &amp; Customization
+---
+
+### Post by delphiguy on 2007-04-26
+Cheers,
+
+I installed Feisty on my system 4 days ago and installed beryl 2 days later.  everything is working fine
+until today wherein I encountered that some of my windows opens black.  Some of the Windows that i open can show after I minimize and restore the application a couple of times but some remains black.
+
+Any ideas on how to fix this?
+
+Thanks.
+
+---
+
+### Post by Hackza on 2007-04-26
+no idea how to fix it. I've had the same thing but only twice. Reading this makes me realise it has happened and just after I have installed beryl. Good question but its probably something either that beryl is working on or the graphics card or lack of ram maybe?
+
+---
+
+### Post by Hackza on 2007-04-26
+oh and just now its done it again, I right clicked beryl manager and under select window manager I picked compiz and low and behold I could see the black windows. This isnt a real solution since it brings you out of beryl (and they great cube) and moves your windows but it should work if you dont mind the hassel. I suppose you could pick your other window manager aswell if you wanted too.
+
+---
+
+### Post by delphiguy on 2007-04-26
+Thats why I disabled Beryl on my machine for the meantime.  And re-enabled Compiz.
+I read somewhere that it is a know bug, and that bug happens to occur in the nvidia driver.
+Hopefully they'll fix this pretty quick.
+
+If only I could get the Beryl effects in Compiz.
+
+---
+
+### Post by justinw28 on 2007-04-28
+I've also been experiencing the same problem using Feisty with an nvidia card.  Sometimes if I minimize the window and maximize it again, it will show normally.  Other times reloading the window manager sometimes does it.  A serious pain--any help is appreciated!
+
+---
+
+### Post by hette on 2007-04-28
+This is the infamous 'black window bug' in the NVidia drivers. 
+It helps setting the "Rendering Path" to "Copy" in Beryl Manager.
+see also: [http://www.nvnews.net/vbulletin/showthread.php?t=84562]("http://www.nvnews.net/vbulletin/showthread.php?t=84562")
+
+---
+
+### Post by Hackza on 2007-04-28
+Well I hope they do get this bug fixed, beryl is useful (and aesthetic of course). Oh well, at least I know I'm not alone. It was seeing beryl and ubuntu that got me booting linux. Oh and that copy thing, worth a shot too see if it helps so cheers
+
+---
+
+### Post by cal6n on 2007-04-30
+Hi,
+
+The following worked for me, with a NVidia 5200, 64 MB VRAM. It was suggested by djdoo in the thread that's linked above.
+
+This is with the 9755 driver.
+
+In the  advanced beryl options, set: Texture from Pixmap; Force AIGLX and XGL binding. Leave the others as automatic.
+
+No more black windows! (yet)
+
+---
+
+### Post by Khaine on 2007-05-01
+I'm experiencing this problem with the compiz that comes with 7.04 :(
+
+---
+
+### Post by JamaicaSka on 2007-05-01
+> **cal6n said:**
+> Hi,
+
+The following worked for me, with a NVidia 5200, 64 MB VRAM. It was suggested by djdoo in the thread that's linked above.
+
+This is with the 9755 driver.
+
+In the  advanced beryl options, set: Texture from Pixmap; Force AIGLX and XGL binding. Leave the others as automatic.
+
+No more black windows! (yet)
+
+Can't thank you enough, suddenly everything is sexy again :) :KS 
+
+Ska
+
+---
+
+### Post by mhanraha on 2007-05-03
+> **JamaicaSka said:**
+> Can't thank you enough, suddenly everything is sexy again :) :KS 
+
+Ska
+
+Where are the advance options found?  Beryl Settings Manager? If so which tab? thanks
+
+---
+
+### Post by usererror on 2007-05-04
+> **cal6n said:**
+> Hi,
+
+The following worked for me, with a NVidia 5200, 64 MB VRAM. It was suggested by djdoo in the thread that's linked above.
+
+This is with the 9755 driver.
+
+In the  advanced beryl options, set: Texture from Pixmap; Force AIGLX and XGL binding. Leave the others as automatic.
+
+No more black windows! (yet)
+
+This also worked for me.  I almost always got the black window when I would maximize Sunbird, Firefox, and well, that's all i really use. haha.
+
+I took screenshots below of the settings that need to be changed for the post above me.
+
+Right click on Emerald, click on Advanced Beryl Settings...
+
+[img]http://gallery.iametarq.com/misc/screenshots/.cache/494x640-beryl_settings_fix_black_window.png[/img]
+[http://gallery.iametarq.com/misc/screenshots/beryl_settings_fix_black_window.png](http://gallery.iametarq.com/misc/screenshots/beryl_settings_fix_black_window.png)
+
+Someone may want to sticky this thread somewhere.
+
+---
+
+### Post by skandar0875 on 2007-05-06
+Hi,
+
+it worked for me, with a NVidia FX 5600, 64 MB VRAM. knwl :) 
+
+I had to edit and add some changes to the xorg.conf to have the decoration work
+
+in case someone have the same issue. (use any editor, vi, nano...etc)
+
+Ahmed@CyberPower:~$ cat /etc/X11/xorg.conf
+
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+        FontPath        "/usr/share/fonts/X11/misc"
+        FontPath        "/usr/share/fonts/X11/cyrillic"
+        FontPath        "/usr/share/fonts/X11/100dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/75dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/Type1"
+        FontPath        "/usr/share/fonts/X11/100dpi"
+        FontPath        "/usr/share/fonts/X11/75dpi"
+        # path to defoma fonts
+        FontPath        "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+     [COLOR="Red"]   Load    "i2c"
+        Load    "bitmap"
+        Load    "ddc"
+        Load    "extmod"
+        Load    "freetype"
+        Load    "glx"
+        Load    "int10"
+        Load    "vbe"[/COLOR]
+EndSection
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "CoreKeyboard"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc105"
+        Option          "XkbLayout"     "us"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+        Option          "Device"                "/dev/input/mice"
+        Option          "Protocol"              "ImPS/2"
+        Option          "ZAxisMapping"          "4 5"
+        Option          "Emulate3Buttons"       "true"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Synaptics Touchpad"
+        Driver          "synaptics"
+        Option          "SendCoreEvents"        "true"
+        Option          "Device"                "/dev/psaux"
+        Option          "Protocol"              "auto-dev"
+        Option          "HorizScrollDelta"      "0"
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "stylus"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "stylus"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "eraser"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "eraser"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "cursor"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "cursor"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "Device"
+     [COLOR="Red"]   Identifier      "nVidia Corporation NV31M [GeForce FX Go5600]"
+        Driver          "nvidia"[/COLOR]
+        BusID           "PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+        Identifier      "Generic Monitor"
+        Option          "DPMS"
+        HorizSync       28-72
+        VertRefresh     43-60
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "nVidia Corporation NV31M [GeForce FX Go5600]"
+        Monitor         "Generic Monitor"
+       [COLOR="Red"] DefaultDepth    24[/COLOR]
+        [COLOR="Red"]Option  "AddARGBGLXVisuals" "True"[/COLOR]
+
+        SubSection "Display"
+                Depth           1
+                Modes           "1440x900"
+        EndSubSection
+        SubSection "Display"
+                Depth           4
+                Modes           "1440x900"
+        EndSubSection
+        SubSection "Display"
+                Depth           8
+                Modes           "1440x900"
+        EndSubSection
+        SubSection "Display"
+                Depth           15
+                Modes           "1440x900"
+        EndSubSection
+        SubSection "Display"
+                Depth           16
+                Modes           "1440x900"
+        EndSubSection
+        SubSection "Display"
+                Depth           24
+                Modes           "1440x900"
+        EndSubSection
+
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+        Screen          "Default Screen"
+        InputDevice     "Generic Keyboard"
+        InputDevice     "Configured Mouse"
+        InputDevice     "stylus"        "SendCoreEvents"
+        InputDevice     "cursor"        "SendCoreEvents"
+        InputDevice     "eraser"        "SendCoreEvents"
+        InputDevice     "Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+        Mode    0666
+EndSection
+
+Section "Extensions"
+[COLOR="Red"]         Option "Composite" "Enable"
+EndSection[/COLOR]
+
+---
+
+### Post by hendrikwout on 2007-05-13
+this one worked for me to avoid the black windows:
+
+Rendering pad: texture of pixmap
+Rendering Platform: for AIGLX
+Binding: XGL binding
+Rendering: XGL rendering
+
+'copy' instead of 'texture of pixmap' worked also but it draws the windows much slower.
+
+---
+
+### Post by FuturePilot on 2007-05-13
+What worked for me was
+Rendering Path: Copy
+
+---
+
+### Post by euxneks on 2007-05-23
+The above picture walkthrough helped me out on my 7100 GS using nvidia drivers.
+
+
+Thanks!
+
+---
+
+### Post by MindFork on 2007-06-13
+Making those rendering changes fixed a sudden mozilla black window problem that I might have created by screwing around with firefox profile files (oops) -- After the changes were in place, I noticed Beryl was a bit choppy, so I put them back to default one at a time and opened firefox each time.  After all 3 were "normal" again, mozilla was still working fine.  
+
+So maybe just the changing of the settings to "refresh" the desktop without loosing all my windows/positions did the trick...?  I don't know, but I'm glad search turned up this thread.
+
+---
+
+### Post by drumstyx on 2007-07-01
+yes, you can change it from force nvidia to AIGLX, HOWEVER, when you do that, you are no longer using your video card to produce the effects...it's all CPU, so when you go to cube view while watching a video or listening to music, you'll get choppy video and/or audio. an annoying solution is to minimize some windows while using others...myself, i only used beryl for nice looks, so i didnt need to use more than one desktop, thus it was easy for me to keep only a few windows open....now i've got an 8600 GT with 256MB VRAM so i should be a bit better off....point is, if you change to using AIGLX you're just using CPU, and your graphics card no longer matters....i.e. you could be using a geforce 2 series
+
+---
+
+### Post by sacherjj on 2007-07-01
+When I tried Texture from Pixmap it actually made windows black.  Copy works for me as Rendering Path.  I'm on the Dell 520N with nVidia 7300.  I left all the other settings to Auto.
+
+---
+
+### Post by sydney on 2007-07-05
+I have the same problem on both Beryl & Compiz. I have tried various combinations of settings and ended up reinstalling each time. I have a workaround for this problem that seems to be working for me every time: Unmaximise the window and the reduce the window size both vertically and horizontally and the black window magically disappears...I am using Feisty on Dell Latitude D620 with NVidia drivers.
+
+Cheers,
+Syd
+
+---
+
+### Post by dawsonj on 2007-07-21
+I have NV17 [GeForce4 420 Go] on VAIO PCG-FR700
+
+MY problem is I Use the frame window (title bar) around the windows so then you cannot move them anymore in beryl and changing to compiz gives black screens but a title bar comes back and mketacity of course works
+
+when chaning to beryl you can see the title bar flash on and off for a while before it gives up
+
+---
+
+### Post by DDRFreak21 on 2007-07-21
+I had a major problem using beryl after installing my Nvidia 7900gs.  Everything would load normally exept that i had no title bar or maximize, minimize, exit buttons.  
+Basically i was no longer loading a window decorator which draws and controls those things.
+If you have some Nvidia cards then you may need to add the following lines to the end of your SCREEN module of xorg.conf.
+
+Option "AddARGBGLXVisuals" "True"
+Option "DisableGLXRootClipping" "True"
+
+EX:
+```
+ sudo gedit /etc/xorg.conf
+```
+Then scroll to the bottom and paste the above lines just above "EndSection"
+```
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Videocard0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "1"
+    Option         "metamodes" "CRT-0: 1280x1024 +1455+0, CRT-1: 1280x1024 +0+0; CRT-0: 1024x768 +0+0, CRT-1: NULL; CRT-0: 832x624 +0+0, CRT-1: NULL; CRT-0: 800x600 +0+0, CRT-1: NULL; CRT-0: 720x400 +0+0, CRT-1: NULL; CRT-0: 640x480 +0+0, CRT-1: NULL"
+    SubSection     "Display"
+        Depth       24
+        Modes      "1600x1200" "1280x1024" "1024x768" "800x600" "640x480"
+    EndSubSection
+[COLOR="Red"]Option "AddARGBGLXVisuals" "True"
+Option "DisableGLXRootClipping" "True"[/COLOR]
+EndSection
+```
+Save and restart window manager. ;) Worked to get beryl working for me.
+
+---
+
+### Post by kamonn on 2007-07-23
+> **hette said:**
+> This is the infamous 'black window bug' in the NVidia drivers. 
+It helps setting the "Rendering Path" to "Copy" in Beryl Manager.
+see also: [http://www.nvnews.net/vbulletin/showthread.php?t=84562]("http://www.nvnews.net/vbulletin/showthread.php?t=84562")
+That perfectly worked for me! (Ubuntu 7.04, Geforce 6100,)
+
+---
+
+### Post by james.gaede on 2007-07-31
+Toshiba m200 tablet w/ Nvidia Geforce FX Go5200 32mb
+
+I tried the Rendering Copy solution, and it made the screen go crazy & green. Now, when I load Beryl, it automatically does that.  I tried removing it and reinstalling it, but for some reason, it kept the settings.  How can I switch the rendering thing back???
+
+Thanks
+James
+
+---
+
+### Post by pofigster on 2007-08-05
+> **cal6n said:**
+> Hi,
+
+The following worked for me, with a NVidia 5200, 64 MB VRAM. It was suggested by djdoo in the thread that's linked above.
+
+This is with the 9755 driver.
+
+In the  advanced beryl options, set: Texture from Pixmap; Force AIGLX and XGL binding. Leave the others as automatic.
+
+No more black windows! (yet)
+
+Worked for me too!  I'm just running onboard Nvidia drivers, but, no problems since I changed these settings!
+
+---
+

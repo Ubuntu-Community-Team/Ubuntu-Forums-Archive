@@ -1,0 +1,3571 @@
+---
+title: "3D with ATI radeon igp 345m in gutsy"
+date: 2007-10-18
+forum: Desktop Effects &amp; Customization
+---
+
+### Post by yashoda on 2007-10-18
+I went nuts with previous versions of Ubuntu, trying to figure out 3D and special effects for my ATI card... but with GUTSY, it all JUST WORKS!
+
+Special effects, wireless card, ipod ... it does it all flawlessly!
+
+Well done, Ubuntu team!!!
+
+---
+
+### Post by Cl1mh4224rd on 2007-10-18
+Lucky. I've got no 3D acceleration on my laptop (same card, too: Radeon IGP 345M), I had to plug in the Cat5 so that Gutsy could download whatever it needed to get the wireless card working, and it takes about a minute or more (staring at a black screen) for the laptop to boot...
+
+Granted, it's got only 448MB of RAM, which is poor, but... damn...
+
+---
+
+### Post by edemark on 2007-10-19
+Hi I have the same card and just cannot get 3d working. I am on livecd I do not know if it was working for you on live cd also? On the other hand can you share your xorg.conf to see if there is any diference with mine.
+Finally i never had problems before with this card setting up 3d but in gusty i just cannot
+thanks
+
+---
+
+### Post by Cl1mh4224rd on 2007-10-20
+> **Cl1mh4224rd said:**
+> Lucky. I've got no 3D acceleration on my laptop (same card, too: Radeon IGP 345M), I had to plug in the Cat5 so that Gutsy could download whatever it needed to get the wireless card working, and it takes about a minute or more (staring at a black screen) for the laptop to boot...
+
+Granted, it's got only 448MB of RAM, which is poor, but... damn...
+
+Oh, and that's after using "safe graphics mode" to install the thing. Otherwise, I just get trash.
+
+---
+
+### Post by daskalos on 2007-10-20
+I also have this IGP340M on my laptop and 3d works fine
+But I have a problem with ctrl-alt-f1
+Black screen
+Do you guys have similar problem;
+
+---
+
+### Post by mikeg113 on 2007-10-20
+> **Cl1mh4224rd said:**
+> Oh, and that's after using "safe graphics mode" to install the thing. Otherwise, I just get trash.
+
+Same problem here. 3D worked fine in Feisty. I had beryl running fine and all the animations and cube worked great.
+I had to install Gutsy the same way. Maybe someone who has their igp 345m card working could post their xorg.conf file?
+
+---
+
+### Post by teddydov on 2007-10-21
+can someone please share the secrets here??
+
+It took me 2 day to get mt computer working again after the upgrade to gusty. And that was only after I used the VESA Card. 
+
+Now I know that the 345M will work with the 3D (I used to have it) but now it all seems messed up... 
+
+so if anyone has any idea what it's working for them I would love to be in on the secret. 
+
+thanks
+
+---
+
+### Post by johncarl81 on 2007-10-21
+I have a Radeon IGP 345m also and mine stopped doing 3d acceleration with the upgrade to gutsy also.  Any help would be appreciated.
+
+---
+
+### Post by teddydov on 2007-10-25
+does this mean there is no answer?? 
+
+I know for a fact that the ATI 345M can work with some 3D stuff I had beryl working on my computer back when I had 6.04. is there any way we can use that stuff.. find those drivers something?? 
+
+Thanks.
+
+---
+
+### Post by mikeg113 on 2007-10-27
+Well, I reinstalled Feisty and have compiz fusion working again on my IGP 345m. How long will Feisty be supported?
+
+---
+
+### Post by johncarl81 on 2007-10-27
+How was the downgrade?  Did you install Feisty right over Gutsy from the CD or did you backup and reinstall Feisty from scratch?
+
+---
+
+### Post by mikeg113 on 2007-10-27
+I backed up and blew away Gutsy and did a fresh install of Feisty from the CD. I installed compiz-fusion by following this guide...except it wasn't necessary to use "envy". 
+[http://kevin.vanzonneveld.net/techblog/article/enable_compizfusion_in_ubuntu_feisty/]("http://kevin.vanzonneveld.net/techblog/article/enable_compizfusion_in_ubuntu_feisty/")
+
+---
+
+### Post by wargames on 2007-10-27
+Hey guys, I think I might have discovered how to fix the direct rendering on my laptop.
+I have a older Compaq Presario 2100 laptop with the ATI Radeon 330M/340M/350M IGP. When I installed Gutsy from an install cd it broke the 3D and direct rendering and all I got was a fuzzy aweful screen of crap. It worked fine in Dapper using the ati driver but not in Gutsy until I did some research and finally got it fully working with the included ati driver that comes with Gutsy with direct rendering enabled. I now have the Extras enable with the wobbly windows. Yeah! :)
+
+I inserted these new options into my xorg.conf file while running the Live CD and then installed it. After reboot the new options had been inserted successfully and my new install had full direct rendering. You might be able to just insert these new options into your already existing xorg.conf file and do a reboot.
+
+Here is my full xorg.conf:
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option		"AGPMode"	"4"
+	Option		"AGPFastWrite"	"true"
+	Option		"EnablePageFlip"	"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	Option		"LVDSBiosNativeMode"	"false"
+
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+
+
+I think the most important option besides changing vesa to ati in the Device section is to add the Option "LVDSBiosNativeMode" "false" in under the Monitor section. The other options I added under the Device section such as the Option "AGPMode" "4" etc., are there to boost performance. From what I've read Gutsy has some kind of bug detecting the monitor. Don't forget the Section "DRI" at the bottom too.
+
+Try this out and let me know if this works for your systems.
+
+Oh, yeah, and after I did my new install, I had the dreaded black screen inbetween grub and the login screen and the thing took like 5 minutes to load up. I fixed that too. So now I get the Ubuntu bootup splash bar and it loads normally.
+
+Here's the fix for that too:
+Go to terminal.
+sudo gedit /etc/usplash.conf
+change "xres=1280" to "xres=1024"
+change "yres=1024" to "yres=768"
+save changes to file and exit gedit
+sudo update-usplash-theme usplash-theme-ubuntu
+
+It'll take a little bit to complete but then after it finished, close terminal window and then reboot. Should be fixed now.
+
+Hope this helps. Let me know how it goes.
+:guitar:
+
+---
+
+### Post by mikeg113 on 2007-10-27
+> **wargames said:**
+> 
+Oh, yeah, and after I did my new install, I had the dreaded black screen inbetween grub and the login screen and the thing took like 5 minutes to load up. I fixed that too. So now I get the Ubuntu bootup splash bar and it loads normally.
+
+You've described the problem I had to a tee. I will give this a try first thing in the morning let you know if it works. Thanks wargames!
+
+---
+
+### Post by NateMan on 2007-10-29
+Great fix! exact same problem with HP Pavilion ze5300. Fix worked to a T. 
+
+Thanks!
+
+---
+
+### Post by wargames on 2007-10-29
+Thanks, and you're welcome. :)
+
+Ubuntu rocks. :guitar:
+
+---
+
+### Post by msibille on 2007-10-30
+Very well !!
+
+It work for me also... on Hewlett Packard NX9010 with ATI IGP345M and Gutsy !!
+
+Great !
+
+---
+
+### Post by yashoda on 2007-10-30
+Hey...
+
+Teddydov, I had a similar problem as u do.
+
+Upgrading from Feisty totally stuffed things up.  So I did a fresh install (after sitting up all night waiting for Gutsy!), and it worked.  no secrets.
+
+Hope the tips above this post helped you though.
+
+---
+
+### Post by edemark on 2007-10-30
+Hi 
+Thanks wargames with your xorg.conf now i have dri and evrything.
+have compaq nx9010 with a radeon igp 345m.
+thanks again
+
+---
+
+### Post by wargames on 2007-10-30
+You're welcome guys. I was hoping this would work out for others as well. Thanks for the feedback. :)
+
+---
+
+### Post by wdydfft on 2007-10-30
+Hi,
+
+I have compaq nx9010 with a radeon igp 345m,
+The above fix disabling LVDS laptop display option works great. But I can't get the "TMDS" external display connection on the back to output correct signal... 
+
+The screen looks shifted to the left and there is a black/green line on the right...
+I tried ati/radeon driver the only one it works flawlessly is vesa, but that driver obviously is very slow...
+
+Has anyone got the external display working with this card?
+
+S.
+
+~What did you do for freedom today?
+
+---
+
+### Post by kane357 on 2007-10-31
+help me with direct rendering, my card is showing up in xorg and all my queries. I just hvae slow fps and no direct rendoring and other options enabled. 
+
+: [
+
+---
+
+### Post by kane357 on 2007-10-31
+Bump, anyone know how to enable this on my ATI card, ive searched the forums many times I can not figure this out.
+
+---
+
+### Post by wargames on 2007-11-01
+Hey kane357. So what kind of ATI card do you have? What model of laptop do you have? Can you post a copy of your xorg.conf file? I'll take a look, and see if I can help.
+
+---
+
+### Post by johncarl81 on 2007-11-01
+In the mean time can you help me with my ATI video card?  I have a ATI Radeon IGP 345M.  Ive tried to use the fglrx driver, without success.  When I start up X with that driver, X crashes and I have to exit my xorg.conf file by hand.  Here is my xorg.conf file with the ATI driver that works and no direct rendering:
+
+```
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier "Generic Keyboard"
+	Driver "kbd"
+	Option "CoreKeyboard"
+	Option "XkbRules" "xorg"
+	Option "XkbModel" "pc101"
+	Option "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+	Identifier "Configured Mouse"
+	Driver "mouse"
+	Option "CorePointer"
+	Option "Device" "/dev/input/mice"
+	Option "Protocol" "ImPS/2"
+	Option "ZAxisMapping" "4 5"
+	Option "Emulate3Buttons" "true"
+EndSection
+
+Section "InputDevice"
+	Identifier "Synaptics Touchpad"
+	Driver "synaptics"
+	Option "SendCoreEvents" "true"
+	Option "Device" "/dev/psaux"
+	Option "Protocol" "auto-dev"
+	Option "HorizEdgeScroll" "0"
+EndSection
+
+Section "Device"
+	Identifier "Generic Video Card"
+	Driver "ati"
+	BusID "PCI:1:5:0"
+	Option "AGPMode" "4"
+	Option "AGPFastWrite" "true"
+	Option "EnablePageFlip" "true"
+EndSection
+
+Section "Monitor"
+	Identifier "Generic Monitor"
+	Option "DPMS"
+	Option "LVDSBiosNativeMode" "false"
+
+EndSection
+
+Section "Screen"
+	Identifier "Default Screen"
+	Device "Generic Video Card"
+	Monitor "Generic Monitor"
+	DefaultDepth 24
+EndSection
+
+Section "ServerLayout"
+	Identifier "Default Layout"
+	Screen "Default Screen"
+	InputDevice "Generic Keyboard"
+	InputDevice "Configured Mouse"
+	InputDevice "Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode 0666
+EndSection
+```
+
+Thanks for any help!
+
+---
+
+### Post by wargames on 2007-11-02
+> **johncarl81 said:**
+> In the mean time can you help me with my ATI video card?  I have a ATI Radeon IGP 345M.  Ive tried to use the fglrx driver, without success.  When I start up X with that driver, X crashes and I have to exit my xorg.conf file by hand.  Here is my xorg.conf file with the ATI driver that works and no direct rendering:
+
+```
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier "Generic Keyboard"
+	Driver "kbd"
+	Option "CoreKeyboard"
+	Option "XkbRules" "xorg"
+	Option "XkbModel" "pc101"
+	Option "XkbLayout" "us"
+EndSection
+
+Section "InputDevice"
+	Identifier "Configured Mouse"
+	Driver "mouse"
+	Option "CorePointer"
+	Option "Device" "/dev/input/mice"
+	Option "Protocol" "ImPS/2"
+	Option "ZAxisMapping" "4 5"
+	Option "Emulate3Buttons" "true"
+EndSection
+
+Section "InputDevice"
+	Identifier "Synaptics Touchpad"
+	Driver "synaptics"
+	Option "SendCoreEvents" "true"
+	Option "Device" "/dev/psaux"
+	Option "Protocol" "auto-dev"
+	Option "HorizEdgeScroll" "0"
+EndSection
+
+Section "Device"
+	Identifier "Generic Video Card"
+	Driver "ati"
+	BusID "PCI:1:5:0"
+	Option "AGPMode" "4"
+	Option "AGPFastWrite" "true"
+	Option "EnablePageFlip" "true"
+EndSection
+
+Section "Monitor"
+	Identifier "Generic Monitor"
+	Option "DPMS"
+	Option "LVDSBiosNativeMode" "false"
+
+EndSection
+
+Section "Screen"
+	Identifier "Default Screen"
+	Device "Generic Video Card"
+	Monitor "Generic Monitor"
+	DefaultDepth 24
+EndSection
+
+Section "ServerLayout"
+	Identifier "Default Layout"
+	Screen "Default Screen"
+	InputDevice "Generic Keyboard"
+	InputDevice "Configured Mouse"
+	InputDevice "Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode 0666
+EndSection
+```
+
+Thanks for any help!
+
+Hi. Have you rebooted your computer with the above xorg.conf file? The reason I ask, is because when I was fixing my IGP Radeon laptop card, after I made the changes to xorg.conf I had to completely reboot the computer in order for the new settings to take effect. After a reboot, I opened a terminal and checked with the command "glxgears | grep direct". If you already have rebooted and it didn't work, try to edit your /etc/modules file and insert "agpgart" at either the beginning or the end of the file, save and then reboot and see if that works.
+
+---
+
+### Post by johncarl81 on 2007-11-04
+I rebooted with that xorg.conf file, and added agpgart to the end of the /etc/modules file, with no effect... glxgears | grep direct doesnt return anything, but glxinfo | grep direct reports the following:
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+
+here is the verbose output from glxinfo fyi:
+
+```
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer, 
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_get_proc_address, GLX_SGI_video_sync, GLX_ARB_multisample, 
+    GLX_ATI_pixel_format_float, GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_multisample
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.1
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multitexture, GL_ARB_texture_border_clamp, 
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add, 
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3, 
+    GL_ARB_transpose_matrix, GL_EXT_abgr, GL_EXT_blend_color, 
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_texture_env_add, 
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3, 
+    GL_EXT_texture_lod_bias
+
+Visual ID: 23  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 24  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 25  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 26  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 27  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 28  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 29  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 2a  depth=24  class=TrueColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 2b  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 2c  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 2d  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 2e  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=1 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 2f  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 30  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+    Opaque.
+Visual ID: 31  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=8
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 32  depth=24  class=DirectColor
+    bufferSize=32 level=0 renderType=rgba doubleBuffer=0 stereo=0
+    rgba: redSize=8 greenSize=8 blueSize=8 alphaSize=8
+    auxBuffers=0 depthSize=24 stencilSize=0
+    accum: redSize=16 greenSize=16 blueSize=16 alphaSize=16
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=Slow
+    Opaque.
+Visual ID: 55  depth=32  class=TrueColor
+    bufferSize=0 level=0 renderType=ci doubleBuffer=0 stereo=0
+    rgba: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    auxBuffers=0 depthSize=0 stencilSize=0
+    accum: redSize=0 greenSize=0 blueSize=0 alphaSize=0
+    multiSample=0  multiSampleBuffers=0
+    visualCaveat=None
+
+```
+
+and I get about 365 fps from glxgears... it's still choppy.
+
+Any other tips?  Thanks.
+
+---
+
+### Post by wargames on 2007-11-06
+Hey johncarl81. Sorry for taking so long to reply back. Been busy with work. How about using the above xorg.conf file, and then posting a copy of your xorg.log from your System Log Viewer. It may show an error or something to help point us in the right direction.
+
+---
+
+### Post by johncarl81 on 2007-11-06
+here's my xorg.log file:
+
+```
+
+
+X Window System Version 1.3.0
+Release Date: 19 April 2007
+X Protocol Version 11, Revision 0, Release 1.3
+Build Operating System: Linux Ubuntu (xorg-server 2:1.3.0.0.dfsg-12ubuntu8)
+Current Operating System: Linux john-laptop 2.6.22-14-386 #1 Sun Oct 14 22:36:54 GMT 2007 i686
+Build Date: 29 September 2007
+	Before reporting problems, check http://wiki.x.org
+	to make sure that you have the latest version.
+Module Loader present
+Markers: (--) probed, (**) from config file, (==) default setting,
+	(++) from command line, (!!) notice, (II) informational,
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(==) Log file: "/var/log/Xorg.0.log", Time: Mon Nov  5 20:04:46 2007
+(==) Using config file: "/etc/X11/xorg.conf"
+(==) ServerLayout "Default Layout"
+(**) |-->Screen "Default Screen" (0)
+(**) |   |-->Monitor "Generic Monitor"
+(**) |   |-->Device "Generic Video Card"
+(**) |-->Input Device "Generic Keyboard"
+(**) |-->Input Device "Configured Mouse"
+(**) |-->Input Device "Synaptics Touchpad"
+(WW) The directory "/usr/share/fonts/X11/cyrillic" does not exist.
+	Entry deleted from font path.
+(==) FontPath set to:
+	/usr/share/fonts/X11/misc,
+	/usr/share/fonts/X11/100dpi/:unscaled,
+	/usr/share/fonts/X11/75dpi/:unscaled,
+	/usr/share/fonts/X11/Type1,
+	/usr/share/fonts/X11/100dpi,
+	/usr/share/fonts/X11/75dpi,
+	/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType
+(==) RgbPath set to "/etc/X11/rgb"
+(==) ModulePath set to "/usr/lib/xorg/modules"
+(II) Open ACPI successful (/var/run/acpid.socket)
+(II) Loader magic: 0x81ea440
+(II) Module ABI versions:
+	X.Org ANSI C Emulation: 0.3
+	X.Org Video Driver: 1.2
+	X.Org XInput driver : 0.7
+	X.Org Server Extension : 0.3
+	X.Org Font Renderer : 0.5
+(II) Loader running on linux
+(II) LoadModule: "pcidata"
+(II) Loading /usr/lib/xorg/modules//libpcidata.so
+(II) Module pcidata: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.2
+(++) using VT number 7
+
+(II) PCI: PCI scan (all values are in hex)
+(II) PCI: 00:00:0: chip 1002,cbb2 card 0000,0000 rev 02 class 06,00,00 hdr 00
+(II) PCI: 00:01:0: chip 1002,7010 card 0000,0000 rev 00 class 06,04,00 hdr 01
+(II) PCI: 00:03:0: chip 10b9,5457 card 104d,8175 rev 00 class 07,03,00 hdr 00
+(II) PCI: 00:04:0: chip 10b9,5451 card 104d,8175 rev 02 class 04,01,00 hdr 00
+(II) PCI: 00:06:0: chip 10b9,7101 card 104d,8175 rev 00 class 06,80,00 hdr 00
+(II) PCI: 00:07:0: chip 10b9,1533 card 104d,8175 rev 00 class 06,01,00 hdr 00
+(II) PCI: 00:09:0: chip 168c,0013 card 1468,0406 rev 01 class 02,00,00 hdr 00
+(II) PCI: 00:0a:0: chip 104c,ac8e card 1400,0000 rev 00 class 06,07,00 hdr 82
+(II) PCI: 00:0a:2: chip 104c,802e card 104d,8175 rev 00 class 0c,00,10 hdr 80
+(II) PCI: 00:0a:3: chip 104c,ac8f card 104d,8175 rev 00 class 01,80,00 hdr 80
+(II) PCI: 00:0c:0: chip 1033,0035 card 104d,8175 rev 43 class 0c,03,10 hdr 80
+(II) PCI: 00:0c:1: chip 1033,0035 card 104d,8175 rev 43 class 0c,03,10 hdr 00
+(II) PCI: 00:0c:2: chip 1033,00e0 card 104d,8175 rev 04 class 0c,03,20 hdr 00
+(II) PCI: 00:0f:0: chip 10b9,5229 card 104d,8175 rev c4 class 01,01,fa hdr 00
+(II) PCI: 00:12:0: chip 10ec,8139 card 104d,8175 rev 10 class 02,00,00 hdr 00
+(II) PCI: 01:05:0: chip 1002,4337 card 104d,8175 rev 00 class 03,00,00 hdr 00
+(II) PCI: End of PCI scan
+(II) Host-to-PCI bridge:
+(II) Bus 0: bridge is at (0:0:0), (0,0,2), BCTRL: 0x0008 (VGA_EN is set)
+(II) Bus 0 I/O range:
+	[0] -1	0	0x00000000 - 0x0000ffff (0x10000) IX[B]
+(II) Bus 0 non-prefetchable memory range:
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+(II) Bus 0 prefetchable memory range:
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+(II) PCI-to-PCI bridge:
+(II) Bus 1: bridge is at (0:1:0), (0,1,1), BCTRL: 0x000c (VGA_EN is set)
+(II) Bus 1 I/O range:
+	[0] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B]
+	[1] -1	0	0x0000a400 - 0x0000a4ff (0x100) IX[B]
+	[2] -1	0	0x0000a800 - 0x0000a8ff (0x100) IX[B]
+	[3] -1	0	0x0000ac00 - 0x0000acff (0x100) IX[B]
+(II) Bus 1 non-prefetchable memory range:
+	[0] -1	0	0xc0300000 - 0xc03fffff (0x100000) MX[B]
+(II) Bus 1 prefetchable memory range:
+	[0] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B]
+(II) PCI-to-ISA bridge:
+(II) Bus -1: bridge is at (0:7:0), (0,-1,-1), BCTRL: 0x0008 (VGA_EN is set)
+(II) PCI-to-CardBus bridge:
+(II) Bus 2: bridge is at (0:10:0), (0,2,5), BCTRL: 0x05c0 (VGA_EN is cleared)
+(II) Bus 2 I/O range:
+	[0] -1	0	0x00001400 - 0x000014ff (0x100) IX[B]
+	[1] -1	0	0x00001800 - 0x000018ff (0x100) IX[B]
+(II) Bus 2 non-prefetchable memory range:
+	[0] -1	0	0x34000000 - 0x37ffffff (0x4000000) MX[B]
+(II) Bus 2 prefetchable memory range:
+	[0] -1	0	0x30000000 - 0x33ffffff (0x4000000) MX[B]
+(--) PCI:*(1:5:0) ATI Technologies Inc Radeon IGP 330M/340M/350M rev 0, Mem @ 0xe0000000/28, 0xc0300000/16, I/O @ 0xa000/8
+(II) Addressable bus resource ranges are
+	[0] -1	0	0x00000000 - 0xffffffff (0x0) MX[B]
+	[1] -1	0	0x00000000 - 0x0000ffff (0x10000) IX[B]
+(II) OS-reported resource ranges:
+	[0] -1	0	0x00100000 - 0x3fffffff (0x3ff00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[5] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+(II) PCI Memory resource overlap reduced 0xd0000000 from 0xdfffffff to 0xcfffffff
+(II) PCI Memory resource overlap reduced 0xc0600000 from 0xc0600fff to 0xc05fffff
+(II) Active PCI resource ranges:
+	[0] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[1] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[2] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[3] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[4] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[5] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[6] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[7] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[8] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[9] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[10] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[11] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[12] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[13] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[14] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[15] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[16] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[17] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[18] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+(II) Active PCI resource ranges after removing overlaps:
+	[0] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[1] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[2] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[3] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[4] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[5] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[6] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[7] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[8] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[9] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[10] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[11] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[12] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[13] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[14] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[15] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[16] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[17] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[18] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+(II) OS-reported resource ranges after removing overlaps with PCI:
+	[0] -1	0	0x00100000 - 0x37ffffff (0x37f00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[5] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+(II) All system resource ranges:
+	[0] -1	0	0x00100000 - 0x37ffffff (0x37f00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[5] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[6] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[7] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[8] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[9] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[10] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[11] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[12] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[13] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[14] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[15] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[16] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[17] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[18] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[19] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[20] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[21] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[22] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[23] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[24] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+(II) LoadModule: "extmod"
+(II) Loading /usr/lib/xorg/modules/extensions//libextmod.so
+(II) Module extmod: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	Module class: X.Org Server Extension
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension SHAPE
+(II) Loading extension MIT-SUNDRY-NONSTANDARD
+(II) Loading extension BIG-REQUESTS
+(II) Loading extension SYNC
+(II) Loading extension MIT-SCREEN-SAVER
+(II) Loading extension XC-MISC
+(II) Loading extension XFree86-VidModeExtension
+(II) Loading extension XFree86-Misc
+(II) Loading extension XFree86-DGA
+(II) Loading extension DPMS
+(II) Loading extension TOG-CUP
+(II) Loading extension Extended-Visual-Information
+(II) Loading extension XVideo
+(II) Loading extension XVideo-MotionCompensation
+(II) Loading extension X-Resource
+(II) LoadModule: "dbe"
+(II) Loading /usr/lib/xorg/modules/extensions//libdbe.so
+(II) Module dbe: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	Module class: X.Org Server Extension
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension DOUBLE-BUFFER
+(II) LoadModule: "glx"
+(II) Loading /usr/lib/xorg/modules/extensions//libglx.so
+(II) Module glx: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(==) AIGLX enabled
+(II) Loading extension GLX
+(II) LoadModule: "freetype"
+(II) Loading /usr/lib/xorg/modules//fonts/libfreetype.so
+(II) Module freetype: vendor="X.Org Foundation & the After X-TT Project"
+	compiled for 1.3.0, module version = 2.1.0
+	Module class: X.Org Font Renderer
+	ABI class: X.Org Font Renderer, version 0.5
+(II) Loading font FreeType
+(II) LoadModule: "record"
+(II) Loading /usr/lib/xorg/modules/extensions//librecord.so
+(II) Module record: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.13.0
+	Module class: X.Org Server Extension
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension RECORD
+(II) LoadModule: "dri"
+(II) Loading /usr/lib/xorg/modules/extensions//libdri.so
+(II) Module dri: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org Server Extension, version 0.3
+(II) Loading extension XFree86-DRI
+(II) LoadModule: "ati"
+(II) Loading /usr/lib/xorg/modules/drivers//ati_drv.so
+(II) Module ati: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 6.7.195
+	Module class: X.Org Video Driver
+	ABI class: X.Org Video Driver, version 1.2
+(II) LoadModule: "kbd"
+(II) Loading /usr/lib/xorg/modules/input//kbd_drv.so
+(II) Module kbd: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.2.1
+	Module class: X.Org XInput Driver
+	ABI class: X.Org XInput driver, version 0.7
+(II) LoadModule: "mouse"
+(II) Loading /usr/lib/xorg/modules/input//mouse_drv.so
+(II) Module mouse: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.2.1
+	Module class: X.Org XInput Driver
+	ABI class: X.Org XInput driver, version 0.7
+(II) LoadModule: "synaptics"
+(II) Loading /usr/lib/xorg/modules/input//synaptics_drv.so
+(II) Module synaptics: vendor="The XFree86 Project"
+	compiled for 4.2.0, module version = 1.0.0
+	Module class: XFree86 XInput Driver
+	ABI class: XFree86 XInput driver, version 0.3
+(II) ATI: ATI driver wrapper (version 6.7.195) for chipsets: mach64, rage128, radeon
+(II) Primary Device is: PCI 01:05:0
+(II) Loading sub module "radeon"
+(II) LoadModule: "radeon"
+(II) Loading /usr/lib/xorg/modules/drivers//radeon_drv.so
+(II) Module radeon: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 4.3.0
+	Module class: X.Org Video Driver
+	ABI class: X.Org Video Driver, version 1.2
+(II) RADEON: Driver for ATI Radeon chipsets: ATI Radeon QD (AGP),
+	ATI Radeon QE (AGP), ATI Radeon QF (AGP), ATI Radeon QG (AGP),
+	ATI Radeon VE/7000 QY (AGP/PCI), ATI Radeon VE/7000 QZ (AGP/PCI),
+	ATI ES1000 515E (PCI), ATI ES1000 5969 (PCI),
+	ATI Radeon Mobility M7 LW (AGP),
+	ATI Mobility FireGL 7800 M7 LX (AGP),
+	ATI Radeon Mobility M6 LY (AGP), ATI Radeon Mobility M6 LZ (AGP),
+	ATI Radeon IGP320 (A3) 4136, ATI Radeon IGP320M (U1) 4336,
+	ATI Radeon IGP330/340/350 (A4) 4137,
+	ATI Radeon IGP330M/340M/350M (U2) 4337,
+	ATI Radeon 7000 IGP (A4+) 4237, ATI Radeon Mobility 7000 IGP 4437,
+	ATI FireGL 8700/8800 QH (AGP), ATI Radeon 8500 QL (AGP),
+	ATI Radeon 9100 QM (AGP), ATI Radeon 8500 AIW BB (AGP),
+	ATI Radeon 8500 AIW BC (AGP), ATI Radeon 7500 QW (AGP/PCI),
+	ATI Radeon 7500 QX (AGP/PCI), ATI Radeon 9000/PRO If (AGP/PCI),
+	ATI Radeon 9000 Ig (AGP/PCI), ATI FireGL Mobility 9000 (M9) Ld (AGP),
+	ATI Radeon Mobility 9000 (M9) Lf (AGP),
+	ATI Radeon Mobility 9000 (M9) Lg (AGP),
+	ATI Radeon 9100 IGP (A5) 5834,
+	ATI Radeon Mobility 9100 IGP (U3) 5835, ATI Radeon 9100 PRO IGP 7834,
+	ATI Radeon Mobility 9200 IGP 7835, ATI Radeon 9250 5960 (AGP),
+	ATI Radeon 9200 5961 (AGP), ATI Radeon 9200 5962 (AGP),
+	ATI Radeon 9200SE 5964 (AGP), ATI FireMV 2200 (PCI),
+	ATI Radeon Mobility 9200 (M9+) 5C61 (AGP),
+	ATI Radeon Mobility 9200 (M9+) 5C63 (AGP), ATI Radeon 9500 AD (AGP),
+	ATI Radeon 9500 AE (AGP), ATI Radeon 9600TX AF (AGP),
+	ATI FireGL Z1 AG (AGP), ATI Radeon 9700 Pro ND (AGP),
+	ATI Radeon 9700/9500Pro NE (AGP), ATI Radeon 9600TX NF (AGP),
+	ATI FireGL X1 NG (AGP), ATI Radeon 9600 AP (AGP),
+	ATI Radeon 9600SE AQ (AGP), ATI Radeon 9600XT AR (AGP),
+	ATI Radeon 9600 AS (AGP), ATI FireGL T2 AT (AGP),
+	ATI FireGL RV360 AV (AGP),
+	ATI Radeon Mobility 9600/9700 (M10/M11) NP (AGP),
+	ATI Radeon Mobility 9600 (M10) NQ (AGP),
+	ATI Radeon Mobility 9600 (M11) NR (AGP),
+	ATI Radeon Mobility 9600 (M10) NS (AGP),
+	ATI FireGL Mobility T2 (M10) NT (AGP),
+	ATI FireGL Mobility T2e (M11) NV (AGP), ATI Radeon 9650,
+	ATI Radeon 9800SE AH (AGP), ATI Radeon 9800 AI (AGP),
+	ATI Radeon 9800 AJ (AGP), ATI FireGL X2 AK (AGP),
+	ATI Radeon 9800PRO NH (AGP), ATI Radeon 9800 NI (AGP),
+	ATI FireGL X2 NK (AGP), ATI Radeon 9800XT NJ (AGP),
+	ATI Radeon X600 (RV380) 3E50 (PCIE),
+	ATI FireGL V3200 (RV380) 3E54 (PCIE),
+	ATI Radeon Mobility X600 (M24) 3150 (PCIE),
+	ATI Radeon Mobility X300 (M24) 3152 (PCIE),
+	ATI FireGL M24 GL 3154 (PCIE), ATI Radeon X300 (RV370) 5B60 (PCIE),
+	ATI Radeon X600 (RV370) 5B62 (PCIE),
+	ATI Radeon X550 (RV370) 5B63 (PCIE),
+	ATI FireGL V3100 (RV370) 5B64 (PCIE),
+	ATI FireMV 2200 PCIE (RV370) 5B65 (PCIE),
+	ATI Radeon Mobility X300 (M22) 5460 (PCIE),
+	ATI Radeon Mobility X600 SE (M24C) 5462 (PCIE),
+	ATI FireGL M22 GL 5464 (PCIE), ATI Radeon XPRESS 200 5A41 (PCIE),
+	ATI Radeon XPRESS 200M 5A42 (PCIE),
+	ATI Radeon XPRESS 200 5A61 (PCIE),
+	ATI Radeon XPRESS 200M 5A62 (PCIE),
+	ATI Radeon XPRESS 200 5954 (PCIE),
+	ATI Radeon XPRESS 200M 5955 (PCIE),
+	ATI Radeon XPRESS 200 5974 (PCIE),
+	ATI Radeon XPRESS 200M 5975 (PCIE), ATI FireGL V5000 (RV410) (PCIE),
+	ATI Mobility FireGL V5000 (M26) (PCIE),
+	ATI Mobility FireGL V5000 (M26) (PCIE),
+	ATI Mobility Radeon X700 XL (M26) (PCIE),
+	ATI Mobility Radeon X700 (M26) (PCIE),
+	ATI Mobility Radeon X700 (M26) (PCIE),
+	ATI Radeon X700 PRO (RV410) (PCIE),
+	ATI Radeon X700 XT (RV410) (PCIE), ATI Radeon X700 (RV410) (PCIE),
+	ATI Radeon X700 SE (RV410) (PCIE), ATI Radeon X700 SE (RV410) (PCIE),
+	ATI Radeon X800 (R420) JH (AGP), ATI Radeon X800PRO (R420) JI (AGP),
+	ATI Radeon X800SE (R420) JJ (AGP), ATI Radeon X800 (R420) JK (AGP),
+	ATI Radeon X800 (R420) JL (AGP), ATI FireGL X3 (R420) JM (AGP),
+	ATI Radeon Mobility 9800 (M18) JN (AGP),
+	ATI Radeon X800XT (R420) JP (AGP), ATI Radeon X800 SE (R420) (AGP),
+	ATI Radeon AIW X800 VE (R420) JT (AGP),
+	ATI Radeon X800 (R423) UH (PCIE),
+	ATI Radeon X800PRO (R423) UI (PCIE),
+	ATI Radeon X800LE (R423) UJ (PCIE),
+	ATI Radeon X800SE (R423) UK (PCIE),
+	ATI FireGL V5100 (R423) UQ (PCIE),
+	ATI FireGL unknown (R423) UR (PCIE),
+	ATI FireGL unknown (R423) UT (PCIE),
+	ATI Radeon X800XT (R423) 5D57 (PCIE), ATI FireGL V7100 (R423) (PCIE),
+	ATI Mobility FireGL V5100 (M28) (PCIE),
+	ATI Mobility Radeon X800 (M28) (PCIE),
+	ATI Mobility Radeon X800 XT (M28) (PCIE),
+	ATI Radeon X800 (R430) (PCIE), ATI Radeon X800 XL (R430) (PCIE),
+	ATI Radeon X800 SE (R430) (PCIE), ATI Radeon X800 XTP (R430) (PCIE),
+	ATI Radeon X850 5D4C (PCIE),
+	ATI unknown Radeon / FireGL (R480) 5D50 (PCIE),
+	ATI Radeon X850 SE (R480) (PCIE), ATI Radeon X850 PRO (R480) (PCIE),
+	ATI Radeon X850 XT (R480) (PCIE),
+	ATI Radeon X850 XT PE (R480) (PCIE),
+	ATI Radeon X850 PRO (R480) (AGP), ATI Radeon X850 SE (R480) (AGP),
+	ATI Radeon X850 XT (R480) (AGP), ATI Radeon X850 XT PE (R480) (AGP)
+(--) Chipset ATI Radeon IGP330M/340M/350M (U2) 4337 found
+(II) resource ranges after xf86ClaimFixedResources() call:
+	[0] -1	0	0x00100000 - 0x37ffffff (0x37f00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[5] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[6] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[7] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[8] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[9] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[10] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[11] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[12] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[13] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[14] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[15] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[16] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[17] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[18] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[19] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[20] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[21] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[22] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[23] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[24] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+(II) resource ranges after probing:
+	[0] -1	0	0x00100000 - 0x37ffffff (0x37f00000) MX[B]E(B)
+	[1] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[2] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[3] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[4] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[5] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[6] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[7] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[8] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[9] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[10] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[11] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[12] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[13] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[14] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[15] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[16] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[17] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[18] 0	0	0x000a0000 - 0x000affff (0x10000) MS[B]
+	[19] 0	0	0x000b0000 - 0x000b7fff (0x8000) MS[B]
+	[20] 0	0	0x000b8000 - 0x000bffff (0x8000) MS[B]
+	[21] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[22] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[23] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[24] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[25] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[26] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[27] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+	[28] 0	0	0x000003b0 - 0x000003bb (0xc) IS[B]
+	[29] 0	0	0x000003c0 - 0x000003df (0x20) IS[B]
+(II) Setting vga for screen 0.
+(II) RADEON(0): MMIO registers at 0xc0300000: size 64KB
+(II) RADEON(0): PCI bus 1 card 5 func 0
+(II) RADEON(0): Creating default Display subsection in Screen section
+	"Default Screen" for depth/fbbpp 24/32
+(**) RADEON(0): Depth 24, (--) framebuffer bpp 32
+(II) RADEON(0): Pixel depth = 24 bits stored in 4 bytes (32 bpp pixmaps)
+(==) RADEON(0): Default visual is TrueColor
+(**) RADEON(0): Option "AGPMode" "4"
+(**) RADEON(0): Option "AGPFastWrite" "true"
+(**) RADEON(0): Option "EnablePageFlip" "true"
+(**) RADEON(0): Option "LVDSBiosNativeMode" "false"
+(II) Loading sub module "vgahw"
+(II) LoadModule: "vgahw"
+(II) Loading /usr/lib/xorg/modules//libvgahw.so
+(II) Module vgahw: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 0.1.0
+	ABI class: X.Org Video Driver, version 1.2
+(II) RADEON(0): vgaHWGetIOBase: hwp->IOBase is 0x03d0, hwp->PIOOffset is 0x0000
+(==) RADEON(0): RGB weight 888
+(II) RADEON(0): Using 8 bits per RGB (8 bit DAC)
+(II) Loading sub module "int10"
+(II) LoadModule: "int10"
+(II) Loading /usr/lib/xorg/modules//libint10.so
+(II) Module int10: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.2
+(II) RADEON(0): initializing int10
+(II) RADEON(0): Primary V_BIOS segment is: 0xc000
+(--) RADEON(0): Chipset: "ATI Radeon IGP330M/340M/350M (U2) 4337" (ChipID = 0x4337)
+(--) RADEON(0): Linear framebuffer at 0xe0000000
+(II) RADEON(0): AGP card detected
+(II) RADEON(0): Legacy BIOS detected
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is -1, (No such device or address)
+drmOpenDevice: open result is -1, (No such device or address)
+drmOpenDevice: Open failed
+drmOpenByBusid: Searching for BusID pci:0000:01:05.0
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenByBusid: drmOpenMinor returns 7
+drmOpenByBusid: drmGetBusid reports pci:0000:01:05.0
+(II) RADEON(0): [dri] Found DRI library version 1.3.0 and kernel module version 1.27.0
+(**) RADEON(0): Page Flipping enabled
+(II) RADEON(0): Will try to use DMA for Xv image transfers
+(II) RADEON(0): Detected total video RAM=131072K, accessible=131072K (PCI BAR=262144K)
+(--) RADEON(0): Mapped VideoRAM: 131072 kByte (64 bit DDR SDRAM)
+(II) RADEON(0): Color tiling enabled by default
+(II) RADEON(0): Max desktop size set to 2048x1200
+(II) RADEON(0): For a larger or smaller max desktop size, add a Virtual line to your xorg.conf
+(II) RADEON(0): If you are having trouble with 3D, reduce the desktop size by adjusting the Virtual line to your xorg.conf
+(II) Loading sub module "ddc"
+(II) LoadModule: "ddc"(II) Module already built-in
+(II) Loading sub module "i2c"
+(II) LoadModule: "i2c"(II) Module already built-in
+(II) RADEON(0): PLL parameters: rf=1432 rd=31 min=12000 max=35000; xclk=13300
+(II) RADEON(0): Bios Connector table: 
+(II) RADEON(0): Port0: DDCType-3, DACType-0, TMDSType-0, ConnectorType-2
+(II) RADEON(0): Port1: DDCType-4, DACType-1, TMDSType-1, ConnectorType-4
+(II) RADEON(0): Port4: DDCType-0, DACType-2, TMDSType-2, ConnectorType-1
+(II) RADEON(0): Port5: DDCType-0, DACType-1, TMDSType-2, ConnectorType-6
+(II) RADEON(0): Output VGA-0 using monitor section Generic Monitor
+(II) RADEON(0): I2C bus "VGA_DDC" initialized.
+(II) RADEON(0): Output DVI-0 has no monitor section
+(II) RADEON(0): I2C bus "CRT2_DDC" initialized.
+(WW) RADEON(0): No External TMDS Table found
+(II) RADEON(0): I2C bus "DVO" initialized.
+(II) RADEON(0): I2C device "DVO:RADEON DVO Controller" registered at address 0x70.
+(II) RADEON(0): Output LVDS has no monitor section
+(II) RADEON(0): Panel ID string: QDI141X1LH03            
+(II) RADEON(0): Panel Size from BIOS: 1024x768
+(II) RADEON(0): BIOS provided dividers will be used.
+(WW) RADEON(0): LVDS Info:
+XRes: 1024, YRes: 768, DotClock: 65000
+HBlank: 320, HOverPlus: 16, HSyncWidth: 136
+VBlank: 38, VOverPlus: 2, VSyncWidth: 1
+(II) RADEON(0): Using CVT mode for LVDS
+(II) RADEON(0): Output S-video has no monitor section
+(II) RADEON(0): Default TV standard: NTSC
+(II) RADEON(0): TV standards supported by chip: NTSC PAL NTSC-J 
+(II) RADEON(0): Port0:
+ Monitor   -- AUTO
+ Connector -- VGA
+ DAC Type  -- Primary
+ TMDS Type -- None
+ DDC Type  -- VGA_DDC
+(II) RADEON(0): Port1:
+ Monitor   -- AUTO
+ Connector -- DVI-D
+ DAC Type  -- None
+ TMDS Type -- External
+ DDC Type  -- CRT2_DDC
+(II) RADEON(0): Port2:
+ Monitor   -- AUTO
+ Connector -- Proprietary/LVDS
+ DAC Type  -- None
+ TMDS Type -- None
+ DDC Type  -- None
+(II) RADEON(0): Port3:
+ Monitor   -- AUTO
+ Connector -- STV
+ DAC Type  -- TVDAC/ExtDAC
+ TMDS Type -- None
+ DDC Type  -- None
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+finished output detect: 0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+finished output detect: 1
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+finished output detect: 2
+finished output detect: 3
+finished all detect
+before xf86InitialConfiguration
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x960" (hsync out of range)
+(II) RADEON(0): Not using default mode "1280x960" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x1024" (hsync out of range)
+(II) RADEON(0): Not using default mode "1280x1024" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x1024" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1600x1200" (hsync out of range)
+(II) RADEON(0): Not using default mode "1600x1200" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1600x1200" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1600x1200" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1600x1200" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (exceeds panel dimensions)
+(II) RADEON(0): Not using default mode "1280x800" (exceeds panel dimensions)
+(II) RADEON(0): Not using default mode "1152x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1400x1050" (hsync out of range)
+(II) RADEON(0): Not using default mode "1400x1050" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1400x1050" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1400x1050" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1440x900" (hsync out of range)
+(II) RADEON(0): Not using default mode "1600x1024" (hsync out of range)
+(II) RADEON(0): Not using default mode "1680x1050" (hsync out of range)
+(II) RADEON(0): Not using default mode "1920x1200" (hsync out of range)
+(II) RADEON(0): Not using default mode "1920x1200" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): Output LVDS connected
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): Output LVDS using initial mode 1024x768
+after xf86InitialConfiguration
+(==) RADEON(0): DPI set to (100, 100)
+(II) Loading sub module "fb"
+(II) LoadModule: "fb"
+(II) Loading /usr/lib/xorg/modules//libfb.so
+(II) Module fb: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org ANSI C Emulation, version 0.3
+(==) RADEON(0): Using gamma correction (1.0, 1.0, 1.0)
+(II) Loading sub module "ramdac"
+(II) LoadModule: "ramdac"(II) Module already built-in
+(==) RADEON(0): Using XAA acceleration architecture
+(II) Loading sub module "xaa"
+(II) LoadModule: "xaa"
+(II) Loading /usr/lib/xorg/modules//libxaa.so
+(II) Module xaa: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.2.0
+	ABI class: X.Org Video Driver, version 1.2
+(==) RADEON(0): Assuming overlay scaler buffer width is 1536
+(II) RADEON(0): No MM_TABLE found - assuming CARD is not TV-in capable.
+(!!) RADEON(0): For information on using the multimedia capabilities
+	of this adapter, please see http://gatos.sf.net.
+(!!) RADEON(0): MergedFB support has been removed and replaced with xrandr 1.2 support
+(--) Depth 24 pixmap format is 32 bpp
+(II) do I need RAC?  No, I don't.
+(II) resource ranges after preInit:
+	[0] 0	0	0xc0300000 - 0xc030ffff (0x10000) MX[B]
+	[1] 0	0	0xe0000000 - 0xefffffff (0x10000000) MX[B]
+	[2] -1	0	0x00100000 - 0x37ffffff (0x37f00000) MX[B]E(B)
+	[3] -1	0	0x000f0000 - 0x000fffff (0x10000) MX[B]
+	[4] -1	0	0x000c0000 - 0x000effff (0x30000) MX[B]
+	[5] -1	0	0x00000000 - 0x0009ffff (0xa0000) MX[B]
+	[6] -1	0	0xc000bc00 - 0xc000bdff (0x200) MX[B]
+	[7] -1	0	0xc000b800 - 0xc000b8ff (0x100) MX[B]
+	[8] -1	0	0xc000a000 - 0xc000afff (0x1000) MX[B]
+	[9] -1	0	0xc0009000 - 0xc0009fff (0x1000) MX[B]
+	[10] -1	0	0xc0007000 - 0xc0007fff (0x1000) MX[B]
+	[11] -1	0	0xc0000000 - 0xc0003fff (0x4000) MX[B]
+	[12] -1	0	0xc000b000 - 0xc000b7ff (0x800) MX[B]
+	[13] -1	0	0x38000000 - 0x3800ffff (0x10000) MX[B]
+	[14] -1	0	0xc0005000 - 0xc0005fff (0x1000) MX[B]
+	[15] -1	0	0x38010000 - 0x38010fff (0x1000) MX[B]
+	[16] -1	0	0xc0600000 - 0xc05fffff (0x0) MX[B]O
+	[17] -1	0	0xd0000000 - 0xcfffffff (0x0) MX[B]O
+	[18] -1	0	0xc0300000 - 0xc030ffff (0x10000) MX[B](B)
+	[19] -1	0	0xe0000000 - 0xefffffff (0x10000000) MX[B](B)
+	[20] 0	0	0x000a0000 - 0x000affff (0x10000) MS[B](OprU)
+	[21] 0	0	0x000b0000 - 0x000b7fff (0x8000) MS[B](OprU)
+	[22] 0	0	0x000b8000 - 0x000bffff (0x8000) MS[B](OprU)
+	[23] 0	0	0x0000a000 - 0x0000a0ff (0x100) IX[B]
+	[24] -1	0	0x0000ffff - 0x0000ffff (0x1) IX[B]
+	[25] -1	0	0x00000000 - 0x000000ff (0x100) IX[B]
+	[26] -1	0	0x00009000 - 0x000090ff (0x100) IX[B]
+	[27] -1	0	0x00008080 - 0x0000808f (0x10) IX[B]
+	[28] -1	0	0x00008400 - 0x000084ff (0x100) IX[B]
+	[29] -1	0	0x00001000 - 0x000010ff (0x100) IX[B]
+	[30] -1	0	0x0000a000 - 0x0000a0ff (0x100) IX[B](B)
+	[31] 0	0	0x000003b0 - 0x000003bb (0xc) IS[B](OprU)
+	[32] 0	0	0x000003c0 - 0x000003df (0x20) IS[B](OprU)
+(==) RADEON(0): Write-combining range (0xe0000000,0x8000000)
+Entering TV Save
+Save TV timing tables
+saveTimingTables: reading timing tables
+TV Save done
+(II) RADEON(0): Dynamic Clock Scaling Disabled
+(==) RADEON(0): Using 24 bit depth buffer
+(II) RADEON(0): RADEONInitMemoryMap() : 
+(II) RADEON(0):   mem_size         : 0x08000000
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xffffffc0
+(II) RADEON(0): Depth moves disabled by default
+(II) RADEON(0): CP in BM mode
+(II) RADEON(0): Using 8 MB GART aperture
+(II) RADEON(0): Using 1 MB for the ring buffer
+(II) RADEON(0): Using 2 MB for vertex/indirect buffers
+(II) RADEON(0): Using 5 MB for GART textures
+(II) RADEON(0): Memory manager initialized to (0,0) (1024,8191)
+(II) RADEON(0): Reserved area from (0,1024) to (1024,1026)
+(II) RADEON(0): Largest offscreen area available: 1024 x 7165
+(II) RADEON(0): Will use front buffer at offset 0x0
+(II) RADEON(0): Will use back buffer at offset 0x1000000
+(II) RADEON(0): Will use depth buffer at offset 0x1400000
+(II) RADEON(0): Will use 106496 kb for textures at offset 0x1800000
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenByBusid: Searching for BusID pci:0000:01:05.0
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 7, (OK)
+drmOpenByBusid: drmOpenMinor returns 7
+drmOpenByBusid: drmGetBusid reports pci:0000:01:05.0
+(II) RADEON(0): [drm] DRM interface version 1.3
+(II) RADEON(0): [drm] created "radeon" driver at busid "pci:0000:01:05.0"
+(II) RADEON(0): [drm] added 8192 byte SAREA at 0xd8c7e000
+(II) RADEON(0): [drm] mapped SAREA 0xd8c7e000 to 0xb7b4a000
+(II) RADEON(0): [drm] framebuffer handle = 0xe0000000
+(II) RADEON(0): [drm] added 1 reserved context for kernel
+(**) RADEON(0): Using AGP 4x
+(WW) RADEON(0): WARNING: Using the AGPFastWrite option is not recommended.
+	This option does not provide much of a noticable speed boost, while it
+	will probably hard lock your machine. All bets are off!
+(**) RADEON(0): Enabling AGP Fast Writes.
+(II) RADEON(0): [agp] Mode 0x0f000217 [AGP 0x1002/0xcbb2; Card 0x1002/0x4337]
+(II) RADEON(0): [agp] 8192 kB allocated with handle 0x00000001
+(II) RADEON(0): [agp] ring handle = 0xd0000000
+(II) RADEON(0): [agp] Ring mapped at 0xb7a49000
+(II) RADEON(0): [agp] ring read ptr handle = 0xd0101000
+(II) RADEON(0): [agp] Ring read ptr mapped at 0xb7a48000
+(II) RADEON(0): [agp] vertex/indirect buffers handle = 0xd0102000
+(II) RADEON(0): [agp] Vertex/indirect buffers mapped at 0xaf774000
+(II) RADEON(0): [agp] GART texture map handle = 0xd0302000
+(II) RADEON(0): [agp] GART Texture map mapped at 0xaf294000
+(II) RADEON(0): [drm] register handle = 0xc0300000
+(II) RADEON(0): [dri] Visual configs initialized
+init memmap
+init common
+init crtc1
+init pll1
+restore memmap
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xffffffc0
+restore common
+restore crtc1
+restore pll1
+restore LVDS
+enable montype: 2
+(WW) RADEON(0): No crtc mode list for crtc 1,continuing with desired mode
+disable montype: 2
+(==) RADEON(0): Backing store disabled
+(II) RADEON(0): X context handle = 0x1
+(II) RADEON(0): [drm] installed DRM signal handler
+(II) RADEON(0): [DRI] installation complete
+(II) RADEON(0): [drm] Added 32 65536 byte vertex/indirect buffers
+(II) RADEON(0): [drm] Mapped 32 vertex/indirect buffers
+(II) RADEON(0): [drm] dma control initialized, using IRQ 4
+(II) RADEON(0): [drm] Initialized kernel GART heap manager, 5111808
+(WW) RADEON(0): DRI init changed memory map, adjusting ...
+(WW) RADEON(0):   MC_FB_LOCATION  was: 0x1fff1800 is: 0x1fff1800
+(WW) RADEON(0):   MC_AGP_LOCATION was: 0xffffffc0 is: 0xd07fd000
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xd07fd000
+(II) RADEON(0): Direct rendering enabled
+(II) RADEON(0): Render acceleration enabled
+(II) RADEON(0): Using XFree86 Acceleration Architecture (XAA)
+	Screen to screen bit blits
+	Solid filled rectangles
+	8x8 mono pattern filled rectangles
+	Indirect CPU to Screen color expansion
+	Solid Lines
+	Scanline Image Writes
+	Offscreen Pixmaps
+	Setting up tile and stipple cache:
+		32 128x128 slots
+		32 256x256 slots
+		16 512x512 slots
+(II) RADEON(0): Acceleration enabled
+(**) Option "dpms"
+(**) RADEON(0): DPMS enabled
+(==) RADEON(0): Silken mouse enabled
+(II) RADEON(0): Using hardware cursor (scanline 1026)
+(II) RADEON(0): Largest offscreen area available: 1024 x 7161
+(II) RADEON(0): No video input capabilities detected and no information is provided - disabling multimedia i2c
+(II) Loading sub module "theatre_detect"
+(II) LoadModule: "theatre_detect"
+(II) Loading /usr/lib/xorg/modules/multimedia//theatre_detect_drv.so
+(II) Module theatre_detect: vendor="X.Org Foundation"
+	compiled for 1.3.0, module version = 1.0.0
+	ABI class: X.Org Video Driver, version 1.2
+(II) RADEON(0): no multimedia table present, disabling Rage Theatre.
+(II) RADEON(0): RandR 1.2 enabled, ignore the following RandR disabled message.
+(--) RandR disabled
+(II) Initializing built-in extension MIT-SHM
+(II) Initializing built-in extension XInputExtension
+(II) Initializing built-in extension XTEST
+(II) Initializing built-in extension XKEYBOARD
+(II) Initializing built-in extension XC-APPGROUP
+(II) Initializing built-in extension XAccessControlExtension
+(II) Initializing built-in extension SECURITY
+(II) Initializing built-in extension XINERAMA
+(II) Initializing built-in extension XFIXES
+(II) Initializing built-in extension XFree86-Bigfont
+(II) Initializing built-in extension RENDER
+(II) Initializing built-in extension RANDR
+(II) Initializing built-in extension COMPOSITE
+(II) Initializing built-in extension DAMAGE
+(II) Initializing built-in extension XEVIE
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 8, (OK)
+drmOpenByBusid: Searching for BusID pci:0000:01:05.0
+drmOpenDevice: node name is /dev/dri/card0
+drmOpenDevice: open result is 8, (OK)
+drmOpenByBusid: drmOpenMinor returns 8
+drmOpenByBusid: drmGetBusid reports pci:0000:01:05.0
+(WW) AIGLX: 3D driver claims to not support visual 0x23
+(WW) AIGLX: 3D driver claims to not support visual 0x24
+(WW) AIGLX: 3D driver claims to not support visual 0x25
+(WW) AIGLX: 3D driver claims to not support visual 0x26
+(WW) AIGLX: 3D driver claims to not support visual 0x27
+(WW) AIGLX: 3D driver claims to not support visual 0x28
+(WW) AIGLX: 3D driver claims to not support visual 0x29
+(WW) AIGLX: 3D driver claims to not support visual 0x2a
+(WW) AIGLX: 3D driver claims to not support visual 0x2b
+(WW) AIGLX: 3D driver claims to not support visual 0x2c
+(WW) AIGLX: 3D driver claims to not support visual 0x2d
+(WW) AIGLX: 3D driver claims to not support visual 0x2e
+(WW) AIGLX: 3D driver claims to not support visual 0x2f
+(WW) AIGLX: 3D driver claims to not support visual 0x30
+(WW) AIGLX: 3D driver claims to not support visual 0x31
+(WW) AIGLX: 3D driver claims to not support visual 0x32
+(II) AIGLX: Loaded and initialized /usr/lib/dri/radeon_dri.so
+(II) GLX: Initialized DRI GL provider for screen 0
+(II) RADEON(0): Setting screen physical size to 270 x 203
+(**) Option "CoreKeyboard"
+(**) Generic Keyboard: Core Keyboard
+(**) Option "Protocol" "standard"
+(**) Generic Keyboard: Protocol: standard
+(**) Option "AutoRepeat" "500 30"
+(**) Option "XkbRules" "xorg"
+(**) Generic Keyboard: XkbRules: "xorg"
+(**) Option "XkbModel" "pc101"
+(**) Generic Keyboard: XkbModel: "pc101"
+(**) Option "XkbLayout" "us"
+(**) Generic Keyboard: XkbLayout: "us"
+(**) Option "CustomKeycodes" "off"
+(**) Generic Keyboard: CustomKeycodes disabled
+(**) Option "Protocol" "ImPS/2"
+(**) Configured Mouse: Device: "/dev/input/mice"
+(**) Configured Mouse: Protocol: "ImPS/2"
+(**) Option "CorePointer"
+(**) Configured Mouse: Core Pointer
+(**) Option "Device" "/dev/input/mice"
+(**) Option "Emulate3Buttons" "true"
+(**) Configured Mouse: Emulate3Buttons, Emulate3Timeout: 50
+(**) Option "ZAxisMapping" "4 5"
+(**) Configured Mouse: ZAxisMapping: buttons 4 and 5
+(**) Configured Mouse: Buttons: 9
+(**) Configured Mouse: Sensitivity: 1
+Atom 4, CARD32 4, unsigned long 4
+(II) Synaptics touchpad driver version 0.14.6 (1406)
+(--) Synaptics Touchpad auto-dev sets device to /dev/input/event3
+(**) Option "Device" "/dev/input/event3"
+(**) Option "HorizEdgeScroll" "0"
+(--) Synaptics Touchpad touchpad found
+(**) Option "SendCoreEvents" "true"
+(**) Synaptics Touchpad: always reports core events
+(II) XINPUT: Adding extended input device "Synaptics Touchpad" (type: MOUSE)
+(II) XINPUT: Adding extended input device "Configured Mouse" (type: MOUSE)
+(II) XINPUT: Adding extended input device "Generic Keyboard" (type: KEYBOARD)
+Synaptics DeviceInit called
+SynapticsCtrl called.
+(II) Configured Mouse: ps2EnableDataReporting: succeeded
+Synaptics DeviceOn called
+(--) Synaptics Touchpad auto-dev sets device to /dev/input/event3
+(**) Option "Device" "/dev/input/event3"
+(--) Synaptics Touchpad touchpad found
+enable montype: 2
+(II) RADEON(0): Damage tracking initialized for page flipping
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x800" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1440x900" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1680x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x800" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1440x900" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1680x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+ProcXCloseDevice to close or not ?
+ProcXCloseDevice to close or not ?
+ProcXCloseDevice to close or not ?
+ProcXCloseDevice to close or not ?
+Synaptics DeviceOff called
+(II) AIGLX: Suspending AIGLX clients for VT switch
+disable montype: 2
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0x003f0000
+finished PLL2
+Entering Restore TV
+Restore TV PLL
+Restore TVHV
+Restore TV Restarts
+Restore Timing Tables
+Restore TV standard
+Leaving Restore TV
+Synaptics DeviceOn called
+(II) Open ACPI successful (/var/run/acpid.socket)
+(II) AIGLX: Resuming AIGLX clients after VT switch
+init memmap
+init common
+init crtc1
+init pll1
+restore memmap
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xd07fd000
+restore common
+restore crtc1
+restore pll1
+restore LVDS
+enable montype: 2
+(II) RADEON(0): [RESUME] Attempting to re-init Radeon hardware.
+(**) RADEON(0): Using AGP 4x
+(WW) RADEON(0): WARNING: Using the AGPFastWrite option is not recommended.
+	This option does not provide much of a noticable speed boost, while it
+	will probably hard lock your machine. All bets are off!
+(**) RADEON(0): Enabling AGP Fast Writes.
+(II) RADEON(0): [agp] Mode 0x0f000217 [AGP 0x1002/0xcbb2; Card 0x1002/0x4337]
+enable montype: 2
+Synaptics DeviceOn called
+(--) Synaptics Touchpad auto-dev sets device to /dev/input/event3
+(**) Option "Device" "/dev/input/event3"
+(--) Synaptics Touchpad touchpad found
+(II) Configured Mouse: ps2EnableDataReporting: succeeded
+SetGrabKeysState - disabled
+SetGrabKeysState - enabled
+Synaptics DeviceOff called
+(II) AIGLX: Suspending AIGLX clients for VT switch
+disable montype: 2
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0x003f0000
+finished PLL2
+Entering Restore TV
+Restore TV PLL
+Restore TVHV
+Restore TV Restarts
+Restore Timing Tables
+Restore TV standard
+Leaving Restore TV
+Synaptics DeviceOn called
+(II) Open ACPI successful (/var/run/acpid.socket)
+(II) AIGLX: Resuming AIGLX clients after VT switch
+init memmap
+init common
+init crtc1
+init pll1
+restore memmap
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xd07fd000
+restore common
+restore crtc1
+restore pll1
+restore LVDS
+enable montype: 2
+(II) RADEON(0): [RESUME] Attempting to re-init Radeon hardware.
+(**) RADEON(0): Using AGP 4x
+(WW) RADEON(0): WARNING: Using the AGPFastWrite option is not recommended.
+	This option does not provide much of a noticable speed boost, while it
+	will probably hard lock your machine. All bets are off!
+(**) RADEON(0): Enabling AGP Fast Writes.
+(II) RADEON(0): [agp] Mode 0x0f000217 [AGP 0x1002/0xcbb2; Card 0x1002/0x4337]
+enable montype: 2
+Synaptics DeviceOn called
+(--) Synaptics Touchpad auto-dev sets device to /dev/input/event3
+(**) Option "Device" "/dev/input/event3"
+(--) Synaptics Touchpad touchpad found
+(II) Configured Mouse: ps2EnableDataReporting: succeeded
+SetGrabKeysState - disabled
+SetGrabKeysState - enabled
+enable montype: 2
+disable montype: 2
+disable montype: 2
+SetGrabKeysState - disabled
+enable montype: 2
+enable montype: 2
+SetGrabKeysState - enabled
+enable montype: 2
+disable montype: 2
+disable montype: 2
+SetGrabKeysState - disabled
+enable montype: 2
+enable montype: 2
+disable montype: 2
+enable montype: 2
+enable montype: 2
+SetGrabKeysState - enabled
+Synaptics DeviceOff called
+(II) AIGLX: Suspending AIGLX clients for VT switch
+disable montype: 2
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0x003f0000
+finished PLL2
+Entering Restore TV
+Restore TV PLL
+Restore TVHV
+Restore TV Restarts
+Restore Timing Tables
+Restore TV standard
+Leaving Restore TV
+Synaptics DeviceOn called
+(II) Open ACPI successful (/var/run/acpid.socket)
+(II) AIGLX: Resuming AIGLX clients after VT switch
+init memmap
+init common
+init crtc1
+init pll1
+restore memmap
+(II) RADEON(0): RADEONRestoreMemMapRegisters() : 
+(II) RADEON(0):   MC_FB_LOCATION   : 0x1fff1800
+(II) RADEON(0):   MC_AGP_LOCATION  : 0xd07fd000
+restore common
+restore crtc1
+restore pll1
+restore LVDS
+enable montype: 2
+(II) RADEON(0): [RESUME] Attempting to re-init Radeon hardware.
+(**) RADEON(0): Using AGP 4x
+(WW) RADEON(0): WARNING: Using the AGPFastWrite option is not recommended.
+	This option does not provide much of a noticable speed boost, while it
+	will probably hard lock your machine. All bets are off!
+(**) RADEON(0): Enabling AGP Fast Writes.
+(II) RADEON(0): [agp] Mode 0x0f000217 [AGP 0x1002/0xcbb2; Card 0x1002/0x4337]
+enable montype: 2
+Synaptics DeviceOn called
+(--) Synaptics Touchpad auto-dev sets device to /dev/input/event3
+(**) Option "Device" "/dev/input/event3"
+(--) Synaptics Touchpad touchpad found
+(II) Configured Mouse: ps2EnableDataReporting: succeeded
+SetGrabKeysState - disabled
+SetGrabKeysState - enabled
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x800" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1440x900" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1680x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x800" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1440x900" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1680x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "VGA_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 3, Detected Monitor Type: 0
+(II) RADEON(0): Output VGA-0 disconnected
+(II) RADEON(0): EDID for output VGA-0
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" registered at address 0xA0.
+(II) RADEON(0): I2C device "CRT2_DDC:ddc2" removed.
+(II) RADEON(0): DDC Type: 4, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 0
+(II) RADEON(0): Output DVI-0 disconnected
+(II) RADEON(0): EDID for output DVI-0
+(WW) RADEON(0): DDC2/I2C is not properly initialized
+(II) RADEON(0): DDC Type: 0, Detected Monitor Type: 0
+(II) RADEON(0): Detected Monitor Type: 2
+(II) RADEON(0): Output LVDS connected
+in RADEONProbeOutputModes
+(II) RADEON(0): Added native panel mode: 1024x768
+(II) RADEON(0): Total number of valid Screen mode(s) added: 0
+(II) RADEON(0): Not using default mode "640x350" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "720x400" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "640x480" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "800x600" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1024x768" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x960" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1792x1344" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1856x1392" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "832x624" (vrefresh out of range)
+(II) RADEON(0): Not using default mode "1280x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1280x800" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x768" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1152x864" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1400x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1440x900" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1600x1024" (width too large for virtual size)
+(II) RADEON(0): Not using default mode "1680x1050" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1200" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "1920x1440" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Not using default mode "2048x1536" (height too large for virtual size)
+(II) RADEON(0): Printing probed modes for output LVDS
+(II) RADEON(0): Modeline "1024x768"x59.9   63.50  1024 1072 1176 1328  768 771 775 798 -hsync +vsync (47.8 kHz)
+(II) RADEON(0): Modeline "1024x768"x60.0   65.00  1024 1048 1184 1344  768 771 777 806 -hsync -vsync (48.4 kHz)
+(II) RADEON(0): Modeline "800x600"x60.3   40.00  800 840 968 1056  600 601 605 628 +hsync +vsync (37.9 kHz)
+(II) RADEON(0): Modeline "640x480"x59.9   25.18  640 656 752 800  480 490 492 525 -hsync -vsync (31.5 kHz)
+(II) RADEON(0): Output S-video disconnected
+(II) RADEON(0): EDID for output S-video
+enable montype: 2
+disable montype: 2
+disable montype: 2
+SetGrabKeysState - disabled
+enable montype: 2
+enable montype: 2
+SetGrabKeysState - enabled
+
+```
+
+Thanks!
+
+---
+
+### Post by wargames on 2007-11-08
+johncarl81,
+
+Do you have a CRT monitor hooked up to your laptop? I see entries in the xorg.log file referring to a CRT? The xorg.log file also states that DRI is enabled. It seems like the xorg.log is logging or detecting 2 monitor types on your machine. Does it have an vga or dvi jack on the back of it?
+
+If you run with the Live CD, and check at the terminal to see if DRI is enabled? Have you tried to recofigure your x server?
+
+You could try to reconfigure your x server with this:
+ctrl-alt-f2
+sudo killall gdm
+sudo dpkg-reconfigure-phigh xserver-xorg
+sudo /etc/init.d/gdm start
+
+
+and see if this might reconfigure your xorg.conf file correctly. Then after reboot, check to see if DRI in enabled. Other than that, I can't see why it won't work. Maybe it's confusing an external monitor jack with your internal LCD display?
+
+---
+
+### Post by wargames on 2007-11-09
+Hey John,
+
+Try this first,use the option MonitorLayout under the Device section:
+
+Section "Device"
+Identifier "Generic Video Card"
+Driver "ati"
+BusID "PCI:1:5:0"
+Option "AGPMode" "4"
+Option "AGPFastWrite" "true"
+Option "EnablePageFlip" "true"
+Option ""MonitorLayout" "LVDS,TMDS"
+EndSection
+
+This tells the system to use the LVDS or laptop LCD as the primary display and TMDS or desktop flat panel display an the secondary display.
+
+This is about the only thing I found so far.
+
+---
+
+### Post by johncarl81 on 2007-11-09
+Well, here's the rundown:
+
+adding Option "MonitorLayout" "LVDS,TMDS" to the video card device does nothing
+re-running sudo dpkg-reconfigure xserver-xorg does nothing (with appropriate selections)
+
+and I do have a vga port in the back of my laptop.
+
+Booting off of the gutsy CD shows (just like booting off of the hard disk):
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+
+Booting off the feisty CD shows:
+direct rendering: Yes
+
+Any more help would be much appreciated and let me konw if you guys need any more log/conf files.
+
+---
+
+### Post by wargames on 2007-11-10
+> **johncarl81 said:**
+> In the mean time can you help me with my ATI video card?  I have a ATI Radeon IGP 345M.  Ive tried to use the fglrx driver, without success.  When I start up X with that driver, X crashes and I have to exit my xorg.conf file by hand.  Here is my xorg.conf file with the ATI driver that works and no direct rendering:
+
+I was just wondering about something....Did you try my version of xorg.conf file after you installed and tried the fglrx driver? If you did then maybe you need to restore the libgl1-mesa package and then try my version of the xorg.conf file.
+
+Here is what I found out if you tried to use the fglrx driver and it failed:
+[http://wiki.cchtml.com/index.php/Ubuntu_Gutsy_Installation_Guide](http://wiki.cchtml.com/index.php/Ubuntu_Gutsy_Installation_Guide)
+
+Here is the important section:
+--------------------------------------------------------------------------------------------------------------------
+Revert to Xorg driver
+
+If (for any reason) the fglrx install fails, you can revert to the Xorg driver by executing
+
+sudo dpkg-reconfigure xserver-xorg
+
+and selecting the "ati" driver, or simply restoring the previous /etc/X11/xorg.conf file, if you made a backup.
+
+You also need to remove the xorg-driver-fglrx or your manually installed drivers to get the 3D acceleration back, since it is provided by file /usr/lib/libGL.so.1.2 which belongs to libgl1-mesa package and which is moved to backup and replaced at the installation of xorg-driver-fglrx (or the manually built) package. In case the removal of the fglrx drivers fails to restore the file from libgl1-mesa, you have to reinstall the package by running:
+
+sudo apt-get install --reinstall libgl1-mesa
+
+---------------------------------------------------------------------------------------------------------------------
+
+Did you remove the fglrx driver after it failed? It would seem that the installation of fglrx driver would take the 3d acceleration away from the "ati" driver because it removes /usr/lib/libGL.so.1.2 as the above states. If you tried the fglrx driver before trying my version of xorg.conf, and did not remove the "fglrx" driver from your system and make sure that all of libgl1-mesa was reinstalled then that might explain why you haven't been able to get direct rendering to work.
+
+I would uninstall the "fglrx" driver, reinstall the libgl1-mesa package, and then use my version of xorg.conf and then reboot, and see if you have direct rendering.
+
+---
+
+### Post by johncarl81 on 2007-11-11
+Chaa-ching... problem solved.
+
+Removing the xorg-driver-fglrx driver, reinstalling all the mesa modules and your addition to the xorg.conf file worked like a charm.
+
+I restarted my computer, started a terminal and got the following:
+
+$ glxinfo | grep direct
+direct rendering: Yes :)
+
+Thanks for all your help war games! (coincidentally, I saw that movie last night)
+
+Now Gutsy works as good (if not better) than Feisty did.
+
+---
+
+### Post by Offoffoff on 2007-11-11
+For me on my HP Compaq nc4000 with ATI Radeon IGP345M inside open-source driver works well. Even compiz-fusion runs without any destructive errors (sometimes my hands make some trouble, but it is not driver).
+
+---
+
+### Post by wargames on 2007-11-12
+> **johncarl81 said:**
+> Chaa-ching... problem solved.
+
+Removing the xorg-driver-fglrx driver, reinstalling all the mesa modules and your addition to the xorg.conf file worked like a charm.
+
+I restarted my computer, started a terminal and got the following:
+
+$ glxinfo | grep direct
+direct rendering: Yes :)
+
+Thanks for all your help war games! (coincidentally, I saw that movie last night)
+
+Now Gutsy works as good (if not better) than Feisty did.
+
+Awesome! I'm glad it worked. Yeah, I love that old hacker movie WarGames. :)
+
+---
+
+### Post by teddydov on 2007-11-24
+ok, 
+I am not sure if I am moving forward or back with this but I know i need some help. 
+
+I was using Vesa drive until now due to the issues I was having post install of Gusty. 
+I now tried to use the Xorg.Conf that appears on the site (using the important information) and I am now showing that my driver is MESA:
+```
+~$ fglrxinfo
+display: :0.0  screen: 0
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.1
+```
+
+and now my Frames have come to an almost halt:
+```
+~$ glxgears
+Xlib:  extension "XFree86-DRI" missing on display ":1.0".
+**144 frames in 5.6 seconds = 25.836 FPS**
+
+```
+
+any help would be welcome!
+PLEASE HELP
+
+---
+
+### Post by CharonIDRONES on 2007-11-30
+I just wanted to pop in and say thanks for the fixes!
+I tinkered with trying to fglrx driver a few times, with it failing miserably each time.
+Then I used your configuration (and thankfully the change to get rid of that stupid black loading screen also) and everything worked perfectly.
+Thanks, appreciate the help from the community, one of the best things about Ubuntu, if ya' want to try something, or find a fix for something, someone probably already has and documented the steps for it ;)
+
+---
+
+### Post by Statik on 2007-12-15
+Haven't tested anything crazy yet, but the fix posted on page two worked for my nx9010 as well. I have 1024x768 screen back! That's all that's important because its only for my wife to use for email, etc.
+
+Thanks again!
+
+Statik
+
+---
+
+### Post by snacker on 2007-12-31
+Replaced my xorg.conf with the one from wargames, rebooted and it worked!
+
+HP ze5500 (ze5570us) : Radeon IGP 345M
+
+THANKS!
+
+---
+
+### Post by snacker on 2008-01-01
+Unfortunately "standby" (or resuming from it) doesn't work.
+
+---
+
+### Post by Drewbkilla on 2008-01-15
+> **wargames said:**
+> Hey guys, I think I might have discovered how to fix the direct rendering on my laptop.
+I have a older Compaq Presario 2100 laptop with the ATI Radeon 330M/340M/350M IGP. When I installed Gutsy from an install cd it broke the 3D and direct rendering and all I got was a fuzzy aweful screen of crap. It worked fine in Dapper using the ati driver but not in Gutsy until I did some research and finally got it fully working with the included ati driver that comes with Gutsy with direct rendering enabled. I now have the Extras enable with the wobbly windows. Yeah! :)
+
+I inserted these new options into my xorg.conf file while running the Live CD and then installed it. After reboot the new options had been inserted successfully and my new install had full direct rendering. You might be able to just insert these new options into your already existing xorg.conf file and do a reboot.
+
+Here is my full xorg.conf:
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option		"AGPMode"	"4"
+	Option		"AGPFastWrite"	"true"
+	Option		"EnablePageFlip"	"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	Option		"LVDSBiosNativeMode"	"false"
+
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+
+
+I think the most important option besides changing vesa to ati in the Device section is to add the Option "LVDSBiosNativeMode" "false" in under the Monitor section. The other options I added under the Device section such as the Option "AGPMode" "4" etc., are there to boost performance. From what I've read Gutsy has some kind of bug detecting the monitor. Don't forget the Section "DRI" at the bottom too.
+
+Try this out and let me know if this works for your systems.
+
+Oh, yeah, and after I did my new install, I had the dreaded black screen inbetween grub and the login screen and the thing took like 5 minutes to load up. I fixed that too. So now I get the Ubuntu bootup splash bar and it loads normally.
+
+Here's the fix for that too:
+Go to terminal.
+sudo gedit /etc/usplash.conf
+change "xres=1280" to "xres=1024"
+change "yres=1024" to "yres=768"
+save changes to file and exit gedit
+sudo update-usplash-theme usplash-theme-ubuntu
+
+It'll take a little bit to complete but then after it finished, close terminal window and then reboot. Should be fixed now.
+
+Hope this helps. Let me know how it goes.
+:guitar:
+
+
+
+Can someone please help?   I just did these mentioned adjustments and now my video is coming up scrambled?
+
+Im not sure what I did wrong,  Im really dying to get this IGP 345M card working
+
+just navigating to the visual effects, (although fuzzy and barely visual) I dont get an error when my effects are enabled, so it seems to be working aside from the video being fuzzy like an old tv inbetween channels.
+
+Please share your thoughts.
+
+Thanks!  : )
+
+---
+
+### Post by Drewbkilla on 2008-01-15
+ALSO:  Should I be booting back into recovery mode since I cant see anything?
+
+Will any adjustments still post to the working os or is recovery mode not the right step.
+
+Sorry if thats a dumb question.
+
+---
+
+### Post by Drewbkilla on 2008-01-15
+NEVERMIND!  For some reason my xorg file wasnt keeping the settings after I chose save.
+
+All good to go,  Thank you soo much,  my crummy laptop isnt crummy anymore!
+
+---
+
+### Post by trogrey121 on 2008-03-01
+Hey, I need help. I tried to get my ATI IGP 320/330/340 to do direct rendering but it will not work. Here is my xorg.conf file. I would really like the direct rendering to work so my poor laptop CPU does not take up all the load. Thx for any help. I am new to Ubuntu so please bear with my noobiness.
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option "AGPMode" "4"
+	Option "AGPFastWrite" "true"
+	Option "EnablePageFlip" "true"
+	Option		"UseFBDev"		"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode 0666
+EndSection
+
+******************************************************************
+
+And here is my glxinfo output
+
+~$ glxinfo
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer, 
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_get_proc_address, GLX_SGI_video_sync, GLX_ARB_multisample, 
+    GLX_ATI_pixel_format_float, GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context, 
+    GLX_ARB_multisample
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.1
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multitexture, GL_ARB_texture_border_clamp, 
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add, 
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3, 
+    GL_ARB_transpose_matrix, GL_EXT_abgr, GL_EXT_blend_color, 
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_texture_env_add, 
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3, 
+    GL_EXT_texture_lod_bias
+
+---
+
+### Post by KIAaze on 2008-03-09
+Unfortunately, I'm currently not on my pc, so I can't give you my current xorg.conf, but here are some of my older ones which you can look at if you want:
+[http://launchpadlibrarian.net/9530967/Xorg_debug.tar.gz](http://launchpadlibrarian.net/9530967/Xorg_debug.tar.gz)
+It's from this bug report: [https://bugs.launchpad.net/xorg-server/+bug/133192](https://bugs.launchpad.net/xorg-server/+bug/133192)
+
+I think those are the sections that matter the most for your problem:
+from the "case 0" xorg.conf in my tar.gz:
+```
+Section "Device"
+	Identifier	"ATI Technologies, Inc. Radeon 330M/340M/350M (RS200 IGP)"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+EndSection
+...
+#Section "DRI"
+#	Mode	0666
+#EndSection
+
+```
+
+As suggested by glxinfo, you should first try this:
+```
+
+export LIBGL_DEBUG=verbose
+glxinfo
+
+```
+
+This will give you a more detailed output.
+
+Things you could try to do:
+1)After making a backup copy of your xorg.conf:
+```
+sudo dpkg-reconfigure xserver-xorg
+```
+
+2)Install mesa packages (search for "mesa" in synaptic). I'm not sure exactly which one is needed, but from the descriptions, I think it would be: **libgl1-mesa-dri**
+It helped me get direct rendering to work on Debian and even on Ubuntu once.
+
+The ATI drivers are installed with the following packages as far as I know:
+```
+xserver-xorg-video-ati
+xserver-xorg-driver-ati
+
+```
+So eventually you could try reinstalling them.
+
+I had problems with the Gutsy driver, but I'm currently using the latest version from Hardy and it works very well. Even Compiz is working out of the box. So if you upgrade next April, it should hopefully solve your problems if they aren't solved yet. ;)
+However, you should already be able to have direct rendering with a correct xorg.conf and the right packages I think.
+
+---
+
+### Post by nrune on 2008-03-23
+Well this fix has worked well under Gutsy, I have installd hardy Heron on an external HD just to try it out. I have met with failure at every turn. in trying to get 3d turned on. Any one else trying this on Hardy?  Any sucess?
+
+---
+
+### Post by KIAaze on 2008-03-23
+Here's my xorg.conf currently working perfectly on Hardy 8.04:
+```
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"fr"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"false"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option 		"AGPMode" "4"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+```
+
+```
+$ dpkg -l | grep xserver-xorg-video*
+ii  xserver-xorg-video-all                     1:7.3+10ubuntu7                             the X.Org X server -- output driver metapack
+ii  xserver-xorg-video-amd                     2.7.7.6-1                                   X.org server -- AMD Geode GX/LX display driv
+ii  xserver-xorg-video-apm                     1:1.1.1-10                                  X.Org X server -- APM display driver
+ii  xserver-xorg-video-ark                     1:0.6.0-9                                   X.Org X server -- ark display driver
+ii  xserver-xorg-video-ati                     1:6.8.0-1                                   X.Org X server -- ATI display driver
+ii  xserver-xorg-video-chips                   1:1.1.1-9                                   X.Org X server -- Chips display driver
+ii  xserver-xorg-video-cirrus                  1:1.1.0-8                                   X.Org X server -- Cirrus display driver
+ii  xserver-xorg-video-cyrix                   1:1.1.0-8                                   X.Org X server -- Cyrix display driver
+ii  xserver-xorg-video-dummy                   1:0.2.0-7                                   X.Org X server -- dummy display driver
+ii  xserver-xorg-video-fbdev                   1:0.3.1-4                                   X.Org X server -- fbdev display driver
+ii  xserver-xorg-video-glint                   1:1.1.1-8                                   X.Org X server -- Glint display driver
+ii  xserver-xorg-video-i128                    1:1.2.1-4                                   X.Org X server -- i128 display driver
+ii  xserver-xorg-video-i740                    1:1.1.0-7                                   X.Org X server -- i740 display driver
+ii  xserver-xorg-video-i810                    2:1.7.4-0ubuntu7                            X.Org X server -- Intel i8xx, i9xx display d
+ii  xserver-xorg-video-imstt                   1:1.1.0-7                                   X.Org X server -- IMSTT display driver
+ii  xserver-xorg-video-intel                   2:2.2.1-1ubuntu5                            X.Org X server -- Intel i8xx, i9xx display d
+ii  xserver-xorg-video-mga                     1:1.4.8.dfsg.1-1                            X.Org X server -- MGA display driver
+ii  xserver-xorg-video-neomagic                1:1.1.1-8                                   X.Org X server -- Neomagic display driver
+ii  xserver-xorg-video-newport                 1:0.2.1-4ubuntu1                            X.Org X server -- Newport display driver
+ii  xserver-xorg-video-nsc                     1:2.8.3-2                                   X.Org X server -- NSC display driver
+ii  xserver-xorg-video-nv                      1:2.1.8-1                                   X.Org X server -- NV display driver
+ii  xserver-xorg-video-openchrome              1:0.2.901-0ubuntu4                          X.Org X server -- VIA display driver
+ii  xserver-xorg-video-psb                     0.2.1-1ubuntu3                              2D graphics driver for Poulsbo
+ii  xserver-xorg-video-rendition               1:4.1.3.dfsg.1-4                            X.Org X server -- Rendition display driver
+ii  xserver-xorg-video-s3                      1:0.5.0-4                                   X.Org X server -- legacy S3 display driver
+ii  xserver-xorg-video-s3virge                 1:1.9.1-7                                   X.Org X server -- S3 ViRGE display driver
+ii  xserver-xorg-video-savage                  1:2.1.3-5                                   X.Org X server -- Savage display driver
+ii  xserver-xorg-video-siliconmotion           1:1.5.1-3                                   X.Org X server -- SiliconMotion display driv
+ii  xserver-xorg-video-sis                     1:0.9.3-6                                   X.Org X server -- SiS display driver
+ii  xserver-xorg-video-sisusb                  1:0.8.1-9                                   X.Org X server -- SiS USB display driver
+ii  xserver-xorg-video-tdfx                    1:1.3.0-6                                   X.Org X server -- tdfx display driver
+ii  xserver-xorg-video-tga                     1:1.1.0-9ubuntu1                            X.Org X server -- TGA display driver
+ii  xserver-xorg-video-trident                 1:1.2.4-1                                   X.Org X server -- Trident display driver
+ii  xserver-xorg-video-tseng                   1:1.1.1-4                                   X.Org X server -- Tseng display driver
+ii  xserver-xorg-video-v4l                     1:0.1.1-6ubuntu1                            X.Org X server -- Video 4 Linux display driv
+ii  xserver-xorg-video-vesa                    1:1.3.0-4ubuntu3                            X.Org X server -- VESA display driver
+ii  xserver-xorg-video-vga                     1:4.1.0-8                                   X.Org X server -- VGA display driver
+ii  xserver-xorg-video-via                     1:0.2.2-5                                   X.Org X server -- VIA display driver
+ii  xserver-xorg-video-vmware                  1:10.15.2-1ubuntu2                          X.Org X server -- VMware display driver
+ii  xserver-xorg-video-voodoo                  1:1.1.1-5                                   X.Org X server -- Voodoo display driver
+
+```
+
+```
+$ dpkg -l | grep mesa
+ii  libgl1-mesa-dev                            7.0.3~rc2-1ubuntu2                          A free implementation of the OpenGL API -- G
+ii  libgl1-mesa-dri                            7.0.3~rc2-1ubuntu2                          A free implementation of the OpenGL API -- D
+ii  libgl1-mesa-glx                            7.0.3~rc2-1ubuntu2                          A free implementation of the OpenGL API -- G
+ii  libglu1-mesa                               7.0.3~rc2-1ubuntu2                          The OpenGL utility library (GLU)
+ii  libglu1-mesa-dev                           7.0.3~rc2-1ubuntu2                          The OpenGL utility library -- development fi
+ii  mesa-common-dev                            7.0.3~rc2-1ubuntu2                          Developer documentation for Mesa
+ii  mesa-utils                                 7.0.3~rc2-1ubuntu2                          Miscellaneous Mesa GL utilities
+
+```
+
+```
+$ glxinfo
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: Yes
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap,
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer,
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control,
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: SGI
+client glx version string: 1.4
+client glx extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context,
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_allocate_memory,
+    GLX_MESA_copy_sub_buffer, GLX_MESA_swap_control,
+    GLX_MESA_swap_frame_usage, GLX_OML_swap_method, GLX_OML_sync_control,
+    GLX_SGI_make_current_read, GLX_SGI_swap_control, GLX_SGI_video_sync,
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_pbuffer,
+    GLX_SGIX_visual_select_group, GLX_EXT_texture_from_pixmap
+GLX version: 1.2
+GLX extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context,
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer,
+    GLX_MESA_swap_control, GLX_MESA_swap_frame_usage, GLX_OML_swap_method,
+    GLX_SGI_make_current_read, GLX_SGI_swap_control, GLX_SGI_video_sync,
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.3-rc2
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multisample, GL_ARB_multitexture,
+    GL_ARB_texture_border_clamp, GL_ARB_texture_compression,
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add,
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_crossbar,
+    GL_ARB_texture_env_dot3, GL_ARB_texture_mirrored_repeat,
+    GL_ARB_texture_rectangle, GL_ARB_transpose_matrix,
+    GL_ARB_vertex_buffer_object, GL_ARB_window_pos, GL_EXT_abgr, GL_EXT_bgra,
+    GL_EXT_blend_color, GL_EXT_blend_logic_op, GL_EXT_blend_minmax,
+    GL_EXT_blend_subtract, GL_EXT_clip_volume_hint,
+    GL_EXT_compiled_vertex_array, GL_EXT_convolution, GL_EXT_copy_texture,
+    GL_EXT_draw_range_elements, GL_EXT_fog_coord, GL_EXT_histogram,
+    GL_EXT_packed_pixels, GL_EXT_polygon_offset, GL_EXT_rescale_normal,
+    GL_EXT_secondary_color, GL_EXT_separate_specular_color,
+    GL_EXT_stencil_wrap, GL_EXT_subtexture, GL_EXT_texture, GL_EXT_texture3D,
+    GL_EXT_texture_edge_clamp, GL_EXT_texture_env_add,
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3,
+    GL_EXT_texture_filter_anisotropic, GL_EXT_texture_lod_bias,
+    GL_EXT_texture_mirror_clamp, GL_EXT_texture_object,
+    GL_EXT_texture_rectangle, GL_EXT_vertex_array, GL_APPLE_packed_pixels,
+    GL_ATI_texture_env_combine3, GL_ATI_texture_mirror_once,
+    GL_IBM_rasterpos_clip, GL_IBM_texture_mirrored_repeat,
+    GL_MESA_ycbcr_texture, GL_MESA_window_pos, GL_NV_blend_square,
+    GL_NV_light_max_exponent, GL_NV_texture_rectangle,
+    GL_NV_texgen_reflection, GL_OES_read_format, GL_SGI_color_matrix,
+    GL_SGI_color_table, GL_SGIS_generate_mipmap, GL_SGIS_texture_border_clamp,
+    GL_SGIS_texture_edge_clamp, GL_SGIS_texture_lod
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x23 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x24 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x26 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x27 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x28 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x29 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2a 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2b 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x2c 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x2d 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2e 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2f 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x30 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x31 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x32 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x55 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  0 0 Ncon
+
+```
+
+Hope this can help you. :/
+
+---
+
+### Post by nrune on 2008-03-23
+Well I am a no go. 
+
+Xorg.conf
+```
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option 		"AGPMode" "4"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies Inc Radeon IGP 330M/340M/350M"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+```
+glxinfo
+```
+
+name of display: :0.0
+display: :0  screen: 0
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer, 
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: SGI
+client glx version string: 1.4
+client glx extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_allocate_memory, 
+    GLX_MESA_swap_control, GLX_MESA_swap_frame_usage, GLX_OML_swap_method, 
+    GLX_OML_sync_control, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGI_video_sync, GLX_SGIS_multisample, GLX_SGIX_fbconfig, 
+    GLX_SGIX_pbuffer, GLX_SGIX_visual_select_group, 
+    GLX_EXT_texture_from_pixmap
+GLX version: 1.2
+GLX extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_OML_swap_method, 
+    GLX_SGI_make_current_read, GLX_SGI_swap_control, GLX_SGIS_multisample, 
+    GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group, 
+    GLX_EXT_texture_from_pixmap
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.3-rc2
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multisample, GL_ARB_multitexture, 
+    GL_ARB_texture_border_clamp, GL_ARB_texture_compression, 
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add, 
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_crossbar, 
+    GL_ARB_texture_env_dot3, GL_ARB_texture_mirrored_repeat, 
+    GL_ARB_texture_rectangle, GL_ARB_transpose_matrix, GL_ARB_window_pos, 
+    GL_EXT_abgr, GL_EXT_bgra, GL_EXT_blend_color, GL_EXT_blend_logic_op, 
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_clip_volume_hint, 
+    GL_EXT_copy_texture, GL_EXT_draw_range_elements, GL_EXT_fog_coord, 
+    GL_EXT_multi_draw_arrays, GL_EXT_packed_pixels, GL_EXT_polygon_offset, 
+    GL_EXT_rescale_normal, GL_EXT_secondary_color, 
+    GL_EXT_separate_specular_color, GL_EXT_stencil_wrap, GL_EXT_subtexture, 
+    GL_EXT_texture, GL_EXT_texture3D, GL_EXT_texture_edge_clamp, 
+    GL_EXT_texture_env_add, GL_EXT_texture_env_combine, 
+    GL_EXT_texture_env_dot3, GL_EXT_texture_lod_bias, 
+    GL_EXT_texture_mirror_clamp, GL_EXT_texture_object, 
+    GL_EXT_texture_rectangle, GL_EXT_vertex_array, GL_APPLE_packed_pixels, 
+    GL_ATI_texture_env_combine3, GL_ATI_texture_mirror_once, 
+    GL_ATIX_texture_env_combine3, GL_IBM_texture_mirrored_repeat, 
+    GL_MESA_ycbcr_texture, GL_NV_blend_square, GL_NV_light_max_exponent, 
+    GL_NV_texgen_reflection, GL_NV_texture_rectangle, GL_SGI_color_matrix, 
+    GL_SGI_color_table, GL_SGIS_generate_mipmap, GL_SGIS_texture_border_clamp, 
+    GL_SGIS_texture_edge_clamp, GL_SGIS_texture_lod, GL_SUN_multi_draw_arrays
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x23 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x24 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x26 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x27 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x28 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x29 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2a 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2b 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x2c 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x2d 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2e 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2f 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x30 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x31 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x32 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x55 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  0 0 Ncon
+Segmentation fault (core dumped)
+```
+
+dpkg -l | grep mesa
+```
+ii  libgl1-mesa-dev                            7.0.3~rc2-1ubuntu2            A free implementation of the OpenGL API -- G
+ii  libgl1-mesa-dri                            7.0.3~rc2-1ubuntu2            A free implementation of the OpenGL API -- D
+ii  libgl1-mesa-glx                            7.0.3~rc2-1ubuntu2            A free implementation of the OpenGL API -- G
+ii  libglu1-mesa                               7.0.3~rc2-1ubuntu2            The OpenGL utility library (GLU)
+ii  libglu1-mesa-dev                           7.0.3~rc2-1ubuntu2            The OpenGL utility library -- development fi
+ii  mesa-common-dev                            7.0.3~rc2-1ubuntu2            Developer documentation for Mesa
+ii  mesa-utils      
+
+```
+
+Any ideas?
+
+---
+
+### Post by KIAaze on 2008-03-24
+What does this give you?:
+```
+export LIBGL_DEBUG=verbose
+glxinfo
+```
+It should output more info.
+
+edit: Just noticed something bad: Your glxinfo finishes with a "Segmentation fault (core dumped)". :/
+Maybe you should try recompiling it from source with the -g flag and run it with gdb. :/
+Or for the moment just try to reinstall it.
+It's in the mesa-utils package which doesn't seem to be correctly installed too: There's no version info in your "dpkg -l | grep mesa" output!
+
+Please try:
+```
+sudo apt-get install --reinstall mesa-utils
+```
+
+---
+
+### Post by nrune on 2008-03-24
+Here is glxinfo with export LIBGL_DEBUG=verbose
+```
+name of display: :0.0
+libGL: XF86DRIGetClientDriverName: 5.3.0 radeon (screen 0)
+libGL: OpenDriver: trying /usr/lib/dri/radeon_dri.so
+libGL error: dlopen /usr/lib/dri/radeon_dri.so failed (/usr/lib/dri/radeon_dri.so: undefined symbol: _glapi_Dispatch)
+libGL error: unable to load driver: radeon_dri.so
+display: :0  screen: 0
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+server glx vendor string: SGI
+server glx version string: 1.2 
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer, 
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: SGI
+client glx version string: 1.4
+client glx extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_allocate_memory, 
+    GLX_MESA_swap_control, GLX_MESA_swap_frame_usage, GLX_OML_swap_method, 
+    GLX_OML_sync_control, GLX_SGI_make_current_read, GLX_SGI_swap_control, 
+    GLX_SGI_video_sync, GLX_SGIS_multisample, GLX_SGIX_fbconfig, 
+    GLX_SGIX_pbuffer, GLX_SGIX_visual_select_group, 
+    GLX_EXT_texture_from_pixmap
+GLX version: 1.2
+GLX extensions:
+    GLX_ARB_get_proc_address, GLX_ARB_multisample, GLX_EXT_import_context, 
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_OML_swap_method, 
+    GLX_SGI_make_current_read, GLX_SGI_swap_control, GLX_SGIS_multisample, 
+    GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group, 
+    GLX_EXT_texture_from_pixmap
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.3-rc2
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multisample, GL_ARB_multitexture, 
+    GL_ARB_texture_border_clamp, GL_ARB_texture_compression, 
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add, 
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_crossbar, 
+    GL_ARB_texture_env_dot3, GL_ARB_texture_mirrored_repeat, 
+    GL_ARB_texture_rectangle, GL_ARB_transpose_matrix, GL_ARB_window_pos, 
+    GL_EXT_abgr, GL_EXT_bgra, GL_EXT_blend_color, GL_EXT_blend_logic_op, 
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_clip_volume_hint, 
+    GL_EXT_copy_texture, GL_EXT_draw_range_elements, GL_EXT_fog_coord, 
+    GL_EXT_multi_draw_arrays, GL_EXT_packed_pixels, GL_EXT_polygon_offset, 
+    GL_EXT_rescale_normal, GL_EXT_secondary_color, 
+    GL_EXT_separate_specular_color, GL_EXT_stencil_wrap, GL_EXT_subtexture, 
+    GL_EXT_texture, GL_EXT_texture3D, GL_EXT_texture_edge_clamp, 
+    GL_EXT_texture_env_add, GL_EXT_texture_env_combine, 
+    GL_EXT_texture_env_dot3, GL_EXT_texture_lod_bias, 
+    GL_EXT_texture_mirror_clamp, GL_EXT_texture_object, 
+    GL_EXT_texture_rectangle, GL_EXT_vertex_array, GL_APPLE_packed_pixels, 
+    GL_ATI_texture_env_combine3, GL_ATI_texture_mirror_once, 
+    GL_ATIX_texture_env_combine3, GL_IBM_texture_mirrored_repeat, 
+    GL_MESA_ycbcr_texture, GL_NV_blend_square, GL_NV_light_max_exponent, 
+    GL_NV_texgen_reflection, GL_NV_texture_rectangle, GL_SGI_color_matrix, 
+    GL_SGI_color_table, GL_SGIS_generate_mipmap, GL_SGIS_texture_border_clamp, 
+    GL_SGIS_texture_edge_clamp, GL_SGIS_texture_lod, GL_SUN_multi_draw_arrays
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x23 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x24 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x26 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x27 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x28 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x29 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2a 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2b 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x2c 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x2d 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x2e 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x2f 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  0 0 None
+0x30 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  0 0 None
+0x31 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  0 0 Slow
+0x32 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  0 0 Slow
+0x55 32 tc  0 32  0 r  .  .  8  8  8  8  0  0  0  0  0  0  0  0 0 Ncon
+Segmentation fault (core dumped)
+
+```
+will try reinstall mesa.
+
+Thanks for your help
+
+Reinstall Mesa still no go.  Noticed my bios is not current, willtry update and see if that solves it.
+
+---
+
+### Post by KIAaze on 2008-03-24
+That's the problem:
+> libGL: OpenDriver: trying /usr/lib/dri/radeon_dri.so
+libGL error: dlopen /usr/lib/dri/radeon_dri.so failed (/usr/lib/dri/radeon_dri.so: undefined symbol: _glapi_Dispatch)
+libGL error: unable to load driver: radeon_dri.so
+
+That's the solution (I hope):
+Bug #48029 [https://launchpad.net/ubuntu/+source/mesa/+bug/48029](https://launchpad.net/ubuntu/+source/mesa/+bug/48029)
+
+> I stumbled upon a message on the internet while searching for a resolution that said something like:
+"After debugging and looking at loaded drivers and such it seems that even if I use the 'ati' driver it tries to load some DRI components from the 'fglrx' driver. **After uninstalling the xorg-video-fglrx driver this problem was gone.**"
+
+I have tried the same, and it worked flawlessly for me. So I would advise anyone else to try this. (And you could also try the other way around: uninstall 'ati' and use 'fglrx' if that's preferred. Haven't tested this though.)
+
+It seems like those two drivers might conflict with each other. (At least they did for me.)
+
+
+> 
+On Dapper I fixed this problem compiling and installing my own libGL: quoting from [http://dri.freedesktop.org/wiki/DriTroubleshooting](http://dri.freedesktop.org/wiki/DriTroubleshooting) :
+
+"If the driver complains about unresolved symbols then your libGL is out of sync with your DRI drivers. Because APIs change, you typically need a libGL from the latest X.Org release to run DRI drivers, and sometimes you need a libGL from X.Org CVS for the latest drivers. Reinstall both your drivers and your libGL from sources from the same date."
+
+I hope the first solution works, because the second one sounds complicated...
+
+---
+
+### Post by nrune on 2008-03-26
+All right, 3d working just fine, thanks so much for your help!
+
+Mike
+
+---
+
+### Post by miguelsc on 2008-05-08
+Hello
+
+How did you fix that?  I'm having the same problem
+
+This is my card
+> 
+01:05.0 VGA compatible controller: ATI Technologies Inc Radeon IGP 330M/340M/350M
+
+
+Here is my glxinfo with LIBGL verbose:
+> 
+name of display: :0.0
+libGL: XF86DRIGetClientDriverName: 5.3.0 radeon (screen 0)
+libGL: OpenDriver: trying /usr/lib/dri/radeon_dri.so
+libGL error: dlopen /usr/lib/dri/radeon_dri.so failed (/usr/lib/dri/radeon_dri.so: undefined symbol: _glapi_get_dispatch)
+libGL error: unable to find driver: radeon_dri.so
+libGL: XF86DRIGetClientDriverName: 5.3.0 radeon (screen 0)
+libGL: OpenDriver: trying /usr/lib/dri/radeon_dri.so
+libGL error: dlopen /usr/lib/dri/radeon_dri.so failed (/usr/lib/dri/radeon_dri.so: undefined symbol: _glapi_get_dispatch)
+libGL error: unable to find driver: radeon_dri.so
+display: :0  screen: 0
+direct rendering: No (If you want to find out why, try setting LIBGL_DEBUG=verbose)
+server glx vendor string: SGI
+server glx version string: 1.2
+server glx extensions:
+    GLX_ARB_multisample, GLX_EXT_import_context, GLX_EXT_texture_from_pixmap,
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_MESA_copy_sub_buffer,
+    GLX_OML_swap_method, GLX_SGI_make_current_read, GLX_SGI_swap_control,
+    GLX_SGIS_multisample, GLX_SGIX_fbconfig, GLX_SGIX_visual_select_group
+client glx vendor string: ATI
+client glx version string: 1.3
+client glx extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context,
+    GLX_ARB_get_proc_address, GLX_SGI_video_sync, GLX_ARB_multisample,
+    GLX_ATI_pixel_format_float, GLX_ATI_render_texture
+GLX version: 1.2
+GLX extensions:
+    GLX_EXT_visual_info, GLX_EXT_visual_rating, GLX_EXT_import_context,
+    GLX_ARB_multisample
+OpenGL vendor string: Tungsten Graphics, Inc.
+OpenGL renderer string: Mesa DRI Radeon 20061018 AGP 4x x86/MMX/SSE2 NO-TCL
+OpenGL version string: 1.3 Mesa 7.0.3-rc2
+OpenGL extensions:
+    GL_ARB_imaging, GL_ARB_multitexture, GL_ARB_texture_border_clamp,
+    GL_ARB_texture_cube_map, GL_ARB_texture_env_add,
+    GL_ARB_texture_env_combine, GL_ARB_texture_env_dot3,
+    GL_ARB_transpose_matrix, GL_EXT_abgr, GL_EXT_blend_color,
+    GL_EXT_blend_minmax, GL_EXT_blend_subtract, GL_EXT_texture_env_add,
+    GL_EXT_texture_env_combine, GL_EXT_texture_env_dot3,
+    GL_EXT_texture_lod_bias
+
+   visual  x  bf lv rg d st colorbuffer ax dp st accumbuffer  ms  cav
+ id dep cl sp sz l  ci b ro  r  g  b  a bf th cl  r  g  b  a ns b eat
+----------------------------------------------------------------------
+0x23 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x24 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  1 0 None
+0x25 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  1 0 Slow
+0x26 24 tc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  1 0 Slow
+0x27 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x28 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  1 0 None
+0x29 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  1 0 Slow
+0x2a 24 tc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  1 0 Slow
+0x2b 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x2c 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0  0  0  0  0  1 0 None
+0x2d 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  8 16 16 16 16  1 0 Slow
+0x2e 24 dc  0 32  0 r  y  .  8  8  8  8  0 24  0 16 16 16 16  1 0 Slow
+0x2f 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8  0  0  0  0  1 0 None
+0x30 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0  0  0  0  0  1 0 None
+0x31 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  8 16 16 16 16  1 0 Slow
+0x32 24 dc  0 32  0 r  .  .  8  8  8  8  0 24  0 16 16 16 16  1 0 Slow
+0x55 32 tc  1  0  0 c  .  .  0  0  0  0  0  0  0  0  0  0  0  0 0 None
+
+
+And here my Xorg
+
+> 
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the /etc/X11/xorg.conf manual page.
+# (Type "man /etc/X11/xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/X11/fonts/misc"
+	FontPath	"/usr/share/X11/fonts/cyrillic"
+	FontPath	"/usr/share/X11/fonts/100dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/75dpi/:unscaled"
+	FontPath	"/usr/share/X11/fonts/Type1"
+	FontPath	"/usr/share/X11/fonts/100dpi"
+	FontPath	"/usr/share/X11/fonts/75dpi"
+	FontPath	"/usr/share/fonts/X11/misc"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"type1"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"es"
+	Option		"XkbOptions"	"lv3:ralt_switch"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "stylus"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "stylus"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "eraser"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "eraser"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+  Driver        "wacom"
+  Identifier    "cursor"
+  Option        "Device"        "/dev/wacom"          # Change to 
+                                                      # /dev/input/event
+                                                      # for USB
+  Option        "Type"          "cursor"
+  Option        "ForceDevice"   "ISDV4"               # Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"ATI Technologies, Inc. Radeon 330M/340M/350M (RS200 IGP)"
+	Driver		"ati"
+	BusID		"PCI:1:5:0"
+	Option "AGPMode" "4"
+	Option "AGPFastWrite" "true"
+	Option "EnablePageFlip" "true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	Option "LVDSBiosNativeMode" "false"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"ATI Technologies, Inc. Radeon 330M/340M/350M (RS200 IGP)"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus" "SendCoreEvents"
+	InputDevice     "cursor" "SendCoreEvents"
+	InputDevice     "eraser" "SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+
+Thanks in advance
+
+---
+
