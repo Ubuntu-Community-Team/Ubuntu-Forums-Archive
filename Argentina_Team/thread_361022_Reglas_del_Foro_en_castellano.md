@@ -1,0 +1,125 @@
+---
+title: "Reglas del Foro en castellano"
+date: 2007-02-13
+forum: Argentina Team
+---
+
+### Post by marianom on 2007-02-13
+Hola amigos.
+
+He traducido las reglas del foro de acuerdo a su última versión para que estén en conocimiento de todos (los que pueden leerlas en inglés y quienes no). La idea de tenerlas aquí es para que estén siempre a mano en los pocos casos en los cuales nos veamos obligados a recurrir a ellas.
+
+Recomiendo que lean todo, pero básicamente se resume en éstos puntos:
+
+- Es un sitio para todo público, con lo cual todos los comentarios tienen que tener un lenguaje adecuado para todas las edades, religiones, etnias y origines.
+- Es un sitio técnico, con lo cuál con alguna alegre excepción, el tema central tiene que ser técnico y sobre Ubuntu.
+- Hay que mantener un espíritu positivo, si no tenés nada bueno para decir, no digas nada.
+
+
+[SIZE="2"]**_Políticas y Expectativas del foro_**[/SIZE]
+
+Código de Conducta Oficial de Ubuntu (inglés): [http://www.ubuntulinux.org/community/conduct](http://www.ubuntulinux.org/community/conduct)
+Código de Conducta Oficial de Ubuntu (castellano): [http://www.uluga.com.ar/wiki/CoC](http://www.uluga.com.ar/wiki/CoC)
+
+**Publicando en los Foros**:
+
+*Sección I - Política General*:
+
+Al registrarte y participar en las discusiones del Foro Ubuntu aceptás la siguiente política. Si vos no estás de acuerdo tenes el derecho a no seguir participando en las discusiones del foro a tu criterio.
+
+Esta es TU comunidad. Mucha gente tiene una idea de sentido común de lo que es y lo que no es apropiado en nuestros foros y ustedes amigos hacen un gran trabajo al alinearse por ustedes mismos. Nosotros, sin embargo, nececitamos tener unas pocas políticas establecidas a las cuales referirnos cuando la necesidad aparece.
+
+Si bien los administradores y moderadores de este foro intentarán remover o editar cualquier material objetable generalmente tan rápido como sea posible cuando sea aceptable, es imposible reveer todos los mensajes. Por lo tanto estás en conocimiento que todas las publicaciones hechas en estos foros expresan las opiniones y puntos de vista del autor y no de los administradores, moderadores o web-master (exceptuando las publicaciones hechas por esta gente) y por lo tanto no serán consideradores legalmente responsables.
+
+Vos aceptás no publicar material abusivo, obsceno, vulgar, injurioso, malevolente, amenazador, de orientación sexual or de cualquier otro tipo que pueda violar las leyes aplicables (por favor mirá el backyard para las reglas específicas de esa área). Si hacés eso, podría resultar en que vos seas expulsado de inmediato, permanentemente o temporalmente (y que tu proveedor de servicios sea informado).
+
+Si el usuario continúa quebrando las reglas los usuarios susodichos van a ser revisados por el equipo de resoluciones del foro y removidos de ser necesario. Queda la sola discreción del equipo de resolución el remover cuentas que infrinjan las reglas.
+
+La dirección IP de todas las publicaciones serán registradas para ayudar en el cumplimiento de estas condiciones. Vos aceptás que el web-master, administradores y moderadores del foro tiene el derecho de remover, editar, mover o cerrar cualquier tópico o publicación en cualquier momento si consideran que entran en las reglas establecidas más abajo. Vos aceptás que el web-master, administradores o moderadores de este foro tienen el derecho de enviarte un mensaje privado con una advertencia y o censurar a cualquier usuario del foro quien haya violado las reglas del foro.
+
+   1. Respetá al Equipo del Foro. Nosotros proveemos un servicio en nuestro tiempo libre para mantener el foro funcionando eficientemente. Nosotros ocasionalmente pediremos tu opinión, pero en algunos casos no, por favor respetá nuestras decisiones. También, nosotros editamos por contenido, por favor si tenes problemas con nuestra moderación abrí un requerimiento en el centro de resoluciones del foro.
+   2. Palabras malsonantes: Recordá que los foros son utilizados por gente de todos grupos de edades y niveles de tolerencia al uso de palabras malsonantes. Cuando estés en las áreas de soporte de este foro, por favor mantené tu lenguaje educado y cortés y evitá el uso de palabras malsonantes. En las áreas Lounge/Backyard está permitido ligeras palabras malsonantes/maldecir en el contexto de lo que se esté discutiendo. Palabras malsonantes/insultos explícitos no están permitidos, y bajo ninguna circunstancia se permitirá insultos dirigidos a otra persona. Por favor ver el Código de Conducta: "Sé Considerado", y "Sé Respetuoso" para especificaciones más exactas. Un filtro de lenguaje está colocado para atrapar cualquier palabra malsonante que pudieras accidentalmente utilizado. No intentes evitar el filtro de lenguaje al usar variaciones o ligeros errores en las palabras malsonantes.
+   3. Conversaciones de Foro e Inflamatorios:
+          * Inflamar y mensajes condescendientes: Mensajes con ataques personales, dar nombres, o cualquier otra forma de acoso o de ser condescendientes para otro miembro del foro or cualquier grupo etnico o religioso serán removidos o movidos a "The Backyard" basado en la decisión del moderador.
+          * Si la conversación es provocadora de inflamaciones, será cerrada o removida sin aviso previo. Provocaciones individuales serán borradas o editadas a la discreción del moderador. Ciertos usuarios que continúen publicando mensajes provocadores o entren en cualquier otra forma de practicas cuestionables (como ser un troll) estarán sujetos a sanciones más serias.
+          * Si la conversación se convierte en puras inflamaciones, será removida o cerrada sin aviso. A veces un moderador puede separar el conversación o eliminar ciertas partes de forma tal de mantener la discusión andando.
+   4. Si la conversación es spam será movida a la carcel del foro.
+   5. Contenido Adulto/Violencia/Actividades Ilegales: mensajes conteniendo diálogos, imagenes, contenidos o enlances orientados al sexo/violentos/ilegales serán borrados. Mensajes con enlaces a o que sugieran actividades ilegales también serán borrados. Esta acciones pueden resultar en una prohibición.
+   6. Manejo de conversaciones / Desviación: Por favor mantener las discusiones en el tema. Discusiones fuera de tema y projectos de no terceras partes pertenecen al foro del Café Comunitario.
+   7. Por favor recuerden que estos foros son para incluir a TODA la gente, y queremos reforzar la accesibilidad para todos.
+   8. "The Backyard" es una sección sin moderación de estos foros para discusiones altamente controversiales tales como religión, política, etc. Por favor, mantenerlo limpio y profesional. Publicación xxx y ataques individuales contra personas serán removidos. Por favor ver esa sección del foro para reglas adicionales.
+   9. Por favor, esforzate en comunicarte con otros usuarios tan efectivamente como sea posible:
+          * Por favor intentá escribir tus mensajes en inglés. Tenemos muchos usuarios de muchos paises distintos que nos visitan aquí.
+          * Cuando estés escribiendo un mensaje, por favor espacia los parrafos con una línea vacía en medio para mayor entendimiento.
+          * Por favor no escribas tus mensajes todo en letras capitales, ya que parece que le estuvieras gritando a quienes leen tu mensaje.
+          * Por favor, evita usar habla "leet" (n. del t.: reemplazar números por letras, 50d4 5t3r30 por Soda Stereo -si ya sé que es un ejemplo de lo más tonto pero es el único que me sé ahora-) o lunfardo. Estos foros son una herramienta de comunicación, que puede ser ofuscada con esos tipos de escritura.
+          * Por favor no acortes tus palabras a acrónimos o abreviaturas. Es muy dificil de leer y entender.
+          * Por favor usa colores y propiedades de fuentes para destacar porciones de tu mensaje, y no para todo el texto de tu mensaje.
+          * Errores ortográficos y otro tipo de errores puede causar mala comunicación entre usuarios en estos foros, por favor revisá tu mensaje antes de publicarlo.
+  10. Si has encontrado un mensaje que vos sentís como inapropiado o que viola las políticas del foro, por favor usa el Centro de Resolución. Las listas de correo están incluidas en estos foros para rápido acceso a ellas, por favor no reportes nada de las listas de correo aquí, ya que no tenemos ningún control sobre su contenido.
+  11. Por favor sé prudente en tu uso de imagenes; podrían ayudarte a explicar algo más claramente o indicar un problema que estés experimentando en mejor forma pero tenés que recordar que no todos tienen el mismo ancho de banda. Si una imagen es la mejor forma de manejar la información, por favor mantené esa imagen en menos de 100kb. Si deseas publicar otras imagenes, por ver mirá en nuestra galería.
+  12. Las firmas del foro tienen unas pocas reglas que son las que siguen: Sin imagenes, limitadas a tres líneas de texto, 10pt de tamaño de fuente máximo. Las firmas tampoco son un lugar para material inapropiado como inflamaciones, injurias, acoso o comentarios religiosos.
+  13. Si sentís que alguien ha violado en Código de Conducta de Ubuntu podrías enviar una queja abierta con el Consejo Comunitario. Sin embargo, problemas relacionados con el foro necesitan ser enviados al centro de resoluciones del foro. El Consejo Comunitario reenviará todos los problemas de vuelta al Centro de Resolución del Foro para que sean resueltos.
+  14. La sección de 3ras Partes de los foros son una extensión para equipos que han creado herramientas valorables para Ubuntu. Estos foros son dados a individuos como un acto de agradecimiento por su trabajo. Se espera que los usuarios sigan los lineamientos del Foro y CoC cuando publiquen estos foros.
+  15. EL web-master, administradores y moderadores de este foro mantendrán el contenido del foro mientras sea posible. Sin embargo, editar, bloquear y borrar contenido puede ser necesario a la sola discreción del web-master, administradores y moderadores cuando la política haya sido violada.
+
+*Sección II - Políticas de Soporte Técnico*:
+
+_Al pedir soporte técnico_:
+
+   1. Tratá de dar información en el título de tu mensaje, en vez de usar un título como "Está roto", usá un título que sea específico, tal como, "Imposibilitado de lograr sonido en Firefox". Un título claro va a atraer más visitantes a tu conversación, ya que da clara indicaciones del contenido a la gente que esté deseosa de ayudarte. De última esto permitirá que consigas más ayuda de mejor calidad.
+   2. Buscar en los foros de Ubuntu es una forma rápida de ver si alguien ha tenido el mismo problema que vos y le han respondido. Hay una gran probabilidad que tu pregunta haya sido respondida antes, y podes conseguir la información que necesitás rápido.
+   3. Cuando estés solicitando ayuda, por favor incluí tantos detalles como puedas. Incluí tanta información como sepas. Si la gente te pide números de versión, considerá el usar Synpatic para encontrar información específica sobre los paquetes que has instalado. Por ejemplo, si estás teniendo problemas con Firefox, podés buscar en Synaptic y fijarte el número de versión para darle a la gente que esté ayudando más información. Si vos no sabes como encontrar está información que un usuario te está pidiendo, podrías preguntarle a ellos como conseguir esta información que han pedido. Agregá fotos de pantallas ú otros archivos si pensás que serán de utilidad.
+   4. No hay preguntas estúpidas. Vos no sos una persona estúpida simplemente porque no sabés hacer algo, o no tenés la respuesta para una pregunta. Todos hemos sido usuarios verdes en algún momento. :)
+   5. Es siempre agradable hacerle saber a la gente que te ayudó que estás agradecido por su ayuda. Es aún más agradable si compartís la información con otro usuario que tiene la misma pregunta que vos. Si tu pregunta ha sido resuelta (¡que esperemos sea siempre el caso!), será de utilidad  para otros usuarios y la gente que te ayuda el marcar el procedimiento que funcionó para vos al remarcarlo o referirte a él claramente. Dar feedback sobre los procedimientos que han funcionado no solo le da a la persona que te ayudó un sentimiento de logro, pero también ayudará a otro usuario con el mismo problema al buscar una respuesta.
+
+      _Cuando estés respondiendo problemas técnicos_:
+   6. Sé considerado con la persona que hace la pregunta. Todos fuimos usuarios verdes en algún momento. Sí, algunos usuarios son más complicados de ayudar que otros, pero por favor sé respetuoso de todos los usuarios.
+   7. Tratá de evitar acronimos y jerga cuando des instrucciones. Nuevos o usuarios verdes podrían no poder seguirte y muchos no pedirán explicaciones para evitar verse estúpidos. RTFM, "Andá a fijarte en google" son dos respuestas inapropiadas a una pregunta. Si no sabés la respuesta o no tenes ganas de ayudar, por favor no digas nada en vez de criticar la pregunta de alguien. Mostrarle a alguien en forma correcta como buscar y obtener una respuesta es aceptable, y aún recomandable.
+   8. Si la pregunta de un usuario ha sido cubierta en uno de los documentos de la comunidad, por favor dale una descripción y los enlaces. Algunos sitios útiles para indicarles a los usuarios verdes son: ubuntuguide.org, wiki.ubuntulinux.org, los HOWTOs del foro y wiki.ubuntulinux.org/HowTo. Vos incluso le podés mostrar al usuario como buscar en los foros o contarles acerca de la utilidad de búsqueda del foro. Si querés recordarle al usuario el uso de las herramientas de búsqueda ú otros recursos cuando han pregunta algo que vos creés que es muy básico o común, por favor se educado, ej. "STFB" o "RTFM" son inaceptables y no serán tolerados.
+   9. Siempre asumí que que el usuario tiene una instalación por defecto salvo que alguien te diga lo contrario. Si le pedís a la gente que use una aplicación fuera de la instalación oficial de Ubuntu, por favor dale instrucciones de como instalarlo.
+  10. Siempre asumí que el usuario es un usuario verde salvo que tengas seguridad que no lo es. Por favor recordá dar instrucciones detalladas ya que algunos usuarios no saben como usar una terminal aún.
+  11. Para evitar confusiones y problemas de autoformato, por favor usa los tags [CODE] alrededor de comandos de terminal. Si una imagen equivale a mil palabras y puede mostrar exactamente lo que vos querés decir, por todos los medios, incluí la imagen.
+  12. Por favor rodeá salidas extensas de comandos ú otro texto para prevenir que los usuarios tengan que recorrer el contenido dentro de los tags [CODE].
+  13. Por favor recordá hacer las cosas en la forma Ubuntu. Siempre hay más de una solución para un problema, elegí la que consideres la más fácil para el usuario. Instalación automática de paquetes (usando Synaptic, Aptitude o apt) sobre instalaciones manuales. .deb sobre fuentes. Por favor nunca le des instrucciones a los usuarios que podrían romper su sistema, eso incluye usar --force e --ignore-depends cuando estén instalando un .deb. Tratá de pensar como un usuario verde y elegí la opción más fácil.
+  14. Explicá cada paso de la solución. Si es posible, tratá de enseñarle mientras le das una solución. La enseñanza engendra enseñanza. :)
+  15. Si estás inseguro si un procedimiento es el correcto, por favor comentaselo a los usuarios. Si tu procedimiento tienen riegos inherentes, por favor decile a los usuarios cuales son. Por ejemplo, si le estás enseñando a alguien como redimensionar una partición, por favor incluí una advertencia que PODRÍA ocasionalmente causar pérdida de datos.
+  16. Respuestas a preguntas sobre ayuda en ejecutar software legítimo (por lo tanto cerrado o propietario) que no respondan pero que, en cambio, indiquen al usuario que no debería estar usando ese software sobre la base que no es libre, solo sirve para confundir y frustrar y serán removidos para dar espacio a respuestas de la pregunta que el usuario hizo a discreción del moderador. El objetivo de este foro es primero ofrecer asistencia técnica y luego educar a los usuarios en los beneficios del software libre. 
+
+*Sección III - Políticas y Expectativas del Staff del Foro*:
+
+Las tareas del staff están basadas en lo siguiente:
+
+   1. Manejarse con palabras malsonantes:
+      Palabras malsonantes livianas/maldecir está permitido en el contexto del dialogo general. Palabras malsonantes/insultos explícitos no serán permitidos, y bajo ninguna circunstancia permitiremos que las obcenidades sea dirigidas hacia otra persona. Si sentís que un usuario está fuera de lugar, por favor contactá un administrador con los detalles, ellos le darán una advertencia al usuario.
+   2. Manejarse con spam y mensajes potencialmente encarcelables:
+      Si hay un usuario que está tratando de publicitar algo muevan el mensaje a la carcel, una vez el mensaje haya sido movido, el usuario recibirá un mensaje privado haciendole saber que se ha removido su mensaje. Mensajes que sean usados para inflamar, acosar o dañar a otra persona deben ser reportados a un administrador tan rápido como sea posible. Nosotros no alentamos al personal a tomar parte en este tipo de situaciones y la administración manejará el tema. 
+   3. Edición de mensajes:
+      Cuando un mensaje rompe las reglas y requiere edición para traerlo bajo las reglas, el moderador primero debe copiar el mensaje sin editar a la carcel y luego editar el mensaje original, de forma de preservar el contenido original en caso que el tema se alargue. El moderador debe enviar un mensaje privado al autor y especificar que regla no siguió el post.
+   4. Cierre de conversacion:
+      Si una conversación ha seguido su rumbo y los mensajes comienzan a repetir temas la conversacion puede ser cerrada - si es posible, anunciar que la conversación ya ha finalizado antes de cerrado de forma tal que la gente pueda agregar comentarios de cierre - no se olviden de agradecer a la gente envuelta en la discusión. Siu una conversación se ha convertido en una situación donde la gente se relaciona en forma muy personal sobre el tema la conversación puede ser cerrada y/ o encarcelada. Si una conversación es un duplicado de otra conversación, puede ser cerrado (por favor, proveer un enlace a otra conversación abierta sobre el mismo tema).
+   5. Encarcelamiento de mensajes/conversaciones:
+      Si un mensaje/conversación requiere ser editado en más de la mitad para lograr que entre en norma, o si editar violaciones resultaría en casi mensajes/conversaciones vacías, el mensaje/conversación debe ser movida a la carcel.
+   6. Sin imagenes o publicidad en las firmas a excepción que la publicidad esté directamente relacionada con gnu/linux de alguna forma, vos podes hacer la decisión informada. Si ves una firma que necesite moderación, contactá al administrador, ellos pueden modificarla y contactar al usuario vía un mensaje privado. Los avatares deben mantenerse limpios y disponibles para toda la gente. Nada de pornografía, imagenes racistas, o tipos de imagenes rtfm. Si el usuario tiene una, enviales un mensaje provado y pediles que quiten el avatar. Si el usuario no quita el avatar voluntariamente, contactá al administrador para que quiten el avatar.
+   7. Contenido adulto/Violencia/Actividades Ilegales:
+      Mensajes que contengan dialogos, imagenes, contenidos o enlaces ofensivos / orientados sexualmente / violentos / ilegales seriam movidos al backyard o encarcelados dependiendo de la información que contengan, usa tu mejor juicio. Mensajes con enlaces a o sugiriendo actividades ilegales serán borrados por un administrador. Estas acciones pueden resultar en una prohibición para el usuario.
+   8. Conversacion religiosas/políticas:
+      Conversaciones limpias deben ser mantenidas en el backyard. Si encontrás una conversación relacionada con religión/política y no está aún en el backyard por favor movela.
+   9. Conversaciones RTFM/Odio a linux/Odio a Microsoft:
+      A medida que la comunidad crece este tipo de conversaciones pueden ser más prominentes. Necesitamos asegurarnos que podemos convertir estas conversaciones en discusiones positivas, sin embargo en muchos casos estas conversaciones solo finalizarán en herir sentimientos y serán bloqueadas. Si la conversación no puede convertirse en una discusión limpia el miembro del equipo que la bloquee debe tener el apoyo completo del resto del equipo.
+  10. Guía de las discusiones:
+      Será necesario guiar las conversaciones lejos de convertise en dañinas para el que publica y otros usuarios. Nuestra política es que no permitimos conversaciones derivar muy lejos en temas no relacionados, aún en las charlas comunitarias, hacia áreas donde las cosas se pueden poner feas en forma rápida; por ejemplo, conversaciones de "Yo odio a Linux". Por favor hacé tu mejor esfuerzo en mantener a quienes publican lejos de ponerse muy personales durante debates acalorados.
+  11. Mantené la mente abierta:
+      A veces te vas a enfrentar con una conversación en la que posiblemente no estés de acuerdo, pero es imperativo que mantengas una mentalidad abierta hacia toda la gente, y mantengas un foco neutral cuando respondas. Es nuestro deber el guiar las conversaciones hacia su cauce natural sin meternos en comportamientos negativos.
+  12. Firmas:
+      Si bien no hay guías con respecto a las firmas del equipo, por favor intenten mantenerlas moderadas y dentro de lo razonable.
+
+Debe ser destacado que, como en todas las cosas, estas reglas continuarán cambiando y evolucionando con feedback constructivo de usuarios y de la experiencia. Es nuestra esperanza que estas políticas generarán discusiones abiertas, honestas y civilizadas. Como siempre, le damos la bienvenida al feedback con respecto a cualquier duda que puedas tener por lo tanto sentite libre de publicar en la sección de discusiones del foro. Es la responsabilidad de los usuarios el verificar la política por cualquier actualización.
+
+También debe ser destacado que este sitio es propiedad y está operado por Ubuntu-Geek; por lo tanto publicar aca es un priviligio más que un derecho constitucional al libre discurso y la libertad de expresión, les pedimos que las reglas del foro sean respetadas en todo momento.
+
+[I]Datos públicos del foro son liberados bajo la Licencia Creative Commons Attribution 2.5
+Última actualización 17/2/2006 - 12:56pm EST[/I]
+
+---
+
