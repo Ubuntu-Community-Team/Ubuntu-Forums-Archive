@@ -1,0 +1,288 @@
+---
+title: "Problem after update to 8.04 in XPS M1210"
+date: 2008-04-26
+forum: Dell Ubuntu Support (CLOSED)
+---
+
+### Post by jordan86 on 2008-04-26
+Im facing some problems after upgraded my ubuntu.
+After upgraded, i found out there are 2 ubuntu that using different kernel in GRUB.
+The latest kernel, the wireless seem like a bit problem there. There is no wifi light, and it din show any available connection. But i can see the hardware there. After 1 or 2 mins, the wireless auto connected. The other problem is when i was watching movie or listening music, there is no sound come out from my headphone.
+
+For kernel 2.6.24-14, the wireless working fine. But i cant listen any sound when i was watching video in youtube.
+
+How to solve those problem??
+
+Thanks
+
+---
+
+### Post by manugap on 2008-04-26
+Hi,
+
+I'm experiencing the same problem: no sound at all and the wireless connection stops working (although the signal seems to be ok according to the try icon). This problem have started right after the upgrading to 8.04.
+
+
+My machine is an ASUS PRO31S F3SA, here's some inf about my system:
+
+```
+
+manu@rotor:~$ uname -a
+Linux rotor 2.6.24-16-generic #1 SMP Thu Apr 10 12:47:45 UTC 2008 x86_64 GNU/Linux
+
+```
+
+
+```
+manu@rotor:~$ lspci
+00:00.0 Host bridge: Intel Corporation Mobile PM965/GM965/GL960 Memory Controller Hub (rev 03)
+00:01.0 PCI bridge: Intel Corporation Mobile PM965/GM965/GL960 PCI Express Root Port (rev 03)
+00:1a.0 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #4 (rev 03)
+00:1a.1 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #5 (rev 03)
+00:1a.7 USB Controller: Intel Corporation 82801H (ICH8 Family) USB2 EHCI Controller #2 (rev 03)
+00:1b.0 Audio device: Intel Corporation 82801H (ICH8 Family) HD Audio Controller (rev 03)
+00:1c.0 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 1 (rev 03)
+00:1c.1 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 2 (rev 03)
+00:1c.2 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 3 (rev 03)
+00:1c.3 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 4 (rev 03)
+00:1c.4 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 5 (rev 03)
+00:1c.5 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 6 (rev 03)
+00:1d.0 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #1 (rev 03)
+00:1d.1 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #2 (rev 03)
+00:1d.2 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #3 (rev 03)
+00:1d.7 USB Controller: Intel Corporation 82801H (ICH8 Family) USB2 EHCI Controller #1 (rev 03)
+00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev f3)
+00:1f.0 ISA bridge: Intel Corporation 82801HEM (ICH8M) LPC Interface Controller (rev 03)
+00:1f.1 IDE interface: Intel Corporation 82801HBM/HEM (ICH8M/ICH8M-E) IDE Controller (rev 03)
+00:1f.2 SATA controller: Intel Corporation 82801HBM/HEM (ICH8M/ICH8M-E) SATA AHCI Controller (rev 03)
+01:00.0 VGA compatible controller: ATI Technologies Inc M76 [Radeon Mobility HD 2600 Series]
+02:00.0 Ethernet controller: Attansic Technology Corp. L1 Gigabit Ethernet Adapter (rev b0)
+03:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG Network Connection (rev 02)
+04:00.0 SATA controller: JMicron Technologies, Inc. JMicron 20360/20363 AHCI Controller (rev 02)
+08:00.0 Memory controller: Intel Corporation Turbo Memory Controller (rev 01)
+09:01.0 FireWire (IEEE 1394): Ricoh Co Ltd R5C832 IEEE 1394 Controller (rev 05)
+09:01.1 SD Host controller: Ricoh Co Ltd R5C822 SD/SDIO/MMC/MS/MSPro Host Adapter (rev 22)
+09:01.2 System peripheral: Ricoh Co Ltd R5C843 MMC Host Controller (rev 12)
+09:01.3 System peripheral: Ricoh Co Ltd R5C592 Memory Stick Bus Host Adapter (rev 12)
+09:01.4 System peripheral: Ricoh Co Ltd xD-Picture Card Controller (rev ff)
+
+```
+
+```
+
+manu@rotor:~$ lsmod
+Module                  Size  Used by
+af_packet              27272  0 
+snd_rtctimer            5344  1 
+binfmt_misc            14860  1 
+rfcomm                 47392  2 
+l2cap                  28800  13 rfcomm
+ppdev                  11400  0 
+acpi_cpufreq           10832  2 
+cpufreq_ondemand       11152  1 
+cpufreq_userspace       6180  0 
+cpufreq_conservative    10632  0 
+cpufreq_powersave       3200  0 
+cpufreq_stats           8416  0 
+freq_table              6464  3 acpi_cpufreq,cpufreq_ondemand,cpufreq_stats
+container               6656  0 
+sbs                    17808  0 
+sbshc                   8960  1 sbs
+dock                   12960  0 
+iptable_filter          4608  0 
+ip_tables              24104  1 iptable_filter
+x_tables               23560  1 ip_tables
+nls_iso8859_1           6656  2 
+nls_cp437               8320  2 
+vfat                   16256  2 
+fat                    60592  1 vfat
+ipv6                  311720  10 
+sbp2                   27272  0 
+parport_pc             41128  0 
+lp                     14916  0 
+parport                44300  3 ppdev,parport_pc,lp
+arc4                    3456  2 
+ecb                     5248  2 
+blkcipher               9476  1 ecb
+joydev                 15488  0 
+hci_usb                19228  0 
+bluetooth              67748  5 rfcomm,l2cap,hci_usb
+snd_hda_intel         440408  5 
+snd_hwdep              12552  1 snd_hda_intel
+snd_pcm_oss            47648  0 
+snd_pcm                92168  3 snd_hda_intel,snd_pcm_oss
+snd_page_alloc         13200  2 snd_hda_intel,snd_pcm
+snd_mixer_oss          20224  1 snd_pcm_oss
+snd_seq_dummy           5764  0 
+snd_seq_oss            38912  0 
+iwl3945               100468  0 
+iwlwifi_mac80211      251876  1 iwl3945
+uvcvideo               62084  0 
+snd_seq_midi           10688  0 
+fglrx                1804800  24 
+video                  23444  0 
+compat_ioctl32         11136  1 uvcvideo
+videodev               30720  1 uvcvideo
+v4l1_compat            15492  2 uvcvideo,videodev
+v4l2_common            21888  3 uvcvideo,compat_ioctl32,videodev
+atl1                   40460  0 
+snd_rawmidi            29856  1 snd_seq_midi
+cfg80211               17680  1 iwlwifi_mac80211
+mii                     7552  1 atl1
+output                  5632  1 video
+serio_raw               9092  0 
+ac                      8328  0 
+battery                16776  0 
+snd_seq_midi_event     10112  2 snd_seq_oss,snd_seq_midi
+psmouse                46236  0 
+sdhci                  21508  0 
+ricoh_mmc               5120  0 
+mmc_core               59272  1 sdhci
+snd_seq                63232  7 snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_seq_midi_event
+snd_timer              27912  3 snd_rtctimer,snd_pcm,snd_seq
+snd_seq_device         10644  5 snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_rawmidi,snd_seq
+asus_laptop            22492  0 
+snd                    70856  22 snd_rtctimer,snd_hda_intel,snd_hwdep,snd_pcm_oss,snd_pcm,snd_mixer_oss,snd_seq_dummy,snd_seq_oss,snd_rawmidi,snd_seq,snd_timer,snd_seq_device
+led_class               7176  1 asus_laptop
+intel_agp              30624  0 
+iTCO_wdt               15312  0 
+button                 10912  0 
+soundcore              10400  1 snd
+iTCO_vendor_support     5764  1 iTCO_wdt
+shpchp                 38172  0 
+pci_hotplug            34608  1 shpchp
+evdev                  14976  6 
+pcspkr                  4992  0 
+ext3                  149264  2 
+jbd                    57000  1 ext3
+mbcache                11392  1 ext3
+sr_mod                 20132  0 
+cdrom                  41512  1 sr_mod
+sg                     41880  0 
+ata_piix               24196  0 
+pata_acpi               9856  0 
+sd_mod                 33280  7 
+usbhid                 35168  0 
+hid                    44992  1 usbhid
+ohci1394               36532  0 
+ieee1394              106968  2 sbp2,ohci1394
+ata_generic             9988  0 
+ahci                   33028  6 
+libata                176304  4 ata_piix,pata_acpi,ata_generic,ahci
+scsi_mod              178488  5 sbp2,sr_mod,sg,sd_mod,libata
+ehci_hcd               41996  0 
+uhci_hcd               29856  0 
+usbcore               169904  6 hci_usb,uvcvideo,usbhid,ehci_hcd,uhci_hcd
+thermal                19744  0 
+processor              41448  4 acpi_cpufreq,thermal
+fan                     6792  0 
+fuse                   56112  3 
+vesafb                 10504  0 
+fbcon                  46336  0 
+tileblit                4096  1 fbcon
+font                   10112  1 fbcon
+bitblit                 7424  1 fbcon
+softcursor              3712  1 bitblit
+```
+
+Any ideas ??
+
+---
+
+### Post by gbrainin on 2008-04-26
+Losing sound is one of the known issues with 8.04, at least on some machines.  See the [Dell Linux Wiki Page for 8.04]("http://linux.dell.com/wiki/index.php/Ubuntu_8.04").
+
+---
+
+### Post by y318 on 2008-04-27
+Having the same problem here men. Listen, I'm so so so so so so frustrated, in this moment  And I am seriously thinking in GOING BACK TO WINDOWS VISTA ok? Yes! Your eyes dont lie! At first I loved Ubuntu, even though I had problems at my first day. I spent 3 hours trying to install a P2P program, then I got stuck with bugs and bugs and bugs I had to solve MANUALLLY by using the console (you dont know HOW I HATE THE CONSOLE), then stuff I couldnt fix. I moved to Kubuntu, and I liked it even though I had a problem at the first day. 1 week later I turn on my comp after upgrading it the previous day, and! OH SURPRISE! ITS all messed up!!!
+
+---
+
+### Post by gardara on 2008-04-27
+I have the m1210 too. My sound works ok but my wifi light is always turned off.... I hope this will be fixed soon.
+
+---
+
+### Post by superm1 on 2008-04-27
+> **gardara said:**
+> I have the m1210 too. My sound works ok but my wifi light is always turned off.... I hope this will be fixed soon.
+Install linux-backport-modules.  The version in that package turns on the wifi LED.
+
+---
+
+### Post by techstop on 2008-04-27
+> **superm1 said:**
+> Install linux-backport-modules.  The version in that package turns on the wifi LED.
+
+Yep, I can confirm this fix. LED working on my M1210.
+
+---
+
+### Post by gardara on 2008-04-27
+> **superm1 said:**
+> Install linux-backport-modules.  The version in that package turns on the wifi LED.
+
+I did set up linux-backports-modules-hardy-generic and now my light is working, thanks :)
+
+---
+
+### Post by eamonireland on 2008-04-29
+[This thread]("http://ubuntuforums.org/showthread.php?t=616845") worked for me in sorting out my sound problems. You have to use it to identify which command to use.
+
+For me, I needed to 
+
+sudo gedit **/etc/modprobe.d/alsa-base**
+
+and add the following line
+
+options snd-hda-intel model=dell-3stack
+
+And the world is perfect again!
+
+---
+
+### Post by mbria on 2008-05-08
+I got same problem on a Toshiba U300-14Q.
+
+Wifi and sound is not working after upgrading to 8.04 with kernel 2.6.24-16-386.
+
+This is my HW:
+
+```
+
+00:00.0 Host bridge: Intel Corporation Mobile PM965/GM965/GL960 Memory Controller Hub (rev 03)
+00:02.0 VGA compatible controller: Intel Corporation Mobile GM965/GL960 Integrated Graphics Controller (rev 03)
+00:02.1 Display controller: Intel Corporation Mobile GM965/GL960 Integrated Graphics Controller (rev 03)
+00:1a.0 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #4 (rev 03)
+00:1a.1 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #5 (rev 03)
+00:1a.7 USB Controller: Intel Corporation 82801H (ICH8 Family) USB2 EHCI Controller #2 (rev 03)
+00:1b.0 Audio device: Intel Corporation 82801H (ICH8 Family) HD Audio Controller (rev 03)
+00:1c.0 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 1 (rev 03)
+00:1c.1 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 2 (rev 03)
+00:1c.2 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 3 (rev 03)
+00:1c.3 PCI bridge: Intel Corporation 82801H (ICH8 Family) PCI Express Port 4 (rev 03)
+00:1d.0 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #1 (rev 03)
+00:1d.1 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #2 (rev 03)
+00:1d.2 USB Controller: Intel Corporation 82801H (ICH8 Family) USB UHCI Controller #3 (rev 03)
+00:1d.7 USB Controller: Intel Corporation 82801H (ICH8 Family) USB2 EHCI Controller #1 (rev 03)
+00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev f3)
+00:1f.0 ISA bridge: Intel Corporation 82801HEM (ICH8M) LPC Interface Controller (rev 03)
+00:1f.1 IDE interface: Intel Corporation 82801HBM/HEM (ICH8M/ICH8M-E) IDE Controller (rev 03)
+00:1f.2 SATA controller: Intel Corporation 82801HBM/HEM (ICH8M/ICH8M-E) SATA AHCI Controller (rev 03)
+00:1f.3 SMBus: Intel Corporation 82801H (ICH8 Family) SMBus Controller (rev 03)
+02:00.0 Memory controller: Intel Corporation Turbo Memory Controller (rev 01)
+03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8101E PCI Express Fast Ethernet controller (rev 01)
+04:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG Network Connection (rev 02)
+0a:01.0 FireWire (IEEE 1394): Ricoh Co Ltd R5C832 IEEE 1394 Controller (rev 05)
+0a:01.1 SD Host controller: Ricoh Co Ltd R5C822 SD/SDIO/MMC/MS/MSPro Host Adapter (rev 22)
+0a:01.2 System peripheral: Ricoh Co Ltd R5C843 MMC Host Controller (rev 12)
+0a:01.3 System peripheral: Ricoh Co Ltd R5C592 Memory Stick Bus Host Adapter (rev 12)
+0a:01.4 System peripheral: Ricoh Co Ltd xD-Picture Card Controller (rev ff)
+
+```
+
+Posting to follow the issue.
+
+---
+

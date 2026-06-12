@@ -1,0 +1,72 @@
+---
+title: "Vostro V13 - Synaptic touch pad issues - Please HELP!! Maverick"
+date: 2010-10-12
+forum: Dell Ubuntu Support (CLOSED)
+---
+
+### Post by benjio123 on 2010-10-12
+I've searched the forum and support site extensively and have found no fix, although it seems to be affecting other dell laptops as well...
+The problem is that the touchpad is recognised as a "PS/2 Generic Mouse" instead. I therefore have no scrolling at all, no multitouch/gestures, no control of speed, or anything touchpad related.
+
+All of the info I've found is for older versions that primarily consist of someone recommending to edit the xorg.conf file, then the OP replying that it didn't work. I'm on 10.10 and can't even find the xorg.conf file (although I'm a bit of a noob and it's not in the usual place). 
+
+It doesn't work when booting from the liveCD, or installing, both 32 and 64 bit.
+
+My laptop didn't come with ubuntu installed, so I can't get support from dell, but they do sell this model with ubuntu. There HAS to be a way to fix this. The hardware is certified for 10.4 64-bit, but I had the same problem on that too.
+[http://webapps.ubuntu.com/certification/hardware/201004-5578/](http://webapps.ubuntu.com/certification/hardware/201004-5578/)
+
+Any help is much appreciated!!
+
+Edit: Output of my xinput list
+xinput list
+&#9121; Virtual core pointer                        id=2    [master pointer  (3)]
+&#9116;   &#8627; Virtual core XTEST pointer                  id=4    [slave  pointer  (2)]
+&#9116;   &#8627; PS/2 Generic Mouse                          id=13    [slave  pointer  (2)]
+&#9123; Virtual core keyboard                       id=3    [master keyboard (2)]
+    &#8627; Virtual core XTEST keyboard                 id=5    [slave  keyboard (3)]
+    &#8627; Power Button                                id=6    [slave  keyboard (3)]
+    &#8627; Video Bus                                   id=7    [slave  keyboard (3)]
+    &#8627; Power Button                                id=8    [slave  keyboard (3)]
+    &#8627; Sleep Button                                id=9    [slave  keyboard (3)]
+    &#8627; HID 413c:8161                               id=10    [slave  keyboard (3)]
+    &#8627; Laptop_Integrated_Webcam_1.3M               id=11    [slave  keyboard (3)]
+    &#8627; AT Translated Set 2 keyboard                id=12    [slave  keyboard (3)]
+
+---
+
+### Post by hkphooey on 2010-10-12
+Probably not too much help initially, but I definitely think the xorg.conf tip is a dead end. Over the last few iterations of Ubuntu, they've been moving away from xorg.conf and everything is done without that these days. 
+
+Strange that your trackpoint doesn't show up. I get this on my Vostro 1400 running 10.04:
+s$ xinput list
+&#9121; Virtual core pointer             id=2	[master pointer  (3)]
+&#9116;   &#8627; Virtual core XTEST pointer   id=4	[slave  pointer  (2)]
+&#9116;   &#8627; USB Optical Mouse            id=10	[slave  pointer  (2)]
+&#9116;   &#8627; PS/2 Mouse                   id=13	[slave  pointer  (2)]
+&#9116;   &#8627; Macintosh mouse button emulation  id=14	[slave  pointer  (2)]
+&#9116;   &#8627; AlpsPS/2 ALPS GlidePoint     id=12	[slave  pointer  (2)]
+
+With the last entry being my Trackpad. Are you sure its not disabled in the BIOS. (Just asking). 
+Any useful messages in /var/log/messages?
+  grep input /var/log/messages
+
+---
+
+### Post by Peter09 on 2010-10-12
+Sorry not much help but information:
+ 
+[https://bugs.launchpad.net/ubuntu/+source/linux/+bug/380126](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/380126)
+
+---
+
+### Post by xshadow on 2011-02-11
+The problem has been solved. For details see the bugpage at the previous post.
+You will need to enable the proposed sources. Here it is described how: [https://wiki.ubuntu.com/Testing/EnableProposed](https://wiki.ubuntu.com/Testing/EnableProposed) 
+Than install 2.6.35-26-generic kernel for maverick
+Or 2.6.32.29 for lucid.
+I use lucid with the kernel mentioned.
+
+Hope it helps.
+
+---
+

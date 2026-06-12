@@ -1,0 +1,25 @@
+---
+title: "Dell Inspiron 530 Graphics Problems"
+date: 2012-06-20
+forum: Dell Ubuntu Support (CLOSED)
+---
+
+### Post by mscout2004 on 2012-06-20
+I have a GeForce 8500GT 512MB PCIe graphics card in now and everything runs fine when I tried to upgrade to the GeForce 210 1GB PCIe card Ubuntu would not load and gave me the message:
+
+PANIC: early exception 08 rip 246:10 error ffffffff813175e7 cr2 ffffffffff478f64
+
+That is exactly how it showed it onscreen. What happened and will I be able to use this card as it wouldn't even boot an live CD either?
+
+---
+
+### Post by mscout2004 on 2012-06-20
+Held the shift key down during boot and it fixed itself.
+
+---
+
+### Post by blackflame2996 on 2012-06-22
+Nvidias are a pain with linux.
+
+---
+
