@@ -1,0 +1,1063 @@
+---
+title: "[SOLVED] Firehol+Tinyproxy+Dansguardian: How does it work?"
+date: 2008-08-28
+forum: Networking &amp; Wireless
+---
+
+### Post by KIAaze on 2008-08-28
+I am trying to understand how Firewall, proxy and filtering systems work together.
+
+Where does a URL request go through?
+Where does the resulting incoming webpage go through?
+
+All I currently know:
+8080=>DG=>3128-3128=>TP=>?
+?=>FH=>?
+
+One of the reasons I am trying to understand this is that I have a filtering system which works for eth0, but when I use ath0 (wifi), it blocks everything.
+
+edit: It seems to block everything because dansguardian thinks I'm a "banned user".
+The problem is in the latest dansguardian package, there isn't any banneduserlist...
+
+System info:
+```
+$route -n (when connected over wifi)
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.2.0     0.0.0.0         255.255.255.0   U     0      0        0 ath0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 ath0
+0.0.0.0         192.168.2.1     0.0.0.0         UG    0      0        0 ath0
+
+```
+
+firehol.conf:
+```
+#
+# $Id: client-all.conf,v 1.2 2002/12/31 15:44:34 ktsaou Exp $
+#
+# This configuration file will allow all requests originating from the
+# local machine to be send through all network interfaces.
+#
+# No requests are allowed to come from the network. The host will be
+# completely stealthed! It will not respond to anything, and it will
+# not be pingable, although it will be able to originate anything
+# (even pings to other hosts).
+#
+
+version 5
+
+iptables -t filter -I OUTPUT -d 127.0.0.1 -p tcp --dport 3128 -m owner ! --uid-owner dansguardian -j DROP
+
+transparent_squid 8080 "root root"
+
+interface any world
+policy drop
+protection strong
+client all accept
+server cups accept
+```
+tinyproxy.conf:
+```
+##
+## tinyproxy.conf -- tinyproxy daemon configuration file
+##
+
+#
+# Name of the user the tinyproxy daemon should switch to after the port
+# has been bound.
+#
+User root
+Group root
+
+#
+# Port to listen on.
+#
+Port 3128
+
+#
+# If you have multiple interfaces this allows you to bind to only one. If
+# this is commented out, tinyproxy will bind to all interfaces present.
+#
+#Listen 192.168.0.1
+
+#
+# The Bind directive allows you to bind the outgoing connections to a
+# particular IP address.
+#
+#Bind 192.168.0.1
+
+#
+# Timeout: The number of seconds of inactivity a connection is allowed to
+# have before it closed by tinyproxy.
+#
+Timeout 600
+
+#
+# ErrorFile: Defines the HTML file to send when a given HTTP error
+# occurs.  You will probably need to customize the location to your
+# particular install.  The usual locations to check are:
+#   /usr/local/share/tinyproxy
+#   /usr/share/tinyproxy
+#   /etc/tinyproxy
+#
+# ErrorFile 404 "/usr/share/tinyproxy/404.html"
+# ErrorFile 400 "/usr/share/tinyproxy/400.html"
+# ErrorFile 503 "/usr/share/tinyproxy/503.html"
+# ErrorFile 403 "/usr/share/tinyproxy/403.html"
+# ErrorFile 408 "/usr/share/tinyproxy/408.html"
+
+# 
+# DefaultErrorFile: The HTML file that gets sent if there is no
+# HTML file defined with an ErrorFile keyword for the HTTP error
+# that has occured.
+#
+DefaultErrorFile "/usr/share/tinyproxy/default.html"
+
+#
+# StatFile: The HTML file that gets sent when a request is made
+# for the stathost.  If this file doesn't exist a basic page is
+# hardcoded in tinyproxy.
+#
+StatFile "/usr/share/tinyproxy/stats.html"
+
+#
+# Where to log the information. Either LogFile or Syslog should be set,
+# but not both.
+#
+Logfile "/var/log/tinyproxy.log"
+# Syslog On
+
+#
+# Set the logging level. Allowed settings are:
+#	Critical	(least verbose)
+#	Error
+#	Warning
+#	Notice
+#	Connect		(to log connections without Info's noise)
+#	Info		(most verbose)
+# The LogLevel logs from the set level and above. For example, if the LogLevel
+# was set to Warning, than all log messages from Warning to Critical would be
+# output, but Notice and below would be suppressed.
+#
+LogLevel Info
+
+#
+# PidFile: Write the PID of the main tinyproxy thread to this file so it
+# can be used for signalling purposes.
+#
+PidFile "/var/run/tinyproxy.pid"
+
+#
+# Include the X-Tinyproxy header, which has the client's IP address when
+# connecting to the sites listed.
+#
+#XTinyproxy mydomain.com
+
+#
+# Turns on upstream proxy support.
+#
+# The upstream rules allow you to selectively route upstream connections
+# based on the host/domain of the site being accessed.
+#
+# For example:
+#  # connection to test domain goes through testproxy
+#  upstream testproxy:8008 ".test.domain.invalid"
+#  upstream testproxy:8008 ".our_testbed.example.com"
+#  upstream testproxy:8008 "192.168.128.0/255.255.254.0"
+#
+#  # no upstream proxy for internal websites and unqualified hosts
+#  no upstream ".internal.example.com"
+#  no upstream "www.example.com"
+#  no upstream "10.0.0.0/8"
+#  no upstream "192.168.0.0/255.255.254.0"
+#  no upstream "."
+#
+#  # connection to these boxes go through their DMZ firewalls
+#  upstream cust1_firewall:8008 "testbed_for_cust1"
+#  upstream cust2_firewall:8008 "testbed_for_cust2"
+#
+#  # default upstream is internet firewall
+#  upstream firewall.internal.example.com:80
+#
+# The LAST matching rule wins the route decision.  As you can see, you
+# can use a host, or a domain:
+#  name     matches host exactly
+#  .name    matches any host in domain "name"
+#  .        matches any host with no domain (in 'empty' domain)
+#  IP/bits  matches network/mask
+#  IP/mask  matches network/mask
+#
+#Upstream some.remote.proxy:port
+
+#
+# This is the absolute highest number of threads which will be created. In
+# other words, only MaxClients number of clients can be connected at the
+# same time.
+#
+MaxClients 100
+
+#
+# These settings set the upper and lower limit for the number of
+# spare servers which should be available. If the number of spare servers
+# falls below MinSpareServers then new ones will be created. If the number
+# of servers exceeds MaxSpareServers then the extras will be killed off.
+#
+MinSpareServers 5
+MaxSpareServers 20
+
+#
+# Number of servers to start initially.
+#
+StartServers 10
+
+#
+# MaxRequestsPerChild is the number of connections a thread will handle
+# before it is killed. In practise this should be set to 0, which disables
+# thread reaping. If you do notice problems with memory leakage, then set
+# this to something like 10000
+#
+MaxRequestsPerChild 0
+
+#
+# The following is the authorization controls. If there are any access
+# control keywords then the default action is to DENY. Otherwise, the
+# default action is ALLOW.
+#
+# Also the order of the controls are important. The incoming connections
+# are tested against the controls based on order.
+#
+Allow 127.0.0.1
+Allow 192.168.1.0/25
+Allow 192.168.2.0/25
+
+#
+# The "Via" header is required by the HTTP RFC, but using the real host name
+# is a security concern.  If the following directive is enabled, the string
+# supplied will be used as the host name in the Via header; otherwise, the
+# server's host name will be used.
+#
+ViaProxyName "tinyproxy"
+
+#
+# The location of the filter file.
+#
+#Filter "/etc/tinyproxy/filter"
+
+#
+# Filter based on URLs rather than domains.
+#
+#FilterURLs On
+
+#
+# Use POSIX Extended regular expressions rather than basic.
+#
+#FilterExtended On
+
+#
+# Use case sensitive regular expressions.
+#                                                                         
+#FilterCaseSensitive On     
+
+#
+# Change the default policy of the filtering system.  If this directive is
+# commented out, or is set to "No" then the default policy is to allow
+# everything which is not specifically denied by the filter file.
+#
+# However, by setting this directive to "Yes" the default policy becomes to
+# deny everything which is _not_ specifically allowed by the filter file.
+#
+#FilterDefaultDeny Yes
+
+#
+# If an Anonymous keyword is present, then anonymous proxying is enabled.
+# The headers listed are allowed through, while all others are denied. If
+# no Anonymous keyword is present, then all header are allowed through.
+# You must include quotes around the headers.
+#
+#Anonymous "Host"
+#Anonymous "Authorization"
+
+#
+# This is a list of ports allowed by tinyproxy when the CONNECT method
+# is used.  To disable the CONNECT method altogether, set the value to 0.
+# If no ConnectPort line is found, all ports are allowed (which is not
+# very secure.)
+#
+# The following two ports are used by SSL.
+#
+ConnectPort 443
+ConnectPort 563
+```
+dansguardian.conf:
+```
+# DansGuardian config file for version 2.9.9.4
+
+# **NOTE** as of version 2.7.5 most of the list files are now in dansguardianf1.conf
+
+##CONFIGURED - Please remove this line after configuration
+
+# Web Access Denied Reporting (does not affect logging)
+#
+# -1 = log, but do not block - Stealth mode
+#  0 = just say 'Access Denied'
+#  1 = report why but not what denied phrase
+#  2 = report fully
+#  3 = use HTML template file (accessdeniedaddress ignored) - recommended
+#
+reportinglevel = 2
+
+# Language dir where languages are stored for internationalisation.
+# The HTML template within this dir is only used when reportinglevel
+# is set to 3. When used, DansGuardian will display the HTML file instead of
+# using the perl cgi script.  This option is faster, cleaner
+# and easier to customise the access denied page.
+# The language file is used no matter what setting however.
+#
+languagedir = '/etc/dansguardian/languages'
+
+# language to use from languagedir.
+language = 'french'
+
+# Logging Settings
+#
+# 0 = none  1 = just denied  2 = all text based  3 = all requests
+loglevel = 2
+
+# Log Exception Hits
+# Log if an exception (user, ip, URL, phrase) is matched and so
+# the page gets let through.  Can be useful for diagnosing
+# why a site gets through the filter.
+# 0 = never log exceptions
+# 1 = log exceptions, but do not explicitly mark them as such
+# 2 = always log & mark exceptions (default)
+logexceptionhits = 2
+
+# Log File Format
+# 1 = DansGuardian format (space delimited)
+# 2 = CSV-style format
+# 3 = Squid Log File Format
+# 4 = Tab delimited
+logfileformat = 1
+
+# truncate large items in log lines
+#maxlogitemlength = 400
+
+# anonymize logs (blank out usernames & IPs)
+#anonymizelogs = on
+
+
+# Syslog logging
+#
+# Use syslog for access logging instead of logging to the file
+# at the defined or built-in "loglocation"
+#syslog = on
+
+# Log file location
+# 
+# Defines the log directory and filename.
+#loglocation = '/var/log/dansguardian/access.log'
+
+
+# Statistics log file location
+#
+# Defines the stat file directory and filename.
+# Only used in conjunction with maxips > 0
+# Once every 3 minutes, the current number of IPs in the cache, and the most
+# that have been in the cache since the daemon was started, are written to this
+# file. IPs persist in the cache for 7 days.
+#statlocation = '/var/log/dansguardian/stats'
+
+
+# Network Settings
+# 
+# the IP that DansGuardian listens on.  If left blank DansGuardian will
+# listen on all IPs.  That would include all NICs, loopback, modem, etc.
+# Normally you would have your firewall protecting this, but if you want
+# you can limit it to a certain IP. To bind to multiple interfaces,
+# specify each IP on an individual filterip line.
+filterip =
+
+# the port that DansGuardian listens to.
+filterport = 8080
+
+# the ip of the proxy (default is the loopback - i.e. this server)
+proxyip = 127.0.0.1
+
+# the port DansGuardian connects to proxy on
+proxyport = 3128
+
+# accessdeniedaddress is the address of your web server to which the cgi
+# dansguardian reporting script was copied. Only used in reporting levels 1 and 2.
+#
+# This webserver must be either:
+#  1. Non-proxied. Either a machine on the local network, or listed as an exception
+#     in your browser's proxy configuration.
+#  2. Added to the exceptionsitelist. Option 1 is preferable; this option is
+#     only for users using both transparent proxying and a non-local server
+#     to host this script.
+#
+# Individual filter groups can override this setting in their own configuration.
+#
+accessdeniedaddress = 'http://YOURSERVER.YOURDOMAIN/cgi-bin/dansguardian.pl'
+
+# Non standard delimiter (only used with accessdeniedaddress)
+# To help preserve the full banned URL, including parameters, the variables
+# passed into the access denied CGI are separated using non-standard
+# delimiters. This can be useful to ensure correct operation of the filter
+# bypass modes. Parameters are split using "::" in place of "&", and "==" in
+# place of "=".
+# Default is enabled, but to go back to the standard mode, disable it.
+nonstandarddelimiter = on
+
+
+
+# Banned image replacement
+# Images that are banned due to domain/url/etc reasons including those
+# in the adverts blacklists can be replaced by an image.  This will,
+# for example, hide images from advert sites and remove broken image
+# icons from banned domains.
+# on (default) | off
+usecustombannedimage = on
+custombannedimagefile = '/usr/share/dansguardian/transparent1x1.gif'
+
+
+
+# Filter groups options
+# filtergroups sets the number of filter groups. A filter group is a set of content
+# filtering options you can apply to a group of users.  The value must be 1 or more.
+# DansGuardian will automatically look for dansguardianfN.conf where N is the filter
+# group.  To assign users to groups use the filtergroupslist option.  All users default
+# to filter group 1.  You must have some sort of authentication to be able to map users
+# to a group.  The more filter groups the more copies of the lists will be in RAM so
+# use as few as possible.
+filtergroups = 1
+filtergroupslist = '/etc/dansguardian/lists/filtergroupslist'
+
+
+
+# Authentication files location
+bannediplist = '/etc/dansguardian/lists/bannediplist'
+exceptioniplist = '/etc/dansguardian/lists/exceptioniplist'
+
+
+
+# Show weighted phrases found
+# If enabled then the phrases found that made up the total which excedes
+# the naughtyness limit will be logged and, if the reporting level is
+# high enough, reported. on | off
+showweightedfound = on
+
+# Weighted phrase mode
+# There are 3 possible modes of operation:
+# 0 = off = do not use the weighted phrase feature.
+# 1 = on, normal = normal weighted phrase operation.
+# 2 = on, singular = each weighted phrase found only counts once on a page.
+#
+weightedphrasemode = 0
+
+
+
+# Positive (clean) result caching for URLs
+# Caches good pages so they don't need to be scanned again.
+# It also works with AV plugins.
+# 0 = off (recommended for ISPs with users with disimilar browsing)
+# 1000 = recommended for most users
+# 5000 = suggested max upper limit
+# If you're using an AV plugin then use at least 5000.
+urlcachenumber = 1000
+#
+# Age before they are stale and should be ignored in seconds
+# 0 = never
+# 900 = recommended = 15 mins
+urlcacheage = 900
+
+
+
+# Clean cache for content (AV) scan results
+# By default, to save CPU, files scanned and found to be
+# clean are inserted into the clean cache and NOT scanned
+# again for a while.  If you don't like this then choose
+# to disable it.
+# (on|off) default = on.
+scancleancache = on
+
+
+
+# Smart, Raw and Meta/Title phrase content filtering options
+# Smart is where the multiple spaces and HTML are removed before phrase filtering
+# Raw is where the raw HTML including meta tags are phrase filtered
+# Meta/Title is where only meta and title tags are phrase filtered (v. quick)
+# CPU usage can be effectively halved by using setting 0 or 1 compared to 2
+# 0 = raw only
+# 1 = smart only
+# 2 = both of the above (default)
+# 3 = meta/title
+phrasefiltermode = 2
+
+# Lower casing options
+# When a document is scanned the uppercase letters are converted to lower case
+# in order to compare them with the phrases.  However this can break Big5 and
+# other 16-bit texts.  If needed preserve the case.  As of version 2.7.0 accented
+# characters are supported.
+# 0 = force lower case (default)
+# 1 = do not change case
+# 2 = scan first in lower case, then in original case
+preservecase = 0
+
+# Note:
+# If phrasefiltermode and preserve case are both 2, this equates to 4 phrase
+# filtering passes. If you have a large enough userbase for this to be a
+# worry, and need to filter pages in exotic character encodings, it may be
+# better to run two instances on separate servers: one with preservecase 1
+# (and possibly forcequicksearch 1) and non ASCII/UTF-8 phrase lists, and one
+# with preservecase 0 and ASCII/UTF-8 lists.
+
+
+
+# Hex decoding options
+# When a document is scanned it can optionally convert %XX to chars.
+# If you find documents are getting past the phrase filtering due to encoding
+# then enable.  However this can break Big5 and other 16-bit texts.
+# off = disabled (default)
+# on = enabled
+hexdecodecontent = off
+
+
+
+# Force Quick Search rather than DFA search algorithm
+# The current DFA implementation is not totally 16-bit character compatible
+# but is used by default as it handles large phrase lists much faster.
+# If you wish to use a large number of 16-bit character phrases then
+# enable this option.
+# off (default) | on (Big5 compatible)
+forcequicksearch = off
+
+
+
+# Reverse lookups for banned site and URLs.
+# If set to on, DansGuardian will look up the forward DNS for an IP URL
+# address and search for both in the banned site and URL lists.  This would
+# prevent a user from simply entering the IP for a banned address.
+# It will reduce searching speed somewhat so unless you have a local caching
+# DNS server, leave it off and use the Blanket IP Block option in the
+# bannedsitelist file instead.
+reverseaddresslookups = off
+
+
+
+# Reverse lookups for banned and exception IP lists.
+# If set to on, DansGuardian will look up the forward DNS for the IP
+# of the connecting computer.  This means you can put in hostnames in
+# the exceptioniplist and bannediplist.
+# If a client computer is matched against an IP given in the lists, then the
+# IP will be recorded in any log entries; if forward DNS is successful and a
+# match occurs against a hostname, the hostname will be logged instead.
+# It will reduce searching speed somewhat so unless you have a local DNS server, 
+# leave it off.
+reverseclientiplookups = off
+
+
+# Perform reverse lookups on client IPs for successful requests.
+# If set to on, DansGuardian will look up the forward DNS for the IP
+# of the connecting computer, and log host names (where available) rather than
+# IPs against requests.
+# This is not dependent on reverseclientiplookups being enabled; however, if it
+# is, enabling this option does not incur any additional forward DNS requests.
+logclienthostnames = off
+
+
+# Build bannedsitelist and bannedurllist cache files.
+# This will compare the date stamp of the list file with the date stamp of
+# the cache file and will recreate as needed.
+# If a bsl or bul .processed file exists, then that will be used instead.
+# It will increase process start speed by 300%.  On slow computers this will
+# be significant.  Fast computers do not need this option. on | off
+createlistcachefiles = on
+
+
+
+# POST protection (web upload and forms)
+# does not block forms without any file upload, i.e. this is just for
+# blocking or limiting uploads
+# measured in kibibytes after MIME encoding and header bumph
+# use 0 for a complete block
+# use higher (e.g. 512 = 512Kbytes) for limiting
+# use -1 for no blocking
+#maxuploadsize = 512
+#maxuploadsize = 0
+maxuploadsize = -1
+
+
+
+# Max content filter size
+# Sometimes web servers label binary files as text which can be very
+# large which causes a huge drain on memory and cpu resources.
+# To counter this, you can limit the size of the document to be
+# filtered and get it to just pass it straight through.
+# This setting also applies to content regular expression modification.
+# The value must not be higher than maxcontentramcachescansize
+# The size is in Kibibytes - eg 2048 = 2Mb
+# use 0 to set it to maxcontentramcachescansize
+maxcontentfiltersize = 256
+
+
+
+# Max content ram cache scan size
+# This is only used if you use a content scanner plugin such as AV
+# This is the max size of file that DG will download and cache
+# in RAM.  After this limit is reached it will cache to disk
+# This value must be less than or equal to maxcontentfilecachescansize.
+# The size is in Kibibytes - eg 10240 = 10Mb
+# use 0 to set it to maxcontentfilecachescansize
+# This option may be ignored by the configured download manager.
+maxcontentramcachescansize = 2000
+
+
+
+# Max content file cache scan size
+# This is only used if you use a content scanner plugin such as AV
+# This is the max size file that DG will download
+# so that it can be scanned or virus checked.
+# This value must be greater or equal to maxcontentramcachescansize.
+# The size is in Kibibytes - eg 10240 = 10Mb
+maxcontentfilecachescansize = 20000
+
+
+
+# File cache dir
+# Where DG will download files to be scanned if too large for the
+# RAM cache.
+filecachedir = '/tmp'
+
+
+
+# Delete file cache after user completes download
+# When a file gets save to temp it stays there until it is deleted.
+# You can choose to have the file deleted when the user makes a sucessful
+# download.  This will mean if they click on the link to download from
+# the temp store a second time it will give a 404 error.
+# You should configure something to delete old files in temp to stop it filling up.
+# on|off (defaults to on)
+deletedownloadedtempfiles = on
+
+
+
+# Initial Trickle delay
+# This is the number of seconds a browser connection is left waiting
+# before first being sent *something* to keep it alive.  The
+# *something* depends on the download manager chosen.
+# Do not choose a value too low or normal web pages will be affected.
+# A value between 20 and 110 would be sensible
+# This may be ignored by the configured download manager.
+initialtrickledelay = 20
+
+
+
+# Trickle delay
+# This is the number of seconds a browser connection is left waiting
+# before being sent more *something* to keep it alive.  The
+# *something* depends on the download manager chosen.
+# This may be ignored by the configured download manager.
+trickledelay = 10
+
+
+
+# Download Managers
+# These handle downloads of files to be filtered and scanned.
+# They differ in the method they deal with large downloads.
+# Files usually need to be downloaded 100% before they can be
+# filtered and scanned before being sent on to the browser.
+# Normally the browser can just wait, but with content scanning,
+# for example to AV, the browser may timeout or the user may get
+# confused so the download manager has to do some sort of
+# 'keep alive'.
+#
+# There are various methods possible but not all are included.
+# The author does not have the time to write them all so I have
+# included a plugin systam.  Also, not all methods work with all
+# browsers and clients.  Specifically some fancy methods don't
+# work with software that downloads updates.  To solve this,
+# each plugin can support a regular expression for matching
+# the client's user-agent string, and lists of the mime types
+# and extensions it should manage.
+#
+# Note that these are the matching methods provided by the base plugin
+# code, and individual plugins may override or add to them.
+# See the individual plugin conf files for supported options.
+#
+# The plugins are matched in the order you specify and the last
+# one is forced to match as the default, regardless of user agent
+# and other matching mechanisms.
+#
+downloadmanager = '/etc/dansguardian/downloadmanagers/fancy.conf'
+#downloadmanager = '/etc/dansguardian/downloadmanagers/trickle.conf'
+downloadmanager = '/etc/dansguardian/downloadmanagers/default.conf'
+
+
+
+# Content Scanners (Also known as AV scanners)
+# These are plugins that scan the content of all files your browser fetches
+# for example to AV scan.  The options are limitless.  Eventually all of
+# DansGuardian will be plugin based.  You can have more than one content
+# scanner. The plugins are run in the order you specify.
+# This is one of the few places you can have multiple options of the same name.
+#
+# Some of the scanner(s) require 3rd party software and libraries eg clamav.
+# See the individual plugin conf file for more options (if any).
+#
+#contentscanner = '/etc/dansguardian/contentscanners/clamav.conf'
+#!! Not compiled !! contentscanner = '/etc/dansguardian/contentscanners/clamdscan.conf'
+#!! Unimplemented !! contentscanner = '/etc/dansguardian/contentscanners/kavav.conf'
+#!! Not compiled !! contentscanner = '/etc/dansguardian/contentscanners/kavdscan.conf'
+#contentscanner = '/etc/dansguardian/contentscanners/icapscan.conf'
+#contentscanner = '/etc/dansguardian/contentscanners/commandlinescan.conf'
+
+
+
+# Content scanner timeout
+# Some of the content scanners support using a timeout value to stop
+# processing (eg AV scanning) the file if it takes too long.
+# If supported this will be used.
+# The default of 60 seconds is probably reasonable.
+contentscannertimeout = 60
+
+
+
+# Content scan exceptions
+# If 'on' exception sites, urls, users etc will be scanned
+# This is probably not desirable behavour as exceptions are
+# supposed to be trusted and will increase load.
+# Correct use of grey lists are a better idea.
+# (on|off) default = off
+contentscanexceptions = off
+
+
+
+# Auth plugins
+# These replace the usernameidmethod* options in previous versions. They
+# handle the extraction of client usernames from various sources, such as
+# Proxy-Authorisation headers and ident servers, enabling requests to be
+# handled according to the settings of the user's filter group.
+# Multiple plugins can be specified, and will be queried in order until one
+# of them either finds a username or throws an error. For example, if Squid
+# is configured with both NTLM and Basic auth enabled, and both the 'proxy-basic'
+# and 'proxy-ntlm' auth plugins are enabled here, then clients which do not support
+# NTLM can fall back to Basic without sacrificing access rights.
+#
+# If you do not use multiple filter groups, you need not specify this option.
+#
+#authplugin = '/etc/dansguardian/authplugins/proxy-basic.conf'
+#authplugin = '/etc/dansguardian/authplugins/proxy-digest.conf'
+#authplugin = '/etc/dansguardian/authplugins/proxy-ntlm.conf'
+#authplugin = '/etc/dansguardian/authplugins/ident.conf'
+#authplugin = '/etc/dansguardian/authplugins/ip.conf'
+
+
+
+# Re-check replaced URLs
+# As a matter of course, URLs undergo regular expression search/replace (urlregexplist)
+# *after* checking the exception site/URL/regexpURL lists, but *before* checking against
+# the banned site/URL lists, allowing certain requests that would be matched against the
+# latter in their original state to effectively be converted into grey requests.
+# With this option enabled, the exception site/URL/regexpURL lists are also re-checked
+# after replacement, making it possible for URL replacement to trigger exceptions based
+# on them.
+# Defaults to off.
+recheckreplacedurls = off
+
+
+
+# Misc settings
+
+# if on it adds an X-Forwarded-For: <clientip> to the HTTP request
+# header.  This may help solve some problem sites that need to know the
+# source ip. on | off
+forwardedfor = off
+
+
+# if on it uses the X-Forwarded-For: <clientip> to determine the client
+# IP. This is for when you have squid between the clients and DansGuardian.
+# Warning - headers are easily spoofed. on | off
+usexforwardedfor = off
+
+
+# if on it logs some debug info regarding fork()ing and accept()ing which
+# can usually be ignored.  These are logged by syslog.  It is safe to leave
+# it on or off
+logconnectionhandlingerrors = on
+
+
+
+# Fork pool options
+
+# If on, this causes DG to write to the log file whenever child processes are
+# created or destroyed (other than by crashes). This information can help in
+# understanding and tuning the following parameters, but is not generally
+# useful in production.
+logchildprocesshandling = off
+
+# sets the maximum number of processes to spawn to handle the incoming
+# connections.  Max value usually 250 depending on OS.
+# On large sites you might want to try 180.
+maxchildren = 120
+
+
+# sets the minimum number of processes to spawn to handle the incoming connections.
+# On large sites you might want to try 32.
+minchildren = 8
+
+
+# sets the minimum number of processes to be kept ready to handle connections.
+# On large sites you might want to try 8.
+minsparechildren = 4
+
+
+# sets the minimum number of processes to spawn when it runs out
+# On large sites you might want to try 10.
+preforkchildren = 6
+
+
+# sets the maximum number of processes to have doing nothing.
+# When this many are spare it will cull some of them.
+# On large sites you might want to try 64.
+maxsparechildren = 32
+
+
+# sets the maximum age of a child process before it croaks it.
+# This is the number of connections they handle before exiting.
+# On large sites you might want to try 10000.
+maxagechildren = 500
+
+
+# Sets the maximum number client IP addresses allowed to connect at once.
+# Use this to set a hard limit on the number of users allowed to concurrently
+# browse the web. Set to 0 for no limit, and to disable the IP cache process.
+maxips = 0
+
+
+
+# Process options
+# (Change these only if you really know what you are doing).
+# These options allow you to run multiple instances of DansGuardian on a single machine.
+# Remember to edit the log file path above also if that is your intention.
+
+# IPC filename
+# 
+# Defines IPC server directory and filename used to communicate with the log process.
+ipcfilename = '/tmp/.dguardianipc'
+
+# URL list IPC filename
+# 
+# Defines URL list IPC server directory and filename used to communicate with the URL
+# cache process.
+urlipcfilename = '/tmp/.dguardianurlipc'
+
+# IP list IPC filename
+#
+# Defines IP list IPC server directory and filename, for communicating with the client
+# IP cache process.
+ipipcfilename = '/tmp/.dguardianipipc'
+
+# PID filename
+# 
+# Defines process id directory and filename.
+#pidfilename = '/var/run/dansguardian.pid'
+
+# Disable daemoning
+# If enabled the process will not fork into the background.
+# It is not usually advantageous to do this.
+# on|off (defaults to off)
+nodaemon = off
+
+# Disable logging process
+# on|off (defaults to off)
+nologger = off
+
+# Enable logging of "ADs" category blocks
+# on|off (defaults to off)
+logadblocks = off
+
+# Enable logging of client User-Agent
+# Some browsers will cause a *lot* of extra information on each line!
+# on|off (defaults to off)
+loguseragent = off
+
+# Daemon runas user and group
+# This is the user that DansGuardian runs as.  Normally the user/group nobody.
+# Uncomment to use.  Defaults to the user set at compile time.
+# Temp files created during virus scanning are given owner and group read
+# permissions; to use content scanners based on external processes, such as
+# clamdscan, the two processes must run with either the same group or user ID.
+#daemonuser = 'dansguardian'
+#daemongroup = 'dansguardian'
+
+# Soft restart
+# When on this disables the forced killing off all processes in the process group.
+# This is not to be confused with the -g run time option - they are not related.
+# on|off (defaults to off)
+softrestart = off
+
+# Mail program
+# Path (sendmail-compatible) email program, with options.
+# Not used if usesmtp is disabled (filtergroup specific).
+mailer = '/usr/sbin/sendmail -t'
+
+```
+
+Some test results about working internet status over wifi:
+[I commented out or not the following lines in firehol.conf:
+iptables -t filter -I OUTPUT -d 127.0.0.1 -p tcp --dport 3128 -m owner ! --uid-owner dansguardian -j DROP
+transparent_squid 8080 "root root"
+]
+```
+
+FH started:
+===========
+
+TP+DG stopped:
+======================
+iptables + squid => NO
+iptables + no squid => YES
+no iptables + squid => NO (but google yes?)
+no iptables + no squid => YES
+
+TP started / DG stopped:
+========================
+iptables + squid => NO (but google yes?)
+iptables + no squid => YES
+no iptables + squid => NO (not even google)
+no iptables + no squid => YES
+
+FH stopped:
+===========
+DG OFF / TP ON => YES
+DG OFF / TP OFF => YES
+DG ON / TP ON => YES (and no filtering)
+(with FF proxy set to localhost:8080 => DansGuardian - 400 Bad Request for all pages)
+
+```
+
+iwconfig:
+```
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+wmaster0  no wireless extensions.
+
+ath0      IEEE 802.11  ESSID:"SuperLan"
+          Mode:Managed  Frequency:2.462 GHz  Access Point: 00:03:C9:7D:E7:87
+          Bit Rate=24 Mb/s   Tx-Power=27 dBm
+          Retry min limit:7   RTS thr:off   Fragment thr=2352 B
+          Link Quality=62/100  Signal level=-51 dBm  Noise level=-91 dBm
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+```
+
+ifconfig:
+```
+ath0      Link encap:Ethernet  HWaddr 00:14:78:8f:8b:39  
+          inet addr:192.168.2.101  Bcast:192.168.2.255  Mask:255.255.255.0
+          inet6 addr: fe80::214:78ff:fe8f:8b39/64 Scope:Link              
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1              
+          RX packets:16036 errors:0 dropped:0 overruns:0 frame:0          
+          TX packets:14226 errors:0 dropped:0 overruns:0 carrier:0        
+          collisions:0 txqueuelen:1000                                    
+          RX bytes:17967425 (17.9 MB)  TX bytes:2386532 (2.3 MB)          
+
+eth0      Link encap:Ethernet  HWaddr 00:0b:cd:ab:ef:d9  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1     
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000                        
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)              
+          Interrupt:10 Base address:0xe000                    
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:10797 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:10797 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:562151 (562.1 KB)  TX bytes:562151 (562.1 KB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-14-78-8F-8B-39-30-30-00-00-00-00-00-00-00-00
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+
+```
+
+---
+
+### Post by GVaio on 2008-08-29
+I found this useful:  [HowFilter+ProxyWorks]("http://dansguardian.org/?page=dgflow")
+
+I am heavily in the middle of investigating this more myself ... after some more progress I might report my findings.  But in the meantime, I hope the above can help you.
+:) G.
+
+---
+
+### Post by KIAaze on 2008-08-29
+I already found that page too. :)
+But it doesn't take into account any additional firewall.
+
+In firehol.conf, I have "interface any world" which supposedly makes it work for all interfaces, but it doesn't seem to work. (this is even after restarting it once the wifi interface is up and running!)
+
+But since I get the "banned user" message, maybe stuff going over ath0 gets another username, I don't know.
+
+I found out that the internet does work if I set the dansguardian to only log, not block (reportinglevel = -1).
+
+Here's a sample of /var/log/dansguardian/access.log in that case:
+```
+2008.8.29 21:16:51 - 192.168.2.101 http://happypenguin.org/forums/templates/happypenguin/happypenguin.css  GET 11259 -10  1 200 text/css   -
+
+```
+But I don't see any username in there. :(
+Any idea what the "GET 11259 -10  1 200" means?
+
+I might do some tests with squid too to see if it behaves better.
+
+---
+
+### Post by GVaio on 2008-08-29
+The 11259 is the size of the css file (if you type that address into your browser, save the result in a text file you get 11,257 for its size (close enough).  Not sure about the -10, etc.  The GET simply means that a file was fetched from that address.
+
+The rest of what you're asking is still above my head ... but I am learning as I delve into my own challenge (a dial-up (internal PCI modem) gateway with filtering and ICS -- have not found the perfect combination yet).  So far I keep running into FireStarter breaking DansGuardian ...
+:) G.
+
+---
+
+### Post by KIAaze on 2008-08-31
+I found this howto which explains everything that is done:
+[http://www.pilpi.net/journal/item-985.php](http://www.pilpi.net/journal/item-985.php)
+
+I changed my firehol.conf to:
+```
+transparent_squid 8080 "proxy root"
+```
+It was "root root" before.
+
+eth0 is still working, but I don't have any wifi connection here where I can test ath0.
+I hope it will work.
+
+---
+
+### Post by KIAaze on 2008-08-31
+YES! It works!
+eth0 and ath0 are now both safe & usable. :)
+
+As for my initial question, I think it's mostly solved too, altough I still have to clear a few things up.
+
+---
+
+### Post by Jack Orion on 2009-04-02
+Thanks for this, worked perfect for me.
+
+---
+

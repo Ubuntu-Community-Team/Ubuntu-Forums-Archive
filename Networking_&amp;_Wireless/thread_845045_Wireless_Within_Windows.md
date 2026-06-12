@@ -1,0 +1,19 @@
+---
+title: "Wireless Within Windows"
+date: 2008-06-30
+forum: Networking &amp; Wireless
+---
+
+### Post by nobbydog on 2008-06-30
+hI ALL CAN ANYONE HELP?
+JUST INSTALLED UBUNTU HARDY HERON WITH WUBI WITHIN WINDOWS ON MY NEW LAPTOP INTERNET WORKS WIRED BUT NOT WIRELESS IS THERE ANY CAN ADVISE ME HOW TO SET UP THE WIRELESS CONNECTION.
+REGARDS 
+NOBBYDOG
+
+---
+
+### Post by jw5801 on 2008-06-30
+Take the capslock key off.
+
+---
+

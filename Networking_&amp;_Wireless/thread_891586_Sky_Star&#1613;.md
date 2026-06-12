@@ -1,0 +1,13 @@
+---
+title: "Sky Star&#1613;"
+date: 2008-08-16
+forum: Networking &amp; Wireless
+---
+
+### Post by Uchiha_madara on 2008-08-16
+I am asking about if i can using Sky star with Ubuntu or not
+
+???????????????????????
+
+---
+

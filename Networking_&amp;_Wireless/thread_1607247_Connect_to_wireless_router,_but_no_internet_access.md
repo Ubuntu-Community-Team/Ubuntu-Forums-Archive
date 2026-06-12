@@ -1,0 +1,89 @@
+---
+title: "Connect to wireless router, but no internet access"
+date: 2010-10-27
+forum: Networking &amp; Wireless
+---
+
+### Post by Jerry123 on 2010-10-27
+OK, so I am not a seasoned ubuntu user but have decent technology experience. I am having some issues with connecting to our wireless router at work, and am hoping someone can point me in the right direction.
+
+At work, we (like almost everyone) are still full-on windows. I am currently trying to get away from windows because I am not a fan.
+
+Anyway, my current windows machine (different from my Ubuntu machine) is accessing the wireless network fine, and there are no obvious problems there. Also, my Ubuntu machine can access my wireless network at home, so I know there are no driver issues.
+
+I set up the connection for the Ubuntu machine, and it seems to be connecting OK. I can ping internal IPs and by all statuses, the connection to the router is functioning. However, when I attempt to load a web page or ping a domain or external IP, it fails. I tried to ping the IP, thinking if that worked, it's probably the DNS, but pinging both domains or IPs fails.
+
+I have looked around at forums and posts, but none of them seem to match my issue (that's probably not true, but I am struggling to see the commonality).
+
+Here are the results of "netstat -r":
+
+Destination Gateway Genmask Flags Metric Ref Use Iface
+192.168.45.0 * 255.255.255.0 U 2 0 0 wlan0
+link-local * 255.255.0.0 U 1000 0 0 wlan0
+default 192.168.45.5 0.0.0.0 UG 0 0 0 wlan0
+
+And here is "ifconfig":
+
+wlan0 Link encao:Ethernet HWaddr 74:f0:6d:XX:XX:XX
+inet addr:192.168.45.49 Bcast:192.168.45.255 Mask:255.255.255.0
+inet6 addr:fe80::76f0:6dff:XXXX:XXXX/64 Scope:Link
+UP BROADCAST RUNNING MULTICAST MTU:1500 Metric:1
+RX packets:27934 errors:0 dropped:0 overruns:0 frame:0
+TX Packets:2467 errors:0 dropped:0 overruns:0 carrier:0
+collisions:0 txqueuelen:1000
+RX Bytes:2946766 (2.9 MB) TX bytes:278323 (278.3 KB)
+
+Here is the ipconfig of my FUNCTIONING connection via my windows machine:
+
+Ethernet adapter Wireless Network Connection:
+
+        Connection-specific DNS Suffix  . : XXXXXXX.loc
+        Description . . . . . . . . . . . : Intel(R) WiFi Link 5300 AGN
+        Physical Address. . . . . . . . . : XX-XX-XX-XX-6F-62
+        Dhcp Enabled. . . . . . . . . . . : Yes
+        Autoconfiguration Enabled . . . . : Yes
+        IP Address. . . . . . . . . . . . : 192.168.45.48
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . : 192.168.45.5
+        DHCP Server . . . . . . . . . . . : 192.168.50.11
+        DNS Servers . . . . . . . . . . . : 192.168.50.11
+                                            192.168.50.13
+                                            66.54.XXX.XXX
+                                            66.54.XXX.XXX
+        Primary WINS Server . . . . . . . : 192.168.50.11
+        Secondary WINS Server . . . . . . : 192.168.50.13
+        Lease Obtained. . . . . . . . . . : Wednesday, October 27, 2010 2:18:27
+AM
+        Lease Expires . . . . . . . . . . : Thursday, October 28, 2010 2:18:27 A
+M
+
+
+Does anyone see any glaring issues? Would appreciating someone's help weening me off of the MS teat.
+
+---
+
+### Post by Iowan on 2010-10-27
+Probably neither is responsible, but two possible things come to mind - IPv6 and MTU.  [Here]("http://ubuntuforums.org/showthread.php?t=872346") is a T&T about MTU.
+
+---
+
+### Post by Jerry123 on 2010-11-09
+I figured this out and am posting in case someone stumbles onto this thread and has a similar issue. This is now about a router distributing too many bad nameservers on connection.
+
+The issue was difficult for me to figure out because: 1) my machine was accessing the internet fine on my other network, 2) people with windows and macs had no issue accessing the internet, and 3) I assumed that the router was issuing valid nameservers to use in the DHCP process. The second fact led to the third assumption, but anyway...
+
+The router was throwing four nameserver IPs, the first three were responding but invalid, while the fourth was valid. The network manager seems to only process the first three nameservers it  receives from the router, and anything after that it discards (it actually says this in the /etc/resolv.conf file, which I stupidly didn't check immediately). What really threw me off the trail was that windows and mac machines were working, which must be because they will accept or cycle through more than three nameserver entries and keep trying until they get a good one.
+
+A permanent fix for this problem (besides fixing your router, obviously) is to hard code a nameserver into the /etc/resolv.conf file by way of the /etc/dhcp3/dhclient.conf file. Open the /etc/dhcp3/dhclient.conf file and add this line at the top: prepend domain-name-servers 8.8.8.8; The nameserver is Google's nameserver IP, but you can use any valid DNS.
+
+Since the resolv.conf file is generated by the dhclient.conf file on connection to the router, the dhclient.conf file will add Google's DNS ( 8.8.8.8 ) before it adds the ones provided by the router. Just as a side note, I hardcoded Google's DNS and not the correct one from the router because I am not always going to be on that router.
+
+What I also found interesting is that even if the third nameserver works, it will continuously cycle through the first bad two, which will hurt the responsiveness of browsers because of all the DNS failures.
+
+---
+
+### Post by Iowan on 2010-11-10
+Sounds like you got it [[SOLVED]]("https://wiki.ubuntu.com/UnansweredPostsTeam/SolvedThreads")...
+
+---
+

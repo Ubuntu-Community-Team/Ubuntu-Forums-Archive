@@ -1,0 +1,429 @@
+---
+title: "No pinging, no browsing but connected to wireless"
+date: 2009-09-07
+forum: Networking &amp; Wireless
+---
+
+### Post by Taida on 2009-09-07
+Hello guys,
+
+i know that this topic sounds familiar, and i hate repeating it, but i spend last few days on  reading about this and trying to fix it, but no results. As ive seen most of the people with this problem can ping, but in my case pinging also doesnt work, all packets lost.
+
+It says i am connected to the wireless network in my dormitory, and i tried firefox, konqueror and opera, nothing works.
+
+- DNS settings are on automatic, but when i set them manually to the settings that i read from my windows computer that connects with no problems, still no change. 
+
+- I disabled ipv6 in firefox which someone suggested. 
+
+- In the end i returned to ubuntu 8.10, because last time i was using wireless on that computer, it was 8.10 version. And i have read that  new driver (iwl3945), often makes problems. But when i reinstalled it i see its the same driver. Ofcourse, again not working
+
+I am pretty much new to ubuntu, and ive tried all these things that i read as advices for other people, here on forum, but nothing worked. But also here i have pinging problem. 
+
+I dont have cable internet here so i can not connect with ubuntu computer on the internet at all, but i will copy to this machine and send any logs  that you need in figuring this problem out
+
+I appreciate all the help , this issue is really making me problems 
+
+Taida
+
+---
+
+### Post by jward3010 on 2009-09-07
+When you are connected whats your IP address? Open a terminal and type:
+```
+ifconfig
+```
+and post it here.
+
+---
+
+### Post by Taida on 2009-09-07
+aida@aida-laptop:~$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:16:36:b1:00:50  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Memory:da000000-da020000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:240 (240.0 B)  TX bytes:240 (240.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr 00:18:de:a3:01:a4  
+          inet addr:192.168.3.48  Bcast:192.168.3.255  Mask:255.255.255.0
+          inet6 addr: fe80::218:deff:fea3:1a4/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:735 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:27 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:127133 (127.1 KB)  TX bytes:5599 (5.5 KB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-18-DE-A3-01-A4-31-61-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+---
+
+### Post by jward3010 on 2009-09-07
+For one thing, you say you're staying in a dorm, hence are you in a college? If yes, then most likely you'll have to set up your network connection to go through a proxy, colleges use proxies to filter out what they don't deem necessary. Ask the lovely people in the college about that - network services or whatever they're called. Thats what happens with the colleges in Ireland at least.
+
+---
+
+### Post by Taida on 2009-09-07
+Ellou, thanx for reply
+
+its a small student dormitory with maybe 30 ppl, nobody has linux here and no experience with that, windows goes smoothly. I am trying to reach the administrators, i have no idea who they are,  but  they are not answering my mail and it will be almost 2 days since i wrote them...and for sure they dont live here
+
+---
+
+### Post by jward3010 on 2009-09-07
+Thankfully if it's just a proxy issue setting it up is simple enough, just get the details from them and go to Peferences menu > Network Proxy and enter the info. It might actually be an automatic config file, *.pac which is even easier, you just have to enter the address of the file, and it sets it up automatically. It will look something like "http://www.BigCollege.edu/network/proxy.pac". 
+
+Luckily you can set up Proxy for different locations, obviously when you go elsewhere, away from the college you wont need the proxy anymore, so you can set up two locations in "Network Proxy", one for college (Proxy based), one for everywhere else (Direct Internet Connection).
+
+bada bing, bada boom - if it is a proxy issue of course.
+
+---
+
+### Post by falconindy on 2009-09-07
+192.168.x.x sounds like an address that's being generated by a router. Are you behind a router? Was the Windows setup behind a router too? Were you at any point asked to register a MAC address with the school?
+
+---
+
+### Post by Taida on 2009-09-14
+Hello again,
+
+i was not writing because i was waiting for the network administrator to reply on my emails. To cut the story short i am dealing with very unpleasant person and the story ended that he gave me no information but kept saying that its about my computer. I can not get any other information from that side.
+
+We have two  MacBooks now in our dormitory, they have same problem, connected but no browsing, can not open the login page.......i can not spend semester working on windows machine, is there any solution??
+
+Any new ideas, me still desperate...  ???
+
+thanks :)))
+
+---
+
+### Post by jward3010 on 2009-09-14
+Connect to the network the way you're supposed to (in other words don't set any manual settings, like DNS servers etc.) and post the output of the following to see whay you got and what you ain't:
+```
+ping -c 5 208.67.222.222
+```
+```
+ping -c 5 resolver1.opendns.com
+```
+```
+route -n
+```
+```
+cat /etc/resolv.conf
+```
+With this info we're going to see whether you're on a viable network or not.
+
+If you manage to get internet elsewhere install **nmap**...
+```
+sudo apt-get install nmap
+```
+
+---
+
+### Post by Taida on 2009-09-15
+Hello, i connected to the wireless in my school without any problems, here are results:
+
+aida@aida-laptop:~$ ping -c 5 208.67.222.222
+PING 208.67.222.222 (208.67.222.222) 56(84) bytes of data.
+64 bytes from 208.67.222.222: icmp_seq=1 ttl=54 time=37.6 ms
+64 bytes from 208.67.222.222: icmp_seq=3 ttl=54 time=28.1 ms
+64 bytes from 208.67.222.222: icmp_seq=4 ttl=54 time=31.3 ms
+64 bytes from 208.67.222.222: icmp_seq=5 ttl=54 time=30.8 ms
+
+--- 208.67.222.222 ping statistics ---
+5 packets transmitted, 4 received, 20% packet loss, time 4010ms
+rtt min/avg/max/mdev = 28.119/31.994/37.670/3.497 ms
+
+
+aida@aida-laptop:~$ ping -c 5 resolver1.opendns.com
+PING resolver1.opendns.com (208.67.222.222) 56(84) bytes of data.
+64 bytes from resolver1.opendns.com (208.67.222.222): icmp_seq=1 ttl=54 time=28.1 ms
+64 bytes from resolver1.opendns.com (208.67.222.222): icmp_seq=2 ttl=54 time=27.3 ms
+64 bytes from resolver1.opendns.com (208.67.222.222): icmp_seq=3 ttl=54 time=29.1 ms
+64 bytes from resolver1.opendns.com (208.67.222.222): icmp_seq=4 ttl=54 time=28.3 ms
+64 bytes from resolver1.opendns.com (208.67.222.222): icmp_seq=5 ttl=54 time=27.7 ms
+
+--- resolver1.opendns.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+rtt min/avg/max/mdev = 27.386/28.163/29.185/0.630 ms
+
+
+aida@aida-laptop:~$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.68.0    0.0.0.0         255.255.252.0   U     2      0        0 wlan0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+0.0.0.0         192.168.71.254  0.0.0.0         UG    0      0        0 wlan0
+
+
+aida@aida-laptop:~$ cat /etc/resolv.conf
+# Generated by NetworkManager
+nameserver 195.176.178.1
+nameserver 195.176.178.2
+
+And i installed nmap.
+
+thanx!!
+
+---
+
+### Post by jward3010 on 2009-09-15
+OK, the first result means you can get out on the web and route packets out to the web.
+The second result means that DNS is working which should enable Firefox to work, have you tried that yet.
+In relation to the "route -n" info, send us "ifconfig -a" now that you're connected.
+The last info. (nameserver) seem ok.
+
+---
+
+### Post by jdripper on 2009-09-15
+You seem to be connected to the internet.
+
+What's the output of :
+ping -c 3 google.com
+
+Better yet, try in a terminal window :
+wget google.com
+
+If the last line looks something like this, you can make HTTP connections to a host on the public internet, you problem will most likely be with firefox.
+```
+
+13:43:50 (70.15 KB/s) - `index.html' saved [5612]
+
+```If this is not the last line, then your HTTP outbound access may be restricted.
+
+---
+
+### Post by Taida on 2009-09-15
+> **jward3010 said:**
+> The second result means that DNS is working which should enable Firefox to work, have you tried that yet.
+
+
+Hey, i am sorry i am not sure i understood fairly well quoted question, what have i tried yet??? 
+I am connected at the moment from my university wireless where everything works great. It automatically connects and i can browse no problem. So results i posted this morning as well as these now, are from this network. 
+
+As soon as i get to my dormitoty, firefox doesnt work and pinging doesnt work as well....and i have to use my windows computer :/
+ 
+Once someone asked me did i have to register MAC address at any moment, the answer is NO..
+
+aida@aida-laptop:~$ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:16:36:b1:00:50  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Memory:da000000-da020000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:115 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:115 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:15497 (15.4 KB)  TX bytes:15497 (15.4 KB)
+
+pan0      Link encap:Ethernet  HWaddr 7e:c5:a9:08:f1:1f  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr 00:18:de:a3:01:a4  
+          inet addr:192.168.69.129  Bcast:192.168.71.255  Mask:255.255.252.0
+          inet6 addr: fe80::218:deff:fea3:1a4/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:124168 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17712 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:45482913 (45.4 MB)  TX bytes:2843001 (2.8 MB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-18-DE-A3-01-A4-31-61-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+thanks for all efforts :)
+
+---
+
+### Post by jdripper on 2009-09-15
+So you need to re-provide the data in the non-working environment.
+
+How could data from another working network help us figure out what's wrong with a different non-working net ? :-/
+
+---
+
+### Post by jward3010 on 2009-09-15
+> **Taida said:**
+> Hey, i am sorry i am not sure i understood fairly well quoted question, what have i tried yet???
+I pretty much meant when you open Firefox does it show up webpages, load them? In other words does Firefox actually work the way it should or do you get "The Page requested could not be retrieved" etc. blah?
+
+The previous post where I asked you to **ping** and do **route -n, cat /etc/resolv.conf** I should have mentioned that I needed you to do that when you we're on your dorm  network, not the working college one.
+
+Could you do that whenever you get the chance?
+
+The other Windows people who are able to connect, do they connect to the same access point as you? What do they have to do to get connected to the dorm network, where do they get the information on security passphrases etc.
+
+The thing is networking standards are just that, they are **standards** across all OS's, there should  be nothing purely Windows based on that network that would prevent an Ubuntu box from connection, so this problem should be fairly simple to resolve. In fact the Unix / Linux world mostly created them and Microsoft, Apple, Novell etc. can thank them for that.
+
+---
+
+### Post by Taida on 2009-09-15
+Sorry, my bad, wasnt thinking .....  here are all results when i connect here, where i have problem.
+
+
+
+aida@aida-laptop:~$ ping -c 5 208.67.222.222 
+PING 208.67.222.222 (208.67.222.222) 56(84) bytes of data. 
+
+--- 208.67.222.222 ping statistics --- 
+5 packets transmitted, 0 received, 100% packet loss, time 4031ms 
+
+
+
+aida@aida-laptop:~$ ping -c 5 resolver1.opendns.com 
+PING resolver1.opendns.com (208.67.222.222) 56(84) bytes of data. 
+
+--- resolver1.opendns.com ping statistics --- 
+5 packets transmitted, 0 received, 100% packet loss, time 4032ms 
+
+aida@aida-laptop:~$ route -n 
+Kernel IP routing table 
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface 
+192.168.3.0     0.0.0.0         255.255.255.0   U     2      0        0 wlan0 
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0 
+0.0.0.0         192.168.3.1     0.0.0.0         UG    0      0        0 wlan0 
+
+aida@aida-laptop:~$ cat /etc/resolv.conf 
+# Generated by NetworkManager 
+nameserver 195.186.1.162 
+nameserver 195.186.4.162 
+
+
+aida@aida-laptop:~$ ifconfig -a 
+eth0      Link encap:Ethernet  HWaddr 00:16:36:b1:00:50  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1 
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0 
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B) 
+          Memory:da000000-da020000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0 
+          inet6 addr: ::1/128 Scope:Host 
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1 
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0 
+          TX packets:4 errors:0 dropped:0 overruns:0 carrier:0 
+          collisions:0 txqueuelen:0 
+          RX bytes:240 (240.0 B)  TX bytes:240 (240.0 B) 
+ 
+pan0      Link encap:Ethernet  HWaddr 12:06:bd:f4:69:eb  
+          BROADCAST MULTICAST  MTU:1500  Metric:1 
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0 
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B) 
+
+wlan0     Link encap:Ethernet  HWaddr 00:18:de:a3:01:a4  
+          inet addr:192.168.3.48  Bcast:192.168.3.255  Mask:255.255.255.0 
+          inet6 addr: fe80::218:deff:fea3:1a4/64 Scope:Link 
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1 
+          RX packets:2364 errors:0 dropped:0 overruns:0 frame:0 
+          TX packets:181 errors:0 dropped:0 overruns:0 carrier:0 
+          collisions:0 txqueuelen:1000 
+          RX bytes:423702 (423.7 KB)  TX bytes:31081 (31.0 KB) 
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-18-DE-A3-01-A4-31-61-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1 
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0 
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0 
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B) 
+
+
+
+
+aida@aida-laptop:~$ wget google.com 
+--2009-09-15 17:25:57--  [http://google.com/](http://google.com/) 
+Resolving google.com... 74.125.67.100, 74.125.127.100, 74.125.45.100 
+Connecting to google.com|74.125.67.100|:80... connected. 
+HTTP request sent, awaiting response... 302 OK 
+Location: [http://wss1.local/aaa/wba_login.html?wbaredirect=http://google.com/](http://wss1.local/aaa/wba_login.html?wbaredirect=http://google.com/) [following] 
+--2009-09-15 17:25:57--  [http://wss1.local/aaa/wba_login.html?wbaredirect=http://google.com/](http://wss1.local/aaa/wba_login.html?wbaredirect=http://google.com/) 
+Resolving wss1.local... failed: Name or service not known. 
+wget: unable to resolve host address `wss1.local'
+
+
+:: This **wss1.local** is that login page, that opens in browser, when i use my windows computer. On ubuntu or MAC it doesnt open, i get the- address not found message. We got usernames and passwords, but nothing else they asked us for, or given us any other info.
+
+As i mentioned iin the previous posts, pinging of anything results in all packets lost.
+
+---
+
+### Post by jward3010 on 2009-09-15
+> **Taida said:**
+> :: This **wss1.local** is that login page, that opens in browser, when i use my windows computer. On ubuntu or MAC it doesn't open, i get the- address not found message. We got usernames and passwords, but nothing else they asked us for, or given us any other info.
+
+As i mentioned in the previous posts, pinging of anything results in all packets lost.
+I know those type of sites. There can be free wi-fi hotspots like that etc. There unsecured, you connect, you're redirected to a login page, input details and you're connected.
+
+When you use Windows do you use **Internet Explorer** or **Firefox**. If this is what I think it is, the IT department should be shot, it may just be a browser compatibility issue - i.e. the wss1.local page will only appear and function in an IE browser. There's plenty of proprietary Microsoft pages out there.
+
+---
+
+### Post by jdripper on 2009-09-15
+From what I can discern  you need to "login" to a site at **wss1.local** and then you can access the internet. However you are unable to resolve wss1..local to an IP address.
+On windows can you do :
+ping wss1.local
+
+You will see an IP address being pinged. Record that address, then in ubuntu do :
+ gksudo gedit /etc/hosts
+
+Add a line with the IP that you just got after the line with 127.0.0.1 :
+x.x.x.x  wss1.local
+(where you replace x.x.x.x by the IP address you recorded in the previous step)
+
+Then save the file and close gedit. Try to open a website again in firefox.
+
+---
+
+### Post by Taida on 2009-09-16
+> **jdripper said:**
+> From what I can discern  you need to "login" to a site at **wss1.local** and then you can access the internet. However you are unable to resolve wss1..local to an IP address.
+On windows can you do :
+ping wss1.local
+
+You will see an IP address being pinged. Record that address, then in ubuntu do :
+ gksudo gedit /etc/hosts
+
+Add a line with the IP that you just got after the line with 127.0.0.1 :
+x.x.x.x  wss1.local
+(where you replace x.x.x.x by the IP address you recorded in the previous step)
+
+Then save the file and close gedit. Try to open a website again in firefox.
+
+
+Thank you so much!!!!! It works!! And just about the time when school work started seriously and i need computer desperately :):) thank u thank u thank u........!!
+
+---
+

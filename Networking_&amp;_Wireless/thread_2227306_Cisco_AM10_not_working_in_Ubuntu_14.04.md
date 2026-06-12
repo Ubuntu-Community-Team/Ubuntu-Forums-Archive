@@ -1,0 +1,180 @@
+---
+title: "Cisco AM10 not working in Ubuntu 14.04"
+date: 2014-06-01
+forum: Networking &amp; Wireless
+---
+
+### Post by Thien_Vu on 2014-06-01
+I installed Linux for the first time on my EXTREMELY Ancient Piece of Hardware(Pentium4, Less than 2GB of DDR2), and I got everything loaded up, I plugged in my Valet Connector(My NIC was dead), and it didn't load, I'm slashing through forums trying to find a solution, and most of them are something I don't understand. Someone help me please? I'm not a good expert when it comes to Linux.
+
+---
+
+### Post by praseodym on 2014-06-01
+Hi,
+
+please show the terminal outputs of these commands:
+```
+
+uname -a
+lspci -nnk | grep -iA2 net
+lsusb
+pccardctl info
+ifconfig -a
+cat /etc/resolv.conf
+route -n
+lsmod
+rfkill list
+```
+What kind of computer is it?
+
+---
+
+### Post by chili555 on 2014-06-01
+Perhaps this will be helpful: [http://ubuntuforums.org/showthread.php?t=1808690](http://ubuntuforums.org/showthread.php?t=1808690)
+
+---
+
+### Post by Thien_Vu on 2014-06-01
+lighteater12@lighteater12-Linux:~$ sudo uname -a
+[sudo] password for lighteater12: 
+Linux lighteater12-Linux 3.13.0-24-generic #46-Ubuntu SMP Thu Apr 10 19:08:14 UTC 2014 i686 i686 i686 GNU/Linux
+
+
+
+
+lighteater12@lighteater12-Linux:~$ sudo lspci -nnk | grep -iA2
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+
+
+
+
+lighteater12@lighteater12-Linux:~$ sudo net
+Invalid command: net 
+Usage:
+net rpc             Run functions using RPC transport
+net rap             Run functions using RAP transport
+net ads             Run functions using ADS transport
+net file            Functions on remote opened files
+net share           Functions on shares
+net session         Manage sessions
+net server          List servers in workgroup
+net domain          List domains/workgroups on network
+net printq          Modify printer queue
+net user            Manage users
+net group           Manage groups
+net groupmap        Manage group mappings
+net sam             Functions on the SAM database
+net validate        Validate username and password
+net groupmember     Modify group memberships
+net admin           Execute remote command on a remote OS/2 server
+net service         List/modify running services
+net password        Change user password on target server
+net changetrustpw   Change the trust password
+net changesecretpw  Change the secret password
+net setauthuser     Set the winbind auth user
+net getauthuser     Get the winbind auth user settings
+net time            Show/set time
+net lookup          Look up host names/IP addresses
+net g_lock          Manipulate the global lock table
+net join            Join a domain/AD
+net dom             Join/unjoin (remote) machines to/from a domain/AD
+net cache           Operate on the cache tdb file
+net getlocalsid     Get the SID for the local domain
+net setlocalsid     Set the SID for the local domain
+net setdomainsid    Set domain SID on member servers
+net getdomainsid    Get domain SID on member servers
+net maxrid          Display the maximum RID currently used
+net idmap           IDmap functions
+net status          Display server status
+net usershare       Manage user-modifiable shares
+net usersidlist     Display list of all users with SID
+net conf            Manage Samba registry based configuration
+net registry        Manage the Samba registry
+net eventlog        Process Win32 *.evt eventlog files
+net printing        Process tdb printer files
+net serverid        Manage the serverid tdb
+net help            Print usage information
+lighteater12@lighteater12-Linux:~$ sudo lsusb
+Bus 001 Device 016: ID 1307:1169 Transcend Information, Inc. TS2GJF210 JetFlash 210 2GB
+Bus 001 Device 015: ID 1307:0169 Transcend Information, Inc. 
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 002: ID 0461:4d38 Primax Electronics, Ltd 
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 003 Device 002: ID 046d:c52b Logitech, Inc. Unifying Receiverlighteater12@lighteater12-Linux:~$ sudo lsusb
+Bus 001 Device 016: ID 1307:1169 Transcend Information, Inc. TS2GJF210 JetFlash 210 2GB
+Bus 001 Device 015: ID 1307:0169 Transcend Information, Inc. 
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 002: ID 0461:4d38 Primax Electronics, Ltd 
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 003 Device 002: ID 046d:c52b Logitech, Inc. Unifying Receiver
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+
+
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+
+
+
+
+lighteater12@lighteater12-Linux:~$ sudo cat /etc/resolv.conf
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+
+
+
+
+lighteater12@lighteater12-Linux:~$ sudo route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+lighteater12@lighteater12-Linux:~$ sudo lsmod
+Module                  Size  Used by
+nls_iso8859_1          12617  0 
+bnep                   18895  2 
+rfcomm                 53664  0 
+snd_intel8x0           33110  2 
+bluetooth             342263  10 bnep,rfcomm
+snd_ac97_codec        105709  1 snd_intel8x0
+joydev                 17101  0 
+ac97_bus               12642  1 snd_ac97_codec
+snd_pcm                85501  2 snd_ac97_codec,snd_intel8x0
+snd_page_alloc         14230  2 snd_intel8x0,snd_pcm
+snd_seq_midi           13132  0 
+snd_seq_midi_event     14475  1 snd_seq_midi
+snd_rawmidi            25135  1 snd_seq_midi
+snd_seq                55383  2 snd_seq_midi_event,snd_seq_midi
+dcdbas                 14448  0 
+i915                  705396  3 
+psmouse                91033  0 
+snd_seq_device         14137  3 snd_seq,snd_rawmidi,snd_seq_midi
+snd_timer              28584  2 snd_pcm,snd_seq
+snd                    60871  12 snd_ac97_codec,snd_intel8x0,snd_timer,snd_pcm,snd_seq,snd_rawmidi,snd_seq_device,snd_seq_midi
+serio_raw              13230  0 
+soundcore              12600  1 snd
+lpc_ich                16864  0 
+video                  18903  1 i915
+drm_kms_helper         46907  1 i915
+drm                   243792  4 i915,drm_kms_helper
+mac_hid                13037  0 
+i2c_algo_bit           13197  1 i915
+parport_pc             31981  1 
+ppdev                  17391  0 
+lp                     13299  0 
+parport                40836  3 lp,ppdev,parport_pc
+hid_generic            12492  0 
+hid_logitech_dj        18165  0 
+usbhid                 47035  0 
+hid                    87604  4 hid_generic,usbhid,hid_logitech_dj
+usb_storage            48417  0 
+floppy                 55378  0 
+
+
+The other commands showed no response.
+My Computer is a Dell Optiplex GX520
+It sports less than 2GB of DDR2 Ram, and has only integrated graphics, it dual-boots Windows 8 from a salvaged 500GB HDD I have.
+
+---
+

@@ -1,0 +1,411 @@
+---
+title: "VZW UMW 190 Connection Issue Ubuntu 10.10"
+date: 2010-12-25
+forum: Networking &amp; Wireless
+---
+
+### Post by tdavis01 on 2010-12-25
+I need help setting up a VZW UMW 190 USB modem on my HP Mini 110. I have completed the install of Ubuntu 10.10 Net book Remix everything seems to work great but I have spent 3 hours trying every fix I can find for this modem to no avail.
+
+I have tried the broadband network wizard, adjusted the setting several times. I have tried GNOME PPP In every configeration imaginable and still no luck.  Below I have pasted the log:-> WvDial: Internet dialer version 1.60
+--> Cannot get information for serial port.
+--> Initializing modem.
+--> Sending: ATZ
+ATZ
+OK
+--> Sending: ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+OK
+--> Modem initialized.
+--> Please enter password (or empty password to stop):
+--> Sending: ATM0L0DT#777
+--> Waiting for carrier.
+ATM0L0DT#777
+CONNECT
+--> Carrier detected.  Waiting for prompt.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Don't know what to do!  Starting pppd and hoping for the best.
+--> Unable to run /usr/sbin/pppd.
+--> Check permissions, or specify a "PPPD Path" option in wvdial.conf.
+--> Connected, but carrier signal lost!  Retrying...
+--> Sending: ATM0L0DT#777
+--> Waiting for carrier.
+NO CARRIER
+ATM0L0DT#777
+--> No Carrier!  Trying again.
+--> Maximum Attempts Exceeded..Aborting!!
+--> Disconnecting at Sat Dec 25 16:14:22 2010
+
+
+I have attached a screen shot of my setting as well. Please help!
+
+---
+

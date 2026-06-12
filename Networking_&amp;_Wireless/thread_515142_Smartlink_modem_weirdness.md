@@ -1,0 +1,106 @@
+---
+title: "Smartlink modem weirdness"
+date: 2007-08-01
+forum: Networking &amp; Wireless
+---
+
+### Post by Pogo_VA on 2007-08-01
+Dear Community,
+
+I've got an HP dv1622nr laptop (essentially series dv1000) on which I'm testing a WUBI installation of Feisty Fawn after trying out the live 7.04 CD. It seems to see pretty much everything such as sound, video, ethernet, and wireless out of the box, but not my winmodem (of course - that would be too easy!!)
+
+Unfortunately, I've got to have a working dialup connection and there is no serial port on the system.
+
+After visiting Linmodem and reading various wiki & howto articles (thanks to all contributors), I dl'd the appropriate (I hope) driver and installed it. Now, my Smartlink at /dev/ttySL0 responds to query modem requests in Gnome ppp as well as terminal probes from within Kppp. In fact, I was able to use the INIT2 information found through Gnome to help configure the Kppp dialer which is what I want to use.
+
+Howsomever, the Kppp log showed that while modem initialization apparently went without a hitch up to dialing the ISP's telephone number, the process stalled after that and failed with a NO CARRIER message. After poking about a bit, I found a thread at Ubuntu forums to try:
+
+$ sudo /etc/init.d/sl-modem-daemon restart
+
+This got rid of the NO CARRIER problem (Note: the daemon restart is required whenever the system is rebooted), but then I started getting NO ANSWER in the log although I knew I was dialing the correct number.
+
+I verified that the modem was dialing out under WINDOWS by picking up a handset and listening for tones, but when I returned to Ubuntu kppp I discovered that although the log said the modem was dialing out, there were no tones.
+
+On another Ubuntu thread dealing with SmartLink winmodems, I found a reference to a driver set and a comment, “This package seems to work better in breezy and dapper and does not give the dialing problem that causes the modem to fail on ATDT and not dial out."
+
+On a hunch, I tried the latest KANOTIX Live CD which recognized a modem at /dev/ttySL0, but had the same NO ANSWER problem. Although both Ubuntu and KANOTIX are debian based, I'm sure the issue is with the SmartLink driver rather than a given distro.
+
+Does anyone out there have any particular experience with the SmartLink drivers for winmodems within Feisty and any suggestions as which version is most likely to work given the known ATDT question? If all else fails, my system has both a PCMCIA port and USB ports which could support an external modem if it supports LINUX.
+
+Any thoughts or suggestions appreciated.
+__________________
+We have met the enemy and he is us.
+
+---
+
+### Post by helmut_hed on 2007-08-06
+Perhaps you need to set your country code?  It's a parameter to "slmodemd":
+
+slmodemd -c USA
+
+(for example)
+
+This governs what tone it expects to hear before dialing, and probably other things.
+
+Regards,
+Jeff
+
+---
+
+### Post by Pogo_VA on 2007-08-06
+Thanks to all thus far, but there's a new twist.
+
+Because I couldn't be sure that I hadn't inadvertently done somethng screwy, I wiped and then reinstalled 7.04 through WUBI including the standard security updates at a local WiFi point. I then downloaded the scanModem.gz and went through the process of rerunning it before I did anything else to my system relative to dialers or dialout configurations.
+
+The Modemtxt now says I have a Conexant chipset although I thought that I got SmartLink information the first time, but my earlier playing about may have messed something up. I still find this odd because at least 2 other LiveCD distros (KANOTIX and MEPIS) found and set up SmartLink winmodems at ttySL0 as I'd earlier reported although both with the missing dialout tones issue.
+
+I will keep eveyone's advice at hand, but think I'll have to look at the possibility that I have a Conexant chipset and try to figure out those drivers with their known issues as my next step.
+
+Also, I recently had a client suggest that I consider a type of dialup router that does the dialup, but attaches to your laptop or other system with 10/100 cable through an RJ45 port. I'd be interested in hearing if anyone has experience with such a setup.
+
+---------------------------------------
+We have the enemy and he is us - Pogo
+
+---
+
+### Post by Pogo_VA on 2007-08-08
+First, thanks to everyone for their help and suggestions with my winmodem. I've been able to get it going and here's what happened to get there. 
+
+
+I don't know what I'd done prior to reinstalling Ubuntu 7.04 through WUBI, but I either misread the first scanModem output or had done something to my laptop that confused the issue and resulted in my thinking I had a SmartLink modem. After reinstalling, I ran scanModem prior to installing any dialers or making any adjustments to wvdial.conf This resulted in my chipset being identified as Conexant. Specifically (from the ModemData.txt file generated by scanModem):
+*************************************************************
+
+CodecModemFile not found
+ For candidate modem in PCI bus:  00:1e.3
+   Class 0703: 8086:266d Modem: Intel Corporation 82801FB/FBM/FR/FW/FRW
+      Primary PCI_id  8086:266d
+    Subsystem PCI_id  103c:3080 
+    Softmodem codec or Vendor from diagnostics: CXT30, a Conexant type,
+                              from    Archives: CXT, a Conexant type,
+      CXT is  a generic for all CXTnumbers, with  Linuxant hsfmodem software support.                  
+
+ Lacking a dsp (digital signal processing) chip, the modem is a software 
+ intensive or "softmodem" type. Its primary controller manages the traffic 
+ with the CPU. But the software needed is specified in the Subsystem.
+ -----------------------------------------
+Support type needed or chipset:	hsfmodem
+
+*************************************************************
+Further in the ModemData.txt file:
+*************************************************************
+
+The hsfmodem package serves a great variety of Conexant chipset modems. 
+ From  [http://www.linuxant.com/drivers/hsf/full/downloads-ubuntu-x86.php](http://www.linuxant.com/drivers/hsf/full/downloads-ubuntu-x86.php)
+ download hsfmodem_VersionSpec_k2.6.20_16_generic_ubuntu_i386.deb.zip 
+                           with 2.6.20_16_generic equivalent to 2.6.20-16-generic, your kernel version.
+*************************************************************
+
+I went to the Linuxant web site and followed the drivers link to the HSF section and used their web install setup for the ubuntu_i386 driver. I had trouble getting this process to work in my browser, but used the terminal option that was offered without a  problem. I then modified the /etc/wvdial.conf file using the wvdial.txt generated by scanModem as a reference; thence to a terminal $ sudo wvdial and I had tone and a working data connection albeit at 14.4 Kbps which is the max the freeware driver will run. The full 56K data/fax driver costs $20 USD. Personally, that doesn't seem like too much given the legal issues Linuxant has to handle and the fact that the hardware solutions I'd seen as possibles were running at least twice that much, but I'll be waiting a bit before forking over the cash.
+
+
+Also during my searching, I'd found a note indicating that some Conexant chipsets can use the Smartlink driver which may be why the other distros identified the modem as SmartLink at /dev/ttySL0. That might also explain the apparent ability of the modem to respond to modem queries, but subsequent failure to generate dialout tones when issued an ATDT command. I may experiment with the SmartLink driver in the future to see if it's just a matter of the right init strings. If I find the workaround is that simple, I'll be sure to pass along the information.
+
+Thanks again to all.
+
+---
+

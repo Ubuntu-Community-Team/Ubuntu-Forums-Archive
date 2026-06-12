@@ -1,0 +1,11 @@
+---
+title: "Forwarding traffic on a specific port through an SSH tunnel using iptables"
+date: 2013-03-02
+forum: Networking &amp; Wireless
+---
+
+### Post by nonentity133742 on 2013-03-02
+Alright, the question of why I would want to do this is probably going to be the first to come up, so I'll answer that first. I am a casual Ubuntu user and a few months back started hosting my own email server for personal and home use by. Comcast, being the wonderful ISP that they are, decided to block all of my incoming and outgoing SMTP traffic over port 25 without any kind of notification whatsoever! I hadn't had an issue with them for the past six months, so I spent about 3 days troubleshooting my configs, routing, port forwards, etc. and came up with nothing. When I finally decided to call them, I was bounced all around the "tech support" department. Of course nobody knew anything and they all told me to use my "@comcast.net" address or to talk to my service provider. At this point, I just said screw it and got myself a VPS to be a mail relay.   Now the reason I'm here on the forums is that, while I was able to route mail traffic from the remote ports on the VPS (back to my locally hosted mail server through SSH forwards) I have not been able to find a way to tell postfix to either send through my VPS (preferred) or send using a different port. I've literally spent hours on google for this one, but have not been able to come up with a decisive answer. What I have found is that the best solution would be to use iptables to forward traffic to the VPS, which would act as a "gateway" (MASQUERADE) to the outside world. Other solutions involve smarthosts (I really don't want to set one of these up because I have no clue how and don't want to spend the time making another whole mail server just to route outbound traffic) and proxies, which seem to be able to relay conversations between mail servers (But the one's I've seen seem to just be extentions of postfix for processing mail and not actually sending it).   If anyone is able to come up with a real solution please do post. I would appreciate it if people could refrain from posting things telling me that my VPS solution is overly-complex or to scrap i and try something else as well.
+
+---
+

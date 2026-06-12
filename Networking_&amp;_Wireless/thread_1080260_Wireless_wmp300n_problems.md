@@ -1,0 +1,149 @@
+---
+title: "Wireless wmp300n problems"
+date: 2009-02-25
+forum: Networking &amp; Wireless
+---
+
+### Post by r0yalty on 2009-02-25
+Hello,
+
+I must start by saying I'm new to Linux. 
+I have a wireless Syslink WMP300N card in my computer, and I believe it is causing some problems. Worth mentioning is also that I'm using a D-Link DIR-635.
+This configuration has been working flawlessly with Vista, so the conclusion is that the hardware is ok.
+
+I've installed the i386 ver of Ubuntu 8.10. I did not install any drivers what so ever and Ubuntu recognized my WiFi right away. Everything seemed just fine at start, but my connection randomly gets cut off. Sometime it happens after several hours, some times after a few minutes. Usually the connection gets back in a minute or so, but sometimes I have to reboot.
+Is there a known issue with Ubuntu and wifi?
+Maybe I'm just using wrong drivers?
+As I'm new to Linux, all hints are very appritiated.
+
+---
+
+### Post by superprash2003 on 2009-02-25
+in your terminal type **ifconfig** and post output here..
+
+---
+
+### Post by ubu_dynamite on 2009-02-25
+> **superprash2003 said:**
+> in your terminal type **ifconfig** and post output here..
+
+That will not give any output for a wireless card
+
+```
+iwconfig
+```
+
+and the output of
+
+```
+lspci -nn | grep  Ethernet
+```
+
+will be more usefull
+
+---
+
+### Post by r0yalty on 2009-02-25
+ifconfig:
+eth0      Link encap:Ethernet  HWaddr 00:1e:8c:70:37:31  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:17 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:20 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:20 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1264 (1.2 KB)  TX bytes:1264 (1.2 KB)
+
+vmnet1    Link encap:Ethernet  HWaddr 00:50:56:c0:00:01  
+          inet addr:172.16.183.1  Bcast:172.16.183.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:19 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+vmnet8    Link encap:Ethernet  HWaddr 00:50:56:c0:00:08  
+          inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:100 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:37 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr 00:18:39:18:83:aa  
+          inet addr:192.168.0.2  Bcast:192.168.0.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4859 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6941 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1908397 (1.9 MB)  TX bytes:877234 (877.2 KB)
+
+wmaster0  Link encap:UNSPEC  HWaddr 00-18-39-18-83-AA-00-00-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+
+
+-------------------------------------------------------------------------
+iwconfig:
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+wmaster0  no wireless extensions.
+
+wlan0     IEEE 802.11bgn  ESSID:"Pentagon"  
+          Mode:Managed  Frequency:2.412 GHz  Access Point: 00:1C:F0:E9:5E:EF   
+          Bit Rate=1 Mb/s   Tx-Power=27 dBm   
+          Retry min limit:7   RTS thr:off   Fragment thr=2352 B   
+          Power Management:off
+          Link Quality=67/100  Signal level:-52 dBm  Noise level=-95 dBm
+          Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+vmnet1    no wireless extensions.
+
+vmnet8    no wireless extensions.
+
+pan0      no wireless extensions.
+
+-------------------------------------------------------------------------
+lspci -nn | grep  Ethernet:
+02:00.0 Ethernet controller [0200]: Marvell Technology Group Ltd. 88E8056 PCI-E Gigabit Ethernet Controller [11ab:4364] (rev 12)
+
+---
+
+### Post by r0yalty on 2009-02-26
+bump
+
+---
+
+### Post by superprash2003 on 2009-02-26
+post output of **cat /etc/resolv.conf**
+
+---
+
+### Post by r0yalty on 2009-02-26
+cat /etc/resolv.conf :
+# Generated by NetworkManager
+nameserver 192.168.0.1
+
+---
+
+### Post by superprash2003 on 2009-02-27
+do you experience slow browsing speeds?? you could try changing DNS servers to opendns - 208.67.222.222 and 208.67.220.220 .. it could probably be overloaded DNS servers taking time to  resolve sites!!
+
+For reference : [http://www.prash-babu.com/2008/04/how-to-configure-dns-servers-in-linux.html](http://www.prash-babu.com/2008/04/how-to-configure-dns-servers-in-linux.html)
+
+---
+

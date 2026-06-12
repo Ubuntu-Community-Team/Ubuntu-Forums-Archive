@@ -1,0 +1,32 @@
+---
+title: "Intel Wireless 3945 ABG speed dropping"
+date: 2009-06-11
+forum: Networking &amp; Wireless
+---
+
+### Post by volt_tiger on 2009-06-11
+Hello. This is my first post here, so if I've made any mistakes, please forgive me. First of all, I have an HP Pavilion dv6000 Laptop which is equipped with an intel 3945 ABG Wireless Card. Since I upgraded to 9.04 I noticed that my speed starts at 70KB/s and gradually drops to 0KB/s and sometimes it disconnects. Since I have a 2 Mbps line the speed should be around 200KB/s. Sometimes I can't even browse let alone stream videos and download files...  Here are some outputs: ```
+$ lspci | grep Intel  00:00.0 Host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and 945GT Express Memory Controller Hub (rev 03)  00:01.0 PCI bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and 945GT Express PCI Express Root Port (rev 03)  00:1b.0 Audio device: Intel Corporation 82801G (ICH7 Family) High Definition Audio Controller (rev 02)  00:1c.0 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 1 (rev 02)  00:1c.1 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 2 (rev 02)  00:1c.2 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express Port 3 (rev 02)  00:1d.0 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #1 (rev 02)  00:1d.1 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #2 (rev 02)  00:1d.2 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #3 (rev 02)  00:1d.3 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI Controller #4 (rev 02)  00:1d.7 USB Controller: Intel Corporation 82801G (ICH7 Family) USB2 EHCI Controller (rev 02)  00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev e2)  00:1f.0 ISA bridge: Intel Corporation 82801GBM (ICH7-M) LPC Interface Bridge (rev 02)  00:1f.2 IDE interface: Intel Corporation 82801GBM/GHM (ICH7 Family) SATA IDE Controller (rev 02)  00:1f.3 SMBus: Intel Corporation 82801G (ICH7 Family) SMBus Controller (rev 02)  02:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG [Golan] Network Connection (rev 02)  05:00.0 Ethernet controller: Intel Corporation 82573L Gigabit Ethernet Controller
+```  ```
+lsusb  Bus 001 Device 004: ID 0c45:62c0 Microdia Pavilion Webcam  Bus 001 Device 002: ID 1058:1100 Western Digital Technologies, Inc.   Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub  Bus 005 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub  Bus 004 Device 002: ID 03f0:171d Hewlett-Packard Wireless (Bluetooth + WLAN) Interface [Integrated Module]  Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub Bus 003 Device 002: ID 04f3:0212 Elan Microelectronics Corp.   Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub 
+```   ```
+iwconfig  lo no wireless extensions.  eth0 no wireless extensions.  wmaster0 no wireless extensions. wlan0 IEEE 802.11abg ESSID:&quot;zagg&quot; Mode:Managed Frequency:2.437 GHz Access Point: 00:17:9A:1D:27:FE  Bit Rate=11 Mb/s Tx-Power=15 dBm  Retry min limit:7 RTS thr:off Fragment thr=2352 B Power Management:off  Link Quality=75/100 Signal level:-59 dBm Noise level=-94 dBm  Rx invalid nwid:0 Rx invalid crypt:0 Rx invalid frag:0 & Tx excessive retries:0 Invalid misc:0  Missed beacon:0  pan0 no wireless extensions. 
+```  ```
+iwconfig lo no wireless extensions.  eth0 no wireless extensions. wmaster0 no wireless extensions.  wlan0 IEEE 802.11abg ESSID:&quot;zagg&quot;  Mode:Managed Frequency:2.437 GHz Access Point: 00:17:9A:1D:27:FE  Bit Rate=11 Mb/s  Tx-Power=15 dBm  Retry min limit:7 RTS thr:off Fragment thr=2352 B  Power Management:off  Link Quality=75/100  Signal level:-59 dBm Noise level=-94 dBm  Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0           Tx excessive retries:0  Invalid misc:0   Missed beacon:0  pan0      no wireless extensions. 
+``` ```
+lsmod | grep iwl iwl3945                97912  0  mac80211              217464  1 iwl3945 led_class              12036  1 iwl3945 cfg80211               38288  2 iwl3945,mac80211
+``` ```
+dmesg | grep iwl [   13.402592] iwl3945: Intel(R) PRO/Wireless 3945ABG/BG Network Connection driver for Linux, 1.2.26ks [   13.402595] iwl3945: Copyright(c) 2003-2008 Intel Corporation [   13.402661] iwl3945 0000:02:00.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16 [   13.402675] iwl3945 0000:02:00.0: setting latency timer to 64 [   13.402708] iwl3945: Detected Intel Wireless WiFi Link 3945ABG [   13.403529] iwl3945 0000:02:00.0: irq 2298 for MSI/MSI-X [   13.444482] iwl3945: Tunable channels: 13 802.11bg, 23 802.11a channels [   13.445244] phy0: Selected rate control algorithm 'iwl-3945-rs' [  267.473903] iwl3945 0000:02:00.0: firmware: requesting iwlwifi-3945-1.ucode [  267.671654] Registered led device: iwl-phy0:radio [  267.671904] Registered led device: iwl-phy0:assoc [  267.672559] Registered led device: iwl-phy0:RX [  267.672578] Registered led device: iwl-phy0:TX [  271.886236] Registered led device: iwl-phy0:radio [  271.886487] Registered led device: iwl-phy0:assoc [  271.887171] Registered led device: iwl-phy0:RX [  271.887192] Registered led device: iwl-phy0:TX 
+``` ```
+  *-network                       description: Wireless interface        product: PRO/Wireless 3945ABG [Golan] Network Connection        vendor: Intel Corporation        physical id: 0        bus info: pci@0000:02:00.0        logical name: wmaster0        version: 02        serial: 00:19:d2:ad:fe:c4        width: 32 bits        clock: 33MHz        capabilities: pm msi pciexpress bus_master cap_list logical ethernet physical wireless        configuration: broadcast=yes driver=iwl3945 ip=192.168.1.2 latency=0 module=iwl3945 multicast=yes wireless=IEEE 802.11abg 
+``` ```
+$ uname -rm 2.6.28-12-generic i686 
+```  Sorry if the post is too long, but I tried to give as many info as I could according to this: [http://ubuntuforums.org/showthread.php?p=6183681](http://ubuntuforums.org/showthread.php?p=6183681)  Thanks  PS. sorry, but I couldn't make the outputs look vertical. Instead this stupid thing fills the screen with non-breaking spaces...:(
+
+---
+
+### Post by superprash2003 on 2009-06-12
+you could try changing MTU values [http://www.prash-babu.com/2008/06/how-to-change-mtu-values-in-linux.html](http://www.prash-babu.com/2008/06/how-to-change-mtu-values-in-linux.html)
+
+---
+

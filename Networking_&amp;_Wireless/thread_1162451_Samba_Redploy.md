@@ -1,0 +1,206 @@
+---
+title: "Samba Redploy"
+date: 2009-05-17
+forum: Networking &amp; Wireless
+---
+
+### Post by jlbprof on 2009-05-17
+I have had a samba file server working for years and the latest incarnation was on 8.04 Ubuntu. The old machine has been decommissioned and is no longer running.
+
+I am now using a new machine with Jaunty/9.04.
+
+I moved over my samba configuration and cannot get it to work.
+The new machine has the same ip address, but a different hostname.
+
+I copied the entire /etc/samba directory over and only modified the hostname.   Now it does not work at all.   If while on the same machine click on Places>Network and find in the right panel FILEHOME (the name of the domain/workgroup) I click on it and it says "cannot load the share list".
+
+Here is my smb.conf file:
+
+```
+
+[global]
+    workgroup = filehome
+    netbios name = website7
+    server string = website7
+    log file = /var/log/samba/log.%m
+    log level = 3
+    max log size = 100
+    hosts deny = ALL
+    hosts allow = 192.168.1. 127.
+    interfaces = eth0 lo
+    bind interfaces only = Yes
+    security = user
+    username map = /etc/samba/smbusers
+
+[home]
+    path = /home
+    writeable = yes
+    valid users = jules, julian, nicholas, sheila
+
+```
+
+As you can see I restrict access to the network ip addresses of my home network and localhost.
+
+The password files are present and the same as the previous machine.
+
+When I do the Places>Network>Filehome thing, I previously deleted the logs and then took this snapshot of the logs after clicking on Places>Network>Filehome
+
+the log.smbd did not change at all, only the log.nmbd changed here is the log.
+
+```
+
+[2009/05/17 17:24:35,  0] nmbd/nmbd.c:main(850)
+  nmbd version 3.3.2 started.
+  Copyright Andrew Tridgell and the Samba Team 1992-2009
+[2009/05/17 17:24:35,  2] lib/tallocmsg.c:register_msg_pool_usage(106)
+  Registered MSG_REQ_POOL_USAGE
+[2009/05/17 17:24:35,  2] lib/dmallocmsg.c:register_dmalloc_msgs(77)
+  Registered MSG_REQ_DMALLOC_MARK and LOG_CHANGED
+[2009/05/17 17:24:35,  3] param/loadparm.c:lp_load_ex(8818)
+  lp_load_ex: refreshing parameters
+Initialising global parameters
+[2009/05/17 17:24:35,  3] param/params.c:pm_process(569)
+  params.c:pm_process() - Processing configuration file "/etc/samba/smb.conf"
+[2009/05/17 17:24:35,  3] param/loadparm.c:do_section(7481)
+  Processing section "[global]"
+[2009/05/17 17:24:35,  3] nmbd/nmbd.c:reload_nmbd_services(348)
+  services not loaded
+[2009/05/17 17:24:35,  2] nmbd/nmbd.c:main(883)
+  Becoming a daemon.
+[2009/05/17 17:24:35,  3] nmbd/nmbd.c:main(939)
+  Opening sockets 137
+[2009/05/17 17:24:35,  3] nmbd/nmbd.c:open_sockets(729)
+  open_sockets: Broadcast sockets opened.
+[2009/05/17 17:24:35,  2] lib/interface.c:add_interface(340)
+  added interface eth0 ip=fe80::250:8dff:fe65:c635%eth0 bcast=fe80::ffff:ffff:ffff:ffff%eth0 netmask=ffff:ffff:ffff:ffff::
+[2009/05/17 17:24:35,  2] lib/interface.c:add_interface(340)
+  added interface eth0 ip=192.168.1.26 bcast=192.168.1.255 netmask=255.255.255.0
+[2009/05/17 17:24:35,  2] lib/interface.c:add_interface(340)
+  added interface lo ip=::1 bcast=::1 netmask=ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+[2009/05/17 17:24:35,  2] lib/interface.c:add_interface(340)
+  added interface lo ip=127.0.0.1 bcast=127.255.255.255 netmask=255.0.0.0
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:create_subnets(264)
+  create_subnets: Ignoring loopback interface.
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:create_subnets(253)
+  create_subnets: ignoring non IPv4 interface.
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:make_subnet(154)
+  making subnet name:192.168.1.26 Broadcast address:192.168.1.255 Subnet mask:255.255.255.0
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:create_subnets(253)
+  create_subnets: ignoring non IPv4 interface.
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:make_subnet(154)
+  making subnet name:UNICAST_SUBNET Broadcast address:0.0.0.0 Subnet mask:0.0.0.0
+[2009/05/17 17:24:35,  2] nmbd/nmbd_subnetdb.c:make_subnet(154)
+  making subnet name:REMOTE_BROADCAST_SUBNET Broadcast address:0.0.0.0 Subnet mask:0.0.0.0
+[2009/05/17 17:24:35,  2] nmbd/nmbd_lmhosts.c:load_lmhosts_file(41)
+  load_lmhosts_file: Can't open lmhosts file /etc/samba/lmhosts. Error was No such file or directory
+[2009/05/17 17:24:35,  3] nmbd/nmbd.c:main(961)
+  Loaded hosts file /etc/samba/lmhosts
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:35,  3] nmbd/nmbd_serverlistdb.c:create_server_on_workgroup(156)
+  create_server_on_workgroup: Created server entry WEBSITE7 of type 40819a03 (website7) on workgroup FILEHOME.
+[2009/05/17 17:24:35,  3] nmbd/nmbd_workgroupdb.c:initiate_myworkgroup_startup(264)
+  initiate_myworkgroup_startup: Added server name entry WEBSITE7 on subnet 192.168.1.26
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<03> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name FILEHOME<00> with first IP 192.168.1.26 ttl=0 nb_flags=80 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name FILEHOME<1e> with first IP 192.168.1.26 ttl=0 nb_flags=80 to subnet UNICAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet REMOTE_BROADCAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name *<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet REMOTE_BROADCAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet REMOTE_BROADCAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name __SAMBA__<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet REMOTE_BROADCAST_SUBNET
+[2009/05/17 17:24:35,  3] nmbd/nmbd_sendannounce.c:send_host_announcement(207)
+  send_host_announcement: type 819a03 for host WEBSITE7 on subnet 192.168.1.26 for workgroup FILEHOME
+[2009/05/17 17:24:39,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<20> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:39,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<03> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:39,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name WEBSITE7<00> with first IP 192.168.1.26 ttl=0 nb_flags= 0 to subnet 192.168.1.26
+[2009/05/17 17:24:39,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name FILEHOME<00> with first IP 192.168.1.26 ttl=0 nb_flags=80 to subnet 192.168.1.26
+[2009/05/17 17:24:39,  3] nmbd/nmbd_namelistdb.c:add_name_to_subnet(250)
+  add_name_to_subnet: Added netbios name FILEHOME<1e> with first IP 192.168.1.26 ttl=0 nb_flags=80 to subnet 192.168.1.26
+[2009/05/17 17:24:55,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name __MSBROWSE__<01>
+[2009/05/17 17:24:55,  3] nmbd/nmbd_serverlistdb.c:write_browse_list(430)
+  write_browse_list: Wrote browse list into file /var/cache/samba/browse.dat
+[2009/05/17 17:24:55,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name MSHOME<1d>
+[2009/05/17 17:24:55,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name HOME<1d>
+[2009/05/17 17:24:57,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1d>
+[2009/05/17 17:24:58,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1d>
+[2009/05/17 17:24:58,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1d>
+[2009/05/17 17:24:58,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1d>
+[2009/05/17 17:24:58,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1d>
+[2009/05/17 17:24:59,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1d>
+[2009/05/17 17:24:59,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1b>
+[2009/05/17 17:24:59,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1b>
+[2009/05/17 17:24:59,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<1b>
+[2009/05/17 17:25:00,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1b>
+[2009/05/17 17:25:00,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1b>
+[2009/05/17 17:25:00,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<1b>
+[2009/05/17 17:25:01,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<20>
+[2009/05/17 17:25:01,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<20>
+[2009/05/17 17:25:01,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 192.168.1.26 on subnet 192.168.1.26 for name FILEHOME<20>
+[2009/05/17 17:25:02,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<20>
+[2009/05/17 17:25:02,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<20>
+[2009/05/17 17:25:02,  3] nmbd/nmbd_incomingrequests.c:process_name_query_request(453)
+  process_name_query_request: Name query from 127.0.0.1 on subnet REMOTE_BROADCAST_SUBNET for name FILEHOME<20>
+[2009/05/17 17:25:35,  0] nmbd/nmbd.c:terminate(71)
+  Got SIGTERM: going down...
+[2009/05/17 17:25:35,  3] nmbd/nmbd_sendannounce.c:send_host_announcement(207)
+  send_host_announcement: type 0 for host WEBSITE7 on subnet 192.168.1.26 for workgroup FILEHOME
+
+```
+
+Why won't this work?   And especially on localhost?  With an identical configuration file?
+
+Thank you
+
+Julian
+
+---
+

@@ -1,0 +1,506 @@
+---
+title: "Odd issue - LAN works, DNS resolving, cannot Ping WAN IPs"
+date: 2018-07-22
+forum: Networking &amp; Wireless
+---
+
+### Post by TheFu on 2018-07-22
+I'm stuck. Can't figure out why 1 VM can't access the internet when all other VMs on the same VM host, using the same bridge, can.  
+I patch weekly, Saturday mornings.   Have a few home servers running on KVM with manually created Linux bridges.
+Have about 10 virtual machines running and only 1 has been impacted with this issue.   All the others, and the KVM hostOS (Ubuntu 14.04.5 Server), aren't having any network issues. LAN and WAN all work on the other VMs.
+
+The impacted VM is running "Ubuntu 16.04.5 LTS" according to LSB info. The problem system runs nextcloud, but only can be reached from the internal LAN. No WAN firewall ports inbound are open for it. It has outbound access like any typical home network.  The router config hasn't changed in months.  It doesn't seem hacked. I consider it a low risk system.
+
+This is a wired GigE network. All static IPs configured for the servers.  The WAN IPs,.29, are static too.  Don't think that matters.
+
+The firewall is minimal.
+```
+$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22                         ALLOW       172.22.22.0/24            
+80                         ALLOW       172.22.22.0/24            
+443                        ALLOW       172.22.22.0/24    
+```
+
+No IPv6 enabled.  I only use IPv4.
+
+Nothing network-wise has changed the last year.  It has been working fine all this time, just weekly patches are the only changes.
+No external IPs can be pinged.```
+
+$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+--- 8.8.8.8 ping statistics ---
+7 packets transmitted, 0 received, 100% packet loss, time 6047ms
+```
+
+But any LAN IP can be pinged.```
+
+$ ping 172.22.22.1
+PING 172.22.22.1 (172.22.22.1) 56(84) bytes of data.
+64 bytes from 172.22.22.1: icmp_seq=1 ttl=64 time=1.10 ms
+64 bytes from 172.22.22.1: icmp_seq=2 ttl=64 time=1.28 ms
+64 bytes from 172.22.22.1: icmp_seq=3 ttl=64 time=0.986 ms
+64 bytes from 172.22.22.1: icmp_seq=4 ttl=64 time=0.879 ms
+^C
+--- 172.22.22.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 0.879/1.064/1.289/0.151 ms
+
+```
+So, that would mean networking is fine on the VM and all the wiring is fine.  Perhaps a routing issue?
+```
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.22.22.1     0.0.0.0         UG    0      0        0 ens3
+172.22.22.0     0.0.0.0         255.255.255.0   U     0      0        0 ens3
+
+$ ifconfig 
+ens3      Link encap:Ethernet  HWaddr 52:54:00:63:f8:45  
+          inet addr:172.22.22.34  Bcast:172.22.22.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:62747 errors:0 dropped:1 overruns:0 frame:0
+          TX packets:25420 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:8128758 (8.1 MB)  TX bytes:22392145 (22.3 MB)
+```
+I don't see anything wrong there. It matches what I expect and what other, working, VMs have configured.
+
+Looks more like a router issue. We did have an storm that lost internet early Saturday morning for 30 minutes.  Power was not impacted.  All servers and networking gear are on UPS power.
+
+Here's a ping from another VM running on the same host:
+```
+$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=119 time=28.5 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=119 time=26.5 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=119 time=15.6 ms
+^C
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 15.644/23.606/28.592/5.692 ms
+
+``` They all work. Every other VM isn't showing any network issues.  Just the Nextcloud server can't ping the outside.
+I claim that name resolution is working perfectly. From the nextcloud system:
+```
+$ dig google.com
+
+; <<>> DiG 9.10.3-P4-Ubuntu <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52040
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;google.com.                    IN      A
+
+;; ANSWER SECTION:
+google.com.             235     IN      A       64.233.177.101
+google.com.             235     IN      A       64.233.177.138
+google.com.             235     IN      A       64.233.177.113
+google.com.             235     IN      A       64.233.177.100
+google.com.             235     IN      A       64.233.177.139
+google.com.             235     IN      A       64.233.177.102
+```
+It does because I'm using a LAN DNS provider. It isn't slow either. Fast as usual.  The /etc/resolv.conf:
+```
+$ more /etc/resolv.conf 
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+nameserver 172.22.22.1
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+
+```
+DNS runs on the router and is working.
+The VM machine cannot ping 1.1.1.1
+```
+$ ping 1.1.1.1
+PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+^C
+--- 1.1.1.1 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2015ms
+
+jp@nextcloud:~$ ping 1.0.0.1
+PING 1.0.0.1 (1.0.0.1) 56(84) bytes of data.
+^C
+--- 1.0.0.1 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3024ms
+```
+But other VMs don't have any issues with that:
+```
+$ ping 1.0.0.1
+PING 1.0.0.1 (1.0.0.1) 56(84) bytes of data.
+64 bytes from 1.0.0.1: icmp_seq=1 ttl=56 time=30.4 ms
+64 bytes from 1.0.0.1: icmp_seq=2 ttl=56 time=19.2 ms
+^C
+--- 1.0.0.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 19.203/24.833/30.463/5.630 ms
+jp@lubuntu:~$ ping 1.1.1.1
+PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+64 bytes from 1.1.1.1: icmp_seq=1 ttl=56 time=17.7 ms
+64 bytes from 1.1.1.1: icmp_seq=2 ttl=56 time=28.3 ms
+64 bytes from 1.1.1.1: icmp_seq=3 ttl=56 time=26.6 ms
+^C
+--- 1.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 17.730/24.231/28.301/4.649 ms
+
+```
+
+On the VM host, the bridges are:
+```
+$ brctl show
+bridge name     bridge id               STP enabled     interfaces
+br0             8000.0004e2d6a6e4       no              eth1
+                                                        vnet0
+                                                        vnet1
+                                                        vnet2
+                                                        vnet3
+                                                        vnet4
+                                                        vnet5
+                                                        vnet6
+                                                        vnet7
+br1             8000.000000000000       no
+
+$ ifconfig 
+br0       Link encap:Ethernet  HWaddr 00:04:e2:d6:a6:e4  
+          inet addr:172.22.22.4  Bcast:172.22.22.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:47031793 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:38997947 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:43391145533 (43.3 GB)  TX bytes:16119365345 (16.1 GB)
+```
+No errors. Plenty of xfers.
+
+Anyways, I get RSS feeds through Nextcloud News, so I'm really missing those.   I have a few things to run down still - checking the router settings now.  Router seems fine.  This was the first login in months.
+
+At this point, just looking for ideas for things to check. Lacking that, I can migrate the VM to another VM host.  I'm betting the issue follows the VM.
+
+---
+
+### Post by TheFu on 2018-07-22
+Things started working a few minutes ago.  I didn't change anything on the machine.  I did reconfigure a VPN server, but that runs on a completely different subnet and wasn't being used.
+
+I didn't reboot or start/stop any services. I didn't do anything since the last time it wasn't working.
+
+I hate it when things "magically" fix themselves.  HATE IT!
+
+I'll wait to mark this solved for a few days, hoping it really is solved.
+
+---
+
+### Post by TheFu on 2018-08-19
+So, that same machine lost internet again today.   
+
+Patched this morning as usually on a Saturday.  Only 1 package was being updated ... 
+```
+The following packages will be upgraded:
+  squashfs-tools
+```
+No issue with that. The update/upgrade logs show no problems.
+
+DNS is working. Ping on the internet isn't.   Exactly the same issues from 3+ weeks ago.
+```
+$ ping google.com
+PING google.com (216.58.193.174) 56(84) bytes of data.
+^C
+--- google.com ping statistics ---
+8 packets transmitted, 0 received, 100% packet loss, time 7056ms
+
+$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+--- 8.8.8.8 ping statistics ---
+7 packets transmitted, 0 received, 100% packet loss, time 6049ms
+```
+
+A new kernel was installed last weekend and has been working all this week.
+```
+$ uname -a
+Linux nextcloud 4.4.0-133-generic #159-Ubuntu SMP Fri Aug 10 07:31:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+```
+ 
+Moving onto the hypervisor as a possible cause. But no other VMs are showing issues. Email is still flowing, many websites hosted on the same physical host are still all available.
+
+Rebooted the VM host.  Bringing down 25 VMs isn't fun, but at least it is a Saturday evening. No joy.
+
+Moved the VM to a different physical VM host.  No joy.  Same symptoms.  LAN networking is fine. Can't reach the internet by IP.  The VM is the issue ... or the firewall.  But remember, nothing has changed on the VM or router in months besides normal, weekly, patching.
+
+Reconfigured the VM networking from virtio to use the e1000 emulation.  No joy.
+
+```
+$ ip add
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 52:54:00:e2:71:45 brd ff:ff:ff:ff:ff:ff
+    inet 172.22.22.34/24 brd 172.22.22.255 scope global ens3
+       valid_lft forever preferred_lft forever
+$ ip route
+default via 172.22.22.1 dev ens3 onlink 
+172.22.22.0/24 dev ens3  proto kernel  scope link  src 172.22.22.34 
+```
+
+Again, LAN access is 100% fine.  Pinging the internet router works fine.  Pinging the public IPs on the WAN router works, but no IPs outside that point work.
+
+I'm stuck. Completely.  Last time, after 2-3 days it magically started working again.
+
+---
+
+### Post by The Cog on 2018-08-19
+It would be interesting to confirm with tcpdump on the host how far the pings and responses get. 
+Does the host see the pings leave the guest? 
+Does it see them leave the host? 
+To the correct router MAC address? 
+Do responses arrive from the router towards the host? 
+Does it forward them towards the guest?
+
+---
+
+### Post by TheFu on 2018-08-19
+One more bit of info.  The original VM host runs 14.04.  The new host runs 16.04.  Both patched weekly.  That provides even more reason to believe it is a guest issue.
+
+> **The Cog said:**
+> It would be interesting to confirm with tcpdump on the host how far the pings and responses get. 
+Does the host see the pings leave the guest? 
+Does it see them leave the host? 
+To the correct router MAC address? 
+Do responses arrive from the router towards the host? 
+Does it forward them towards the guest?
+
+The pings get to a router, through an access switch, from the hostVM, from the guest.  The WAN router is a physical device.
+
+Ping from the router to the VM:
+```
+PING 172.22.22.34 (172.22.22.34): 56 data bytes
+64 bytes from 172.22.22.34: seq=0 ttl=64 time=1.311 ms
+64 bytes from 172.22.22.34: seq=1 ttl=64 time=1.325 ms
+64 bytes from 172.22.22.34: seq=2 ttl=64 time=1.112 ms
+--- 172.22.22.34 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 1.112/1.249/1.325 ms
+```
+
+arp from the router sees the VM MAC+IP.   
+arp from the VM sees the router. 
+Tcpdump from the VM-host to the router  ping:
+```
+10:59:01.770655 IP 172.22.22.34 > rt1: ICMP echo request, id 2089, seq 1, length 64
+10:59:01.771371 IP rt1 > 172.22.22.34: ICMP echo reply, id 2089, seq 1, length 64
+
+```
+
+Pings for google.com as seen by the VMhost:
+```
+10:59:34.100820 IP 172.22.22.34 > google-public-dns-a.google.com: ICMP echo request, id 2094, seq 1, length 64
+10:59:35.108356 IP 172.22.22.34 > google-public-dns-a.google.com: ICMP echo request, id 2094, seq 2, length 64
+10:59:36.116512 IP 172.22.22.34 > google-public-dns-a.google.com: ICMP echo request, id 2094, seq 3, length 64
+
+```
+No response seen.  But if I ping from the host, say ping 8.8.8.8, all is fine.
+
+The VM used to have a public IP, passed through by the router.  I've since taken that off the internet and require a VPN for any external or wifi access to the services.  Every 3 months, to renew the Let's Encrypt certs, I have to re-enable that passthru on the router for 10 minutes.  It uses a dedicated IP, not used by any other system.  I'll check that.
+
+---
+
+### Post by TheFu on 2018-08-19
+And about 15 min ago, it started working again.  I hadn't changed anything since moving the VM from the 14.04 host to the 16.04 host. Nothing.
+
+I hate it when things magically begin working without a reason.
+
+---
+
+### Post by The Cog on 2018-08-20
+If it's working again that's going to be hard to debug. All I can think of is next time do "tcpdump -e" to get the ethernet header too. 
+
+Check the MAC address (again) and totally off the wall, make sure the guest isn't trying to use vlan tagging.
+
+Maybe the router has been sent an ICMP redirect, and is sending the packets somewhere else until the redirect times out. 
+
+It's not the switch forwarding table because the guest can ping the router. 
+
+hese ideas are bordering on the ludicrous. I'm clean out of good ideas.
+
+---
+
+### Post by TheFu on 2018-08-20
+Thanks for brainstorming.
+
+I don't use vlans.  My LANs are physically separate subnets, not "suggestions" like vlans. It is easy with fewer than 7 physical machines.
+
+It isn't just ICMP that can't get external when it happens.  lynx to using http doesn't work to the outside world either.
+I was certain moving to a different physical VM host would end the issue.  There were a few network problems with KVM in the 2010-2012 days with the virtio driver.  Which reminds me, I need to switch back from e1000 to virtio this Saturday.
+
+It is time that I migrate to newer router hardware.  I need to move to a newer release of pfSense and I'll be changing ISPs in the next 2-3 months. GigE is finally becoming available here.  Going from 25/5 Mbps to 1Gbps will be a real change.
+
+---
+
+### Post by 1clue on 2018-08-20
+This is really interesting.
+
+When you moved the VM did you completely shut it down, as in cold shutdown and startup?
+
+Are you using fail2ban anywhere, or anything like it?
+
+What, exactly, is different between this VM and others?  Distro? ANY virtual hardware differences?
+
+If this were a physical box I would disconnect the ethernet cable from the switch and then put it in another port. Doing so sometimes forces the network stack on either end to wake up and re-initialize rather than saving an old stale setting. Especially if it's a smart switch.
+
+Given that it's a Linux bridge I would try:
+[LIST=1]
+[*]Disconnect the network card and reconnect it using your virt-manager or whatever you use.
+[*]If that doesn't work, disconnect it and change the MAC address, and then reconnect it.
+[*]If that doesn't work, delete the NIC and create a new one, possibly with a different name.
+[/LIST]
+
+For items 2 and 3, I would do a cold shutdown of the guest in each case. I'm not sure if you can do hot-swap on KVM, I haven't ever even tried but it may be possible. I use kvm too but don't have any of the fancy tools.
+
+---
+
+### Post by TheFu on 2018-08-20
+Thanks for replying. Perplexing.
+
+> **1clue said:**
+> This is really interesting.
+
+That's one way to look at it. ;)  
+
+> **1clue said:**
+> When you moved the VM did you completely shut it down, as in cold shutdown and startup?
+Yep.  I used virsh dumpxml to get the VM settings and scp to move both the XML and qcow2 file to the other physical machine.
+
+> **1clue said:**
+> Are you using fail2ban anywhere, or anything like it?
+Yes.  I use fail2ban on every system and use keybased ssh connections.  Fail2ban isn't configured for any other services, just ssh.
+
+> **1clue said:**
+> What, exactly, is different between this VM and others?  Distro? ANY virtual hardware differences?  Well, they are all snowflakes.  Usually use Ubuntu 1604 server and install just an ssh-server.  I use ansible to setup the main things for consistency - my base server settings - ntp client, my ssh keys, /etc/hosts, static IP, and about 20 other things. I'm fairly consistent.  This it the only machine running php webapps - wallabag and nextcloud. It also runs ZNC - and IRC BNC.  I didn't use ansible to install those 3 apps.
+
+> **1clue said:**
+> If this were a physical box I would disconnect the ethernet cable from the switch and then put it in another port. Doing so sometimes forces the network stack on either end to wake up and re-initialize rather than saving an old stale setting. Especially if it's a smart switch. Dumb switches here.
+
+> **1clue said:**
+> Given that it's a Linux bridge I would try:
+[LIST=1]
+[*]Disconnect the network card and reconnect it using your virt-manager or whatever you use.
+[*]If that doesn't work, disconnect it and change the MAC address, and then reconnect it.
+[*]If that doesn't work, delete the NIC and create a new one, possibly with a different name.
+[/LIST]
+I changed the virtual NIC from virtio to e1000 and I changed the MAC seen inside the VM at that time. Actually, deleted the virtioNIC and created a new e1000 one.
+
+> **1clue said:**
+> For items 2 and 3, I would do a cold shutdown of the guest in each case. I'm not sure if you can do hot-swap on KVM, I haven't ever even tried but it may be possible. I use kvm too but don't have any of the fancy tools.
+
+Did a cold restart between each HW change.
+
+Seems we're all thinking the same things.  I'm comfortable saying it isn't the VMhost causing the issue or the switches.  But I cannot rule out the WAN router or the VM itself. If it happens again, I'll change the IP to see if the problem follows with it or not. If the problem goes with the IP change, it is the VM.  If it doesn't, then it is more likely the router, but the VM can't be ruled out.
+
+The bridge is manually configured in /etc/network/interfaces on the hostOS, BTW.  I did play with openvswitch for a month years ago, before determining that the added complexity didn't help on GigE connections.  Also, the 16.04 VM host never saw openvswitch.
+
+I've been planning to replace the 14.04 server hardware with a new Ryzen 5 2600 for a while now.  Just need RAM prices to drop 50%, which is predicted in 2019.  And some clearer how-tos to 18.04 server would be nice. Clearly, I don't like to be bleeding edge.
+
+---
+
+### Post by 1clue on 2018-08-20
+The sporadic nature of the problem makes me think fail2ban or some sort of IDS/IPS issue. Which is why I asked.
+
+While I do use KVM for multiple images and manage a bunch of VMs and a few hosts, I doubt my expertise is much better than yours, if at all. Just trying to come up with stuff to throw at the wall and see what sticks. One thing that strikes me is you're doing pretty much what I do when you describe what you tried.
+
+FWIW going from 14 to 16 is going to want a reinstall. Systemd changes too much to make a happy upgrade IMO, especially if your systems are all so similar. In my experience it's best to start with a standard image and make changes to that for each install, and then copy data and configs.
+
+Not sure what scale you're working on, but if you haven't made the step to ECC memory I recommend it. I never thought I had issues with memory before but my hardware which has ecc memory stays trouble-free longer, consistently. Especially on KVM hosts and similar where you almost never want to reboot the host. I now use it at home. If you have anything you reboot nightly or weekly or even monthly because of random errors, ecc memory may have a significant effect. We had webapps running that we thought just had weird stability issues, but it was memory errors mostly.
+
+---
+
+### Post by TheFu on 2018-08-20
+Everyone has gaps in their skills/knowledge.  Appreciate the help!
+
+I have fail2ban configured on all systems here. None of the others have showed this problem. Been using it for a very long time.
+I don't believe in "golden images."   Ansible adds the easy to automate things for me.  I don't spin up production VMs all that often, so the 10-15 minutes required for a fresh install using the latest ISO isn't a big deal.
+
+I don't reboot any systems unless a patch requires it. They are all stable, except a Win7 one that corrupts storage every 6months or so and the networking issue with this single VM.  My servers just don't have many issues. 
+
+I've not had issues with non-ECC memory since the early 90s. Perhaps if I used ZFS, I'd care more.
+
+---
+
+### Post by 1clue on 2018-08-20
+Golden images:  Me either, unless you consider the bare install to be golden. I have a file stored in git, that I use to drive the package manager to install features I want. Then I have settings for services, also stored in git, with the release (unmodified) version as the base version. I update that as a diff/patch, which usually works when the version is updated upstream.
+
+Rebooting: I used to be an uptime junkie, but then lost a production server when I discovered it had been up more than 2 years and when I rebooted it it would not boot at all. That was my early days of managing systems, I was the entire IT department and I lost some important services and even some important data due to my stupidity. At this point if I see something over 90 days I'll schedule a reboot.
+
+My experiences with oddness have dropped significantly since I switched to ECC. Your mileage may vary I guess.
+
+Good luck and have fun.
+
+---
+
+### Post by The Cog on 2018-08-21
+Let me recap and double-check my understanding:
+(1) Using tcpdump on the host server, when the guest pings the router,  you can see both the request and reply (the ping works).
+(2) Using tcpdump on the host server, when the guest pings the internet, you can see outgoing pings but no returning ping replies.
+(3) Moving the guest to a new host, the problem follows the guest (beyond the time needed for the switch forwarding table to correct itself)
+
+This makes me think the router is treating the guest's IP address in a special way. Firewall on the router? Erroneous NAT entry?
+
+---
+
+### Post by TheFu on 2018-08-21
+> **The Cog said:**
+> Let me recap and double-check my understanding:
+(1) Using tcpdump on the host server, when the guest pings the router,  you can see both the request and reply (the ping works).
+(2) Using tcpdump on the host server, when the guest pings the internet, you can see outgoing pings but no returning ping replies.
+(3) Moving the guest to a new host, the problem follows the guest (beyond the time needed for the switch forwarding table to correct itself)
+
+This makes me think the router is treating the guest's IP address in a special way. Firewall on the router? Erroneous NAT entry?
+
+1 - yes.
+2 - yes.
+3 - that is my suspicion. 
+
+ But it isn't clear since the NAT is only active a few minutes quarterly when Let's Encrypt certs are updated and the problem shows up when the router settings haven't been touched in months and months. Records show March 6th. 2018 was the last significant change. The NAT for this system was not active while either of these failures was happening. We have multiple public IPs with direct NAT to different systems.  Only this 1 system is showing issues and only 2-3 days at a time, infrequently.  
+I can't modify the router until a weekend maintenance period, regardless. I have to let the users know.
+
+Initially, this server was internet facing, but the security team made us remove that access due to php webapps. It can only be available from VPN connections now, so the HTTPS certs aren't strictly necessary and only the internal IP is used.  There will be hassles changing to plain HTTP from HTTPS, especially with our efforts to change in the opposite direction.  
+
+I'm beginning to suspect the router HW.  This setup has been working nearly unchanged for years and the first time the issue happened was when I posted above.  But the same physical ports are shared by with other internet facing systems which haven't been impacted.  Hummm.
+
+I'll update again, next time there is a failure. Hopefully, I'll get a new router installed this weekend.
+
+---
+
+### Post by 1clue on 2018-08-21
+You could solve that problem with a test.
+
+Clone the VM to a new IP address and a new test name.
+Manually examine router settings from the old system and step-by-step insert them for the new system.
+
+---
+
+### Post by TheFu on 2018-08-21
+> **1clue said:**
+> You could solve that problem with a test.
+
+Clone the VM to a new IP address and a new test name.
+Manually examine router settings from the old system and step-by-step insert them for the new system.
+
+And if I could reproduce the problem, that would make sense.  Sorta stuck until Saturday now.
+
+---
+
+### Post by TheFu on 2018-10-08
+Never solved, meaning, I never figured out the root cause.
+But it has been 6+ weeks now and it hasn't reoccurred.
+
+---
+

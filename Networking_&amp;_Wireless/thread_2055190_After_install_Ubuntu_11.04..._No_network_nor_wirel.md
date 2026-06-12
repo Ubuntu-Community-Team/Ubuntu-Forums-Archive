@@ -1,0 +1,19 @@
+---
+title: "After install Ubuntu 11.04... No network nor wireless connection"
+date: 2012-09-08
+forum: Networking &amp; Wireless
+---
+
+### Post by necs on 2012-09-08
+sudo lshw -C network   *-network         description: Ethernet interface                product: 82540EM Gigabit Ethernet Controller         vendor: Intel Corporation                 physical id: 3                  bus info: pci@0000:00:03.0                  logical name: eth0                  version: 02                  serial: 08:00:27:33:92:38                   size: 1GB/s                   capacity: 1GB/s                    width: 32 bits                   clock: 66MHz                   capabilities: pm pcix bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation            configuration: autonegotiation=on broadcast=yes driver=e1000 driverversion=7.3.21-k8-NAPI duplex=full firmware=N/A ip=10.0.2.15 latency=64 link=yes mingnt=255 multicast=yes port=twisted pair speed=1GB/s        resources: irq:10 memory:f0000000-f001ffff ioport:d010(size=8)
+
+---
+
+### Post by necs on 2012-09-08
+> **necs said:**
+> sudo lshw -C network    *-network                description: Ethernet interface                        product: 82540EM Gigabit Ethernet Controller                  vendor: Intel Corporation                          physical id: 3                           bus info: pci@0000:00:03.0                           logical name: eth0                           version: 02                            serial: 08:00:27:33:92:38                            size: 1GB/s                           capacity: 1GB/s                            width: 32 bits             clock: 66MHz                   capabilities: pm pcix bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation                    configuration: autonegotiation=on broadcast=yes driver=e1000 driverversion=7.3.21-k8-NAPI duplex=full firmware=N/A ip=10.0.2.15 latency=64 link=yes mingnt=255 multicast=yes port=twisted pair speed=1GB/s        resources: irq:10 memory:f0000000-f001ffff ioport:d010(size=8)
+
+  lspci -nn | grep 0280           Didn't give any response!!     iwconfig  lo          no wireless extensions.  eth0       no wireless extensions.      rfkill list all          No response as well!!     lsmod  Module                   Size  Used by  dm_crypt                   22236  0   snd_intel8x0               33017  0   snd_ac97_codec             104623  1  snd_intel8x0 ac97_bus       12602  1  snd_ac97_codec snd_pcm      72878  2 snd_intel8x0,snd_ac97_codec snd_seq_midi                13132  0   snd_rawmidi                 24215  1  snd_seq_midi snd_seq_midi_event                        14076  1  snd_seq_midi snd_seq                                   50403  2 snd_seq_midi,snd_seq_midi_event snd_timer              23911  2 snd_pcm,snd_seq snd_seq_device                         13817  3 snd_seq_midi,snd_rawmidi,snd_seq snd                    52787  7 snd_intel8x0,snd_ac97_codec,snd_pcm,snd_rawmidi,snd_seq,snd_timer,snd_seq_device  ppdev                  12840  0   psmouse                72465  0   soundcore              12534  1  snd joydev             17161  0   parport_pc             31867  0   lp                     13321  0   serio_raw              13027  0   snd_page_alloc         13709  2 snd_intel8x0,snd_pcm i2c_piix4              12983  0   mac_hid                13037  0   parport                34960  3 ppdev,parport_pc,lp squashfs               35835  1   nls_utf8               12493  1   isofs                  39187  1   dm_mirror              21585  0   dm_region_hash         15035  1 dm_mirror  dm_log                 17871  2 dm_mirror,dm_region_hash aufs                  162169  149   usbhid                 41119  0   e1000                  99532  0   hid                    79842  1 usbhid     Pls help me with this Mr Moderator.............these are the result to the following codes.
+
+---
+

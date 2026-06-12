@@ -1,0 +1,178 @@
+---
+title: "Name resolution over VPN?"
+date: 2012-02-03
+forum: Networking &amp; Wireless
+---
+
+### Post by Derek Karpinski on 2012-02-03
+Hi all,
+ 
+I need some help. I've searched various how-tos here and across the 'net, and I still am struggling. I cannot get local DNS resolution working over vpn. Here's my setup:
+[LIST]
+[*]Ubuntu 11.10
+[*]Samba sharing user's folder
+[*]OpenVPN running on PC
+[*]D-Link router flashed with DD-WRT (DNSMasq available)
+[*]dyndns dynamic IP set up
+[*]Various laptops (windows7, ubuntu), and 2 android phones that will connect wirelessly to the LAN, and VPN
+[/LIST]I have the VPN set up and it works great. The only problem I have is local name resolution. I do have a local domain set up through my router. My router is also the local DNS server.
+ 
+When I'm on the LAN, I can 'ping home-pc' and I get a response back. Over the VPN, 'ping home-pc' returns 'unknown host'. I CAN 'ping 10.8.0.1' and get a response.
+So, my problem is I have to have 2 sets of samba share definitions on the remote machines. One, where I can use 'home-pc/$USER' as the share, and the other as '10.8.0.1/$USER'.
+ 
+If I can get local DNS name resolution working over the VPN, ideally the 'home-pc/$USER' shares would work for both LAN, and over VPN.
+ 
+I have been able to make this work with editting the remote 'hosts' file, but then I cannot ping using 'home-pc' over the LAN then. The shares work though. But, there has to be another way.
+ 
+Connections:
+INTERNET-----> CABLE MODEM -----> ROUTER -----> HOME-PC
+All other devices connect wirelessly to the router.
+ 
+Thanks! :)
+
+---
+
+### Post by Derek Karpinski on 2012-02-05
+Bump........
+
+While connected to the VPN, from the windows client, I can 'tracert 10.8.0.1', and it actually returns the name of that computer 'home-pc'.  That tells me DNS is working, it's just not getting to the VPN.
+
+Any help is appreciated.
+
+Thanks.
+
+---
+
+### Post by dmizer on 2012-02-05
+Try connecting with the fully qualified domain like so:
+
+computername.yourdyndns.domain.tld
+
+---
+
+### Post by Derek Karpinski on 2012-02-06
+I have my dyndns name, and a local domain defined in the router.
+
+So I tried both.
+
+nslookup home-pc.dyndns.domain.com
+
+and nslookup home-pc.local.domain
+
+and neither one work.
+
+This is frustrating. :)  I really don't want to edit host files.  Not that it's a big deal.  It just seems that the dns 'server' built in my router should be able to handle this.
+
+Now, one more piece of the puzzle.......
+
+When connected to the VPN (I'm borrowing my neighbors Wi-Fi), and I ping them, or run ipconfig, or run nslookup, I see the DNS IP as their ISP DNS servers, and not my router. I'm guessing this is key, but I don't know how to tie it together.
+
+---
+
+### Post by Grenage on 2012-02-06
+> **Derek Karpinski said:**
+> When connected to the VPN (I'm borrowing my neighbors Wi-Fi), and I ping them, or run ipconfig, or run nslookup, I see the DNS IP as their ISP DNS servers, and not my router. I'm guessing this is key, but I don't know how to tie it together.
+
+This is, of course, your problem - one of the most common VPN issues.  There should be an option in your VPN client to use x as the DNS server, so you'd want to specify the the router's internal address there.
+
+---
+
+### Post by Derek Karpinski on 2012-02-06
+Yes, there is an option.
+ 
+In my OpenVPN server.conf file, I put:
+ 
+```
+ 
+push "dhcp-option DNS pri.ma.ry.dns"
+push "dhcp-option DOMAIN in.ter.nal.do.main.name"
+
+
+```
+ 
+My local LAN IP is 10.50.1.0/24, with the router being 10.50.1.1.  The VPN server is 10.50.1.100 local, and 10.8.0.1 over the VPN.
+ 
+I changed the DNS line to my VPN server local IP, VPN IP, Router local IP, no dice.
+ 
+I don't know if the router gets handed a new IP by the VPN, I couldn't find it.
+
+---
+
+### Post by dmizer on 2012-02-06
+Are you using a TUN or a TAP device to handle your VPN connection?
+
+Edit to add more information.
+TAP -> Bridging
+TUN -> Routing
+
+As bridging is more complicated to configure, most home OpenVPN servers are configured with VPN routing rather than bridging. Routing does not support broadcasting which means you will not be able to get name resolution.
+
+[http://openvpn.net/index.php/open-source/faq/75-general/309-what-is-the-difference-between-bridging-and-routing.html](http://openvpn.net/index.php/open-source/faq/75-general/309-what-is-the-difference-between-bridging-and-routing.html)
+
+---
+
+### Post by Derek Karpinski on 2012-02-07
+Yes, I'm using routing! I didn't know DNS wouldn't work with routing.
+ 
+So, now that I have that solved, should I take the leap to bridging, or try to use Samba as a WINS server that will hand out names?
+
+---
+
+### Post by 1cyber on 2012-02-08
+I am using Ubuntu 11.10 and trying to ping to my network in US which is fine when using IPs but when I use Hostname I am not able to ping. Getting "Unrecognized Hostname" and kind of error. I edited resolv.conf and entered the following line.
+
+# Generated by NetworkManager
+domain company.local
+search company.local
+nameserver (Primary local DNS)
+nameserver (Secondary local DNS)
+
+But still the issue is persisting. When I use Windows I am able to ping using Hostname perfectly.
+
+I also edited the file nsswitch.conf and inserted wins in Hosts section :
+
+# Example configuration of GNU Name Service Switch functionality.
+# If you have the `glibc-doc-reference' and `info' packages installed, try:
+# `info libc "Name Service Switch"' for information about this file.
+
+passwd:         compat
+group:            compat
+shadow:         compat
+
+hosts:          files [COLOR=Red]wins[/COLOR] mdns4_minimal [NOTFOUND=return] dns mdns4
+networks:       files
+
+protocols:      db files
+services:       db files
+ethers:           db files
+rpc:                db files
+
+I dont know how to make it work. I sometimes dont know IPs of certain machines for which I have to use there hostname to call.
+
+---
+
+### Post by Derek Karpinski on 2012-02-08
+I gave up.  I just ended up using PPTP, and used my dd-wrt router as the PPTP server.  I don't know enough about networking, routing, etc, to understand the syntax of what it takes to create a 'bridged' OpenVPN server.
+ 
+I have read forums where people have been able to use local dns over a routed OpenVPN connection, but I can't get it to work.  It seems there are a few bugs with Windows that make it difficult, and the android side needs a bunch of configuring.
+ 
+PPTP is not as secure, but I'm not holding national secrets on my server.
+ 
+That being said, I know the only problem was my OpenVPN clients not being able to see the router.  If I had a router that had enough memory to flash the dd-wrt rom with OpenVPN, I know it would work.  Or if I knew routing, I could push all DNS requests to the router.  Likewise, if I felt like running a DNS server, bind9, or DNSMasq, on my OpenVPN server, I'm sure that would work as well.  But for such a small network, it isn't worth my time.
+ 
+Maybe I'll flash my old Linksys router to use as the OpenVPN server and DNS, and use the DIR-615 just for wireless on my LAN.
+
+---
+
+### Post by SeijiSensei on 2012-02-08
+> **dmizer said:**
+> As bridging is more complicated to configure, most home OpenVPN servers are configured with VPN routing rather than bridging. Routing does not support broadcasting which means you will not be able to get name resolution.
+
+Gee, my bind9 server here would be surprised to learn this.  So would the public bind9 server I have running at the other end of my OpenVPN tunnel to which the local server forwards requests for domains outside its ken.  
+
+When you talk about "broadcasting" aren't you talking about resolving NetBIOS names, not fully-qualified domain names?  DNS doesn't use broadcasts for anything I can think of, and I've been running DNS servers for about fifteen years.
+
+I wouldn't rely on a router to be my DNS server in a complex network environment.  I'd run bind9 on a local server and configure the router to send the server's address when DHCP clients request their DNS configuration.  Even better is to put dhcpd on the server as well, disable DHCP on the router, and manage your clients' configurations that way.  You'll have a lot more fine-grained control than you'll have with most routers.
+
+---
+

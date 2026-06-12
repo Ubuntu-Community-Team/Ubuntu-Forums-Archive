@@ -1,0 +1,159 @@
+---
+title: "Wlan interface missing : Wireless is working."
+date: 2011-11-10
+forum: Networking &amp; Wireless
+---
+
+### Post by lordbux on 2011-11-10
+Today I wanted to run a penetration test on my wireless Lan.
+so I just 
+Typed in ifconfig.
+
+Output of ifconfig:
+```
+
+ifconfig
+**eth0 **     Link encap:Ethernet  HWaddr 1c:75:08:86:ef:c6  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:27 Base address:0x4000 
+
+**eth1 **     Link encap:Ethernet  HWaddr 4c:ed:de:a2:fd:49  
+          inet addr:192.168.1.105  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::4eed:deff:fea2:fd49/64 Scope:Link
+          UP BROADCAST RUNNING  MTU:1500  Metric:1
+          RX packets:443392 errors:8 dropped:0 overruns:0 frame:483153
+          TX packets:340890 errors:12 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:563148091 (563.1 MB)  TX bytes:56987906 (56.9 MB)
+          Interrupt:17 
+
+**lo**        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:1218 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1218 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:172387 (172.3 KB)  TX bytes:172387 (172.3 KB)
+
+
+```
+
+And I found that I had 2 eth interfaces and NO Wireless interface.
+I in reality only have 1 eth0 interface.
+
+Then I got curious and ran lspci:
+Output for lspci:
+```
+lspci
+00:00.0 Host bridge: Intel Corporation Core Processor DRAM Controller (rev 02)
+00:02.0 VGA compatible controller: Intel Corporation Core Processor Integrated Graphics Controller (rev 02)
+00:16.0 Communication controller: Intel Corporation 5 Series/3400 Series Chipset HECI Controller (rev 06)
+00:1a.0 USB Controller: Intel Corporation 5 Series/3400 Series Chipset USB2 Enhanced Host Controller (rev 05)
+00:1b.0 Audio device: Intel Corporation 5 Series/3400 Series Chipset High Definition Audio (rev 05)
+00:1c.0 PCI bridge: Intel Corporation 5 Series/3400 Series Chipset PCI Express Root Port 1 (rev 05)
+00:1c.1 PCI bridge: Intel Corporation 5 Series/3400 Series Chipset PCI Express Root Port 2 (rev 05)
+00:1d.0 USB Controller: Intel Corporation 5 Series/3400 Series Chipset USB2 Enhanced Host Controller (rev 05)
+00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev a5)
+00:1f.0 ISA bridge: Intel Corporation Mobile 5 Series Chipset LPC Interface Controller (rev 05)
+00:1f.2 SATA controller: Intel Corporation 5 Series/3400 Series Chipset 4 port SATA AHCI Controller (rev 05)
+00:1f.3 SMBus: Intel Corporation 5 Series/3400 Series Chipset SMBus Controller (rev 05)
+00:1f.6 Signal processing controller: Intel Corporation 5 Series/3400 Series Chipset Thermal Subsystem (rev 05)
+**01:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. ****RTL8101E/RTL8102E PCI Express Fast Ethernet controller** (rev 05)
+06:00.0 Network controller: Broadcom Corporation Device 4727 (rev 01)
+ff:00.0 Host bridge: Intel Corporation Core Processor QuickPath Architecture Generic Non-core Registers (rev 05)
+ff:00.1 Host bridge: Intel Corporation Core Processor QuickPath Architecture System Address Decoder (rev 05)
+ff:02.0 Host bridge: Intel Corporation Core Processor QPI Link 0 (rev 05)
+ff:02.1 Host bridge: Intel Corporation Core Processor QPI Physical 0 (rev 05)
+ff:02.2 Host bridge: Intel Corporation Core Processor Reserved (rev 05)
+ff:02.3 Host bridge: Intel Corporation Core Processor Reserved (rev 05)
+
+```
+and don't get what's happening
+
+and my airmon-ng returns the following
+```
+
+
+Interface	Chipset		Driver
+
+eth1		Unknown 		wl
+
+```
+
+[B]and greatest part is, tho i am absolutely confused.
+MY wireless is working fine, I can connect and brows and everything.
+[/B]
+
+But I can't use pen-test related things, and need it to study. 
+So please help he as fast as you can.
+:confused::confused::confused::confused::(:(
+
+i am using: toshiba : c660 laptop
+
+---
+
+### Post by jonobr on 2011-11-10
+I saw this issue a long time ago and I cant recall where and cant find it now.
+
+
+Thinking back, and looking around my own system, there was a mention of the file
+
+/etc/udev/rules.d/70-persistent-net.rules 
+
+I believe there was a recommendation to modify that,
+I cant recall if it worked or if it should be done, but Ill keep looking for the post.
+Recommend you dont do anything until I look back at my threads
+(unless someone posts a suggestion)
+
+If you do try it (which I dont recommend at the moment), make a backup
+
+
+heres my file
+
+
+```
+
+jabba:~$ cat /etc/udev/rules.d/70-persistent-net.rules
+
+# This file was automatically generated by the /lib/udev/write_net_rules
+# program, run by the persistent-net-generator.rules rules file.
+#
+# You can modify it, as long as you keep each rule on a single
+# line, and change only the value of the NAME= key.
+
+# PCI device 0x14e4:0x170c (b44)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:14:22:ac:0f:88", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
+
+# PCI device 0x14e4:0x4318 (b43-pci-bridge)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="00:14:a5:8d:c6:2d", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
+lumpy@jabba:~$
+
+```
+
+---
+
+### Post by haqking on 2011-11-10
+eth1 is probably your Wireless device.
+
+Some tools bind it to eth1.
+
+However aircrack and other tools are usually not supported here.
+
+Try the aircrack wiki or various other Pen Test related forums
+
+Peace
+
+---
+
+### Post by nothingspecial on 2011-11-10
+aircrack is not supported here.
+
+Closed
+
+---
+

@@ -1,0 +1,516 @@
+---
+title: "LAN Problem new in 11.04"
+date: 2011-08-29
+forum: Networking &amp; Wireless
+---
+
+### Post by Lumpf on 2011-08-29
+Hello there, I'm encountering problems with all my Computers(windows 7/xp dualboot) after updating to 11.04.  
+
+ All devices are connected to a D-link dir100 which logs onto a pppoe connection, working perfectly fine with windows and ubuntu 10.10. 
+
+ In 11.04 ubuntu boots up and shows &quot;conection established&quot;(auto eth0), but i can't load any website. It takes pretty long for FF to notice, about 20 seconds of trying.  
+
+apps like the driver downloader seem to try to connect but can't get no incoming data, then they lock until i switch autoeth0 off. 
+
+ I can't log into my router with ubuntu running, not showing the loginpage but a popup for username/pass and this doesn't accept my password (working in windows -.-). 
+
+ I'm new to ubuntu but not new to computers so i tried ifconfig -a (after finding out about it) and it showed in/outgoing packages, but few (<5kb)
+I'd post it all but i'm on a single dual boot machine now and i'd rather you told me all the command lines probobly interesting and i get them over in one run instead of switching every few minutes.
+
+Thanks for looking,
+Lumpf
+
+edit: I've just tried out if 10.10 is still getting a connection via my  pendrive and it does no longer. I got the feeling that something inside  my router was changed. 
+I forgot telling about the installation: It said something about  "retrieving packages 29 of 65", even though i undid the "download while  installing" checkbox, and got stuck there, seemingly getting redirected  over and over. I skipped it after trying twice and waiting an hour each  try. this happened on the 2 machines with new installations. the one  that got updated from 10.10 didn't have the issue.
+
+---
+
+### Post by praseodym on 2011-08-29
+Hi,
+
+please show:
+
+```
+lspci -nnk | grep -iA2 net
+lsmod
+ifconfig -a
+cat /etc/network/interfaces
+cat /etc/resolv.conf
+route -n
+```
+You can copy/paste the outputs into a .txt file
+
+---
+
+### Post by Lumpf on 2011-08-29
+There you go:
+
+lspci | grep -iA2 net
+06:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168B PCI Express Gigabit Ethernet controller (rev 06)
+
+lsmod
+Module                  Size  Used by
+parport_pc             36959  1 
+ppdev                  17113  0 
+vesafb                 13761  1 
+binfmt_misc            17565  1 
+snd_hda_codec_hdmi     28103  1 
+snd_hda_codec_realtek   336693  1 
+snd_usb_audio         112426  1 
+snd_hda_intel          33211  2 
+snd_hda_codec         103804  3 snd_hda_codec_hdmi,snd_hda_codec_realtek,snd_hda_intel
+snd_pcm                96625  5 snd_hda_codec_hdmi,snd_usb_audio,snd_hda_intel,snd_hda_codec
+snd_hwdep              13604  2 snd_usb_audio,snd_hda_codec
+snd_usbmidi_lib        25139  1 snd_usb_audio
+snd_seq_midi           13324  0 
+uvcvideo               72195  0 
+snd_rawmidi            30486  2 snd_seq_midi,snd_usbmidi_lib
+videodev               82052  1 uvcvideo
+v4l2_compat_ioctl32    17078  1 videodev
+snd_seq_midi_event     14899  1 snd_seq_midi
+snd_seq                61621  2 snd_seq_midi,snd_seq_midi_event
+xhci_hcd               77643  0 
+snd_timer              29602  2 snd_pcm,snd_seq
+snd_seq_device         14462  3 snd_seq_midi,snd_rawmidi,snd_seq
+shpchp                 37297  0 
+snd                    67382  17 snd_hda_codec_hdmi,snd_hda_codec_realtek,snd_usb_audio,snd_hda_intel,snd_hda_codec,snd_pcm,snd_hwdep,snd_usbmidi_lib,snd_rawmidi,snd_seq,snd_timer,snd_seq_device
+psmouse                73535  0 
+serio_raw              13166  0 
+soundcore              12680  1 snd
+snd_page_alloc         18529  2 snd_hda_intel,snd_pcm
+lp                     17825  0 
+parport                46458  3 parport_pc,ppdev,lp
+usbhid                 46956  0 
+hid                    91020  1 usbhid
+ahci                   25951  2 
+libahci                26642  1 ahci
+r8169                  48022  0 
+
+ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 6c:62:6d:e9:9f:df  
+          inet addr:192.168.0.187  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::6e62:6dff:fee9:9fdf/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:21 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:162 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4858 (4.8 KB)  TX bytes:19710 (19.7 KB)
+          Interrupt:41 Base address:0x8000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:48 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:48 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:2880 (2.8 KB)  TX bytes:2880 (2.8 KB)
+
+
+cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+
+cat /etc/resolv.conf
+# Generated by NetworkManager
+nameserver 192.168.0.1
+
+
+route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.0.0     0.0.0.0         255.255.255.0   U     1      0        0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 eth0
+0.0.0.0         192.168.0.1     0.0.0.0         UG    0      0        0 eth0
+
+
+Thanks anyway.
+I've just tried out if 10.10 is still getting a connection via my pendrive and it does no longer. I got the feeling that something inside my router was changed. 
+I forgot telling about the installation: It said something about "retrieving packages 29 of 65", even though i undid the "download while installing" checkbox, and got stuck there, seemingly getting redirected over and over. I skipped it after trying twice and waiting an hour each try. this happened on the 2 machines with new installations. the one that got updated from 10.10 didn't have the issue.
+
+---
+
+### Post by praseodym on 2011-08-29
+Try the following first: Checkbox all user rights in "Users&Groups" in "Advanced settings"->"User rights" and login again. After that delete your eth0-profile and reboot. Your router-firmware is up-to-date?
+
+After that you may try additionally:
+
+```
+echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
+sudo service network-manager restart
+```
+
+Your device doesnt work properly with 11.04 you may install the "real" r8168-driver. Do you have a CD/DVD of your installation? Please show:
+
+```
+uname -a
+```
+
+---
+
+### Post by Lumpf on 2011-08-29
+Giving myself user rights and resetting the connection looked good but didn't help.
+
+My router firmware is up to date. Doing the other thing didn't work either.
+
+How should i install that driver for the NIC? It says "pci controller" but its onboard. i got the driver cd for the msi board right here but i doubt it'll work with ubuntu. even though i'll try right away.
+
+Heres the uname -a:
+Linux Tims-Rig 2.6.38-8-generic #42-Ubuntu SMP Mon Apr 11 03:31:24 UTC 2011 x86_64 x86_64 x86_64 GNU/Linux
+
+Thanks for helping,
+lumpf
+
+edit: The driver cd features drivers for xp, vista and windows 7, each startable via dos-exe s. Is there some kind of guide how to get these working?
+
+---
+
+### Post by praseodym on 2011-08-29
+Do you have the Ubuntu installation CD? If so, insert it, add it to your repositories and install the package **build-essential**. You additionally need the kernel headers and dkms:
+
+[http://de.archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-headers-2.6.38-8-generic_2.6.38-8.42_amd64.deb](http://de.archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-headers-2.6.38-8-generic_2.6.38-8.42_amd64.deb)
+
+[http://de.archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-headers-2.6.38-8_2.6.38-8.42_all.deb](http://de.archive.ubuntu.com/ubuntu/pool/main/l/linux/linux-headers-2.6.38-8_2.6.38-8.42_all.deb)
+
+[http://de.archive.ubuntu.com/ubuntu/pool/main/d/dkms/dkms_2.1.1.2-5ubuntu1_all.deb](http://de.archive.ubuntu.com/ubuntu/pool/main/d/dkms/dkms_2.1.1.2-5ubuntu1_all.deb)
+
+Install them by saving on your desktop and:
+
+```
+sudo dpkg -i ~/Desktop/*.deb
+```
+
+A direct link to the driver [here]("http://r8168.googlecode.com/files/r8168-8.024.00.tar.bz2"). Save it on the desktop, too, and install it via copy/paste:
+
+```
+cd Desktop/
+tar xvf r8168-8.024.00.tar.bz2
+cd r8168-8.024.00
+sudo ./autorun.sh
+echo "blacklist r8169" | sudo tee -a /etc/modprobe.d/blacklist.conf
+sudo modprobe -rf r8169
+sudo modprobe -v r8168
+sudo depmod -a
+sudo update-initramfs -u
+sudo service network-manager restart
+```
+If LAN works, you should update your system and install the metapackage for the headers:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get install linux-headers-generic
+```
+
+---
+
+### Post by Lumpf on 2011-08-29
+I did all you said and I'll just give you everything the console said :D
+Poor thing, it's still not working.
+
+tim@Tims-Rig:~$ sudo dpkg -i ~/Desktop/*.deb
+[sudo] password for tim: 
+Selecting previously deselected package dkms.
+(Reading database ... 128863 files and directories currently installed.)
+Unpacking dkms (from .../dkms_2.1.1.2-5ubuntu1_all.deb) ...
+Preparing to replace linux-headers-2.6.38-8 2.6.38-8.42 (using .../linux-headers-2.6.38-8_2.6.38-8.42_all.deb) ...
+Unpacking replacement linux-headers-2.6.38-8 ...
+Preparing to replace linux-headers-2.6.38-8-generic 2.6.38-8.42 (using .../linux-headers-2.6.38-8-generic_2.6.38-8.42_amd64.deb) ...
+Unpacking replacement linux-headers-2.6.38-8-generic ...
+Setting up dkms (2.1.1.2-5ubuntu1) ...
+Setting up linux-headers-2.6.38-8 (2.6.38-8.42) ...
+Setting up linux-headers-2.6.38-8-generic (2.6.38-8.42) ...
+Examining /etc/kernel/header_postinst.d.
+run-parts: executing /etc/kernel/header_postinst.d/dkms 2.6.38-8-generic /boot/vmlinuz-2.6.38-8-generic
+ * dkms: running auto installation service for kernel 2.6.38-8-generic          
+run-parts: executing /etc/kernel/header_postinst.d/nvidia-common 2.6.38-8-generic /boot/vmlinuz-2.6.38-8-generic
+/etc/kernel/header_postinst.d/nvidia-common: line 8: [: none: unary operator expected
+Processing triggers for man-db ...
+tim@Tims-Rig:~$ cd Desktop/
+tim@Tims-Rig:~/Desktop$ 
+tim@Tims-Rig:~/Desktop$ tar xvf r8168-8.024.00.tar.bz2
+r8168-8.024.00/
+r8168-8.024.00/Makefile
+r8168-8.024.00/src/
+r8168-8.024.00/src/Makefile
+r8168-8.024.00/src/r8168_asf.h
+r8168-8.024.00/src/rtl_eeprom.c
+r8168-8.024.00/src/r8168.h
+r8168-8.024.00/src/r8168_n.c
+r8168-8.024.00/src/r8168_asf.c
+r8168-8.024.00/src/rtl_eeprom.h
+r8168-8.024.00/src/rtltool.h
+r8168-8.024.00/src/rtltool.c
+r8168-8.024.00/src/Makefile_linux24x
+r8168-8.024.00/README
+r8168-8.024.00/autorun.sh
+tim@Tims-Rig:~/Desktop$ 
+tim@Tims-Rig:~/Desktop$ cd r8168-8.024.00
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo ./autorun.sh
+
+Check old driver and unload it.
+rmmod r8169
+Build the module and install
+[: 48: r8168: unexpected operator
+Backup r8169.ko
+rename r8169.ko to r8169.bak
+Depending module. Please wait.
+load module r8168
+Completed.
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ echo "blacklist r8169" | sudo tee -a /etc/modprobe.d/blacklist.conf
+blacklist r8169
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo modprobe -rf r8169
+FATAL: Module r8169 not found.
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo modprobe -v r8168
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo depmod -a
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo update-initramfs -u
+update-initramfs: Generating /boot/initrd.img-2.6.38-8-generic
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ 
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo service network-manager restart
+network-manager start/running, process 7290
+tim@Tims-Rig:~/Desktop/r8168-8.024.00$ sudo apt-get update
+Ign [http://extras.ubuntu.com](http://extras.ubuntu.com) natty InRelease                                                                  
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) natty-security InRelease                                                       
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty InRelease                             
+Err [http://extras.ubuntu.com](http://extras.ubuntu.com) natty Release.gpg                                                                 
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Err [http://security.ubuntu.com](http://security.ubuntu.com) natty-security Release.gpg                                                      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty-updates InRelease                     
+Ign [http://extras.ubuntu.com](http://extras.ubuntu.com) natty Release                                                                     
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) natty-security Release                                                          
+Err [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty Release.gpg                           
+  Something wicked happened resolving 'us.archive.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) natty-security/main Sources/DiffIndex                                           
+Err [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty-updates Release.gpg                                                     
+  Something wicked happened resolving 'us.archive.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign [http://security.ubuntu.com](http://security.ubuntu.com) natty-security/restricted Sources/DiffIndex                                     
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty Release                                                                 
+Ign [http://us.archive.ubuntu.com](http://us.archive.ubuntu.com) natty-updates Release                                                         
+Ign [http://extras.ubuntu.com](http://extras.ubuntu.com) natty/main TranslationIndex                                                       
+21% [Connecting to us.archive.ubuntu.com] [Connecting to security.ubuntu.com] [Connecting to extras.ubuntu.com]
+
+The last part continued. it always went up to 22%, then somehow aborting it and starting the next.
+
+Thanks for going through it again.
+
+---
+
+### Post by praseodym on 2011-08-29
+You may try the following: Remove your wired- and DSL-profiles in the network-manager applet and reboot. Check again:
+
+```
+ifconfig -a
+route -n
+cat /etc/network/interfaces
+lsmod | grep r8
+dmesg | grep r8
+cat /etc/resolv.conf
+```
+Your Login/Password of your provider was given to the router?
+
+---
+
+### Post by wildmanne39 on 2011-08-29
+Hi, this looks like an update error, not an internet not working issue, at the moment.
+Please run this command and if you get errors post all of them here.
+```
+sudo apt-get update && sudo apt-get upgrade
+```
+Thank you
+
+---
+
+### Post by Lumpf on 2011-08-29
+Still nothing. Here's the lot:
+```
+tim@Tims-Rig:~$ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 6c:62:6d:e9:9f:df  
+          inet addr:192.168.0.187  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::6e62:6dff:fee9:9fdf/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:10 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:68 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2258 (2.2 KB)  TX bytes:11137 (11.1 KB)
+          Interrupt:42 Base address:0xc000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:28 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:28 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1680 (1.6 KB)  TX bytes:1680 (1.6 KB)
+
+tim@Tims-Rig:~$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.0.0     0.0.0.0         255.255.255.0   U     1      0        0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 eth0
+0.0.0.0         192.168.0.1     0.0.0.0         UG    0      0        0 eth0
+tim@Tims-Rig:~$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+tim@Tims-Rig:~$ lsmod | grep r8
+r8168                 194904  0 
+tim@Tims-Rig:~$ dmesg | grep r8
+[    0.000000] PERCPU: Embedded 28 pages/cpu @ffff8800bf200000 s84416 r8192 d22080 u524288
+[    0.000000] pcpu-alloc: s84416 r8192 d22080 u524288 alloc=1*2097152
+[    1.566585] r8168 Gigabit Ethernet driver 8.024.00-NAPI loaded
+[    1.566600] r8168 0000:06:00.0: PCI INT A -> GSI 18 (level, low) -> IRQ 18
+[    1.566622] r8168 0000:06:00.0: setting latency timer to 64
+[    1.566682] r8168 0000:06:00.0: irq 42 for MSI/MSI-X
+[    1.761059] r8168: This product is covered by one or more of the following patents: US5,307,459, US5,434,872, US5,732,094, US6,570,884, US6,115,776, and US6,327,625.
+[    1.761062] r8168  Copyright (C) 2011  Realtek NIC software team <nicfae@realtek.com> 
+[    7.462467] r8168: eth0: link down
+[    9.001450] r8168: eth0: link up
+[    9.463655] r8168: eth0: link up
+tim@Tims-Rig:~$ cat /etc/resolv.conf
+# Generated by NetworkManager
+nameserver 192.168.0.1
+tim@Tims-Rig:~$ 
+
+
+```
+
+---
+
+### Post by wildmanne39 on 2011-08-29
+Hi, what error messages did you get from the commands in my previous post.
+Thank you
+
+---
+
+### Post by Lumpf on 2011-08-29
+Ok now, i let that thing run for an hour and cancelled it. it always works its way up to 22% then pops the error. 
+
+```
+tim@Tims-Rig:~$ sudo apt-get update && sudo apt-get upgrade
+[sudo] password for tim: 
+Ign http://extras.ubuntu.com natty InRelease                                                                  
+Ign http://us.archive.ubuntu.com natty InRelease                                                              
+Ign http://security.ubuntu.com natty-security InRelease                      
+Ign http://us.archive.ubuntu.com natty-updates InRelease                                                       
+Err http://security.ubuntu.com natty-security Release.gpg                                                      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://extras.ubuntu.com natty Release.gpg                           
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://us.archive.ubuntu.com natty Release.gpg                                                             
+  Something wicked happened resolving 'us.archive.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign http://extras.ubuntu.com natty Release                                                                     
+Ign http://security.ubuntu.com natty-security Release                        
+Err http://us.archive.ubuntu.com natty-updates Release.gpg                                                     
+  Something wicked happened resolving 'us.archive.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign http://security.ubuntu.com natty-security/main Sources/DiffIndex                                           
+Ign http://us.archive.ubuntu.com natty Release                                                                 
+Ign http://security.ubuntu.com natty-security/restricted Sources/DiffIndex                                     
+Ign http://extras.ubuntu.com natty/main TranslationIndex                                                       
+Ign http://us.archive.ubuntu.com natty-updates Release                                                         
+Ign http://security.ubuntu.com natty-security/main amd64 Packages/DiffIndex                                    
+Ign http://security.ubuntu.com natty-security/restricted amd64 Packages/DiffIndex                              
+Ign http://security.ubuntu.com natty-security/main TranslationIndex                                            
+Ign http://security.ubuntu.com natty-security/multiverse TranslationIndex                                      
+Ign http://security.ubuntu.com natty-security/restricted TranslationIndex                                      
+Ign http://us.archive.ubuntu.com natty/main TranslationIndex                                                   
+Ign http://security.ubuntu.com natty-security/universe TranslationIndex                                        
+Ign http://us.archive.ubuntu.com natty/multiverse TranslationIndex                                             
+Ign http://us.archive.ubuntu.com natty/restricted TranslationIndex                                             
+Ign http://us.archive.ubuntu.com natty/universe TranslationIndex                                               
+Err http://extras.ubuntu.com natty/main Sources                                                                
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://extras.ubuntu.com natty/main amd64 Packages                                                         
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://extras.ubuntu.com natty/main Translation-en_US                                                      
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://extras.ubuntu.com natty/main Translation-en                                                         
+  Something wicked happened resolving 'extras.ubuntu.com:http' (-5 - No address associated with hostname)
+Ign http://us.archive.ubuntu.com natty-updates/main TranslationIndex                                           
+Ign http://us.archive.ubuntu.com natty-updates/multiverse TranslationIndex   
+Ign http://us.archive.ubuntu.com natty-updates/restricted TranslationIndex   
+Ign http://us.archive.ubuntu.com natty-updates/universe TranslationIndex     
+Err http://security.ubuntu.com natty-security/universe Sources               
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/multiverse Sources             
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/universe amd64 Packages        
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/multiverse amd64 Packages      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/main Sources                   
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/restricted Sources             
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/main amd64 Packages            
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/restricted amd64 Packages      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/main Translation-en_US         
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/main Translation-en            
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/multiverse Translation-en_US   
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/multiverse Translation-en      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/restricted Translation-en_US   
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/restricted Translation-en      
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/universe Translation-en_US     
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+Err http://security.ubuntu.com natty-security/universe Translation-en        
+  Something wicked happened resolving 'security.ubuntu.com:http' (-5 - No address associated with hostname)
+22% [Connecting to us.archive.ubuntu.com]
+
+```
+
+Anyway, if it was an update issue i would at least be able to ping or trace some webpages, and i am not. Also it would make me wonder about ubuntu itself as this is an issue that occurs directly after the installation, and i've reinstalled twice from different boot cds so it would be an issue included in the "out the box" natty. Thanks anyway ;)
+
+@Praseodym: 
+The Router logs into a modem via PPPoe, so it has my username/pass for the modem in it and connects on demand (*click in my head*. I'll try turning it on "always" right away). this works perfectly fine for windows and a second router attached as a wlan-switch. I use the wlan regulary with my smartphone->works.
+
+Thanks for helping,
+lumpf
+
+---
+
+### Post by praseodym on 2011-08-29
+You may try other servers?
+
+Software-Sources->Download from 
+
+there you can choose "Main-Servers" instead of Servers for US or others.
+
+---
+
+### Post by Lumpf on 2011-08-29
+Other servers are no good as well. Looks the same. Got some other ideas?
+
+---
+
+### Post by praseodym on 2011-08-29
+PLZ show:
+
+```
+cat /etc/apt/sources.list
+```
+
+---
+
+### Post by wildmanne39 on 2011-08-29
+Hi, I am on my way to another doctors appointment, but if it was just an internet issue it would say 404 error, not saying there is not an internet issue also, but there appears to be more then one issue.
+
+---
+

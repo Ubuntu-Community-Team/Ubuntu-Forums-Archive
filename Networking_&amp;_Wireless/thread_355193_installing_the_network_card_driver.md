@@ -1,0 +1,154 @@
+---
+title: "installing the network card driver"
+date: 2007-02-06
+forum: Networking &amp; Wireless
+---
+
+### Post by mymuscle on 2007-02-06
+I have a dell poweredge 1950 with dual nics that are integrated into the motherboard. It is a Broadcom NetXtreme II BCM5708 Gigabit Ethernet card. I have the driver burned onto cd from dell.com but how would I go about installing it to the system? the driver is in .tgz format.
+
+---
+
+### Post by gradedcheese on 2007-02-06
+.tgz is a gzipped tar file, ie: an archive (like a .zip).  You should first copy it to your hard disk and uncompress it.  From the GUI, you can just right-click on it and 'Extract Here'.  From the shell:
+
+gunzip name_of_archive.tgz
+tar -xvvf name_of_archive.tar
+
+or, in one shot:
+
+tar -xzvvf name_of_archive.tgz
+
+Now you can look in the uncompressed directory and locate a file called README and/or INSTALL to see what you need to do...
+
+---
+
+### Post by mymuscle on 2007-02-07
+i did what you said and there are only 2 files in there..... they are as follows:
+
+bnx2-1.4.36b-5dkms.noarch.rpm
+bnx2-1.4.36b-5dkms.src.rpm
+
+now what?
+
+---
+
+### Post by gradedcheese on 2007-02-07
+those are RPM files, for a RedHat type Linux distribution.  Techically, you can use 'alien' to install them as .deb files, but it's probably not going to work (I don't know though).  You can get alien like this:
+
+sudo apt-get install alien
+
+And then read about it with 'man alien'.  What you should probably do is see if there's another source for this driver (hopefully google will turn something up).  Hopefully you can build it from source or find .deb files already made and use those.
+
+---
+
+### Post by mymuscle on 2007-02-07
+ya i cant get alien becuase i need the network card for that.. and thats whats not working right now... ill look for the deb files though in the mean time
+
+---
+
+### Post by gradedcheese on 2007-02-07
+I just looked and it appears that your card might work out of the box?
+
+[https://launchpad.net/ubuntu/+source/linux-source-2.6.17/+bug/73647](https://launchpad.net/ubuntu/+source/linux-source-2.6.17/+bug/73647)
+
+If you run 'lsmod', do you see any mention of 'bnx' in the output?  What if you run 'ifconfig -a', what is the output?
+
+---
+
+### Post by mymuscle on 2007-02-07
+ifcongf -a :
+
+Up boradcast multicast MTU:1500 metric:1
+RX packets:0 errors:0 dropped :0 overuns:0 frame:0
+TX packets:0 errors:0 dropped :0 overuns:0 carrier:0
+collsions:0 txqueuelen:1000
+Rx bytes:0 (0,0b) TC bytes:0 (0,0b)
+Interrupt:169 Memory:f4000000-f401110
+
+eht1
+Link encap: Ethernet Hwaddr 00:15:c5:e6:55:e9
+Broadtcast multicast MTU: 1500 Metric:1
+RX packets:0 errors:0 dropped :0 overuns:0 frame:0
+TX packets:0 errors:0 dropped :0 overuns:0 carrier:0
+collsions:0 txqueuelen:1000
+Rx bytes:0 (0,0b) TC bytes:0 (0,0b)
+Interrupt:169 Memory:f4000000-f401110
+
+lo
+Link encap: Local Loopback
+inet addr: 127.0.0.1 Mask: 255.0.0.0
+UP LOOPBACK RUNNING MTU:16436 Metric:1
+RX packets:0 errors:0 dropped :0 overuns:0 frame:0
+TX packets:0 errors:0 dropped :0 overuns:0 carrier:0
+collsions:0 txqueuelen:1000
+Rx bytes:0 (0,0b) TC bytes:0 (0,0b)
+Interrupt:169 Memory:f4000000-f401110
+
+---
+
+### Post by gradedcheese on 2007-02-07
+well, it looks like your cards already work?
+
+Try assigning an IP address (substitute whatever is right for your LAN)
+
+sudo ifconfig eht1 192.168.1.80 up
+
+And now see if you're up and running...  I assume you didn't paste the whole ifconfig output, and the first card is "eht0", right?  Make sure whichever one you bring up is the one that the Ethernet cable is connected to.
+
+---
+
+### Post by mymuscle on 2007-02-07
+this is a little weird.... it seems that eth0 is slot #2???? im pinging the server from my laptop and eth0 appears to be slot 2? does this sound right? id so then what is slot 1?
+
+---
+
+### Post by gradedcheese on 2007-02-07
+could be.  when you run ifconfig -a, it will list all interfaces.  Just to confirm, you have eht0, eht1, and lo right?  You can bring one down like this:
+
+sudo ifconfig eht1 down
+
+and then bring the other up to see which is which.
+
+---
+
+### Post by mymuscle on 2007-02-07
+o by the way this might sound dumb but when i do a command and it scrolls down several pages how can i scroll back up to see what it said? or atleast pause it?
+
+---
+
+### Post by NiTS on 2007-02-07
+page up? :confused:
+
+---
+
+### Post by mymuscle on 2007-02-07
+nope doesnt work
+
+---
+
+### Post by chili555 on 2007-02-07
+You can "pipe" your command through another command called less.
+
+sudo ifconfig -a | less
+
+Then you can use the up and down arrow keys to scroll. Quit with Shift+Q.
+
+---
+
+### Post by mymuscle on 2007-02-07
+how do i type "|"
+
+---
+
+### Post by gradedcheese on 2007-02-07
+that's the pipe symbol, it's Shift+\, ie: the key under Backspace and above Enter
+
+If you want to instead save the output of a command to a file, do this:
+
+sudo ifconfig -a > output_of_command
+
+Where whatever output is generated by the command to the left of > is saved to a file named whatever you type on the right of >, and then you can look at the file with a text editor.
+
+---
+

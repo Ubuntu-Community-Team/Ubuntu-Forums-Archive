@@ -1,0 +1,199 @@
+---
+title: "Can't get connect to internet on 10.04"
+date: 2013-08-24
+forum: Networking &amp; Wireless
+---
+
+### Post by adriang2 on 2013-08-24
+I'm on ver. 10.04 and I'm not that technical (though I know how to access a terminal but don't know anything much about commands). Suddenly lately I haven't been able to access the internet using Firefox or Evolution. Firefox comes up working offline. I can't access the router through my desktop either. It's a wired ethernet connection but I'm not sure what the settings are like now as I've now gone through several attempted changes to get it to work.
+I think I should have updated my os a while ago so I guess that's what I should do next if I get connected again. I've got successful access through a wired laptop connection to the same router.
+Could anyone help me get my connection back up?
+
+Thanks
+
+---
+
+### Post by praseodym on 2013-08-24
+Please open a terminal on the 10.04 system and show these outputs:
+```
+
+uname -a
+lspci -nnk | grep -iA2 net
+lsusb
+lsmod
+iwconfig
+cat /etc/network/interfaces
+cat /etc/resolv.conf
+ifconfig -a
+```
+
+---
+
+### Post by adriang2 on 2013-08-27
+Thanks for replying, I hope you can help!;) Here's the output though I seem to have lost the formattting in the table part. If it matters maybe you could suggest how I transfer the info from ubuntu to windows programs:
+
+```
+dad@SilverServer:~$ uname -a
+Linux SilverServer 2.6.32-50-generic #112-Ubuntu SMP Tue Jul 9 20:29:14 UTC 2013 i686 GNU/Linux
+dad@SilverServer:~$ lspci -nnk | grep -iA2 net
+05:02.0 Ethernet controller [0200]: Broadcom Corporation NetXtreme BCM5702X Gigabit Ethernet [14e4:16a6] (rev 02)
+ Kernel driver in use: tg3
+ Kernel modules: tg3
+--
+05:0d.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL-8139/8139C/8139C+ [10ec:8139] (rev 10)
+ Kernel driver in use: 8139too
+ Kernel modules: 8139too, 8139cp
+dad@SilverServer:~$ lsusb
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 001 Device 003: ID 07ab:fcf6 Freecom Technologies 
+Bus 001 Device 002: ID 04b4:6560 Cypress Semiconductor Corp. CY7C65640 USB-2.0 "TetraHub"
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+dad@SilverServer:~$ lsmod
+Module                  Size  Used by
+nls_iso8859_1           3249  1 
+nls_cp437               4919  1 
+vfat                    8933  1 
+fat                    47767  1 vfat
+usb_storage            40033  1 
+binfmt_misc             6523  1 
+snd_cmipci             30437  2 
+fbcon                  35102  71 
+tileblit                1999  1 fbcon
+font                    7557  1 fbcon
+bitblit                 4707  1 fbcon
+softcursor              1189  1 bitblit
+gameport                9089  1 snd_cmipci
+vga16fb                11385  0 
+vgastate                8961  1 vga16fb
+snd_pcm_oss            35308  0 
+snd_mixer_oss          13746  1 snd_pcm_oss
+snd_pcm                70694  2 snd_cmipci,snd_pcm_oss
+snd_page_alloc          7076  1 snd_pcm
+snd_opl3_lib            8966  1 snd_cmipci
+snd_hwdep               5412  1 snd_opl3_lib
+snd_mpu401_uart         5649  1 snd_cmipci
+snd_seq_dummy           1338  0 
+snd_seq_oss            26722  0 
+snd_seq_midi            4557  0 
+snd_rawmidi            19056  2 snd_mpu401_uart,snd_seq_midi
+snd_seq_midi_event      6003  2 snd_seq_oss,snd_seq_midi
+radeon                678607  2 
+snd_seq                47295  6 snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_seq_midi_event
+ttm                    49847  1 radeon
+drm_kms_helper         29329  1 radeon
+snd_timer              19130  3 snd_pcm,snd_opl3_lib,snd_seq
+snd_seq_device          5700  6 snd_opl3_lib,snd_seq_dummy,snd_seq_oss,snd_seq_midi,snd_rawmidi,snd_seq
+drm                   163779  4 radeon,ttm,drm_kms_helper
+snd                    54244  16 snd_cmipci,snd_pcm_oss,snd_mixer_oss,snd_pcm,snd_opl3_lib,snd_hwdep,snd_mpu401_uart,snd_seq_oss,snd_rawmidi,snd_seq,snd_timer,snd_seq_device
+ppdev                   5259  0 
+e7xxx_edac              3750  0 
+i2c_algo_bit            5028  1 radeon
+soundcore               6620  1 snd
+edac_core              37331  1 e7xxx_edac
+parport_pc             25962  1 
+psmouse                63677  0 
+intel_agp              24375  1 
+agpgart                31724  3 ttm,drm,intel_agp
+shpchp                 28835  0 
+serio_raw               3978  0 
+lp                      7060  0 
+parport                32635  3 ppdev,parport_pc,lp
+8139too                18545  0 
+floppy                 53016  0 
+8139cp                 16186  0 
+mii                     4381  2 8139too,8139cp
+tg3                   109356  0 
+aic79xx               138122  2 
+scsi_transport_spi     21096  1 aic79xx
+dad@SilverServer:~$ iwconfig
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+eth1      no wireless extensions.
+```
+
+```
+dad@SilverServer:~$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+```
+
+```
+dad@SilverServer:~$ cat /etc/resolv.conf
+# Generated by NetworkManager
+```
+```
+dad@SilverServer:~$ ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:0f:20:69:c5:0a  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:21 
+
+eth1      Link encap:Ethernet  HWaddr 00:0e:2e:f1:76:40  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:22 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:240 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:240 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:18776 (18.7 KB)  TX bytes:18776 (18.7 KB)
+```
+
+---
+
+### Post by praseodym on 2013-08-27
+You need nameservers:
+```
+
+echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
+sudo /etc/init.d/networking restart
+```
+Remove the profiles in "cable" and "DSL" in the network-manager applet and reboot.
+
+---
+
+### Post by adriang2 on 2013-08-27
+Should i have typed in the code literally as shown or change the 8.8.8.8 and 'namserver' parts with my info?
+I also did what you asked in the network manager parts.
+But after the reboot I still have the same problem and no profiles are showing in the network manager (if they're supposed to reappear?)
+
+---
+
+### Post by adriang2 on 2013-08-27
+Sorry I'll have to revisit this tomorrow. Thanks for your help so far.
+
+---
+
+### Post by praseodym on 2013-08-27
+Do you use a single modem or a router? Did you receive Login/password of your ISP?
+
+---
+
+### Post by adriang2 on 2013-08-28
+It's a router. But the browser won't connect to the router's address (and I've unchecked 'work offline') I've got the login/password for the router, I have a separate one for my broadband supplier account and another for host of my mailboxes.
+
+---
+
+### Post by adriang2 on 2013-09-30
+I've solved this problem by downloading a new version of Ubuntu! Thanks for your interest and help. I'm really really sorry for not clearing this thread up earlier.
+
+---
+
+### Post by mörgæs on 2013-09-30
+Good, please mark it 'solved' using Thread Tools.
+
+---
+

@@ -1,0 +1,11 @@
+---
+title: "What the hell Ubuntu Wireless Problem"
+date: 2008-11-06
+forum: Networking &amp; Wireless
+---
+
+### Post by chef toonie on 2008-11-06
+Okay this is a question mostly rant with Ubuntu. I have been trying to use Ubuntu for the past 3 YEARS waiting for one distribution that will finally recognize my wirelss card. Well 8.10 was finally the distribution. I wubi install ubuntu check out the drivers and I notice all of them are recognized. So I am happy but then I load up firefox and no internet. And thats not what gets me angry what gets me angry is the fact that Ubuntu isn't doing anything about it. Previous versions Ubuntu would have a problem and it would tell me it. Now my wireless driver is supported but Ubuntu still won't let use internet I tried everything. I know this message is vague but I am also extremly pissed at Ubuntu right now so if anyone could post me a link to Ubuntu 8.10 wireless set up. So I can try it than if doesn't work never ******* use Ubuntu again there's a reason windows/mac are leading because they ******* now how to tell you when theres a problem and they don't just leave you stranded expecting you to be some code magician who magically knows how to use their os. I mean COME THE **** ON just a little guidance for us windows migrates. This is stupid what are we suppose to do I even checked google for liek an hour for a wireless set up ubuntu 8.10 guide and nothing. So that was my horrible grammer rant about ubuntu I don't even know why I tried it seems like theres more problems than benfits so w/e window>ubuntu I guess I'll stick to my crappy *** windows but atleast it has usability and doesn't rely on you being some code wizard. Jesus Christ Ubuntu YOU SUCK!!! I wanted to support you but YOU!!! SUCK YOU COMPLETLY IGNORE TE NEEEDS OF THE AVERAGE CONSUMER AND YOU NEVER WILL GROW UNTIL YOU HELP NO IGNORE **** ITS BASIC BUISNNESS HELP THE PEOPLE WHO USE YOUR PRODUCTS NO MORE UBUNTU EVER AGAIN IT SUCKS LIFE NOTHING HAS EVER SUCKED BEFORE SO **** OFF UBUNTU AND I DON"T EVEN WANT HELP ANYMORE I JUST NEED SOMETIGN TO YELL AT THATS AL THIS SHITTY *** SOFTWARE IS GOOD FOR ANGER MANGEMENT. GOD THAT FELT GOOD. SEE YOU IN I'VE PROBABLY BEEN BANNED HELL.
+
+---
+

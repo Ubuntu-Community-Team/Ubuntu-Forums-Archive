@@ -1,0 +1,13 @@
+---
+title: "ubuntu networking issue"
+date: 2011-11-07
+forum: Networking &amp; Wireless
+---
+
+### Post by cherryw on 2011-11-07
+hello guys,
+I am a kind of newbie to ubuntu( in some aspects like  networking). And  what I wanna ask is about NOAUTH. I read on "ubuntu  help" that while  configuring a PPPOE connection we need to enable  NOAUTH. I just couldnt  figure out what it is? I mean I wanna know  exactly about it(meaning  and a lil bit of explanation). So guys pls help  me out. I even wanna  know about DEFAULTROUTE , NODETACH, PEER DNS,   LIMITED MSS PROBLEM. I  am really sorry if I am expecting too much from u  guys. But I would  definitely do something for u in return.
+"I even posted this question before but didnt get any replies. Even questions posted after this one got 10s of replies. Im really feeling helpless here. So anybody pls try to understand and help me"
+
+---
+

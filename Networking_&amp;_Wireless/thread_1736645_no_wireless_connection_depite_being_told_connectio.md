@@ -1,0 +1,720 @@
+---
+title: "no wireless connection depite being told connection active"
+date: 2011-04-22
+forum: Networking &amp; Wireless
+---
+
+### Post by kk bw on 2011-04-22
+My level - beginner (please treat me gently)
+
+Sony Vaio VGN-NW20ZF. Dual Boot Windows 7 / ubuntu 10.10 from burnt from ubuntu.
+
+Network controller Intel WiFi Link 5100 (I'm not sure if this information helps)
+
+[U]At my home
+[/U]I installed ubuntu on this machine a couple of days ago. Updated no problem using ethernet cable. Couldn't get a wireless connection with ubuntu (no problem with Windows), even though hovering over mouse icon showed active connection to ssidssid (my home wireless ssid).
+
+_At my daughter's home_
+ I can get a wireless connection at my daughter's home using Windows 7, but when I try to connect using ubuntu,  hovering over the wireless icon shows active connection to ssidssid (I treble checked my daughters key), which  is my home connection more than 80 miles from where I am using this  laptop so something is definitely not right here.
+
+Entering lspci | grep Wireless does nothing (nor did sudo lspci | grep Wireless).
+
+I've attached three screenshots in case that helps. I have only ever used windows zip so just did the default compression. Perhaps you could let me know if there's a more helpful way for people in the forums. Apologies in advance if I got that wrong.
+
+The thread is about the wireless problem. However, there's another slight problem. I can't see sufficient of the right hand side to click to close. I has to ctrl+alt+delete. The screen is fine in Windows 7. If you think I should make this a new thread, perhaps you could let me know.
+
+Also, if I'm not posting correctly I'll willingly take advice on helping folk to help me. It's going to be one way traffic for the time being at least, but hopefully in time I will be able to do my bit.
+
+In advance, many thanks.
+
+---
+
+### Post by mapes12 on 2011-04-22
+Hi
+
+I found this:-
+
+[http://ubuntuforums.org/showthread.php?t=1672582](http://ubuntuforums.org/showthread.php?t=1672582)
+
+---
+
+### Post by kk bw on 2011-04-22
+I looked at the link you suggested and found the relevant part.
+
+The thing is though, I don't get the red on the icon. The screenshots I attached show what I saw. If any light could be shed on this it would be appreciated.
+
+Following the link you suggested, maybe the following could help someone guide me what do do next.
+
+kk@kk-VGN-NW20ZF-S:~$ rfkill list all
+0: hci0: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+1: sony-wifi: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+2: sony-bluetooth: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+3: phy0: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+
+kk@kk-VGN-NW20ZF-S:~$ dmesg  grep iwl
+Usage: dmesg [-c] [-n level] [-r] [-s bufsize]
+
+By the way, I'm now in foreign langauage territory, so please be kind.
+
+Many thanks
+
+---
+
+### Post by kk bw on 2011-04-22
+I'm surprised not to have received any guidance here. Am I doing something wrong? Please help.
+
+---
+
+### Post by howefield on 2011-04-22
+Threads merged.
+
+Hi and welcome to the forum.
+
+Please be patient and remember that posters here are assisting others in their own free time and of their own free will. Should you need immediate assistance there are options open to you such as paid support.
+
+[http://www.ubuntu.com/business/services/overview](http://www.ubuntu.com/business/services/overview)
+
+The poster who can help may not be logged in or have read your thread, so feel free to bump after 24 hours has passed with no reply.
+
+Posting in the appropriate forum may also help, in your case maybe "*[Networking & Wireless]("http://ubuntuforums.org/forumdisplay.php?f=336")*" would be the place to ask. If you want your thread moving there, let me know.
+
+---
+
+### Post by kk bw on 2011-04-22
+Thanks for your message. I think that the postings I have made today have been reasonable, specific and courteous. The reason I was surprised at the lack of response was because other messages, some of which were vague and general (for example, one title was 'ubuntu qeustions[sic]' which resulted in lots of quick responses.
+
+I'm trying my best to find my way around. It is clear that I'm a beginner and am a little concerned about moving to a specialist forum at this juncture. I would imagine that my problem is easily resolved and am surprised that I have taken note of guidance and given all specific information in a friendly fashion and yet heard nothing, despite the real buzz of activity that is going on in what seems to be a great community.
+
+I would be happy to be guided by you if you think it would be better to post this in the forum you suggested. However, given that I'm also not really sure about using the fora just yet, I'm also concerned about getting a bit lost.
+
+Once again, thanks for your message.
+
+---
+
+### Post by Hippytaff on 2011-04-22
+If you download and post the wireless-results.txt generated by the wireless script (see link below) people will be better able to assist you. It will provide all the relevant information to diagnose the problem, so you don't have to waste time typing suggested commands into the terminal. It might even fix it :-)
+
+---
+
+### Post by kk bw on 2011-04-22
+Hippytaff
+
+I'm a beginner - I've made that clear in my postings, following advice about how to use the fora. The link you gave is too much for me to follow.
+
+I followed the one piece of advice above to the letter, and yet there is nothing following that. Was the first piece of advice duff?
+
+I think my posts have been reasonable and concise. Why is it that such a  supposed fantastic operating system is such that beginners have to go through  such inconvenience just to find out how to get connected.
+
+---
+
+### Post by Hippytaff on 2011-04-22
+each to their own..if you prefer windows then that is your choice to make...
+
+to use the script, download it. Right click and go to the permissions tab (at the top). the bit where it says execute...click the box there and then run the script by double (left) clicking and choose 'run in terminal'
+
+> [I]Last edited by howefield; 11 Hours Ago at 11:19 PM.. 					 					 						Reason: removed insult.
+
+*Edit - please PM me if you want to insult me ;-)*
+[/I]
+
+---
+
+### Post by grahammechanical on 2011-04-22
+Can we examine this matter one step at a time?
+
+I have a wireless connection at home. If I take my PC to someone else's home and they have a wireless connection. Then my home connection information will still be in my machine. And I would expect it to be there. Of course, I would not be able to get a wireless connection to my home router because I would be out of range. But I could simply make a new connection to my friend's wireless router if I knew the wireless pass phrase.
+
+So, the fact that the ssid of your home wireless router is still in the Network Manager program is not a fault but the correct way of working.
+
+Regards.
+
+---
+
+### Post by kk bw on 2011-04-23
+Thanks for you reply. I agree with what you say and fully understand that. However, that is not addressing my problem at all. My posting specifically states the problem. I can get wireless using windows but not using ubuntu. Further, the screenshots I attached clearly show that I should have an active connection to my home ssid, 'ssidssid', which cannot be possible as I was 80 miles away from my home router.
+
+I also said that I could get no wireless at home.
+
+Sorry, if it sounds as if I don't appreciate the support, but the little offerings to date have done nothing whatsoever to help me feel positive about moving to ubuntu from windows.
+
+It would be really great if someone could read my specific query. I can't see the previous postings as I write this, but one person sent me to a link, where I fed back after seeing just one part of relevant information to my particular case. Another person suggested something outside the remit of a beginner (I clearly said I was a beginner), and also suggested downloading something from sourceforge or somewhere. However, the advice seems to be that one should get software from a depository and not download directly, so that is causing me further confusion.
+
+Ideally, it would be great if someone could read my posting and look at the screenshots. that way I wouldn't get a response that is of no help and just causes frustration. Sorry for being a bit blunt, but I thought that I would get good support here, and that is not the case.
+
+Oh, by the way, one person really let the ubuntu community down and his pathetic post has been removed.
+
+I took the trouble toi try to put together a post which stated my level,the equipment that was being used and the exact nature of the problem. However, other postings with general titles like 'ubuntp qeustions[sic]' have lots of responses. I've asked if I'm doing something wrong in the way I constructed the post, and nobody has given any feedback in that respect, other than a moderator saying it might be better placed in another forum. Given that I'm a beginner and finding my way around, and given that I would have thought that ubuntu would allow me to connect by wireless without this inconvenience, I'm surprised that I am still no nearer to finding a solution.
+
+Many thanks.
+
+---
+
+### Post by kk bw on 2011-04-23
+Oops - sent another message in error. Sorry.
+
+---
+
+### Post by gandaran on 2011-04-23
+look, I don't have the fix for your wireless problem but what I would recommend to try is to _remove clear_ up every existing wireless setup connection from the network manager wireless tab and then manually add new one with the ssid and the wep/wpa password, try connecting then, if it still doesn't work then maybe it is a wireless driver problem, I would recommend to try using the windows driver instead, could be it'l work.
+
+---
+
+### Post by kk bw on 2011-04-23
+Sony Vaio VGN-NW20ZF. Dual Boot Windows 7 / ubuntu 10.10 from burnt from ubuntu.
+
+Network controller Intel WiFi Link 5100  
+ 
+
+ [U]At my home
+[/U]I installed ubuntu on this machine a couple of days ago. Updated no problem using ethernet cable. Couldn't get a wireless connection with ubuntu (no problem with Windows), even though hovering over mouse icon showed active connection to ssidssid (my home wireless ssid). Attempted connection made via wireless icon top right of screen.
+
+_At my daughter's home_
+I can get a wireless connection at my daughter's home using Windows 7, but when I try to connect using ubuntu, hovering over the wireless icon shows active connection to ssidssid (I treble checked my daughters key), which is my home connection more than 80 miles from where I am using this laptop so something is definitely not right here. Attempted connection made via wireless icon top right of screen.
+
+
+ 
+
+ Following a suggestion to another thread, took relevant information and posted back the following:
+ 
+Entering lspci | grep Wireless does nothing (nor did sudo lspci | grep Wireless).  
+ 
+
+ kk@kk-VGN-NW20ZF-S:~$ rfkill list all
+0: hci0: Bluetooth
+Soft blocked: no
+Hard blocked: no
+1: sony-wifi: Wireless LAN
+Soft blocked: no
+Hard blocked: no
+2: sony-bluetooth: Bluetooth
+Soft blocked: no
+Hard blocked: no
+3: phy0: Wireless LAN
+Soft blocked: no
+Hard blocked: no
+
+kk@kk-VGN-NW20ZF-S:~$ dmesg grep iwl
+Usage: dmesg [-c] [-n level] [-r] [-s bufsize]
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi gandaran,
+
+I responded to your message, giving you the best information I have to date, and in the meantime you completely changed the message you sent me. However, the problem doesn't lie as suggested in your edited post. Maybe the information I sent following your pre-edited message could help.
+
+Many thanks.
+
+---
+
+### Post by gandaran on 2011-04-23
+> **kk bw said:**
+> Hi gandaran,
+
+I responded to your message, giving you the best information I have to date, and in the meantime you completely changed the message you sent me. However, the problem doesn't lie as suggested in your edited post. Maybe the information I sent following your pre-edited message could help.
+
+Many thanks.
+I did change my post because I really think if you clear up all connections and manually add one with the correct information it will work, I seen this work before including on my own laptop wireless.
+I have googled the " ubuntu Network controller Intel WiFi Link 5100" and haven't found any problems on ubuntu 10.10 with this wireless card so everything should be working for you.
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi gandaran,
+
+I've done exactly as you said. The wireless icon is showing that it is trying to connect, but it won't connect. I've tried it again in windows, treble checking the key, and it works fine. Trying with unbuntu a second time after leaving windows still gives the same problem. There is no problem with my hardware, and the problem is only there when using ubuntu.
+
+Many thanks.
+
+---
+
+### Post by kk bw on 2011-04-23
+Beginner. Cannot get wireless connection. Works fine with Windows. Key treble checked. No red on icon. Icon suggests trying to connect. Any help much appreciated.
+ 
+
+ Sony Vaio VGN-NW20ZF. Dual Boot Windows 7 / ubuntu 10.10 from burnt from ubuntu.
+
+Network controller Intel WiFi Link 5100 
+
+
+ I don't know if what follows helps. It's just things I've tried along the way, to no avail.
+ 
+
+ rfkill list all
+0: hci0: Bluetooth
+Soft blocked: no
+Hard blocked: no
+1: sony-wifi: Wireless LAN
+Soft blocked: no
+Hard blocked: no
+2: sony-bluetooth: Bluetooth
+Soft blocked: no
+Hard blocked: no
+3: phy0: Wireless LAN
+Soft blocked: no
+Hard blocked: no  
+ 
+
+ mesg grep iwl
+Usage: dmesg [-c] [-n level] [-r] [-s bufsize]
+
+---
+
+### Post by gandaran on 2011-04-23
+hi again,
+just remembered this, what type of security does the wireless network have? wep, wpa, wpa2 or a mixture of wpa and wpa2? can you try set the router with a deferent security and see if Ubuntu will work with it?
+
+---
+
+### Post by kk bw on 2011-04-23
+WPA and WPA2 personal. With windows it is WPA. I can't see an option in ubuntu for WPA only. I am not in a position to consider using WEP.
+
+---
+
+### Post by gandaran on 2011-04-23
+> **kk bw said:**
+> WPA and WPA2 personal. With windows it is WPA. I can't see an option in ubuntu for WPA only. I am not in a position to consider using WEP.
+well with wpa there isn't any problem, I thought for a moment you could be using the dreaded mixture of wap and wpa2.
+look try posting on the networking section of this forum maybe you will get quick and the right answers to your problem.
+
+---
+
+### Post by kk bw on 2011-04-23
+I'm trying my best to resolve a wireless connectivity problem and have consulted the related ubuntu 10.10 [wireless troubleshooting documentation]("https://help.ubuntu.com/10.10/internet/C/troubleshooting-wireless.html#troubleshooting-wireless-ndiswrapper").  However, the documentation does not seem to be consistent with what is  actually happening. I can't  see CLAIMED, UNCLAIMED, ENABLED or DISABLED  anywhere after following this guidance, and so I don't know what to do  know. The documentation states that the steps should be made in order,  but I cannot go to the next step. Any help appreciated.
+
+kk@kk-VGN-NW20ZF-S:~$ sudo lshw -C network
+[sudo] password for kk: 
+  *-network               
+       description: Ethernet interface
+       product: 88E8057 PCI-E Gigabit Ethernet Controller
+       vendor: Marvell Technology Group Ltd.
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eth0
+       version: 10
+       serial: 00:24:be:ac:6c:f7
+       capacity: 1GB/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi pciexpress bus_master cap_list rom ethernet  physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=sky2  driverversion=1.28 firmware=N/A latency=0 link=no multicast=yes  port=twisted pair
+       resources: irq:44 memory:d3520000-d3523fff ioport:c000(size=256) memory:d3500000-d351ffff
+  *-network
+       description: Wireless interface
+       product: WiFi Link 5100
+       vendor: Intel Corporation
+       physical id: 0
+       bus info: pci@0000:03:00.0
+       logical name: wlan0
+       version: 00
+       serial: 00:24:d6:40:2e:80
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi pciexpress bus_master cap_list ethernet physical wireless
+       configuration: broadcast=yes driver=iwlagn  driverversion=2.6.35-28-generic firmware=8.24.2.12 latency=0 link=no  multicast=yes wireless=IEEE 802.11abg
+       resources: irq:46 memory:d2100000-d2101fff
+kk@kk-VGN-NW20ZF-S:~$ ^C
+kk@kk-VGN-NW20ZF-S:~$
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi,
+Thanks for that. In the meantime I've[ posted there]("http://ubuntuforums.org/showthread.php?t=1737334") too. I've also been looking at the ubunto documentation but that isn't consistent with what I am getting. I'll mark this thread as solved, even though it isn't and try to see if it can get sorted in wireless. All the best.
+
+---
+
+### Post by chili555 on 2011-04-23
+> mesg grep iwl
+Usage: dmesg [-c] [-n level] [-r] [-s bufsize]It's supposed to be:```
+dmesg | grep iwl
+```The pipe symbol | is on the right side of my US keyboard on the same key with \.
+
+Please post.
+
+---
+
+### Post by Hippytaff on 2011-04-23
+> **kk bw said:**
+> suggested downloading something from sourceforge or somewhere. However, the advice seems to be that one should get software from a depository and not download directly, so that is causing me further confusion.
+
+
+What I suggested you download was a script to run all the diagnostic commands people will ask for on forums that will help diagnose the problems. I admit I tend to skim read long posts, but you also must have skim read my advise, because I specifically explained what it was I was asking you to download and post. I hope you get it sorted :-D
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi chili555,
+
+kk@kk-VGN-NW20ZF-S:~$ rfkill list all
+0: hci0: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+1: sony-wifi: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+2: sony-bluetooth: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+3: phy0: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+kk@kk-VGN-NW20ZF-S:~$ dmesg grep | iwl
+No command 'iwl' found, did you mean:
+ Command 'wwl' from package 'wwl' (universe)
+ Command 'idl' from package 'likewise-open' (main)
+ Command 'owl' from package 'owl' (universe)
+ Command 'iw' from package 'iw' (universe)
+iwl: command not found
+
+I'm getting more confused now. I wonder if you may be able to walk me through what's going on here. Also, my posting above refers to official ubunto documentation which didn't give the expected output so I don't know what to do.
+
+In advance, many thanks.
+
+---
+
+### Post by chili555 on 2011-04-23
+> $ dmesg grep | iwlThe command is actually:```
+dmesg | grep iwl
+```Please see my post.
+
+dmesg is a log file; we are wanting to see what messages are stored related to "iwlagn," the usual driver for the Intel 5100.
+
+Your readings actually look very good. Are you able to click the Network Manager icon and see your network? What happens when you click it and try to connect?
+
+Please see attached.
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi chili555,
+
+Sorry for typing that incorrectly - thanks for your patience - much appreciated.
+
+By the way, I'm back home now, just in case you may be looking back at earlier postings in this thread.
+
+If I hover over the wireless icon it says 'wireless network connection 'ssidssid' active: 'ssidssid' (100%) and if I left click the icon underneath my SSID (ssidssid) it gives me the option to disconnect. I clicke that and then I saw the window with the wireless icon and the red cross. Left clicking again, I see ssidssid listed twice, one of which has an icon of what looks like a monitor to the left of the wireless icon with the padlock.
+
+Now, this is quite strange. I have the red ! by the wireless icon, and for the first time I have a connection. Hoevering over the icon says 'no network connection' amd left clicking only shows disconnected, and ssisssid is in the list of available networks. This is most confusing. Following this I entered dmesg | grep iwl again and got the same result as before.
+
+Below is the info that may help. In advance, many thanks for being patient. I now feel that I'll get this sorted with your assistance and start to make the move to ubuntu.
+
+kk@kk-VGN-NW20ZF-S:~$ rfkill list all
+0: sony-wifi: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+1: sony-bluetooth: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+2: phy0: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+3: hci0: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+kk@kk-VGN-NW20ZF-S:~$ dmesg | grep iwl
+[   12.506957] iwlagn: Intel(R) Wireless WiFi Link AGN driver for Linux, in-tree:
+[   12.506961] iwlagn: Copyright(c) 2003-2010 Intel Corporation
+[   12.507061] iwlagn 0000:03:00.0: PCI INT A -> GSI 17 (level, low) -> IRQ 17
+[   12.507097] iwlagn 0000:03:00.0: setting latency timer to 64
+[   12.507176] iwlagn 0000:03:00.0: Detected Intel(R) WiFi Link 5100 AGN, REV=0x54
+[   12.534163] iwlagn 0000:03:00.0: Tunable channels: 13 802.11bg, 24 802.11a channels
+[   12.536949] iwlagn 0000:03:00.0: irq 46 for MSI/MSI-X
+[   12.575360] iwlagn 0000:03:00.0: loaded firmware version 8.24.2.12
+[   12.678454] phy0: Selected rate control algorithm 'iwl-agn-rs'
+[   50.828764] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[   50.830019] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  145.313900] iwlagn 0000:03:00.0: failed to remove IBSS station 00:00:00:00:00:00
+[  153.809915] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  153.810113] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  239.377753] iwlagn 0000:03:00.0: Error: Response NULL in 'REPLY_REMOVE_STA'
+[  239.377762] iwlagn 0000:03:00.0: failed to remove IBSS station 7e:dc:83:cf:85:a0
+[  247.828916] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  247.829075] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  257.864884] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  257.865040] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  267.869596] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  267.869754] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  277.873169] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  277.873285] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  287.877649] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  287.877806] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  297.893411] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  297.893574] iwlagn 0000:03:00.0: Unable to find TIM Element in beacon
+[  915.568118] iwlagn 0000:03:00.0: ACTIVATE a non DRIVER active station id 0 addr 1c:af:f7:8a:95:a8
+kk@kk-VGN-NW20ZF-S:~$
+
+---
+
+### Post by kk bw on 2011-04-23
+Hi chili555,
+
+I just tried restarting and its in the position were I cannot connect, but suggesting connected as before. If I then click disconnect in the menu I get the red ! in the wireless icon again and then, yes, I can connect. Then, if I try to connect, I get confirmation that I'm connected but I have no connection. Have you ever come across this situation before?
+
+Many thanks.
+
+---
+
+### Post by chili555 on 2011-04-23
+> Have you ever come across this situation before?You mean today or ever? Yes, indeed. Please post, while it seems to be connected:```
+ifconfig wlan0
+route  -n
+ping -c3 74.125.45.105
+cat /etc/resolv.conf
+```We'll get to the bottom of this!
+
+---
+
+### Post by kk bw on 2011-04-24
+Did the post again instead of editing. Sorry. Beginner but getting there.
+
+---
+
+### Post by kk bw on 2011-04-24
+Hi chili555,
+
+Just to let you know, my objective is to learn about this and not just  get the wireless problem resolved. There is no urgency and I'm beginning  to get the feeling that it will be enjoyable learning about ubuntu. So,  to help you prioritise when supporting others, if their requirements  seem urgent, please assist them first.
+
+Also, when it says disconnected it does indeed seem to be the case that I  am actually disconnected. I wonder if  I may have been fooled by the  Firefox cache or something like that.
+
+Thanks for helping me.
+
+```
+ifconfig wlan0
+wlan0     Link encap:Ethernet  HWaddr 00:24:d6:40:2e:80  
+          inet addr:10.42.43.1  Bcast:10.42.43.255  Mask:255.255.255.0
+          inet6 addr: fe80::224:d6ff:fe40:2e80/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:553 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:58 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:103219 (103.2 KB)  TX bytes:12491 (12.4 KB)
+
+route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.42.43.0      0.0.0.0         255.255.255.0   U     2      0        0 wlan0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+
+ping -c3 74.125.45.105
+connect: Network is unreachable
+
+cat /etc/resolv.conf
+# Generated by NetworkManager
+```
+
+---
+
+### Post by varunendra on 2011-04-24
+> **kk bw said:**
+> 
+```
+ifconfig wlan0
+wlan0     Link encap:Ethernet  HWaddr 00:24:d6:40:2e:80  
+          inet addr:[COLOR=Red]**10.42.43.1**[/COLOR]  Bcast:10.42.43.255  Mask:255.255.255.0
+
+route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.42.43.0      0.0.0.0         255.255.255.0   U     2      0        0 wlan0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+(**[COLOR=Red]????[/COLOR]**)
+
+ping -c3 74.125.45.105
+connect: [COLOR=Red]**Network is unreachable**[/COLOR]
+
+cat /etc/resolv.conf
+# Generated by NetworkManager
+**[COLOR=Red](????[/COLOR])**
+```
+Hi kk,
+
+While being afraid of the risk of misleading the thread, I couldn't help but express my doubts / opinion on your above results. Sincechili555 seems currently offline, I hope he won't mind if I try to add a couple of bits in the meanwhile.
+
+**_First, the explanation of the results_:**
+The above results (highlighted) suggest to me that either you don't have DHCP enabled on your network, or perhaps ubuntu is not getting reply to its DHCP request for some reason. DHCP (Dynamic Host Configuration Protocol) is a network protocol that automatically assigns a valid IP address, and rest of the necessary settings (gateway, DNS, etc.) to your network interface.
+
+Your current IP [COLOR=Red]**10.42.43.1 **[/COLOR]seems a bit unusual, implying that it "may not be" a valid IP assigned by DHCP, and hence a randomly adapted one that is not compatible with your network.
+
+Further, you have no gateway defined (output of route -n)
+(you may think of gateway as: gateway = the IP of that device, typically router or modem, that opens the local network's gate towards the Internet, that is, it is a gateway between LAN (local area network) and WAN (Wide Area Network) or Internet)
+
+Furthermore, you don't have a DNS defined in your resolv.conf file (there should have been one or more IP addresses where I've marked red question marks)
+
+Now all this is obvious if you don't have a DHCP on your network.
+
+
+**_Conclusion (may be wrong since I'm no way near to an expert on these issues)_:**
+Either you don't have DHCP on your network, or something is blocking ubuntu from requesting, or getting response to a DHCP request. If DHCP is absent, your Windows 7 installation must have been configured manually by someone to connect it to Internet.
+
+**_Solution (again, not guaranteed to work, since I'm no expert, just a user learning like you)_:**
+Either enable DHCP on your wifi router/access point, or try making a DHCP request manually, or simply, manually provide the configuration details to the Network Manager. I prefer the last approach.
+
+**_How?_:**
+
+**(A) The shorter way (may or may not work)**
+Before taking the lengthy way, I guess we should try our luck on the shortest way (will work only if DHCP is present). Try a DHCP request by entering the following command in the terminal:
+```
+sudo dhclient
+```After entering this command, try browsing Internet. If the problem still exist, we need further troubleshooting. You may wish to post the output of sudo dhclient in order to let us know how it goes.
+[note: sudo temporarily gives you root privileges. For this, it'll ask for your password, remember- your password, not the root's. And you'll see nothing while typing the password. Just type it correctly and enter]
+
+[B]
+(B) One of the lengthy ways[/B] (99% chance of success, will need exchanging a couple of more posts):
+
+[LIST=1]
+[*]Just log in to your Windows 7
+[*]click start, then at the bottom of the start menu, where there's a text box in which you can type names of programs (if I remember correctly - I don't have Win 7 currently) type **cmd**
+[*]press Enter button on your keyboard. This will open command prompt (please search and open it from programs' menu if this doesn't open it)
+[*]In command prompt, type and 'enter' the following command:```
+ipconfig /all > "%userprofile%"\desktop\ipconf.txt
+``` This will create a file named- ipconf.txt on your windows desktop. (To avoid typing mistakes, just copy the code from here, right click in the command prompt window and select 'paste')
+[*]Open this newly created ipconf.txt file (on your desktop), copy all of its contents, and paste in your new post in this thread.
+[*]It makes the pasted outputs more readable if you select them (only pasted output in you post) and click "#" mark located at the top of the post-editing box. It actually places [ code].... [ /code] tags around the selected text which causes it to be displayed in a more user-friendly code-box.
+[/LIST]
+If it all appears too messy or horrible, I apologize in advance. But since you said in a previous post that you want to 'learn', so I tried to help the way I can.
+
+Now I think I'll just shut up for chili555 to proceed.
+
+---
+
+### Post by kk bw on 2011-04-24
+Hi Varunendra,
+
+Firstly, I would like to thank you for the time and trouble you have gone to in assisting me. I have the feeling that chili555 would welcome the input, especially as you have taken the trouble to explain things to guide me through. There is quite a bit for me to digest here, and I will take a look at this later and try to get to grips with it.
+
+Unfortunately I was not able to see the router settings as I needed to reset the router as I must have set a password (the default admin username and no password didn't work). So, I'm not able to tell you what the situation was. Anyway, I reset the router DLink DIR615 and just set up wireless by default settings using the wizard. I now have wireless on the laptop.
+
+The following is what I now get. I've posted in case there is anything that you may wish to bring to my attention to help me follow what's happening when I compare with the previous results.
+
+```
+ifconfig wlan0
+wlan0     Link encap:Ethernet  HWaddr 00:24:d6:40:2e:80  
+          inet addr:192.168.0.101  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::224:d6ff:fe40:2e80/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1977 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1588 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2477991 (2.4 MB)  TX bytes:227751 (227.7 KB)
+
+route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.0.0     0.0.0.0         255.255.255.0   U     2      0        0 wlan0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+0.0.0.0         192.168.0.1     0.0.0.0         UG    0      0        0 wlan0
+ 
+ping -c3 74.125.45.105
+PING 74.125.45.105 (74.125.45.105) 56(84) bytes of data.
+64 bytes from 74.125.45.105: icmp_req=1 ttl=53 time=116 ms
+64 bytes from 74.125.45.105: icmp_req=2 ttl=52 time=115 ms
+64 bytes from 74.125.45.105: icmp_req=3 ttl=51 time=114 ms
+
+--- 74.125.45.105 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 114.434/115.500/116.212/0.816 ms
+
+ cat /etc/resolv.conf
+# Generated by NetworkManager
+domain cable.virginmedia.net
+search cable.virginmedia.net
+nameserver 192.168.0.1
+```
+ 
+Hi chili555,
+
+I would like to thank you for your help. It really is appreciated. If there's anything else about this issue that I ought to be aware of at present, perhaps you could let me know.
+
+
+Hi Varunendra and chili555,
+
+This has been a really positive experience, and I think that you've represented the ubuntu community in fine fashion. I'm grateful to you.
+
+---
+
+### Post by varunendra on 2011-04-24
+> **kk bw said:**
+> 
+```
+ifconfig wlan0
+wlan0     Link encap:Ethernet  HWaddr 00:24:d6:40:2e:80  
+          inet addr:[COLOR=Blue]**192.168.0.101**[/COLOR]  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::224:d6ff:fe40:2e80/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1977 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1588 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2477991 (2.4 MB)  TX bytes:227751 (227.7 KB)
+
+route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.0.0     0.0.0.0         255.255.255.0   U     2      0        0 wlan0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+0.0.0.0         [COLOR=Blue]**192.168.0.1**[/COLOR]     0.0.0.0         UG    0      0        0 wlan0
+ 
+ping -c3 74.125.45.105
+PING 74.125.45.105 (74.125.45.105) 56(84) bytes of data.
+64 bytes from 74.125.45.105: icmp_req=1 ttl=53 time=116 ms
+64 bytes from 74.125.45.105: icmp_req=2 ttl=52 time=115 ms
+64 bytes from 74.125.45.105: icmp_req=3 ttl=51 time=114 ms
+
+--- 74.125.45.105 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 114.434/115.500/116.212/0.816 ms
+
+ cat /etc/resolv.conf
+# Generated by NetworkManager
+[COLOR=Blue][B]domain cable.virginmedia.net
+search cable.virginmedia.net
+nameserver 192.168.0.1[/B][/COLOR]
+```
+I guess you can notice the difference yourself now! :)
+
+
+> **kk bw said:**
+> 
+Hi Varunendra and chili555,
+
+This has been a really positive experience, and I think that you've represented the ubuntu community in fine fashion. I'm grateful to you.
+
+Can't say about chili, but I do it out of my own interest, a hobby, (just like some people like to watch sports and so on..)
+You know.. the "feel good" thing! Besides, it helps us polish ourselves. So I don't think there's something to be grateful about, just a simple thanx would be sufficient to make us happy :). And you're always welcome.
+
+
+**PS:**
+How about marking it as [Solved] (see my sig.)
+
+---
+
+### Post by chili555 on 2011-04-24
+Good work, both of you! The IP address in question:> wlan0     Link encap:Ethernet  HWaddr 00:24:d6:40:2e:80  
+          inet addr:[COLOR="Red"]10.42.43.1[/COLOR]  Bcast:10.42.43.255  Mask:255.255.255.0is typical of an ad-hoc connection; that is, computer to computer, either to transfer files or for internet connection sharing. Sometimes, for inexplicable reasons, drivers come up ad-hoc instead of managed. Sometimes newbies mistakenly set up networking as ad-hoc. Please see attached.
+
+I'm glad you got it sorted while I got my beauty sleep.
+
+---
+
+### Post by kk bw on 2011-04-24
+Hi chili555 and varunendra,
+
+Many thanks.
+
+I'll mark this this thread as solved.
+
+---
+
+### Post by Hippytaff on 2011-04-24
+Nice to see a positive outcome - glad you got it sorted :-)
+
+---
+

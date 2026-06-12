@@ -1,0 +1,17 @@
+---
+title: "Need help setting up wireless bridge"
+date: 2011-07-08
+forum: Networking &amp; Wireless
+---
+
+### Post by philcollier on 2011-07-08
+My primary home wireless is a Linksys WRT54GS Broadband Router. I have an older Netgear WGR614 Wireless Router that I would like to setup as a wireless bridge to use in another room to connect my other electronics to (i.e tv, blu-ray, Wii).
+ 
+I would appreciate any help on how to accomplish this.
+ 
+Thanks in advance....
+ 
+Phil
+
+---
+

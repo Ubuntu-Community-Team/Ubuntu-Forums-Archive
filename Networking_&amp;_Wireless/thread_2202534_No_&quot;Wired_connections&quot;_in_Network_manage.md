@@ -1,0 +1,252 @@
+---
+title: "No &quot;Wired connections&quot; in Network manager's menu"
+date: 2014-01-29
+forum: Networking &amp; Wireless
+---
+
+### Post by anvo2 on 2014-01-29
+Hi everyone!
+For some days now Network manager doesn't show the "Wired connections" list... Despite ethernet led of some devices I connect by wire to my PC are lit, it is impossible to control them using my ethernet NIC: no ethernet or wired connections under Network manager's left click menu! Not even the list per se, "Wired networks"!!! I post bellow some outputs I read would be usefull... I read some similar messages, here, but I believe none of them is of much help...
+
+```
+anvo@deadend:~$ sudo lshw -C network
+[sudo] password for anvo: 
+  *-network               
+       description: Network controller
+       product: BCM4311 802.11b/g WLAN
+       vendor: Broadcom Corporation
+       physical id: 0
+       bus information: pci@0000:06:00.0
+       version: 01
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm msi pciexpress bus_master cap_list
+       configuration: driver=b43-pci-bridge latency=0
+       resources: irq:18 memory:80000000-80003fff
+  *-network UNCLAIMED
+       description: Ethernet controller
+       product: RTL-8139/8139C/8139C+
+       vendor: Realtek Semiconductor Co., Ltd.
+       physical id: 8
+       bus information: pci@0000:08:08.0
+       version: 10
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm bus_master cap_list
+       configuration: latency=32 maxlatency=64 mingnt=32
+       &#960;&#972;&#961;&#959;&#953;: ioport:2000(size=256) memory:d0100000-d01000ff
+  *-network:0
+       description: Ethernet interface
+       physical id: 1
+       logical name: ham0
+       serial: 7a:79:19:96:28:cf
+       size: 10Mbit/s
+       capabilities: ethernet physical
+       configuration: autonegotiation=off broadcast=yes driver=tun  driverversion=1.6 duplex=full firmware=N/A ip=25.150.40.207 link=yes  multicast=yes port=twisted pair speed=10Mbit/s
+  *-network:1
+       description: Wireless interface
+       physical id: 2
+       logical name: wlan0
+       serial: 00:1a:73:3e:8b:bd
+       capabilities: ethernet physical wireless
+       configuration: broadcast=yes driver=b43  driverversion=3.2.0-58-generic firmware=666.2 ip=192.168.1.101 link=yes  multicast=yes wireless=IEEE 802.11bg
+anvo@deadend:~$
+```
+
+```
+anvo@deadend:~$dmesg | grep eth0
+anvo@deadend:~$ (i.e., empty output)
+```
+
+```
+anvo@deadend:~$ lspci -nnk | grep -iA2 net
+06:00.0 Network controller [0280]: Broadcom Corporation BCM4311 802.11b/g WLAN [14e4:4311] (rev 01)
+    Subsystem: Hewlett-Packard Company BCM4311 802.11b/g Wireless LAN Controller [103c:1364]
+    Kernel driver in use: b43-pci-bridge
+--
+08:08.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd. RTL-8139/8139C/8139C+ [10ec:8139] (rev 10)
+    Subsystem: Hewlett-Packard Company Device [103c:30a5]
+    Kernel modules: 8139too, 8139cp
+```
+
+```
+anvo@deadend:~$ ifconfig -a
+ham0      Link encap:Ethernet  HWaddr 7a:79:19:96:28:cf  
+          inet addr:25.150.40.207  Bcast:25.255.255.255  Mask:255.0.0.0
+          inet6 addr: fe80::7879:19ff:fe96:28cf/64 Scope:Link
+          inet6 addr: 2620:9b::1996:28cf/96 Scope:Global
+          UP BROADCAST RUNNING MULTICAST  MTU:1404  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:442 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:500 
+          RX bytes:0 (0.0 B)  TX bytes:96631 (96.6 KB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:1244 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1244 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:116393 (116.3 KB)  TX bytes:116393 (116.3 KB)
+
+virbr0    Link encap:Ethernet  HWaddr a6:37:26:43:c0:8d  
+          inet addr:192.168.122.1  Bcast:192.168.122.255  Mask:255.255.255.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr 00:1a:73:3e:8b:bd  
+          inet addr:192.168.1.101  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::21a:73ff:fe3e:8bbd/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:48167 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:51551 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:34755945 (34.7 MB)  TX bytes:31782447 (31.7 MB)
+
+anvo@deadend:~$
+
+```
+
+```
+anvo@deadend:~$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+anvo@deadend:~$
+```
+
+```
+anvo@deadend:~$ cat /etc/resolv.conf
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+nameserver 127.0.0.1
+anvo@deadend:~$
+```
+
+```
+anvo@deadend:~$ lsmod
+Module                  Size  Used by
+ip6table_filter        12711  0 
+ip6_tables             18432  1 ip6table_filter
+ebtable_nat            12695  0 
+ebtables               21508  1 ebtable_nat
+pci_stub               12550  1 
+vboxpci                22911  0 
+vboxnetadp             25616  0 
+vboxnetflt             27270  0 
+vboxdrv               285086  3 vboxpci,vboxnetadp,vboxnetflt
+ipt_MASQUERADE         12663  3 
+iptable_nat            13016  1 
+nf_nat                 24959  2 ipt_MASQUERADE,iptable_nat
+nf_conntrack_ipv4      19084  4 iptable_nat,nf_nat
+nf_defrag_ipv4         12649  1 nf_conntrack_ipv4
+xt_state               12514  1 
+nf_conntrack           73847  5 ipt_MASQUERADE,iptable_nat,nf_nat,nf_conntrack_ipv4,xt_state
+ipt_REJECT             12512  2 
+xt_CHECKSUM            12493  1 
+iptable_mangle         12646  1 
+xt_tcpudp              12531  5 
+iptable_filter         12706  1 
+ip_tables              18106  3 iptable_nat,iptable_mangle,iptable_filter
+x_tables                22011  12  ip6table_filter,ip6_tables,ebtables,ipt_MASQUERADE,iptable_nat,xt_state,ipt_REJECT,xt_CHECKSUM,iptable_mangle,xt_tcpudp,iptable_filter,ip_tables
+bridge                 79601  0 
+stp                    12848  1 bridge
+parport_pc             32114  0 
+bnep                   17830  2 
+bluetooth             158447  7 bnep
+ppdev                  12849  0 
+binfmt_misc            17292  1 
+nfsd                  229909  2 
+dm_crypt               22528  0 
+nfs                   372273  1 
+lockd                  78865  2 nfsd,nfs
+fscache                50642  1 nfs
+auth_rpcgss            39597  2 nfsd,nfs
+nfs_acl                12771  2 nfsd,nfs
+sunrpc                215112  16 nfsd,nfs,lockd,auth_rpcgss,nfs_acl
+snd_hda_codec_conexant    52521  1 
+snd_hda_intel          32719  3 
+snd_hda_codec         109562  2 snd_hda_codec_conexant,snd_hda_intel
+snd_hwdep              13276  1 snd_hda_codec
+hp_wmi                 13652  0 
+sparse_keymap          13658  1 hp_wmi
+snd_pcm                80916  2 snd_hda_intel,snd_hda_codec
+snd_seq_midi           13132  0 
+snd_rawmidi            25424  1 snd_seq_midi
+snd_seq_midi_event     14475  1 snd_seq_midi
+snd_seq                51592  2 snd_seq_midi,snd_seq_midi_event
+dm_multipath           22747  0 
+snd_timer              28931  2 snd_pcm,snd_seq
+snd_seq_device         14172  3 snd_seq_midi,snd_rawmidi,snd_seq
+serio_raw              13027  0 
+snd                     62218  15  snd_hda_codec_conexant,snd_hda_intel,snd_hda_codec,snd_hwdep,snd_pcm,snd_rawmidi,snd_seq,snd_timer,snd_seq_device
+soundcore              14635  1 snd
+snd_page_alloc         14115  2 snd_hda_intel,snd_pcm
+arc4                   12473  2 
+b43                   342801  0 
+mac80211              436493  1 b43
+cfg80211              178877  2 b43,mac80211
+bcma                   25651  1 b43
+ssb                    50691  1 b43
+lp                     17455  0 
+parport                40930  3 parport_pc,ppdev,lp
+dm_raid45              76451  0 
+xor                    25987  1 dm_raid45
+dm_mirror              21822  0 
+dm_region_hash         16100  1 dm_mirror
+dm_log                 18193  3 dm_raid45,dm_mirror,dm_region_hash
+btrfs                 638387  0 
+zlib_deflate           26622  1 btrfs
+libcrc32c              12543  1 btrfs
+usbhid                 41937  0 
+hid                    81731  1 usbhid
+i915                  428213  2 
+drm_kms_helper         45466  1 i915
+drm                   197641  3 i915,drm_kms_helper
+i2c_algo_bit           13199  1 i915
+wmi                    18744  1 hp_wmi
+video                  19115  1 i915
+usb_storage            39646  1 
+anvo@deadend:~$
+```
+
+And finally, 
+
+```
+anvo@deadend:~$ cat /etc/udev/rules.d/70-persistent-net.rules
+# This file was automatically generated by the /lib/udev/write_net_rules
+# program, run by the persistent-net-generator.rules rules file.
+#
+# You can modify it, as long as you keep each rule on a single
+# line, and change only the value of the NAME= key.
+
+# PCI device 0x10ec:/sys/devices/pci0000:00/0000:00:1e.0/0000:08:08.0 (8139too)
+SUBSYSTEM=="net", ACTION=="add", drivers=="?*", ATTR{address}=="00:1b:38:36:ff:37", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="eth0"
+
+# PCI device 0x14e4:/sys/devices/pci0000:00/0000:00:1c.2/0000:06:00.0/ssb0:0 (b43-pci-bridge)
+SUBSYSTEM=="net", ACTION=="add", drivers=="?*", ATTR{address}=="00:1a:73:3e:8b:bd", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="wlan*", NAME="wlan0"
+anvo@deadend:~$
+```
+
+Any help would be extremelly apreciated!:P
+George
+
+---
+
+### Post by varunendra on 2014-02-01
+Please try -
+```
+sudo modprobe -v 8139too
+```
+
+And post back the output of -
+```
+dmesg | grep 8139
+```
+
+---
+

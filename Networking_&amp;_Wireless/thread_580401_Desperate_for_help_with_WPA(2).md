@@ -1,0 +1,328 @@
+---
+title: "Desperate for help with WPA(2)"
+date: 2007-10-18
+forum: Networking &amp; Wireless
+---
+
+### Post by nwoolls on 2007-10-18
+I'd love it if someone could help me get WPA working on my laptop. It's an older laptop that I'd put Ubuntu on and given to my wife. A few weeks ago I decided to change my wireless security from WEP to WPA and since then couldn't connect with Ubuntu. I installed XP back on the laptop and flashed my card's (MA401) firmware which got WPA working just fine under XP. However, XP isn't stable on the laptop, and after a couple of weeks of freezing my wife asked me to put Ubuntu back on.
+
+I waited until 7.10 was out and installed that, but now I'm back to the exact same place, unable to get on my wireless network. I've followed the instructions in the stickied howto with no luck. Here is the output from the commands suggested in the "if you're stumped" section. Any help would be very much appreciated. Both my wife and I want to keep Ubuntu on this machine, but not at the expense of having to lower my wireless security.
+
+> root@awoolls-laptop:/# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+169.254.0.0     0.0.0.0         255.255.0.0     U     0      0        0 eth1
+0.0.0.0         0.0.0.0         0.0.0.0         U     1000   0        0 eth1
+root@awoolls-laptop:/# iwconfig
+lo        no wireless extensions.
+
+eth0      no wireless extensions.
+
+eth1      IEEE 802.11b  ESSID:"Gay Jay"  Nickname:"Prism  I"
+          Mode:Managed  Frequency:2.412 GHz  Access Point: 00:14:BF:DA:F7:11   
+          Bit Rate:11 Mb/s   Sensitivity:1/3  
+          Retry short limit:8   RTS thr:off   Fragment thr:off
+          Encryption key:off
+          Power Management:off
+          Link Quality=70/92  Signal level=-9 dBm  Noise level=-138 dBm
+          Rx invalid nwid:0  Rx invalid crypt:104  Rx invalid frag:0
+          Tx excessive retries:0  Invalid misc:0   Missed beacon:0
+
+root@awoolls-laptop:/# 
+root@awoolls-laptop:/# ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:08:02:05:E5:A3  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:296 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:387 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:284864 (278.1 KB)  TX bytes:59468 (58.0 KB)
+          Interrupt:11 Base address:0x2000 
+
+eth1      Link encap:Ethernet  HWaddr 00:30:AB:13:32:DB  
+          inet6 addr: fe80::230:abff:fe13:32db/64 Scope:Link
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:111 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:18113 (17.6 KB)
+          Interrupt:3 Base address:0x100 
+
+eth1:avah Link encap:Ethernet  HWaddr 00:30:AB:13:32:DB  
+          inet addr:169.254.6.207  Bcast:169.254.255.255  Mask:255.255.0.0
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          Interrupt:3 Base address:0x100 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:23 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:23 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:2122 (2.0 KB)  TX bytes:2122 (2.0 KB)
+
+root@awoolls-laptop:/# iwlist scan
+lo        Interface doesn't support scanning.
+
+eth0      Interface doesn't support scanning.
+
+eth1      Scan completed :
+          Cell 01 - Address: 00:14:BF:DA:F7:11
+                    ESSID:"Gay Jay"
+                    Mode:Master
+                    Frequency:2.412 GHz (Channel 1)
+                    Signal level:55/153  Noise level:21/153
+                    Encryption key:on
+                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s
+                              24 Mb/s; 36 Mb/s; 54 Mb/s
+          Cell 02 - Address: 00:40:10:10:00:03
+                    ESSID:"psybase"
+                    Mode:Master
+                    Frequency:2.437 GHz (Channel 6)
+                    Signal level:63/153  Noise level:15/153
+                    Encryption key:on
+                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s
+                              24 Mb/s; 36 Mb/s; 54 Mb/s
+
+root@awoolls-laptop:/# cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth1
+iface eth1 inet dhcp
+wpa-driver wext
+wpa-ssid psybase
+wpa-ap-scan 1
+wpa-proto WPA RSN
+wpa-pairwise TKIP CCMP
+wpa-group TKIP CCMP
+wpa-key-mgmt WPA-PSK
+wpa-psk XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+root@awoolls-laptop:/# cat /etc/modprobe.d/ndiswrapper
+cat: /etc/modprobe.d/ndiswrapper: No such file or directory
+root@awoolls-laptop:/# cat /etc/resolv.conf
+# generated by NetworkManager, do not edit!
+
+
+
+nameserver 192.168.1.1
+
+
+root@awoolls-laptop:/# /etc/init.d/networking restart
+ * Reconfiguring network interfaces...                                          There is already a pid file /var/run/dhclient.eth1.pid with pid 5150
+killed old client process, removed PID file
+Internet Systems Consortium DHCP Client V3.0.5
+Copyright 2004-2006 Internet Systems Consortium.
+All rights reserved.
+For info, please visit [http://www.isc.org/sw/dhcp/](http://www.isc.org/sw/dhcp/)
+
+Listening on LPF/eth1/00:30:ab:13:32:db
+Sending on   LPF/eth1/00:30:ab:13:32:db
+Sending on   Socket/fallback
+ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 7 value 0x1 - ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 4 value 0x0 - ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 5 value 0x1 - There is already a pid file /var/run/dhclient.eth1.pid with pid 134519120
+Internet Systems Consortium DHCP Client V3.0.5
+Copyright 2004-2006 Internet Systems Consortium.
+All rights reserved.
+For info, please visit [http://www.isc.org/sw/dhcp/](http://www.isc.org/sw/dhcp/)
+
+Listening on LPF/eth1/00:30:ab:13:32:db
+Sending on   LPF/eth1/00:30:ab:13:32:db
+Sending on   Socket/fallback
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 3
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 3
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 7
+
+---
+
+### Post by Oraclegol on 2007-10-18
+just a basic glance it looks like your 
+```
+wpa-driver wext
+
+```
+
+[https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsNetgear](https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsNetgear)
+a couple different version of your card use different drivers
+maybe try 
+```
+wpa-driver hostap
+
+```
+instead
+
+you can also figure out what version have using
+```
+lspci -v | less
+```
+
+---
+
+### Post by nwoolls on 2007-10-18
+lspci didn't give me anything good (I'm guessing) because it's a PCMCIA card. I tried using the hostap driver instead of wext, but that doesn't work either. After changing to hostap, here's the output of restarting networking:
+
+> root@awoolls-laptop:/# /etc/init.d/networking restart
+ * Reconfiguring network interfaces...                                          RTNETLINK answers: No such process
+There is already a pid file /var/run/dhclient.eth1.pid with pid 134519120
+Internet Systems Consortium DHCP Client V3.0.5
+Copyright 2004-2006 Internet Systems Consortium.
+All rights reserved.
+For info, please visit http://www.isc.org/sw/dhcp/
+
+Listening on LPF/eth1/00:30:ab:13:32:db
+Sending on   LPF/eth1/00:30:ab:13:32:db
+Sending on   Socket/fallback
+ioctl[PRISM2_IOCTL_HOSTAPD]: Operation not supported
+Failed to set encryption.
+ioctl[PRISM2_IOCTL_HOSTAPD]: Operation not supported
+Failed to set encryption.
+ioctl[PRISM2_IOCTL_HOSTAPD]: Operation not supported
+Failed to set encryption.
+ioctl[PRISM2_IOCTL_HOSTAPD]: Operation not supported
+Failed to set encryption.
+There is already a pid file /var/run/dhclient.eth1.pid with pid 134519120
+Internet Systems Consortium DHCP Client V3.0.5
+Copyright 2004-2006 Internet Systems Consortium.
+All rights reserved.
+For info, please visit http://www.isc.org/sw/dhcp/
+
+Listening on LPF/eth1/00:30:ab:13:32:db
+Sending on   LPF/eth1/00:30:ab:13:32:db
+Sending on   Socket/fallback
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 8
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 8
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 15
+No DHCPOFFERS received.
+No working leases in persistent database - sleeping.
+
+
+Any other thoughts? Is there any other information I can provide? Any help would be very much appreciated.
+
+---
+
+### Post by nwoolls on 2007-10-19
+It seems like this may be caused by the kernel using the orinoco driver for my card rather than the hostap driver (I guess the orinico driver doesn't support WPA). However, I've tried following instructions on blacklisting the orinoco driver. Afterwards, the orinoco module no longer loads, but I also lose eth1 altogether.
+
+---
+
+### Post by tormod on 2007-10-19
+lspci should list pcmcia cards as well.
+
+Please run this to we can confirm what driver is being used:
+ sudo lshw -C network
+
+---
+
+### Post by nwoolls on 2007-10-19
+Here you go:
+
+```
+  *-network               
+       description: Card
+       product: Version 01.00
+       vendor: NETGEAR MA401 Wireless PC
+       physical id: 0
+       slot: Socket 0
+       resources: irq:3
+  *-network
+       description: Ethernet interface
+       product: RTL-8139/8139C/8139C+
+       vendor: Realtek Semiconductor Co., Ltd.
+       physical id: b
+       bus info: pci@0000:00:0b.0
+       logical name: eth0
+       version: 10
+       serial: 00:08:02:05:e5:a3
+       size: 100MB/s
+       capacity: 100MB/s
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm bus_master cap_list ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=8139too driverversion=0.9.28 duplex=full ip=192.168.1.101 latency=64 link=yes maxlatency=64 mingnt=32 module=8139too multicast=yes port=MII speed=100MB/s
+  *-network
+       description: Wireless interface
+       physical id: 1
+       logical name: eth1
+       serial: 00:30:ab:13:32:db
+       capabilities: ethernet physical wireless
+       configuration: broadcast=yes driver=orinoco driverversion=0.15 firmware=Intersil 1.7.1 link=yes multicast=yes wireless=IEEE 802.11b
+
+```
+
+Thanks very much!
+
+---
+
+### Post by tormod on 2007-10-19
+Yes, you are using the orinoco driver:
+configuration: broadcast=yes driver=orinoco driverversion=0.15 firmware=Intersil 1.7.1 link=yes multicast=yes wireless=IEEE 802.11b
+
+---
+
+### Post by nwoolls on 2007-10-19
+Which I've read doesn't support WPA. How can I change to hostap? My chip (prism2) is supposed to work with the hostap driver, but I've had no luck getting that working.
+
+---
+
+### Post by tormod on 2007-10-20
+I have no experience with the hostap driver, but I would suggest:
+ [https://help.ubuntu.com/community/WifiDocs/WirelessTroubleShootingGuide](https://help.ubuntu.com/community/WifiDocs/WirelessTroubleShootingGuide)
+ [https://help.ubuntu.com/community/WifiDocs/WiFiTroubleshooting](https://help.ubuntu.com/community/WifiDocs/WiFiTroubleshooting)
+ [http://www.catb.org/~esr/faqs/smart-questions.html](http://www.catb.org/~esr/faqs/smart-questions.html)
+
+---
+
+### Post by Achetar on 2007-12-06
+> **nwoolls said:**
+> Which I've read doesn't support WPA. How can I change to hostap? My chip (prism2) is supposed to work with the hostap driver, but I've had no luck getting that working.
+You probably need to update your firmware, I am working on that. Any help anyone?
+
+---
+
+### Post by tormod on 2007-12-07
+> **Achetar said:**
+> You probably need to update your firmware, I am working on that. Any help anyone?
+
+The firmware is specific to the card/vendor, so you have to give more details on your card. Generally the firmware upgrade tools are made for Windows only, so it is recommended to find a Windows box to do the upgrade the easiest way.
+
+---
+
+### Post by kevdog on 2007-12-07
+orinoco doesnt do wpa.  Get a different card.
+
+---
+
+### Post by Achetar on 2007-12-16
+I got it working! I am dual booting Win and Lin, and used Win to flash the firmware.
+
+(I don't know precisely what my card is, Ubuntu calls it 'Intersil Prism2.5 (rev 01)')
+
+BTW, I am using the hostap driver.
+
+---
+
+### Post by tormod on 2007-12-16
+> **Achetar said:**
+> I got it working! I am dual booting Win and Lin, and used Win to flash the firmware.
+
+(I don't know precisely what my card is, Ubuntu calls it 'Intersil Prism2.5 (rev 01)')
+
+BTW, I am using the hostap driver.
+
+Great! I hope this can work for nwoolls as well. For your card identification, a precise ID should be given by lspci -nn. And you might find additional info about revisions and firmware etc in /var/log/dmesg.
+
+---
+

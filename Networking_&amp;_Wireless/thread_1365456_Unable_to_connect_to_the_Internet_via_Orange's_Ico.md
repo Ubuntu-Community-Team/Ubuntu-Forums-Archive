@@ -1,0 +1,11 @@
+---
+title: "Unable to connect to the Internet via Orange's Icon 225 modem in Ubuntu 9.10"
+date: 2009-12-27
+forum: Networking &amp; Wireless
+---
+
+### Post by EmilNovak on 2009-12-27
+Hi all, I have a problem with my Ubuntu 9.10 (Desktop 64bit) newly installed system. Right after the installation and logging in I tried to connect to the Internet via my modem Icon 225 obtained from the Orange ISP. I opened the network connections, selected the mobile broadband tab, and added a new connection. The system automatically detected the modem device (the ttyHso* files were automatically added into the /dev folder after plugging in the modem too) and successfully created the connection. When I looked at it, it showed IPv4 settings -> automatic (PPP), mobile broadband -> number: *99#, username, password, network and pin were empty and APN set to 'internet'. PPP Settings were configured similarly to the default values. The connection was set not to start automatically and was available to all users. The values set under the mobile broadband tab were the same as on my winXP OS where the connection worked properly. Then when I tried to connect to the Internet I left clicked on the network connections icon in the upper right corner of the screen and choosed the newly created mobile connection. After a short period of time the system said that the connection is established, but when I used the Firefox to access the google.com nothing happened. I also disabled any proxy settings in the web browser so it directly connects to the Internet, I also modified the user's privilegies to be able to connect to the internet (I found the checkbox unchecked in the system - admin. - usr & groups - properties - usr privilegies) and still nothing. The browser is just looking up google.com... Then I executed the ifconfig command from the terminal and it showed a local loopback, my local ethernet, which worked correctly from the beginning without any installation and the Orange's Icon 225 connection through the hso0. The only difference between the listed information was that the hso0 had its hardware address set to zeros and it has not transferred any data during the established connection. So can anybody help?
+
+---
+

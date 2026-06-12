@@ -1,0 +1,147 @@
+---
+title: "[SOLVED] Wired LAN, static IP can't access the internet, but VMWare client on same ma"
+date: 2008-12-19
+forum: Networking &amp; Wireless
+---
+
+### Post by Ublis on 2008-12-19
+Ubuntu 8.10 is wired to a Linksys SRX200 modem/router. No DHCP, but static IP. The router's web interface can be accessed from Ubuntu browsers, but nothing else. 
+
+The same machine runs a VMWare 2.0 server with a WinXP client (with bridged network). The virtual WinXP machine *can* connect to the internet - the virtual machine has its own IP. The Ubuntu host cannot connect to internet regardless of whether the virtual WinXP machine is running.
+
+Also checked the router's page, the MAC address of the network card is bound to the IP of the Ubuntu machine. The DNS servers in Ubuntu point to the same addresses as the ones in WinXP.
+
+It worked until today. Have updated something recently IIRC, but I don't know what it was and whether I went on the internet afterwards - not the kernel and not VMWare. No changes to the network topology.
+
+Here is the output of ifconfig eth1 (I'm not connected on eth0):
+> 
+eth1      Link encap:Ethernet  HWaddr 00:16:e6:5f:55:fc  
+          inet addr:192.168.1.102  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::216:e6ff:fe5f:55fc/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:9666 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:7688 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:7655155 (7.6 MB)  TX bytes:1269895 (1.2 MB)
+          Interrupt:253 Base address:0x2000 
+
+Here are the contents of /etc/network/interfaces:
+> 
+auto lo
+iface lo inet loopback
+
+iface eth1 inet static
+address 192.168.1.102
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 194.134.5.5 194.134.0.97
+
+auto eth1
+
+Tried with and without dns-nameservers (originally they weren't explicitly mentioned, and it always worked).
+
+I've also tried:
+- rebooting
+- /etc/init.d/networking restart
+- changing my IP
+
+Any ideas what is wrong and what I should do about it?
+
+---
+
+### Post by madverb on 2008-12-19
+Have you tried adding the DNS servers to resolv.conf instead?
+
+---
+
+### Post by Ublis on 2008-12-19
+> **madverb said:**
+> Have you tried adding the DNS servers to resolv.conf instead?
+
+Like this?
+> 
+> cat /etc/resolv.conf
+nameserver 194.134.5.5
+nameserver 194.134.0.97
+
+
+Tried now, followed by /etc/init.d/networking restart. Then tried in FF and Konq, doesn't work. 
+
+Interestingly enough, in the GUI version of the Network Configuration, the IP did not get updated when I modified the /etc/network/interfaces, even if the Network Tools did show a different IP. If I try modifying anything in the UI and confirm it, it refuses to write. 
+
+By the way the Netmask in the Network Configuration UI is set to 24. That doesn't seem right. I don't understand where it gets it from. The Network Tools claims 255.255.255.0 for the Netmask of eth1.
+
+---
+
+### Post by madverb on 2008-12-19
+24 is correct 255.255.255.0 translates to 11111111.11111111.11111111.00000000 add all the 1's and you get 24.
+
+Don't worry about using the Network Configuration UI if you are using a static IP. It's just a pain if you know how to edit the config files.
+
+It seems like you have everything setup correctly.
+
+What NIC are you using? Have you tried using your other NIC instead?
+
+---
+
+### Post by madverb on 2008-12-19
+Just thought it might also be a good idea to test the nameservers you are using
+```
+nslookup google.com
+```
+
+---
+
+### Post by superprash2003 on 2008-12-19
+post output of ping 74.125.45.100
+
+---
+
+### Post by Ublis on 2008-12-19
+It just wouldn't work, so I did a fresh install of 8.10, because the previous installation somehow got really borked, wouldn't even boot anymore due to some CRC error. It still didn't work after reinstall. I could configure static IP and DNSes manually in the GUI and it would keep for the current session, but be reset to DHCP after reboot. 
+
+I also tried configuring it using /etc/network/interfaces (this time eth0), but that made it disappear from the GUI and would still only give access to the web interface of the router, without internet access.
+
+However, "Auto eth0" had disappeared from the GUI, I added it manually again in the GUI with a new name (after looking up the mac address in the router), outcommented it in /etc/network/interfaces. In the GUI it has the "System setting" checked off, unlike what the auto-created interfaces have. After rebooting, I got "Auto eth0" in the GUI again, but my manual connection is still in there and seems to 'win' from its "Auto" version.
+
+I have no idea what's going on, but I'll just not touch it any more from now on and hope updates don't break it again. For future reference, this is my current config - with the wire stuck in eth0:
+> 
+> cat /etc/resolv.conf
+# Generated by NetworkManager
+nameserver 194.134.5.55
+nameserver 194.134.5.5
+
+> cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+#iface eth0 inet static
+#address 192.168.1.104
+#netmask 255.255.255.0
+#gateway 192.168.1.1
+#auto eth0
+
+> ifconfig eth0 
+eth0      Link encap:Ethernet  HWaddr 00:16:e6:5f:56:02  
+          inet addr:192.168.1.104  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::216:e6ff:fe5f:5602/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:11856 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:49717 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:10297206 (10.2 MB)  TX bytes:17956063 (17.9 MB)
+          Interrupt:252 
+
+> ifconfig eth1
+eth1      Link encap:Ethernet  HWaddr 00:16:e6:5f:55:fc  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          Interrupt:253 Base address:0x2000 
+
+That's one way of spending a day... Thanks all for the help.
+
+---
+

@@ -1,0 +1,16 @@
+---
+title: "How to setup Internet Connection"
+date: 2007-07-01
+forum: Networking &amp; Wireless
+---
+
+### Post by breaker84 on 2007-07-01
+hello guys out there...
+may i ask how to setup my internet connection...
+i'm from malaysia and i'm using streamyx line internet connection...
+if in Windows we can create new connection which we set as login to the connection...
+but how to set up in Ubuntu...??
+i hope u can understand what i'm try to say, if there is MAlaysian out there which understand my question, please help me to define it to the expertise here...
+
+---
+

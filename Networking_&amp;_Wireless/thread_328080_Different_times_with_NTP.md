@@ -1,0 +1,74 @@
+---
+title: "Different times with NTP"
+date: 2006-12-30
+forum: Networking &amp; Wireless
+---
+
+### Post by KenSentMe on 2006-12-30
+I have a server running with ntp-simple installed. The time is to be synced with ntp.ubuntu.com. On my desktop system i've run a sync with ntp.ubuntu.com too, but the times on both machines differ a few minutes. How can this be?
+
+Here is the contents of my server's /etc/ntp.conf:
+
+```
+
+# /etc/ntp.conf, configuration for ntpd
+
+# ntpd will use syslog() if logfile is not defined
+logfile /var/log/ntpd
+
+driftfile /var/lib/ntp/ntp.drift
+statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+
+# You do need to talk to an NTP server or two (or three).
+#server ntp.your-provider.example
+
+server ntp.ubuntu.com
+
+# pool.ntp.org maps to more than 100 low-stratum NTP servers.
+# Your server will pick a different set every time it starts up.
+#  *** Please consider joining the pool! ***
+#  ***  <http://www.pool.ntp.org/#join>  ***
+# server pool.ntp.org
+
+# ... and use the local system clock as a reference if all else fails
+# NOTE: in a local network, set the local stratum of *one* stable server
+# to 10; otherwise your clocks will drift apart if you lose connectivity.
+server 127.127.1.0
+fudge 127.127.1.0 stratum 13
+
+# By default, exchange time with everybody, but don't allow configuration.
+# See /usr/share/doc/ntp-doc/html/accopt.html for details.
+restrict default kod notrap nomodify nopeer noquery
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1 nomodify
+
+# Clients from this (example!) subnet have unlimited access,
+# but only if cryptographically authenticated
+#restrict 192.168.123.0  mask  255.255.255.0 notrust
+
+# If you want to provide time to your local subnet, change the next line.
+# (Again, the address is an example only.)
+#broadcast 192.168.123.255
+
+# If you want to listen to time broadcasts on your local subnet,
+# de-comment the next lines. Please do this only if you trust everybody
+# on the network!
+#disable auth
+#broadcastclient
+
+```
+
+And this is what i get when i update my desktop system:
+
+sudo ntpdate ntp.ubuntu.com
+30 Dec 16:03:59 ntpdate[16118]: adjust time server 82.211.81.145 offset 0.045644 sec
+
+---
+

@@ -1,0 +1,231 @@
+---
+title: "Help me connect to this wireless network"
+date: 2008-01-08
+forum: Networking &amp; Wireless
+---
+
+### Post by slackjack on 2008-01-08
+Hey all,
+
+How can I use wicd to connect to this network? Below are the instructions for windows xp.
+[http://www.brooklaw.edu/it/wireless/instructions.pdf](http://www.brooklaw.edu/it/wireless/instructions.pdf) (pdf file)
+
+Thanks.
+
+---
+
+### Post by Hightide on 2008-01-09
+HI, can you give us a bit more information on your problem?
+
+:)
+
+---
+
+### Post by slackjack on 2008-01-09
+> **Hightide said:**
+> HI, can you give us a bit more information on your problem?
+
+:)
+
+Well I tried using wicd with the security configuration of PEAP - TKIP. I entered my student ID and password. But in the path to "CA Certification" I left it black. Then tried connecting, but it won't get an IP address.
+
+So I did the same as the above, but I just placed some random path (my home dir) for the CA certification. But it still does not work. (I have no idea what the certificate is).
+
+I also tried the second PEAP security setting on wicd, but that doesnt work!! :cry::mad:
+
+I have been trying to get this thing for over a year now. Its so frustrating. I've gotten no where with wifi-radar. I've even tried experimenting with wpa_supplicant. That got me no where. I would assume that wicd uses wpa_supplicant also.
+
+And can someone please **read** the instructions linked in the OP and walk me through this.
+
+Thanks.
+
+---
+
+### Post by imdano on 2008-01-10
+Wicd does use wpa_supplicant, you can find the templates it uses to build the configuration files in /opt/wicd/encryption/templates.  The PEAP-TKIP template that wicd provides is *almost* exactly what you need, the difference is that your school doesn't require a ca_cert file (which is why you uncheck the "Validate server certificate" box in Windows).  Try opening up /opt/wicd/encryption/templates/peap-tkip (with sudo/gksudo) and editting the file to look like this:
+> name = PEAP with TKIP
+author = Fralaltro
+version = 1
+require identity *Identity password *Password
+-----
+network={
+        ssid="$_ESSID"
+        scan_ssid=$_SCAN
+        proto=WPA
+        key_mgmt=WPA-EAP
+        pairwise=TKIP
+        group=TKIP
+        eap=PEAP
+        identity="$_IDENTITY"
+        password="$_PASSWORD"
+        phase1="peaplabel=0"
+        phase2="auth=MSCHAPV2"
+}
+If that doesn't work, try editting the "phase1=" line above to be
+> phase1="peaplabel=1"If that still doesn't work, let me know.  But to be honest I'd probably be out of ideas at that point!
+
+---
+
+### Post by slackjack on 2008-01-12
+That unfortunately does not work. Could it be the driver I'm using. I have a 2wire card. The that wpa_sup is using is wext.
+
+Is there anyway to view the wpa_sup logs and see whats really happening?
+
+---
+
+### Post by imdano on 2008-01-12
+Yes, you run the command ```
+wpa_supplicant -i <interface> -c <configuration file>  -D wext
+```You can use -d or -dd to add more debugging output.  The configuration file that wicd uses is in /opt/wicd/encryption/configurations, and the name of the file will be the MAC address of your access point.
+
+The vast majority of the time wext is the driver you want to use, so that probably isn't the problem.
+
+---
+
+### Post by slackjack on 2008-01-15
+Hi!
+
+Here the output of wpa_sup. Apparently I;m missing something?
+```
+
+wpa_supplicant -i eth0 -c /usr/share/wicd/encryption/configurations/000b0e0d7cc4  -D wext 
+ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 7 value 0x1 - ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWENCODEEXT]: Operation not supported
+ioctl[SIOCSIWENCODE]: Invalid argument
+ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 4 value 0x0 - ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 5 value 0x1 - ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 7 value 0x0 - ioctl[SIOCSIWAUTH]: Operation not supported
+WEXT auth param 5 value 0x0 - ioctl[SIOCSIWAUTH]: Operation not supported
+.
+
+```
+I would have to explicitly kill the command [C-c] around line "WEXT auth param 4 value 0x0", or else it just sits there.
+
+---
+
+### Post by imdano on 2008-01-15
+I think you need to run the command with sudo.  See if that helps.
+
+---
+
+### Post by slackjack on 2008-01-15
+Sudo? There is no need for that as the command was run as root. I'm on slackware based machine.
+
+---
+
+### Post by kevdog on 2008-01-15
+Can you post your wpa_supplicant.conf file, or whatever file you are passing to wpa_supplicant as the configuration file? 
+
+I need to see it exactly.
+
+---
+
+### Post by slackjack on 2008-01-16
+The configuration file I used with the wpa_sup command in post #7, was the one that was generated by wicd. Here are the contents:
+
+```
+
+ap_scan=1
+
+network={
+        ssid="bls"
+        scan_ssid=0
+        proto=WPA
+        key_mgmt=WPA-EAP
+        pairwise=TKIP
+        group=TKIP
+        eap=PEAP
+        identity="username"
+        password="passwd"
+        phase1="peaplabel=1"
+        phase2="auth=MSCHAPV2"
+}
+
+```
+
+---
+
+### Post by kevdog on 2008-01-16
+Try adding this under ap_scan:
+
+ctrl_interface=/var/run/wpa_supplicant
+
+
+Are you trying to connect to a WPA1 network??
+
+---
+
+### Post by slackjack on 2008-01-18
+Adding ctrl_interface=/var/run/wpa_supplicant does not seem to do anything.
+
+I'm not sure which version of wpa I'm using. What would I do in either case? I'll try and see if I can get that info by tomorrow.
+
+---
+
+### Post by spacefreak86 on 2008-03-19
+*Bump*
+
+This has similar things to my school network, only we have WPA-Enterprise with PEAP and TKIP encryption. The info from connecting through Windows XP (which connects on my laptop) is posted here:
+
+[http://occs.odu.edu/gettingconnected/wireless/wxp_sp2_wireless.pdf](http://occs.odu.edu/gettingconnected/wireless/wxp_sp2_wireless.pdf)
+
+I've been trying for at least two to three weeks to get my laptop to connect on campus but I have yet to connect once. Does anyone know how to get this working?
+
+---
+
+### Post by spacefreak86 on 2008-03-19
+Nevermind, I got it somehow. Using wicd, I went into the templates for it and removed the lines related to the CA certification, aka, turning off certificate authentication. it works and now I'm happy!
+
+---
+
+### Post by imdano on 2008-03-19
+spacefreak, could you post your exact wpa_supplicant.conf file?  You can find it in /opt/wicd/encryption/configurations/<your access point bssid>.  I'd like to gather up as many of them as I can.  Eventually I might make some kind of UI to create the conf files in wicd, and I want to know what Windows settings map to what wpa_supplicant settings.
+
+---
+
+### Post by spacefreak86 on 2008-04-26
+Basically I had to edit the interface for my school wireless network, which uses WPA with TKIP-PEAP with no CA certification. While WiCD out of the box supports TKIP-PEAP (or at least a hell of a lot easier than I could figure out KNetworkManager (evil program), it wouldn't connect for the TKIP-PEAP due to the CA certification.
+
+Here's what I did:
+
+Went into /opt/wicd/encryption/templates
+
+Clicked on "Edit as root" to gain access to the folder
+
+Opened up the file peap-tkip
+
+Removed anything related to CA cert. 
+
+This is what my file currently now looks like:
+
+name = PEAP with TKIP
+author = Fralaltro
+version = 1
+require identity *Identity password *Password
+-----
+network={
+        ssid="$_ESSID"
+        scan_ssid=$_SCAN
+        proto=WPA
+        key_mgmt=WPA-EAP
+        pairwise=TKIP
+        group=TKIP
+        eap=PEAP
+        identity="$_IDENTITY"
+        password="$_PASSWORD"
+        phase1="peaplabel=0"
+        phase2="auth=MSCHAPV2"
+}
+
+
+Note that this removes the option for CA certification within wicd, but only for this specific type of encryption.
+
+---
+

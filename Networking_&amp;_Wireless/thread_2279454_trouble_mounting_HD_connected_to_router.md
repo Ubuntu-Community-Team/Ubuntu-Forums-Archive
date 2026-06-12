@@ -1,0 +1,60 @@
+---
+title: "trouble mounting HD connected to router"
+date: 2015-05-23
+forum: Networking &amp; Wireless
+---
+
+### Post by standell on 2015-05-23
+hello,
+
+i have an external HD connected to my ASUS RT-AC68U router. my macbook pro can see this drive and connect to it, but i can NOT get my ubuntu 12.04 box to mount it. i've issued this command:
+```
+sudo mount -o username=xyz password=xzypasswd -t smbfs //192.168.1.1/RT-AC68U-9830  /media/blah/blah
+```
+
+i have also tried:
+```
+sudo mount -t smbfs smb://RT-AC68U-9830 /media/blah/blah -o username=xyz password=xyzpasswd
+```
+
+truthfully, grasping at straws, i have tried a variety of variations of the above cmds (inclduing cifs mount) and the output i receive is pretty much always the same... it's almost a usage statement, but i never get an actual error mesg saying the cmd couldn't be completed or the drive wasn't mounted. when i look in the dir i'm trying to map the HD to, nothing is there. the output i get from the command is this lengthy usage-like text (sorry for the quantity):
+
+> Usage: mount -V                 : print version
+       mount -h                 : print this help
+       mount                    : list mounted filesystems
+       mount -l                 : idem, including volume labels
+So far the informational part. Next the mounting.
+The command is `mount [-t fstype] something somewhere'.
+Details found in /etc/fstab may be omitted.
+       mount -a [-t|-O] ...     : mount all stuff from /etc/fstab
+       mount device             : mount device at the known place
+       mount directory          : mount known device here
+       mount -t type dev dir    : ordinary mount command
+Note that one does not really mount a device, one mounts
+a filesystem (of the given type) found on the device.
+One can also mount an already visible directory tree elsewhere:
+       mount --bind olddir newdir
+or move a subtree:
+       mount --move olddir newdir
+One can change the type of mount containing the directory dir:
+       mount --make-shared dir
+       mount --make-slave dir
+       mount --make-private dir
+       mount --make-unbindable dir
+One can change the type of all the mounts in a mount subtree
+containing the directory dir:
+       mount --make-rshared dir
+       mount --make-rslave dir
+       mount --make-rprivate dir
+       mount --make-runbindable dir
+A device can be given by name, say /dev/hda1 or /dev/cdrom,
+or by label, using  -L label  or by uuid, using  -U uuid .
+Other options: [-nfFrsvw] [-o options] [-p passwdfd].
+For many more details, say  man 8 mount .
+
+
+i'm really at a loss here. i assume since my macbook pro can see (and mount) the drive it is 'available' on my network. any help appreciated. TIA
+standell
+
+---
+

@@ -1,0 +1,17 @@
+---
+title: "display parameters"
+date: 2008-09-28
+forum: Networking &amp; Wireless
+---
+
+### Post by desaidileep on 2008-09-28
+hi,
+i am a new user of ubuntu,i dont know much about linux too.
+i use centos at my workplace.
+when i tried to connect to my workplace through vpn, i am getting connected to my system. when i tried to work,for which i need a display, my system says "x window Display initialization failure and display<not defined>.
+what should i do to set the display,please help me. thanks for ur replies in advance.
+
+Dileep
+
+---
+
