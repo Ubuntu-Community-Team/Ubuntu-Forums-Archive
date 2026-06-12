@@ -1,0 +1,344 @@
+---
+title: "[SOLVED] make 'setxkbmap dvorak' permanent"
+date: 2007-09-27
+forum: Hardware &amp; Laptops
+---
+
+### Post by leetrefz on 2007-09-27
+switching to dvorak, but ' setxkbmap dvorak' seems to only work for one session. how to make it permanent?
+
+---
+
+### Post by olejorgen on 2007-09-27
+My suggestions:
+
+1. Make a script and add it to sessions (preferences -> sessions) I guess you can simply add the command directly too
+2. Use the gui tool to change the layout (preferences -> keyboard)
+
+Assuming you use gnome
+
+---
+
+### Post by olejorgen on 2007-09-27
+x
+
+---
+
+### Post by leetrefz on 2007-09-27
+Afraid I'm not using gnome but my beloved xfce. 
+
+Sorry but what does a single x mean? 
+
+Go easy, I'm no guru
+
+---
+
+### Post by olejorgen on 2007-09-27
+Ok, you might try to add the comamnd to ~/.profile or ~/.bashrc
+
+x means notthing. I misposted, and didn't find a delete button :P
+
+---
+
+### Post by leetrefz on 2007-09-28
+putting it in ~/.bashrc works only after opening the terminal for some reason. also tried /etc/rc.local but no dice. want it to work for session login too
+
+---
+
+### Post by olejorgen on 2007-09-28
+Did you try .profile ?
+
+> 
+# ~/.profile: executed by the command interpreter for login shells.
+
+
+---
+
+### Post by Apo2k4 on 2007-09-28
+How about editing /etc/X11/xorg.conf?
+
+Find Section "InputDevice" and change the options to
+        Option      "XkbLayout" "us"
+        Option      "XkbVariant" "dvorak"
+
+---
+
+### Post by leetrefz on 2007-09-29
+editing xorg.conf got me dvorak for session login, but not for the actual session. Still strangely had to simply open the terminal for it to magically switch thanks to .bashrc. When I deleted 'setxkbmap dvorak' from .bashrc the magic stopped working and, despite adding the same command back into .profile I don't have dvorak except in the login window. 
+
+Now .profile looks like 
+> # ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d ~/bin ] ; then
+    PATH=~/bin:"${PATH}"
+fi
+
+setxkbmap dvorak
+
+and .bashrc
+> # ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+export HISTCONTROL=ignoredups
+# ... and ignore same sucessive entries.
+export HISTCONTROL=ignoreboth
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+xterm-color)
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    ;;
+*)
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    ;;
+esac
+
+# Comment in the above and uncomment this below for a color prompt
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    ;;
+*)
+    ;;
+esac
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+#if [ -f ~/.bash_aliases ]; then
+#    . ~/.bash_aliases
+#fi
+
+# enable color support of ls and also add handy aliases
+if [ "$TERM" != "dumb" ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    #alias dir='ls --color=auto --format=vertical'
+    #alias vdir='ls --color=auto --format=long'
+fi
+
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+
+and xorg.conf:
+> # /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbVariant"	"dvorak"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Intel Corporation Mobile 945GM/GMS/940GML Express Integrated Graphics Controller"
+	Driver		"i810"
+	BusID		"PCI:0:2:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-51
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel Corporation Mobile 945GM/GMS/940GML Express Integrated Graphics Controller"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+
+I had the command in the same place in .bashrc as it is in .profile, the very end.
+
+Would have thought xorg.conf would be the last word in this setup. lucky, I guess, that I didn't try to squish that 'setxkbmap dvorak' randomly in there.
+
+---
+
+### Post by leetrefz on 2007-09-29
+put the command back in .bashrc so again I get dvorak just by opening the terminal, besides having dvorak in the login window thanks to editing xorg.conf. the command's still in .profile but I don't notice any effect from it there even after so many reboots with various combinations of the three edits.
+
+---
+
+### Post by peabody on 2007-09-29
+Hello, fellow dvorak users myself :).  I have absolutely no experience with keymaps under xubuntu.  Using Ubuntu here myself.  Does xfce have no regional input support option?  That's the usual place to find these kinds of things.
+
+---
+
+### Post by leetrefz on 2007-09-29
+There's language support with no keyboard or input options, and keyboard prefs- layouts... ah, it hadn't let me de-select 'use x conf' so I could change layouts, now for some reason I can. trying reboot.... got it. So I guess editing xorg.conf somehow deselected 'use x conf' in keyboard prefs- layouts so I could then delete 'us.' Now I guess selecting or de-selecting 'use x conf' won't make a difference. anyway it works! Took commands out of .bashrc and .profile. Again I can't edit Xfce keyboard layout, may never know why I suddenly could.
+
+---
+

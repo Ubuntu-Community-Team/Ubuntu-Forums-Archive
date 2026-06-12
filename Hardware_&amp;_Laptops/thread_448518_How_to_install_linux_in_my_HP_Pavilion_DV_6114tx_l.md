@@ -1,0 +1,22 @@
+---
+title: "How to install linux in my HP Pavilion DV 6114tx laptop"
+date: 2007-05-19
+forum: Hardware &amp; Laptops
+---
+
+### Post by ashwini on 2007-05-19
+dear members,
+i own a HP PAVILION DV 6114TX NOTEBOOK PC,
+AND I HAVE COPY OF 5 UBANTU LINUX CD'S, 
+NOW CAN SOME ONE GUIDE ME TO INSTALL DUAL BOOT LINUX ON MY LAPTOP, 
+CURRENTLY I AM USING WINDOWS XP MEDIA CENTER 2005 EDITION, 
+AND I AM DYING TO USE  LINUX, AS I AM PLANNING TO SHIFT MY CAREER TO FIRMWARE PROGRAMMING,
+
+SO ANY ONE PLEASE HELP ME......
+PLEASE FEEL FREE TO MAIL ME @
+[email]ashwini.dubey@hotmail.com[/email].
+
+THANKYOU.
+
+---
+

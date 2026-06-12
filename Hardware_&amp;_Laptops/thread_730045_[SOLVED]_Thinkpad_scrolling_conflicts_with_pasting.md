@@ -1,0 +1,453 @@
+---
+title: "[SOLVED] Thinkpad scrolling conflicts with pasting text - help"
+date: 2008-03-20
+forum: Hardware &amp; Laptops
+---
+
+### Post by MountainX on 2008-03-20
+I have a Thinkpad and I like to scroll every application (Firefox, text editors, etc.) with the trackpoint and middle mouse button. However in Ubuntu, the middle mouse button pastes text. I do not like this nor do I use it. I like to paste with Ctrl-V.
+
+How can I make the Trackpoint scrolling work correctly? I don't want to paste with the MMB.
+
+It is interesting that the touch pad scrolling works correctly, but the Trackpoint (which I prefer) doesn't work correctly. The problem is also seen in long drop down dialogs - the touch pad will scroll them while the Trackpoint will not. 
+
+It seems that if the touch pad can be made to act correctly, that the Trackpoint can be fixed too. Thanks.
+
+---
+
+### Post by MountainX on 2008-03-21
+bump...
+this is an important issue for me. I bought the Thinkpad largely because I love the Trackpoint. I hope to use it fully under Ubuntu. Thanks.
+
+---
+
+### Post by Am6er on 2008-03-21
+[http://ph.ubuntuforums.com/showthread.php?t=711907](http://ph.ubuntuforums.com/showthread.php?t=711907)
+
+---
+
+### Post by MountainX on 2008-03-21
+Thanks for the link, but that doesn't work. Changing the mouse button assignment via xorg.conf  to something like "1 3 3" completely disables scrolling with the Trackpoint.
+
+Still looking for a solution. Thanks.
+
+---
+
+### Post by MountainX on 2008-03-22
+....still looking ;)
+
+---
+
+### Post by MountainX on 2008-03-23
+This really is important to me. Is there an additional place I should be asking the question? Thanks.
+
+---
+
+### Post by MountainX on 2008-03-24
+I'm still trying ;)
+
+---
+
+### Post by MountainX on 2008-03-24
+I finally found some resources that look helpful. As I try the solutions, I'll report back. 
+
+**_Best links:_**
+[http://www.thinkwiki.org/wiki/How_to_configure_the_TrackPoint](http://www.thinkwiki.org/wiki/How_to_configure_the_TrackPoint)
+[http://opseast.wordpress.com/2007/11/05/getting-the-thinkpad-scroll-button-to-work-in-linux/](http://opseast.wordpress.com/2007/11/05/getting-the-thinkpad-scroll-button-to-work-in-linux/)
+
+_**Related links:**_
+[http://www.thinkwiki.org/wiki/Patch_to_enable_advanced_trackpoint_configuration](http://www.thinkwiki.org/wiki/Patch_to_enable_advanced_trackpoint_configuration)
+[http://ubuntu.wordpress.com/2006/03/24/disable-synaptics-touchpad/](http://ubuntu.wordpress.com/2006/03/24/disable-synaptics-touchpad/)
+
+[http://forum.notebookreview.com/showthread.php?t=177638](http://forum.notebookreview.com/showthread.php?t=177638)
+[http://ubuntuforums.org/showthread.php?t=711208](http://ubuntuforums.org/showthread.php?t=711208) (Hardy - no solution)
+
+**_References:_**
+[http://stephen.evanchik.com/taxonomy/term/9](http://stephen.evanchik.com/taxonomy/term/9)   developer of TrackPoint driver in Linux kernel
+[http://forum.notebookreview.com/showthread.php?t=186952&page=2](http://forum.notebookreview.com/showthread.php?t=186952&page=2) (Windows, vmWare)
+
+[http://rsim.cs.uiuc.edu/~sachs/tp-scroll/](http://rsim.cs.uiuc.edu/~sachs/tp-scroll/)
+
+---
+
+### Post by MountainX on 2008-03-24
+No luck! It is still not working correctly.
+
+running this code:
+```
+sudo /etc/init.d/trackpoint restart
+```
+gives me "command not found"
+
+This is in Gutsy i386
+
+Surely someone with a Thinkpad has gotten the Trackpoint to work like it works under WIndows!
+
+---
+
+### Post by Whiffle on 2008-03-24
+I see you found something on thinkwiki.  I have my trackpoint configured just like windows off that page and i use the middle click paste.  You just have to make sure to hold down the middle button.  What specific issues are you having with those howtos?
+
+I don't know of any service called trackpoint, and nor does your computer, which is why you're getting command not found.
+
+---
+
+### Post by MountainX on 2008-03-24
+> **Whiffle said:**
+> What specific issues are you having with those howtos?.
+
+I followed them exactly and still no success:
+1. I cannot get Trackpoint scrolling to work. 
+2. My speed and sensitivity settings are lost after I reboot.
+
+
+> **Whiffle said:**
+> 
+I don't know of any service called trackpoint, and nor does your computer, which is why you're getting command not found.
+
+OK, good. There is an entry at the thinkwiki link that specifies:
+/etc/init.d/trackpoint restart
+
+Maybe that page needs to be corrected... ?
+
+Anyway, I appreciate any advice on how to enable Trackpoint scrolling given that the steps that are working for others don't work for me. What could I be missing? What logs or config files should I check? Thanks
+
+---
+
+### Post by Whiffle on 2008-03-24
+Okay, trackpoint scrolling is dictated by xorg.conf.  Here is my xorg.conf, I'm using the one off of thinkwiki basically:
+
+```
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+        FontPath        "/usr/share/fonts/X11/misc"
+        FontPath        "/usr/share/fonts/X11/cyrillic"
+        FontPath        "/usr/share/fonts/X11/100dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/75dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/Type1"
+        FontPath        "/usr/share/fonts/X11/100dpi"
+        FontPath        "/usr/share/fonts/X11/75dpi"
+        # path to defoma fonts
+        FontPath        "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+        Load    "i2c"
+        Load    "bitmap"
+        Load    "ddc"
+        Load    "dri"
+        Load    "extmod"
+        Load    "freetype"
+        Load    "glx"
+        Load    "int10"
+        Load    "vbe"
+        Load    "synaptics"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "CoreKeyboard"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc105"
+        Option          "XkbLayout"     "us"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+        Option          "Device"                "/dev/input/mice"
+        Option          "Protocol"              "ExplorerPS/2"
+        Option          "ZAxisMapping"          "4 5"
+        Option          "Emulate3Buttons"       "on"
+        Option          "EmulateWheel"          "on"
+        Option          "EmulateWheelTimeOut"   "200"
+        Option          "Emulate3TimeOut"       "50"
+        Option          "EmulateWheelButton"    "2"
+        Option      "YAxisMapping"        "4 5"
+        Option      "XAxisMapping"        "6 7"
+
+EndSection
+
+Section "InputDevice"
+        Identifier      "Synaptics Touchpad"
+        Driver          "synaptics"
+        Option          "SendCoreEvents"        "true"
+        Option          "Device"                "/dev/psaux"
+        Option          "Protocol"              "auto-dev"
+        Option          "HorizScrollDelta"      "1"
+EndSection
+
+Section "Device"
+        Identifier      "Intel Corporation Mobile 915GM/GMS/910GML Express Graphics Controller"
+        Driver          "intel"
+        BusID           "PCI:0:2:0"
+#       Option          "NoDri"
+EndSection
+
+Section "Monitor"
+        Identifier      "Generic Monitor"
+        Option          "DPMS"
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "Intel Corporation Mobile 915GM/GMS/910GML Express Graphics Controller"
+        Monitor         "Generic Monitor"
+        DefaultDepth    24
+        SubSection "Display"
+                Depth           1
+                Modes           "1024x768"
+        EndSubSection
+        SubSection "Display"
+                Depth           4
+                Modes           "1024x768"
+        EndSubSection
+        SubSection "Display"
+                Depth           8
+                Modes           "1024x768"
+        EndSubSection
+        SubSection "Display"
+                Depth           15
+                Modes           "1024x768"
+        EndSubSection
+        SubSection "Display"
+                Depth           16
+                Modes           "1024x768"
+        EndSubSection
+        SubSection "Display"
+                Depth           24
+                Modes           "1024x768"
+        EndSubSection
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+        Screen          "Default Screen"
+        InputDevice     "Generic Keyboard"
+        InputDevice     "Configured Mouse"
+        InputDevice     "Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+        Mode    0666
+EndSection
+
+```
+
+The important part is the first mouse section on theere.
+
+Saving settings for sensitivity is done on my T43 using sysfsutils.  If you install those and then open up /etc/sysfs.conf, you can add a line there like this:
+```
+
+#trackpoint configuration
+devices/platform/i8042/serio1/serio2/speed=170
+devices/platform/i8042/serio1/serio2/sensitivity=200
+devices/platform/i8042/serio1/serio2/press_to_select=1
+
+```
+
+You'll want to make sure those paths are correct for your laptop, just look for the speed, sensitivitry and press_to_select ones and you should have the correct one.
+
+As far as disabling middle click paste, no idea.  Never wanted to...
+
+---
+
+### Post by MountainX on 2008-03-24
+Thank you.
+
+I have exactly the same mouse settings in xorg.conf that you do. What would I check for to see why they aren't working for me? (In other words Trackpoint scrolling still doesn't work.)
+
+I downloaded and installed sysfsutils on your suggestion. Thanks for that.
+
+---
+
+### Post by Whiffle on 2008-03-24
+Hmmmm.  Assuming you've restarted Xorg (logout, log in) after changing xorg.conf, I can't think of anything else.  Sometimes the options vary though so you might have to play around with the X Y and Z axis mapping lines.  I'll keep thinking about it.
+
+---
+
+### Post by MountainX on 2008-03-24
+Thanks. I appreciate any other thoughts.
+
+Here is the output of xev. It is showing both the button 2 press and the trackpoint movement but I don't get the scrolling that should result from that combination.
+
+```
+ButtonPress event, serial 28, synthetic NO, window 0x3800001,
+    root 0x13a, subw 0x0, time 3811111376, (167,169), root:(174,221),
+    state 0x0, button 2, same_screen YES
+
+ConfigureNotify event, serial 28, synthetic YES, window 0x3800001,
+    event 0x3800001, window 0x3800001, (5,50), width 178, height 178,
+    border_width 2, above 0x1800252, override NO
+
+MotionNotify event, serial 28, synthetic NO, window 0x3800001,
+    root 0x13a, subw 0x0, time 3811112733, (167,170), root:(174,222),
+    state 0x200, is_hint 0, same_screen YES
+
+MotionNotify event, serial 28, synthetic NO, window 0x3800001,
+    root 0x13a, subw 0x0, time 3811112802, (168,170), root:(175,222),
+    state 0x200, is_hint 0, same_screen YES
+
+ButtonRelease event, serial 28, synthetic NO, window 0x3800001,
+    root 0x13a, subw 0x0, time 3811113347, (168,170), root:(175,222),
+    state 0x200, button 2, same_screen YES
+```
+
+Here are my current xorg.conf settings:
+```
+Section "InputDevice"
+	#see http://opseast.wordpress.com/2007/11/05/getting-the-thinkpad-scroll-button-to-work-in-linux/
+	#and http://www.thinkwiki.org/wiki/How_to_configure_the_TrackPoint
+	Driver "mouse"
+	Identifier "TrackPoint"
+	Option "Buttons" "5"
+	Option "Device" "/dev/input/mice"
+	Option "Name" "TPPS/2 IBM TrackPoint"
+	Option "Protocol" "ExplorerPS/2&#8243;
+	#add the following lines
+	Option "Emulate3Buttons" "true"
+	Option "Emulate3TimeOut" "50&#8243;
+	Option "EmulateWheel" "true"
+	Option "EmulateWheelTimeOut" "200&#8243;
+	Option "EmulateWheelButton" "2&#8243;
+	#end
+	Option "Vendor" "Synaptics"
+	Option "YAxisMapping" "4 5&#8243;
+	Option "XAxisMapping" "6 7"
+	Option "ZAxisMapping" "4 5"
+
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"	"/dev/input/mice"
+	Option		"Protocol"	"ExplorerPS/2" #was "ImPS/2"
+	Option		"ZAxisMapping"	"4 5"
+	Option		"Emulate3Buttons"	"true"
+	Option 		"ButtonMapping" "1 2 3"
+	#add the following lines DS - testing 24mar08
+	Option "EmulateWheel" "on"
+	Option "EmulateWheelTimeOut" "200&#8243;
+	Option "EmulateWheelButton" "2&#8243;
+	#end
+EndSection
+```
+
+I am only using "Configured Mouse" (but I experimented with the other definition too)
+```
+Section "ServerLayout"
+	Identifier	"Default Layout"
+        screen "Default Screen"
+	Inputdevice	"Generic Keyboard"
+	Inputdevice	"Configured Mouse"
+```
+
+---
+
+### Post by Whiffle on 2008-03-24
+Hmmm.   On mine I've got a separate section for synaptics, but I don't think thats the problem.
+
+Just for kicks, Try moving the      Option "YAxisMapping" "4 5"  right below Option "ZAxisMapping" "4 5".  I think it might be assigning it and then  reassigning it.  I really should clean up my xorg.conf.
+
+---
+
+### Post by MountainX on 2008-03-24
+> **Whiffle said:**
+> Hmmm.   On mine I've got a separate section for synaptics, but I don't think thats the problem.
+
+Just for kicks, Try moving the      Option "YAxisMapping" "4 5"  right below Option "ZAxisMapping" "4 5".  I think it might be assigning it and then  reassigning it. 
+
+I do have a separate section for the synaptics touchpad too. I just didn't paste here it because I don't use the touchpad so I don't care too much how it is configured.
+
+I tried your idea for reordering the statements, but it didn't make any difference. Still, I appreciate the idea. At this point I'll try anything.
+
+---
+
+### Post by MountainX on 2008-03-24
+Just as an experiment, I removed all the *AxisMapping values from my mouse in xorg.conf
+```
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+	Option 		"ButtonMapping" 	"1 2 3"
+	Option		"Emulate3Buttons"	"on"
+	Option 		"EmulateWheel" 		"on"
+	Option 		"EmulateWheelTimeOut" 	"1&#8243;
+	Option 		"EmulateWheelButton" 	"2&#8243;&#8243;
+EndSection
+```
+
+Strange, but it had no noticeable effect. My Trackpoint works exactly the same. Unfortunately, that means it isn't working the way I want it to -- it has no scrolling.
+
+---
+
+### Post by MountainX on 2008-03-24
+Does this give any clues? I removed almost everything from the mouse section in xorg.conf
+```
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ExplorerPS/2"
+EndSection
+```
+
+My Trackpoint works EXACTLY like it did before. (And it still won't scroll of course.)
+
+Doesn't that seem strange? I would think the mouse would act poorly with all the config info removed.
+
+---
+
+### Post by Whiffle on 2008-03-24
+try backing up your xorg.conf, deleting out all of the InputDevice sections, and then copying the InputDevice sections from my xorg.conf in.
+
+---
+
+### Post by MountainX on 2008-03-24
+> **Whiffle said:**
+> try backing up your xorg.conf, deleting out all of the InputDevice sections, and then copying the InputDevice sections from my xorg.conf in.
+
+Holy Cow! That worked! Thanks for the idea.
+
+I can't see any significant differences between the relevant sections of our xorg.conf files, so I think I will use a diff program to find out what fixed my issue. (Finding a diff program will be my next challenge ;)
+
+I am very happy to have this working!!!!!!!!!!!!!!1
+
+:)
+
+---
+
+### Post by MountainX on 2008-04-04
+> **MountainX said:**
+> I followed them exactly and still no success:
+2. My speed and sensitivity settings are lost after I reboot.
+
+
+See [http://ubuntuforums.org/showpost.php?p=4652660&postcount=10](http://ubuntuforums.org/showpost.php?p=4652660&postcount=10)
+
+---
+

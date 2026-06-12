@@ -1,0 +1,313 @@
+---
+title: "Gutsy and Gamma Settings"
+date: 2007-11-03
+forum: Hardware &amp; Laptops
+---
+
+### Post by lwylie on 2007-11-03
+Hey everyone,
+
+     Has anyone else experienced problems with their gamma settings in xorg.conf after the Gutsy upgrade?  In Feisty I just added a line into the xorg.conf under the monitor section ("Gamma <red> <green> <blue>").  However, under Gutsy this doesn't make any difference.  I assume it has something to do with the new "Screens and Graphics" Plug-n-Play option.  Any advice or suggestions are extremely welcome.
+
+Thanks!
+
+---
+
+### Post by gap on 2007-11-06
+Yes, I'm having this problem too. Gamma option is ignored. I wonder if it's a driver problem. Can you please tell me which video adapter you have? I have Intel 82852/82855GM.
+
+---
+
+### Post by lwylie on 2007-11-06
+I have an Intel 945 GM video adapter.  However, it should be a problem with the screen driver.  I noticed in Gutsy there is a new Screens and Graphics configure panel that has a Plug-n-Play option.  It looks like this ignores any settings in xorg.conf and tries to configure the display on the fly.  I tried setting my screen manually and then editing the gamma field, however, the display gets real whacky afterward.
+
+---
+
+### Post by gap on 2007-11-06
+The plug-n-play option defaulted for me to an "experimental modesetting driver". This driver ignores options inside the "Monitor" section in xorg.conf, such as Gamma. Changing the driver from the dialog does lead to whackiness, like you said.
+
+I fixed it with a few edits to xorg.conf. Basically, I changed the Driver option in the "Device" section to "i810" (used to be "intel"). I also added these lines to the same section:
+
+```
+
+Option "XAANoOffscreenPixmaps"
+Option "VideoRam" "65536"
+Option "CacheLines" "1980"
+
+```
+
+To the "Monitor" section I added:
+
+```
+
+HorizSync       28-70
+VertRefresh     43-60
+
+```
+
+I'm not sure if these are right for you, but perhaps you could try after making a backup. :) If you do try, please let me know if it worked.
+
+For reference, the full copy of my xorg.conf:
+
+```
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Intel Corporation 82852/855GM Integrated Graphics Device"
+	#Driver		"intel"
+	Driver		"i810"
+	BusID		"PCI:0:2:0"
+	Option		"XAANoOffscreenPixmaps"
+	Option "VideoRam" "65536"
+	Option "CacheLines" "1980"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	DisplaySize 370 277
+	HorizSync	28-70
+	VertRefresh	43-60
+	Gamma 1.1 1.0 0.7
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel Corporation 82852/855GM Integrated Graphics Device"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1400x1050"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+```
+
+---
+
+### Post by lwylie on 2007-11-11
+Well I hit some more whackiness trying to edit the xorg.conf like you suggested.  However, I decided to reinstall the 915resolution package and then select the i810 - Intel graphics driver in the Screen and Graphics.  After that I went in and manually edited the gamma settings.  So in other words I'm using the same graphics set up that was in place in Feisty.  I've posted my xorg.conf below.  Thanks again for your help Gap.
+
+```
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"	"/dev/input/mice"
+	Option		"Protocol"	"ImPS/2"
+	Option		"ZAxisMapping"	"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"	"/dev/psaux"
+	Option		"Protocol"	"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"	"stylus"
+	Option		"ForceDevice"	"ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"	"eraser"
+	Option		"ForceDevice"	"ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"	"cursor"
+	Option		"ForceDevice"	"ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller"
+	Boardname	"Intel 945"
+	Busid		"PCI:0:2:0"
+	Driver		"i810"
+	Screen	0
+	Vendorname	"Intel"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Vendorname	"Generic LCD Display"
+	Modelname	"LCD Panel 1280x800"
+	Horizsync	31.5-50.0
+	Vertrefresh	56.0 - 65.0
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "1280x768@60" 80.14 1280 1344 1480 1680 768 769 772 795 -hsync +vsync
+  modeline  "1280x720@60" 74.48 1280 1336 1472 1664 720 721 724 746 -hsync +vsync
+  modeline  "1280x800@60" 83.46 1280 1344 1480 1680 800 801 804 828 -hsync +vsync
+	Gamma	0.55 0.5 0.45
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller"
+	Monitor		"Generic Monitor"
+	Defaultdepth	24
+	SubSection "Display"
+		Depth	24
+		Virtual	1280	800
+		Modes		"1280x800@60"	"1280x720@60"	"1280x768@60"	"800x600@60"	"800x600@56"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+  screen 0 "Default Screen" 0 0
+	Inputdevice	"Generic Keyboard"
+	Inputdevice	"Configured Mouse"
+	
+	# Uncomment if you have a wacom tablet
+	#	InputDevice     "stylus"	"SendCoreEvents"
+	#	InputDevice     "cursor"	"SendCoreEvents"
+	#	InputDevice     "eraser"	"SendCoreEvents"
+	Inputdevice	"Synaptics Touchpad"
+EndSection
+Section "Module"
+	Load		"glx"
+	Load		"GLcore"
+	Load		"dri"
+	Load		"v4l"
+EndSection
+Section "device" #    
+	Identifier	"device1"
+	Boardname	"Intel 945"
+	Busid		"PCI:0:2:0"
+	Driver		"i810"
+	Screen	1
+	Vendorname	"Intel"
+EndSection
+Section "screen" #    
+	Identifier	"screen1"
+	Device		"device1"
+	Defaultdepth	24
+	Monitor		"monitor1"
+	SubSection "Display"
+		Depth	24
+		Modes		"640x480@60"
+	EndSubSection
+EndSection
+Section "monitor" #    
+	Identifier	"monitor1"
+	Vendorname	"Plug 'n' Play"
+	Modelname	"Plug 'n' Play"
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+	Gamma	1.0
+EndSection
+Section "ServerFlags"
+EndSection
+```
+
+---
+

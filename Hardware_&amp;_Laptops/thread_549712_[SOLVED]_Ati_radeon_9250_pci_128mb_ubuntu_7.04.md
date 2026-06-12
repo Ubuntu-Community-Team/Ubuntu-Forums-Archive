@@ -1,0 +1,307 @@
+---
+title: "[SOLVED] Ati radeon 9250 pci 128mb ubuntu 7.04"
+date: 2007-09-12
+forum: Hardware &amp; Laptops
+---
+
+### Post by displicente on 2007-09-12
+Hello,
+
+I Have ubuntu 7.04 LTS installed on my PC. I installed a ATI Radeon 9250 PCI card with 128MB thinking that will be an improvement for my PC. The graphical enviroment does not work. I have a multiboot with XP and I have run the directX diagnostics and were OK. I have try with live CD of ubuntu 6.06LTS and Fedora 7, both hang with black screen.
+I have seen a lot of complain with this card and some solutions, but I need a more detailed help. Even more detailed help to get helped. Which file should I post to let people help me?
+
+Thanks in advance.
+
+Neville
+
+---
+
+### Post by voided3 on 2007-09-12
+Hmm, that's strange because I have a computer with a 256mb AGP 9250 in it and from 6.06 through 7.04 I never had a problem just using the default open source driver. Does the computer still boot but the monitor just doesn't come on? If that is the case it could be a resolution setting. Post your "/etc/X11/xorg.conf" file.
+
+---
+
+### Post by mrreality13 on 2007-09-12
+what drivers are you using? did you try envy?
+
+---
+
+### Post by w4ett on 2007-09-13
+Using the 9250 card can be a bit of a  hit or miss affair and there are some problems with that card, also Bugs reported with the PCI 9250 cards...see:
+
+[https://bugs.launchpad.net/xorg-server/+bug/114520](https://bugs.launchpad.net/xorg-server/+bug/114520)
+
+Try this:
+
+Boot into recovery mode.
+
+From the command line type:
+
+```
+sudo dpkg-reconfigure -phigh xserver-xorg
+```
+
+This will give you the interface to modify the driver and resolutions. Controls are UP and DOWN cursor keys move the cursor and scrolls through available options, the space selects options, and <enter> confirms selections.
+
+Select [COLOR="Blue"]"ati"[/COLOR] as the driver and press <enter>, then at the next screen you can enable any addttional resolutions that you want to use.....then use the cursor keys to highlight {OK} and <spacebar> to select the resolutions and press <enter> to save the selections as prompted, then type:
+
+```
+startx
+```
+
+This SHOULD get you to a GUI desktop.
+
+If you still get the error with black screen or the Xfailure error, follow the procedures above again, but this time select [COLOR="Blue"]"vesa"[/COLOR] as the driver and see if that will get you into a GUI Desktop.
+
+---
+
+### Post by steevols on 2007-09-14
+Did it "hang" or just have an X failure?
+
+---
+
+### Post by mrcold on 2007-09-14
+I am having the same problem, and have been trying to get it working for about a week.
+
+I have tried configuring the xerver-xorg, but doing this does not work.  I just get and x failure.
+
+I have heard that this card is not supposed to be compatible with the newest version fglrx.  Is there a way to get an old version perhaps?
+
+thanks for helping!
+
+---
+
+### Post by w4ett on 2007-09-14
+> **mrcold said:**
+> I am having the same problem, and have been trying to get it working for about a week.
+
+I have tried configuring the xerver-xorg, but doing this does not work.  I just get and x failure.
+
+I have heard that this card is not supposed to be compatible with the newest version fglrx.  Is there a way to get an old version perhaps?
+
+thanks for helping!
+
+The ATI cards before  the 9500 are only supported by the open source xorg-driver-ati see:
+
+[https://help.ubuntu.com/community/BinaryDriverHowto/ATI](https://help.ubuntu.com/community/BinaryDriverHowto/ATI)
+
+---
+
+### Post by displicente on 2007-09-14
+Hello W4ett
+I follewd your instructions and worked 
+
+"sudo dpkg-reconfigure -phigh xserver-xorg"
+"startx"
+
+For reference, my problem was only with the Xserver, it started say something about not able to setup the graphyc environment and then text mode.
+
+Thanks
+
+Neville
+
+---
+
+### Post by mrcold on 2007-09-14
+alright.. i have read that before, but i didn't see the relevant link at the bottom about using the open source driver.  I am going to try to get that working now.  thank you.
+
+---
+
+### Post by w4ett on 2007-09-14
+> **displicente said:**
+> Hello W4ett
+I follewd your instructions and worked 
+
+"sudo dpkg-reconfigure -phigh xserver-xorg"
+"startx"
+
+For reference, my problem was only with the Xserver, it started say something about not able to setup the graphyc environment and then text mode.
+
+Thanks
+
+Neville
+
+Bueno!!!
+
+Please mark this thread "solved"
+
+[https://wiki.ubuntu.com/UnansweredPostsTeam/SolvedThreads](https://wiki.ubuntu.com/UnansweredPostsTeam/SolvedThreads)
+
+---
+
+### Post by displicente on 2007-09-14
+Ups... hapiness didn last.
+
+Now xserver runs, but the computer freezes.
+
+I will post my xorg.conf file in a few minutes. I have been working in two machines, so I have to get it on a usb memory to post t in here.
+
+Neville
+
+---
+
+### Post by displicente on 2007-09-14
+Here is my xorg.conf file
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"ati"
+	BusID		"PCI:0:7:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-64
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1280x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+---
+
+### Post by displicente on 2007-09-14
+A little afraid of what is going on in my computer restarted with VESA. I started by clicking num-lock to see if it was responding, as it was OK ... I went for the mouse, firts move and freezes.
+Went back to dpkg-reconfigure -phigh xserver-xorg set for ati and crashed right away.
+
+Re-did it everything back againg to vesa, and the same everything looks right until I move the mouse.
+
+Neville
+
+---
+
+### Post by displicente on 2007-09-17
+I am writing to report than I am giving up. There is more thatn just de ATI radeon 9250 card on the problem. There is something funny with the motherboard integrated video card. Has 3 settings for primary video card: PCI, AGP and Internal. No matter what setting I enter, Linux always goes for the PCI card. I only have a PCI card and the internal moterboard video. No AGP video card installed. With the settings for AGP or Internal I got video from the BIOS boot, but when the Ubuntu starts goes to the PCI card, disabling the signal from the on board video card. I boot Windows and behave according with the bios settings, Internal or AGP goes for the motherboard video card. I guess that I have a funny interaction with this motherboard and video card. I am removing the PCI card. I am replacing it to the computer that I originally took it from, that were running Fedora 6 without any problem. I hope the reinstall goes as smooth, as it was when I installed the card in that machine.
+
+Thanks to everybody that has provided some help. I am marking this as solved, as I believe that there is enought information to solve a similar problem if you are not having this Motherboard/Video card game.
+
+Neville
+
+---
+

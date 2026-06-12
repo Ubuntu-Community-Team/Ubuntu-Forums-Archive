@@ -1,0 +1,120 @@
+---
+title: "Breezy update issues"
+date: 2005-10-18
+forum: Hardware &amp; Laptops
+---
+
+### Post by mriedel on 2005-10-18
+I am aware that some parts of this thread would rather belong into "Installation and upgrade help", but my primary concern is hardware-related, so I decided to put it here.
+
+Anyway, I upgraded both my desktop and my notebook from Hoary to Breezy yesterday. I tried to, that is. On both systems, the update eventually crashed, leaving me with a half-way upgraded system. It crashed because of some conflicting packages, namely some files that were both in openoffice.org2-common and openoffice.org2-help-en. I'd consider this a minor problem, however, the update process just aborted at that point which lead to broken locales (falling back to the C locale) and a lot of broken packages.
+
+As to my desktop computer, I could resolve some package conflicts and get the system stable. Some packages are still not properly installed, though.
+
+My notebook, on the other hand seems to be pretty done for. The update appears to have damaged my root partition in a way. fsck reported a few thousand broken inodes. Fortunately, I could fix the filesystem and perform a backup on the basis of a knoppix live cd. The system itself, however, seemed quite unrescuable. Trying to boot it lead to nothing but "kernel panic: attempted to kill init!" which is quite a severe error a simple os update should never result in.
+
+Anyway, I found out that even my hdd's partition table was irrecoverably damaged. fdisk couldn't even read from it any more, so I went for the radical solution: dd if=/dev/zero of=/dev/hda bs=1M. As this hadn't finished after several hours, I decided to restart it. It then took only about one hour to finish but afterwards, any program (fdisk, cfdisk and several others) reported an hdd size of approximately 8.5gb. Obviously, this is the maximum disk size that can be addressed without extended int13h (bios/os) capabilities. The only program that showed me something else was PowerQuest Partition Magic. That one claimed my hdd to be 120gb. In fact, it's 60gb.
+
+So basically, my question is: **What the...?**
+(In other words: How can I get back my hdd's full capacity?)
+
+---
+
+### Post by 11hjpphty76lkjj on 2005-10-18
+Maybe it's just early and I'm not awake yet, but it seems to me that you had a pre-existing hardware issue.  I've installed Hoary and Breezy a 100 times on 10 different systems and not because of a Hoary/Breezy issue, but because I work in a QA test environment. and I've never had a hardware issue caused by the OS.  The point is software is software, and even though the software does change some settings on the hard drive, like the MBR, etc.  It's highly improbable that the software will CAUSE a hardware issue.  Sounds like your hard drive was already broke and couldn't take the normal conditions that another hard drive could, so it broke. But blaming it on the software is--in my view--an uneducated way of dealing with the situation.  Get a new hard drive, pending your hard drive still has a warranty, and if not why not? (back to pre-existing hard drive condition) Either way Ubuntu comes with no warranty.  And so so so many people have installed it with no problems.  Remember that the forums are only a small percentage of the people that install ubuntu that have some sort of issue.  If you need help there are many many good people that will help you on the forums.  But express your problem, not your unhappyness with the OS.  It's a learning curve and we are all on the curve somewhere.  You expressed your unhappyness for a reason and you apparently want to learn more about Ubuntu as we all do, else you wouldn't have posted anything.
+
+Regarding the hard drive, if you can boot to a bootdisk and clear the MBR.  Although size readings usually indicate a more severe problem, but I could be wrong.  As for your laptop if you are doing the install from the cd and you are getting conflicts my first guess would be check your cd, or make another one.  Like I said, I've installed Breezy at least 20-30 times in the past week and the install runs perfectly from my CD.  Or maybe I'm just lucky.  [-o< 
+
+I don't intend on being harsh, but blaming the OS for something that is highly improbable always gets me going.  We all have different views, and I don't mean to downplay yours, however knowing what is really the most probable cause will help make your future progress easier.  Sounds like hard drive and install cd issues.  but I'm just guessing without more information.
+
+Alas.  Good luck.
+
+Aaron
+
+---
+
+### Post by mpettitt on 2005-10-18
+From the way two unrelated systems had problems with the install CD, it sounds like the burn process went wrong at some point (well, could even be the download file being corrupt in some way).
+That wouldn't cause hardware failure though, unless the system was already suffering some kind of problem that could be worsened by the excessive writes and reads generated by a corrupt installer. In that case, at least you'll have a backup of the data from the system that you performed before attempting to upgrade.
+
+---
+
+### Post by mriedel on 2005-10-18
+**kalosaurusrex:**
+
+To make that clear, I don't really think that it's a hardware issue as such. I'm not having read errors or anything similar but it seems that the low-level format of the hdd was broken in a way. This hdd is pretty new and worked well with hoary. I think the probability that it broke during the the breezy update process just by coincidence is quite low.
+
+As regards possible install cd damage: I upgraded via Synaptic. A corrupted download remains possible, of course.
+
+> Either way Ubuntu comes with no warranty. And so so so many people have installed it with no problems. Remember that the forums are only a small percentage of the people that install ubuntu that have some sort of issue. If you need help there are many many good people that will help you on the forums. But express your problem, not your unhappyness with the OS.
+
+I'm not blaming ubuntu, its developers or the community. The reason why I chose this forum to "express my unhappiness" is that the error occurred in connection to ubuntu. Remember, I criticised that ubuntu aborted the upgrade process because of some duplicate files in some openoffice.org2 packages which had quite some negative impact on both my notebook and my desktop, especially to the former. Even if it hadn't broken my hdd, I would have posted this thread because I would still have assumed that this isn't expected behaviour.
+
+> But express your problem, not your unhappyness with the OS
+
+That's what I did in most of my first post.
+
+> It's a learning curve and we are all on the curve somewhere. You expressed your unhappyness for a reason and you apparently want to learn more about Ubuntu as we all do, else you wouldn't have posted anything
+
+I really don't see what a "learning curve" has to do with my problem. It's not as if i had just come here to complain right after the error occurred. I've spent a two digit number of hours trying to fix it.
+
+I'm sorry but I can't forego mentioning it: I feel a little offended by the way you've addressed me at some points. I'd be interested in what entitles you to judge my position on a learning curve, to call my way of problem analysis "uneducated" or to treat me like a rookie talking about my "future progress". The major parts of my post sum up the problem whereas you seem to put much effort in claming that the problem shouldn't exist as such instead of providing a solution approach. 
+
+> Regarding the hard drive, if you can boot to a bootdisk and clear the MBR.
+
+You don't even seem to have read my post attentively. If you had and if you're as skilled as you struggle to appear, you would, for example, have noticed that I've already cleared *all* of my hdd.
+
+Maybe I sounded a little too aggressive in my first post. If so, I'm sorry, this wasn't intended.
+
+**mpettitt:**
+> 
+From the way two unrelated systems had problems with the install CD [...]
+
+I'm sorry, I forgot to mention that I did the upgrade by Synaptic. That does, of course, not rule out a corrupted download. However, the latter seems improbable to me as the actual error that made the process halt was something about a file existing in two packages.
+
+
+
+Just in case I sounded like stating the opposite: I do not expect you (as in the community) to come up with a solution for me. I posted this because the problem is at least partially related to ubuntu, hoping to provide constructive critics and because I wanted to check whether I have overlooked a way of solving my problem before assuming a hardware or lowest-level software error and sending my notebook in for repair. Generally, I really like ubuntu and I have used it since Warty.
+
+---
+
+### Post by Swatje on 2005-10-21
+I have the same  problem, i tried to upgrade from hoary and it failed...
+I reinstalled the hoary, and tryed to upgrade again and it failed again.
+When i try to continue the installation process with apt-get -f distrib upgrade it stops with the same error. 
+
+Unpacking openoffice.org2-help-en-us (from 
+.../openoffice.org2-help-en-us_1.9.129-0.1ubuntu5_all.deb) ...
+dpkg: error processing 
+/var/cache/apt/archives/openoffice.org2-help-en-us_1.9.129-0.1ubuntu5_all.deb 
+(--unpack):
+  trying to overwrite `/usr/lib/openoffice2/help/en/scalc.idx/DOCS.TAB', 
+which is also in package openoffice.org2-calc
+dpkg-deb: subprocess paste killed by signal (Broken pipe)
+Errors were encountered while processing:
+ 
+/var/cache/apt/archives/openoffice.org2-help-en-us_1.9.129-0.1ubuntu5_all.deb
+E: Sub-process /usr/bin/dpkg returned an error code (1)
+
+---
+
+### Post by mriedel on 2005-10-21
+It seems I was right assuming my hdd problem wasn't really hardware-related. I appear to have gotten rid of it.
+
+As to the update problem, it seems that the update procedure is simply broken. There must be an error either in apt or the package tree, probably the latter.
+
+You can work around it by downloading a breezy cd and installing from that one. That's virtually the same amount of data to download as the update requires. If you have an ati card, you'll have to install the fglrx drivers because the non-restricted ones included in ubuntu don't work. Also, you might get resolution problems with the fglrx driver in the ubuntu repositories, especially if you want to use a widescreen resolution. If so, you'll have to get the newest fglrx from the ati site. There's a thread on how to install them somewhere in these forums.
+
+---
+
+### Post by Swatje on 2005-10-21
+I have solved the problem by doing the folowing:
+cd /var/cache/apt/.../
+dpkg -i *.deb
+and then
+apt-get -i distrib-upgrade
+
+Now everything is fine...
+
+---
+
