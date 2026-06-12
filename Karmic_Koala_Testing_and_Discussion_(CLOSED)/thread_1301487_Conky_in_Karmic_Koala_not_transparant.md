@@ -1,0 +1,416 @@
+---
+title: "Conky in Karmic Koala not transparant"
+date: 2009-10-26
+forum: Karmic Koala Testing and Discussion (CLOSED)
+---
+
+### Post by DeRRudi on 2009-10-26
+Hi all,
+
+I just upgraded to Ubuntu 9.10 (new install) I used conky in 9.04 and before but now on my new installation it refuses to get transparant. 
+
+If i set it to own_window false it is transparant, but all desktop icons dissapear. If i set it to own_window true and own_window_transparant yes it keeps a dark background.
+
+My conky code:
+```
+
+# UBUNTU-CONKY
+# A comprehensive conky script, configured for use on
+# Ubuntu / Debian Gnome, without the need for any external scripts.
+#
+# Based on conky-jc and the default .conkyrc.
+# INCLUDES:
+# - tail of /var/log/messages 
+# - netstat connections to your computer
+#
+# -- Pengo (conky@pengo.us)
+#
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Fiddle width window
+use_spacer right
+
+# fiddle with window
+use_xft no
+
+
+# Update interval in seconds
+update_interval 3.0
+
+# Minimum size of text area
+# minimum_size 250 5
+
+# Maximum width of window
+maximum_width 330
+
+# Draw shades?
+draw_shades no
+
+# Text stuff
+draw_outline no # amplifies text if yes
+draw_borders no
+font arial
+uppercase no # set to yes if you want all text to be in uppercase
+
+# Stippled borders?
+stippled_borders 3
+
+# border margins
+border_inner_margin 9
+
+# border width
+border_width 10
+
+# Default colors and also border colors, grey90 == #e5e5e5
+default_color grey
+
+# Text alignment, other possible values are commented
+#alignment top_left
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+
+# Gap between borders of screen and text
+gap_x 10
+gap_y 20
+
+# stuff after 'TEXT' will be formatted on screen
+# hdb3:  ${fs_free_perc /media/hdb3}%   ${fs_bar 6 /media/hdb3}
+# ${color orange}EMPTY ${hr 2}$color
+# ${execi 120 fortune -s | fold -w50}
+
+TEXT
+$color
+${color orange}SYSTEM ${hr 2}$color
+$nodename $sysname $kernel on $machine
+
+${color orange}CPU ${hr 2}$color
+${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'} 
+Uptime:$uptime   Load: ${loadavg}   Temp: ${acpitemp}C
+Average
+$cpubar
+${cpugraph 000000 ffffff}
+Core 1 $alignr Core 2
+${cpubar cpu1 5,160} $alignr ${cpubar cpu2 5,160}
+${cpugraph cpu1 25,160 000000 ffffff} $alignr ${cpugraph cpu2 25,160 000000 ffffff}
+NAME             PID       CPU%      MEM%
+${top name 1} ${top pid 1}   ${top cpu 1}    ${top mem 1}
+${top name 2} ${top pid 2}   ${top cpu 2}    ${top mem 2}
+${top name 3} ${top pid 3}   ${top cpu 3}    ${top mem 3}
+${top name 4} ${top pid 4}   ${top cpu 4}    ${top mem 4}
+
+${color orange}MEMORY ${hr 2}$color
+RAM($memmax):    $memperc%   ${membar 6}$color
+Swap($swapmax):    $swapperc%   ${swapbar 6}$color
+
+${color orange}DISK ${hr 2}$color
+Root(${fs_size /}):  ${fs_used_perc /} %   ${fs_bar 5 /}$color 
+Home(${fs_size /home}):  ${fs_used_perc /home} %   ${fs_bar 5 /home}$color
+DeRRudi(${fs_size /media/DeRRudi-ext}):  ${fs_used_perc /media/DeRRudi-ext} %   ${fs_bar 5 /media/DeRRudi-ext}$color
+DeRRudi2(${fs_size /media/DeRRudi}):  ${fs_used_perc /media/DeRRudi} %   ${fs_bar 5 /media/DeRRudi}$color
+
+${color orange}NETWORK ${addr eth0} ${hr 2} $color
+Down: $color${downspeed eth0} k/s ${alignr}Up: ${upspeed eth0} k/s
+${downspeedgraph eth0 25,160 000000 00ff00} ${alignr}${upspeedgraph eth0 25,160 000000 ff0000} $color
+Total: ${totaldown eth0} ${alignr}Total: ${totalup eth0}
+
+Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count} ${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color orange}MUSIC ${hr 2} $color
+${mpd_artist} - ${mpd_title}
+${mpd_status} ${mpd_bar 5}
+
+${color orange}GMAIL ${hr 2} $color
+You have ${color3}${texeci 60 perl ~/Scripts/gmail.pl n} ${color}new gmail(s).
+${execi 60 perl ~/Scripts/gmail.pl s}
+
+${color orange}LOGGING ${hr 2}$color
+${execi 30 tail -n3 /var/log/messages | awk '{print " ",$5,$6,$7,$8,$9,$10}' | fold -w50}
+
+```
+
+How can i fix this?
+
+---
+
+### Post by taavi on 2009-10-26
+I have this problem too... With same config, it now has black background.
+
+---
+
+### Post by slakkie on 2009-10-26
+You run KDE? or Gnome?
+
+Eitherway, this is how I do it:
+
+[http://ubuntuforums.org/showpost.php?p=7846238&postcount=8820](http://ubuntuforums.org/showpost.php?p=7846238&postcount=8820)
+
+---
+
+### Post by taavi on 2009-10-26
+Gnome here.
+
+---
+
+### Post by NRDNick on 2009-10-26
+Weird my conkyrc looks the same and transparency is working without a problem. I looked for anything in mine that you may not have in yours and commented it out but still wasn't able to reproduce your issue. here is my conkyrc in case I missed something. ```
+# Generated by Conky GUI
+# Check http://conkygui.sourceforge.net/
+# For the latest version of Conky GUI
+
+#10-Sep-09 02:40:30 AM#author: conky
+
+# Conky
+background yes
+no_buffers yes
+out_to_console no
+top_cpu_separate no
+max_port_monitor_connections 256
+cpu_avg_samples 3
+net_avg_samples 3
+total_run_times 0
+update_interval 3
+music_player_interval 3
+
+# Text
+uppercase no
+override_utf8_locale no
+short_units no
+pad_percents 0
+text_buffer_size 2048
+max_user_text 16384
+font Bitstream Charter:style=Regular
+use_xft yes
+xftalpha 0.6
+xftfont DejaVu Sans:size=8
+
+# Window
+own_window yes
+own_window_colour 9e5a00
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_type override
+
+# Graphics
+double_buffer yes
+draw_borders no
+draw_graph_borders no
+draw_shades no
+draw_outline no
+stippled_borders 3
+max_specials 512
+
+# Layout
+alignment bottom_right
+gap_x 10
+gap_y 10
+maximum_width 300
+minimum_size 200 5
+use_spacer right
+border_inner_margin 11
+border_width 10
+
+# Colors
+default_color ffffff
+default_outline_color c0c0c0
+default_shade_color c4fa8e
+color0 ff0000
+color1 0000ff
+color2 ffff00
+color3 00ff00
+color4 ffafaf
+color5 ffc800
+color6 ff00ff
+color7 00ffff
+color8 808080
+color9 404040
+
+# Net  
+
+# stuff after 'TEXT' will be formatted on screen
+
+TEXT
+$color
+${color #c4fa8e}SYSTEM ${hr 2}$color
+$nodename $sysname ${alignr}$kernel on $machine
+@${freq}MHz   ${alignr}Uptime ${uptime_short}
+${color #c4fa8e}CPU ${hr 2}$color
+
+Core 1 Temp: ${execi 8 sensors | grep Core0 | head -n1 | cut -c15-16} $alignr Core 2 Temp: ${execi 8 sensors | grep Core1 | head -n1 | cut -c15-16}
+${color c4fa8e}${cpubar cpu1 6,140} ${alignr}${cpubar cpu2 6,140} 
+${cpugraph cpu1 25,140 000000 c4fa8e} ${alignr}${cpugraph cpu2 25,140 000000 c4fa8e}
+${color #c4fa8e}Top Processes ${hr 2}$color
+NAME ${alignr}PID   CPU%   MEM%
+${top name 1} ${alignr}${top pid 1}   ${top cpu 1}    ${top mem 1}
+${top name 2} ${alignr}${top pid 2}   ${top cpu 2}    ${top mem 2}
+${top name 3} ${alignr}${top pid 3}   ${top cpu 3}    ${top mem 3}
+${top name 4} ${alignr}${top pid 4}   ${top cpu 4}    ${top mem 4}
+${color #c4fa8e}MEMORY / DISK ${hr 2}$color
+RAM:   $memperc%   ${alignr}${color c4fa8e}${membar 6,215}$color
+Swap:  $swapperc%   ${alignr}${color c4fa8e}${swapbar 6,215}$color
+Root:  ${fs_used_perc /}%   ${alignr}${color c4fa8e}${fs_bar 6,215 /}$color 
+Media: ${fs_used_perc /media/media}% ${alignr}${color c4fa8e}${fs_bar 6,215 /media/media}$color
+External: ${fs_used_perc /media/External}% ${alignr}${color c4fa8e}${fs_bar 6,215 /media/External}$color
+${color #c4fa8e}NETWORK (${addr eth0}) ${hr 2}$color
+Down: $color${downspeed eth0} k/s ${alignr}Up: ${upspeed eth0} k/s
+${downspeedgraph eth0 25,140 000000 c4fa8e} ${alignr}${upspeedgraph eth0 25,140 000000 c4fa8e}$color
+Total: ${totaldown eth0} ${alignr}Total: ${totalup eth0}
+${color #c4fa8e}Connections${hr 2} ${alignr}  
+$color Inbound: ${tcp_portmon 1 32767 count}  Outbound: ${tcp_portmon 32768 61000 count}${alignr}ALL: ${tcp_portmon 1 65535 count}
+${color #c4fa8e}Inbound Connection ${alignr} Local Service/Port$color
+ ${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
+ ${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
+ ${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
+ ${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
+ ${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
+${color #c4fa8e}Outbound Connection ${alignr} Remote Service/Port$color
+ ${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
+ ${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
+ ${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
+ ${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
+ ${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
+${color #c4fa8e}LOGGING ${hr 2}$color
+${execi 30 tail -n3 /var/log/messages | awk '{print " ",$5,$6,$7,$8,$9,$10}' | fold -w50}
+
+``` 
+
+The only big difference I noticed was that you don't have your conky set to fork to the background ```
+background yes
+``` I'm still a noob so I'm not really sure what it does, as commenting it out did not disable transparency for me. Hope you get it sorted out:confused:
+
+---
+
+### Post by DeRRudi on 2009-10-26
+I'm using Gnome, adding background yes crashes conky
+
+it's a bit weard. :) It worked before.
+
+---
+
+### Post by wnelson on 2009-10-26
+Are you using a wall paper for a background or a selected color?
+If a selected color change to a wallpaper.
+
+---
+
+### Post by cyberkilla on 2009-10-26
+Some notification icons on gnome-panel have stopped being transparent too. Perhaps it is related. On the other hand, it could be entirely unrelated:p
+
+It could be due to a change in GTK.
+
+---
+
+### Post by DeRRudi on 2009-10-27
+> **wnelson said:**
+> Are you using a wall paper for a background or a selected color?
+If a selected color change to a wallpaper.
+
+I have selected a wallpaper as background.
+
+Anybody an idea how to fix this?
+
+---
+
+### Post by SalvoMaltese on 2009-10-27
+I had the same problem. You have to start conky "some time" after gnome.
+
+I use a script like 
+
+sllep 30 && conky
+
+to be launched at startup.
+
+To verify this, try killing conky and relaunching it. If it goes transparent, that's the solution.
+
+---
+
+### Post by DeRRudi on 2009-10-27
+> **SalvoMaltese said:**
+> I had the same problem. You have to start conky "some time" after gnome.
+
+I use a script like 
+
+sllep 30 && conky
+
+to be launched at startup.
+
+To verify this, try killing conky and relaunching it. If it goes transparent, that's the solution.
+
+I already use a script to start conky after gnome started. Restarting conky does not make any difference.
+
+---
+
+### Post by DeRRudi on 2009-10-27
+I should mention i only have this on my laptop that runs Ubuntu 9.10 64bit. On my pc at home that runs Ubuntu 9.10 32bit i dont have this problem...
+
+---
+
+### Post by stinkeye on 2009-10-27
+Try and change these settings
+```
+own_window_type [COLOR="Blue"]normal[/COLOR]
+# border margins
+border_inner_margin [COLOR="Blue"]0[/COLOR]
+# border width
+border_width [COLOR="Blue"]0[/COLOR]
+```
+Could also try
+```
+own_window_type [COLOR="Blue"]desktop[/COLOR]
+```
+and if your using compiz add this
+[ATTACH]133282[/ATTACH]
+
+> **DeRRudi said:**
+> Hi all,
+
+I just upgraded to Ubuntu 9.10 (new install) I used conky in 9.04 and before but now on my new installation it refuses to get transparant. 
+
+If i set it to own_window [COLOR="DarkRed"]false[/COLOR] it is transparant, but all desktop icons dissapear. If i set it to own_window true and own_window_transparant yes it keeps a dark background.
+And the options for own_window are yes or no
+although you appear to be using the right ones in your conky.
+
+---
+
+### Post by DeRRudi on 2009-10-28
+> **stinkeye said:**
+> Try and change these settings
+```
+own_window_type [COLOR="Blue"]normal[/COLOR]
+# border margins
+border_inner_margin [COLOR="Blue"]0[/COLOR]
+# border width
+border_width [COLOR="Blue"]0[/COLOR]
+```
+Could also try
+```
+own_window_type [COLOR="Blue"]desktop[/COLOR]
+```
+and if your using compiz add this
+[ATTACH]133282[/ATTACH]
+
+
+And the options for own_window are yes or no
+although you appear to be using the right ones in your conky.
+
+I tried about every setting in conky, but still it does not work. Am i the only one having this problem?
+
+edit: I found out that when i leave out the option alignment top_right it does get transparant. only not at the place i want it to be (at the right side of the screen)
+
+edit2: Another step forward.. i am using 2 screens. It only happens on my second screen....
+
+---
+
+### Post by DeRRudi on 2009-10-28
+Really? Nobody?
+
+---
+
