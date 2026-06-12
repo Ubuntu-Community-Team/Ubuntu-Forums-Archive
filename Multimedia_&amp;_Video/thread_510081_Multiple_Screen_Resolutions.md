@@ -1,0 +1,706 @@
+---
+title: "Multiple Screen Resolutions?"
+date: 2007-07-26
+forum: Multimedia &amp; Video
+---
+
+### Post by anewguy on 2007-07-26
+I have a Gateway MX3215 laptop with a 14 widescreen lcd screen.  I have set up the driver (unfortunately, the openchrome driver) and can get the highest resolution I specify, but I can never change to any of the lower resolution (via the keyboard or via system/preferences/screen resolution).  Trying to access anything other than the default resolution results in an unreadable screen.  Just playing around, it would appear to be something with the frequencies.  The following is what I see in system/preferences/screen resolution:
+
+My default resolution shows as 1024x768 with a refresh of 0. 
+
+The 800x600 resolution shows as 800x600 with a refresh of 61.  When I try to switch to this resolution the screen becomes unreadable.
+
+The 640x480 resolution shows as 640x480 with a refresh of 60.  This also is unreadable when I try to switch to it.
+
+I looked in the /var/log/xorg.0.log and it says:
+
+(**) VIA(0): *Built-in mode "1024x768"
+(**) VIA(0): *Built-in mode "800x600": 0.0 MHz, 37879.3 kHz, 60.8 Hz
+(II) VIA(0): Modeline "800x600"    0.00  800 0 0 0  600 0 0 0
+(**) VIA(0):  Built-in mode "640x480": 0.0 MHz, 31469.2 kHz, 60.4 Hz
+(II) VIA(0): Modeline "640x480"    0.00  640 0 0 0  480 0 0 0
+
+
+I don't know how to take the frequencies specified and translate them all into a mode line.
+
+Also, further down in the log when it is going through what actually looks like the things from my xorg.conf file, it shows the following:
+
+(WW) AIGLX: 3D driver claims to not support visual 0x22
+(WW) AIGLX: 3D driver claims to not support visual 0x23
+(WW) AIGLX: 3D driver claims to not support visual 0x24
+(WW) AIGLX: 3D driver claims to not support visual 0x25
+(WW) AIGLX: 3D driver claims to not support visual 0x26
+(WW) AIGLX: 3D driver claims to not support visual 0x27
+(WW) AIGLX: 3D driver claims to not support visual 0x28
+(WW) AIGLX: 3D driver claims to not support visual 0x29
+(WW) AIGLX: 3D driver claims to not support visual 0x2a
+(WW) AIGLX: 3D driver claims to not support visual 0x2b
+(WW) AIGLX: 3D driver claims to not support visual 0x2c
+(WW) AIGLX: 3D driver claims to not support visual 0x2d
+
+What are these and what do they mean?  I know I tried both beryl and then compiz-fusion and neither would work - gave some error about not supporting something.  Could the above cause these messages as well?
+
+Thank you!:)
+
+---
+
+### Post by MrHippocampus on 2007-07-26
+You can try using xrandr on the command line to change the resolution, just type "xrandr" in a terminal ans it will give you a list of all the resolutions you can have:
+
+```
+
+user@host ~ $ xrandr
+ SZ:    Pixels          Physical       Refresh
+*0   1280 x 800    ( 331mm x 211mm )  *50  
+ 1   1024 x 768    ( 265mm x 203mm )   51  
+ 2    800 x 600    ( 207mm x 158mm )   52  
+ 3    800 x 512    ( 207mm x 135mm )   53  
+ 4    640 x 512    ( 165mm x 135mm )   54  
+ 5    640 x 480    ( 165mm x 127mm )   55   56  
+ 6    512 x 384    ( 132mm x 101mm )   57  
+ 7    400 x 300    ( 103mm x  79mm )   58  
+ 8    320 x 240    (  82mm x  63mm )   59  
+Current rotation - normal
+Current reflection - none
+Rotations possible - normal left inverted right 
+Reflections possible - none
+
+```
+
+You should then be able to change resolution by running "xrandr -s SZ" where SZ is one of the numbers in the left hand column.
+
+It might give the same results but its worth a try.
+
+---
+
+### Post by anewguy on 2007-07-27
+Thanks for the suggestion.  It did give the same results.:)
+
+---
+
+### Post by MrHippocampus on 2007-07-27
+Can you please elaborate on what you mean by "unreadable" and also can you post your full /etc/X11/xorg.conf file please :)
+
+---
+
+### Post by anewguy on 2007-07-29
+Basically, it means either the refresh or horizontal is off, as I get multiple images of the screen, all really narrow, and none of them are readable.  I have tried specifying horizontal frequency ranges and refresh ranges in xorg.conf, but still the same result.  I removed those entries for now since they don't seem to make  any difference.  It should also be noted that the via driver I am using is from openchrome.org.  Also, the log file shows the generic "v bios error" message and tries to default to BDE and then says VESA.  The BDE modes it uses also don't work any better - using ctl-alt-+ has the same result as using the GUI system/preferences/screen resolution.  There must be someway of doing this, as I have set one of the frequencies low when experimenting and got only 640x480 and it was fine.  So, I 'm looking for some way to figure out the frequencies/refresh needed for each resolution to show ok, and how to specify those individual settings in xorg.conf - I assume somehow on the MODE lines.  My current xorg.conf file follows:
+
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"dbe"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+	Option		"SHMConfig"		"true"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"via"
+	BusID		"PCI:1:0:0"
+        Option          "SWCursor" "true"
+	Option  	"XAANoOffscreenPixmaps" "true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+Option "AddARGBGLXVisuals" "True"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"800x600" 
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"800x600" 
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"800x600" 
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"800x600" 
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"800x600" 
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768"  "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+        Option         "AIGLX" "true"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+        
+Section "Extensions"
+        Option "Composite" "Enable"
+EndSection
+
+---
+
+### Post by MrHippocampus on 2007-07-30
+I can safely say ive never had that problem before, but from what you describe it does sound like modelines will be the answer. If you go to [this]("http://xtiming.sourceforge.net/cgi-bin/xtiming.pl") site (There are others which might be better, just google for "modeline generator") you can generate modelines based on information such as resolution/refresh rates.
+
+A modeline must be declared in the monitor section, and referenced (with the name of the modeline) in the screen section, e.g:
+
+```
+
+Section "Monitor"
+Identifier "Generic Monitor"
+Option "DPMS"
+#random modeline I made up, you probably shouldn't use it :)
+Modeline "1280x1024@75" 156.43 1280 1312 1904 1936 1024 1043 1056 1076
+EndSection
+
+Section "Screen"
+Identifier "Default Screen"
+Device "Generic Video Card"
+Monitor "Generic Monitor"
+Option "AddARGBGLXVisuals" "True"
+DefaultDepth 24
+SubSection "Display"
+Depth 1
+Modes "800x600"
+EndSubSection
+SubSection "Display"
+Depth 4
+Modes "800x600"
+EndSubSection
+SubSection "Display"
+Depth 8
+Modes "800x600"
+EndSubSection
+SubSection "Display"
+Depth 15
+Modes "800x600"
+EndSubSection
+SubSection "Display"
+Depth 16
+Modes "800x600"
+EndSubSection
+SubSection "Display"
+Depth 24
+Modes "1280x1024@75" "1024x768" "800x600" "640x480"
+EndSubSection
+EndSection
+```
+
+Good luck :)
+
+---
+
+### Post by anewguy on 2007-08-02
+It appears I need at least 1 if not both of the frequencies in order for that to give me an answer.  I still have not heard a thing from Gateway about the horiz freq/vert refresh rates for the panel in this laptop, so I've got no way to put those in.  Does anyone know of a site or program (can be Linux or Windows) that will test my panel/video card ad tell me what frrequencies are used for what resolution?:)
+
+---
+
+### Post by florisjan on 2007-10-15
+Hi
+
+I'm not sure our problems relate, however we might be having the same situation in a way:
+
+My screen worked fine, full res until i started changing 'screen and graphics'. Now I cannot get my Samsung Syncmaster 226bw to display 1680x1050 anymore.
+
+I'll start with a few details:
+Nvidia Gforce 7300GS 256MB
+Ubuntu 7.10, kernel 2.6.22-14-generic
+
+My guess is that even though i have disabled the secondary display, the videocard still operates in dual display mode, implicating a max resolution of 1280x1024? I have tried several settings, tried the restricted drivers, all kinds of combinations. The vga cable to the 2nd display is not connected, as I've had trouble running drivers in previous versions of ubuntu and before in fedora, trying to modify the settings with the vga display connected. I've tried replacing xorg.conf with a backup, but that didn't do any good either.
+
+I assume the system just isn't ready yet for what I'm trying to do, all I want now is to have my full resolution back on my display... Can anybody help?
+
+(While observing xorg.conf I noticed the secondary display is still listed, so this may also have something to do with the primary/secondary displays being in the wrong order? I've read about this in another post earlier I believe, and I remember having this situation in Windows, with Ati video however.)
+
+I Also tried the instructions a couple of lines below, resulting in a new xorg.conf file (at the bottom), this however did not change anything either.
+
+Thanks a lot in advance, I'll just keep messing and let you know if and how I've figured anything out.
+
+Michael
+
+Xorg.conf:
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by failsafeDexconf, using
+# values from the debconf database and some overrides to use vesa mode.
+#
+# You should use dexconf or another such tool for creating a "real" xorg.conf
+# For example:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+Section "Files"
+EndSection
+
+Section "Module"
+	Load		"glx"
+	Load		"GLcore"
+	Load		"v4l"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"	"/dev/input/mice"
+	Option		"Protocol"	"ImPS/2"
+	Option		"ZAxisMapping"	"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "Device"
+	Identifier	"Failsafe Device"
+	Boardname	"vesa"
+	Busid		"PCI:1:0:0"
+	Driver		"vesa"
+	Screen	0
+EndSection
+
+Section "Monitor"
+	Identifier	"Failsafe Monitor"
+	Vendorname	"Samsung"
+	Modelname	"Samsung SyncMaster 226BW (Digital)"
+	Horizsync	30-81
+	Vertrefresh	56-75
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@72" 50.0 800 856 976 1040 600 637 643 666 +hsync +vsync
+  modeline  "800x600@75" 49.5 800 816 896 1056 600 601 604 625 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "1280x768@60" 80.14 1280 1344 1480 1680 768 769 772 795 -hsync +vsync
+  modeline  "1280x720@60" 74.48 1280 1336 1472 1664 720 721 724 746 -hsync +vsync
+  modeline  "1280x800@75" 107.21 1280 1360 1496 1712 800 801 804 835 -hsync +vsync
+  modeline  "1280x768@75" 102.98 1280 1360 1496 1712 768 769 772 802 -hsync +vsync
+  modeline  "1280x800@60" 83.46 1280 1344 1480 1680 800 801 804 828 -hsync +vsync
+  modeline  "1440x900@75" 136.49 1440 1536 1688 1936 900 901 904 940 -hsync +vsync
+  modeline  "1440x900@60" 106.47 1440 1520 1672 1904 900 901 904 932 -hsync +vsync
+  modeline  "1600x1024@60" 136.36 1600 1704 1872 2144 1024 1025 1028 1060 -hsync +vsync
+  modeline  "1680x1050@60" 147.14 1680 1784 1968 2256 1050 1051 1054 1087 -hsync +vsync
+  modeline  "1920x1200@60" 193.16 1920 2048 2256 2592 1200 1201 1204 1242 -hsync +vsync
+	Gamma	1.0
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Failsafe Device"
+	Monitor		"Failsafe Monitor"
+	Defaultdepth	24
+	SubSection "Display"
+		Depth	24
+		Modes		"1680x1050@60"	"1920x1200@60"	"1600x1024@60"	"1440x900@60"	"1440x900@75"	"1280x800@60"	"1280x768@75"	"1280x800@75"	"1280x720@60"	"1280x768@60"	"800x600@60"	"800x600@75"	"800x600@72"	"800x600@56"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+  screen 0 "Default Screen" 0 0
+	Inputdevice	"Generic Keyboard"
+	Inputdevice	"Configured Mouse"
+EndSection
+Section "device" # 
+	Identifier	"device1"
+	Boardname	"vesa"
+	Busid		"PCI:1:0:0"
+	Driver		"vesa"
+	Screen	1
+EndSection
+Section "screen" # 
+	Identifier	"screen1"
+	Device		"device1"
+	Defaultdepth	24
+	Monitor		"monitor1"
+	SubSection "Display"
+		Depth	24
+		Modes		"640x480@60"	"800x600@56"	"800x600@60"	"1024x768@60"
+	EndSubSection
+EndSection
+Section "monitor" # 
+	Identifier	"monitor1"
+	Vendorname	"Generic LCD Display"
+	Modelname	"LCD Panel 1360x768"
+	Horizsync	31.5-48.0
+	Vertrefresh	56.0 - 65.0
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "1024x768@60" 65.0 1024 1048 1184 1344 768 771 777 806 -vsync -hsync
+	Gamma	1.0
+EndSection
+Section "ServerFlags"
+EndSection
+
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+xorg.conf after running sudo dpkg-reconfigure -phigh xserver-xorg, selecting only 1680x1050:
+
+
+
+
+# xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"nVidia Corporation G71 [GeForce 7300 GS]"
+	Driver		"nv"
+	BusID		"PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-84
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"nVidia Corporation G71 [GeForce 7300 GS]"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Modes		"1680x1050"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+
+# Uncomment if you have a wacom tablet
+#	InputDevice     "stylus"	"SendCoreEvents"
+#	InputDevice     "cursor"	"SendCoreEvents"
+#	InputDevice     "eraser"	"SendCoreEvents"
+EndSection
+
+---
+
+### Post by BobLand on 2007-10-15
+florisjan,
+I have the same setup but with fiesty.  Here's my xorg.conf.  My mouse is an MX510 so that will probably look different but just ignore it.
+
+```
+Section "Files"
+        FontPath        "/usr/share/fonts/X11/misc"
+        FontPath        "/usr/share/fonts/X11/cyrillic"
+        FontPath        "/usr/share/fonts/X11/100dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/75dpi/:unscaled"
+        FontPath        "/usr/share/fonts/X11/Type1"
+        FontPath        "/usr/share/fonts/X11/100dpi"
+        FontPath        "/usr/share/fonts/X11/75dpi"
+        # path to defoma fonts
+        FontPath        "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+        Load    "i2c"
+        Load    "bitmap"
+        Load    "ddc"
+        Load    "dri"
+        Load    "extmod"
+        Load    "freetype"
+        Load    "glx"
+        Load    "int10"
+        Load    "vbe"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "CoreKeyboard"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc105"
+        Option          "XkbLayout"     "us"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+        Option          "Device"                "/dev/input/mice"
+        Option          "Protocol"              "auto"
+        Option          "Buttons"               "7"
+        Option          "ZAxisMapping"          "4 5"
+        #Option         "ButtonMapping"         "1 2 3 6 7 4 5"
+        Option          "ButtonMapping"         "1 2 3 6 7 4 5 6"
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "stylus"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "stylus"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "eraser"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "eraser"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+        Driver          "wacom"
+        Identifier      "cursor"
+        Option          "Device"        "/dev/input/wacom"
+        Option          "Type"          "cursor"
+        Option          "ForceDevice"   "ISDV4"         # Tablet PC ONLY
+EndSection
+
+Section "Device"
+        Identifier      "Generic Video Card"
+        Driver          "nvidia"
+        BusID           "PCI:1:0:0"
+EndSection
+
+Section "Monitor"
+        Identifier      "SyncMaster"
+        Option          "DPMS"
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "Generic Video Card"
+        Monitor         "SyncMaster"
+        DefaultDepth    24
+        SubSection "Display"
+                Depth           1
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           4
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           8
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           15
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           16
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+        SubSection "Display"
+                Depth           24
+                Modes           "1680x1050" "1280x1024" "1280x960" "1152x864" "1024x768" "832x624" "800x600" "720x400" "640x480"
+        EndSubSection
+EndSection
+
+Section "ServerLayout"
+        Identifier      "Default Layout"
+        Screen          "Default Screen"
+        InputDevice     "Generic Keyboard"
+        InputDevice     "Configured Mouse"
+        InputDevice     "stylus"        "SendCoreEvents"
+        InputDevice     "cursor"        "SendCoreEvents"
+        InputDevice     "eraser"        "SendCoreEvents"
+EndSection
+
+Section "DRI"
+        Mode    0666
+EndSection
+```
+I don't remember what driver I used but I'm guessing it was the nvidia-glx-new installed from Synaptic.  
+
+It's hard to know if there is a video card setting to change, the xorg.conf or both.
+
+Go to System -> Administration -> and click Restricted Drivers Manager.  Mine says:
+```
+NVIDIA accelerated graphics driver - enabled - in use
+```
+
+bobland
+
+---
+
+### Post by florisjan on 2007-10-16
+Thans for your help, but the problem seems to have solved itself, turning the computer off and back on put the nvidia back into single screen mode. This is why i always keep the vga cable disconnected when it's not in use.. If the card detects a secondary display during boot, linux (ubuntu & fedora, from my experience) have problems with handling the primary..
+
+Thanks again!
+
+---
+

@@ -1,0 +1,417 @@
+---
+title: "More Widescreen Issues"
+date: 2007-09-06
+forum: Multimedia &amp; Video
+---
+
+### Post by heho on 2007-09-06
+Well... where to begin. I've seen and read many articles about this, however have yet to come up with a solution that seems to correct the issue. Let me explain what appears to be going on.
+
+I've got a Lenovo D221 22.1" LCD monitor, capable of displaying up to 1680x1050 resolution, running on an Intel 845GX video adapter. Unfortunately, I cannot seem to get Gnome to use the optimized resolution of 1680x1050. As soon as I load into Gnome it defaults to 1280x1024. If I increase the resolution to 1680x1050 in Gnome, the display resizes, however the display does not fit the monitor (ie you move your mouse to the bottom of the screen to scroll down to the bottom - makes maximizing windows a pain, cause now not only do you have to scroll with scrollbars/scroll wheels, you've got to move your mouse to the bottom of the window) and the everything appears blurry. There is one exception, the Ubuntu log on screen runs perfectly fine in 1680x1050 resolution. No vertical monitor scrolling, crisp clear images and text.
+
+Now, let me start copying and pasting information to you:
+
+**xorg.conf** (yes I've tried DPMS as well as VESA
+
+```
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"VESA"
+	HorizSync	60
+	VertRefresh	60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel 845GX"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1680x1050" "1440x900" "1280x1024" "1024x768" "800x600"
+	EndSubSection
+EndSection
+```
+
+I have also run the **915resolution** update, and have attempted to use it to correctly configure the resolution.
+
+I have also done the **dpkg-reconfigure xserver-xorg** and selected only 1680x1050, 1440x900, 1280x1024, 1024x768 resolutions and it still does not display 1680x1050 correctly in Gnome.
+
+If I open up the Screen Resolution applet from System -> Preferences, it lists the following resolutions available for me: 1680x1050, 1280x1024, 1152x864, 1024x768, 832x624, 800x600, 640x480, 1680x1680. Where are these resolutions coming from? Surprisingly, when I run 1680x1680, the display fonts, images, all sharpen up and looks like 1680x1050, with the exception of having to scroll up and down on the monitor to see the top and bottom of windows.
+
+Anyone have any thoughts or suggestions that I can try now? I think I've covered all the steps that I've seen listed in various other threads - or maybe I'm just missing something.
+
+---
+
+### Post by heho on 2007-09-07
+Well.. seeing as I haven't received any replies to this post, I thought I'd post an update.
+
+I haven't changed any of the settings on my system, however if I attempt to get my 1680x1050 resolution I attempted going into the Screen Resolution applet and changing my resolution to a lower resolution and back to the 1680x1050 resolution. After about 5 tries of this, it finally went to a proper 1680x1050 resolution. However when I reboot, I have to use the same approach again to get it to display it properly.
+
+Any further thoughts on this would be appreciated.
+
+---
+
+### Post by mhenry35 on 2007-09-08
+I am having the same problem.  I have an Intel 945G display chipset on my gateway MT6070 laptop.  I got the new Intel driver and my laptop screen is great at 1280 resolution, and I've been using this configuration for a few months now with no problems at all.
+
+Then yesterday I bought an Envision 22" widescreen monitor, hooked it up, and when I used the Gnome desktop to change over to 1680 x 1050, the screen changed, and I can see the top and bottom of the screen, but there is a 2 or 3 inch dead zone at the left of the screen.
+
+Back in my tech days, when CRT's used to do this, I would up the refresh rate and it would be fixed, but my monitor only supports 60hz.
+
+I haven't tried switching mine to VESA yet, but I know that's what my monitor needs, so I'll switch that and see what happens.
+
+I'll follow your thread and let you know if I get it solved - in the meantime... S.O.M!  (Save our Monitors)  :-)
+
+---
+
+### Post by mhenry35 on 2007-09-08
+I should also include that my monitor is an Envision 22", and here is my xorg.conf file:
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"i2c"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizScrollDelta"	"0"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"intel"
+	BusID		"PCI:0:2:0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Generic Monitor"
+	Option		"DPMS"
+	HorizSync	28-96
+	VertRefresh	43-60
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"Generic Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1920x1440" "1920x1200" "1856x1392" "1792x1344" "1680x1050" "1600x1200" "1440x900" "1400x1050" "1280x1024" "1280x960" "1280x854" "1280x800" "1280x768" "1200x800" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+---
+
+### Post by Niki ^_^ on 2007-09-08
+I have a Samsung Syncmaster 226BW widescreen LCD monitor , it supports 1680X1050 resolution .
+
+I pulled a few hairs off my head before I figured out how to get 1680X1050 to work perfectly with ubuntu and Beryl.
+
+Heres how I got 1680X1050 to work with a fresh install of ubuntu :
+
+1. I have installed a fresh ubuntu , the default resolution was 1024X768 .
+2. clicked on Enable desktop effects so ubuntu could install nvidia drivers .
+3. Added 1680X1050 resolution to /etc/x11/xorg.conf file .
+
+after this I rebooted ubuntu and it booted up already in 1680X1050 resolution .
+
+just a warning : do not use nvidia-settings panel to change anything related to your monitor , and don't use the "write to xorg.conf" .
+why ? after doing that Beryl / compiz stopped working , and icons on the panels were disoriented .
+
+anyway , here is my xorg.conf
+
+```
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+    Fontpath    "/usr/share/fonts/X11/misc"
+    Fontpath    "/usr/share/fonts/X11/cyrillic"
+    Fontpath    "/usr/share/fonts/X11/100dpi/:unscaled"
+    Fontpath    "/usr/share/fonts/X11/75dpi/:unscaled"
+    Fontpath    "/usr/share/fonts/X11/Type1"
+    Fontpath    "/usr/share/fonts/X11/100dpi"
+    Fontpath    "/usr/share/fonts/X11/75dpi"
+    # path to defoma fonts
+    Fontpath    "/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+    Load        "i2c"
+    Load        "bitmap"
+    Load        "ddc"
+    Load        "extmod"
+    Load        "freetype"
+    Load        "glx"
+    Load        "int10"
+    Load        "vbe"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Generic Keyboard"
+    Driver        "kbd"
+    Option        "CoreKeyboard"
+    Option        "XkbRules"    "xorg"
+    Option        "XkbModel"    "pc105"
+    Option        "XkbLayout"    "us"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Configured Mouse"
+    Driver        "mouse"
+    Option        "CorePointer"
+    Option        "Device"    "/dev/input/mice"
+    Option        "Protocol"    "ImPS/2"
+    Option        "ZAxisMapping"    "4 5"
+    Option        "Emulate3Buttons"    "true"
+EndSection
+
+Section "InputDevice"
+    Driver        "wacom"
+    Identifier    "stylus"
+    Option        "Device"    "/dev/input/wacom"
+    Option        "Type"    "stylus"
+    Option        "ForceDevice"    "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+    Driver        "wacom"
+    Identifier    "eraser"
+    Option        "Device"    "/dev/input/wacom"
+    Option        "Type"    "eraser"
+    Option        "ForceDevice"    "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+    Driver        "wacom"
+    Identifier    "cursor"
+    Option        "Device"    "/dev/input/wacom"
+    Option        "Type"    "cursor"
+    Option        "ForceDevice"    "ISDV4"# Tablet PC ONLY
+EndSection
+
+Section "Device"
+    Identifier    "Generic Video Card"
+    Driver        "nvidia"
+    Busid        "PCI:1:0:0"
+    Option        "AddARGBVisuals"    "True"
+    Option        "AddARGBGLXVisuals"    "True"
+    Option        "NoLogo"    "True"
+EndSection
+
+Section "Monitor"
+    Identifier    "Generic Monitor"
+    Option        "DPMS"
+    Horizsync    28-51
+    Vertrefresh    43-60
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Device        "Generic Video Card"
+    Monitor        "Generic Monitor"
+    Defaultdepth    24
+    SubSection "Display"
+        Depth    1
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+    SubSection "Display"
+        Depth    4
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+    SubSection "Display"
+        Depth    8
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+    SubSection "Display"
+        Depth    15
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+    SubSection "Display"
+        Depth    16
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+    SubSection "Display"
+        Depth    24
+        Modes        "1680x1050"    "1024x768"    "800x600"    "640x480"
+    EndSubSection
+EndSection
+
+Section "ServerLayout"
+    Identifier    "Default Layout"
+  screen "Default Screen"
+    Inputdevice    "Generic Keyboard"
+    Inputdevice    "Configured Mouse"
+    Inputdevice    "stylus"    "SendCoreEvents"
+    Inputdevice    "cursor"    "SendCoreEvents"
+    Inputdevice    "eraser"    "SendCoreEvents"
+EndSection
+
+Section "DRI"
+    Mode    0666
+EndSection
+```
+
+---
+
+### Post by mhenry35 on 2007-09-08
+That could be a possibility - although both of us are using Intel 945G graphics sets, where yours is NVidia.
+
+However, your horizontal Sync rate is different, I think I'll try that and see if it works.
+
+Thanks for the info, anything can be a help at this point.
+
+---
+
