@@ -1,0 +1,243 @@
+---
+title: "Ubuntu 10.10 Beta (Maverick Meerkat) Released"
+date: 2010-09-02
+forum: The Fridge Discussions
+---
+
+### Post by TheFridge on 2010-09-02
+**The Ubuntu team is pleased to announce the release of Ubuntu 10.10 beta.** 
+
+ Codenamed &#8220;Maverick Meerkat&#8221;, 10.10 continues Ubuntu&#8217;s proud tradition of integrating the latest and greatest open source technologies into a high-quality, easy-to-use Linux distribution.
+
+ Ubuntu 10.10 Desktop Edition and Ubuntu 10.10 Netbook Edition continue the trend of ever-faster boot speeds, with improved startup times and a smoother, streamlined boot experience.
+
+ Ubuntu 10.10 Server Edition provides even better integration of the Ubuntu Enterprise Cloud, with its install time cloud setup.
+
+ Ubuntu 10.10 Server for UEC and EC2 brings the power and stability of the Ubuntu Server Edition to cloud computing, whether you&#8217;re using Amazon EC2 or your own Ubuntu Enterprise Cloud.
+
+ The Ubuntu 10.10 family of Kubuntu, Xubuntu, Edubuntu, Ubuntu Studio, and Mythbuntu, also reach beta status today.
+
+ **Ubuntu Desktop features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ The GNOME base platform has been updated to the current 2.31 versions. This includes the new dconf and gsettings API. 
+
+ Evolution was updated to the 2.30.2 version, which operates much faster than the version in Ubuntu 10.04 LTS. 
+
+ Shotwell has replaced F-Spot as the default photo manager.
+
+ Gwibber has been updated to support the recent change in Twitter&#8217;s authentication system, as well as changing the back end storage to improve performance.
+
+ The Sound Indicator has been enhanced to include music player controls.
+
+ The Ubuntu Software Center has an updated look and feel, including the new &#8220;Featured&#8221; and &#8220;What&#8217;s New&#8221; views for showcasing applications, and an improved package description view. You can now easily access your package installation history too.
+
+ New Design: The boot process is cleaner and faster. New themes, new icons, and new wallpaper bring a dramatically updated look and feel to Ubuntu.
+
+ Ubuntu One: Polished desktop integration with new sign up and sign in process. Tighter integration with Ubuntu SSO. Nautilus enhancements for managing folder sync preferences. Faster file sync speed. Share links to music within the Ubuntu One Music Store.
+
+ Please see [http://www.ubuntu.com/testing/maverick/beta](http://www.ubuntu.com/testing/maverick/beta) for details.
+
+ **Ubuntu Server features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
+
+ Cloud computing:  The configurable initialization process for Ubuntu Server cloud images (cloud-init) has gained new features in Maverick Beta, including pluggable hooks, ebsmount, ext4 support, and new stanzas in the cloud-config format.  Cloud image instances can now manage their own kernel and upgrade kernels with apt. This is done by using pv-grub, provided by Amazon. 
+
+ **Ubuntu Netbook features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
+
+ The new Unity interface is now the default in Ubuntu Netbook Edition. It includes the global menu bar. The date/time indicator now has a real calendar widget.
+
+ The standard photo management application has been switched to Shotwell. 
+
+ **Kubuntu features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ For Maverick, Kubuntu have merged the Desktop and Netbook images into one. Ubiquity, Kubuntu&#8217;s installer, will detect the screen size before the install and use either the Plasma Desktop workplace or the Plasma Netbook workplace as needed. Users will be able to switch between the two in System Settings.
+
+ Plasma Netbook now sports the Global Menu by default.
+
+ The standard web browser is now Rekonq, a KDE browser based on Qt Webkit.
+
+ Bluedevil has become the default bluetooth stack.
+
+ Pulseaudio is the default sound server.
+
+ KPackageKit updates bring a faster backend and an updated UI that provides a new Categories page, and new features such as a backup/restore tool for the list of installed packages.
+
+ Kubuntu&#8217;s installer (Ubiquity) now has updated look and layout.
+Qapt-batch now replaces install-package as the update/batch-installer utility
+
+ KDE Platform, Workspaces, and Applications were updated to 4.5.0 (the recently released 4.5.1 update could not be integrated before beta release and will arrive shortly).
+
+ Qt was updated to the current 4.7 beta release.
+
+ See [https://wiki.kubuntu.org/MaverickMeerkat/Beta/Kubuntu](https://wiki.kubuntu.org/MaverickMeerkat/Beta/Kubuntu) for more details.
+
+ **Xubuntu features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ Xfce4 was updated to the current 4.6.2 release.
+
+ New default applications include: Parole (Xfce4 Media Player), replacing Totem Movie Player; Xfburn (Xfce4 CD/DVD burning tool), replacing Brasero; and xfce4-taskmanager (Xfce4 process manager), replacing Gnome-Task-Manager. 
+
+ **Edubuntu features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
+
+ Edubuntu now includes Gnome Nanny, which provides parental controls in Edubuntu. There is new wallpaper included (periodic table breakout). In addition, an OEM Install mode is now available.
+
+ For those interested in learning more, there&#8217;s a new web site as well.
+Check out [http://www.edubuntu.org](http://www.edubuntu.org). 
+
+ **Ubuntu Studio features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ In this release, Ubuntu Studio has better integration between Pulse Audio and JACK. JACK and Pulse Audio can now be used side-by-side if they are using different audio interfaces. If they are trying to use the same audio interface, JACK will take precedent. The network connections can now be configured with gnome-network-admin. 
+
+ **Mythbuntu features**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ In this release, Mythbuntu has updated to MythTV 0.23.1. 
+
+ There is also a new backup and restore tool.
+
+ **Other**
+&#8212;&#8212;-
+
+ 
+[LIST] 
+[*]On the Desktop: GNOME 2.31, KDE 4.5.0b, Xfce 4.6.2, OpenOffice.org 3.2.1, X.org server 7.5
+[*]On the Server: Apache 2.2.16, PostgreSQL 8.4.4, PHP 5.3.3, LTSP 5.2.4&#8220;Under the hood&#8221;: Linux 2.6.35.3, GCC 4.4.4 (default) / 4.5.1
+(optional), eglibc 2.12.1, Python 2.6.6 (default) / 3.1.2 (optional) 
+[/LIST]
+ The full release notes can be found at [http://www.ubuntu.com/testing/maverick/beta](http://www.ubuntu.com/testing/maverick/beta)
+
+ **About Ubuntu**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ Ubuntu is a full-featured Linux distribution for desktops, laptops, and servers, with a fast and easy installation and regular releases.  A tightly-integrated selection of excellent applications is included, and an incredible variety of add-on software is just a few clicks away.
+
+ Professional technical support is available from Canonical Limited and hundreds of other companies around the world.  For more information about support, visit [http://www.ubuntu.com/support](http://www.ubuntu.com/support)
+
+ **To Get Ubuntu 10.10 Beta**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ To upgrade to Ubuntu 10.10 Beta from Ubuntu 10.04 LTS,
+follow these instructions:
+
+   [https://help.ubuntu.com/community/MaverickUpgrades](https://help.ubuntu.com/community/MaverickUpgrades)
+
+ Or, download Ubuntu 10.10 Beta; The following link will direct you to a download location near you:
+
+   [http://www.ubuntu.com/testing/download](http://www.ubuntu.com/testing/download)
+
+ Or, choose the mirror closest to you:
+
+ ***Africa:***
+
+ 
+[LIST] 
+[*][http://ubuntu.mirror.ac.za/ubuntu-release/10.10](http://ubuntu.mirror.ac.za/ubuntu-release/10.10) (South Africa)[http://ubuntu.saix.net/ubuntu-releases/10.10](http://ubuntu.saix.net/ubuntu-releases/10.10) (South Africa) 
+[/LIST]
+ ***Asia:***
+
+ 
+[LIST] 
+[*][http://mirrors.sohu.com/ubuntu-releases/10.10](http://mirrors.sohu.com/ubuntu-releases/10.10) (China)
+[*][http://ftp.riken.jp/Linux/ubuntu-iso/CDs/10.10](http://ftp.riken.jp/Linux/ubuntu-iso/CDs/10.10) (Japan)
+[*][http://ubuntutym2.u-toyama.ac.jp/ubuntu/10.10](http://ubuntutym2.u-toyama.ac.jp/ubuntu/10.10) (Japan)
+[*][http://ftp.kaist.ac.kr/ubuntu-cd/10.10](http://ftp.kaist.ac.kr/ubuntu-cd/10.10) (Korea, Republic of)
+[*][http://ubuntu.qualitynet.net/releases/10.10](http://ubuntu.qualitynet.net/releases/10.10) (Kuwait)
+[*][http://mirror.yandex.ru/ubuntu-releases/10.10](http://mirror.yandex.ru/ubuntu-releases/10.10) (Russian Federation)
+[*][http://tw.releases.ubuntu.com/10.10](http://tw.releases.ubuntu.com/10.10) (Taiwan)[http://ftp.linux.org.tr/ubuntu-releases/10.10](http://ftp.linux.org.tr/ubuntu-releases/10.10) (Turkey) 
+[/LIST]
+ ***Europe:***
+
+ 
+[LIST] 
+[*][http://ubuntu.lagis.at/releases/10.10](http://ubuntu.lagis.at/releases/10.10) (Austria)
+[*][http://ftp.mgts.by/pub/ubuntu-releases/10.10](http://ftp.mgts.by/pub/ubuntu-releases/10.10) (Belarus)
+[*][http://ubuntu.ipacct.com/releases/10.10](http://ubuntu.ipacct.com/releases/10.10) (Bulgaria)
+[*][http://hr.releases.ubuntu.com/10.10](http://hr.releases.ubuntu.com/10.10) (Croatia)
+[*][http://releases.ubuntu.cz/releases/10.10](http://releases.ubuntu.cz/releases/10.10) (Czech Republic)
+[*][http://mirrors.dotsrc.org/ubuntu-cd/10.10](http://mirrors.dotsrc.org/ubuntu-cd/10.10) (Denmark)
+[*][http://ftp.estpak.ee/pub/ubuntu-releases/10.10](http://ftp.estpak.ee/pub/ubuntu-releases/10.10) (Estonia)
+[*][http://ubuntu.trumpetti.atm.tut.fi/releases/10.10](http://ubuntu.trumpetti.atm.tut.fi/releases/10.10) (Finland)
+[*][http://ubuntu.mirrors.proxad.net/10.10](http://ubuntu.mirrors.proxad.net/10.10) (France)
+[*][http://ubuntu.mirror.tudos.de/ubuntu-releases/10.10](http://ubuntu.mirror.tudos.de/ubuntu-releases/10.10) (Germany)
+[*][http://gb.releases.ubuntu.com/10.10](http://gb.releases.ubuntu.com/10.10) (Great Britain)
+[*][http://mirror.greennet.gl/releases/10.10](http://mirror.greennet.gl/releases/10.10) (Greenland)
+[*][http://speglar.simnet.is/ubuntu-releases/10.10](http://speglar.simnet.is/ubuntu-releases/10.10) (Iceland)
+[*][http://ftp.heanet.ie/pub/ubuntu-releases/10.10](http://ftp.heanet.ie/pub/ubuntu-releases/10.10) (Ireland)
+[*][http://na.mirror.garr.it/mirrors/ubuntu-releases/10.10](http://na.mirror.garr.it/mirrors/ubuntu-releases/10.10) (Italy)
+[*][http://ubuntu.mirror.root.lu/ubuntu-releases/10.10](http://ubuntu.mirror.root.lu/ubuntu-releases/10.10) (Luxembourg)
+[*][http://nl.releases.ubuntu.com/releases/10.10](http://nl.releases.ubuntu.com/releases/10.10) (Netherlands)
+[*][http://no.releases.ubuntu.com/10.10](http://no.releases.ubuntu.com/10.10) (Norway)
+[*][http://ubuntu.task.gda.pl/ubuntu-releases/10.10](http://ubuntu.task.gda.pl/ubuntu-releases/10.10) (Poland)
+[*][http://cesium.di.uminho.pt/pub/ubuntu/10.10](http://cesium.di.uminho.pt/pub/ubuntu/10.10) (Portugal)
+[*][http://ftp.astral.ro/mirrors/ubuntu.com/releases/10.10](http://ftp.astral.ro/mirrors/ubuntu.com/releases/10.10) (Romania)
+[*][http://rs.releases.ubuntu.com/10.10](http://rs.releases.ubuntu.com/10.10) (Serbia)
+[*][http://ubuntu.cica.es/releases/10.10](http://ubuntu.cica.es/releases/10.10) (Spain)
+[*][http://se.releases.ubuntu.com/10.10](http://se.releases.ubuntu.com/10.10) (Sweden)[http://mirror.switch.ch/ftp/mirror/ubuntu-cdimage/10.10](http://mirror.switch.ch/ftp/mirror/ubuntu-cdimage/10.10) (Switzerland) 
+[/LIST]
+ ***North America:***
+
+ 
+[LIST] 
+[*][http://mirror.csclub.uwaterloo.ca/ubuntu-releases/10.10](http://mirror.csclub.uwaterloo.ca/ubuntu-releases/10.10) (Canada)
+[*][http://mirror.anl.gov/pub/ubuntu-iso/CDs/10.10](http://mirror.anl.gov/pub/ubuntu-iso/CDs/10.10) (United States)
+[*][http://mirrors.us.kernel.org/ubuntu-releases/10.00](http://mirrors.us.kernel.org/ubuntu-releases/10.00) (United States)[http://ubuntu.osuosl.org/releases/10.10](http://ubuntu.osuosl.org/releases/10.10) (United States) 
+[/LIST]
+ ***Oceania/Australia:***
+
+ 
+[LIST] 
+[*][http://mirror.aarnet.edu.au/pub/ubuntu/releases/10.10](http://mirror.aarnet.edu.au/pub/ubuntu/releases/10.10) (Australia)
+[*][http://mirror.linux.org.au/ubuntu-releases/10.10](http://mirror.linux.org.au/ubuntu-releases/10.10) (Australia)
+[*][http://releases.ubuntu.nautile.nc/10.10](http://releases.ubuntu.nautile.nc/10.10) (New Caledonia)[http://ftp.citylink.co.nz/ubuntu-releases/10.10](http://ftp.citylink.co.nz/ubuntu-releases/10.10) (New Zealand) 
+[/LIST]
+ ***South America:***
+
+ 
+[LIST] 
+[*][http://mirror.pop-sc.rnp.br/mirror/ubuntu/10.10](http://mirror.pop-sc.rnp.br/mirror/ubuntu/10.10) (Brazil)[http://ubuntu.c3sl.ufpr.br/releases/10.10](http://ubuntu.c3sl.ufpr.br/releases/10.10) (Brazil) 
+[/LIST]
+ ***Please download using Bittorrent if possible.***
+
+ The final version of Ubuntu 10.10 is expected to be released in October 2010.
+
+ **Feedback and Participation**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ If you would like to help shape Ubuntu, take a look at the list of ways you can participate at
+
+   [http://www.ubuntu.com/community/participate/](http://www.ubuntu.com/community/participate/)
+
+ Your comments, bug reports, patches and suggestions will help turn this Beta into the best release of Ubuntu ever.  Please note that, where possible, we prefer that bugs be reported using the tools provided, rather than by visiting Launchpad directly.  Instructions can be found at
+
+   [https://help.ubuntu.com/community/ReportingBugs](https://help.ubuntu.com/community/ReportingBugs)
+
+ If you have a question, or if you think you may have found a bug but are not sure, first try asking on the #ubuntu IRC channel on freenode, on the Ubuntu Users mailing list, or on the Ubuntu forums:
+
+   [http://lists.ubuntu.com/mailman/listinfo/ubuntu-users](http://lists.ubuntu.com/mailman/listinfo/ubuntu-users)
+  [http://www.ubuntuforums.org/](http://www.ubuntuforums.org/)
+
+ **More Information**
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+
+ You can find out more about Ubuntu and about this preview release on our website, IRC channel and wiki. If you are new to Ubuntu, please visit:  
+
+   [http://www.ubuntu.com/](http://www.ubuntu.com/)
+
+ To sign up for future Ubuntu announcements, please subscribe to Ubuntu&#8217;s very low volume announcement list at:
+
+  [http://lists.ubuntu.com/mailman/listinfo/ubuntu-announce](http://lists.ubuntu.com/mailman/listinfo/ubuntu-announce)
+
+ Originally posted to the[ubuntu-announce mailing list]("https://lists.ubuntu.com/archives/ubuntu-announce/2010-September/000136.html") by Robbie Williamson  on Thu Sep 2 23:50:39 BST 2010.
+
+ 
+
+[More...](http://fridge.ubuntu.com/node/2123)
+
+---
+
