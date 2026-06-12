@@ -1,0 +1,347 @@
+---
+title: "Windows 7 No Longer Booting After Installing Ubuntu"
+date: 2010-12-19
+forum: New to Ubuntu
+---
+
+### Post by HumanoidCarbonUnit on 2010-12-19
+Hi, hopefully someone can help. I've been searching the forums and haven't been able to find anything that has been able to help me. Not sure if this is an Ubuntu question exactly or not. 
+
+I have a new computer I built myself that was intended o be a Windows 7 x64 and Ubuntu 10.10 x64 dual boot. I installed Windows first and had the hard drive partitioned into 4 parts. Windows was installed on one of these and Ubuntu was to be installed on another. After I installed Windows everything was working just fine. I then installed Ubuntu and everything went fine except for when I tried to boot in Windows.
+
+I am taken to what I am pretty sure is the grub screen. I'm given the options of Ubuntu, Ubuntu (recovery), Memory test, a different Memory test, and Windows 7 (loader) (on /dev/sad2/). If I select Ubuntu there is no problem however if I select Windows 7 it takes me to a screen that looks like it might be the Windows Boot Record. It tells me Windows failed to start and that it could be because of recent hardware or soft ware changes. It then tells me to insert the install disk, select a language, and then choose repair from the menu. At the bottom of the screen there is a little line that says "Info: Boot selction failed because a requred device is inaccessible."
+
+I have tried doing what the screen prompted. I insert the disk and try to run the repair option. The computer is unable to find a system image. When asked to select a location no location is found. 
+
+I have tried reinstalling Windows but the computer does not find any trace of my hard drive and prompts for drivers on a CD. 
+
+I have run boot info script. Below is the file I got from it.
+
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #3 for (,msdos3)/boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       
+    Boot sector type:  -
+    Boot sector info:  
+    Mounting failed:
+mount: unknown filesystem type ''
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda3: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda4: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  According to the info in the boot sector, sda4 has 
+                       167772159 sectors, but according to the info from 
+                       fdisk, it has 1785750959 sectors.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 1000.2 GB, 1000204886016 bytes
+255 heads, 63 sectors/track, 121601 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1                  63         2,047         1,985  42 SFS
+/dev/sda2    *          2,048       206,847       204,800  42 SFS
+/dev/sda3             206,848   167,772,159   167,565,312  83 Linux
+/dev/sda4         167,772,160 1,953,523,119 1,785,750,960  42 SFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda2        32F88A8EF88A4FD1                       ntfs       System Reserved               
+/dev/sda3        02161bac-729d-4066-a329-a124b2c73362   ext4                                     
+/dev/sda4        4C044E96044E8346                       ntfs       Ubuntu                        
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda3        /                        ext4       (rw,errors=remount-ro,commit=0)
+/dev/sr0         /media/UDF Volume        udf        (ro,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,iocharset=utf8,umask=0077)
+
+
+=========================== sda3/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos3)'
+search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos3)'
+search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos3)'
+    search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=02161bac-729d-4066-a329-a124b2c73362 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos3)'
+    search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+    echo    'Loading Linux 2.6.35-22-generic ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic root=UUID=02161bac-729d-4066-a329-a124b2c73362 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos3)'
+    search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos3)'
+    search --no-floppy --fs-uuid --set 02161bac-729d-4066-a329-a124b2c73362
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sda2)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(hd0,msdos2)'
+    search --no-floppy --fs-uuid --set 32f88a8ef88a4fd1
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda3/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sda3       /               ext4    errors=remount-ro 0       1
+
+=================== sda3: Location of files loaded by Grub: ===================
+
+
+  81.8GB: boot/grub/core.img
+  73.2GB: boot/grub/grub.cfg
+  77.7GB: boot/initrd.img-2.6.35-22-generic
+  81.8GB: boot/vmlinuz-2.6.35-22-generic
+  77.7GB: initrd.img
+  81.8GB: vmlinuz 
+```
+
+---
+
+### Post by napoleon3665 on 2010-12-19
+it looks to me like your master boot record got screwed up, this tends to happen alot when ppl dual boot. give this a try.
+
+insert a windows cd, boot it, and open a recovery console.
+
+log in to the windows installation, wherever that may be, and type "fixmbr" without the quotes.
+
+you may also want to run the command "fixboot" without the quotes, to fix the boot sector as well.
+
+hope this helps, let me know the outcome.
+
+---
+
+### Post by sikander3786 on 2010-12-19
+Sorry to say but I think Widows 7 is no longer there thats why Startup Repair couldn't find it.
+
+> sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    [COLOR="Red"]Operating System:[/COLOR]  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+
+And that happened because of this.
+
+> /dev/sda1                  63         2,047         1,985  42 [COLOR="Red"]SFS[/COLOR]
+/dev/sda2    *          2,048       206,847       204,800  42 [COLOR="Red"]SFS[/COLOR]
+/dev/sda3             206,848   167,772,159   167,565,312  83 Linux
+/dev/sda4         167,772,160 1,953,523,119 1,785,750,960  42 [COLOR="Red"]SFS[/COLOR]
+
+
+SFS means you had Dynamic Disks (another Microsoft Proprietary thing) under Windows and Linux as not good at those. You needed to have Basic Partitions before trying to install Ubuntu.
+
+If you can survive a re-install of Windows, I would suggest to do a fresh install and create Basic Partitions this time and then try to re-install Ubuntu.
+
+If you need to extract some data from Windows partition, you can try testdisk.
+
+[http://www.cgsecurity.org/wiki/TestDisk](http://www.cgsecurity.org/wiki/TestDisk)
+
+[https://help.ubuntu.com/community/DataRecovery](https://help.ubuntu.com/community/DataRecovery)
+
+But I don't know if that would be successful with SFS or not.
+
+I would recommend to wait for some other replies and consensus to develop on what I've said.
+
+---
+
+### Post by HumanoidCarbonUnit on 2010-12-19
+At this point I'm fully prepared to reinstall Windows as I figured that would end up having to happen. I've tried it once but Windows doesn't find a hard drive to install on to.
+
+When I click "Install Windows" the select custom install, it takes me to a screen where I select where I want to install Windows. Nothing appears here. I'm wondering if I should just wipe the hard drive and try to start from scratch.
+
+---
+
+### Post by sikander3786 on 2010-12-19
+I wonder if sda1 was your recovery partition so wiping the disc might result in losing that recovery option. Have you got a CD/DVD backup for that partition?
+
+If yes, you can try deleting all partitions from an Ubuntu Live CD using Gparted and try Windows installation again.
+
+---
+
+### Post by sandyd on 2010-12-19
+Your going to have to do a complete harddisk repartition. (back up all your data first)
+
+Do this.
+Go to System -> administration -> gparted
+
+Go to Device-> Create partition table.
+
+Create the table (leave the settings as default).
+
+Right click on the free space, and Create a NTFS partition for windows (with the amount of space you want to give to windows) (note, the format of the partition MUST be in NTFS)
+
+Create an extended partition at the end of the disk (space after should be 0). THe size should be the same as the amount of RAM you have. If you don't need swap because you don't hibernate and you have enough RAM, ignore this.
+
+Use the free space (in the extended parition) to create a swap partition. (right click, new parition)
+
+Use the other free space to create an EXT4 parition for Ubuntu.
+
+The NTFS disk should now show up in windows.
+
+After installing Windows, boot up the ubuntu livecd, and start the installation.
+
+Choose "custom" or "manual" partitioning when you get to the partitioning stage.
+
+Set the mountpoint of the ext4 partition to "/" (without the quotes).
+
+Click 'Next' and everything else is self explanatory
+
+---
+

@@ -1,0 +1,151 @@
+---
+title: "DSL Connection"
+date: 2012-05-21
+forum: New to Ubuntu
+---
+
+### Post by Avinash007 on 2012-05-21
+Hello everyone,I am a newbie in linux.Please help me with the following.
+
+Recently,I installed Ubuntu 12.04 LTS on my laptop.I use DSL Broadband connection for internet.I established a new DSL connection using Network Connections.The DSL connection automatically goes down after some time even though the server at the ISP is not down.Also some websites take too long time to download.But however I do not face such problems when I use Windows.
+
+Any help would be appreciated.
+
+---
+
+### Post by jtarin on 2012-05-22
+See post below.
+
+---
+
+### Post by jtarin on 2012-05-22
+I have used [pppoeconf ]("https://help.ubuntu.com/community/ADSLPPPoE")to setup my DSL connection since first using Ubuntu. NetworkManager is fine for some, but I prefer other methods. Here's a link on setting it up. If you have problems and need help just post back. [Another link if you encounter problems.]("http://ubuntuforums.org/showpost.php?p=9611450&postcount=2")
+
+---
+
+### Post by Avinash007 on 2012-05-22
+But after some time the modem itself will not be detected by the computer,I have tried with pppoeconf when it was giving problem with Network Manager.But however it failed detecting the modem.
+
+---
+
+### Post by jtarin on 2012-05-22
+It would have been helpful if you had mentioned that.
+What model of modem is it and how does it connect to your computer?
+
+---
+
+### Post by Avinash007 on 2012-05-23
+Its a DNA-A201BEI model(BSNL Broadband Connection,Its the broadband connection in India).The modem is connected to the computer by a single Ethernet cable running from the modem directly to the computer.
+
+---
+
+### Post by jtarin on 2012-05-23
+Can you access the modem at the url of 192.168.1.1 in your browser? 
+Name:admin 
+Password:admin
+
+---
+
+### Post by Avinash007 on 2012-05-24
+I unable to connect to the web page with URL being 192.168.1.1
+
+---
+
+### Post by jtarin on 2012-05-24
+Open a terminal and type the command ```
+ifconfig
+``` then post the results here.
+
+---
+
+### Post by Avinash007 on 2012-05-25
+Here is the output of the command
+
+
+
+eth0      Link encap:Ethernet  HWaddr f0:4d:a2:c0:cc:10  
+          inet6 addr: fe80::f24d:a2ff:fec0:cc10/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3225 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3610 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1860595 (1.8 MB)  TX bytes:539264 (539.2 KB)
+          Interrupt:46 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:78 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:78 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:11397 (11.3 KB)  TX bytes:11397 (11.3 KB)
+
+ppp0      Link encap: Point-to-Point Protocol  
+          inet addr:117.213.197.0  P-t-P:117.213.192.1  Mask:255.255.255.255
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1492  Metric:1
+          RX packets:3195 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3555 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:3 
+          RX bytes:1787485 (1.7 MB)  TX bytes:455085 (455.0 KB)
+
+wlan0     Link encap:Ethernet  HWaddr 1c:65:9d:9f:72:10  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+---
+
+### Post by Haneef Mubarak on 2012-05-25
+I lived in India for a short while, once. I know of BSNL and their problems. Go to their office and tell them it isn't working and annoy them for a while and when they send someone to reset something outside your home, it'll magically work. Lolz.
+
+---
+
+### Post by jtarin on 2012-05-25
+Your output of "ifconfig" shows you are connected. Try the url address in your browser of "google.com". The try the address "173.194.32.169". Which one works?
+
+---
+
+### Post by Avinash007 on 2012-05-26
+Sorry for late reply.
+
+Whenever I type [www.google.com](www.google.com) in the address bar the page is getting loaded, but however the IP address 173.194.32.169 is not serving the purpose.
+
+---
+
+### Post by jtarin on 2012-05-27
+Copy and paste your /etc/resolv.conf file here. Your having DNS problems. I think you should follow the advice of the poster and call your provider. BSNL is very problematic. You can search the forum for BSNL and see what I mean.
+
+---
+
+### Post by Avinash007 on 2012-05-27
+Here are the contents of the /etc/resolv.conf file
+
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+nameserver 218.248.255.139
+nameserver 218.248.255.141
+nameserver 127.0.0.1
+
+---
+
+### Post by Avinash007 on 2012-05-27
+Here are the contents of the /etc/resolv.conf file
+
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by resolvconf( 8 )
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+nameserver 218.248.255.139
+nameserver 218.248.255.141
+nameserver 127.0.0.1
+
+---
+
+### Post by jtarin on 2012-05-27
+Your nameservers are "BSNL" so they should be resolving. 
+If you have a connection and pages are being served in your browser with their named url....
+I don't know what else I can help you with.
+
+---
+

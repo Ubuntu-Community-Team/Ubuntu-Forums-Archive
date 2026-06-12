@@ -1,0 +1,21 @@
+---
+title: "Debugging"
+date: 2008-08-13
+forum: New to Ubuntu
+---
+
+### Post by 7raTEYdCql on 2008-08-13
+At present in University, and am learning C programming. The college insists that we use TurboC. Now i wanted to know that how is debugging done by using the 'watch' option.
+
+Went through the manual pages and found the command gdb(tui)
+How is it used. Can someone please give me a step-by-step procedure.
+
+---
+
+### Post by Sycron on 2008-08-13
+I have never tried it but here is a tut [http://www.cs.princeton.edu/~benjasik/gdb/gdbtut.html](http://www.cs.princeton.edu/~benjasik/gdb/gdbtut.html).
+
+I use only strategic printf's .
+
+---
+

@@ -1,0 +1,233 @@
+---
+title: "Nvidia resolution problem on XServer"
+date: 2010-05-29
+forum: New to Ubuntu
+---
+
+### Post by Ben_222 on 2010-05-29
+I installed Ubuntu 9.10 from a cd onto a single partition,then the proprietary driver (XServer for NVidia),and it only lists TWO screen resolutions(640x480 and one lower),and AUTO.I had a low screen resolution problem a while back on another pc,but it showed many resolutions;and i was able to fix it with forum help(typing sudo nvidia-xconfig in a terminal).Well, doing that this time does nothing;I always end up with the XServer only having auto,and the two low resolutions.Any ideas?
+
+---
+
+### Post by wojox on 2010-05-29
+Which number driver did you install? 
+
+Did you download it from the repo's or the nvidia site?
+
+You also entered as root:
+
+```
+gksudo nvidia-settings
+```
+
+---
+
+### Post by Ben_222 on 2010-05-30
+I downloaded it from the repository,and the version is 96.43.13   This is an old Legacy card that I put in a "spare" computer. My other computer ,which I alternate using on the same monitor has version 96.43.17,but it has Ubuntu 10.04 on it.I noticed on the Xserver on that computer that the "mode name" was "1024x768",but the mode name on the Karmic is "nvidia-autoselect".Seems maybe the program thinks the monitor will not handle the higher resolution?I tried some things(saving config files),and the monitor one time could not display;there was a "too high a resolution" colored box.The monitor is a HP Pavilion vx74.Oh,I did download direct from the Nvidia site,but I can't open the file......"character encoding" problem.
+
+---
+
+### Post by 4Orbs on 2010-05-30
+> I downloaded it from the repository,and the version is 96.43.13
+So you used Synaptic Pkg Mgr to install the driver? Have you activated the driver yet from System>> Administration>> Hardware Drivers then rebooted? Once the driver is activated, you change the resolution by using the nVidia Settings Mgr as root user rather than using the System Preferences Display settings. To open the nvidia Settings Mgr, enter in a terminal:
+```
+gksudo nvidia-settings
+```
+then change the resolution and then click the "Save Settings" button at the bottom and choose to save to /etc/X11/xorg.conf which will save and apply your settings to all user accounts on the computer.
+
+---
+
+### Post by Ben_222 on 2010-05-30
+No, I didn't use Synaptic Package Manager to download it.I don't quite know how to use that yet.;I just used Hardware Drivers,and it searched and loaded the driver.Oh,and the driver is activated,but in the Nvidia XServer Settings,under "Resolutions",it only has three choices,Auto,640x480,and 320x240.So what I get is 640x480! Everything is unbearably huge.I have done several reinstalls,all with the same results.And this same computer has run Ubuntu on it in the past,with much higher resolutions.The only difference is a different crt monitor,and a different hard drive.But the monitor is newer than the other one.I really like Ubuntu,cause it's faster than Windows,and it runs the only online game I like to play with no problems(Quakelive).Wojox helped me about a year ago with this same problem,albeit,many more resolutions were showing in the settings mgr,so it was an easy fix. Doesn't look quite as easy this time.
+
+---
+
+### Post by 4Orbs on 2010-05-30
+Is your current monitor a widescreen, or crt and what size?
+
+EDIT: While you have the nvidia settings mgr open as root, click on the "Detect Display" button and see if it is able to identify your monitor. If that produces no results, then you might want to try manually editing the xorg.conf file... which I'll help you with after your reply to this post.
+
+---
+
+### Post by Ben_222 on 2010-05-30
+The monitor is a crt,17 inch,the older type.Clicking on "detect displays" seems to do nothing,but I'm not sure;I can't even move the window farther to the left to see all of it.Oh,and at the top under "Layout" it says "hidden because screen height is less........"(Can't see the rest)
+
+---
+
+### Post by 4Orbs on 2010-05-30
+After you activated the driver and rebooted, did you get a warning message that you were in "Low Graphics Mode"?
+
+It sounds like nvidia is unable to detect the brand of monitor you are using so it defaults to a lousy resolution. In some cases when this happens you might be able to "scroll" to the unseen parts of the screen by just bumping the mouse cursor to the edges of the screen.
+
+If you are able to do that and reach the setting on the nvidia settings mgr to change resolution (as root user), set it back to "auto" then save the settings and reboot. This shouldn't change anything for the better, but it's the first step to modifying the xorg.conf file manually.
+
+---
+
+### Post by Ben_222 on 2010-05-30
+Ok,it is already set to "Auto";I had assumed what I have is 640x480,but it's probably lower.I clicked on the save button and clicked "show preview" and got this:
+
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildd@palmer)  Sun Feb  1 20:21:04 UTC 2009
+
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 1.0  (buildmeister@builder63)  Thu Jun 25 18:57:07 PDT 2009
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "Module"
+    Load           "dbe"
+    Load           "extmod"
+Load           "type1"
+    Load           "freetype"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+Section "Monitor"
+
+    # HorizSync source: xconfig, VertRefresh source: xconfig
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "CRT-0"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce2 MX/MX 400"
+EndSection
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "TwinViewXineramaInfoOrder" "CRT-0"
+    Option         "metamodes" "nvidia-auto-select +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+---
+
+### Post by 4Orbs on 2010-05-30
+I don't think you have done anything wrong... nvidia just doesn't know what to do with your monitor. If you want to try fixing this by doing the thing that worked for me, here are the steps. No guarantee as to how successful it might be.
+
+First, save your current xorg.conf file as a backup by entering in the terminal:
+```
+sudo mv /etc/X11/xorg.conf /etc/X11/xorg.conf.backup2
+```
+after which you will not have any xorg.conf file in place. Then open the text editor as root with a blank page by entering in the terminal:
+```
+gksudo gedit
+```
+then copy the below and paste it into the blank text file:
+```
+
+Section "Screen"
+	Identifier	"Default Screen"
+	DefaultDepth	24
+	Option	"AddARGBGLXVisuals"	"True"
+   SubSection "Display"
+   Depth 24
+   Modes "1024x768" "800x600" "640x480"
+   EndSubSection
+EndSection
+
+Section "Module"
+	Load	"glx"
+EndSection
+
+Section "Device"
+	Identifier	"Default Device"
+	Driver	"nvidia"
+	Option	"NoLogo"	"True"
+EndSection
+
+
+```
+and finally you want to save the file as your new xorg.conf file by "Save As" (up in the text editor top "File" menu) /etc/X11/xorg.conf
+
+After it is saved, close the editor and browser and reboot then login. With any luck you will be greeted with a working 1024x768 resolution, which should be the native resolution for your monitor.
+
+Now if this works... from now on, in order to change resolution, you don't use the nvidia settings manager but instead edit this file as root by adding your desired new resolution as the first entry in the "Modes" line of the file. Example, "1280x1024" "1024x768" "800x600" ....etc.
+
+And if this doesn't work, then you'll need to probably boot into recovery mode and login to the black screen and delete the xorg.conf file by entering:
+```
+sudo rm /etc/X11/xorg.conf
+```
+then reboot. This will put you back into your desktop without the nvidia driver but with the open source driver.
+
+---
+
+### Post by Ben_222 on 2010-05-30
+Ok,when I tried to do the backup of the conf file,I got this in the terminal:
+
+ben@ben-desktop:~$ sudo mv /etc/X11/xorg.conf /etc/X11/xorg.conf.backup2
+mv: cannot stat `/etc/X11/xorg.conf': No such file or directory
+
+That's weird.Anyway,I went ahead and did the gksudo gedit.And I may have messed up.....When the "Save As" window came up,I saved to "root" and named the file "/etc/X11/xorg.conf".Seemed logical to me.I then rebooted,but came back with low resolution.But I checked in the settings manager,and it didnt show it as 'auto" but as "640x480",and still there are only three choices.Did I save it wrong?Or does the inability to do a backup change what I did in gedit? This sounds so much like it should work.Hey,just HOW do I reboot in recovery mode in Linux?Ive come across it before,but not on purpose,but in grub.But I dont even see grub when this reboots.Anyway,hey ,I sure do thank you for your time and help!I'm not so good with software,but I've done a lot of hardware. If none of this works,could I possibly get the OTHER,older monitor;install using IT,and then switch over to the newer one?Or would it revert back?
+
+---
+
+### Post by 4Orbs on 2010-05-30
+No, you don't save to the word "root". When you named the file, root is automatically implied by the first slash / then the subfolder etc then the subsubfolder X11 which contains the file xorg.conf. You are the root user if you opened the text editor with the preamble gksudo. Anyway... if you just name the file as shown it will go to the correct location.
+
+The fact that you couldn't create the backup file from the terminal indicates that you have never actually saved your settings when you used the nvidia settings manager. It's important to understand that these changes need to be made as the root user (super-user) and that's why you open the nvidia settings manager by using the command in the terminal:
+```
+gksudo nvidia-settings
+```
+Then when you save your settings they will automatically be applied from the root-user level of authority.
+
+EDIT: Also, don't type these commands into the terminal when it's much easier and more accurate to just copy and paste them into the terminal.
+
+And as for the other monitor... that might work, but I doubt it. There is no reason to re-install the whole shebang when this can probably be easily fixed by working only on the driver and xorg.conf file. But if you really would rather install again.... practice makes perfect.
+
+---
+
+### Post by Ben_222 on 2010-05-31
+Thanks for the help,4Orbs.I never could get the editing the conf file to work,so I tried switching monitors.The first time didn't work,but the second time did.I switched while still logged in,and the resolution was great;and then I did the code sudo nvidia-xconfig,and then gksudo nvidia-settings.Then I saved the configuration in the server manager,,,and HOPED when I restartd it would work.It did,and now in the server settings,there are many high resolutions.I am going to save all of this you have told me,and maybe play around with it.I also may look for a cheap,better video card for this older pc.Thanks again,and I will mark the thread as solved.
+
+---
+
+### Post by 4Orbs on 2010-05-31
+> and maybe play around with it.
+I've heard rumors that will make you go blind.
+:guitar:
+Glad you got it working.
+
+---
+

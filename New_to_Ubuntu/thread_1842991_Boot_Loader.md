@@ -1,0 +1,351 @@
+---
+title: "Boot Loader"
+date: 2011-09-12
+forum: New to Ubuntu
+---
+
+### Post by Martin Houlton on 2011-09-12
+Hi
+
+I occasionally let the boot loader, when I get the choice of Windows or Ubuntu, time out so it goes to Windows and I have to waste time getting out again and into Ubuntu. Is it possible to set Ubuntu as the default?
+
+---
+
+### Post by drs305 on 2011-09-12
+Yes you can do it by editing one of the Windows boot files (such as boot.ini) or using bcedit in the latest version. The file to edit depends on the version of Windows you are using. Tell us which version and someone can help you out. 
+
+It may help to have the information provided by the boot info script available if you want specific instructions. Please post the contents of RESULTS.txt, which you create in Ubuntu after downloading/extracting/running the boot info script. Click the "BIS" link in my signature line to take you to the script page.
+
+---
+
+### Post by Martin Houlton on 2011-09-12
+> **drs305 said:**
+> Yes you can do it by editing one of the Windows boot files (such as boot.ini) or using bcedit in the latest version. The file to edit depends on the version of Windows you are using. Tell us which version and someone can help you out. 
+
+It may help to have the information provided by the boot info script available if you want specific instructions. Please post the contents of RESULTS.txt, which you create in Ubuntu after downloading/extracting/running the boot info script. Click the "BIS" link in my signature line to take you to the script page.
+
+Hi
+
+I am using Windows Vista Home Premium. I have downloaded and extracted the boot info script, but I can't figure out how to run it.
+
+---
+
+### Post by garvinrick4 on 2011-09-12
+Using Ubuntu Put the extracted script on Desktop then open a terminal and:
+```
+cd Desktop
+``````
+chmod +x boot_info_script.sh
+``````
+sudo ./boot_info_script.sh
+```Will now have a text file named RESULTS post it to this thread is long so nice after you paste it all here to hit
+code tags (highlight whole thing and hit # in upper right will put in nice box to read from)
+
+---
+
+### Post by Martin Houlton on 2011-09-13
+Hi
+
+Here is the requested information.
+
+```
+                  Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Windows is installed in the MBR of /dev/sda.
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /bootmgr /boot/BCD
+
+sda2: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  Windows Vista
+    Boot files:        /bootmgr /boot/BCD /Windows/System32/winload.exe 
+                       /wubildr /ubuntu/winboot/wubildr /wubildr.mbr 
+                       /ubuntu/winboot/wubildr.mbr /ubuntu/disks/root.disk 
+                       /ubuntu/disks/swap.disk
+
+sda2/Wubi: _____________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 11.04
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1                  63    16,787,924    16,787,862  27 Hidden NTFS (Recovery Environment)
+/dev/sda2    *     16,787,925   312,579,759   295,791,835   7 NTFS / exFAT / HPFS
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0       8cdaf524-406e-48f1-b0dd-22f6ea66fbc1   ext4       
+/dev/sda1        E6983A80983A4F75                       ntfs       _OEMBP
+/dev/sda2        FA9C17079C16BDD7                       ntfs       HDD
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /                        ext4       (rw,errors=remount-ro,commit=0)
+/dev/sda2        /host                    fuseblk    (rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096)
+
+
+======================== sda2/Wubi/boot/grub/grub.cfg: =========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="2"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+true
+}
+
+insmod part_msdos
+insmod ntfs
+set root='(/dev/sda,msdos2)'
+search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+loopback loop0 /ubuntu/disks/root.disk
+set root=(loop0)
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+menuentry "Ubuntu, Linux 2.6.38-11-generic" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-11-generic root=UUID=FA9C17079C16BDD7 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.38-11-generic
+}
+menuentry "Ubuntu, Linux 2.6.38-11-generic (recovery mode)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-11-generic root=UUID=FA9C17079C16BDD7 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.38-11-generic
+}
+menuentry "Ubuntu, Linux 2.6.38-8-generic" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-8-generic root=UUID=FA9C17079C16BDD7 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.38-8-generic
+}
+menuentry "Ubuntu, Linux 2.6.38-8-generic (recovery mode)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-8-generic root=UUID=FA9C17079C16BDD7 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.38-8-generic
+}
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Vista (loader) (on /dev/sda1)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root E6983A80983A4F75
+    chainloader +1
+}
+menuentry "Windows Vista (loader) (on /dev/sda2)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos2)'
+    search --no-floppy --fs-uuid --set=root FA9C17079C16BDD7
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+============================= sda2/Wubi/etc/fstab: =============================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/host/ubuntu/disks/root.disk /               ext4    loop,errors=remount-ro 0       1
+/host/ubuntu/disks/swap.disk none            swap    loop,sw         0       0
+--------------------------------------------------------------------------------
+
+================= sda2/Wubi: Location of files loaded by Grub: =================
+
+           GiB - GB             File                                 Fragment(s)
+
+   0.258644104 = 0.277716992    boot/grub/grub.cfg                             1
+   3.293537140 = 3.536408576    boot/initrd.img-2.6.38-11-generic              1
+   1.133346558 = 1.216921600    boot/initrd.img-2.6.38-8-generic               2
+   1.445625305 = 1.552228352    boot/vmlinuz-2.6.38-11-generic                 1
+   8.717472076 = 9.360314368    boot/vmlinuz-2.6.38-8-generic                  1
+   3.293537140 = 3.536408576    initrd.img                                     1
+   1.133346558 = 1.216921600    initrd.img.old                                 2
+   1.445625305 = 1.552228352    vmlinuz                                        1
+   8.717472076 = 9.360314368    vmlinuz.old                                    1
+
+========= Devices which don't seem to have a corresponding hard drive: =========
+
+sdb sdc sdd sde 
+
+
+```
+
+---
+
+### Post by drs305 on 2011-09-13
+I think since you are using 7 and Wubi you will need to make Ubuntu the default boot option in your Windows boot menu (I *think* with EasyBCD). 
+
+Since I'm not a Windows user you'll either have to wait for someone on here to tell you how to do it or search these or Windows forums to find out how to change the default menu selection.
+
+---
+
+### Post by garvinrick4 on 2011-09-13
+@Martin Houltin
+ There is another or the Ubuntu staff named rubi1200 who is excellent with all aspects
+of a WUBI install. I will leave him a message to check in on this thread when he logs in.
+
+I know as drs305 stated that if you run "bcdedit" without quotes at cmd line of Windows you will see an entry with "wubildr" in it, that is the Ubuntu entry as it boots off of the
+Windows boot manager. But to get that entry to be first in boot order is for a Windows user
+or someone like rubi1200 who has written tutorials on the subject. If no one else answers
+with patience rubi1200 will be with you. Enjoy your UBuntu.
+
+Below is rubi1200's wubi mega-thread
+[http://ubuntuforums.org/showthread.php?t=1639198&highlight=rubi1200](http://ubuntuforums.org/showthread.php?t=1639198&highlight=rubi1200)
+
+---
+
+### Post by Rubi1200 on 2011-09-13
+The easiest thing to do would be to install EasyBCD and use it to set Ubuntu as the default:
+[http://www.howtogeek.com/howto/20340/how-to-restore-the-wubi-ubuntu-bootloader/](http://www.howtogeek.com/howto/20340/how-to-restore-the-wubi-ubuntu-bootloader/)
+
+(Only the first part here is relevant; so you can see what it does).
+
+Enjoy!
+
+---
+
+### Post by Martin Houlton on 2011-09-17
+Hi,
+
+I'm using Windows Vista, not Windows 7. Anyway I think I will try to remember to press the down-arrow to get Ubuntu.
+
+---
+
+### Post by bcbc on 2011-09-18
+Right click on Computer, Properties, Advanced system settings, Startup & Recovery settings.
+
+Then under the 'Default operating system' there's a dropdown box where you can select Ubuntu. (Don't set the time to display OSes to less than 10)
+
+BUT... if you are booting more often than not into Ubuntu, you should probably start thinking about doing a regular dual boot or [migrating]("http://ubuntuforums.org/showthread.php?t=1519354") your Wubi install.
+
+---
+

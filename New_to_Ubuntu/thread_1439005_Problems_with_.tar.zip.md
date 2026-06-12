@@ -1,0 +1,119 @@
+---
+title: "Problems with .tar.zip"
+date: 2010-03-25
+forum: New to Ubuntu
+---
+
+### Post by BigG73 on 2010-03-25
+hello I am very new to Ubuntu and I am having a problem installing drivers for my cmedia sound card. I downloaded a package from Cmedia (linux drivers) and have it saved on my desktop. when I read the "read me" file it says to extract the files /usr/src/linux/Document/sound however I cannot seem to find this folder. I have tried placeing extracted files in my document folder but when I try to configure the files I get an error saying something about the target?
+
+can soemone tell me an easy way to install the files needed for my soundcard? 
+thank you in advance for any help..
+the instructions givin are as follows..
+
+STEPS TO BUILD DRIVER
+================================================================================
+
+  1. Backup the Config.in and Makefile in the sound driver directory
+     (/usr/src/linux/driver/sound).
+     The Configure.help provide help when you config driver in step
+     4, please backup the original one (/usr/src/linux/Document) and
+     copy this file.
+     The cmpci is document for the driver in detail, please copy it
+     to /usr/src/linux/Document/sound so you can refer it. Backup if
+     there is already one.
+
+  2. Extract the tar file by 'tar xvzf cmpci-xx.tar.gz' in the above
+     directory.
+
+  3. Change directory to /usr/src/linux
+
+  4. Config cm8338 driver by 'make menuconfig', 'make config' or
+     'make xconfig' command.
+
+  5. Please select Sound Card (CONFIG_SOUND=m) support and CMPCI
+     driver (CONFIG_SOUND_CMPCI=m) as modules. Resident mode not tested.
+     For driver option, please refer 'DRIVER PARAMETER'
+
+  6. Compile the kernel if necessary.
+
+  7. Compile the modules by 'make modules'.
+
+  8. Install the modules by 'make modules_install'
+
+
+INSTALL DRIVER
+================================================================================
+
+  1. Before first time to run the driver, create module dependency by
+     'depmod -a'
+
+  2. To install the driver manually, enter 'modprobe cmpci'.
+
+  3. Driver installation for various distributions:
+
+    a. Slackware 4.0
+       Add the 'modprobe cmpci' command in your /etc/rc.d/rc.modules
+       file.so you can start the driver automatically each time booting.
+
+    b. Caldera OpenLinux 2.2
+       Use LISA to load the cmpci module.
+
+    c. RedHat 6.0 and S.u.S.E. 6.1
+       Add following command in /etc/conf.modules:
+
+       alias sound cmpci
+
+	also visit [http://www.cmedia.com.tw](http://www.cmedia.com.tw) for installation instruction.
+
+DRIVER PARAMETER
+================================================================================
+
+  Some functions for the cm8738 can be configured in Kernel Configuration
+  or modules parameters. Set these parameters to 1 to enable.
+
+  mpu_io:	I/O ports base for MPU-401, 0 if disabled.
+  fm_io:	I/O ports base for OPL-3, 0 if disabled.
+  spdif_inverse:Inverse the S/PDIF-in signal, this depends on your
+		CD-ROM or DVD-ROM.
+  spdif_loop:   Enable S/PDIF loop, this route S/PDIF-in to S/PDIF-out
+                directly.
+  speakers:     Number of speakers used.
+  use_line_as_rear:Enable this if you want to use line-in as
+                rear-out.
+  use_line_as_bass:Enable this if you want to use line-in as
+                bass-out.
+  modem:	You will need to set this parameter if you want to use
+		the HSP modem. You need install the pctel.o, the modem
+		driver itself.
+  joystick:	Enable joystick. You will need to install Linux joystick
+		driver.
+
+---
+
+### Post by mbzn on 2010-03-25
+Read here [http://ubuntuforums.org/showthread.php?t=1052065](http://ubuntuforums.org/showthread.php?t=1052065) (for know how on linux)
+
+Hope it'll help you
+
+---
+
+### Post by r-senior on 2010-03-25
+Some other threads suggest that C-Media cards are often detected and work ou of the box on Ubuntu ...
+
+[http://ubuntuforums.org/showthread.php?t=567855]("http://ubuntuforums.org/showthread.php?t=567855")
+[http://ubuntuforums.org/showthread.php?t=932250]("http://ubuntuforums.org/showthread.php?t=932250")
+[http://ubuntuforums.org/showthread.php?t=379429]("http://ubuntuforums.org/showthread.php?t=379429")
+
+This might help ...
+
+[https://help.ubuntu.com/community/HowToSetupSoundCards]("https://help.ubuntu.com/community/HowToSetupSoundCards")
+
+as might this ...
+
+[http://ubuntuforums.org/showthread.php?t=205449]("http://ubuntuforums.org/showthread.php?t=205449")
+
+I'd investigate these options before trying to compile a driver by hand that doesn't have specific instructions for Ubuntu. I note it refers to RedHat 6.0 which dates back to about 1999. Back in those days recompiling kernels and modules was common practice but things have moved on.
+
+---
+

@@ -1,0 +1,333 @@
+---
+title: "Boot Info Script results"
+date: 2011-07-25
+forum: New to Ubuntu
+---
+
+### Post by dsonone on 2011-07-25
+```
+Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.97-1.98) is installed in the MBR of /dev/sda and looks at sector 
+    1 of the same hard drive for core.img. core.img is at this location and 
+    looks in partition 8 for (,msdos8)/boot/grub.
+
+sda1: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files:        /boot.ini /ntldr /NTDETECT.COM
+
+sda2: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sda3: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files:        /grub/grub.cfg /grub/core.img
+
+sda6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda7: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files:        /etc/fstab
+
+sda8: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  
+    Boot files:        
+
+sda9: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *             63   106,494,884   106,494,822   7 NTFS / exFAT / HPFS
+/dev/sda2         106,494,885   169,840,317    63,345,433   7 NTFS / exFAT / HPFS
+/dev/sda3         169,840,638   312,576,704   142,736,067   5 Extended
+/dev/sda5         231,416,388   231,609,104       192,717  83 Linux
+/dev/sda6         231,609,168   234,532,934     2,923,767  82 Linux swap / Solaris
+/dev/sda7         234,532,998   312,576,704    78,043,707  83 Linux
+/dev/sda8         169,840,640   228,786,175    58,945,536  83 Linux
+/dev/sda9         228,788,224   231,415,807     2,627,584  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        223CB6143CB5E2C9                       ntfs       
+/dev/sda2        28F41FC3F41F9264                       ntfs       New Volume
+/dev/sda5        657a5615-f1e6-44e4-8d17-c5fbfd67d1d2   ext4       
+/dev/sda6        1c1bd1a9-36fe-4e71-b7ac-194031f2056a   swap       
+/dev/sda7        392d29fd-70f9-46f1-82d9-2049af61d8a0   ext4       
+/dev/sda8        f159daaf-aa51-4c97-b50e-b896c71c349c   ext4       
+/dev/sda9        e83a0396-1339-4177-9174-0ea76feace07   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sda8        /media/f159daaf-aa51-4c97-b50e-b896c71c349c ext4       (rw,nosuid,nodev,uhelper=udisks)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+================================ sda1/boot.ini: ================================
+
+--------------------------------------------------------------------------------
+[boot loader] 
+timeout=30 
+default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[operating systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect /usepmtimer 
+--------------------------------------------------------------------------------
+
+============================= sda5/grub/grub.cfg: ==============================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,7)'
+search --no-floppy --fs-uuid --set 392d29fd-70f9-46f1-82d9-2049af61d8a0
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+set locale_dir=($root)/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    linux    /vmlinuz-2.6.32-25-generic root=UUID=392d29fd-70f9-46f1-82d9-2049af61d8a0 ro   quiet splash
+    initrd    /initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    echo    'Loading Linux 2.6.32-25-generic ...'
+    linux    /vmlinuz-2.6.32-25-generic root=UUID=392d29fd-70f9-46f1-82d9-2049af61d8a0 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-14-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    linux    /vmlinuz-2.6.31-14-generic root=UUID=392d29fd-70f9-46f1-82d9-2049af61d8a0 ro   quiet splash
+    initrd    /initrd.img-2.6.31-14-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.31-14-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    echo    'Loading Linux 2.6.31-14-generic ...'
+    linux    /vmlinuz-2.6.31-14-generic root=UUID=392d29fd-70f9-46f1-82d9-2049af61d8a0 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    linux16    /memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 657a5615-f1e6-44e4-8d17-c5fbfd67d1d2
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Microsoft Windows XP Professional (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 223cb6143cb5e2c9
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+--------------------------------------------------------------------------------
+
+=================== sda5: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+ 110.363674164 = 118.502092800  grub/core.img                                  1
+ 110.373037338 = 118.512146432  grub/grub.cfg                                  1
+ 110.374201775 = 118.513396736  initrd.img-2.6.31-14-generic                   2
+ 110.394656181 = 118.535359488  initrd.img-2.6.32-25-generic                   1
+ 110.363276482 = 118.501665792  vmlinuz-2.6.31-14-generic                      1
+ 110.379037857 = 118.518589440  vmlinuz-2.6.32-25-generic                      1
+
+=============================== sda7/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda7 during installation
+UUID=392d29fd-70f9-46f1-82d9-2049af61d8a0 /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/sda5 during installation
+UUID=657a5615-f1e6-44e4-8d17-c5fbfd67d1d2 /boot           ext4    defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=1c1bd1a9-36fe-4e71-b7ac-194031f2056a none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+--------------------------------------------------------------------------------
+```
+
+---
+
+### Post by coffeecat on 2011-07-25
+@dsonone, you should do three things.
+
+Start your own thread with a descriptive title and not hijack an info thread. This has already been said to others before in this thread.
+
+State what the problem is and describe what you have done to get to the point you have got to. I can see that you have Windows and Ubuntu 10.04, and I can also see that you cannot boot because grub in the mbr is looking in the wrong partition, but unless you describe what you have done and what you are trying to achieve, it is difficult for people to help you.
+
+Enclose the contents of RESULTS.txt between [noparse]```
+ and 
+```[/noparse] tags for legibility. This is clearly stated in both the sourceforge link and the OP and without code tags the output is difficult to read, and people will be less inclined to help.
+
+---
+
+### Post by CharlesA on 2011-07-25
+Moved to it's own thread. I can change the title when the OP gives some more information, if needed.
+
+---
+
+### Post by coffeecat on 2011-07-25
+> **CharlesA said:**
+> Moved to it's own thread. I can change the title when the OP gives some more information, if needed.
+
+Thanks. I'll try to help when and if the OP gives more information rather than blindly telling them how to re-install grub pointing to the Ubuntu boot partition, which may or may not be what is needed.
+
+---
+
+### Post by CharlesA on 2011-07-25
+> **coffeecat said:**
+> Thanks. I'll try to help when and if the OP gives more information rather than blindly telling them how to re-install grub pointing to the Ubuntu boot partition, which may or may not be what is needed.
+
+No prob. I'm subscribed to the thread, so I'll know when it's updated. ;)
+
+---
+

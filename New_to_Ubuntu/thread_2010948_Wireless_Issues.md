@@ -1,0 +1,287 @@
+---
+title: "Wireless Issues"
+date: 2012-06-26
+forum: New to Ubuntu
+---
+
+### Post by Korosia on 2012-06-26
+Hello,
+ 
+I've been using Ubuntu for about 6 months, but for a large amount of that time I've been on a ethernet connection (I have ethernet while I'm away at Uni, but wireless at home). Last time I was home I had problems connecting to wireless, but simply hitting "cancel" when it asked for a password (the password had already been inputted previously) made it connect.
+
+[SIZE=3][FONT=Times New Roman]I've got got home from Uni again, and decided to update to 12.04. Now I can't connect to wireless at all. The wireless card is definatly working, and can detect the wirless router, but it can't seem to get further than asking for the key. (If you press cancel when it asks, it just disconnects. Pressing confirm means it keeps scanning, and just asks again in a couple of minutes).[/FONT][/SIZE]
+
+[SIZE=3][FONT=Times New Roman]I managed to make it connect last night, but I have no idea what I did. This morning it connected for a few minutes, then the connection dropped and I can't seem to get it to reconnect.[/FONT][/SIZE]
+
+[SIZE=3][FONT=Times New Roman]I'm using an Acer Aspire 5332 laptop. [/FONT][/SIZE][SIZE=3][FONT=Times New Roman]I tried removing and blacklisting acer-wmi but that didn't seem to help.[/FONT][/SIZE]
+
+ 
+[SIZE=3][FONT=Times New Roman]:~$ lspci -nn | grep 0280[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]04:00.0 Network controller [0280]: Atheros Communications Inc. AR928X Wireless Network Adapter (PCI-Express) [168c:002a] (rev 01)[/FONT][/SIZE]
+ 
+ 
+[SIZE=3][FONT=Times New Roman]:~$ sudo iwlist wlan0 scan[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman][sudo] password for bgw25: [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]wlan0     Scan completed :[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 01 - Address: 40:4D:8E:40:FE:8F[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.412 GHz (Channel 1)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=28/70  Signal level=-82 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"BTHub3-C756"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=0000034bf389c19f[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 916ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 000B4254487562332D43373536[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 030101[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: IEEE 802.11i/WPA2 Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1AF0181BFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D1601000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180200F0040000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 02 - Address: 00:17:3F:07:CA:72[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:2[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.417 GHz (Channel 2)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=32/70  Signal level=-78 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"Our Home Network"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 18 Mb/s; 24 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              36 Mb/s; 48 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=00000086003ad177[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 912ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 00104F757220486F6D65204E6574776F726B[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010482848B96[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 030102[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (1) : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 0406000200000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32080C1218243048606C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 03 - Address: 00:FE:F4:24:01:E0[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:6[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.437 GHz (Channel 6)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=48/70  Signal level=-62 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"BTHub3-T54P"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 6 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              9 Mb/s; 12 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:24 Mb/s; 36 Mb/s; 48 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=000000a302922c89[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 608ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 000B4254487562332D54353450[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B960C121824[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 030106[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: IEEE 802.11i/WPA2 Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32043048606C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1AAC011BFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D1606001300000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 4A0E14000A002C01C800140005001900[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 7F0101[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101860003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD1E00904C33AC011BFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD1A00904C3406001300000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD0900037F01010000FF7F[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 04 - Address: 4C:17:EB:4B:05:35[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:11[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.462 GHz (Channel 11)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=32/70  Signal level=-78 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"SKYB0534"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=000002e7dc92119e[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 224ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 0008534B594230353334[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 03010B[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: IEEE 802.11i/WPA2 Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1AFC181BFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D160B000400000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD7B0050F204104A00011010440001021041000100103B0001031047001078BCD88B3A2A5990D9AFD203EE31617A1021000842726F6164636F6D1023000842726F6164636F6D1024000631323334353610420004313233341054000800060050F20400011011000A42726F6164636F6D4150100800020084103C000101[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180204F0040000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 05 - Address: 34:08:04:95:ED:58[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:11[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.462 GHz (Channel 11)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=22/70  Signal level=-88 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"SKY61622"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=000009ac6baa718b[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 264ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 0008534B593631363232[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 03010B[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: IEEE 802.11i/WPA2 Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180202F0040000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 06 - Address: 20:2B:C1:75:29:89[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:6[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.437 GHz (Channel 6)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=24/70  Signal level=-86 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"BTHub3-G58Q"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=000000d3b774f435[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 592ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 000B4254487562332D47353851[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 030106[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 050400010000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: WPA Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: IEEE 802.11i/WPA2 Version 1[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Group Cipher : TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Pairwise Ciphers (2) : CCMP TKIP[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                        Authentication Suites (1) : PSK[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1AFC181BFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D1606001500000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180201F0040000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101800003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 07 - Address: 02:24:2C:66:1E:A8[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:11[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.462 GHz (Channel 11)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=22/70  Signal level=-88 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:off[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"BTFON"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=0000004cdfda3185[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 360ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 00054254464F4E[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 03010B[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 050401030000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0104[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0104[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1A0C181AFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D160B001300000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180202F0050000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD180050F2020101880003A4000027A4000042435E0062322F00[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]          Cell 08 - Address: 00:24:2C:66:1E:AA[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Channel:11[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Frequency:2.462 GHz (Channel 11)[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Quality=23/70  Signal level=-87 dBm  [/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Encryption key:on[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    ESSID:"BTHomeHub2-5C6Q"[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 18 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                              24 Mb/s; 36 Mb/s; 54 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Bit Rates:6 Mb/s; 9 Mb/s; 12 Mb/s; 48 Mb/s[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Mode:Master[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra:tsf=0000004cdfda3790[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    Extra: Last beacon: 360ms ago[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 000F4254486F6D65487562322D35433651[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 010882848B962430486C[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 03010B[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 050401030100[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2A0104[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2F0104[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 32040C121860[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 2D1A0C181AFFFF000000000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: 3D160B001300000000000000000000000000000000000000[/FONT][/SIZE]
+[SIZE=3][FONT=Times New Roman]                    IE: Unknown: DD090010180202F0050000[/FONT][/SIZE]
+[FONT=Times New Roman]                    IE: Unknown: DD180050F2020101880003A4000027A4000042435E0062322F00[/FONT]
+
+---
+
+### Post by chili555 on 2012-06-26
+To whick network are you trying to connect? If this one, with the highest signal strength:> Cell 03 - Address: 00:FE:F4:24:01:E0
+Channel:6
+Frequency:2.437 GHz (Channel 6)
+Quality=48/70 Signal level=-62 dBm
+Encryption keyn
+ESSID:"BTHub3-T54P"
+Bit Rates:1 Mb/s; 2 Mb/s; 5.5 Mb/s; 11 Mb/s; 6 Mb/s
+9 Mb/s; 12 Mb/s; 18 Mb/s
+Bit Rates:24 Mb/s; 36 Mb/s; 48 Mb/s; 54 Mb/s
+Mode:Master
+<snip>
+[COLOR="Red"]IE: IEEE 802.11i/WPA2 Version 1[/COLOR]
+Group Cipher : TKIP
+Pairwise Ciphers (2) : CCMP TKIP
+Authentication Suites (1) : PSK
+<snip>
+[COLOR="Red"]IE: WPA Version 1[/COLOR]
+Group Cipher : TKIP
+Pairwise Ciphers (2) : CCMP TKIP
+Authentication Suites (1) : PSKThen you will probably have better luck setting the router to WPA2 only and not WPA and WPA2 mixed mode. Can you please try that and report back?
+
+---
+
+### Post by Korosia on 2012-06-26
+> **chili555 said:**
+> To whick network are you trying to connect? If this one, with the highest signal strength, then you will probably have better luck setting the router to WPA2 only and not WPA and WPA2 mixed mode. Can you please try that and report back?
+ 
+Yes, that's the one. Sorry for the newbie-ness, but how do I change it to WPA2 only?
+
+---
+
+### Post by chili555 on 2012-06-26
+> **Korosia said:**
+> Yes, that's the one. Sorry for the newbie-ness, but how do I change it to WPA2 only?You log on to the administrative pages of the router and look under wireless and change the encryption mode. Please see attached. We are not blessed with BTHome goodness here in South Carolina, so your exact details will differ.
+
+---
+

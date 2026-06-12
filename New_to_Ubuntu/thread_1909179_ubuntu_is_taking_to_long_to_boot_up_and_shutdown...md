@@ -1,0 +1,1407 @@
+---
+title: "ubuntu is taking to long to boot up and shutdown..."
+date: 2012-01-14
+forum: New to Ubuntu
+---
+
+### Post by werty2010 on 2012-01-14
+since i installed ubuntu(11.10) besides some minor bugs, there is one big:
+is taking too long to boot up and shutdown. 
+approximately 2 minutes and 30 seconds for each one.
+
+could someone give me a hand to figure this out?
+
+---
+
+### Post by Hylas de Niall on 2012-01-14
+11.10 is markedly slower on boot up and shut-down than the older Gnome 2.X based Ubu's in my experience.
+I've noticed that since reverting my main machine back to 10.10; it's like swapping a pit-pony for a racehorse, TBH.
+
+---
+
+### Post by Mark Phelps on 2012-01-15
+The presence of Unity causes 11.x versions to take longer to boot.
+
+You can try other desktops, which may shorten the boot time, but you will lose the features of Unity.
+
+---
+
+### Post by Gone fishing on 2012-01-15
+2 minutes sounds too long if the computer is usable once it starts up, I suspect there is an start up error what does dmesg run in a terminal look like?
+
+---
+
+### Post by werty2010 on 2012-01-22
+> **Gone fishing said:**
+> 2 minutes sounds too long if the computer is usable once it starts up, I suspect there is an start up error what does dmesg run in a terminal look like?
+
+
+the output of "dmesg run":
+```
+
+[   15.006049] [fglrx] Maximum main memory to use for locked dma buffers: 3666 MBytes.
+[   15.006264] [fglrx]   vendor: 1002 device: 68c1 count: 1
+[   15.006700] [fglrx] ioport: bar 4, base 0xe000, size: 0x100
+[   15.006719] pci 0000:01:00.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16
+[   15.006725] pci 0000:01:00.0: setting latency timer to 64
+[   15.006928] [fglrx] Kernel PAT support is enabled
+[   15.006946] [fglrx] module loaded - fglrx 8.88.7 [Jul 28 2011] with 1 minors
+[   15.033054] Bluetooth: Generic Bluetooth USB driver ver 0.6
+[   15.033272] usbcore: registered new interface driver btusb
+[   15.081778] brcmutil: module is from the staging directory, the quality is unknown, you have been warned.
+[   15.112454] brcmsmac: module is from the staging directory, the quality is unknown, you have been warned.
+[   15.114283] brcmsmac 0000:12:00.0: bus 18 slot 0 func 0 irq 10
+[   15.114305] brcmsmac 0000:12:00.0: PCI INT A -> GSI 17 (level, low) -> IRQ 17
+[   15.114313] brcmsmac 0000:12:00.0: setting latency timer to 64
+[   15.141491] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141495] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141498] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141501] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141504] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141507] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141509] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141512] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141514] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141517] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141520] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141522] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141524] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141526] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141528] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141530] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141532] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141534] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141536] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141538] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141540] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141542] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141544] cfg80211: Updating information on frequency 2467 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141546] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141548] cfg80211: Updating information on frequency 2472 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141550] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.141551] cfg80211: Updating information on frequency 2484 MHz for a 20 MHz width channel with regulatory rule:
+[   15.141554] cfg80211: 2474000 KHz - 2494000 KHz @  KHz), (600 mBi, 2000 mBm)
+[   15.445632] ieee80211 phy0: Selected rate control algorithm 'minstrel_ht'
+[   15.446315] cfg80211: Pending regulatory request, waiting for it to be processed...
+[   15.484777] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484783] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484786] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484790] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484792] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484796] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484798] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484802] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484804] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484807] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484809] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484812] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484815] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484818] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484820] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484823] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484825] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484828] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484831] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484834] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484837] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484840] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484842] cfg80211: Updating information on frequency 2467 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484845] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484848] cfg80211: Updating information on frequency 2472 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484851] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484854] cfg80211: Updating information on frequency 2484 MHz for a 20 MHz width channel with regulatory rule:
+[   15.484857] cfg80211: 2474000 KHz - 2494000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   15.484860] cfg80211: World regulatory domain updated:
+[   15.484862] cfg80211:     (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[   15.484865] cfg80211:     (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.484868] cfg80211:     (2457000 KHz - 2482000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[   15.484871] cfg80211:     (2474000 KHz - 2494000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[   15.484873] cfg80211:     (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.484876] cfg80211:     (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.484891] cfg80211: Calling CRDA for country: US
+[   15.488629] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488634] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488636] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488638] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488640] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488642] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488644] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488646] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488648] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488650] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488652] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488654] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488656] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488658] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488659] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488662] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488663] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488666] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488667] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488669] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488671] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[   15.488673] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   15.488675] cfg80211: Disabling freq 2467 MHz
+[   15.488676] cfg80211: Disabling freq 2472 MHz
+[   15.488677] cfg80211: Disabling freq 2484 MHz
+[   15.488680] cfg80211: Regulatory domain changed to country: US
+[   15.488681] cfg80211:     (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[   15.488683] cfg80211:     (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2700 mBm)
+[   15.488685] cfg80211:     (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 1700 mBm)
+[   15.488687] cfg80211:     (5250000 KHz - 5330000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.488689] cfg80211:     (5490000 KHz - 5600000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.488691] cfg80211:     (5650000 KHz - 5710000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   15.488693] cfg80211:     (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 3000 mBm)
+[   15.510056] Synaptics Touchpad, model: 1, fw: 7.2, id: 0x1c0b1, caps: 0xd04733/0xa40000/0xa0000
+[   15.523354] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[   15.584427] input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input10
+[   15.606265] lib80211: common routines for IEEE802.11 drivers
+[   15.606269] lib80211_crypt: registered algorithm 'NULL'
+[   16.001702] HDA Intel 0000:00:1b.0: PCI INT A -> GSI 22 (level, low) -> IRQ 22
+[   16.001777] HDA Intel 0000:00:1b.0: irq 47 for MSI/MSI-X
+[   16.001811] HDA Intel 0000:00:1b.0: setting latency timer to 64
+[   16.136451] input: HDA Intel Mic at Ext Left Jack as /devices/pci0000:00/0000:00:1b.0/sound/card0/input11
+[   16.136571] input: HDA Intel HP Out at Ext Left Jack as /devices/pci0000:00/0000:00:1b.0/sound/card0/input12
+[   16.136784] HDA Intel 0000:01:00.1: PCI INT B -> GSI 17 (level, low) -> IRQ 17
+[   16.136898] HDA Intel 0000:01:00.1: irq 48 for MSI/MSI-X
+[   16.136920] HDA Intel 0000:01:00.1: setting latency timer to 64
+[   16.179473] HDMI status: Pin=3 Presence_Detect=0 ELD_Valid=0
+[   16.179632] input: HD-Audio Generic HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input13
+[   17.308822] ieee80211 phy0: wl_ops_config: change monitor mode: false (implement)
+[   17.308827] ieee80211 phy0: wl_ops_config: change power-save mode: false (implement)
+[   17.309446] ieee80211 phy0: wl_ops_bss_info_changed: qos enabled: false (implement)
+[   17.309917] ADDRCONF(NETDEV_UP): wlan0: link is not ready
+[   17.315102] r8169 0000:13:00.0: eth0: link down
+[   17.315458] ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   17.356330] type=1400 audit(1327248393.587:5): apparmor="STATUS" operation="profile_load" name="/usr/lib/lightdm/lightdm-guest-session-wrapper" pid=1219 comm="apparmor_parser"
+[   17.358327] type=1400 audit(1327248393.591:6): apparmor="STATUS" operation="profile_replace" name="/sbin/dhclient" pid=1223 comm="apparmor_parser"
+[   17.358679] type=1400 audit(1327248393.591:7): apparmor="STATUS" operation="profile_replace" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=1223 comm="apparmor_parser"
+[   17.358897] type=1400 audit(1327248393.591:8): apparmor="STATUS" operation="profile_replace" name="/usr/lib/connman/scripts/dhclient-script" pid=1223 comm="apparmor_parser"
+[   17.364731] type=1400 audit(1327248393.595:9): apparmor="STATUS" operation="profile_load" name="/usr/bin/evince" pid=1224 comm="apparmor_parser"
+[   17.369322] type=1400 audit(1327248393.599:10): apparmor="STATUS" operation="profile_load" name="/usr/bin/evince-previewer" pid=1224 comm="apparmor_parser"
+[   17.372222] type=1400 audit(1327248393.603:11): apparmor="STATUS" operation="profile_load" name="/usr/bin/evince-thumbnailer" pid=1224 comm="apparmor_parser"
+[   17.413922] ppdev: user-space parallel port driver
+[   18.109506] init: failsafe main process (1154) killed by TERM signal
+[   18.111621] init: apport pre-start process (1276) terminated with status 1
+[   18.125248] init: apport post-stop process (1309) terminated with status 1
+[   18.831341] vboxdrv: Found 4 processor cores.
+[   18.832033] vboxdrv: fAsync=0 offMin=0x242 offMax=0x4aae
+[   18.832468] vboxdrv: TSC mode is 'synchronous', kernel timer mode is 'normal'.
+[   18.832471] vboxdrv: Successfully loaded version 4.1.2_Ubuntu (interface 0x00190000).
+[   18.896248] fglrx_pci 0000:01:00.0: irq 49 for MSI/MSI-X
+[   18.896886] [fglrx] Firegl kernel thread PID: 1359
+[   18.897091] [fglrx] Firegl kernel thread PID: 1360
+[   18.897242] [fglrx] Firegl kernel thread PID: 1361
+[   18.897580] [fglrx] IRQ 49 Enabled
+[   19.740296] vboxpci: IOMMU not found (not registered)
+[   19.789706] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[   19.789710] Bluetooth: BNEP filters: protocol multicast
+[   19.917466] [fglrx] Gart USWC size:1196 M.
+[   19.917470] [fglrx] Gart cacheable size:474 M.
+[   19.917476] [fglrx] Reserved FB block: Shared offset:0, size:1000000 
+[   19.917478] [fglrx] Reserved FB block: Unshared offset:f941000, size:3bf000 
+[   19.917479] [fglrx] Reserved FB block: Unshared offset:3fff4000, size:c000 
+[   19.922655] Bluetooth: RFCOMM TTY layer initialized
+[   19.922662] Bluetooth: RFCOMM socket layer initialized
+[   19.922664] Bluetooth: RFCOMM ver 1.11
+[   20.584378] Adding 4051964k swap on /dev/mapper/cryptswap1.  Priority:-1 extents:1 across:4051964k 
+[   21.760210] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro,commit=0
+[   26.088231] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro,commit=0
+[   67.383548] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=55492 DPT=53 LEN=47 
+[   67.383570] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=55492 DPT=53 LEN=47 
+[   67.383616] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=58027 DPT=53 LEN=47 
+[   67.383624] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=58027 DPT=53 LEN=47 
+[   67.383651] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=34695 DPT=53 LEN=47 
+[   67.383659] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=34695 DPT=53 LEN=47 
+[   67.383679] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=52133 DPT=53 LEN=47 
+[   67.383687] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=52133 DPT=53 LEN=47 
+[   67.383715] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=55144 DPT=53 LEN=47 
+[   67.383723] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=55144 DPT=53 LEN=47 
+[   67.383744] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=48260 DPT=53 LEN=47 
+[   67.383752] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=48260 DPT=53 LEN=47 
+[   67.383773] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=51067 DPT=53 LEN=47 
+[   67.383781] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=51067 DPT=53 LEN=47 
+[   67.383801] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=35951 DPT=53 LEN=47 
+[   67.383809] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=7368 DF PROTO=UDP SPT=35951 DPT=53 LEN=47 
+[  123.414524] usb 2-1.6: USB disconnect, device number 3
+[  123.414532] usb 2-1.6.1: USB disconnect, device number 4
+[  123.555491] usb 2-1.6.2: USB disconnect, device number 5
+[  123.555605] usb 2-1.6.3: USB disconnect, device number 6
+[  124.066354] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21560 DF PROTO=UDP SPT=40212 DPT=53 LEN=44 
+[  124.066382] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21560 DF PROTO=UDP SPT=40212 DPT=53 LEN=44 
+[  124.066439] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21560 DF PROTO=UDP SPT=54276 DPT=53 LEN=44 
+[  124.066484] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21560 DF PROTO=UDP SPT=54276 DPT=53 LEN=44 
+[  124.066622] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21561 DF PROTO=UDP SPT=60922 DPT=53 LEN=44 
+[  124.066634] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21561 DF PROTO=UDP SPT=60922 DPT=53 LEN=44 
+[  124.066668] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21561 DF PROTO=UDP SPT=33855 DPT=53 LEN=44 
+[  124.066680] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=21561 DF PROTO=UDP SPT=33855 DPT=53 LEN=44 
+[  128.107280] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=22572 DF PROTO=UDP SPT=56112 DPT=53 LEN=47 
+[  128.107309] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=22572 DF PROTO=UDP SPT=56112 DPT=53 LEN=47 
+[  154.302776] wlan0: authenticate with 38:22:9d:c1:89:52 (try 1)
+[  154.304485] wlan0: authenticated
+[  154.308233] wlan0: associate with 38:22:9d:c1:89:52 (try 1)
+[  154.329607] wlan0: RX AssocResp from 38:22:9d:c1:89:52 (capab=0x431 status=0 aid=1)
+[  154.329612] wlan0: associated
+[  154.330488] ieee80211 phy0: wl_ops_bss_info_changed: qos enabled: true (implement)
+[  154.330495] ieee80211 phy0: brcmsmac: wl_ops_bss_info_changed: associated
+[  154.330513] ieee80211 phy0: wl_ops_bss_info_changed: arp filtering: enabled true, count 0 (implement)
+[  154.331172] ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[  154.339103] [UFW ALLOW] IN= OUT=wlan0 SRC=0000:0000:0000:0000:0000:0000:0000:0000 DST=ff02:0000:0000:0000:0000:0000:0000:0016 LEN=76 TC=0 HOPLIMIT=1 FLOWLBL=0 PROTO=ICMPv6 TYPE=143 CODE=0 
+[  154.751106] ieee80211 phy0: wl_ops_bss_info_changed: arp filtering: enabled true, count 1 (implement)
+[  154.754409] [UFW ALLOW] IN= OUT=wlan0 SRC=0000:0000:0000:0000:0000:0000:0000:0000 DST=ff02:0000:0000:0000:0000:0000:0000:0016 LEN=76 TC=0 HOPLIMIT=1 FLOWLBL=0 PROTO=ICMPv6 TYPE=143 CODE=0 
+[  154.758420] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  154.758436] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  154.820421] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=29261 DF PROTO=UDP SPT=37577 DPT=53 LEN=51 
+[  154.853304] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=115 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=95 
+[  154.950099] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  154.987744] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=70 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=50 
+[  155.047358] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=325 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=305 
+[  155.115038] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=214 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=194 
+[  155.298081] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=325 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=305 
+[  155.548354] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=325 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=305 
+[  155.748725] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=301 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=281 
+[  155.852811] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=96 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=76 
+[  156.064358] [UFW ALLOW] IN= OUT=wlan0 SRC=0000:0000:0000:0000:0000:0000:0000:0000 DST=ff02:0000:0000:0000:0000:0000:0000:0016 LEN=76 TC=0 HOPLIMIT=1 FLOWLBL=0 PROTO=ICMPv6 TYPE=143 CODE=0 
+[  156.315989] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:0002 LEN=56 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=ICMPv6 TYPE=133 CODE=0 
+[  156.323927] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:0016 LEN=76 TC=0 HOPLIMIT=1 FLOWLBL=0 PROTO=ICMPv6 TYPE=143 CODE=0 
+[  156.417175] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=126 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=86 
+[  156.417185] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=126 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=86 
+[  156.417204] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=126 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=86 
+[  156.611027] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  156.611042] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  156.611065] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  156.678377] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=234 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=194 
+[  156.678393] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=234 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=194 
+[  156.678417] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=234 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=194 
+[  156.861787] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  156.861802] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  156.861825] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  157.112314] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  157.112328] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  157.112351] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=404 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=364 
+[  157.312312] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=380 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=340 
+[  157.312349] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=380 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=340 
+[  157.415543] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=126 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=86 
+[  157.415564] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=126 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=86 
+[  157.921060] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=348 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=308 
+[  157.921087] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=348 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=308 
+[  158.554507] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=294 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=254 
+[  158.554535] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=294 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=254 
+[  158.555035] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=171 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=131 
+[  158.555051] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=171 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=131 
+[  165.317815] wlan0: no IPv6 routers present
+[  168.468320] [UFW AUDIT] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=951 PROTO=2 
+[  168.468345] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=951 PROTO=2 
+[  168.469356] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=68 TOS=0x00 PREC=0x00 TTL=64 ID=32679 DF PROTO=UDP SPT=43867 DPT=53 LEN=48 
+[  171.543483] [UFW AUDIT INVALID] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=199.59.148.20 DST=192.168.1.10 LEN=40 TOS=0x08 PREC=0x20 TTL=48 ID=0 DF PROTO=TCP SPT=443 DPT=36024 WINDOW=0 RES=0x00 RST URGP=0 
+[  171.543496] [UFW BLOCK] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=199.59.148.20 DST=192.168.1.10 LEN=40 TOS=0x08 PREC=0x20 TTL=48 ID=0 DF PROTO=TCP SPT=443 DPT=36024 WINDOW=0 RES=0x00 RST URGP=0 
+[  176.011910] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=74 TOS=0x00 PREC=0x00 TTL=64 ID=34567 DF PROTO=UDP SPT=51271 DPT=53 LEN=54 
+[  176.201074] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  177.201293] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  177.201316] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  188.027772] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=37576 DF PROTO=UDP SPT=48253 DPT=53 LEN=47 
+[  195.818108] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=65 TOS=0x00 PREC=0x00 TTL=64 ID=39527 DF PROTO=UDP SPT=49109 DPT=53 LEN=45 
+[  207.788671] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=72 TOS=0x00 PREC=0x00 TTL=64 ID=42524 DF PROTO=UDP SPT=37551 DPT=53 LEN=52 
+[  210.671683] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  210.671701] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  210.671718] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  210.671828] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=72 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  210.865919] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=70 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=50 
+[  215.245062] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=72 TOS=0x00 PREC=0x00 TTL=64 ID=44391 DF PROTO=UDP SPT=41723 DPT=53 LEN=52 
+[  217.660295] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  217.660308] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  217.660329] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  233.509634] [UFW AUDIT] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=952 PROTO=2 
+[  233.509659] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=952 PROTO=2 
+[  234.673203] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=46.198.11.156 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=41809 DF PROTO=TCP SPT=60895 DPT=80 WINDOW=14600 RES=0x00 SYN URGP=0 
+[  234.673224] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=46.198.11.156 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=41809 DF PROTO=TCP SPT=60895 DPT=80 WINDOW=14600 RES=0x00 SYN URGP=0 
+[  247.174814] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=56 TOS=0x00 PREC=0x00 TTL=64 ID=52386 DF PROTO=UDP SPT=48923 DPT=53 LEN=36 
+[  250.040428] [UFW AUDIT] IN=wlan0 OUT= MAC=ff:ff:ff:ff:ff:ff:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=192.168.1.255 LEN=244 TOS=0x00 PREC=0x00 TTL=64 ID=31160 PROTO=UDP SPT=138 DPT=138 LEN=224 
+[  250.245564] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  250.245578] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  250.245598] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  254.741690] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=61 TOS=0x00 PREC=0x00 TTL=64 ID=54280 DF PROTO=UDP SPT=55233 DPT=53 LEN=41 
+[  274.991938] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=74 TOS=0x00 PREC=0x00 TTL=64 ID=59351 DF PROTO=UDP SPT=56240 DPT=53 LEN=54 
+[  274.991947] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=70 TOS=0x00 PREC=0x00 TTL=64 ID=59351 DF PROTO=UDP SPT=38409 DPT=53 LEN=50 
+[  275.184938] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=112 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=72 
+[  275.184960] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=112 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=72 
+[  275.184990] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=112 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=72 
+[  275.185173] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=92 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=72 
+[  275.389108] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=90 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=50 
+[  276.388298] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=90 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=50 
+[  276.388336] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=90 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=50 
+[  287.758901] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=69.58.183.140 LEN=60 TOS=0x00 PREC=0x00 TTL=64 ID=23183 DF PROTO=TCP SPT=55725 DPT=80 WINDOW=14600 RES=0x00 SYN URGP=0 
+[  297.073534] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.4.4 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=64880 DF PROTO=UDP SPT=40570 DPT=53 LEN=51 
+[  297.278615] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  297.278637] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  297.278665] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=91 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  297.278817] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=71 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  298.551125] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=953 PROTO=2 
+[  307.184918] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=1876 DF PROTO=UDP SPT=36392 DPT=53 LEN=51 
+[  307.388275] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=71 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=51 
+[  314.182697] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  316.182290] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  316.182315] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=94 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  316.182428] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=74 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=54 
+[  331.308592] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=72 TOS=0x00 PREC=0x00 TTL=64 ID=7916 DF PROTO=UDP SPT=36533 DPT=53 LEN=52 
+[  340.088332] [UFW AUDIT] IN=wlan0 OUT= MAC=ff:ff:ff:ff:ff:ff:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=192.168.1.255 LEN=244 TOS=0x00 PREC=0x00 TTL=64 ID=31265 PROTO=UDP SPT=138 DPT=138 LEN=224 
+[  340.090011] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=72 TOS=0x00 PREC=0x00 TTL=64 ID=10115 DF PROTO=UDP SPT=44004 DPT=53 LEN=52 
+[  340.281221] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  340.281235] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  340.281256] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=92 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=52 
+[  357.910831] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=14577 DF PROTO=UDP SPT=37850 DPT=53 LEN=51 
+[  357.910848] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=14577 DF PROTO=UDP SPT=37850 DPT=53 LEN=51 
+[  363.592508] [UFW AUDIT] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=954 PROTO=2 
+[  363.592525] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=954 PROTO=2 
+[  367.138076] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=71 TOS=0x00 PREC=0x00 TTL=64 ID=16888 DF PROTO=UDP SPT=54921 DPT=53 LEN=51 
+[  381.650631] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=77 TOS=0x00 PREC=0x00 TTL=64 ID=20521 DF PROTO=UDP SPT=39077 DPT=53 LEN=57 
+[  387.006597] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.4.4 LEN=77 TOS=0x00 PREC=0x00 TTL=64 ID=21863 DF PROTO=UDP SPT=50022 DPT=53 LEN=57 
+[  409.995205] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=67 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  409.995223] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=224.0.0.251 LEN=67 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  409.995250] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=192.168.1.10 DST=224.0.0.251 LEN=67 TOS=0x00 PREC=0x00 TTL=255 ID=0 DF PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  411.556925] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  411.556939] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  411.556963] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  425.651119] [UFW ALLOW] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=77 TOS=0x00 PREC=0x00 TTL=64 ID=31539 DF PROTO=UDP SPT=49017 DPT=53 LEN=57 
+[  427.024769] [UFW AUDIT] IN= OUT=wlan0 SRC=192.168.1.10 DST=8.8.8.8 LEN=77 TOS=0x00 PREC=0x00 TTL=64 ID=31883 DF PROTO=UDP SPT=50146 DPT=53 LEN=57 
+[  428.633480] [UFW AUDIT] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=955 PROTO=2 
+[  428.633506] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=955 PROTO=2 
+[  430.135385] [UFW AUDIT] IN=wlan0 OUT= MAC=ff:ff:ff:ff:ff:ff:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=192.168.1.255 LEN=244 TOS=0x00 PREC=0x00 TTL=64 ID=31419 PROTO=UDP SPT=138 DPT=138 LEN=224 
+[  430.145409] [UFW AUDIT] IN=wlan0 OUT= MAC=ff:ff:ff:ff:ff:ff:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=192.168.1.255 LEN=244 TOS=0x00 PREC=0x00 TTL=64 ID=31420 PROTO=UDP SPT=138 DPT=138 LEN=224 
+[  433.649920] [UFW AUDIT INVALID] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=63.245.217.113 DST=192.168.1.10 LEN=40 TOS=0x00 PREC=0x00 TTL=52 ID=0 DF PROTO=TCP SPT=443 DPT=51208 WINDOW=0 RES=0x00 RST URGP=0 
+[  433.649944] [UFW BLOCK] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=63.245.217.113 DST=192.168.1.10 LEN=40 TOS=0x00 PREC=0x00 TTL=52 ID=0 DF PROTO=TCP SPT=443 DPT=51208 WINDOW=0 RES=0x00 RST URGP=0 
+[  433.651165] [UFW AUDIT INVALID] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=63.245.209.92 DST=192.168.1.10 LEN=40 TOS=0x00 PREC=0x00 TTL=54 ID=0 DF PROTO=TCP SPT=443 DPT=35683 WINDOW=0 RES=0x00 RST URGP=0 
+[  433.651188] [UFW BLOCK] IN=wlan0 OUT= MAC=1c:65:9d:5f:02:ad:38:22:9d:c1:89:52:08:00 SRC=63.245.209.92 DST=192.168.1.10 LEN=40 TOS=0x00 PREC=0x00 TTL=54 ID=0 DF PROTO=TCP SPT=443 DPT=35683 WINDOW=0 RES=0x00 RST URGP=0 
+[  493.675074] [UFW AUDIT] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=956 PROTO=2 
+[  493.675091] [UFW BLOCK] IN=wlan0 OUT= MAC=01:00:5e:00:00:01:38:22:9d:c1:89:52:08:00 SRC=192.168.1.1 DST=224.0.0.1 LEN=32 TOS=0x00 PREC=0x00 TTL=1 ID=956 PROTO=2 
+[  498.437208] ieee80211 phy0: wl_ops_bss_info_changed: arp filtering: enabled true, count 0 (implement)
+[  498.440704] ieee80211 phy0: wl_ops_bss_info_changed: qos enabled: false (implement)
+[  498.440720] ieee80211 phy0: brcmsmac: wl_ops_bss_info_changed: disassociated
+[  498.440736] ieee80211 phy0: wl_ops_bss_info_changed: arp filtering: enabled false, count 0 (implement)
+[  498.440745] wlan0: deauthenticating from 38:22:9d:c1:89:52 by local choice (reason=3)
+[  498.443867] [UFW AUDIT] IN= OUT=wlan0 SRC=0.0.0.0 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  498.443887] [UFW ALLOW] IN= OUT=wlan0 SRC=0.0.0.0 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  498.575813] cfg80211: All devices are disconnected, going to restore regulatory settings
+[  498.575825] cfg80211: Restoring regulatory settings
+[  498.576925] cfg80211: Calling CRDA to update world regulatory domain
+[  498.585794] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585803] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585809] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585815] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585820] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585825] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585829] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585835] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585839] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585845] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585849] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585855] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585859] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585865] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585869] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585875] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585879] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585885] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585889] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585895] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585900] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[  498.585905] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[  498.585909] cfg80211: Disabling freq 2467 MHz
+[  498.585912] cfg80211: Disabling freq 2472 MHz
+[  498.585915] cfg80211: Disabling freq 2484 MHz
+[  498.585921] cfg80211: World regulatory domain updated:
+[  498.585924] cfg80211:     (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[  498.585930] cfg80211:     (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[  498.585935] cfg80211:     (2457000 KHz - 2482000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[  498.585940] cfg80211:     (2474000 KHz - 2494000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[  498.585945] cfg80211:     (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[  498.585950] cfg80211:     (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[  504.122989] [UFW AUDIT] IN= OUT=wlan0 SRC=0.0.0.0 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  504.123005] [UFW ALLOW] IN= OUT=wlan0 SRC=0.0.0.0 DST=224.0.0.22 LEN=40 TOS=0x00 PREC=0xC0 TTL=1 ID=0 DF PROTO=2 
+[  545.401220] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=46196 DPT=53 LEN=44 
+[  545.401253] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=46196 DPT=53 LEN=44 
+[  545.401312] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=57975 DPT=53 LEN=44 
+[  545.401326] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=57975 DPT=53 LEN=44 
+[  545.401383] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=45936 DPT=53 LEN=44 
+[  545.401397] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=45936 DPT=53 LEN=44 
+[  545.401441] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=61523 DF PROTO=UDP SPT=39227 DPT=53 LEN=44 
+[  667.166571] [UFW AUDIT] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  667.166585] [UFW ALLOW] IN= OUT=wlan0 SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+[  667.166608] [UFW AUDIT] IN=wlan0 OUT= MAC= SRC=fe80:0000:0000:0000:1e65:9dff:fe5f:02ad DST=ff02:0000:0000:0000:0000:0000:0000:00fb LEN=87 TC=0 HOPLIMIT=255 FLOWLBL=0 PROTO=UDP SPT=5353 DPT=5353 LEN=47 
+
+```
+
+---
+
+### Post by Gone fishing on 2012-01-22
+Well that looks like a problem with the wireless. If you disable the wireless does it boot up and shut down quickly? Is this a laptop? (turn off the wireless) or desktop (remove the wireless addaptor)
+
+If that does make it boot up quickly post back and we'll see how to sort out this hardware / driver problem.
+
+---
+
+### Post by werty2010 on 2012-01-22
+> **Gone fishing said:**
+> Well that looks like a problem with the wireless. If you disable the wireless does it boot up and shut down quickly? Is this a laptop? (turn off the wireless) or desktop (remove the wireless addaptor)
+
+If that does make it boot up quickly post back and we'll see how to sort out this hardware / driver problem.
+
+yes this is a laptop
+i turned off the wireless and reboot but still no difference
+i forgot to mention that except the time to boot up it also takes looong time to log in
+
+---
+
+### Post by Gone fishing on 2012-01-23
+What does the dmesg look like with the wireless turned off? and can you post sudo lshw
+Are you running a firewall?
+
+---
+
+### Post by werty2010 on 2012-01-23
+> **Gone fishing said:**
+> What does the dmesg look like with the wireless turned off? and can you post sudo lshw
+Are you running a firewall?
+
+only gufw enabled.
+
+with wireless turned off:
+
+dmesg output:
+```
+
+[    0.644283] PCI: max bus depth: 1 pci_try_num: 2
+[    0.644341] pci 0000:00:1c.1: BAR 15: assigned [mem 0xd1600000-0xd17fffff 64bit pref]
+[    0.644344] pci 0000:00:1c.1: BAR 13: assigned [io  0x2000-0x2fff]
+[    0.644347] pci 0000:00:1c.0: BAR 14: assigned [mem 0xd1800000-0xd19fffff]
+[    0.644350] pci 0000:00:1c.0: BAR 15: assigned [mem 0xd1a00000-0xd1bfffff 64bit pref]
+[    0.644352] pci 0000:00:1c.0: BAR 13: assigned [io  0x3000-0x3fff]
+[    0.644355] pci 0000:00:01.0: PCI bridge to [bus 01-01]
+[    0.644358] pci 0000:00:01.0:   bridge window [io  0xe000-0xefff]
+[    0.644361] pci 0000:00:01.0:   bridge window [mem 0xfbe00000-0xfbefffff]
+[    0.644363] pci 0000:00:01.0:   bridge window [mem 0xc0000000-0xcfffffff 64bit pref]
+[    0.644367] pci 0000:00:1c.0: PCI bridge to [bus 11-11]
+[    0.644370] pci 0000:00:1c.0:   bridge window [io  0x3000-0x3fff]
+[    0.644376] pci 0000:00:1c.0:   bridge window [mem 0xd1800000-0xd19fffff]
+[    0.644381] pci 0000:00:1c.0:   bridge window [mem 0xd1a00000-0xd1bfffff 64bit pref]
+[    0.644389] pci 0000:00:1c.1: PCI bridge to [bus 12-12]
+[    0.644392] pci 0000:00:1c.1:   bridge window [io  0x2000-0x2fff]
+[    0.644398] pci 0000:00:1c.1:   bridge window [mem 0xfbd00000-0xfbdfffff]
+[    0.644403] pci 0000:00:1c.1:   bridge window [mem 0xd1600000-0xd17fffff 64bit pref]
+[    0.644411] pci 0000:00:1c.2: PCI bridge to [bus 13-13]
+[    0.644414] pci 0000:00:1c.2:   bridge window [io  0xd000-0xdfff]
+[    0.644420] pci 0000:00:1c.2:   bridge window [mem 0xfb300000-0xfbcfffff]
+[    0.644425] pci 0000:00:1c.2:   bridge window [mem 0xd0c00000-0xd15fffff 64bit pref]
+[    0.644433] pci 0000:00:1c.4: PCI bridge to [bus 15-15]
+[    0.644436] pci 0000:00:1c.4:   bridge window [io  0xc000-0xcfff]
+[    0.644442] pci 0000:00:1c.4:   bridge window [mem 0xfa900000-0xfb2fffff]
+[    0.644447] pci 0000:00:1c.4:   bridge window [mem 0xd0100000-0xd0afffff 64bit pref]
+[    0.644455] pci 0000:00:1e.0: PCI bridge to [bus 20-20]
+[    0.644457] pci 0000:00:1e.0:   bridge window [io  disabled]
+[    0.644462] pci 0000:00:1e.0:   bridge window [mem disabled]
+[    0.644467] pci 0000:00:1e.0:   bridge window [mem pref disabled]
+[    0.644488] pci 0000:00:01.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16
+[    0.644491] pci 0000:00:01.0: setting latency timer to 64
+[    0.644507] pci 0000:00:1c.0: PCI INT A -> GSI 17 (level, low) -> IRQ 17
+[    0.644512] pci 0000:00:1c.0: setting latency timer to 64
+[    0.644520] pci 0000:00:1c.1: PCI INT B -> GSI 16 (level, low) -> IRQ 16
+[    0.644525] pci 0000:00:1c.1: setting latency timer to 64
+[    0.644535] pci 0000:00:1c.2: PCI INT C -> GSI 18 (level, low) -> IRQ 18
+[    0.644540] pci 0000:00:1c.2: setting latency timer to 64
+[    0.644548] pci 0000:00:1c.4: PCI INT A -> GSI 17 (level, low) -> IRQ 17
+[    0.644552] pci 0000:00:1c.4: setting latency timer to 64
+[    0.644560] pci 0000:00:1e.0: setting latency timer to 64
+[    0.644565] pci_bus 0000:00: resource 4 [io  0x0000-0x0cf7]
+[    0.644566] pci_bus 0000:00: resource 5 [io  0x0d00-0xffff]
+[    0.644568] pci_bus 0000:00: resource 6 [mem 0x000a0000-0x000bffff]
+[    0.644570] pci_bus 0000:00: resource 7 [mem 0xc0000000-0xffffffff]
+[    0.644572] pci_bus 0000:01: resource 0 [io  0xe000-0xefff]
+[    0.644574] pci_bus 0000:01: resource 1 [mem 0xfbe00000-0xfbefffff]
+[    0.644576] pci_bus 0000:01: resource 2 [mem 0xc0000000-0xcfffffff 64bit pref]
+[    0.644578] pci_bus 0000:11: resource 0 [io  0x3000-0x3fff]
+[    0.644580] pci_bus 0000:11: resource 1 [mem 0xd1800000-0xd19fffff]
+[    0.644582] pci_bus 0000:11: resource 2 [mem 0xd1a00000-0xd1bfffff 64bit pref]
+[    0.644584] pci_bus 0000:12: resource 0 [io  0x2000-0x2fff]
+[    0.644586] pci_bus 0000:12: resource 1 [mem 0xfbd00000-0xfbdfffff]
+[    0.644587] pci_bus 0000:12: resource 2 [mem 0xd1600000-0xd17fffff 64bit pref]
+[    0.644590] pci_bus 0000:13: resource 0 [io  0xd000-0xdfff]
+[    0.644591] pci_bus 0000:13: resource 1 [mem 0xfb300000-0xfbcfffff]
+[    0.644593] pci_bus 0000:13: resource 2 [mem 0xd0c00000-0xd15fffff 64bit pref]
+[    0.644595] pci_bus 0000:15: resource 0 [io  0xc000-0xcfff]
+[    0.644597] pci_bus 0000:15: resource 1 [mem 0xfa900000-0xfb2fffff]
+[    0.644599] pci_bus 0000:15: resource 2 [mem 0xd0100000-0xd0afffff 64bit pref]
+[    0.644601] pci_bus 0000:20: resource 4 [io  0x0000-0x0cf7]
+[    0.644603] pci_bus 0000:20: resource 5 [io  0x0d00-0xffff]
+[    0.644605] pci_bus 0000:20: resource 6 [mem 0x000a0000-0x000bffff]
+[    0.644607] pci_bus 0000:20: resource 7 [mem 0xc0000000-0xffffffff]
+[    0.644609] pci_bus 0000:ff: resource 0 [io  0x0000-0xffff]
+[    0.644610] pci_bus 0000:ff: resource 1 [mem 0x00000000-0xfffffffff]
+[    0.644645] NET: Registered protocol family 2
+[    0.644790] IP route cache hash table entries: 131072 (order: 8, 1048576 bytes)
+[    0.645754] TCP established hash table entries: 524288 (order: 11, 8388608 bytes)
+[    0.647667] TCP bind hash table entries: 65536 (order: 8, 1048576 bytes)
+[    0.647897] TCP: Hash tables configured (established 524288 bind 65536)
+[    0.647899] TCP reno registered
+[    0.647909] UDP hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.647931] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes)
+[    0.648039] NET: Registered protocol family 1
+[    0.899768] pci 0000:01:00.0: Boot video device
+[    0.899797] PCI: CLS 64 bytes, default 64
+[    0.899800] PCI-DMA: Using software bounce buffering for IO (SWIOTLB)
+[    0.899802] Placing 64MB software IO TLB between ffff8800bb5a7000 - ffff8800bf5a7000
+[    0.899804] software IO TLB at phys 0xbb5a7000 - 0xbf5a7000
+[    0.900275] audit: initializing netlink socket (disabled)
+[    0.900287] type=2000 audit(1327358902.736:1): initialized
+[    0.929198] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.946118] VFS: Disk quotas dquot_6.5.2
+[    0.946172] Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.946734] fuse init (API version 7.16)
+[    0.946814] msgmni has been set to 7608
+[    0.947195] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 253)
+[    0.947225] io scheduler noop registered
+[    0.947228] io scheduler deadline registered
+[    0.947271] io scheduler cfq registered (default)
+[    0.947373] pcieport 0000:00:01.0: setting latency timer to 64
+[    0.947402] pcieport 0000:00:01.0: irq 40 for MSI/MSI-X
+[    0.947450] pcieport 0000:00:1c.0: setting latency timer to 64
+[    0.947500] pcieport 0000:00:1c.0: irq 41 for MSI/MSI-X
+[    0.947578] pcieport 0000:00:1c.1: setting latency timer to 64
+[    0.947628] pcieport 0000:00:1c.1: irq 42 for MSI/MSI-X
+[    0.947730] pcieport 0000:00:1c.2: setting latency timer to 64
+[    0.947780] pcieport 0000:00:1c.2: irq 43 for MSI/MSI-X
+[    0.947859] pcieport 0000:00:1c.4: setting latency timer to 64
+[    0.947909] pcieport 0000:00:1c.4: irq 44 for MSI/MSI-X
+[    0.947991] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
+[    0.948099] pciehp: Using ACPI for slot detection.
+[    0.948160] pciehp 0000:00:1c.4:pcie04: HPC vendor_id 8086 device_id 3b4a ss_vid 1028 ss_did 447
+[    0.948194] pciehp 0000:00:1c.4:pcie04: service driver pciehp loaded
+[    0.948201] pciehp: PCI Express Hot Plug Controller Driver version: 0.4
+[    0.948235] intel_idle: MWAIT substates: 0x1120
+[    0.948236] intel_idle: v0.4 model 0x25
+[    0.948237] intel_idle: lapic_timer_reliable_states 0xffffffff
+[    0.948327] ACPI: Deprecated procfs I/F for AC is loaded, please retry with CONFIG_ACPI_PROCFS_POWER cleared
+[    0.948370] ACPI: AC Adapter [AC] (on-line)
+[    0.948458] input: Power Button as /devices/LNXSYSTM:00/device:00/PNP0C0C:00/input/input0
+[    0.948463] ACPI: Power Button [PWRB]
+[    0.948498] input: Lid Switch as /devices/LNXSYSTM:00/device:00/PNP0C0D:00/input/input1
+[    0.950085] ACPI: Lid Switch [LID0]
+[    0.950118] input: Sleep Button as /devices/LNXSYSTM:00/device:00/PNP0C0E:00/input/input2
+[    0.950121] ACPI: Sleep Button [SBTN]
+[    0.950151] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input3
+[    0.950153] ACPI: Power Button [PWRF]
+[    0.950178] ACPI: acpi_idle yielding to intel_idle
+[    0.967323] thermal LNXTHERM:00: registered as thermal_zone0
+[    0.967327] ACPI: Thermal Zone [THM] (65 C)
+[    0.967360] ACPI: Deprecated procfs I/F for battery is loaded, please retry with CONFIG_ACPI_PROCFS_POWER cleared
+[    0.967390] ERST: Table is not found!
+[    0.967439] ACPI: Battery Slot [BAT0] (battery absent)
+[    0.967483] Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+[    1.090669] Freeing initrd memory: 18928k freed
+[    1.203615] Linux agpgart interface v0.103
+[    1.204535] brd: module loaded
+[    1.204930] loop: module loaded
+[    1.205276] Fixed MDIO Bus: probed
+[    1.205293] PPP generic driver version 2.4.2
+[    1.205322] tun: Universal TUN/TAP device driver, 1.6
+[    1.205324] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.205384] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.205404] ehci_hcd 0000:00:1a.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16
+[    1.205429] ehci_hcd 0000:00:1a.0: setting latency timer to 64
+[    1.205434] ehci_hcd 0000:00:1a.0: EHCI Host Controller
+[    1.205464] ehci_hcd 0000:00:1a.0: new USB bus registered, assigned bus number 1
+[    1.205499] ehci_hcd 0000:00:1a.0: debug port 2
+[    1.209443] ehci_hcd 0000:00:1a.0: cache line size of 64 is not supported
+[    1.209463] ehci_hcd 0000:00:1a.0: irq 16, io mem 0xfbf08000
+[    1.223225] ehci_hcd 0000:00:1a.0: USB 2.0 started, EHCI 1.00
+[    1.223375] hub 1-0:1.0: USB hub found
+[    1.223379] hub 1-0:1.0: 2 ports detected
+[    1.223444] ehci_hcd 0000:00:1d.0: PCI INT A -> GSI 23 (level, low) -> IRQ 23
+[    1.223458] ehci_hcd 0000:00:1d.0: setting latency timer to 64
+[    1.223461] ehci_hcd 0000:00:1d.0: EHCI Host Controller
+[    1.223494] ehci_hcd 0000:00:1d.0: new USB bus registered, assigned bus number 2
+[    1.223521] ehci_hcd 0000:00:1d.0: debug port 2
+[    1.227492] ehci_hcd 0000:00:1d.0: cache line size of 64 is not supported
+[    1.227505] ehci_hcd 0000:00:1d.0: irq 23, io mem 0xfbf07000
+[    1.243194] ehci_hcd 0000:00:1d.0: USB 2.0 started, EHCI 1.00
+[    1.243326] hub 2-0:1.0: USB hub found
+[    1.243330] hub 2-0:1.0: 2 ports detected
+[    1.243381] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.243390] uhci_hcd: USB Universal Host Controller Interface driver
+[    1.243437] i8042: PNP: PS/2 Controller [PNP0303:KBC,PNP0f13:PS2] at 0x60,0x64 irq 1,12
+[    1.264543] serio: i8042 KBD port at 0x60,0x64 irq 1
+[    1.264549] serio: i8042 AUX port at 0x60,0x64 irq 12
+[    1.264654] mousedev: PS/2 mouse device common for all mice
+[    1.265619] rtc_cmos 00:03: RTC can wake from S4
+[    1.265713] rtc_cmos 00:03: rtc core: registered rtc_cmos as rtc0
+[    1.265745] rtc0: alarms up to one year, y3k, 114 bytes nvram, hpet irqs
+[    1.265829] device-mapper: uevent: version 1.0.3
+[    1.265887] device-mapper: ioctl: 4.20.0-ioctl (2011-02-02) initialised: dm-devel@redhat.com
+[    1.265969] cpuidle: using governor ladder
+[    1.266090] cpuidle: using governor menu
+[    1.266092] EFI Variables Facility v0.08 2004-May-17
+[    1.266302] TCP cubic registered
+[    1.266403] NET: Registered protocol family 10
+[    1.266814] NET: Registered protocol family 17
+[    1.266826] Registering the dns_resolver key type
+[    1.266904] PM: Hibernation image not present or could not be loaded.
+[    1.266914] registered taskstats version 1
+[    1.282915]   Magic number: 12:818:856
+[    1.283072] rtc_cmos 00:03: setting system clock to 2012-01-23 22:48:24 UTC (1327358904)
+[    1.284267] BIOS EDD facility v0.16 2004-Jun-25, 0 devices found
+[    1.284269] EDD information not available.
+[    1.285985] Freeing unused kernel memory: 988k freed
+[    1.286153] Write protecting the kernel read-only data: 12288k
+[    1.292266] Freeing unused kernel memory: 2036k freed
+[    1.296725] Freeing unused kernel memory: 1388k freed
+[    1.297075] input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input4
+[    1.316363] udevd[91]: starting version 173
+[    1.340562] r8169 Gigabit Ethernet driver 2.3LK-NAPI loaded
+[    1.340613] r8169 0000:13:00.0: PCI INT A -> GSI 18 (level, low) -> IRQ 18
+[    1.340666] r8169 0000:13:00.0: setting latency timer to 64
+[    1.340736] r8169 0000:13:00.0: irq 45 for MSI/MSI-X
+[    1.341259] r8169 0000:13:00.0: eth0: RTL8102e at 0xffffc9000064c000, f0:4d:a2:8c:21:bc, XID 04e00000 IRQ 45
+[    1.344644] wmi: Mapper loaded
+[    1.353439] ACPI Warning: _BQC returned an invalid level (20110413/video-473)
+[    1.364150] acpi device:03: registered as cooling_device4
+[    1.364254] input: Video Bus as /devices/LNXSYSTM:00/device:00/PNP0A08:00/device:01/LNXVIDEO:00/input/input5
+[    1.364323] ACPI: Video Device [PEGP] (multi-head: yes  rom: no  post: no)
+[    1.380887] ahci 0000:00:1f.2: version 3.0
+[    1.380920] ahci 0000:00:1f.2: PCI INT B -> GSI 19 (level, low) -> IRQ 19
+[    1.380985] ahci 0000:00:1f.2: irq 46 for MSI/MSI-X
+[    1.381077] ahci 0000:00:1f.2: AHCI 0001.0300 32 slots 6 ports 3 Gbps 0x13 impl SATA mode
+[    1.381082] ahci 0000:00:1f.2: flags: 64bit ncq sntf ilck pm led clo pio slum part ems sxs apst 
+[    1.381089] ahci 0000:00:1f.2: setting latency timer to 64
+[    1.395926] scsi0 : ahci
+[    1.396060] scsi1 : ahci
+[    1.396321] scsi2 : ahci
+[    1.396526] scsi3 : ahci
+[    1.396617] scsi4 : ahci
+[    1.396702] scsi5 : ahci
+[    1.396833] ata1: SATA max UDMA/133 abar m2048@0xfbf06000 port 0xfbf06100 irq 46
+[    1.396836] ata2: SATA max UDMA/133 abar m2048@0xfbf06000 port 0xfbf06180 irq 46
+[    1.396838] ata3: DUMMY
+[    1.396839] ata4: DUMMY
+[    1.396842] ata5: SATA max UDMA/133 abar m2048@0xfbf06000 port 0xfbf06300 irq 46
+[    1.396844] ata6: DUMMY
+[    1.534814] usb 1-1: new high speed USB device number 2 using ehci_hcd
+[    1.667481] hub 1-1:1.0: USB hub found
+[    1.667675] hub 1-1:1.0: 6 ports detected
+[    1.714556] ata1: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
+[    1.714589] ata5: SATA link down (SStatus 0 SControl 300)
+[    1.714627] ata2: SATA link up 1.5 Gbps (SStatus 113 SControl 300)
+[    1.715886] ata2.00: ATAPI: HL-DT-ST DVD+/-RW GT10N, A109, max UDMA/100
+[    1.716798] ata1.00: ATA-8: WDC WD5000BEVT-75A0RT0, 01.01A01, max UDMA/133
+[    1.716803] ata1.00: 976773168 sectors, multi 16: LBA48 NCQ (depth 31/32), AA
+[    1.718874] ata2.00: configured for UDMA/100
+[    1.719258] ata1.00: configured for UDMA/133
+[    1.719554] scsi 0:0:0:0: Direct-Access     ATA      WDC WD5000BEVT-7 01.0 PQ: 0 ANSI: 5
+[    1.719688] sd 0:0:0:0: Attached scsi generic sg0 type 0
+[    1.719743] sd 0:0:0:0: [sda] 976773168 512-byte logical blocks: (500 GB/465 GiB)
+[    1.719856] sd 0:0:0:0: [sda] Write Protect is off
+[    1.719861] sd 0:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    1.719929] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+[    1.722341] scsi 1:0:0:0: CD-ROM            HL-DT-ST DVD+-RW GT10N    A109 PQ: 0 ANSI: 5
+[    1.726015] sr0: scsi3-mmc drive: 24x/24x writer dvd-ram cd/rw xa/form2 cdda tray
+[    1.726022] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    1.726198] sr 1:0:0:0: Attached scsi CD-ROM sr0
+[    1.726247] sr 1:0:0:0: Attached scsi generic sg1 type 5
+[    1.778420] usb 2-1: new high speed USB device number 2 using ehci_hcd
+[    1.781837]  sda: sda1 sda2 < sda5 >
+[    1.782261] sd 0:0:0:0: [sda] Attached SCSI disk
+[    1.898258] Refined TSC clocksource calibration: 2399.999 MHz.
+[    1.898271] Switching to clocksource tsc
+[    1.910960] hub 2-1:1.0: USB hub found
+[    1.911004] hub 2-1:1.0: 8 ports detected
+[    1.982350] usb 1-1.6: new high speed USB device number 3 using ehci_hcd
+[    2.189885] usb 2-1.6: new full speed USB device number 3 using ehci_hcd
+[    2.284777] hub 2-1.6:1.0: USB hub found
+[    2.284921] hub 2-1.6:1.0: 3 ports detected
+[    2.557443] usb 2-1.6.1: new full speed USB device number 4 using ehci_hcd
+[    2.658118] input: HID 413c:8161 as /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.6/2-1.6.1/2-1.6.1:1.0/input/input6
+[    2.658199] generic-usb 0003:413C:8161.0001: input,hidraw0: USB HID v1.11 Keyboard [HID 413c:8161] on usb-0000:00:1d.0-1.6.1/input0
+[    2.658212] usbcore: registered new interface driver usbhid
+[    2.658213] usbhid: USB HID core driver
+[    2.725182] usb 2-1.6.2: new full speed USB device number 5 using ehci_hcd
+[    2.823668] input: HID 413c:8162 as /devices/pci0000:00/0000:00:1d.0/usb2/2-1/2-1.6/2-1.6.2/2-1.6.2:1.0/input/input7
+[    2.823751] generic-usb 0003:413C:8162.0002: input,hidraw1: USB HID v1.11 Mouse [HID 413c:8162] on usb-0000:00:1d.0-1.6.2/input0
+[    3.234744] vesafb: mode is 1024x768x32, linelength=4096, pages=0
+[    3.234747] vesafb: scrolling: redraw
+[    3.234750] vesafb: Truecolor: size=0:8:8:8, shift=0:16:8:0
+[    3.236371] vesafb: framebuffer at 0xc0000000, mapped to 0xffffc90011100000, using 3072k, total 3072k
+[    3.236511] Console: switching to colour frame buffer device 128x48
+[    3.236538] fb0: VESA VGA frame buffer device
+[    3.596452] EXT4-fs (sda1): mounted filesystem with ordered data mode. Opts: (null)
+[   13.649333] udevd[371]: starting version 173
+[   13.688526] mei: module is from the staging directory, the quality is unknown, you have been warned.
+[   13.688858] mei 0000:00:16.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16
+[   13.688866] mei 0000:00:16.0: setting latency timer to 64
+[   13.693259] fglrx: module license 'Proprietary. (C) 2002 - ATI Technologies, Starnberg, GERMANY' taints kernel.
+[   13.693264] Disabling lock debugging due to kernel taint
+[   13.693434] lp: driver loaded but no devices found
+[   13.699042] cfg80211: Calling CRDA to update world regulatory domain
+[   13.709591] brcmutil: module is from the staging directory, the quality is unknown, you have been warned.
+[   13.710555] brcmsmac: module is from the staging directory, the quality is unknown, you have been warned.
+[   13.714581] brcmsmac 0000:12:00.0: bus 18 slot 0 func 0 irq 10
+[   13.714605] brcmsmac 0000:12:00.0: PCI INT A -> GSI 17 (level, low) -> IRQ 17
+[   13.714614] brcmsmac 0000:12:00.0: setting latency timer to 64
+[   13.716821] ip_tables: (C) 2000-2006 Netfilter Core Team
+[   13.724974] nf_conntrack version 0.5.0 (16384 buckets, 65536 max)
+[   13.738218] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[   13.793867] [fglrx] Maximum main memory to use for locked dma buffers: 3666 MBytes.
+[   13.798342] [fglrx]   vendor: 1002 device: 68c1 count: 1
+[   13.801386] [fglrx] ioport: bar 4, base 0xe000, size: 0x100
+[   13.801407] pci 0000:01:00.0: PCI INT A -> GSI 16 (level, low) -> IRQ 16
+[   13.801413] pci 0000:01:00.0: setting latency timer to 64
+[   13.801640] [fglrx] Kernel PAT support is enabled
+[   13.801669] [fglrx] module loaded - fglrx 8.88.7 [Jul 28 2011] with 1 minors
+[   13.804572] type=1400 audit(1327358917.036:2): apparmor="STATUS" operation="profile_load" name="/sbin/dhclient" pid=447 comm="apparmor_parser"
+[   13.805001] type=1400 audit(1327358917.036:3): apparmor="STATUS" operation="profile_load" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=447 comm="apparmor_parser"
+[   13.805269] type=1400 audit(1327358917.036:4): apparmor="STATUS" operation="profile_load" name="/usr/lib/connman/scripts/dhclient-script" pid=447 comm="apparmor_parser"
+[   13.811249] HDA Intel 0000:00:1b.0: PCI INT A -> GSI 22 (level, low) -> IRQ 22
+[   13.811325] HDA Intel 0000:00:1b.0: irq 47 for MSI/MSI-X
+[   13.811360] HDA Intel 0000:00:1b.0: setting latency timer to 64
+[   13.868215] input: HDA Intel Mic at Ext Left Jack as /devices/pci0000:00/0000:00:1b.0/sound/card0/input8
+[   13.868326] input: HDA Intel HP Out at Ext Left Jack as /devices/pci0000:00/0000:00:1b.0/sound/card0/input9
+[   13.868569] HDA Intel 0000:01:00.1: PCI INT B -> GSI 17 (level, low) -> IRQ 17
+[   13.868671] HDA Intel 0000:01:00.1: irq 48 for MSI/MSI-X
+[   13.868698] HDA Intel 0000:01:00.1: setting latency timer to 64
+[   13.888675] dcdbas dcdbas: Dell Systems Management Base Driver (version 5.6.0-3.2)
+[   13.917480] HDMI status: Pin=3 Presence_Detect=0 ELD_Valid=0
+[   13.917624] input: HD-Audio Generic HDMI/DP,pcm=3 as /devices/pci0000:00/0000:00:01.0/0000:01:00.1/sound/card1/input10
+[   13.957671] Linux video capture interface: v2.00
+[   13.958721] uvcvideo: Found UVC 1.00 device Laptop_Integrated_Webcam_1.3M (0c45:6480)
+[   13.977357] input: Dell WMI hotkeys as /devices/virtual/input/input11
+[   13.980759] input: Laptop_Integrated_Webcam_1.3M as /devices/pci0000:00/0000:00:1a.0/usb1/1-1/1-1.6/1-1.6:1.0/input/input12
+[   13.981504] usbcore: registered new interface driver uvcvideo
+[   13.981507] USB Video Class driver (v1.1.0)
+[   13.982290] cfg80211: World regulatory domain updated:
+[   13.982294] cfg80211:     (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[   13.982297] cfg80211:     (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   13.982301] cfg80211:     (2457000 KHz - 2482000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[   13.982304] cfg80211:     (2474000 KHz - 2494000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[   13.982307] cfg80211:     (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   13.982310] cfg80211:     (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   14.011102] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011107] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011109] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011112] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011115] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011117] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011119] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011123] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011125] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011129] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011131] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011134] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011136] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011138] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011140] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011142] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011143] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011146] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011147] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011150] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011151] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011153] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011155] cfg80211: Updating information on frequency 2467 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011157] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011159] cfg80211: Updating information on frequency 2472 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011161] cfg80211: 2457000 KHz - 2482000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.011163] cfg80211: Updating information on frequency 2484 MHz for a 20 MHz width channel with regulatory rule:
+[   14.011165] cfg80211: 2474000 KHz - 2494000 KHz @  KHz), (300 mBi, 2000 mBm)
+[   14.013710] ieee80211 phy0: Selected rate control algorithm 'minstrel_ht'
+[   14.016038] lib80211: common routines for IEEE802.11 drivers
+[   14.016041] lib80211_crypt: registered algorithm 'NULL'
+[   14.019385] cfg80211: Calling CRDA for country: US
+[   14.030486] cfg80211: Updating information on frequency 2412 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030492] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030495] cfg80211: Updating information on frequency 2417 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030498] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030501] cfg80211: Updating information on frequency 2422 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030505] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030508] cfg80211: Updating information on frequency 2427 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030511] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030514] cfg80211: Updating information on frequency 2432 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030517] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030520] cfg80211: Updating information on frequency 2437 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030523] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030526] cfg80211: Updating information on frequency 2442 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030530] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030532] cfg80211: Updating information on frequency 2447 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030536] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030539] cfg80211: Updating information on frequency 2452 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030542] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030545] cfg80211: Updating information on frequency 2457 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030548] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030551] cfg80211: Updating information on frequency 2462 MHz for a 20 MHz width channel with regulatory rule:
+[   14.030554] cfg80211: 2402000 KHz - 2472000 KHz @  KHz), (300 mBi, 2700 mBm)
+[   14.030557] cfg80211: Disabling freq 2467 MHz
+[   14.030559] cfg80211: Disabling freq 2472 MHz
+[   14.030560] cfg80211: Disabling freq 2484 MHz
+[   14.030564] cfg80211: Regulatory domain changed to country: US
+[   14.030566] cfg80211:     (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[   14.030569] cfg80211:     (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2700 mBm)
+[   14.030573] cfg80211:     (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 1700 mBm)
+[   14.030576] cfg80211:     (5250000 KHz - 5330000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   14.030579] cfg80211:     (5490000 KHz - 5600000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   14.030582] cfg80211:     (5650000 KHz - 5710000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[   14.030586] cfg80211:     (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 3000 mBm)
+[   14.179247] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro
+[   14.343154] usb 2-1.6.3: new full speed USB device number 6 using ehci_hcd
+[   14.454895] Bluetooth: Core ver 2.16
+[   14.454954] NET: Registered protocol family 31
+[   14.454956] Bluetooth: HCI device and connection manager initialized
+[   14.454959] Bluetooth: HCI socket layer initialized
+[   14.454961] Bluetooth: L2CAP socket layer initialized
+[   14.455042] Bluetooth: SCO socket layer initialized
+[   14.456467] Bluetooth: Generic Bluetooth USB driver ver 0.6
+[   14.456779] usbcore: registered new interface driver btusb
+[   14.571081] type=1400 audit(1327358917.804:5): apparmor="STATUS" operation="profile_load" name="/opt/extras.ubuntu.com/unity-scope-calculator/unity-scope-calculator" pid=1151 comm="apparmor_parser"
+[   14.571708] type=1400 audit(1327358917.804:6): apparmor="STATUS" operation="profile_load" name="/opt/extras.ubuntu.com/unity-scope-cities/unity-scope-cities" pid=1152 comm="apparmor_parser"
+[   14.573174] type=1400 audit(1327358917.804:7): apparmor="STATUS" operation="profile_load" name="/usr/lib/lightdm/lightdm-guest-session-wrapper" pid=1149 comm="apparmor_parser"
+[   14.573943] type=1400 audit(1327358917.804:8): apparmor="STATUS" operation="profile_replace" name="/sbin/dhclient" pid=1153 comm="apparmor_parser"
+[   14.575170] type=1400 audit(1327358917.808:9): apparmor="STATUS" operation="profile_replace" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=1153 comm="apparmor_parser"
+[   14.575450] type=1400 audit(1327358917.808:10): apparmor="STATUS" operation="profile_replace" name="/usr/lib/connman/scripts/dhclient-script" pid=1153 comm="apparmor_parser"
+[   14.576781] type=1400 audit(1327358917.808:11): apparmor="STATUS" operation="profile_load" name="/opt/extras.ubuntu.com/unity-lens-utilities/unity-lens-utilities" pid=1150 comm="apparmor_parser"
+[   14.668849] ppdev: user-space parallel port driver
+[   14.923046] Synaptics Touchpad, model: 1, fw: 7.2, id: 0x1c0b1, caps: 0xd04733/0xa40000/0xa0000
+[   14.982770] init: failsafe main process (1099) killed by TERM signal
+[   14.986583] init: apport pre-start process (1266) terminated with status 1
+[   15.000346] init: apport post-stop process (1302) terminated with status 1
+[   15.004588] input: SynPS/2 Synaptics TouchPad as /devices/platform/i8042/serio1/input/input13
+[   15.373706] vboxdrv: Found 4 processor cores.
+[   15.373925] vboxdrv: fAsync=0 offMin=0x246 offMax=0x1706
+[   15.373998] vboxdrv: TSC mode is 'synchronous', kernel timer mode is 'normal'.
+[   15.374000] vboxdrv: Successfully loaded version 4.1.2_Ubuntu (interface 0x00190000).
+[   15.384764] vboxpci: IOMMU not found (not registered)
+[   15.403933] Bluetooth: RFCOMM TTY layer initialized
+[   15.403939] Bluetooth: RFCOMM socket layer initialized
+[   15.403941] Bluetooth: RFCOMM ver 1.11
+[   15.407273] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[   15.407277] Bluetooth: BNEP filters: protocol multicast
+[   15.838387] fglrx_pci 0000:01:00.0: irq 49 for MSI/MSI-X
+[   15.838988] [fglrx] Firegl kernel thread PID: 1468
+[   15.839106] [fglrx] Firegl kernel thread PID: 1469
+[   15.839278] [fglrx] Firegl kernel thread PID: 1470
+[   15.839599] [fglrx] IRQ 49 Enabled
+[   16.648759] [fglrx] Gart USWC size:1196 M.
+[   16.648763] [fglrx] Gart cacheable size:474 M.
+[   16.648768] [fglrx] Reserved FB block: Shared offset:0, size:1000000 
+[   16.648770] [fglrx] Reserved FB block: Unshared offset:f941000, size:3bf000 
+[   16.648772] [fglrx] Reserved FB block: Unshared offset:3fff4000, size:c000 
+[   16.925489] Adding 4051964k swap on /dev/mapper/cryptswap1.  Priority:-1 extents:1 across:4051964k 
+[   17.005130] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro,commit=0
+[   20.159213] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro,commit=0
+[   99.366550] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=51673 DPT=53 LEN=47 
+[   99.366576] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=51673 DPT=53 LEN=47 
+[   99.366633] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=56924 DPT=53 LEN=47 
+[   99.366645] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=56924 DPT=53 LEN=47 
+[   99.366681] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=52997 DPT=53 LEN=47 
+[   99.366692] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=52997 DPT=53 LEN=47 
+[   99.366719] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=53640 DPT=53 LEN=47 
+[   99.366730] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=53640 DPT=53 LEN=47 
+[   99.366765] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=42055 DPT=53 LEN=47 
+[   99.366777] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=42055 DPT=53 LEN=47 
+[   99.366803] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=44521 DPT=53 LEN=47 
+[   99.366813] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=44521 DPT=53 LEN=47 
+[   99.366841] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=56397 DPT=53 LEN=47 
+[   99.366852] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=56397 DPT=53 LEN=47 
+[   99.366877] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=41377 DPT=53 LEN=47 
+[   99.366888] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=15376 DF PROTO=UDP SPT=41377 DPT=53 LEN=47 
+[  143.446925] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.446931] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.446961] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.446965] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447019] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447023] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447043] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447046] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447049] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447052] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447065] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447067] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447070] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447072] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447086] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447088] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447090] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447092] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  143.447110] ecryptfs_decrypt_page: Error attempting to read lower page; rc = [-4]
+[  143.447112] ecryptfs_readpage: Error decrypting page; rc = [-4]
+[  145.715009] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=43906 DPT=53 LEN=44 
+[  145.715041] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=43906 DPT=53 LEN=44 
+[  145.715103] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=45245 DPT=53 LEN=44 
+[  145.715115] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=45245 DPT=53 LEN=44 
+[  145.715161] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=47855 DPT=53 LEN=44 
+[  145.715173] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=47855 DPT=53 LEN=44 
+[  145.715207] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=47209 DPT=53 LEN=44 
+[  145.715218] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=64 TOS=0x00 PREC=0x00 TTL=64 ID=26981 DF PROTO=UDP SPT=47209 DPT=53 LEN=44 
+[  159.336570] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=30392 DF PROTO=UDP SPT=35172 DPT=53 LEN=47 
+[  159.336599] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=30392 DF PROTO=UDP SPT=35172 DPT=53 LEN=47 
+[  219.277610] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45400 DF PROTO=UDP SPT=38819 DPT=53 LEN=47 
+[  219.277660] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45400 DF PROTO=UDP SPT=38819 DPT=53 LEN=47 
+[  219.277765] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45400 DF PROTO=UDP SPT=51790 DPT=53 LEN=47 
+[  219.277796] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45400 DF PROTO=UDP SPT=51790 DPT=53 LEN=47 
+[  219.281956] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45402 DF PROTO=UDP SPT=50354 DPT=53 LEN=47 
+[  219.281998] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=45402 DF PROTO=UDP SPT=50354 DPT=53 LEN=47 
+[  234.341204] usb 2-1.6: USB disconnect, device number 3
+[  234.341209] usb 2-1.6.1: USB disconnect, device number 4
+[  234.434358] usb 2-1.6.2: USB disconnect, device number 5
+[  234.434531] usb 2-1.6.3: USB disconnect, device number 6
+[  279.246501] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=56546 DPT=53 LEN=47 
+[  279.246539] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=56546 DPT=53 LEN=47 
+[  279.246615] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=49923 DPT=53 LEN=47 
+[  279.246636] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=49923 DPT=53 LEN=47 
+[  279.246694] [UFW AUDIT] IN= OUT=lo SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=43676 DPT=53 LEN=47 
+[  279.246714] [UFW AUDIT] IN=lo OUT= MAC=00:00:00:00:00:00:00:00:00:00:00:00:08:00 SRC=127.0.0.1 DST=127.0.0.1 LEN=67 TOS=0x00 PREC=0x00 TTL=64 ID=60416 DF PROTO=UDP SPT=43676 DPT=53 LEN=47 
+
+```
+
+sudo lshw output:
+```
+
+me-inspiron-n5010       
+    description: Portable Computer
+    product: Inspiron N5010 (To be filled by O.E.M.)
+    vendor: Winbond Electronics
+    version: A07
+    serial: 9HW78N1
+    width: 64 bits
+    capabilities: smbios-2.6 dmi-2.6 vsyscall64 vsyscall32
+    configuration: boot=normal chassis=portable sku=To be filled by O.E.M. uuid=44454C4C-4800-1057-8037-B9C04F384E31
+  *-core
+       description: Motherboard
+       product: 0TD2K6
+       vendor: Winbond Electronics
+       physical id: 0
+       version: A07
+       serial: .9HW78N1.CN7016609Q007H.
+       slot: To Be Filled By O.E.M.
+     *-cpu
+          description: CPU
+          product: Intel(R) Core(TM) i3 CPU       M 370  @ 2.40GHz
+          vendor: Intel Corp.
+          physical id: 4
+          bus info: cpu@0
+          version: Intel(R) Core(TM) i3 CPU       M 370  @ 2.40GH
+          serial: To Be Filled By O.E.M.
+          slot: CPU 1
+          size: 931MHz
+          capacity: 2394MHz
+          width: 64 bits
+          clock: 533MHz
+          capabilities: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 sse4_2 popcnt lahf_lm arat tpr_shadow vnmi flexpriority ept vpid cpufreq
+          configuration: cores=2 enabledcores=1 threads=2
+        *-cache:0
+             description: L1 cache
+             physical id: 5
+             slot: L1-Cache
+             size: 64KiB
+             capacity: 64KiB
+             capabilities: internal write-back unified
+        *-cache:1
+             description: L2 cache
+             physical id: 6
+             slot: L2-Cache
+             size: 512KiB
+             capacity: 512KiB
+             capabilities: internal varies unified
+        *-cache:2
+             description: L3 cache
+             physical id: 7
+             slot: L3-Cache
+             size: 3MiB
+             capacity: 3MiB
+             capabilities: internal varies unified
+     *-memory
+          description: System Memory
+          physical id: 1d
+          slot: System board or motherboard
+          size: 4GiB
+        *-bank:0
+             description: DIMM DDR3 Synchronous 1333 MHz (0.8 ns)
+             product: HMT325S6BFR8C-H9
+             vendor: Hynix Semiconductor (Hyundai Electronics)
+             physical id: 0
+             serial: 19869FBC
+             slot: DIMM_A
+             size: 2GiB
+             width: 64 bits
+             clock: 1333MHz (0.8ns)
+        *-bank:1
+             description: DIMM DDR3 Synchronous 1333 MHz (0.8 ns)
+             product: HMT325S6BFR8C-H9
+             vendor: Hynix Semiconductor (Hyundai Electronics)
+             physical id: 1
+             serial: 19369FF1
+             slot: DIMM_B
+             size: 2GiB
+             width: 64 bits
+             clock: 1333MHz (0.8ns)
+     *-firmware
+          description: BIOS
+          vendor: Winbond Electronics
+          physical id: 0
+          version: A07
+          date: 07/26/2010
+          size: 64KiB
+          capacity: 1984KiB
+          capabilities: mca pci upgrade shadowing escd cdboot bootselect socketedrom edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int9keyboard int14serial int17printer int10video acpi usb zipboot biosbootspecification
+     *-pci:0
+          description: Host bridge
+          product: Core Processor DRAM Controller
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 18
+          width: 32 bits
+          clock: 33MHz
+        *-pci:0
+             description: PCI bridge
+             product: Core Processor PCI Express x16 Root Port
+             vendor: Intel Corporation
+             physical id: 1
+             bus info: pci@0000:00:01.0
+             version: 18
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pm msi pciexpress normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:40 ioport:e000(size=4096) memory:fbe00000-fbefffff ioport:c0000000(size=268435456)
+           *-display
+                description: VGA compatible controller
+                product: Madison [AMD Radeon HD 5000M Series]
+                vendor: ATI Technologies Inc
+                physical id: 0
+                bus info: pci@0000:01:00.0
+                version: 00
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi vga_controller bus_master cap_list rom
+                configuration: driver=fglrx_pci latency=0
+                resources: irq:49 memory:c0000000-cfffffff memory:fbe20000-fbe3ffff ioport:e000(size=256) memory:fbe00000-fbe1ffff
+           *-multimedia
+                description: Audio device
+                product: Redwood HDMI Audio [Radeon HD 5600 Series]
+                vendor: ATI Technologies Inc
+                physical id: 0.1
+                bus info: pci@0000:01:00.1
+                version: 00
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: driver=HDA Intel latency=0
+                resources: irq:48 memory:fbe40000-fbe43fff
+        *-communication
+             description: Communication controller
+             product: 5 Series/3400 Series Chipset HECI Controller
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=mei latency=0
+             resources: irq:16 memory:fbf09000-fbf0900f
+        *-usb:0
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1a
+             bus info: pci@0000:00:1a.0
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:16 memory:fbf08000-fbf083ff
+        *-multimedia
+             description: Audio device
+             product: 5 Series/3400 Series Chipset High Definition Audio
+             vendor: Intel Corporation
+             physical id: 1b
+             bus info: pci@0000:00:1b.0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi pciexpress bus_master cap_list
+             configuration: driver=HDA Intel latency=0
+             resources: irq:47 memory:fbf00000-fbf03fff
+        *-pci:1
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 1
+             vendor: Intel Corporation
+             physical id: 1c
+             bus info: pci@0000:00:1c.0
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:41 ioport:3000(size=4096) memory:d1800000-d19fffff ioport:d1a00000(size=2097152)
+        *-pci:2
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 2
+             vendor: Intel Corporation
+             physical id: 1c.1
+             bus info: pci@0000:00:1c.1
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:42 ioport:2000(size=4096) memory:fbd00000-fbdfffff ioport:d1600000(size=2097152)
+           *-network DISABLED
+                description: Wireless interface
+                product: BCM4313 802.11b/g/n Wireless LAN Controller
+                vendor: Broadcom Corporation
+                physical id: 0
+                bus info: pci@0000:12:00.0
+                logical name: wlan0
+                version: 01
+                serial: 1c:65:9d:5f:02:ad
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress bus_master cap_list ethernet physical wireless
+                configuration: broadcast=yes driver=brcmsmac driverversion=3.0.0-15-generic firmware=N/A latency=0 link=no multicast=yes wireless=IEEE 802.11bgn
+                resources: irq:17 memory:fbd00000-fbd03fff
+        *-pci:3
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 3
+             vendor: Intel Corporation
+             physical id: 1c.2
+             bus info: pci@0000:00:1c.2
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:43 ioport:d000(size=4096) memory:fb300000-fbcfffff ioport:d0c00000(size=10485760)
+           *-network DISABLED
+                description: Ethernet interface
+                product: RTL8101E/RTL8102E PCI Express Fast Ethernet controller
+                vendor: Realtek Semiconductor Co., Ltd.
+                physical id: 0
+                bus info: pci@0000:13:00.0
+                logical name: eth0
+                version: 02
+                serial: f0:4d:a2:8c:21:bc
+                size: 10Mbit/s
+                capacity: 100Mbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress msix vpd bus_master cap_list rom ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd autonegotiation
+                configuration: autonegotiation=off broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=half firmware=N/A latency=0 link=no multicast=yes port=MII speed=10Mbit/s
+                resources: irq:45 ioport:d000(size=256) memory:d0c10000-d0c10fff memory:d0c00000-d0c0ffff memory:fb300000-fb31ffff
+        *-pci:4
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 5
+             vendor: Intel Corporation
+             physical id: 1c.4
+             bus info: pci@0000:00:1c.4
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:44 ioport:c000(size=4096) memory:fa900000-fb2fffff ioport:d0100000(size=10485760)
+        *-usb:1
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1d
+             bus info: pci@0000:00:1d.0
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:23 memory:fbf07000-fbf073ff
+        *-pci:5
+             description: PCI bridge
+             product: 82801 Mobile PCI Bridge
+             vendor: Intel Corporation
+             physical id: 1e
+             bus info: pci@0000:00:1e.0
+             version: a6
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci subtractive_decode bus_master cap_list
+        *-isa
+             description: ISA bridge
+             product: Mobile 5 Series Chipset LPC Interface Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 06
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master cap_list
+             configuration: latency=0
+        *-storage
+             description: SATA controller
+             product: 5 Series/3400 Series Chipset 6 port SATA AHCI Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             logical name: scsi0
+             logical name: scsi1
+             version: 06
+             width: 32 bits
+             clock: 66MHz
+             capabilities: storage msi pm ahci_1.0 bus_master cap_list emulated
+             configuration: driver=ahci latency=0
+             resources: irq:46 ioport:f070(size=8) ioport:f060(size=4) ioport:f050(size=8) ioport:f040(size=4) ioport:f020(size=32) memory:fbf06000-fbf067ff
+           *-disk
+                description: ATA Disk
+                product: WDC WD5000BEVT-7
+                vendor: Western Digital
+                physical id: 0
+                bus info: scsi@0:0.0.0
+                logical name: /dev/sda
+                version: 01.0
+                serial: WD-WX91A70N8896
+                size: 465GiB (500GB)
+                capabilities: partitioned partitioned:dos
+                configuration: ansiversion=5 signature=000450f0
+              *-volume:0
+                   description: EXT4 volume
+                   vendor: Linux
+                   physical id: 1
+                   bus info: scsi@0:0.0.0,1
+                   logical name: /dev/sda1
+                   logical name: /
+                   version: 1.0
+                   serial: 2f5fa971-3011-46c5-b26f-b00c8fc4d5b1
+                   size: 461GiB
+                   capacity: 461GiB
+                   capabilities: primary bootable journaled extended_attributes large_files huge_files dir_nlink recover extents ext4 ext2 initialized
+                   configuration: created=2011-10-19 22:58:29 filesystem=ext4 lastmountpoint=/ modified=2012-01-20 01:18:27 mount.fstype=ext4 mount.options=rw,relatime,errors=remount-ro,user_xattr,acl,barrier=1,data=ordered mounted=2012-01-24 00:48:37 state=mounted
+              *-volume:1
+                   description: Extended partition
+                   physical id: 2
+                   bus info: scsi@0:0.0.0,2
+                   logical name: /dev/sda2
+                   size: 3957MiB
+                   capacity: 3957MiB
+                   capabilities: primary extended partitioned partitioned:extended
+                 *-logicalvolume
+                      description: Linux swap / Solaris partition
+                      physical id: 5
+                      logical name: /dev/sda5
+                      capacity: 3957MiB
+                      capabilities: nofs
+           *-cdrom
+                description: DVD-RAM writer
+                product: DVD+-RW GT10N
+                vendor: HL-DT-ST
+                physical id: 1
+                bus info: scsi@1:0.0.0
+                logical name: /dev/cdrom
+                logical name: /dev/cdrw
+                logical name: /dev/dvd
+                logical name: /dev/dvdrw
+                logical name: /dev/scd0
+                logical name: /dev/sr0
+                version: A109
+                capabilities: removable audio cd-r cd-rw dvd dvd-r dvd-ram
+                configuration: ansiversion=5 status=nodisc
+        *-serial UNCLAIMED
+             description: SMBus
+             product: 5 Series/3400 Series Chipset SMBus Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             configuration: latency=0
+             resources: memory:fbf05000-fbf050ff ioport:f000(size=32)
+     *-pci:1
+          description: Host bridge
+          product: Core Processor QuickPath Architecture Generic Non-core Registers
+          vendor: Intel Corporation
+          physical id: 101
+          bus info: pci@0000:ff:00.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:2
+          description: Host bridge
+          product: Core Processor QuickPath Architecture System Address Decoder
+          vendor: Intel Corporation
+          physical id: 102
+          bus info: pci@0000:ff:00.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:3
+          description: Host bridge
+          product: Core Processor QPI Link 0
+          vendor: Intel Corporation
+          physical id: 103
+          bus info: pci@0000:ff:02.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:4
+          description: Host bridge
+          product: Core Processor QPI Physical 0
+          vendor: Intel Corporation
+          physical id: 104
+          bus info: pci@0000:ff:02.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:5
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 105
+          bus info: pci@0000:ff:02.2
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:6
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 106
+          bus info: pci@0000:ff:02.3
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+  *-battery
+       description: Lithium Ion Battery
+       product: NA
+       vendor: NA
+       physical id: 1
+       version: 10/31/2006
+       serial: NA
+       slot: NA
+
+```
+
+---
+
+### Post by werty2010 on 2012-01-24
+bump
+
+---
+
+### Post by Gone fishing on 2012-01-25
+Sorry - I'm sure Unity isn't the problem your system is plenty powerful enough.
+
+However, I was hoping some ubergeek could identify the problem :o
+
+looking at dmesg these come to mind: 
+
+your firewall is doing a lot on start up as in a default install all the ports are closed do you need it I would uninstall the firewall and we if the problem goes away? 
+
+and there is this error
+
+ecryptfs_readpage: Error decrypting page; rc = [-4] not sure if this is a problem you are running an encrypted /home ?
+
+---
+

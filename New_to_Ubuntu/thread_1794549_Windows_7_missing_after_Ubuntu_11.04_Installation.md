@@ -1,0 +1,602 @@
+---
+title: "Windows 7 missing after Ubuntu 11.04 Installation"
+date: 2011-07-01
+forum: New to Ubuntu
+---
+
+### Post by brightshadow on 2011-07-01
+Hi,
+
+I have just installed Ubuntu 11.04 but problem is, I can't find my Windows 7 from the part where you choose an OS to use. 
+
+In the Ubuntu installation, I used sda1 where FreeDOS was originally located (I installed there 'cause I thought I'm not using it anyway) and I noted that my Windows 7 is in sda3. But when I restarted my laptop, I can't find my windows 7 anymore.  
+
+I also checked my Windows 7 files from Ubuntu, and can see that they're still there. I just don't know how to access my Windows 7 again.
+
+Please help. :(
+
+Here's some info that might help in solving the problem (I followed some steps advised from previous threads)
+
+```
+                  Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Windows is installed in the MBR of /dev/sda.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  Grub2 (v1.99)
+    Boot sector info:   Grub2 (v1.99) is installed in the boot sector of sda1 
+                       and looks at sector 50684935 of the same hard drive 
+                       for core.img. core.img is at this location and looks 
+                       for (,msdos1)/boot/grub on this drive.
+    Operating System:  Ubuntu 11.04
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  Unknown
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sda3: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files:        /Windows/System32/winload.exe /wubildr 
+                       /ubuntu/winboot/wubildr /wubildr.mbr 
+                       /ubuntu/winboot/wubildr.mbr /ubuntu/disks/root.disk 
+                       /ubuntu/disks/swap.disk
+
+sda3/Wubi: _____________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 11.04
+    Boot files:        /boot/grub/grub.cfg /etc/fstab
+
+sda4: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:   According to the info in the boot sector, sda4 has 
+                       2050047 sectors, but according to the info from fdisk, 
+                       it has 2270895 sectors.
+    Operating System:  
+    Boot files:        /bootmgr /boot/bcd
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 500.1 GB, 500107862016 bytes
+255 heads, 63 sectors/track, 60801 cylinders, total 976773168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *             63    57,541,078    57,541,016  83 Linux
+/dev/sda2          61,448,625   122,897,249    61,448,625   c W95 FAT32 (LBA)
+/dev/sda3         122,898,432   974,501,887   851,603,456   7 NTFS / exFAT / HPFS
+/dev/sda4         974,502,272   976,773,167     2,270,896  12 Compaq diagnostics
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/sda1        914870ef-4fb6-4a46-9f1c-3aa68aeb6560   ext4       
+/dev/sda2        CC77-7348                              vfat       
+/dev/sda3        2260913160910CA3                       ntfs       
+/dev/sda4        E8567002566FCFBC                       ntfs       LENOVO_PART
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro,commit=0)
+/dev/sda2        /media/CC77-7348         vfat       (rw,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,shortname=mixed,dmask=0077,utf8=1,showexec,flush)
+/dev/sr0         /media/Repair disc Windows 7 32-bit udf        (ro,nosuid,nodev,uhelper=udisks,uid=1000,gid=1000,iocharset=utf8,umask=0077,dmode=0500)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos1)'
+search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos1)'
+search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+set locale_dir=($root)/boot/grub/locale
+set lang=en_PH
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+if [ ${recordfail} != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "$linux_gfx_mode" != "text" ]; then load_video; fi
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+    linux    /boot/vmlinuz-2.6.38-8-generic root=UUID=914870ef-4fb6-4a46-9f1c-3aa68aeb6560 ro   quiet splash vt.handoff=7
+    initrd    /boot/initrd.img-2.6.38-8-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    set gfxpayload=$linux_gfx_mode
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+    echo    'Loading Linux 2.6.38-8-generic ...'
+    linux    /boot/vmlinuz-2.6.38-8-generic root=UUID=914870ef-4fb6-4a46-9f1c-3aa68aeb6560 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.38-8-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 914870ef-4fb6-4a46-9f1c-3aa68aeb6560
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows Recovery Environment (loader) (on /dev/sda4)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos4)'
+    search --no-floppy --fs-uuid --set=root E8567002566FCFBC
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda1/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda1 during installation
+UUID=914870ef-4fb6-4a46-9f1c-3aa68aeb6560 /               ext4    errors=remount-ro 0       1
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+  24.168487072 = 25.950715392   boot/grub/core.img                             1
+   4.759089947 = 5.110033920    boot/grub/grub.cfg                             1
+   0.688724041 = 0.739511808    boot/initrd.img-2.6.38-8-generic               2
+  24.166759014 = 25.948859904   boot/vmlinuz-2.6.38-8-generic                  1
+   0.688724041 = 0.739511808    initrd.img                                     2
+  24.166759014 = 25.948859904   vmlinuz                                        1
+
+======================== sda3/Wubi/boot/grub/grub.cfg: =========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+true
+}
+
+insmod part_msdos
+insmod ntfs
+set root='(/dev/sda,msdos3)'
+search --no-floppy --fs-uuid --set=root 2260913160910CA3
+loopback loop0 /ubuntu/disks/root.disk
+set root=(loop0)
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/10_lupin ###
+menuentry "Ubuntu, Linux 2.6.38-8-generic" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos3)'
+    search --no-floppy --fs-uuid --set=root 2260913160910CA3
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-8-generic root=UUID=2260913160910CA3 loop=/ubuntu/disks/root.disk ro   quiet splash
+    initrd /boot/initrd.img-2.6.38-8-generic
+}
+menuentry "Ubuntu, Linux 2.6.38-8-generic (recovery mode)" {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos3)'
+    search --no-floppy --fs-uuid --set=root 2260913160910CA3
+    loopback loop0 /ubuntu/disks/root.disk
+    set root=(loop0)
+    linux /boot/vmlinuz-2.6.38-8-generic root=UUID=2260913160910CA3 loop=/ubuntu/disks/root.disk ro single 
+    initrd /boot/initrd.img-2.6.38-8-generic
+}
+### END /etc/grub.d/10_lupin ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "FreeDOS (on /dev/sda1)" --class windows --class os {
+    insmod part_msdos
+    insmod fat
+    set root='(/dev/sda,msdos1)'
+    search --no-floppy --fs-uuid --set=root 443b-14ef
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+menuentry "Windows Recovery Environment (loader) (on /dev/sda4)" --class windows --class os {
+    insmod part_msdos
+    insmod ntfs
+    set root='(/dev/sda,msdos4)'
+    search --no-floppy --fs-uuid --set=root E8567002566FCFBC
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+============================= sda3/Wubi/etc/fstab: =============================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/host/ubuntu/disks/root.disk /               ext4    loop,errors=remount-ro 0       1
+/host/ubuntu/disks/swap.disk none            swap    loop,sw         0       0
+--------------------------------------------------------------------------------
+
+================= sda3/Wubi: Location of files loaded by Grub: =================
+
+           GiB - GB             File                                 Fragment(s)
+
+   6.130851746 = 6.582951936    boot/grub/grub.cfg                             1
+   1.630825043 = 1.751085056    boot/initrd.img-2.6.38-8-generic               2
+   6.254211426 = 6.715408384    boot/vmlinuz-2.6.38-8-generic                  1
+   1.630825043 = 1.751085056    initrd.img                                     2
+   6.254211426 = 6.715408384    vmlinuz                                        1
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  eb 58 90 4d 53 44 4f 53  35 2e 30 00 02 20 da 0a  |.X.MSDOS5.0.. ..|
+00000010  02 00 00 00 00 f8 00 00  3f 00 ff 00 b1 a1 a9 03  |........?.......|
+00000020  b1 a1 a9 03 93 3a 00 00  00 00 00 00 02 00 00 00  |.....:..........|
+00000030  01 00 06 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000040  80 00 29 48 73 77 cc 4e  4f 20 4e 41 4d 45 20 20  |..)Hsw.NO NAME  |
+00000050  20 20 46 41 54 33 32 20  20 20 33 c9 8e d1 bc f4  |  FAT32   3.....|
+00000060  7b 8e c1 8e d9 bd 00 7c  88 4e 02 8a 56 40 b4 41  |{......|.N..V@.A|
+00000070  bb aa 55 cd 13 72 10 81  fb 55 aa 75 0a f6 c1 01  |..U..r...U.u....|
+00000080  74 05 fe 46 02 eb 2d 8a  56 40 b4 08 cd 13 73 05  |t..F..-.V@....s.|
+00000090  b9 ff ff 8a f1 66 0f b6  c6 40 66 0f b6 d1 80 e2  |.....f...@f.....|
+000000a0  3f f7 e2 86 cd c0 ed 06  41 66 0f b7 c9 66 f7 e1  |?.......Af...f..|
+000000b0  66 89 46 f8 83 7e 16 00  75 38 83 7e 2a 00 77 32  |f.F..~..u8.~*.w2|
+000000c0  66 8b 46 1c 66 83 c0 0c  bb 00 80 b9 01 00 e8 2b  |f.F.f..........+|
+000000d0  00 e9 2c 03 a0 fa 7d b4  7d 8b f0 ac 84 c0 74 17  |..,...}.}.....t.|
+000000e0  3c ff 74 09 b4 0e bb 07  00 cd 10 eb ee a0 fb 7d  |<.t............}|
+000000f0  eb e5 a0 f9 7d eb e0 98  cd 16 cd 19 66 60 80 7e  |....}.......f`.~|
+00000100  02 00 0f 84 20 00 66 6a  00 66 50 06 53 66 68 10  |.... .fj.fP.Sfh.|
+00000110  00 01 00 b4 42 8a 56 40  8b f4 cd 13 66 58 66 58  |....B.V@....fXfX|
+00000120  66 58 66 58 eb 33 66 3b  46 f8 72 03 f9 eb 2a 66  |fXfX.3f;F.r...*f|
+00000130  33 d2 66 0f b7 4e 18 66  f7 f1 fe c2 8a ca 66 8b  |3.f..N.f......f.|
+00000140  d0 66 c1 ea 10 f7 76 1a  86 d6 8a 56 40 8a e8 c0  |.f....v....V@...|
+00000150  e4 06 0a cc b8 01 02 cd  13 66 61 0f 82 75 ff 81  |.........fa..u..|
+00000160  c3 00 02 66 40 49 75 94  c3 42 4f 4f 54 4d 47 52  |...f@Iu..BOOTMGR|
+00000170  20 20 20 20 00 00 00 00  00 00 00 00 00 00 00 00  |    ............|
+00000180  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001a0  00 00 00 00 00 00 00 00  00 00 00 00 0d 0a 52 65  |..............Re|
+000001b0  6d 6f 76 65 20 64 69 73  6b 73 20 6f 72 20 6f 74  |move disks or ot|
+000001c0  68 65 72 20 6d 65 64 69  61 2e ff 0d 0a 44 69 73  |her media....Dis|
+000001d0  6b 20 65 72 72 6f 72 ff  0d 0a 50 72 65 73 73 20  |k error...Press |
+000001e0  61 6e 79 20 6b 65 79 20  74 6f 20 72 65 73 74 61  |any key to resta|
+000001f0  72 74 0d 0a 00 00 00 00  00 ac cb d8 00 00 55 aa  |rt............U.|
+00000200
+
+
+=============================== StdErr Messages: ===============================
+
+unlzma: Decoder error
+
+```
+
+---
+
+### Post by coffeecat on 2011-07-01
+You are missing the /bootmgr and /Boot/BCD files in your Windows 7 sda3 partition. That is why grub's os-prober in Ubuntu cannot detect it and why it has not added a Windows entry to the grub menu. My guess is that these files were in your freedos sda1 partition. Did you install Windows 7 when the freedos partition was already there? The Windows 7 installer has an obsession with sticking the boot files anywhere but the C: partition and will grab any pre-existing suitable partition formatted with a Microsoft filesystem. 
+
+One odd thing I've noticed - you have Windows code in the mbr. Can you boot Ubuntu? You have grub installed to the boot sector of sda, which is the partition with the boot flag, so perhaps this is how you are doing it. But it's a strange way of getting grub to boot.
+
+Do you have a Windows 7 installation DVD (a Microsoft one, not an OEM restore disc) or did you create a Windows 7 repair CD while you were still able to boot Windows 7? If yes to either, have a look here:
+
+If you boot with the installation DVD or repair CD and go to the command prompt, you should be able to repair the boot sector of sda3 with either 'bootrec /FixBoot' or 'bootrec /RebuildBcd'. **Don't** use 'bootrec /FixMbr'. This will simply rewrite Windows code to the mbr.
+
+Once you've repaired the sda3 boot sector, boot into Ubuntu (if you can) and run from a terminal:
+
+```
+sudo update-grub
+```
+
+There are a few other loose ends, but let's see what that does.
+
+You also have a wubi installation in your Windows sda3 partition, but that's not likely to be a problem at the moment.
+
+---
+
+### Post by brightshadow on 2011-07-01
+Yes, freedos existed before I installed Windows 7.
+
+I can also boot from Ubuntu. 
+I have a Windows 7 repair CD and did as you said and here are the results:
+
+```
+The volume does not contain a recognized file system.
+Please make sure that all required file system drivers are loaded and that the volume is not corrupted.
+```The command `bootrec \RebuildBcd` detected my installed Windows but when I chose 'yes' to adding it to the boot list, the error message above appears.
+
+---
+
+### Post by coffeecat on 2011-07-01
+This...
+
+> **brightshadow said:**
+> ```
+The volume does not contain a recognized file system.
+```
+
+... could be because the Windows repair disc is looking at sda1 because it has the boot flag set. Emphasis on **could** be. Windows knows nothing about Linux filesystems and is probably being confused by a partition with a boot flag and with an unknown filesystem. 
+
+You don't need the boot flag for Linux, so try this. Boot up Ubuntu and install Gparted. Use Gparted to set the boot flag to sda3. Or, if you have an Ubuntu live CD handy, boot up with that and use Gparted from the live CD.
+
+Once the boot flag is on the Windows partition, try the Windows 7 repair disc again.
+
+---
+
+### Post by shibu_sawyer on 2011-07-01
+your filesystem has changed from NTFS to Ext and thats why windows couldn detect,the files/m and displays errors..
+
+---
+
+### Post by brightshadow on 2011-07-01
+> **coffeecat said:**
+> This...
+
+
+
+... could be because the Windows repair disc is looking at sda1 because it has the boot flag set. Emphasis on **could** be. Windows knows nothing about Linux filesystems and is probably being confused by a partition with a boot flag and with an unknown filesystem. 
+
+You don't need the boot flag for Linux, so try this. Boot up Ubuntu and install Gparted. Use Gparted to set the boot flag to sda3. Or, if you have an Ubuntu live CD handy, boot up with that and use Gparted from the live CD.
+
+Once the boot flag is on the Windows partition, try the Windows 7 repair disc again.
+
+Wow, worked at last. Thank you very much coffeecat, I can finally access my Windows 7 again. :D Though I still have to fix my bootloader, it doesn't show up right now.
+
+---
+
+### Post by coffeecat on 2011-07-01
+Excellent. :) I'm glad that worked.
+
+> **brightshadow said:**
+> Though I still have to fix my bootloader, it doesn't show up right now.
+
+Do you want help with that? Your boot script showed Windows code in the mbr, and if it was my machine I would re-install grub to the mbr. What isn't showing up?
+
+---
+
+### Post by brightshadow on 2011-07-01
+I reinstalled the grub and everything's working fine again. Thanks for the help again. :D
+
+---
+
+### Post by Gutzas on 2011-09-06
+I'm happy to confirm that coffeecat's hint works -- and that it's the only working solution I have found after searching for several hours on the net. In my case it wasn't Ubuntu but CentOS that messed up my Windows 7, but the same applies. Also, I had already messed up the CentOS boot loader so I basically had no OS that I could boot from the hard disk -- I ended up downloading the wonderful [SystemRescueCd]("http://www.sysresccd.org/") on my laptop, burned it on a CD and used that for gparted.
+
+Finally, be advised that the Windows repair procedure might need to be applied incrementally (I needed two iterations) after setting the boot flag in gparted. But still, it ends up working. (I didn't try reinstalling grub yet, but at least I can boot in Windows, which was my primary concern.)
+
+In conclusion, kudos coffeecat!
+
+---
+
+### Post by Gutzas on 2011-09-22
+Also be advised that if you end up messing up your MBR again, you will need to unset and set the boot flag in gparted explicitly for the Windows partition. No idea why this is needed, but it took me several hours to figure it out (the flag seems to be already set when you consult the gparted interface, but for some reason the Windows utilities don't get that).
+
+---
+

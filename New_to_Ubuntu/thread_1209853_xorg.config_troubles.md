@@ -1,0 +1,297 @@
+---
+title: "xorg.config troubles"
+date: 2009-07-10
+forum: New to Ubuntu
+---
+
+### Post by zerolgk on 2009-07-10
+id like for my resolution settings to stick  after a reboot, and ive read that editing the xorg.conf file might help.
+
+i did notice that the subsection "display" is missing.
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+EndSection
+
+so, if im not mistaken, i should change that to:
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+SubSuection "Display"
+     Mode          "1280x800_60"
+EndSubSection             
+EndSection
+
+
+maybe? thanks again.
+
+*maybe not. Parsing error=fail...
+
+if someone could help, thatd be awesome. i feel like im doing more harm and getting nowhere for it.
+
+---
+
+### Post by doas777 on 2009-07-10
+well for the parse error, check the spelling on subsection. i don't think you need to camel-case it either.
+
+---
+
+### Post by 0pul3nce on 2009-07-10
+I had some problems with graphics when i first got into ubuntu. Have you upgraded the drivers?
+
+Secondly try to change the resolution by going through System>Administration>*graphics card trype*(in my case nvidia x server setting)
+
+From what i understand you don't really want to be playing with **xorg.config**
+
+---
+
+### Post by doas777 on 2009-07-10
+> **0pul3nce said:**
+> i had some problems with graphics when i first got into ubuntu. Have you upgraded the drivers?
+
+Secondly try to change the resolution by going through system>administration>*graphics card trype*(in my case nvidia x server setting)
+
+from what i understand you don't really want to be playing with **xorg.config**
++1
+
+---
+
+### Post by wojox on 2009-07-10
+You need to change SubSuection "Display" to SubSection "Display"
+
+And what the underscore for in Mode "1280x800_60"?
+
+Make sure you have a back up of xorg.conf
+
+---
+
+### Post by zerolgk on 2009-07-10
+> **0pul3nce said:**
+> I had some problems with graphics when i first got into ubuntu. Have you upgraded the drivers?
+
+Secondly try to change the resolution by going through System>Administration>*graphics card trype*(in my case nvidia x server setting)
+
+From what i understand you don't really want to be playing with **xorg.config**
+
+updated my drivers right after install. tried System>Administration>nvidia x server settings but couldnt save the new settings. tried gksudo nvidia-settings and they still dont stick. beyond that, all the info ive found says to edit the xorg.config. im trying to locate the edid file in windows hoping that might help, but no luck yet.
+
+if it helps, this is how it looks right now:
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+EndSection
+
+Section "Screen"
+
+# Removed Option "metamodes" "1024x768 +0+0"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "1280x800 +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+---
+
+### Post by donaldt on 2009-07-10
+First you need to log on to NVIDIA X server as root.  Then make your changes and they will stick during your next boot up.  It worked for me...
+
+Ok.  Now, for my problem.  I just tried to install the latest NVIDIA drivers per the step by step guide (which requires removal of the existing nvidia driver) and it failed.  Now I am stuck with one screen and a low res mode.
+
+I have a recent driver on my desktop but am unable to install it in Ubuntu.  Here it is:  </home/donald/Desktop/NVIDIA-Linux-x86-185.18.14-pkg1.run>
+
+HOw can I install this latest driver and recover my twin screen high resolution set up once again?
+
+As always, your help is much appreciated.
+
+donaldt;)
+
+---
+
+### Post by zerolgk on 2009-07-10
+ive done that. about a dozen times.
+
+so here we are:
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "1280x800 +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+and it still boots into 800x600. i got nothing.
+
+---
+
+### Post by doas777 on 2009-07-10
+in my twin view config, i run this via the startup applications at login:
+```
+nvidia-settings -l
+```
+to correct some overscan, and whatnot. perhaps it will help.
+
+just to clarify, when you used nvidia-settings with gksu, you clicked the "Save to Xorg.conf" button, correct?
+
+also a reboot is needed before twinview will work correctly. here is my twinview xorg. it has been with me for many years so yes it's very messy, and has dormant sections.
+```
+# nvidia-settings: X configuration file generated by nvidia-settings
+# nvidia-settings:  version 1.0  (buildd@crested)  Sun Feb  1 20:25:37 UTC 2009
+
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Files"
+    RgbPath         "/usr/X11R6/lib/X11/rgb"
+EndSection
+
+Section "Module"
+    Load           "dbe"
+    Load           "extmod"
+    Load           "type1"
+    Load           "freetype"
+    Load           "glx"
+EndSection
+
+Section "ServerFlags"
+
+# Removed Option "Xinerama" "0"
+# Removed Option "Xinerama" "1"
+    Option         "Xinerama" "0"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+
+    # HorizSync source: edid, VertRefresh source: edid
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "TV-0"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+EndSection
+
+Section "Monitor"
+
+    # HorizSync source: xconfig, VertRefresh source: xconfig
+    Identifier     "Monitor1"
+    VendorName     "Unknown"
+    ModelName      "TV-0"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "Videocard0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 7950 GT"
+    BusID          "PCI:2:0:0"
+    Screen          0
+EndSection
+
+Section "Device"
+    Identifier     "Videocard1"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 7950 GT"
+    BusID          "PCI:2:0:0"
+    Screen          1
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 7950 GT"
+EndSection
+
+Section "Device"
+    Identifier     "Device1"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce 7950 GT"
+    BusID          "PCI:2:0:0"
+    Screen          1
+EndSection
+
+Section "Screen"
+
+# Removed Option "metamodes" "CRT: 800x600_56 +0+0"
+    #Option         "TwinViewXineramaInfoOrder" "CRT-0"
+# Removed Option "TwinView" "0"
+# Removed Option "metamodes" "DFP: 1024x768_60 +0+0"
+# Removed Option "metamodes" "TV: 1024x768 +1024+0, DFP: 1024x768_60 +0+0"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "1"
+    Option         "TwinViewXineramaInfoOrder" "DFP-0"
+    Option         "metamodes" "TV: 1024x768 +0+0, DFP: 1024x768_60 +1024+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen1"
+    Device         "Device1"
+    Monitor        "Monitor1"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "TV: 720x480 +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+``` 
+
+I really shoudl get arround to cleaning that up.
+
+cheers
+
+---
+

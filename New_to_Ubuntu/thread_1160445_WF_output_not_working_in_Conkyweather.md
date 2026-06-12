@@ -1,0 +1,262 @@
+---
+title: "WF output not working in Conkyweather?"
+date: 2009-05-15
+forum: New to Ubuntu
+---
+
+### Post by steelsparky on 2009-05-15
+First off, let me start by saying hello! New to ubuntu, or any version of linux for that matter. Got an EEEpc and put windows 7 on it, did not like it so here I am!
+
+I've read a lot about conky and it's a pretty interesting app. I've taken bits and pieces here and there of other, and compiled my own. However, for what ever reason I cannot get the WF fonts to display. I have a screen shot below. You'll notice the 'C' in it's place. I've located the fonts, I just don't know how to get them to recognize them. Please take it easy on me with the lingo, I'm still very new. I'll attach my .conkyrc file too.
+
+Thanks!
+
+```
+# set to yes if you want Conky to be forked in the background
+background no
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+out_to_console no
+
+# X font when Xft is disabled, you can pick one with program xfontsel
+#font 7x12
+#font 6x10
+#font 7x13
+#font 8x13
+#font 7x12
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
+
+# Use Xft?
+use_xft yes
+
+# Xft font when Xft is enabled
+xftfont Bitstream Vera Sans Mono:size=8
+
+own_window_transparent no
+#own_window_colour hotpink
+# Text alpha when using Xft
+xftalpha 0.8
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+on_bottom yes
+
+# mail spool
+mail_spool $MAIL
+
+# Update interval in seconds
+update_interval 1
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_transparent yes
+own_window_hints undecorated,below,skip_taskbar
+own_window_type override
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+minimum_size 260 5
+maximum_width 260
+
+# Draw shades?
+draw_shades no
+
+# Draw outlines?
+draw_outline no
+
+# Draw borders around text
+draw_borders no
+
+# Stippled borders?
+stippled_borders no
+
+# border margins
+border_margin 4
+
+# border width
+border_width 1
+
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+gap_x 15
+gap_y 70
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+
+# Gap between borders of screen and text no
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer no
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# none, xmms, bmp, audacious, infopipe (default is none)
+xmms_player bmp
+
+# boinc (seti) dir
+# seti_dir /opt/seti
+
+# Possible variables to be used:
+#
+#      Variable         Arguments                  Description                
+#  acpiacadapter                     ACPI ac adapter state.                   
+#  acpifan                           ACPI fan state                           
+#  acpitemp                          ACPI temperature.                        
+#  adt746xcpu                        CPU temperature from therm_adt746x       
+#  adt746xfan                        Fan speed from therm_adt746x             
+#  battery           (num)           Remaining capasity in ACPI or APM        
+#                                    battery. ACPI battery number can be      
+#                                    given as argument (default is BAT0).     
+#  buffers                           Amount of memory buffered                
+#  cached                            Amount of memory cached                  
+#  color             (color)         Change drawing color to color            
+#  cpu                               CPU usage in percents                    
+#  cpubar            (height)        Bar that shows CPU usage, height is      
+#                                    bar's height in pixels                   
+#  downspeed         net             Download speed in kilobytes              
+#  downspeedf        net             Download speed in kilobytes with one     
+#                                    decimal                                  
+#  exec              shell command   Executes a shell command and displays    
+#                                    the output in torsmo. warning: this      
+#                                    takes a lot more resources than other    
+#                                    variables. I'd recommend coding wanted   
+#                                    behaviour in C and posting a patch :-).  
+#  execi             interval, shell Same as exec but with specific interval. 
+#                    command         Interval can't be less than              
+#                                    update_interval in configuration.        
+#  fs_bar            (height), (fs)  Bar that shows how much space is used on 
+#                                    a file system. height is the height in   
+#                                    pixels. fs is any file on that file      
+#                                    system.                                  
+#  fs_free           (fs)            Free space on a file system available    
+#                                    for users.                               
+#  fs_free_perc      (fs)            Free percentage of space on a file       
+#                                    system available for users.              
+#  fs_size           (fs)            File system size                         
+#  fs_used           (fs)            File system used space                   
+#  hr                (height)        Horizontal line, height is the height in 
+#                                    pixels                                   
+#  i2c               (dev), type, n  I2C sensor from sysfs (Linux 2.6). dev   
+#                                    may be omitted if you have only one I2C  
+#                                    device. type is either in (or vol)       
+#                                    meaning voltage, fan meaning fan or temp 
+#                                    meaning temperature. n is number of the  
+#                                    sensor. See /sys/bus/i2c/devices/ on     
+#                                    your local computer.                     
+#  kernel                            Kernel version                           
+#  loadavg           (1), (2), (3)   System load average, 1 is for past 1     
+#                                    minute, 2 for past 5 minutes and 3 for   
+#                                    past 15 minutes.                         
+#  machine                           Machine, i686 for example                
+#  mails                             Mail count in mail spool. You can use    
+#                                    program like fetchmail to get mails from 
+#                                    some server using your favourite         
+#                                    protocol. See also new_mails.            
+#  mem                               Amount of memory in use                  
+#  membar            (height)        Bar that shows amount of memory in use   
+#  memmax                            Total amount of memory                   
+#  memperc                           Percentage of memory in use              
+#  new_mails                         Unread mail count in mail spool.         
+#  nodename                          Hostname                                 
+#  outlinecolor      (color)         Change outline color                     
+#  pre_exec          shell command   Executes a shell command one time before 
+#                                    torsmo displays anything and puts output 
+#                                    as text.                                 
+#  processes                         Total processes (sleeping and running)   
+#  running_processes                 Running processes (not sleeping),        
+#                                    requires Linux 2.6                       
+#  shadecolor        (color)         Change shading color                     
+#  stippled_hr       (space),        Stippled (dashed) horizontal line        
+#                    (height)        
+#  swapbar           (height)        Bar that shows amount of swap in use     
+#  swap                              Amount of swap in use                    
+#  swapmax                           Total amount of swap                     
+#  swapperc                          Percentage of swap in use                
+#  sysname                           System name, Linux for example           
+#  time              (format)        Local time, see man strftime to get more 
+#                                    information about format                 
+#  totaldown         net             Total download, overflows at 4 GB on     
+#                                    Linux with 32-bit arch and there doesn't 
+#                                    seem to be a way to know how many times  
+#                                    it has already done that before torsmo   
+#                                    has started.                             
+#  totalup           net             Total upload, this one too, may overflow 
+#  updates                           Number of updates (for debugging)        
+#  upspeed           net             Upload speed in kilobytes                
+#  upspeedf          net             Upload speed in kilobytes with one       
+#                                    decimal                                  
+#  uptime                            Uptime                                   
+#  uptime_short                      Uptime in a shorter format               
+#
+#  seti_prog                         Seti@home current progress
+#  seti_progbar      (height)        Seti@home current progress bar
+#  seti_credit                       Seti@hoome total user credit
+
+
+# variable is given either in format $variable or in ${variable}. Latter
+# allows characters right after the variable and must be used in network
+# stuff because of an argument
+#${font Dungeon:style=Bold:pixelsize=10}I can change the font as well
+#${font Verdana:size=10}as many times as I choose
+#${font Perry:size=10}Including UTF-8,
+# stuff after 'TEXT' will be formatted on screen
+#${font Grunge:size=12}${time %a  %b  %d}${alignr -25}${time %k:%M}
+
+TEXT
+${color #0077ff}Battery $color${battery_percent BAT0}% ${battery_time BAT0} ${color #0077ff}${battery_bar BAT0} 
+
+${color #0077ff}Uptime:${color lightgrey} $uptime ${color #0077ff} Load:${color lightgrey} $loadavg
+
+${color #0077ff}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'} ${color lightgrey}${freq_dyn}Mhz
+${color #0077ff}Usage:${color #0077ff} ${color lightgrey}${cpu}% ${color #0077ff}${cpubar}
+${color #0077ff}${cpugraph 000000 0077ff}
+${color #0077ff}Proces:${color lightgrey} $processes  ${color #0077ff}Run:${color lightgrey} $running_processes ${color #0077ff}CPU:${color lightgrey} ${i2c temp 2}C${color lightgrey} ${color #0077ff}MB:${color lightgrey} ${i2c temp 1}C
+
+${color #0077ff}RAM:${color lightgrey} $mem/$memmax - $memperc% ${alignr}${color #0077ff}${membar 5,110}
+
+${color #0077ff}Hard Disks:
+${color #0077ff} Home ${color lightgrey}${fs_used /home}/${fs_size /home}${alignr}${color #0077ff}${fs_bar 5,120 /home}
+${color #0077ff} SD ${color lightgrey}${fs_used /media/disk}/${fs_size /media/disk}${alignr}${color #0077ff}${fs_bar 5,120 /media/disk}
+
+${color #0077ff}Network: $color${wireless_essid ra0}${alignr}${color #0077ff}IP: ${color lightgrey}${addr ra0}
+${color #0077ff}Speed: $color${wireless_bitrate ra0}${alignr}${color #0077ff}Signal: $color${wireless_link_qual_perc ra0}%
+${color #0077ff}Down:${color lightgrey} ${downspeed ra0} k/s $alignr${color #0077ff} Up:${color lightgrey} ${upspeed ra0} k/s
+${color #0077ff}${downspeedgraph ra0 27,120 000000 0077ff 180} $alignr${color #0077ff}${upspeedgraph ra0 27,120 000000 0077ff 25}
+${color lightgrey}${totaldown ra0}           $alignr${color lightgrey}${totalup ra0}
+
+${color #0077ff}Weather:
+${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=CN --refetch}
+
+${color #0077ff}Day: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=DW}
+${color #0077ff}Conditions: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=CC}
+${font Weather:size=36}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=WF}${font}
+${color #0077ff}Temp: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=HT -i}
+${color #0077ff}Wind: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=WS -i}
+${color #0077ff}Wind Direction: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=WD}
+${color #0077ff}Humidity: ${color lightgrey}${execi 3600 python ~/.scripts/conkyForecast.py --location=USOH1075 --datatype=HM}
+```
+
+---
+
+### Post by steelsparky on 2009-05-15
+anyone?
+
+---
+

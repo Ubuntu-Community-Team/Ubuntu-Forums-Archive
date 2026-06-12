@@ -1,0 +1,209 @@
+---
+title: "Error 2 when installing Creative Drivers"
+date: 2008-07-24
+forum: New to Ubuntu
+---
+
+### Post by paradroid27 on 2008-07-24
+Hey all, absolute noob with Linux, I'm trying to install the creative drivers for my X-Fi sound card.
+This is what I'm getting in Terminal:
+> rick@rick-desktop:~/Creative/XFiDrv_Linux_US-1.18$ sudo ./installer
+[sudo] password for rick:
+
+..readme txt removed for clarity..
+
+Installation is in progress. Please wait...
+
+checking for gcc... gcc
+checking for C compiler default output file name... configure: error: C compiler cannot create executables
+See `config.log' for more details.
+make: *** [all] Error 2
+make: *** [install] Error 2
+Installation Unsuccessful
+rick@rick-desktop:~/Creative/XFiDrv_Linux_US-1.18$ 
+
+
+Probably something very basic that I'm missing but, hey, I'm new at this  :)
+
+Any help would me appreciated
+
+---
+
+### Post by Tim Sharitt on 2008-07-24
+In a terminal:
+```
+sudo apt-get install build-essentials
+```
+
+Then try it again. If it still doesn't work, be sure to post if it's the same error or not.
+
+---
+
+### Post by paradroid27 on 2008-07-25
+Thanks for replying Tim, I get this when I enter what you suggested:
+> rick@rick-desktop:~$ sudo apt-get install build-essentials
+[sudo] password for rick: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+E: Couldn't find package build-essentials
+
+
+When I then try to run the installer I get the same  error as above.
+
+---
+
+### Post by hashimoto on 2008-07-25
+Should be:
+```
+sudo apt-get install build-essential
+```
+("essential" not in plural) 
+
+then try again.
+
+---
+
+### Post by paradroid27 on 2008-07-27
+Thanks Hashimoto, thats fixed that, but still no go on the driver install.
+Long paste here:
+> Installation is in progress. Please wait...
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ANSI C... none needed
+checking for ranlib... ranlib
+checking for a BSD-compatible install... /usr/bin/install -c
+checking how to run the C preprocessor... gcc -E
+checking for egrep... grep -E
+checking for ANSI C header files... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking whether time.h and sys/time.h may both be included... yes
+checking whether gcc needs -traditional... no
+checking for current directory... /opt/Creative/XFiDrv_Linux_US-1.18/drivers
+checking cross compile... 
+checking for directory with kernel source... /lib/modules/2.6.24-19-generic/build
+checking for directory with kernel build... 
+checking for directory with ALSA include files... /lib/modules/2.6.24-19-generic/build/include
+checking for kernel linux/version.h... yes
+checking for kernel linux/autoconf.h... yes
+checking for kernel version... 2.6.24-19-generic
+checking for GCC version... Kernel compiler:  Used compiler: gcc (GCC) 4.2.3 (Ubuntu 4.2.3-2ubuntu7)
+
+*** NO PREDEFINED KERNEL COMPILER IS DETECTED
+*** Assuming the same compiler is used with the current system compiler.
+
+*** Please make sure that the same compiler version was used for building kernel.
+
+checking for built-in ALSA... no
+checking for existing ALSA module... no
+checking to modify of kernel linux/kmod.h... no
+checking for kernel linux/compiler.h... yes
+checking for kernel linux/pm.h... yes
+checking for kernel linux/spinlock.h... yes
+checking for kernel linux/irq.h... yes
+checking for kernel linux/threads.h... yes
+checking for kernel linux/rwsem.h... yes
+checking for kernel linux/gameport.h... yes
+checking for kernel linux/devfs_fs_kernel.h... no
+Creating a dummy <linux/devfs_fs_kernel.h>...
+checking for kernel linux/highmem.h... yes
+checking for kernel linux/workqueue.h... yes
+checking for kernel linux/dma-mapping.h... yes
+checking for kernel asm/hw_irq.h... yes
+checking for kernel linux/device.h... yes
+checking for kernel linux/platform_device.h... yes
+checking for kernel linux/jiffies.h... yes
+checking for kernel linux/compat.h... yes
+checking for kernel linux/adb.h... yes
+checking for kernel linux/cuda.h... yes
+checking for kernel linux/pmu.h... yes
+checking for kernel linux/moduleparam.h... yes
+checking for kernel linux/syscalls.h... yes
+checking for kernel linux/firmware.h... yes
+checking for kernel linux/err.h... yes
+checking for kernel linux/bitmap.h... yes
+checking for kernel linux/mutex.h... yes
+checking for kernel module symbol versions... yes
+checking for PCI support in kernel... yes
+checking for I2C driver in kernel... module
+checking for firmware loader... yes
+checking for input subsystem in kernel... yes
+checking for directory to store kernel modules... /lib/modules/2.6.24-19-generic/kernel/sound
+checking for ISA support in kernel... yes
+checking for processor type... i586
+checking for ISA DMA API... yes
+checking for SMP... yes
+checking for Video device support in kernel... yes
+checking for strlcpy... no
+checking for snprintf... no
+checking for vsnprintf... no
+checking for scnprintf... no
+checking for sscanf... no
+checking for vmalloc_to_page... no
+checking for old kmod... yes
+checking for PDE... no
+checking for pci_set_consistent_dma_mask... no
+checking for pci_dev_present... no
+checking for msleep... no
+checking for msecs_to_jiffies... no
+checking for tty->count is the atomic type... no
+checking for video_get_drvdata... no
+checking for io_remap_pfn_range... no
+checking for new io_remap_page_range... no
+checking for kcalloc... no
+checking for kstrdup... no
+checking for kzalloc... no
+checking for create_workqueue with flags... no
+checking for saved_config_space in pci_dev... no
+checking for register_sound_special_device... no
+checking for RTC callback support in kernel... no
+checking for HPET support... yes
+checking for Procfs support... yes
+checking for class_simple... no
+checking for old driver suspend/resume callbacks... no
+checking for removal of page-reservation for nopage/mmap... no
+checking for nested class_device... no
+checking for new unlocked/compat_ioctl... no
+configure: creating ./config.status
+config.status: creating Makefile.conf
+make: *** [all] Error 2
+make: *** [install] Error 2
+Installation Unsuccessful
+
+As you can see, I'm getting more than before, but still no joy on the install.
+Hope someone can help.
+
+---
+
+### Post by hashimoto on 2008-07-28
+Paradroid,
+
+Maybe this will help you:
+[http://ubuntuforums.org/showthread.php?t=571656](http://ubuntuforums.org/showthread.php?t=571656)
+
+Good luck!
+
+---
+
+### Post by paradroid27 on 2008-07-29
+:shock:
+
+Wow, 128 pages there!
+/takes a deep breath to wade through all that.
+
+Thanks for the help, I'll let you know how it goes.
+
+---
+
+### Post by paradroid27 on 2008-08-26
+Hey, it's been a while but I got caught up with RL issues, I've just had time to play with this, I installed OSS drivers instead ( see here: [http://ubuntuforums.org/showpost.php?p=4874981&postcount=2](http://ubuntuforums.org/showpost.php?p=4874981&postcount=2) ) and they work like a charm. Thanks again for all the help.
+
+---
+

@@ -1,0 +1,71 @@
+---
+title: "Procedure to install Stardict dictionaries"
+date: 2008-04-26
+forum: New to Ubuntu
+---
+
+### Post by kle on 2008-04-26
+The best English dictionaries I have been able to find for Ubuntu are Stardict's "Oxford Advanced Learners" and 
+"Longman Dictionary of Contemporary English" 
+(6.1 MB and 4.5 MB respectively, when compressed). 
+To install them: 
+
+1) Install 'Stardict' and 'Stardict-Common' from Ubuntu repositories 
+
+2) Download your preferred dictionary from: 
+[http://stardict.sourceforge.net/Dictionaries.php](http://stardict.sourceforge.net/Dictionaries.php)
+
+(I wanted the ones under the first group, "dictd...dict.org, where I also found:the Concise Britannica (which is very concise indeed. Longman and Oxford are in the lower part of the list.)
+
+Download each **tarball-file** to your "home" directory. 
+
+3) From here you have to use console/terminal 
+a) to extract the file you have downloaded, so:
+cd into the directory with your downloaded file and 
+Write: tar -xjvf *the_name_of_your_downloaded_file*
+
+b) to move the extracted files to Stardict, so: 
+cd into the new directory with your extracted files
+write: mv * /usr/share/stardict/dic
+
+Now quit console/terminal, and start stardict, In Kubuntu, which I am using, you will find Stardict under "utilities". However, the procedures above should apply to any flavour of Ubuntu.
+
+---
+
+### Post by jerg on 2011-03-07
+Just a small adjustment ....some of you may already notice this but I will still mention this as assumption is the mother of all F*%K ups ...as we should know linux is case sensitive so its:
+
+```
+
+sudo apt-get install [COLOR="Red"]s[/COLOR]tartdict [COLOR="Red"]s[/COLOR]tardict-[COLOR="Red"]c[/COLOR]ommon
+
+```
+
+its lowercase letters
+
+---
+
+### Post by imageraw on 2012-04-10
+Kle: thanks for the guide.  I haven't used Stardict for a while, and it looks like things have changed. 
+
+sorry I couldn't find a dictionary list in the link you provided. I found one at [http://www.stardict.org/download.php](http://www.stardict.org/download.php), but dictionaries such as Oxford Advanced Learner, English Etymology, the Cobuild are not there (at least I can't find them). 
+
+I'm trying Babiloo, but its dictionary download option doesn't seem to work - I keep getting the following message, incidentally these are the ones I used to have - and have lost and I now need - on Stardict a couple of years ago: 
+
+ p, li { white-space: pre-wrap; }  *Dictionary that couldn't be installed:*
+ * ['Moby Thesaurus II', 'Longman Dictionary of Contemporary English', "Oxford Advanced Learner's Dictionary", 'Merrian Webster 10th dictionary', 'The Britannica Concise Encyclopedia', 'English Etymology', 'Oxford English Collocation Dictionary']*
+
+
+I'm also looking at GoldenDict - very interesting, a bit like Stardict, but then where do I find the (for example, from the list above) Oxford dictionary? 
+
+
+
+Thanks.
+
+---
+
+### Post by oldos2er on 2012-04-10
+Closed. Please start a new thread.
+
+---
+

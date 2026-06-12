@@ -1,0 +1,416 @@
+---
+title: "Grub and dual booting"
+date: 2010-10-13
+forum: New to Ubuntu
+---
+
+### Post by Sheeplauncher on 2010-10-13
+On this computer I had a windows 7 partition and a an old windows xp one which was on a different hd which i was basically just using to store files.I decided to save all my files and overwrite the XP partition with  an ubuntu one. Anyways i intended on dual booting linux and windows 7 but i guess grub is not seeing both my operating systems and only boots into ubuntu. i am running grub 2 and downloaded the startup manager which doesn't even have my windows 7 partition on the list. I am not sure how to fix this and any help would be much appreciated. Edit: also when i startup i dont even see the  grub menu.
+
+---
+
+### Post by wilee-nilee on 2010-10-13
+First try in the Ubuntu terminal.
+```
+sudo update-grub
+```
+
+If windows doesn't show in the terminal in the grub.cfg readout, post the bootscript in my signature in code tags. The code tags are very important as it is a lot of text. You can build the code tags as described in my sig or just click on the # in the reply and put the text in between.
+
+If you had XP then installed W7, even though XP was a storage it may have had the bootloader files for both XP and W7.
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+Thank you for the reply. The hd with XP was mostly full and i was prety sure that all the windows 7 stuff was on its own hd but when i installed ubuntu over the  XP partition it listed something about windows 7 files. So if it did contain boot loader files for both how would i repair them without reinstalling windows 7?
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+```
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for (,msdos1)/boot/grub.
+ => Windows is installed in the MBR of /dev/sdb
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   /Windows/System32/winload.exe
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048   468,520,959   468,518,912  83 Linux
+/dev/sda2         468,523,006   488,396,799    19,873,794   5 Extended
+/dev/sda5         468,523,008   488,396,799    19,873,792  82 Linux swap / Solaris
+
+
+Drive: sdb ___________________ _____________________________________________________
+
+Disk /dev/sdb: 1000.2 GB, 1000204886016 bytes
+16 heads, 63 sectors/track, 1938021 cylinders, total 1953525168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sdb1               2,048 1,953,519,615 1,953,517,568   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        c761ab76-e55d-4cb7-b6df-b6813ed9463f   ext4                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda5        c3a0a20f-02af-4097-94e8-8ee9f0dc9504   swap                                     
+/dev/sda: PTTYPE="dos" 
+/dev/sdb1        2A002F4D002F1EF7                       ntfs       THE TB                        
+/dev/sdb: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda1        /                        ext4       (rw,errors=remount-ro,commit=0)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+}
+
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(hd0,msdos1)'
+search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+    linux    /boot/vmlinuz-2.6.35-22-generic-pae root=UUID=c761ab76-e55d-4cb7-b6df-b6813ed9463f ro  splash  quiet splash
+    initrd    /boot/initrd.img-2.6.35-22-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.35-22-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+    echo    'Loading Linux 2.6.35-22-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.35-22-generic-pae root=UUID=c761ab76-e55d-4cb7-b6df-b6813ed9463f ro single  splash
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.35-22-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod part_msdos
+    insmod ext2
+    set root='(hd0,msdos1)'
+    search --no-floppy --fs-uuid --set c761ab76-e55d-4cb7-b6df-b6813ed9463f
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sdb1       /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sdb5 during installation
+UUID=c3a0a20f-02af-4097-94e8-8ee9f0dc9504 none            swap    sw              0       0
+/dev/fd0        /media/floppy0  auto    rw,user,noauto,exec,utf8 0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+ 124.7GB: boot/grub/core.img
+  64.6GB: boot/grub/grub.cfg
+    .8GB: boot/initrd.img-2.6.35-22-generic-pae
+ 124.7GB: boot/vmlinuz-2.6.35-22-generic-pae
+    .8GB: initrd.img
+ 124.7GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  6e 38 74 38 7a 38 8d 38  92 38 a5 38 ab 38 af 38  |n8t8z8.8.8.8.8.8|
+00000010  ba 38 c0 38 ca 38 d1 38  d6 38 db 38 e0 38 e5 38  |.8.8.8.8.8.8.8.8|
+00000020  ea 38 ef 38 f4 38 f9 38  ff 38 05 39 09 39 0f 39  |.8.8.8.8.8.9.9.9|
+00000030  16 39 1d 39 23 39 27 39  2d 39 33 39 37 39 3c 39  |.9.9#9'9-93979<9|
+00000040  41 39 46 39 4b 39 50 39  55 39 5a 39 5f 39 65 39  |A9F9K9P9U9Z9_9e9|
+00000050  6b 39 6f 39 75 39 7c 39  83 39 89 39 8d 39 93 39  |k9o9u9|9.9.9.9.9|
+00000060  99 39 9d 39 a2 39 a7 39  ac 39 b1 39 b6 39 bb 39  |.9.9.9.9.9.9.9.9|
+00000070  c0 39 c5 39 cb 39 d1 39  d5 39 db 39 e2 39 e9 39  |.9.9.9.9.9.9.9.9|
+00000080  ef 39 f3 39 f9 39 ff 39  03 3a 08 3a 0d 3a 12 3a  |.9.9.9.9.:.:.:.:|
+00000090  17 3a 1c 3a 21 3a 26 3a  2b 3a 31 3a 37 3a 3b 3a  |.:.:!:&:+:1:7:;:|
+000000a0  41 3a 48 3a 4f 3a 55 3a  59 3a 5f 3a 65 3a 69 3a  |A:H:O:U:Y:_:e:i:|
+000000b0  6e 3a 73 3a 78 3a 7d 3a  82 3a 87 3a 8c 3a 91 3a  |n:s:x:}:.:.:.:.:|
+000000c0  98 3a a2 3a a6 3a ab 3a  31 3b 63 3b af 3b db 3b  |.:.:.:.:1;c;.;.;|
+000000d0  e9 3b e9 3c 1a 3d 26 3d  31 3d db 3d f7 3d 88 3e  |.;.<.=&=1=.=.=.>|
+000000e0  94 3e 9f 3e bf 3e eb 3e  23 3f 85 3f 92 3f 97 3f  |.>.>.>.>#?.?.?.?|
+000000f0  9c 3f a2 3f a8 3f ae 3f  b4 3f ba 3f cd 3f d2 3f  |.?.?.?.?.?.?.?.?|
+00000100  e0 3f e7 3f eb 3f f7 3f  fd 3f 00 00 00 50 15 00  |.?.?.?.?.?...P..|
+00000110  c0 01 00 00 02 30 0c 30  17 30 1e 30 25 30 2d 30  |.....0.0.0.0%0-0|
+00000120  33 30 39 30 3d 30 43 30  49 30 4f 30 55 30 5b 30  |3090=0C0I0O0U0[0|
+00000130  61 30 67 30 6d 30 73 30  79 30 7d 30 83 30 8a 30  |a0g0m0s0y0}0.0.0|
+00000140  90 30 96 30 9a 30 a0 30  a6 30 aa 30 b0 30 b6 30  |.0.0.0.0.0.0.0.0|
+00000150  bc 30 c2 30 c8 30 ce 30  d4 30 da 30 e0 30 e6 30  |.0.0.0.0.0.0.0.0|
+00000160  ea 30 f0 30 f7 30 fd 30  03 31 07 31 0d 31 13 31  |.0.0.0.0.1.1.1.1|
+00000170  17 31 1d 31 23 31 29 31  2f 31 35 31 3b 31 41 31  |.1.1#1)1/151;1A1|
+00000180  47 31 4d 31 53 31 57 31  5d 31 64 31 6a 31 70 31  |G1M1S1W1]1d1j1p1|
+00000190  74 31 7a 31 80 31 84 31  8a 31 90 31 96 31 9c 31  |t1z1.1.1.1.1.1.1|
+000001a0  a2 31 a8 31 ae 31 b4 31  ba 31 c0 31 c4 31 ca 31  |.1.1.1.1.1.1.1.1|
+000001b0  d1 31 d7 31 dd 31 e1 31  e7 31 ed 31 f1 31 00 fe  |.1.1.1.1.1.1.1..|
+000001c0  ff ff 82 fe ff ff 02 00  00 00 00 40 2f 01 00 00  |...........@/...|
+000001d0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+```
+
+Thats the script you told me to run.
+
+---
+
+### Post by drs305 on 2010-10-13
+Edit: 1. Yes you are missing some of the Windows boot folders.
+2. Yes this is how you would fix it.
+3. Nevermind. ^^  ;-)
+
+1. You probably *did* wipe out some of the Windows boot files when you installed Ubuntu over XP. The easiest way for us to see what you have left is to run the boot info script from here:
+[http://bootinfoscript.sourceforge.net/]("http://bootinfoscript.sourceforge.net/")
+
+2. You would use the W7 repair disk if you have it. If not, there is a site from which you can download it. I'm not a Windows guy but someone will have the link and instructions for repairing the install.
+
+3. But in the meantime, boot the LiveCD and post the contents of RESULTS.txt. When you are ready to copy the contents, press the # icon to generate 'code' tags and copy between them.
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+i think i beat you to the punch while you were posting. my results are above :).
+
+---
+
+### Post by wilee-nilee on 2010-10-13
+> **Sheeplauncher said:**
+> Thank you for the reply. The hd with XP was mostly full and i was prety sure that all the windows 7 stuff was on its own hd but when i installed ubuntu over the  XP partition it listed something about windows 7 files. So if it did contain boot loader files for both how would i repair them without reinstalling windows 7?
+
+First lets confirm the boot, with the script. There are a couple of members on regularly who can provide links to this sort of problem. The W7 forum is probably one of the better sources, but lets confirm if your missing anything at this time. They don't use the script on that forum so the detail it gives will be a great help if you know exactly what your missing.
+
+I just noticed that drs305 has posted, they along with many others are a excellent resource.;)
+
+Just for reference If have added what your missing in red.
+sdb1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows 7
+    Boot files/dirs:   [COLOR="Red"]/bootmgr /Boot/BCD[/COLOR] /Windows/System32/winload.exe
+
+---
+
+### Post by drs305 on 2010-10-13
+Here is a good link to a post by *oldfred* on repairing Windows:
+[http://ubuntuforums.org/showpost.php?p=9826152]("http://ubuntuforums.org/showthread.php?p=9826152")  Post # 7.
+
+Here is a link to the repair disk if you need to download one:
+[http://ubuntuforums.org/showpost.php?p=9826152]("http://ubuntuforums.org/showpost.php?p=9826152")
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+Thanks guys, very helpful. i will report back if i have any issues or fix it.
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+Quick question for you guys. i got the repair disk and tried to use the automatic repair but it didn't work. also when i booted using the windows 7 disk my windows partition did not show up on the list of things to repair. the script thing finds it though(without some of the necessary boot files) i am kinda of unsure of where to go from here. in the articles you linked you need to have it listing the partition. [http://windows7ultimate.windowsreinstall.com/images/repair/startup/indexf5.jpg](http://windows7ultimate.windowsreinstall.com/images/repair/startup/indexf5.jpg) it should look like that but mine has nothing.... my one thought is that  i have the wrong repair disk (32 bit). i pretty sure im running 64 bit so im going to dl that and try but any other suggestions would be welcome.
+
+---
+
+### Post by wilee-nilee on 2010-10-13
+Could be a couple of reasons why W7 isn't showing in the recovery boot. The partition with windows should have a bootflag to be active. Also I would unplug the Ubuntu HD since it is reading as sda. You can put the bootflag on the W7 partition with gparted, right click on a unmounted W7 in gparted and then manage flags and tick boot. Can't say this is the answer but where I would start to see if W7 shows up in the recovery environment. If you get it to show then try the auto at least 3 times. The actual commands you would run courtesy of oldfred, if the auto doesn't work.
+
+1) Boot with your Vista/Windows 7 installation disk. Hit <Enter> at the language selection prompt then hit <R> for Repair to get to the Repair section. 
+2) Select the command prompt (console) and type in the following commands:
+BootRec.exe /fixmbr (#updates MBR master boot record...do not run if you still want grub)
+chkdsk /r
+BootRec.exe /FixBoot (#updates PBR partition boot)
+BootRec.exe /ScanOs
+BootRec.exe /RebuildBcd
+[http://www.sevenforums.com/tutorials/20864-mbr-restore-windows-7-master-boot-record.html](http://www.sevenforums.com/tutorials/20864-mbr-restore-windows-7-master-boot-record.html)
+
+I would also post a thread at the W7 forums as well.
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+alright ill see if the new disk works as its almost done dling and then do this and see if i cant get it to work.
+
+EDIT: alright i fixed the boot errors. i can now boot into both by changing the order of the partitions in the BIOS but grub  still isnt working any ideas?
+
+---
+
+### Post by Sheeplauncher on 2010-10-13
+I fixed it! Thanks wilee-nile. I installed Gparted and enabled the boot option my windows partition and that enabled me to use the disk to repair it which then allowed grub to work once i tweaked a few settings! thanks again everyone!
+
+---
+
+### Post by wilee-nilee on 2010-10-13
+> **Sheeplauncher said:**
+> I fixed it! Thanks wilee-nile. I installed Gparted and enabled the boot option my windows partition and that enabled me to use the disk to repair it which then allowed grub to work once i tweaked a few settings! thanks again everyone!
+
+We posted at the same time, glad you got it fixed. I learned most of what I know from the other members in this thread and the one referenced.
+
+It is good to know that the recovery disc will rebuild the /bootmgr /Boot/BCD stuff.;)
+
+---
+

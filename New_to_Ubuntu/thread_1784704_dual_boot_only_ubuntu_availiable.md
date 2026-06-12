@@ -1,0 +1,467 @@
+---
+title: "dual boot: only ubuntu availiable"
+date: 2011-06-17
+forum: New to Ubuntu
+---
+
+### Post by ni ni on 2011-06-17
+hi all,
+
+i got a new harddrive for my ancient laptop, i installed Win XP on a 20GB partition, then installed ubuntu on the remaining 60GB.  On starting the laptop it goes straight to Ubuntu, and if i F12 for boot menu, Win XP isn't listed.
+
+I think i might have deleted the 8mb Windows partition that starts everything going for windows.
+
+Is there a way i can get a dual boot of both??  the win XP partition is perfect, everything installed just the system doesn't know it's there on starting up.
+
+i hope someone can help............... thanks soooo much x x x x
+
+---
+
+### Post by DirtyPC on 2011-06-17
+Ermm. I think if you deleted that 8mb partition you're kinda ballsed. I'd recommend putting the XP disc in and running the repair disc.
+
+---
+
+### Post by Rubi1200 on 2011-06-17
+I think it would be prudent to check whether you really deleted the partition by running and posting the results of the boot info script:
+
+Boot the Ubuntu Live CD/USB. Choose the option "Try Ubuntu without any changes." Once the desktop loads come back here and do the following:
+
+1. Download the boot info script which is in a zipped file. There is a link in my signature.
+2. Once downloaded, move the boot info script by either copying or dragging and dropping the zipped folder onto the desktop and unzip the contents by using right-click Extract here.
+3. Open the folder and copy the script to the desktop (you can also drag and drop if you like)
+4. Open a terminal and run the following command
+
+```
+sudo bash ~/Desktop/boot_info_script.sh
+```
+
+This will create a RESULTS.txt file on the desktop. Paste the entire contents of that file back here in a new post. Once pasted highlight all text and click the # sign on the toolbar to place code tags around the text.
+
+---
+
+### Post by ni ni on 2011-06-17
+Thanks so much Rubi1200.
+
+
+Here is the result:
+```
+                  Boot Info Script 0.60    from 17 May 2011
+
+
+============================= Boot Info Summary: ===============================
+
+ => Grub2 (v1.99) is installed in the MBR of /dev/sda and looks at sector 1 of 
+    the same hard drive for core.img. core.img is at this location and looks 
+    for (,msdos1)/boot/grub on this drive.
+
+sda1: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 11.04
+    Boot files:        /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: __________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: __________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:   According to the info in the boot sector, sda5 starts 
+                       at sector 63.
+    Operating System:  Windows XP
+    Boot files:        
+
+sda6: __________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+============================ Drive/Partition Info: =============================
+
+Drive: sda _____________________________________________________________________
+
+Disk /dev/sda: 80.0 GB, 80026361856 bytes
+255 heads, 63 sectors/track, 9729 cylinders, total 156301488 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot  Start Sector    End Sector  # of Sectors  Id System
+
+/dev/sda1    *             63   116,918,031   116,917,969  83 Linux
+/dev/sda2         116,918,270   156,280,319    39,362,050   f W95 Extended (LBA)
+/dev/sda5         120,824,928   156,280,319    35,455,392   7 NTFS / exFAT / HPFS
+/dev/sda6         116,918,272   120,823,807     3,905,536  82 Linux swap / Solaris
+
+
+"blkid" output: ________________________________________________________________
+
+Device           UUID                                   TYPE       LABEL
+
+/dev/loop0                                              squashfs   
+/dev/sda1        5f901fec-26af-47cd-95d1-67580cbde87e   ext4       
+/dev/sda5        1C9097549097336E                       ntfs       
+/dev/sda6        f5f281ed-6ba2-4c31-8801-ba6ecfaacb6a   swap       
+
+================================ Mount points: =================================
+
+Device           Mount_Point              Type       Options
+
+/dev/loop0       /rofs                    squashfs   (ro,noatime)
+/dev/sr0         /cdrom                   iso9660    (ro,noatime)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+--------------------------------------------------------------------------------
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+
+function load_video {
+  insmod vbe
+  insmod vga
+  insmod video_bochs
+  insmod video_cirrus
+}
+
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos1)'
+search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+fi
+terminal_output gfxterm
+insmod part_msdos
+insmod ext2
+set root='(/dev/sda,msdos1)'
+search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+set locale_dir=($root)/boot/grub/locale
+set lang=en_IE
+insmod gettext
+if [ "${recordfail}" = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+if [ ${recordfail} != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+if [ "$linux_gfx_mode" != "text" ]; then load_video; fi
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	set gfxpayload=$linux_gfx_mode
+	insmod part_msdos
+	insmod ext2
+	set root='(/dev/sda,msdos1)'
+	search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+	linux	/boot/vmlinuz-2.6.38-8-generic root=UUID=5f901fec-26af-47cd-95d1-67580cbde87e ro   quiet splash vt.handoff=7
+	initrd	/boot/initrd.img-2.6.38-8-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.38-8-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	set gfxpayload=$linux_gfx_mode
+	insmod part_msdos
+	insmod ext2
+	set root='(/dev/sda,msdos1)'
+	search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+	echo	'Loading Linux 2.6.38-8-generic ...'
+	linux	/boot/vmlinuz-2.6.38-8-generic root=UUID=5f901fec-26af-47cd-95d1-67580cbde87e ro single 
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.38-8-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(/dev/sda,msdos1)'
+	search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod part_msdos
+	insmod ext2
+	set root='(/dev/sda,msdos1)'
+	search --no-floppy --fs-uuid --set=root 5f901fec-26af-47cd-95d1-67580cbde87e
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ "x${timeout}" != "x-1" ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+--------------------------------------------------------------------------------
+
+=============================== sda1/etc/fstab: ================================
+
+--------------------------------------------------------------------------------
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+/dev/sda1       /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=f5f281ed-6ba2-4c31-8801-ba6ecfaacb6a none            swap    sw              0       0
+--------------------------------------------------------------------------------
+
+=================== sda1: Location of files loaded by Grub: ====================
+
+           GiB - GB             File                                 Fragment(s)
+
+  24.134063244 = 25.913753088   boot/grub/core.img                             1
+  24.134070873 = 25.913761280   boot/grub/grub.cfg                             1
+   1.429717541 = 1.535147520    boot/initrd.img-2.6.38-8-generic               2
+  24.132335186 = 25.911897600   boot/vmlinuz-2.6.38-8-generic                  1
+   1.429717541 = 1.535147520    initrd.img                                     2
+  24.132335186 = 25.911897600   vmlinuz                                        1
+
+======================== Unknown MBRs/Boot Sectors/etc: ========================
+
+Unknown BootLoader on sda2
+
+00000000  8a 10 8a 10 8a 10 8a 10  8a 10 8b 10 8b 10 8b 10  |................|
+00000010  8b 10 8b 10 8b 10 8b 10  8b 10 ab 14 8b 10 8b 10  |................|
+00000020  8b 10 ac 14 8b 10 8b 10  8b 10 ac 14 ac 14 8c 10  |................|
+00000030  8c 10 ac 14 ac 14 ac 14  8c 10 ac 14 ac 14 ac 14  |................|
+00000040  ac 14 ad 14 ad 14 ac 14  ac 14 ad 14 ad 14 ad 14  |................|
+00000050  ad 14 ad 14 ad 14 ad 14  ad 14 ad 14 ad 14 ad 14  |................|
+00000060  ad 14 ae 14 ad 14 ad 14  ad 14 ae 14 ad 14 ad 14  |................|
+00000070  ad 14 ae 14 ae 14 ad 14  ad 14 ae 14 ae 14 ae 14  |................|
+00000080  ad 14 ae 14 ae 14 ae 14  ae 14 ce 18 ae 14 ae 14  |................|
+00000090  ae 14 ce 18 ae 14 ae 14  ae 14 ce 18 ae 14 ae 14  |................|
+*
+000000c0  ae 14 ce 18 ae 14 ae 14  ad 14 ae 14 ae 14 ae 14  |................|
+000000d0  ad 14 ae 14 ae 14 ad 14  ad 14 ae 14 ad 14 ad 14  |................|
+000000e0  ad 14 ae 14 ad 14 ad 14  ad 14 ad 14 ad 14 ad 14  |................|
+000000f0  ad 14 ad 14 ad 14 ad 14  ad 14 ad 14 ad 14 ad 14  |................|
+00000100  ac 14 ad 14 ad 14 ac 14  ac 14 ad 14 ac 14 ac 14  |................|
+00000110  8c 10 ac 14 ac 14 ac 14  8c 10 ac 14 ac 14 8c 10  |................|
+00000120  8b 10 ac 14 ac 14 8b 10  8b 10 ac 14 8b 10 8b 10  |................|
+00000130  8b 10 ab 14 8b 10 8b 10  8b 10 8b 10 8b 10 8b 10  |................|
+00000140  8a 10 8b 10 8a 10 8a 10  8a 10 8a 10 8a 10 8a 10  |................|
+00000150  8a 10 8a 10 8a 10 89 10  69 0c 8a 10 89 10 89 10  |........i.......|
+00000160  69 0c 89 10 89 10 69 0c  69 0c 89 10 69 0c 68 0c  |i.....i.i...i.h.|
+00000170  68 0c 89 10 68 0c 68 0c  68 0c 68 0c 68 0c 68 0c  |h...h.h.h.h.h.h.|
+00000180  67 0c 68 0c 67 0c 67 0c  67 0c 67 0c 67 0c 67 0c  |g.h.g.g.g.g.g.g.|
+00000190  66 0c 67 0c 67 0c 66 0c  46 08 66 0c 66 0c 46 08  |f.g.g.f.F.f.f.F.|
+000001a0  46 08 66 0c 46 08 46 08  45 08 66 0c 45 08 45 08  |F.f.F.F.E.f.E.E.|
+000001b0  45 08 45 08 45 08 45 08  44 08 45 08 44 08 00 01  |E.E.E.E.D.E.D...|
+000001c0  c1 ff 07 fe ff ff 62 9c  3b 00 a0 01 1d 02 00 fe  |......b.;.......|
+000001d0  ff ff 05 fe ff ff 01 00  00 00 01 98 3b 00 00 00  |............;...|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+=============================== StdErr Messages: ===============================
+
+unlzma: Decoder error
+
+```
+
+---
+
+### Post by jtarin on 2011-06-17
+In Ubuntu try running the command ```
+sudo update-grub
+```watch the print out after the command.Post the results.
+
+---
+
+### Post by drs305 on 2011-06-17
+I am not a Windows guy, so hopefully a Windows user will be able to address these issues:
+
+Your XP installation is on sda5. The boot info script shows this is an extended partition. Will XP run in an extended partition (vs a primary partition)? The script also says that sda5 starts at sector 63, which is defined elsewhere as in sda1, a primary partition, and appears to contradict the previous.
+
+The script didnt' find any boot files in sda5. For XP, normally it should find: /boot.ini /ntldr /NTDETECT.COM. If Grub 2 doesn't find the Windows boot files it isn't going to add XP to the menu.
+
+I don't have answers, just areas for others to comment on and perhaps provide solutions.
+
+---
+
+### Post by jtarin on 2011-06-17
+> **drs305 said:**
+> I am not a Windows guy, so hopefully a Windows user will be able to address these issues:
+
+Your XP installation is on sda5. The boot info script shows this is an extended partition. Will XP run in an extended partition (vs a primary partition)? The script also says that sda5 starts at sector 63, which is defined elsewhere as in sda1, a primary partition, and appears to contradict the previous.
+
+The script didnt' find any boot files in sda5. For XP, normally it should find: /boot.ini /ntldr /NTDETECT.COM. If Grub 2 doesn't find the Windows boot files it isn't going to add XP to the menu.
+
+I don't have answers, just areas for others to comment on and perhaps provide solutions.Yea...I'm sleeping. Should have caught that. Partitions are all #$@^%-up. If you don't have a lot invested in Ubuntu at the moment or XP I would start from scratch and partition your drive as you want it into 2 primary partitions....20GB's for XP at the beginning of the disk and the rest as you stated 60GB's for Linux. Then install XP to the first partition on the disk and Ubuntu to the second partition. Consider your boot options also. You can install Grub to the MBR of the disk and it will boot both or there are a few alternatives to leave your MBR untouched and still dual boot without having to mess up your windows boot manager.
+
+---
+
+### Post by LostFarmer on 2011-06-17
+> Will XP run in an extended partition (vs a primary partition)?   Yes it will but it is not the best as one can not do a reinstall or repair install if there is not a primary partition for the boot files.
+
+> The script also says that sda5 starts at sector 63, which is defined elsewhere as in sda1 That is normal for a logical partition for XP.  The start sector is in reference to its extended partition table.
+
+---
+
+### Post by jtarin on 2011-06-17
+> **LostFarmer said:**
+> Yes it will but it is not the best as one can not do a reinstall or repair install if there is not a primary partition for the boot files.I can vouch for that.:p
+
+---
+
+### Post by ni ni on 2011-06-18
+> **jtarin said:**
+> In Ubuntu try running the command ```
+sudo update-grub
+```watch the print out after the command.Post the results.
+
+
+```
+nim@nim-AMILO-L7310:~$ sudo update-grub
+[sudo] password for nim: 
+Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-2.6.38-8-generic
+Found initrd image: /boot/initrd.img-2.6.38-8-generic
+Found memtest86+ image: /boot/memtest86+.bin
+done
+nim@nim-AMILO-L7310:~$
+```
+
+So the best thing to do is start again afresh it seems...
+I think i read somewhere that i should Install XP first, but how do i make sure i don't do the same thing again?  Should i do the guided partitioning when it comes to installing linux??
+
+---
+
+### Post by YesWeCan on 2011-06-18
+> **ni ni said:**
+> So the best thing to do is start again afresh it seems...
+I think i read somewhere that i should Install XP first, but how do i make sure i don't do the same thing again?  Should i do the guided partitioning when it comes to installing linux??
+Hi there. Installing Ubuntu next to Windows can be a pain in the...
+IMO the Ubuntu installer is pretty hard to figure out. Once you "get it" it is very easy, but getting it is quite hard. And it is hard to describe in words. I found YouTube invaluable while learning this.
+
+As has been said, the problem is that the XP boot-loader is missing. The Grub boot-loader is not equipped to boot XP and can only boot XPs boot-loader. I don't know how to install an XP boot-loader without installing XP too.
+
+First, you should back up any XP files you want to keep using Ubuntu. The file manager can open your XP partition.
+
+You can start again from scratch or you can just reinstall XP. The former takes longer and you have to figure out the Ubuntu partitioner and the latter is quicker and you have to learn to use Gparted. I am going to describe the latter. Gparted is a very useful tool so it is worth learning and it is pretty easy to learn, I think.
+
+What you want is a gap at the start of your disk in which to reinstall XP. To make this, boot off a live CD and run Gparted. Delete the XP partition and then move the remaining partitions to the right, to create a free space at the start of the disk. Then boot your XP CD and install it in the gap.
+Now you can boot XP but only XP. Next you need to reinstall Grub so you can boot both. Boot a live CD and run
+[COLOR="Navy"]sudo mount /dev/sda2 /mnt[/COLOR]  to mount the root directory of your Ubuntu OS
+[COLOR="Navy"]sudo grub-install --boot-directory=/mnt/boot /dev/sda[/COLOR]
+(assuming the drive is called sda and the Ubuntu root partition is sda2. You can confirm this using [COLOR="Navy"]sudo fdisk -l[/COLOR])
+
+---
+
+### Post by jtarin on 2011-06-18
+> **ni ni said:**
+> ```
+nim@nim-AMILO-L7310:~$ sudo update-grub
+[sudo] password for nim: 
+Generating grub.cfg ...
+Found linux image: /boot/vmlinuz-2.6.38-8-generic
+Found initrd image: /boot/initrd.img-2.6.38-8-generic
+Found memtest86+ image: /boot/memtest86+.bin
+done
+nim@nim-AMILO-L7310:~$
+```
+
+So the best thing to do is start again afresh it seems...
+I think i read somewhere that i should Install XP first, but how do i make sure i don't do the same thing again?  Should i do the guided partitioning when it comes to installing linux??
+When installing XP  delete all partitions it shows during install and create one for XP only. It will ask you how much of the disk you want to use...make your choice here for XP partition. When get into windows you can manipulate the rest of the disk as you want. Maybe on a 80GB disk you might create two primary partitions, One for Windows and one for Ubuntu.Make sure it is formatted with a file system before installing Ubuntu. Remember to make a third partition out of the Ubuntu partition, about 2GB's for swap. Now if you want to preserve your XP MBR and Boot files install Grub to the Ubuntu partition not the Windows partition. There are several ways to use the Windows boot manager to boot Ubuntu, but if you want Grub to boot everything then let it do its own thing to the MBR during Ubuntu install.
+
+---
+

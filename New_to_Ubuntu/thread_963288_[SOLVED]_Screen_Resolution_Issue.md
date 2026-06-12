@@ -1,0 +1,355 @@
+---
+title: "[SOLVED] Screen Resolution Issue"
+date: 2008-10-30
+forum: New to Ubuntu
+---
+
+### Post by xreaper on 2008-10-30
+Hey guys, just me here again.
+
+I have a query about Ubuntu 8.10, concerning the available screen resolutions. 
+
+Basically, long story short, can someone please describe to me how I can set my screen resolution to 1280x1024? rather than 800x600. I previously tried to myself and I managed to get my login screen 4x the normal size that it should have been.
+
+I have just done a fresh install wit all updates, and I am using an NVIDIA geforce 6600 GT, and the following is my xorg.conf file:
+
+Section "Device"
+    Identifier    "Configured Video Device"
+EndSection
+
+Section "Monitor"
+    Identifier    "Configured Monitor"
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Monitor        "Configured Monitor"
+    Device        "Configured Video Device"
+EndSection
+
+Any help will be much appreciated, as always. ^^
+
+---
+
+### Post by eternalnewbee on 2008-10-30
+Have you tried via Main Menu > System > Preferences >Screen Resolution?
+
+---
+
+### Post by xreaper on 2008-10-30
+yes ^^ ofcourse I have. The maximum I can get is 1024x768.
+
+In the mean time, Ive installed the latest NVIDIA driver, and my xorg.conf now looks like this:
+
+Section "ServerLayout"
+    Identifier     "Default Layout"
+    Screen         "Default Screen" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Module"
+    Load           "glx"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "keyboard"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "Monitor"
+    Identifier     "Configured Monitor"
+EndSection
+
+Section "Device"
+    Identifier     "Configured Video Device"
+    Driver         "nvidia"
+EndSection
+
+Section "Screen"
+    Identifier     "Default Screen"
+    Device         "Configured Video Device"
+    Monitor        "Configured Monitor"
+    DefaultDepth    24
+    Option         "NoLogo" "True"
+    SubSection     "Display"
+        Depth       24
+        Modes      "nvidia-auto-select"
+    EndSubSection
+EndSection
+
+
+....a little more complicated than what I can interpret.
+
+---
+
+### Post by starcannon on 2008-10-30
+Enable the nvidia drivers using:
+System>Administration>Hardware Drivers
+
+Follow on screen instructions, reboot when prompted, you should have more resolutions available when you get back to a desktop.
+
+---
+
+### Post by eternalnewbee on 2008-10-30
+> 
+....a little more complicated than what I can interpret.
+Same here...
+Sorry for pointing out the obvious, but you never know...
+
+---
+
+### Post by xreaper on 2008-10-30
+I've installed the NVIDIA drivers and I can get a resolution up to 1024x768, still no luck with 1280x1024 though.
+
+---
+
+### Post by ubhi on 2008-10-30
+hi all, i m new at ubuntuforums, so can you tell me how do i post a new thread from my account..??
+
+---
+
+### Post by xreaper on 2008-10-30
+Sure. What I do is navigate my way to Absalute beginner talk, and then click the link "new thread" somewhere on the top left of the page.
+
+---
+
+### Post by ubhi on 2008-10-30
+thank u
+
+---
+
+### Post by xreaper on 2008-10-30
+heh, its what I'm here for. So anyway, back to the main issue... does anyone have even the slightest idea?
+
+---
+
+### Post by eternalnewbee on 2008-10-30
+Btw, did you have the same issues with Hardy?
+
+---
+
+### Post by xreaper on 2008-10-30
+Nope, all I had to do in Hardy was change my monitor brand, etc in the "screens and graphics" menu. thats another idea I guess, just to take the monitor part of someones xorg.conf file (with the same monitor I selected) and paste it instead of my monitor.
+
+Anyone using Hardy willing to do that? ^^
+
+---
+
+### Post by Hyel on 2008-10-30
+Assuming your computer refresh rate is 60hz, Screen Section should have the following subsection:
+
+       SubSection "Display"
+		Viewport   0 0
+		Depth     4
+		Modes    "1280x1024@60"
+	EndSubSection
+
+Monitor section should say:
+
+ModeLine     "1280x1024@60" 108.0 1280 1328 1440 1688 1024 1025 1028 1066 +hsync +vsync
+
+
+Note, I'm a complete beginner myself... But I had a laptop with 1280x800 and had to figure out how to get the right screen res.
+
+---
+
+### Post by xreaper on 2008-10-30
+okay. thank you for your advice, I'll try in a minute once i manage to fix my xorg.conf yet again ^^
+
+---
+
+### Post by xreaper on 2008-10-30
+Nope =[ still the same thing. maximum resolution is 1024x768. I'll post my xorg.conf file here again to show if anythings changed..:
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# Note that some configuration settings that could be done previously
+# in this file, now are automatically configured by the server and settings
+# here are ignored.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Monitor"
+    Identifier    "Configured Monitor"
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Monitor        "Configured Monitor"
+    Device        "Configured Video Device"
+    DefaultDepth    24
+EndSection
+
+Section "Module"
+    Load    "glx"
+EndSection
+
+Section "Device"
+    Identifier    "Configured Video Device"
+    Driver    "nvidia"
+    Option    "NoLogo"    "True"
+EndSection
+
+---
+
+### Post by Jammy4041 on 2008-10-30
+> **xreaper said:**
+> Anyone using Hardy willing to do that? ^^
+
+Hardy Heron is an LTS release. If everything works fine in hardy, then I suggest stick with hardy heron. Try using a persistant live usb and test your screen resolutions first.
+
+I recommend using a persistent live usb because it saves your data on shutdown, so restricted drivers really aren't a problem.
+
+To do this, first download the Ubuntu Live USB creator from [here]("http://packages.ubuntu.com/intrepid/all/usb-creator/download")
+
+then open a terminal and type
+
+```
+sudo -i
+```
+
+to become root.
+
+now type 
+
+```
+wget http://releases.ubuntu.com/intrepid/ubuntu-8.10-rc-desktop-i386.iso
+```
+
+and you can download a release canditdate of Intrepid. For me this works fine,
+
+If you want to download the finalized version,  you will have to navigate to [http://releases.ubuntu.com/intrepid/](http://releases.ubuntu.com/intrepid/) in firefox, and download the desktop iso when it is released. 
+
+Then open up the Live USB creator by typing, 
+
+```
+usb-creator
+```
+
+and for the iso, look in the root folder, insert a usb stick (it will format it :(), whack the slider maximum right. Click Make Startup Disk and wait for a little while and you will have a bootable intrepid live usb.
+
+You might have to go into the BIOS to make sure you c an boot from live usb.
+
+When in the live USB environment, go to system >> administration >> hardware drivers 
+
+and your nVidia drivers should be auto detected. Download them and hopefully you will be able to get your drivers working.
+
+Hoope this helps.
+
+---
+
+### Post by xreaper on 2008-10-30
+Right! After alot of playing around, and edting the xorg.conf file, I managed to get it working on Ibex. For anyone else who reads this, what I did to set the display to 1280x1024 was changing two sections of my xorg.conf file.
+
+1:I changed my "Monitor" section to look like the following:
+
+Section "Monitor"
+    Identifier "Monitor0"
+    Option "DPMS"
+    HorizSync 28-64
+    VertRefresh 43-60
+EndSection
+
+and 2: I changed my "Screen" section to 'read' the momnitor and add the prefferred resolutions:
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Monitor        "Monitor0"
+    Device        "Configured Video Device"
+    DefaultDepth    24
+    SubSection "Display"
+        Depth 24
+        Modes "1280x1024" "1152x864" "1152x768" "1024x768" "800x600" "640x480"
+    EndSubSection
+EndSection
+
+Thank you to all of you who helped, it is very much appreciated !! ^^
+
+---
+
+### Post by thasban on 2008-11-01
+Whatever it is, i'm losing my head towards the damn computer due to the resolutions as well.:mad:
+
+I upgraded to intrepid from hardy through the update manager. Everything was flawless. When they told me to restart, the resolutions was perfect (1024x768).
+
+After restarting, i was prompted of a message saying that some sort of graphics thing wasn't detected and the resolution was awful. So, i selected to run ubuntu in low-res. In the desktop, i noticed the resolution was 800x600. I went to screen resolution and the only selection i saw was 800x600 and 640x480.
+
+I googled, and googled, and googled on how to solve the problem and i encountered many configuration editing, software installing and lots of seemingly effective maneuvers.
+
+I tried installing a driver for the graphics card from hardware drivers, but i saw nothing!
+[IMG]http://farm4.static.flickr.com/3012/2991482962_466c9b7857.jpg[/IMG]
+
+This is also what i have in the xorg.conf file.
+> Section "Device"
+	Identifier	"Configured Video Device"
+	Option		"UseFBDev"		"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"Configured Monitor"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Monitor		"Configured Monitor"
+	Device		"Configured Video Device"
+
+EndSection
+
+By the way, i'm using a laptop, Compaq Evo N1020v, with an ATI Radeon IGP 340M. I certainly hope that this conflict can be resolved as quick as possible.
+
+Thanks a million!
+
+---
+
+### Post by Yar4ek on 2008-11-01
+> **thasban said:**
+> Whatever it is, i'm losing my head towards the damn computer due to the resolutions as well.:mad:
+
+I upgraded to intrepid from hardy through the update manager. Everything was flawless. When they told me to restart, the resolutions was perfect (1024x768).
+
+After restarting, i was prompted of a message saying that some sort of graphics thing wasn't detected and the resolution was awful. So, i selected to run ubuntu in low-res. In the desktop, i noticed the resolution was 800x600. I went to screen resolution and the only selection i saw was 800x600 and 640x480.
+
+I googled, and googled, and googled on how to solve the problem and i encountered many configuration editing, software installing and lots of seemingly effective maneuvers.
+
+I tried installing a driver for the graphics card from hardware drivers, but i saw nothing!
+[IMG]http://farm4.static.flickr.com/3012/2991482962_466c9b7857.jpg[/IMG]
+
+This is also what i have in the xorg.conf file.
+
+
+By the way, i'm using a laptop, Compaq Evo N1020v, with an ATI Radeon IGP 340M. I certainly hope that this conflict can be resolved as quick as possible.
+
+Thanks a million!
+
+I have the same problem.
+My graphics card to Via Chrome9 HC and I have only 1280x800 resolution, unfortunately, I do not have Refresh of 60 Hz . :(
+With the top Thank you for your help.
+
+(Sorry For My English is Not Good)
+
+---
+

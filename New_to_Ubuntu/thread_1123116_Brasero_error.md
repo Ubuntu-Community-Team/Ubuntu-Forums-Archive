@@ -1,0 +1,1962 @@
+---
+title: "Brasero error"
+date: 2009-04-11
+forum: New to Ubuntu
+---
+
+### Post by lil_kid1333 on 2009-04-11
+I can't seem to burn an audio cd :S I keep getting this error log
+
+```
+Checking session consistency (brasero_burn_check_session_consistency burn.c:1843)
+BraseroNormalize called brasero_job_get_action
+BraseroNormalize called brasero_job_get_action
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize called brasero_job_get_action
+BraseroNormalize Output set (AUDIO) image = /tmp/brasero_tmp_794DSU.cdr
+BraseroNormalize called brasero_job_get_session_output_size
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Creating new pipeline
+BraseroNormalize called brasero_job_set_current_action
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.007088)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.015836)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.025642)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.035196)
+BraseroNormalize Setting track peak (1.000000) and gain (-7.450000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.042951)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.048938)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.054744)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.060576)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.066473)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.072141)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.077647)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.083138)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.420000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.089952)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.097887)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.105284)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.112525)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.120796)
+BraseroNormalize Setting track peak (1.000000) and gain (-7.780000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.127964)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.136863)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.145608)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.154398)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.162789)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.230000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.170159)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.179406)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.188285)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.197693)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.206702)
+BraseroNormalize Setting track peak (1.000000) and gain (-6.730000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.212578)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.219158)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.225722)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.232211)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.238281)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.244748)
+BraseroNormalize Setting track peak (1.000000) and gain (-7.780000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.250182)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.257552)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.264923)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.272264)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.279954)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.287657)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.290000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.293880)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.301104)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.307913)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.314756)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.322063)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.328845)
+BraseroNormalize Setting track peak (1.000000) and gain (-5.580000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.334794)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.342401)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.350674)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.358216)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.366640)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.374592)
+BraseroNormalize Setting track peak (1.000000) and gain (-4.980000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.381640)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.389533)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.397036)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.402197)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.408696)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.416667)
+BraseroNormalize Setting track peak (1.000000) and gain (-5.880000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.422770)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.430460)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.438266)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.446064)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.453955)
+BraseroNormalize Setting track peak (1.000000) and gain (-4.850000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.460338)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.467927)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.475405)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.482410)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.489378)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.496078)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.640000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.501503)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.507621)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.513339)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.519107)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.523459)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.527936)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.533991)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.539298)
+BraseroNormalize Setting track peak (1.000000) and gain (-7.380000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.544392)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.550584)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.558616)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.566387)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.573710)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.580636)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.310000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.585552)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.590008)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.594775)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.599641)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.604491)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.609351)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.613135)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.617941)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.623067)
+BraseroNormalize Setting track peak (1.000000) and gain (-9.790000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.627169)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.634278)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.641132)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.648058)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.654970)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.661339)
+BraseroNormalize Setting track peak (1.000000) and gain (-9.130000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.666803)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.669972)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.677295)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.684709)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.692364)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.699771)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.707150)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.140000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.712715)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.721149)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.728144)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.732208)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.737964)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.745739)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.790000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.752660)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.759501)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.767522)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.775645)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.783866)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.840000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.796276)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.802640)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.809138)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.815599)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.821398)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.827787)
+BraseroNormalize Setting track peak (1.000000) and gain (-6.890000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.833520)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.840280)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.847075)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.854539)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.861115)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.868190)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.180000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.881996)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.889247)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.897099)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.905469)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.913097)
+BraseroNormalize Setting track peak (1.000000) and gain (-8.910000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.916983)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.924017)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.931384)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.938997)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.945861)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.953227)
+BraseroNormalize Setting track peak (1.000000) and gain (-5.160000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.960000)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.966368)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.972712)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.978568)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.984931)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.991077)
+BraseroNormalize called brasero_job_get_tracks
+BraseroNormalize Called brasero_job_set_progress (0.997636)
+BraseroNormalize Setting track peak (1.000000) and gain (-7.910000)
+BraseroNormalize Setting album peak (1.000000) and gain (-8.150000)
+BraseroNormalize called brasero_job_tag_add
+BraseroNormalize called brasero_job_tag_add
+BraseroNormalize finished successfully session
+BraseroNormalize stopping
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode deactivating
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_LMNNSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 147696326531 / bytes = 0 26053633
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -7.450000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/001 el chuma.wav to /tmp/brasero_tmp_LMNNSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 26053632 bytes (= 147696326531 ns) out of 26053633 (= 147696326531 ns)
+=> padding 1824 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 288 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_26QMSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 238889795919 / bytes = 0 42140161
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.420000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/002 el avion de la muerte.wav to /tmp/brasero_tmp_26QMSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 42140160 bytes (= 238889795919 ns) out of 42140161 (= 238889795919 ns)
+=> padding 624 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 112 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_ZP9ESU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 172643265307 / bytes = 0 30454273
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -7.780000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/004 el ayudante de lino.wav to /tmp/brasero_tmp_ZP9ESU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 30454272 bytes (= 172643265307 ns) out of 30454273 (= 172643265307 ns)
+=> padding 1776 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 240 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_UKSGSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 160914285715 / bytes = 0 28385281
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.230000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/005 el jorongo.wav to /tmp/brasero_tmp_UKSGSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 28385280 bytes (= 160914285715 ns) out of 28385281 (= 160914285715 ns)
+=> padding 1008 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 496 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_9DBGSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 156525714286 / bytes = 0 27611137
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -6.730000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/007 roman irarte.wav to /tmp/brasero_tmp_9DBGSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 27611136 bytes (= 156525714286 ns) out of 27611137 (= 156525714286 ns)
+=> padding 1344 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 320 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_F53CSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 222249795919 / bytes = 0 39204865
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -7.780000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/008 campos de amapola.wav to /tmp/brasero_tmp_F53CSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 39204864 bytes (= 222249795919 ns) out of 39204865 (= 222249795919 ns)
+=> padding 624 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 112 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_ZZKNSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 183510204082 / bytes = 0 32371201
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.290000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/011 el comico.wav to /tmp/brasero_tmp_ZZKNSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 32371200 bytes (= 183510204082 ns) out of 32371201 (= 183510204082 ns)
+=> padding 1728 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 192 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_NCJKSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 198008163266 / bytes = 0 34928641
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -5.580000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/036 el amo.wav to /tmp/brasero_tmp_NCJKSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 34928640 bytes (= 198008163266 ns) out of 34928641 (= 198008163266 ns)
+=> padding 912 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 400 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_ITINSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 167523265307 / bytes = 0 29551105
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -4.980000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/038 era cabron el viejo.wav to /tmp/brasero_tmp_ITINSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 29551104 bytes (= 167523265307 ns) out of 29551105 (= 167523265307 ns)
+=> padding 1776 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 240 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_DNPQSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 181106938776 / bytes = 0 31947265
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -5.880000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/042 amargura en la sangre.wav to /tmp/brasero_tmp_DNPQSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 31947264 bytes (= 181106938776 ns) out of 31947265 (= 181106938776 ns)
+=> padding 2304 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 256 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_VHXHSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 182622040817 / bytes = 0 32214529
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -4.850000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/046 juan ramoz.wav to /tmp/brasero_tmp_VHXHSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 32214528 bytes (= 182622040817 ns) out of 32214529 (= 182622040817 ns)
+=> padding 816 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 304 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_6IFFSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 183902040817 / bytes = 0 32440321
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.640000 1.000000
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/052 el moro y e melon.wav to /tmp/brasero_tmp_6IFFSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 32440320 bytes (= 183902040817 ns) out of 32440321 (= 183902040817 ns)
+=> padding 816 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 304 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_R5AKSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 216973061225 / bytes = 0 38274049
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -7.380000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/058 corrido de solovino.wav to /tmp/brasero_tmp_R5AKSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 38274048 bytes (= 216973061225 ns) out of 38274049 (= 216973061225 ns)
+=> padding 48 bytes
+BraseroTranscode written 48 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_KDSGSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 190249795919 / bytes = 0 33560065
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.310000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/068 juan corona.wav to /tmp/brasero_tmp_KDSGSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 33560064 bytes (= 190249795919 ns) out of 33560065 (= 190249795919 ns)
+=> padding 624 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 112 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_LQROSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 298736326531 / bytes = 0 52697089
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -9.790000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/069 manuel juarez.wav to /tmp/brasero_tmp_LQROSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 52697088 bytes (= 298736326531 ns) out of 52697089 (= 298736326531 ns)
+=> padding 1824 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 288 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_QEL8RU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 209188571429 / bytes = 0 36900865
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -9.130000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/072 el canelo.wav to /tmp/brasero_tmp_QEL8RU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 36900864 bytes (= 209188571429 ns) out of 36900865 (= 209188571429 ns)
+=> padding 2016 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 480 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_25CASU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 191164081633 / bytes = 0 33721345
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.140000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/076 lupe ruvalcaba.wav to /tmp/brasero_tmp_25CASU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 33721344 bytes (= 191164081633 ns) out of 33721345 (= 191164081633 ns)
+=> padding 1632 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 96 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_Q868RU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 181185306123 / bytes = 0 31961089
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.790000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/077 emeterio fierro.wav to /tmp/brasero_tmp_Q868RU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 31961088 bytes (= 181185306123 ns) out of 31961089 (= 181185306123 ns)
+=> padding 240 bytes
+BraseroTranscode written 240 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_Q2OMSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 186409795919 / bytes = 0 32882689
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.840000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/079 la coqueta.wav to /tmp/brasero_tmp_Q2OMSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 32882688 bytes (= 186409795919 ns) out of 32882689 (= 186409795919 ns)
+=> padding 624 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 112 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_OUSFSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 231079183674 / bytes = 0 40762369
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -6.890000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/087 el celular.wav to /tmp/brasero_tmp_OUSFSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 40762368 bytes (= 231079183674 ns) out of 40762369 (= 231079183674 ns)
+=> padding 144 bytes
+BraseroTranscode written 144 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_B8SHSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 207177142858 / bytes = 0 36546049
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.180000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/089 la sorpresa.wav to /tmp/brasero_tmp_B8SHSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 36546048 bytes (= 207177142858 ns) out of 36546049 (= 207177142858 ns)
+=> padding 1680 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 144 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_4XFFSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 163866122449 / bytes = 0 28905985
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -8.910000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/010 venganza divina.wav to /tmp/brasero_tmp_4XFFSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 28905984 bytes (= 163866122449 ns) out of 28905985 (= 163866122449 ns)
+=> padding 96 bytes
+BraseroTranscode written 96 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_GZKJSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 180715102041 / bytes = 0 31878145
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -5.160000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/045 el corrido de pedro av.wav to /tmp/brasero_tmp_GZKJSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 31878144 bytes (= 180715102041 ns) out of 31878145 (= 180715102041 ns)
+=> padding 864 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 352 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Output set (AUDIO) image = /tmp/brasero_tmp_84LHSU.cdr
+BraseroTranscode called brasero_job_get_session_output_size
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_use_average_rate
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_done_tracks
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode settings track boundaries time = 0 204956734694 / bytes = 0 36154369
+BraseroTranscode Creating new pipeline
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode Found audio levels tags
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_image_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode Sending audio levels tags
+BraseroTranscode Set -7.910000 1.000000
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_current_action
+BraseroTranscode called brasero_job_start_progress
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode start decoding /home/chick3n/Desktop/converted/107 el profeta.wav to /tmp/brasero_tmp_84LHSU.cdr
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_set_written_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode called brasero_job_get_fd_out
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode wrote 36154368 bytes (= 204956734694 ns) out of 36154369 (= 204956734694 ns)
+=> padding 576 bytes
+BraseroTranscode written 512 bytes for padding
+BraseroTranscode written 64 bytes for padding
+BraseroTranscode called brasero_job_get_audio_output
+BraseroTranscode called brasero_job_get_current_track
+BraseroTranscode called brasero_job_get_output_type
+BraseroTranscode called brasero_job_add_track
+BraseroTranscode called brasero_job_get_action
+BraseroTranscode finished track successfully
+BraseroTranscode stopping
+BraseroWodim called brasero_job_get_action
+BraseroWodim getting varg
+BraseroWodim called brasero_job_get_action
+BraseroWodim got varg:
+BraseroWodim deactivating
+BraseroWodim called brasero_job_get_action
+BraseroWodim stopping
+Session error : Insufficient space on media (0 available for 349308) (brasero_burn_record burn.c:2524)
+
+```
+
+I also can't seem to burn with K3B >.<
+
+---
+
+### Post by lil_kid1333 on 2009-04-11
+Here's a pic of what it says it's doing
+
+[IMG]http://img13.imageshack.us/img13/4032/screenshotjqh.png[/IMG]
+
+---
+
+### Post by lil_kid1333 on 2009-04-11
+omg I got it all i had to do was install the libk3b extra codec thing ^^ thanks
+
+well at least I think I got it it's currently burning but that's what brasero would say too >_>
+
+---
+

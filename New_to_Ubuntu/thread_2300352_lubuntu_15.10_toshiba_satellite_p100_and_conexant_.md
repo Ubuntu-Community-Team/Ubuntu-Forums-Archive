@@ -1,0 +1,533 @@
+---
+title: "lubuntu 15.10: toshiba satellite p100 and conexant audio not working"
+date: 2015-10-25
+forum: New to Ubuntu
+---
+
+### Post by max62 on 2015-10-25
+I recently upgraded to lubuntu 15.10
+
+
+```
+
+
+
+~$ uname -a
+Linux max-Satellite-P100 3.16.0-28-generic #38-Ubuntu SMP Fri Dec 12 17:38:37 UTC 2014 i686 i686 i686 GNU/Linux
+
+
+
+```
+
+
+and now I'm experiencing the same annoying issue of the last installation (lubuntu 14.10), no audio at all...
+
+
+my configuration is the following
+
+
+```
+
+
+
+~$ lspci | grep Audio
+00:1b.0 Audio device: Intel Corporation NM10/ICH7 Family High Definition Audio Controller (rev 02)
+
+
+cat /proc/asound/card0/codec* | grep Codec
+Codec: Conexant CX20551 (Waikiki)
+
+
+
+```
+
+
+the last time I sorted out the issue by installing pavucontrol, see my previous thread
+
+
+[http://ubuntuforums.org/showthread.php?t=2254742&p=13177579#post13177579](http://ubuntuforums.org/showthread.php?t=2254742&p=13177579#post13177579)
+
+
+
+
+now what can I try? 
+
+
+any help much appreciated
+
+
+thanks
+
+---
+
+### Post by grahammechanical on 2015-10-25
+Are you sure you upgraded to 15.10? uname -a is showing the 14.10 kernel for Dec 12 2014. This is what I get on 15.10 installed about a week before released 15.10 day. 
+
+> ~$ uname -a
+Linux sdb7-Dev 4.2.0-16-generic #19-Ubuntu SMP Thu Oct 8 15:35:06 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+
+
+It is kernel 4.2.0-16 from Oct 8 2015. Try downloading and running the Lubuntu 15.10 ISO image and see if that detects that audio card. How did you upgrade? By upgrading to 15.04 and then upgrading again to 14.10? Or a fresh install?
+
+Regards.
+
+---
+
+### Post by max62 on 2015-10-25
+it is not a fresh install, I upgraded in two steps: first to 15.04 and then to 15.10
+the splash screen in fact it is saying lubuntu 15.10, I'm a bit confused now...
+
+how to properly update the kernel?
+
+no effects by issuing
+
+apt-get update
+apt-get upgrade
+apt-get dist-upgrade
+
+~$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 15.10
+Release:	15.10
+Codename:	wily
+
+
+
+and finally this is my configuration for pulseaudio
+
+~$ pulseaudio --dump-conf
+### Lettura dal file di configurazione: /etc/pulse/daemon.conf ###
+daemonize = no
+fail = yes
+high-priority = yes
+nice-level = -11
+realtime-scheduling = yes
+realtime-priority = 5
+allow-module-loading = yes
+allow-exit = yes
+use-pid-file = yes
+system-instance = no
+local-server-type = user
+cpu-limit = no
+enable-shm = yes
+flat-volumes = no
+lock-memory = no
+exit-idle-time = 20
+scache-idle-time = 20
+dl-search-path = /usr/lib/pulse-6.0/modules
+default-script-file = /etc/pulse/default.pa
+load-default-script-file = yes
+log-target = 
+log-level = notice
+resample-method = auto
+enable-remixing = yes
+enable-lfe-remixing = yes
+lfe-crossover-freq = 120
+default-sample-format = s16le
+default-sample-rate = 44100
+alternate-sample-rate = 48000
+default-sample-channels = 2
+default-channel-map = front-left,front-right
+default-fragments = 4
+default-fragment-size-msec = 25
+enable-deferred-volume = yes
+deferred-volume-safety-margin-usec = 1
+deferred-volume-extra-delay-usec = 0
+shm-size-bytes = 0
+log-meta = no
+log-time = no
+log-backtrace = 0
+rlimit-fsize = -1
+rlimit-data = -1
+rlimit-stack = -1
+rlimit-core = -1
+rlimit-rss = -1
+rlimit-as = -1
+rlimit-nproc = -1
+rlimit-nofile = 256
+rlimit-memlock = -1
+rlimit-locks = -1
+rlimit-sigpending = -1
+rlimit-msgqueue = -1
+rlimit-nice = 31
+rlimit-rtprio = 9
+rlimit-rttime = 200000
+
+---
+
+### Post by sandyd on 2015-10-25
+Can you post the output of the following
+```
+
+dpkg -l | grep linux-image
+ls /boot
+cat /boot/grub/grub.cfg
+```
+
+---
+
+### Post by max62 on 2015-10-26
+here it is
+
+thanks for the support
+
+
+```
+
+dpkg -l | grep linux-image
+
+
+rc  linux-image-3.16.0-23-generic                3.16.0-23.31                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+rc  linux-image-3.16.0-25-generic                3.16.0-25.33                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-3.16.0-28-generic                3.16.0-28.38                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+rc  linux-image-extra-3.16.0-23-generic          3.16.0-23.31                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+rc  linux-image-extra-3.16.0-25-generic          3.16.0-25.33                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-extra-3.16.0-28-generic          3.16.0-28.38                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+
+```
+
+
+
+```
+
+ls /boot
+abi-3.16.0-28-generic     grub                          lost+found      memtest86+.elf            System.map-3.16.0-28-generic
+config-3.16.0-28-generic  initrd.img-3.16.0-28-generic  memtest86+.bin  memtest86+_multiboot.bin  vmlinuz-3.16.0-28-generic
+
+```
+
+
+```
+
+cat /boot/grub/grub.cfg
+
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+
+export menuentry_id_option
+
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod lvm
+insmod ext2
+set root='lvmid/qB11rd-YBDn-hFUs-AIcI-1vyW-38Xu-wEGtp3/feCA2x-o7QP-1jNp-oVWX-60k3-3cK7-Sy2R11'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint='lvmid/qB11rd-YBDn-hFUs-AIcI-1vyW-38Xu-wEGtp3/feCA2x-o7QP-1jNp-oVWX-60k3-3cK7-Sy2R11'  da77b184-1f7a-4893-83b0-75e128daceed
+else
+  search --no-floppy --fs-uuid --set=root da77b184-1f7a-4893-83b0-75e128daceed
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=it_IT
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=30
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=0
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 0 ; then
+    set timeout=0
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-da77b184-1f7a-4893-83b0-75e128daceed' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    else
+      search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    fi
+    linux    /vmlinuz-3.16.0-28-generic root=/dev/mapper/lubuntu--vg-root ro clocksource =hpet quiet splash $vt_handoff
+    initrd    /initrd.img-3.16.0-28-generic
+}
+submenu 'Opzioni avanzate per Ubuntu' $menuentry_id_option 'gnulinux-advanced-da77b184-1f7a-4893-83b0-75e128daceed' {
+    menuentry 'Ubuntu, con Linux 3.16.0-28-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.16.0-28-generic-advanced-da77b184-1f7a-4893-83b0-75e128daceed' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        else
+          search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        fi
+        echo    'Caricamento Linux 3.16.0-28-generic...'
+        linux    /vmlinuz-3.16.0-28-generic root=/dev/mapper/lubuntu--vg-root ro clocksource =hpet quiet splash $vt_handoff
+        echo    'Caricamento ramdisk iniziale...'
+        initrd    /initrd.img-3.16.0-28-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.16.0-28-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.16.0-28-generic-init-upstart-da77b184-1f7a-4893-83b0-75e128daceed' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        else
+          search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        fi
+        echo    'Caricamento Linux 3.16.0-28-generic...'
+        linux    /vmlinuz-3.16.0-28-generic root=/dev/mapper/lubuntu--vg-root ro clocksource =hpet quiet splash $vt_handoff init=/sbin/upstart
+        echo    'Caricamento ramdisk iniziale...'
+        initrd    /initrd.img-3.16.0-28-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.16.0-28-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.16.0-28-generic-recovery-da77b184-1f7a-4893-83b0-75e128daceed' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        else
+          search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+        fi
+        echo    'Caricamento Linux 3.16.0-28-generic...'
+        linux    /vmlinuz-3.16.0-28-generic root=/dev/mapper/lubuntu--vg-root ro recovery nomodeset clocksource =hpet
+        echo    'Caricamento ramdisk iniziale...'
+        initrd    /initrd.img-3.16.0-28-generic
+    }
+}
+
+
+### END /etc/grub.d/10_linux ###
+
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+
+### END /etc/grub.d/20_linux_xen ###
+
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry 'Memory test (memtest86+)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    else
+      search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    fi
+    knetbsd    /memtest86+.elf
+}
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    else
+      search --no-floppy --fs-uuid --set=root 2d75d6be-95e6-4a60-b3c5-9ffc625dca6d
+    fi
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+
+
+```
+
+---
+
+### Post by sandyd on 2015-10-26
+Your missing the metapackage that automatically adds the latest kernel.
+Run the following to install it.
+```
+
+sudo apt-get install linux-image-generic
+```
+
+---
+
+### Post by max62 on 2015-10-27
+I did
+
+```
+
+[COLOR=#000000][FONT=Ubuntu Mono]sudo apt-get install linux-image-generic
+[/FONT][/COLOR]
+```
+
+so now my configuration is effectively upgraded to the latest image
+
+```
+
+dpkg -l | grep linux-image
+rc  linux-image-3.16.0-23-generic                3.16.0-23.31                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+rc  linux-image-3.16.0-25-generic                3.16.0-25.33                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-3.16.0-28-generic                3.16.0-28.38                             i386         Linux kernel image for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-4.2.0-16-generic                 4.2.0-16.19                              i386         Linux kernel image for version 4.2.0 on 32 bit x86 SMP
+rc  linux-image-extra-3.16.0-23-generic          3.16.0-23.31                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+rc  linux-image-extra-3.16.0-25-generic          3.16.0-25.33                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-extra-3.16.0-28-generic          3.16.0-28.38                             i386         Linux kernel extra modules for version 3.16.0 on 32 bit x86 SMP
+ii  linux-image-extra-4.2.0-16-generic           4.2.0-16.19                              i386         Linux kernel extra modules for version 4.2.0 on 32 bit x86 SMP
+ii  linux-image-generic                          4.2.0.16.18                              i386         Generic Linux kernel image
+
+```
+
+but still no audio working....
+
+any other chance for me?
+ It's a pity because my old laptop seems now really revitalized....
+
+still searching for a solution...
+
+thanks for the support
+
+---
+

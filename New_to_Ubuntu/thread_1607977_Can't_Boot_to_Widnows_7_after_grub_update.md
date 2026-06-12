@@ -1,0 +1,327 @@
+---
+title: "Can't Boot to Widnows 7 after grub update"
+date: 2010-10-28
+forum: New to Ubuntu
+---
+
+### Post by monty593 on 2010-10-28
+Hi everyone im using Ubuntu 10.04 LTS lucid lunix on dell mini 10v after i updated my grub it can detect windows on /sda1 but it cant boot and i get the black screen i tried the (linux recovery option) and the (update grub) option with the test and the backup the thing is am a complete noob thought ive been using ubuntu since 2008 also and i knw its too much i cant get my hands on a copy of windows to use the repair option thanx.....
+ here is my boot scrip::::
+
+  Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   /bootmgr /Boot/BCD
+
+sda2: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Mounting failed:
+ntfs_attr_pread_i: ntfs_pread failed: Input/output error
+Failed to read NTFS $Bitmap: Input/output error
+NTFS is either inconsistent, or there is a hardware fault, or it's a
+SoftRAID/FakeRAID hardware. In the first case run chkdsk /f on Windows
+then reboot into Windows twice. The usage of the /f parameter is very
+important! If the device is a SoftRAID/FakeRAID then first activate
+it and mount a different device under the /dev/mapper/ directory, (e.g.
+/dev/mapper/nvidia_eahaabcc1). Please see the 'dmraid' documentation
+for more details.
+ntfs_attr_pread_i: ntfs_pread failed: Input/output error
+Failed to read NTFS $Bitmap: Input/output error
+NTFS is either inconsistent, or there is a hardware fault, or it's a
+SoftRAID/FakeRAID hardware. In the first case run chkdsk /f on Windows
+then reboot into Windows twice. The usage of the /f parameter is very
+important! If the device is a SoftRAID/FakeRAID then first activate
+it and mount a different device under the /dev/mapper/ directory, (e.g.
+/dev/mapper/nvidia_eahaabcc1). Please see the 'dmraid' documentation
+for more details.
+
+sda3: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.1 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 160.0 GB, 160041885696 bytes
+255 heads, 63 sectors/track, 19457 cylinders, total 312581808 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *          2,048       206,847       204,800   7 HPFS/NTFS
+/dev/sda2             206,848   255,133,563   254,926,716   7 HPFS/NTFS
+/dev/sda3         255,133,694   312,580,095    57,446,402   5 Extended
+/dev/sda5         255,133,696   310,118,399    54,984,704  83 Linux
+/dev/sda6         310,120,448   312,580,095     2,459,648  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        EE383DF1383DB983                       ntfs       System Reserved               
+/dev/sda2        C0C847D3C847C67E                       ntfs                                     
+/dev/sda3: PTTYPE="dos" 
+/dev/sda5        96cc1d62-82f6-412b-90b6-3bebc346693f   ext4                                     
+/dev/sda6        42aec2fc-b3eb-447f-9a79-ae862ec8fb7d   swap                                     
+/dev/sda: PTTYPE="dos" 
+error: /dev/sdb: No medium found
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext4       (rw,errors=remount-ro)
+
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="6"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	linux	/boot/vmlinuz-2.6.32-25-generic root=UUID=96cc1d62-82f6-412b-90b6-3bebc346693f ro  splash vga=786  quiet splash
+	initrd	/boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	echo	'Loading Linux 2.6.32-25-generic ...'
+	linux	/boot/vmlinuz-2.6.32-25-generic root=UUID=96cc1d62-82f6-412b-90b6-3bebc346693f ro single  splash vga=786
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-25-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=96cc1d62-82f6-412b-90b6-3bebc346693f ro  splash vga=786  quiet splash
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+	recordfail
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	echo	'Loading Linux 2.6.32-21-generic ...'
+	linux	/boot/vmlinuz-2.6.32-21-generic root=UUID=96cc1d62-82f6-412b-90b6-3bebc346693f ro single  splash vga=786
+	echo	'Loading initial ramdisk ...'
+	initrd	/boot/initrd.img-2.6.32-21-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	linux16	/boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+	insmod ext2
+	set root='(hd0,5)'
+	search --no-floppy --fs-uuid --set 96cc1d62-82f6-412b-90b6-3bebc346693f
+	linux16	/boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows 7 (loader) (on /dev/sda1)" {
+	insmod ntfs
+	set root='(hd0,1)'
+	search --no-floppy --fs-uuid --set ee383df1383db983
+	chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=96cc1d62-82f6-412b-90b6-3bebc346693f /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=42aec2fc-b3eb-447f-9a79-ae862ec8fb7d none            swap    sw              0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+ 132.9GB: boot/grub/core.img
+ 148.2GB: boot/grub/grub.cfg
+ 132.9GB: boot/initrd.img-2.6.32-21-generic
+ 133.0GB: boot/initrd.img-2.6.32-25-generic
+ 132.9GB: boot/vmlinuz-2.6.32-21-generic
+ 133.0GB: boot/vmlinuz-2.6.32-25-generic
+ 133.0GB: initrd.img
+ 132.9GB: initrd.img.old
+ 133.0GB: vmlinuz
+ 132.9GB: vmlinuz.old
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda3
+
+00000000  78 26 57 00 08 00 00 00  7c 26 57 00 08 00 00 00  |x&W.....|&W.....|
+00000010  84 26 57 00 08 00 00 00  88 26 57 00 08 00 00 00  |.&W......&W.....|
+00000020  8c 26 57 00 08 00 00 00  90 26 57 00 08 00 00 00  |.&W......&W.....|
+00000030  94 26 57 00 08 00 00 00  9c 26 57 00 08 00 00 00  |.&W......&W.....|
+00000040  a0 26 57 00 08 00 00 00  a4 26 57 00 08 00 00 00  |.&W......&W.....|
+00000050  a8 26 57 00 08 00 00 00  ac 26 57 00 08 00 00 00  |.&W......&W.....|
+00000060  b0 26 57 00 08 00 00 00  b4 26 57 00 08 00 00 00  |.&W......&W.....|
+00000070  bc 26 57 00 08 00 00 00  c0 26 57 00 08 00 00 00  |.&W......&W.....|
+00000080  c4 26 57 00 08 00 00 00  c8 26 57 00 08 00 00 00  |.&W......&W.....|
+00000090  cc 26 57 00 08 00 00 00  d0 26 57 00 08 00 00 00  |.&W......&W.....|
+000000a0  d8 26 57 00 08 00 00 00  dc 26 57 00 08 00 00 00  |.&W......&W.....|
+000000b0  e0 26 57 00 08 00 00 00  e4 26 57 00 08 00 00 00  |.&W......&W.....|
+000000c0  f4 26 57 00 08 00 00 00  f8 26 57 00 08 00 00 00  |.&W......&W.....|
+000000d0  fc 26 57 00 08 00 00 00  00 27 57 00 08 00 00 00  |.&W......'W.....|
+000000e0  10 27 57 00 08 00 00 00  14 27 57 00 08 00 00 00  |.'W......'W.....|
+000000f0  18 27 57 00 08 00 00 00  1c 27 57 00 08 00 00 00  |.'W......'W.....|
+00000100  2c 27 57 00 08 00 00 00  30 27 57 00 08 00 00 00  |,'W.....0'W.....|
+00000110  34 27 57 00 08 00 00 00  38 27 57 00 08 00 00 00  |4'W.....8'W.....|
+00000120  4c 27 57 00 08 00 00 00  6c 27 57 00 08 00 00 00  |L'W.....l'W.....|
+00000130  78 27 57 00 08 00 00 00  7c 27 57 00 08 00 00 00  |x'W.....|'W.....|
+00000140  80 27 57 00 08 00 00 00  88 27 57 00 08 00 00 00  |.'W......'W.....|
+00000150  a4 27 57 00 08 00 00 00  a8 27 57 00 08 00 00 00  |.'W......'W.....|
+00000160  ac 27 57 00 08 00 00 00  b0 27 57 00 08 00 00 00  |.'W......'W.....|
+00000170  b8 27 57 00 08 00 00 00  bc 27 57 00 08 00 00 00  |.'W......'W.....|
+00000180  c0 27 57 00 08 00 00 00  c4 27 57 00 08 00 00 00  |.'W......'W.....|
+00000190  c8 27 57 00 08 00 00 00  cc 27 57 00 08 00 00 00  |.'W......'W.....|
+000001a0  d0 27 57 00 08 00 00 00  d4 27 57 00 08 00 00 00  |.'W......'W.....|
+000001b0  d8 27 57 00 08 00 00 00  dc 27 57 00 08 00 00 fe  |.'W......'W.....|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 00 47 03 00 fe  |............G...|
+000001d0  ff ff 05 fe ff ff 6a 01  47 03 98 8e 25 00 00 00  |......j.G...%...|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb
+
+---
+
+### Post by Mark Phelps on 2010-10-28
+WHEN you had Win7 working, before you started messing around with dual-booting, you should have gone into the Backup feature, created and burned a Win7 Repair CD.  Had you done that, you would have the Win7 disk needed to repair the Win7 boot.
+
+Since you didn't do that, go to the link below, download and burn the appropriate Win7 Repair CD, boot from that, and if it detects your Win7 install, run Startup Repair three times.  That should get you back into booting Win7 OK:
+
+[http://neosmart.net/blog/2009/windows-7-system-repair-discs/]("http://neosmart.net/blog/2009/windows-7-system-repair-discs/")
+
+---
+
+### Post by monty593 on 2010-10-29
+It wroked like a charm i didnt know that my windows mbr was messed up i thought the problem was with grub thank you..:P:P
+
+---
+

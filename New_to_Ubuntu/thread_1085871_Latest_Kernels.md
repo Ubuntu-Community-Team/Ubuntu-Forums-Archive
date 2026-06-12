@@ -1,0 +1,132 @@
+---
+title: "Latest Kernels"
+date: 2009-03-03
+forum: New to Ubuntu
+---
+
+### Post by titopagan on 2009-03-03
+Will the latest kernels support the VT6656 chip.  
+
+I am going through hell trying to get the VT6656 to work with kernel 2.6.27.
+
+---
+
+### Post by st33med on 2009-03-03
+[http://www.logicsupply.com/blog/2008/01/02/building-the-vt6656-linux-driver-for-ubuntu/](http://www.logicsupply.com/blog/2008/01/02/building-the-vt6656-linux-driver-for-ubuntu/)
+
+Bit of Googling helps ;)
+
+---
+
+### Post by titopagan on 2009-03-03
+Google does help;)
+
+I have searched google.  I have tried the [http://www.logicsupply.com/blog/2008/01/02/building-the-vt6656-linux-driver-for-ubuntu/]("http://www.logicsupply.com/blog/2008/01/02/building-the-vt6656-linux-driver-for-ubuntu/")but not success.
+
+I have done a lot of reading and many many people cant get it to work.
+
+That's why I asked the question.  I would love to hear from someone that got it to work.  
+
+Thanks,
+
+(I really want to change from Windows to LINUX) I cant afford a new card that supports Linux student on extremely low budget)
+
+---
+
+### Post by wirelessmonkey on 2009-03-03
+It's pretty clear that that chipset/driver are not currently compatible with 2.6.27+ kernels.
+
+---
+
+### Post by SJCBColby on 2009-04-08
+I found it works under 8.1
+
+Here is what I did.
+
+Basically what needs to be done is down load the OEM source files and then compile them on your machine.
+
+
+Preparing for the Install
+
+You can down load the driver directly from Via and original manufacturer at
+
+[http://www.viaarena.com/default.aspx?PageID=420&OSID=45&CatID=3160&SubCatID=176](http://www.viaarena.com/default.aspx?PageID=420&OSID=45&CatID=3160&SubCatID=176)
+
+As of April 4 2009 the latest version was 1.19.12
+
+It will download on your desktop as a zip file.
+
+You can explore it by clicking on the folder.
+
+Extract it to a folder on the desktop 
+
+I found the following Ubuntu comunity documentation on how to compile this very helpful
+
+[https://help.ubuntu.com/community/CompilingEasyHowTo](https://help.ubuntu.com/community/CompilingEasyHowTo)
+
+You will need some tools – 
+By default, Ubuntu does not come with the tools required. You need to install the package build-essential for making the package and checkinstall for putting it into your package manager. These can be found on the install CD or in the repositories, searching in Synaptic Package Manager 
+
+I was able to get and install both using the Synaptic Package Manager.
+
+Now you need to create a directory to work in and have sufficient permissions to copy the file there and work on it.
+
+I made directory temp1
+
+Open up under application, accessories, a terminal session.
+
+Make a directory to work in ( I used temp1 for the name)
+
+   Please enter the following commands at the UNIX prompt. Remember, UNIX is
+    case sensitive and make sure your root login.
+
+    1) Create a temporary directory:
+        	sudo mkdir /temp1
+
+    2) Change to the temporary directory:
+       	 cd /temp1
+
+    3) Make sure this directory is writable by you under yourusername. 
+ 		sudo chown yourusername /temp1
+
+
+
+Now click on Places at the top of the desk top, 
+A window will open, then click on Computer, then Filesystem and you should see the directory you just made.
+ 
+Grab the via driver you extracted to the desk top and drop it into your directory temp1
+
+Now make the name of the folder a little easier to work with 
+	Right click and under Properties shorten the name 
+	I shortened it to VT6656_Linux
+
+Now change your directory to the file containing the extracted files.
+
+Cd /temp1/VT6656_Linux
+
+
+
+Note with this procedure you don’t need to copy from a DOS disk or untar the archive file as refrenced in the Via Txt doc.
+
+Now you are ready to compile and prepare for installation
+
+    4) Type the command sudo checkinstall
+it will ask you for your password
+You will be asked if you want to put in a description – do so then press – ENTER, press ENTER again on a blank line and it will then give you a screen of default values for building the package.
+Leave them and press ENTER to continue
+
+You will see computer generate a number of files 
+
+
+
+When it is done you can check the log
+
+I found when I shut down my computer and restarted it loaded and my wireless comes up with the desktop and worked with no problems. 
+
+Hope this helps.
+
+
+SJC
+
+---
+

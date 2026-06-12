@@ -1,0 +1,360 @@
+---
+title: "wallpaper cheat sheet request. (for commands)"
+date: 2010-01-25
+forum: New to Ubuntu
+---
+
+### Post by ankspo71 on 2010-01-25
+Hi,
+Can anybody recommend a good debian/ubuntu command line cheat sheet that I can use as a wallpaper. I'm learning most of the basic commands quite well, but I have some problem areas like 'tar', 'chmod', 'chown', and 'mv' (because it also renames). I'm only interested in the basics like permissions and file management for now. 
+Thanks,
+
+---
+
+### Post by D3V11 on 2010-01-25
+That might help. I recommend a good book for beginners - *Linux Phrasebook* by Scott Granneman.
+
+```
+
+# 1: Uncompress tarball
+
+To uncompress them, execute the following command(s) depending on the extension:
+$ tar zxf file.tar.gz
+$ tar zxf file.tgz
+$ tar jxf file.tar.bz2
+$ tar jxf file.tbz2
+
+Now change directory
+$ ls
+$ cd path-to-software/
+# 2: Build and install software
+
+Generally you need to type 3 commands as follows for building and compiling software:
+# ./configure
+# make
+# make install
+
+Where,
+
+    * ./configure will configure the software to ensure your system has the necessary functionality and libraries to successfully compile the package
+    * make will compile all the source files into executable binaries.
+    * Finally, make install will install the binaries and any supporting files into the appropriate locations.
+
+```For chmod check here:
+[http://www.perlfect.com/articles/chmod.shtml](http://www.perlfect.com/articles/chmod.shtml)
+
+PS. - Most tar balls will have special instructions for installing in a .txt file that comes with them.
+
+---
+
+### Post by ankspo71 on 2010-01-25
+Hi D3V11,
+
+Thanks for the recommendation on the book. I see it got good reviews at amazon.com.
+
+I can compile from source code, usually without problems, but I keep forgetting how to extract (and create) tar.gz files through the command line... so I have to look it up in the man pages (over and over again lol). 
+
+I just found one wallpaper here and it's pretty much was I was looking for.
+[http://gnome-look.org/content/show.php/linux+cheat+sheet+%28remake+%2B+gray%29?content=99957]("http://gnome-look.org/content/show.php/linux+cheat+sheet+%28remake+%2B+gray%29?content=99957")
+If anyone knows of any others, let me know please.:D
+
+Thanks for the advice,
+
+Edit, Ohh Ok, I see the code has been updated. Thanks for that.
+
+---
+
+### Post by ankspo71 on 2010-01-25
+I think I will go buy myself a good reference book instead. :P I see there is a lot more to know about certain commands than what can fit on a cheat sheet.
+
+---
+
+### Post by D3V11 on 2010-01-25
+```
+
+adduser  Add a user to the system
+  addgroup Add a group to the system
+
+  alias    Create an alias &#8226;
+  apropos  Search Help manual pages (man -k)
+  apt-get  Search for and install software packages (Debian)
+  aspell   Spell Checker
+  awk      Find and Replace text, database sort/validate/index
+b
+  basename Strip directory and suffix from filenames
+  bash     GNU Bourne-Again SHell 
+  bc       Arbitrary precision calculator language 
+  bg       Send to background
+  break    Exit from a loop &#8226;
+  builtin  Run a shell builtin
+  bzip2    Compress or decompress named file(s)
+c
+  cal      Display a calendar
+  case     Conditionally perform a command
+  cat      Display the contents of a file
+  cd       Change Directory
+  cfdisk   Partition table manipulator for Linux
+  chgrp    Change group ownership
+  chmod    Change access permissions
+  chown    Change file owner and group
+  chroot   Run a command with a different root directory
+  chkconfig System services (runlevel)
+  cksum    Print CRC checksum and byte counts
+  clear    Clear terminal screen
+  cmp      Compare two files
+  comm     Compare two sorted files line by line
+  command  Run a command - ignoring shell functions &#8226;
+  continue Resume the next iteration of a loop &#8226;
+  cp       Copy one or more files to another location
+  cron     Daemon to execute scheduled commands
+  crontab  Schedule a command to run at a later time
+  csplit   Split a file into context-determined pieces
+  cut      Divide a file into several parts
+d
+  date     Display or change the date & time
+  dc       Desk Calculator
+  dd       Convert and copy a file, write disk headers, boot records
+  ddrescue Data recovery tool
+  declare  Declare variables and give them attributes &#8226;
+  df       Display free disk space
+  diff     Display the differences between two files
+  diff3    Show differences among three files
+  dig      DNS lookup
+  dir      Briefly list directory contents
+  dircolors Colour setup for `ls'
+  dirname  Convert a full pathname to just a path
+  dirs     Display list of remembered directories
+  dmesg    Print kernel & driver messages 
+  du       Estimate file space usage
+e
+  echo     Display message on screen &#8226;
+  egrep    Search file(s) for lines that match an extended expression
+  eject    Eject removable media
+  enable   Enable and disable builtin shell commands &#8226;
+  env      Environment variables
+  ethtool  Ethernet card settings
+  eval     Evaluate several commands/arguments
+  exec     Execute a command
+  exit     Exit the shell
+  expect   Automate arbitrary applications accessed over a terminal
+  expand   Convert tabs to spaces
+  export   Set an environment variable
+  expr     Evaluate expressions
+f
+  false    Do nothing, unsuccessfully
+  fdformat Low-level format a floppy disk
+  fdisk    Partition table manipulator for Linux
+  fg       Send job to foreground 
+  fgrep    Search file(s) for lines that match a fixed string
+  file     Determine file type
+  find     Search for files that meet a desired criteria
+  fmt      Reformat paragraph text
+  fold     Wrap text to fit a specified width.
+  for      Expand words, and execute commands
+  format   Format disks or tapes
+  free     Display memory usage
+  fsck     File system consistency check and repair
+  ftp      File Transfer Protocol
+  function Define Function Macros
+  fuser    Identify/kill the process that is accessing a file
+g
+  gawk     Find and Replace text within file(s)
+  getopts  Parse positional parameters
+  grep     Search file(s) for lines that match a given pattern
+  groups   Print group names a user is in
+  gzip     Compress or decompress named file(s)
+h
+  hash     Remember the full pathname of a name argument
+  head     Output the first part of file(s)
+  help     Display help for a built-in command &#8226;
+  history  Command History
+  hostname Print or set system name
+i
+  id       Print user and group id's
+  if       Conditionally perform a command
+  ifconfig Configure a network interface
+  ifdown   Stop a network interface 
+  ifup     Start a network interface up
+  import   Capture an X server screen and save the image to file
+  install  Copy files and set attributes
+j
+  join     Join lines on a common field
+k
+  kill     Stop a process from running
+  killall  Kill processes by name
+l
+  less     Display output one screen at a time
+  let      Perform arithmetic on shell variables &#8226;
+  ln       Make links between files
+  local    Create variables &#8226;
+  locate   Find files
+  logname  Print current login name
+  logout   Exit a login shell &#8226;
+  look     Display lines beginning with a given string
+  lpc      Line printer control program
+  lpr      Off line print
+  lprint   Print a file
+  lprintd  Abort a print job
+  lprintq  List the print queue
+  lprm     Remove jobs from the print queue
+  ls       List information about file(s)
+  lsof     List open files
+m
+  make     Recompile a group of programs
+  man      Help manual
+  mkdir    Create new folder(s)
+  mkfifo   Make FIFOs (named pipes)
+  mkisofs  Create an hybrid ISO9660/JOLIET/HFS filesystem
+  mknod    Make block or character special files
+  more     Display output one screen at a time
+  mount    Mount a file system
+  mtools   Manipulate MS-DOS files
+  mv       Move or rename files or directories
+  mmv      Mass Move and rename (files)
+n
+  netstat  Networking information
+  nice     Set the priority of a command or job
+  nl       Number lines and write files
+  nohup    Run a command immune to hangups
+  nslookup Query Internet name servers interactively
+o
+  open     Open a file in its default application
+  op       Operator access 
+p
+  passwd   Modify a user password
+  paste    Merge lines of files
+  pathchk  Check file name portability
+  ping     Test a network connection
+  pkill    Stop processes from running
+  popd     Restore the previous value of the current directory
+  pr       Prepare files for printing
+  printcap Printer capability database
+  printenv Print environment variables
+  printf   Format and print data &#8226;
+  ps       Process status
+  pushd    Save and then change the current directory
+  pwd      Print Working Directory
+q
+  quota    Display disk usage and limits
+  quotacheck Scan a file system for disk usage
+  quotactl Set disk quotas
+r
+  ram      ram disk device
+  rcp      Copy files between two machines
+  read     Read a line from standard input &#8226;
+  readarray Read from stdin into an array variable &#8226;
+  readonly Mark variables/functions as readonly
+  reboot   Reboot the system
+  rename   Rename files
+  renice   Alter priority of running processes 
+  remsync  Synchronize remote files via email
+  return   Exit a shell function
+  rev      Reverse lines of a file
+  rm       Remove files
+  rmdir    Remove folder(s)
+  rsync    Remote file copy (Synchronize file trees)
+s
+  screen   Multiplex terminal, run remote shells via ssh
+  scp      Secure copy (remote file copy)
+  sdiff    Merge two files interactively
+  sed      Stream Editor
+  select   Accept keyboard input
+  seq      Print numeric sequences
+  set      Manipulate shell variables and functions
+  sftp     Secure File Transfer Program
+  shift    Shift positional parameters
+  shopt    Shell Options
+  shutdown Shutdown or restart linux
+  sleep    Delay for a specified time
+  slocate  Find files
+  sort     Sort text files
+  source   Run commands from a file `.'
+  split    Split a file into fixed-size pieces
+  ssh      Secure Shell client (remote login program)
+  strace   Trace system calls and signals
+  su       Substitute user identity
+  sudo     Execute a command as another user
+  sum      Print a checksum for a file
+  symlink  Make a new name for a file
+  sync     Synchronize data on disk with memory
+t
+  tail     Output the last part of files
+  tar      Tape ARchiver
+  tee      Redirect output to multiple files
+  test     Evaluate a conditional expression
+  time     Measure Program running time
+  times    User and system times
+  touch    Change file timestamps
+  top      List processes running on the system
+  traceroute Trace Route to Host
+  trap     Run a command when a signal is set(bourne)
+  tr       Translate, squeeze, and/or delete characters
+  true     Do nothing, successfully
+  tsort    Topological sort
+  tty      Print filename of terminal on stdin
+  type     Describe a command &#8226;
+u
+  ulimit   Limit user resources &#8226;
+  umask    Users file creation mask
+  umount   Unmount a device
+  unalias  Remove an alias &#8226;
+  uname    Print system information
+  unexpand Convert spaces to tabs
+  uniq     Uniquify files
+  units    Convert units from one scale to another
+  unset    Remove variable or function names
+  unshar   Unpack shell archive scripts
+  until    Execute commands (until error)
+  useradd  Create new user account
+  usermod  Modify user account
+  users    List users currently logged in
+  uuencode Encode a binary file 
+  uudecode Decode a file created by uuencode
+v
+  v        Verbosely list directory contents (`ls -l -b')
+  vdir     Verbosely list directory contents (`ls -l -b')
+  vi       Text Editor
+  vmstat   Report virtual memory statistics
+w
+  watch    Execute/display a program periodically
+  wc       Print byte, word, and line counts
+  whereis  Search the user's $path, man pages and source files for a program
+  which    Search the user's $path for a program file
+  while    Execute commands
+  who      Print all usernames currently logged in
+  whoami   Print the current user id and name (`id -un')
+  Wget     Retrieve web pages or files via HTTP, HTTPS or FTP
+  write    Send a message to another user 
+x
+  xargs    Execute utility, passing constructed argument list(s)
+  yes      Print a string until interrupted
+  .        Run a command script in the current shell
+  ###      Comment / Remark
+
+```
+
+You may find use for these as well.
+
+---
+
+### Post by hansdown on 2010-01-25
+Hi ankspo71.
+
+You can get the ubuntu cheat sheet.
+
+[http://fosswire.com/post/2008/4/ubuntu-cheat-sheet/](http://fosswire.com/post/2008/4/ubuntu-cheat-sheet/)
+
+Also, the unix/linux reference sheet.
+
+[http://fosswire.com/post/2007/8/unixlinux-command-cheat-sheet/](http://fosswire.com/post/2007/8/unixlinux-command-cheat-sheet/)
+
+I print the page, and have it above my desk for ease of use.
+
+---
+
+### Post by steindor2 on 2010-01-25
+i recommend the cheat sheet shirt:D
+[http://store.xkcd.com/xkcd/#LinuxCheatShirt](http://store.xkcd.com/xkcd/#LinuxCheatShirt)
+
+---
+

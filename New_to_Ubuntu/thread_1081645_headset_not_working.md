@@ -1,0 +1,73 @@
+---
+title: "headset not working"
+date: 2009-02-26
+forum: New to Ubuntu
+---
+
+### Post by furoido on 2009-02-26
+I can't get my headset to work (either hearing through headphones or speaking through the mic)...checked preference-sounds and sound recorder settings but they seem ok...any idea of what I should do next?
+
+Thanks
+
+PS Speakers work fine, its only the headset that is giving problems
+
+
+00:00.0 Host bridge: Intel Corporation 82G33/G31/P35/P31 Express DRAM Controller (rev 02)
+00:02.0 VGA compatible controller: Intel Corporation 82G33/G31 Express Integrated Graphics Controller (rev 02)
+00:1a.0 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #4 (rev 02)
+00:1a.1 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #5 (rev 02)
+00:1a.7 USB Controller: Intel Corporation 82801I (ICH9 Family) USB2 EHCI Controller #2 (rev 02)
+00:1b.0 Audio device: Intel Corporation 82801I (ICH9 Family) HD Audio Controller (rev 02)
+00:1c.0 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 1 (rev 02)
+00:1c.1 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 2 (rev 02)
+00:1c.2 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 3 (rev 02)
+00:1c.3 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 4 (rev 02)
+00:1c.4 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 5 (rev 02)
+00:1c.5 PCI bridge: Intel Corporation 82801I (ICH9 Family) PCI Express Port 6 (rev 02)
+00:1d.0 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #1 (rev 02)
+00:1d.1 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #2 (rev 02)
+00:1d.2 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #3 (rev 02)
+00:1d.3 USB Controller: Intel Corporation 82801I (ICH9 Family) USB UHCI Controller #6 (rev 02)
+00:1d.7 USB Controller: Intel Corporation 82801I (ICH9 Family) USB2 EHCI Controller #1 (rev 02)
+00:1e.0 PCI bridge: Intel Corporation 82801 PCI Bridge (rev 92)
+00:1f.0 ISA bridge: Intel Corporation 82801IB (ICH9) LPC Interface Controller (rev 02)
+00:1f.2 IDE interface: Intel Corporation 82801IB (ICH9) 2 port SATA IDE Controller (rev 02)
+00:1f.3 SMBus: Intel Corporation 82801I (ICH9 Family) SMBus Controller (rev 02)
+00:1f.5 IDE interface: Intel Corporation 82801I (ICH9 Family) 2 port SATA IDE Controller (rev 02)
+06:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168B PCI Express Gigabit Ethernet controller (rev 01)
+
+---
+
+### Post by ymra on 2009-02-26
+Have you tried activating Jack sense?  
+
+Right click on the speaker symbol at the top of your screen, select open volume control and then the switches tab.  You should have the option to enable Jack sense.
+
+---
+
+### Post by furoido on 2009-02-26
+No Jack sense, only Master....
+
+---
+
+### Post by furoido on 2009-02-26
+Actually, Ymra, I have found 'headphones' tab under HDA Intel (Alsa Mixer) and it was already ticked, so seems that is not the problem...
+
+---
+
+### Post by waffleturd on 2009-02-26
+i actually had the same problem.
+If you have speakers plugged in, that might be the problem.
+
+---
+
+### Post by furoido on 2009-02-26
+waffleturd, just tried unplugging the speakers and that does not work...
+
+---
+
+### Post by ymra on 2009-02-27
+Sorry I could not be more help.  That was just something to check.  Good luck.
+
+---
+

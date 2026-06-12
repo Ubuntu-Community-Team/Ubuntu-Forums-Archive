@@ -1,0 +1,123 @@
+---
+title: "stop network manager log spam"
+date: 2009-09-13
+forum: New to Ubuntu
+---
+
+### Post by SpinningAround on 2009-09-13
+I'm using a VPN connection at it cause a little package drop (I guess) from time to time, I think this isn't something to be worried about but gnome network manager are spamming my log with the following messages something that cause the log to be (for 1 day) close to 70mb in size. Question is if there is any way to stop this flooding?
+
+```
+Sep 13 16:33:22  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208022 (expecting 2208012, lost or reordered)
+Sep 13 16:33:22  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208023 (expecting 2208012, lost or reordered)
+Sep 13 16:33:22  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208024 (expecting 2208012, lost or reordered)
+Sep 13 16:33:22  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208025 (expecting 2208012, lost or reordered)
+Sep 13 16:33:22  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208026 (expecting 2208012, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208241 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208242 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208243 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208244 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208245 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208246 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208247 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208248 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208249 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208250 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208251 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208252 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208253 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208254 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208255 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208256 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208257 (expecting 2208240, lost or reordered)
+Sep 13 16:33:24  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208258 (expecting 2208240, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208589 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208590 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208591 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208592 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208593 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208594 (expecting 2208588, lost or reordered)
+Sep 13 16:33:29  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2208595 (expecting 2208588, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209205 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209206 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209207 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209208 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209209 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209210 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209211 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209212 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209213 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209214 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209215 (expecting 2209204, lost or reordered)
+Sep 13 16:33:36  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209216 (expecting 2209204, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209746 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209747 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209748 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209749 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209750 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209751 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209752 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209753 (expecting 2209745, lost or reordered)
+Sep 13 16:33:44  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209754 (expecting 2209745, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209838 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209839 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209840 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209841 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209842 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209843 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209845 (expecting 2209837, lost or reordered)
+Sep 13 16:33:45  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209846 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209847 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209848 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209849 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209850 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209851 (expecting 2209844, lost or reordered)
+Sep 13 16:33:46  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2209852 (expecting 2209844, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210012 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210013 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210014 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210015 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210016 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210017 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210018 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210019 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210020 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210021 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210022 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210023 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210024 (expecting 2210011, lost or reordered)
+Sep 13 16:33:48  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2210025 (expecting 2210011, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212397 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212398 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212399 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212400 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212401 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212402 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212403 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212404 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212405 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212406 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212407 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212408 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212409 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212410 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212411 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212412 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212413 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212414 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212415 (expecting 2212396, lost or reordered)
+Sep 13 16:34:12  pptp[8615]: nm-pptp-service-8607 log[decaps_gre:pptp_gre.c:414]: buffering packet 2212416 (expecting 2212396, lost or reordered)
+
+```
+
+---
+
+### Post by Copernicus1234 on 2010-04-09
+Actually this seems to be a bug that affects everybody, and its causing some lost packets (chat messages in Empathy sometimes not reaching their destination and stuff like that).
+
+Official bug here: [https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/258743](https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/258743)
+
+If anyone has a workaround, it would be great. Setting the MTU to some other value doesnt seem to work according to the people who have tried it.
+
+---
+

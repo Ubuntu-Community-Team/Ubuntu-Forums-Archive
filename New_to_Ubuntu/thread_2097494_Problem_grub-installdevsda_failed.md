@@ -1,0 +1,237 @@
+---
+title: "Problem grub-install/dev/sda failed"
+date: 2012-12-23
+forum: New to Ubuntu
+---
+
+### Post by rapalos on 2012-12-23
+Hello,
+
+First sorry for my english, I will do my best but I am not very good.
+
+I was trying to install Ubuntu in dual-boot, but I messed up with the partition thing and I lost my Windows and everything... But it doesn't matter.
+
+So, I now try to install Ubuntu in my whole laptop (when I start him, I only see "missing operating system"), I have a Usb key with a version of Ubuntu 11.04. 
+But during the installation, I got an error message "grub-install/dev/sda failed. This is a fatal error." and so I can't even install Ubuntu...
+
+I have looked for solution on Internet, but I only found old posts which different solution for all person, apparently this problem can come from the hardware, or I don't understand very good, and nothing worked for me. 
+That's why I come here, hoping that you have a good solution for me, because I am becoming desperate...
+
+Thanks, and merry Xmas !
+
+---
+
+### Post by Bashing-om on 2012-12-23
+rapalos; Hi ! Welcome to the forum.
+
+Version 11.04 has reached end-of-life- and will no longer be supported. May I suggest that you download the current long term support version 12.04 ?
+
+When you have the install medium, boot it up first in the "try ubuntu" mode to verify that all devices work as expected in ubuntu.
+
+[INDENT]just my opinion <== BDQ
+
+[/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-23
+I just did it with a 12.04 version.
+Same problem, so, what can I do now ? ='(
+
+---
+
+### Post by Bashing-om on 2012-12-23
+rapalos;
+With the 12.04 version, boot up the install-usb, let it boot to the greeter screen that has these two options:
+a) Try ubuntu
+b) Install ubuntu
+
+What results when you choose "try ubuntu" ?
+
+[INDENT][INDENT]one step at a time <== BDQ
+
+[/INDENT][/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-23
+Actually, I take an ISO-image of Ubuntu from my school, in which I only have the option "install ubuntu" and no the "try ubuntu", but if it could solve my problems i'm going to take an other 12.04 version and try. :)
+
+---
+
+### Post by Bashing-om on 2012-12-23
+rapalos;
+
+Download the .iso image from a link such as this: (recommended)
+[http://www.ubuntu.com/download/desktop](http://www.ubuntu.com/download/desktop)
+Burn the .iso and an "image" [not as data] at the slowest possible speed.
+This install disk is also the liveCD.
+If You require the install to be via usb, I will provide the links to the instructions.
+[INDENT]try'n to help <== BDQ
+
+[/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-23
+Well, I haven't burner (I don't know if it is the right word :s), so if you can explain me a method via Usb, I will be very grateful ! :)
+
+---
+
+### Post by Bashing-om on 2012-12-23
+rapalos;
+Sure!
+[http://www.ubuntu.com/download/help/create-a-usb-stick-on-ubuntu](http://www.ubuntu.com/download/help/create-a-usb-stick-on-ubuntu)
+[http://ubuntuforums.org/showthread.php?t=2042965](http://ubuntuforums.org/showthread.php?t=2042965)
+[http://unetbootin.sourceforge.net/](http://unetbootin.sourceforge.net/)
+
+and if you are in the windows environment:
+[http://www.ubuntu.com/download/help/create-a-usb-stick-on-windows](http://www.ubuntu.com/download/help/create-a-usb-stick-on-windows)
+
+Installing fron usb stick:
+[https://help.ubuntu.com/community/Installation/FromUSBStick](https://help.ubuntu.com/community/Installation/FromUSBStick)
+
+Partitioning:
+[http://ubuntuforums.org/showthread.php?t=2080356](http://ubuntuforums.org/showthread.php?t=2080356)
+[INDENT]Those should assist you and answer all questions; if not ---post back!
+[INDENT]try'n to help <== BDQ
+
+[/INDENT][/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-24
+As I explain in my first post, my laptop has no one OS left, so I create a bootable usb-stick from an other computer with Windows, but when I choose the version (I take the last, Ubuntu 12.10), I can't choose anything, however, it is a 32-bit system, whereas the one in which I want to install Ubuntu is a 64-bit, would I get problems ?
+
+Whatever, I boot my computer on the fresh Usb-stick, and chose "try ubuntu", after I am as before, on a ubuntu desktop with a folder "exemples" and a "install Ubuntu" option. It seems to work correctly for the moment. I'm going to install and I back tell you what happened !
+
+---
+
+### Post by rapalos on 2012-12-24
+Same problem, "grub-install/dev/sda failed. This is a fatal error." :(
+
+I just notice that all my partitions names are /dev/mapper/iiafibgif, except my Usb-key which is /dev/sdc, so the problem isn't that my computer does not recognize my hard disks ?
+
+---
+
+### Post by Bashing-om on 2012-12-24
+rapalos;
+
+Still here for you, and trying to help.
+1. You are willing that ubuntu is the sole operating sytem on your computer.
+2. I have installed ubuntu numerous times and have never encounterd 
+>   /dev/mapper/iiafibgif Is this generated by a "windows" installer -trying to install as "wubi" ???
+
+Now here is what I require of you, such that I know what there is to work with, enabling me to help you.
+Boot up your install usb; After loading to the greeter screen choose "try ubuntu";
+Loads to the desk top. The key combo ctl+alt+t activates a command line interface(terminal). 
+ Post the output of these terminal commands:
+```
+
+sudo fdisk -lu 
+sudo parted /dev/sda unit s print
+
+```Frankly I do not expect to see any ubuntu partitions in the outputs. Not to stress. In that event will format the hard drive with the GParted utility on the install usb, and then install ubuntu as the only operating system.
+
+OK with this ? Comfortable to proceed ? 
+[INDENT][INDENT]try'n to help <== BDQ
+
+[/INDENT][/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-24
+Thanks for your help Bashing-om !
+
+After the first line
+> fdisk: unable to seek on /dev/sda: Invalid Argument
+
+After the second
+> Error: The partition cannot be outside of the disk
+
+Otherwise, looking for solution on Internet, seems that the /dev/mapper/ means that my hard disk is in RAID mode, so I checked the BIOS and indeed, it is on RAID, and I can change this to IDE or AHCI but I know nothing about this things, so I don't change yet.
+
+And I never use something like this "wubi". But as I said, I had Windows before (until 2 days ago), maybe that's why I have these remains.
+
+---
+
+### Post by Bashing-om on 2012-12-24
+rapalos;
+
+You do good work !
+
+The presence of "raid" at one time does complicate matters, and changes the procedure to enable the installation of ubuntu.
+In this context, what prior version of windows was installed(later versions incorporated a booting method called "UEFI"  and dynamic partitioning) That may further complicate things. Not a great big deal, if so, there are ways to cope.
+
+With the advent of technology, things have become more complex.  To install ubuntu as a desktop system the raid meta data will have to be removed from the hard drive. The desktop install does not have the tools to accomplish this task, the server edition does have them. 
+
+So, the next step is to down load a server edition .iso and burn this to the install medium. 
+[INDENT][INDENT]advise me when prepared to proceed ==> BDQ
+
+[/INDENT][/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-24
+I bought my computer with Windows 7, after I upgrade it last August to W8, and I downgrade it back to W7 two days ago, just before I lost everything.
+
+When i start my computer, I can go in a section where I can change some Raid settings, maybe it could help ?
+
+Here a picture of my screen
+[https://www.dropbox.com/s/9t8u80fxld3e4h0/IMG_0142.JPG](https://www.dropbox.com/s/9t8u80fxld3e4h0/IMG_0142.JPG)
+
+Otherwise, I am ready to proceed. (but I can't burn a Cd at home, remember :s)
+
+---
+
+### Post by Bashing-om on 2012-12-24
+rapalos;
+Having had windows 8 --- "UEFI" is a factor, maybe seeing this rather than "raid meta data". 
+see this link for instructions to install ubuntu under these conditions:
+[https://help.ubuntu.com/community/UEFI](https://help.ubuntu.com/community/UEFI)
+I am glad you have the 64 bit install, as the 64 bit install will recognize "UEFI"
+[INDENT]struggle to help, hang'n in there ==> BDQ
+
+[/INDENT]
+
+---
+
+### Post by rapalos on 2012-12-25
+I did what was explained, it appears that I haven't the UEFI thing if I understood correctly; but I do the whole tutorial anyway, and  after doing boot-repair, it worked !
+Now I am writing from my computer on Ubuntu, without any USB-stick or CD, it is amazing !
+
+Here is my boot-repair report, if you want take a peek [http://paste.ubuntu.com/1464408/](http://paste.ubuntu.com/1464408/)
+
+Thanks a lot Bashing-om, you saved me ! :D:D:D
+It is really nice having people like you in this world !
+
+I hope it will keep working, otherwise I'll be back ! :wink:
+
+Thanks again, and merry Christmas ! ):P
+
+---
+
+### Post by Bashing-om on 2012-12-26
+rapalos; Glad you are up !
+
+Your thanks makes it all worth my while ..
+Spread the good word about a great operating system. And come back here often for the learning experience.
+
+Please mark this thread as solved; It aides others seeking solutions and it saves us aides time in not looking at a solved situation.
+[INDENT][INDENT][INDENT]happy ubuntu'n < == BDQ
+
+[/INDENT][/INDENT][/INDENT]
+
+---
+
+### Post by YannBuntu on 2012-12-26
+> **rapalos said:**
+> after doing boot-repair, it worked !
+Now I am writing from my computer on Ubuntu, without any USB-stick or CD, it is amazing !
+
+Please could you use the thread tools in order to mark this thread [SOLVED].
+
+Happy Ubuntu-ing :)
+
+---
+

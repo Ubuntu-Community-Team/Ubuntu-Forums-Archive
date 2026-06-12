@@ -1,0 +1,429 @@
+---
+title: "Ubuntu not starting properly"
+date: 2011-04-22
+forum: New to Ubuntu
+---
+
+### Post by thebiguglyone on 2011-04-22
+My sisters desktop pc has ubuntu installed on it, not sure which version it is currently running. I think I originally installed 9.10 but seem to remember updating to 10.10 a while ago.
+ 
+When she turns on the PC, it goes through the BIOS start up but then ends up at a command prompt before getting to the user screen. She seems to think she pressed something whilst pulling her keyboard forwards but I have my doubts that it is anything that simple.
+ 
+I have attached a photo of the screen to hopefully make it nice and simple for someone to tell me to press X Y and Z Job done! :???:
+ 
+Thanks in advance for any help offered...
+
+---
+
+### Post by jtarin on 2011-04-22
+Does this disk have Ubuntu only on it? Try booting with your Live CD and reinstall Grub.
+
+---
+
+### Post by boogman on 2011-04-22
+i would agree on that, boot from a live disk using terminal to reinstall grub. i ad this problem last friday and worked fine for me.
+you may find this link helpful [http://ubuntuforums.org/showthread.php?t=224351](http://ubuntuforums.org/showthread.php?t=224351)
+hope it helps 
+have a good day :)
+boogman
+
+---
+
+### Post by thebiguglyone on 2011-04-22
+Thanks for the pointers folks, I will give it a try over the weekend and report back when done. :)
+ 
+Edit- Yes it is Ubuntu only.
+
+---
+
+### Post by thebiguglyone on 2011-04-23
+Hi folks,
+
+Tried to follow the instructions off the link but fell at the first hurdle...
+
+After entering sudo grub in the terminal it returns sudo: grub: command not found
+
+Any thoughts on this?
+
+Cheers
+
+---
+
+### Post by cipherboy_loc on 2011-04-23
+Run the boot signature in my signature. That will tell us a bit more about it. Without the results of the script, a random guess would be to chroot into it the laptop's install from the LiveCD and run:
+
+```
+
+sudo update-grub2
+
+```Use google to find more information about chrooting. It doesn't look like you are missing grub altogether. If that doesn't work, reinstall the linux-image and linux-header packages (chroot).
+
+
+EDIT:
+Reading the link ([http://ubuntuforums.org/showthread.php?t=224351](http://ubuntuforums.org/showthread.php?t=224351)), it is a dated article. The new grub-pc package doesn't have grub legacy's prompt any more. 
+
+
+Cipherboy
+
+---
+
+### Post by thebiguglyone on 2011-04-23
+I hope I did this right...
+
+
+```
+               Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #1 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04.2 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  -
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 200.0 GB, 200049647616 bytes
+255 heads, 63 sectors/track, 24321 cylinders, total 390721968 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0xb09b50b1
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   379,021,544   379,021,482  83 Linux
+/dev/sda2         379,021,545   390,716,864    11,695,320   5 Extended
+/dev/sda5         379,021,608   390,716,864    11,695,257  82 Linux swap / Solaris
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/loop0                                              squashfs                                 
+/dev/sda1        961972ff-c4a6-48a0-86f6-094ca8fd86c8   ext4                                     
+/dev/sda5        1963f4e9-633a-4d31-81d6-05c44dae9f88   swap                                     
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+aufs             /                        aufs       (rw)
+/dev/sr0         /cdrom                   iso9660    (rw)
+/dev/loop0       /rofs                    squashfs   (rw)
+
+
+=========================== sda1/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,1)'
+search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-30-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-30-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-30-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-30-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-30-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-30-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-29-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-29-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-29-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-29-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-29-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-29-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-28-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-28-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-28-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-28-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-28-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-28-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-27-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-27-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-27-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-27-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-27-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-27-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-27-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-26-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-26-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-26-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-26-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-26-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-26-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-26-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.32-25-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-25-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.32-25-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.32-25-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.32-25-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-25-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.31-22-generic-pae' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux    /boot/vmlinuz-2.6.31-22-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-22-generic-pae
+}
+menuentry 'Ubuntu, with Linux 2.6.31-22-generic-pae (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    echo    'Loading Linux 2.6.31-22-generic-pae ...'
+    linux    /boot/vmlinuz-2.6.31-22-generic-pae root=UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.31-22-generic-pae
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 961972ff-c4a6-48a0-86f6-094ca8fd86c8
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+if [ ${timeout} != -1 ]; then
+  if keystatus; then
+    if keystatus --shift; then
+      set timeout=-1
+    else
+      set timeout=0
+    fi
+  else
+    if sleep --interruptible 3 ; then
+      set timeout=0
+    fi
+  fi
+fi
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda1/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda1 during installation
+UUID=961972ff-c4a6-48a0-86f6-094ca8fd86c8 /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda5 during installation
+UUID=1963f4e9-633a-4d31-81d6-05c44dae9f88 none            swap    sw              0       0
+/dev/scd0       /media/cdrom0   udf,iso9660 user,noauto,exec,utf8 0       0
+
+=================== sda1: Location of files loaded by Grub: ===================
+
+
+    .1GB: boot/grub/core.img
+   6.0GB: boot/grub/grub.cfg
+   1.6GB: boot/initrd.img-2.6.31-22-generic-pae
+   1.7GB: boot/initrd.img-2.6.32-25-generic-pae
+   3.2GB: boot/initrd.img-2.6.32-26-generic-pae
+   1.6GB: boot/initrd.img-2.6.32-27-generic-pae
+   1.6GB: boot/initrd.img-2.6.32-28-generic-pae
+   2.0GB: boot/initrd.img-2.6.32-29-generic-pae
+   2.1GB: boot/initrd.img-2.6.32-30-generic-pae
+   1.0GB: boot/vmlinuz-2.6.31-22-generic-pae
+   1.2GB: boot/vmlinuz-2.6.32-25-generic-pae
+   1.1GB: boot/vmlinuz-2.6.32-26-generic-pae
+   1.1GB: boot/vmlinuz-2.6.32-27-generic-pae
+   1.4GB: boot/vmlinuz-2.6.32-28-generic-pae
+   1.2GB: boot/vmlinuz-2.6.32-29-generic-pae
+   2.0GB: boot/vmlinuz-2.6.32-30-generic-pae
+   2.1GB: initrd.img
+   2.0GB: initrd.img.old
+   2.0GB: vmlinuz
+   1.2GB: vmlinuz.old
+=======Devices which don't seem to have a corresponding hard drive==============
+
+sdb sdc sdd sde 
+```
+
+---
+
+### Post by cipherboy_loc on 2011-04-23
+It looks like a simple CHROOT + update-grub2 should fix it. Which kernel did you try booting in the screen shot? Do all kernels do this or just that one? Also, you might want to remove the 4 or 5 oldest ones.
+
+---
+
+### Post by thebiguglyone on 2011-04-23
+Kernels?  I'll have to read up on that one:confused: 
+I looked up chroot on google and found a link which sort of explained what I was to do.
+
+I followed the instructions as best I could and think I got there in the end.
+
+Final input I made was the sudo update (above)
+
+It said update successful or something along those lines, anyway, restarted without the live disk and it booted up so I guess that was a result!
+
+Thanks for the input.
+
+---
+

@@ -1,0 +1,229 @@
+---
+title: "installing tar.zp files of lammps"
+date: 2009-09-13
+forum: New to Ubuntu
+---
+
+### Post by naveen.cardoza on 2009-09-13
+hai,
+I am absolutely new to ubuntu or to any open source. I have downloded a physics software called 'lammps 9jan09' which is in tar.zp format. could anyone help me to install it please
+
+---
+
+### Post by Michael.Godawski on 2009-09-13
+Hey naveen.cardoza,
+
+there should be a read-me file, which tells you what to do.
+For this particular application the installation instructions are located in /doc/Section_start.html
+
+```
+
+2.2 Making LAMMPS  
+
+ Read this first: 
+ Building LAMMPS can be non-trivial.  You will likely need to edit a makefile, there are compiler options, additional libraries can be used (MPI, FFT), etc.  Please read this section carefully.  If you are not comfortable with makefiles, or building codes on a Unix platform, or running an MPI job on your machine, please find a local expert to help you.  Many compiling, linking, and run problems that users are not really LAMMPS issues - they are peculiar to the user's system, compilers, libraries, etc.  Such questions are better answered by a local expert. 
+ If you have a build problem that you are convinced is a LAMMPS issue (e.g. the compiler complains about a line of LAMMPS source code), then please send an email to the [developers]("http://lammps.sandia.gov/authors.html"). 
+ If you succeed in building LAMMPS on a new kind of machine (which there isn't a similar Makefile for in the distribution), send it to the developers and we'll include it in future LAMMPS releases. 
+ Building a LAMMPS executable: 
+ The src directory contains the C++ source and header files for LAMMPS. It also contains a top-level Makefile and a MAKE sub-directory with low-level Makefile.* files for several machines.  From within the src directory, type "make" or "gmake".  You should see a list of available choices.  If one of those is the machine and options you want, you can type a command like: 
+ make linux
+gmake mac 
+Note that on a multi-processor or multi-core platform you can launch a parallel make, by using the "-j" switch with the make command, which will typically build LAMMPS more quickly. 
+ If you get no errors and an executable like lmp_linux or lmp_mac is produced, you're done; it's your lucky day. 
+ Errors that can occur when making LAMMPS: 
+ (1) If the make command breaks immediately with errors that indicate it can't find files with a "*" in their names, this can be because your machine's make doesn't support wildcard expansion in a makefile. Try gmake instead of make.  If that doesn't work, try using a -f switch with your make command to use Makefile.list which explicitly lists all the needed files, e.g. 
+ make makelist
+make -f Makefile.list linux
+gmake -f Makefile.list mac 
+The first "make" command will create a current Makefile.list with all the file names in your src dir.  The 2nd "make" command (make or gmake) will use it to build LAMMPS. 
+ (2) Other errors typically occur because the low-level Makefile isn't setup correctly for your machine.  If your platform is named "foo", you need to create a Makefile.foo in the MAKE sub-directory.  Use whatever existing file is closest to your platform as a starting point.  See the next section for more instructions. 
+ Editing a new low-level Makefile.foo: 
+ These are the issues you need to address when editing a low-level Makefile for your machine.  With a couple exceptions, the only portion of the file you should need to edit is the "System-specific Settings" section. 
+ (1) Change the first line of Makefile.foo to include the word "foo" and whatever other options you set.  This is the line you will see if you just type "make". 
+ (2) Set the paths and flags for your C++ compiler, including optimization flags.  You can use g++, the open-source GNU compiler, which is available on all Unix systems.  Vendor compilers often produce faster code.  On boxes with Intel CPUs, we suggest using the free Intel icc compiler, which you can download from [Intel's compiler site]("http://www.intel.com/software/products/noncom"). 
+   (3) If you want LAMMPS to run in parallel, you must have an MPI library installed on your platform.  If you do not use "mpicc" as your compiler/linker, then Makefile.foo needs to specify where the mpi.h file (-I switch) and the libmpi.a library (-L switch) is found.  If you are installing MPI yourself, we recommend Argonne's MPICH 1.2 which can be downloaded from the [Argonne MPI site]("http://www-unix.mcs.anl.gov/mpi").  LAM MPI should also work.  If you are running on a big parallel platform, your system people or the vendor should have already installed a version of MPI, which will be faster than MPICH or LAM, so find out how to build and link with it. If you use MPICH or LAM, you will have to configure and build it for your platform.  The MPI configure script should have compiler options to enable you to use the same compiler you are using for the LAMMPS build, which can avoid problems that may arise when linking LAMMPS to the MPI library. 
+ (4) If you just want LAMMPS to run on a single processor, you can use the STUBS library in place of MPI, since you don't need an MPI library installed on your system.  See the Makefile.serial file for how to specify the -I and -L switches.  You will also need to build the STUBS library for your platform before making LAMMPS itself.  From the STUBS dir, type "make" and it will hopefully create a libmpi.a suitable for linking to LAMMPS.  If the build fails, you will need to edit the STUBS/Makefile for your platform. 
+ The file STUBS/mpi.cpp has a CPU timer function MPI_Wtime() that calls gettimeofday() .  If your system doesn't support gettimeofday() , you'll need to insert code to call another timer.  Note that the ANSI-standard function clock() rolls over after an hour or so, and is therefore insufficient for timing long LAMMPS simulations. 
+ (5) If you want to use the particle-particle particle-mesh (PPPM) option in LAMMPS for long-range Coulombics, you must have a 1d FFT library installed on your platform.  This is specified by a switch of the form -DFFT_XXX where XXX = INTEL, DEC, SGI, SCSL, or FFTW.  All but the last one are native vendor-provided libraries.  FFTW is a fast, portable library that should work on any platform.  You can download it from [www.fftw.org]("http://www.fftw.org/").  Use version 2.1.X, not the newer 3.0.X.  Building FFTW for your box should be as simple as ./configure; make.  Whichever FFT library you have on your platform, you'll need to set the appropriate -I and -L switches in Makefile.foo. 
+ If you examine fft3d.c and fft3d.h you'll see it's possible to add other vendor FFT libraries via #ifdef statements in the appropriate places.  If you successfully add a new FFT option, like -DFFT_IBM, please send the [developers]("http://lammps.sandia.gov/") an email; we'd like to add it to LAMMPS. 
+ (6) If you don't plan to use PPPM, you don't need an FFT library.  Use a -DFFT_NONE switch in the CCFLAGS setting of Makefile.foo, or exclude the KSPACE package (see below). 
+ (7) There are a few other -D compiler switches you can set as part of CCFLAGS.  The read_data and dump commands will read/write gzipped files if you compile with -DLAMMPS_GZIP.  It requires that your Unix support the "popen" command.  Using one of the -DPACK_ARRAY, -DPACK_POINTER, and -DPACK_MEMCPY options can make for faster parallel FFTs (in the PPPM solver) on some platforms.  The -DPACK_ARRAY setting is the default.  If you compile with -DLAMMPS_XDR, the build will include XDR compatibility files for doing particle dumps in XTC format.  This is only necessary if your platform does have its own XDR files available.  See the Restrictions section of the [dump]("file:///home/michael/Desktop/lammps-7Jul09/doc/dump.html") command for details. 
+ (8) The DEPFLAGS setting is how the C++ compiler creates a dependency file for each source file.  This speeds re-compilation when source (*.cpp) or header (*.h) files are edited.  Some compilers do not support dependency file creation, or may use a different switch than -D.  GNU g++ works with -D.  If your compiler can't create dependency files (a long list of errors involving *.d files), then you'll need to create a Makefile.foo patterned after Makefile.tflop, which uses different rules that do not involve dependency files. 
+ That's it.  Once you have a correct Makefile.foo and you have pre-built the MPI and FFT libraries it will use, all you need to do from the src directory is type one of these 2 commands: 
+ make foo
+gmake foo 
+You should get the executable lmp_foo when the build is complete. 
+ Additional build tips: 
+ (1) Building LAMMPS for multiple platforms. 
+ You can make LAMMPS for multiple platforms from the same src directory.  Each target creates its own object sub-directory called Obj_name where it stores the system-specific *.o files. 
+ (2) Cleaning up. 
+ Typing "make clean" will delete all *.o object files created when LAMMPS is built. 
+ (3) On some machines with some compiler options, the Coulomb tabling option that is enabled by default for "long" [pair styles]("file:///home/michael/Desktop/lammps-7Jul09/doc/pair_style.html") such as lj/cut/coul/long and lj/charmm/coul/long does not work.  Tables are used by these styles since it can offer a 2x speed-up.  A symptom of this problem is getting wildly large energies on timestep 0 of the examples/peptide simulation. 
+ Here are several work-arounds.  Coulomb tables can be disabled by setting "table 0" in the [pair_modify]("file:///home/michael/Desktop/lammps-7Jul09/doc/pair_modify.html") command. 
+ The associated files (e.g. pair_lj_cut_coul_long.cpp) can be compiled at a lower optimization level like -O2, or with the compiler flag -fno-strict-aliasing.  The latter can be done by adding something like these lines in your Makefile.machine: 
+ NOALIAS =       -fno-strict-aliasing 
+pair_lj_cut_coul_long.o : pair_lj_cut_coul_long.cpp
+         $(CC) $(CCFLAGS) $(NOALIAS) -c $< 
+pair_lj_charmm_coul_long.o : pair_lj_charmm_coul_long.cpp
+         $(CC) $(CCFLAGS) $(NOALIAS) -c $< 
+On a Macintosh, try compiling the pair "long" files without the -fast compiler option. 
+ (4) Building for a Macintosh. 
+ OS X is BSD Unix, so it already works.  See the Makefile.mac file. 
+ (5) Building for MicroSoft Windows. 
+ I've never done this, but LAMMPS is just standard C++ with MPI and FFT calls.  You can use cygwin to build LAMMPS with a Unix make; see Makefile.cygwin.  Or you should be able to pull all the source files into Visual C++ (ugh) or some similar development environment and build it.  In the src/MAKE/Windows directory are some notes from users on how they built LAMMPS under Windows, so you can look at their instructions for tips.  Good luck - we can't help you on this one. 
+   2.3 Making LAMMPS with optional packages  
+
+ The source code for LAMMPS is structured as a large set of core files which are always used, plus optional packages, which are groups of files that enable a specific set of features.  For example, force fields for molecular systems or granular systems are in packages.  You can see the list of both standard and user-contributed packages by typing "make package". 
+ The current list of standard packages is as follows: 
+ [CENTER] asphere  aspherical particles and force fields class2  class 2 force fields colloid  colloidal particle force fields dipole  point dipole particles and force fields dpd  dissipative particle dynamics (DPD) force field granular  force fields and boundary conditions for granular systems kspace  long-range Ewald and particle-mesh (PPPM) solvers manybody  metal, 3-body, bond-order potentials meam  modified embedded atom method (MEAM) potential molecule  force fields for molecular systems opt  optimized versions of a few pair potentials peri  Peridynamics model and potential poems  coupled rigid body motion reax  ReaxFF potential xtc  dump atom snapshots in XTC format  [/CENTER]
+  There are also user-contributed packages which may be as simple as a single additional file or many files grouped together which add a specific functionality to the code.  The difference between a standard package versus a user package is as follows. 
+ Standard packages are supported by the LAMMPS developers and are written in a syntax and style consistent with the rest of LAMMPS. This means we will answer questions about them, debug and fix them if necessary, and keep them compatible with future changes to LAMMPS. 
+ User packages don't necessarily meet these requirements.  If you have problems using a feature provided in a user package, you will likely need to contact the contributor directly to get help.  Information on how to submit additions you make to LAMMPS as a user-contributed package is given in [this section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_modify.html#package") of the documentation. 
+   Any or all packages can be included or excluded when LAMMPS is built. The one exception is that to use the standard "opt" package, you must also be using the "molecule" and "manybody" packages.  You may wish to exclude certain packages if you will never run certain kinds of simulations.  This will keep you from having to build auxiliary libraries (see below) and will produce a smaller executable which may run a bit faster. 
+ By default, LAMMPS includes only the "kspace", "manybody", and "molecule" packages.  As described below, some standard packages require LAMMPS be linked to separately built library files, which will require editing of your src/MAKE/Makefile.machine. 
+ Packages are included or excluded by typing "make yes-name" or "make no-name", where "name" is the name of the package.  You can also type "make yes-standard", "make no-standard", "make yes-user", "make no-user", "make yes-all" or "make no-all" to include/exclude various sets of packages.  These commands work by simply moving files back and forth between the main src directory and sub-directories with the package name, so that the files are seen or not seen when LAMMPS is built.  After you have included or excluded a package, you must re-build LAMMPS. 
+ Additional make options exist to help manage LAMMPS files that exist in both the src directory and in package sub-directories.  You do not normally need to use these commands unless you are editing LAMMPS files or have downloaded a patch from the LAMMPS WWW site.  Typing "make package-update" will overwrite src files with files from the package directories if the package has been included.  It should be used after a patch is installed, since patches only update the master package version of a file.  Typing "make package-overwrite" will overwrite files in the package directories with src files.  Typing "make package-check" will list differences between src and package versions of the same files. 
+ Some packages require that additional libraries first be compiled, which LAMMPS will link to when it builds.  Currently, these are the "meam", "poems", and "reax" packages.  You should look at the README files in the lib directories (e.g. lib/reax/README) for instructions on how to build the libraries themselves. 
+ The "meam" library in lib/meam computes the modified embedded atom method potential, which is a generalization of EAM potentials that can be used to model a wider variety of materials.  This MEAM implementation was written by Greg Wagner at Sandia.  It requires a F90 compiler to build. The C++ to FORTRAN function calls in pair_meam.cpp assumes that FORTRAN object names are converted to C object names by  appending an underscore character. This is generally the case, but  on machines that do not conform to this convention, you will need to  modify either the C++ code or your compiler settings. 
+ The "reax" library in lib/reax computes the Reactive Force Field (ReaxFF) potential, developed by Adri van Duin in Bill Goddard's group at CalTech.  This implementation in LAMMPS uses many of Adri's files and was developed by Aidan Thompson at Sandia and Hansohl Cho at MIT. It requires a F77 or F90 compiler to build.  The C++ to FORTRAN function calls in pair_reax.cpp assume that FORTRAN object names are converted to C object names by  appending an underscore character. This is generally the case, but  on machines that do not conform to this convention, you will need to  modify either the C++ code or your compiler settings. The name conversion is handled by the preprocessor macro called FORTRAN in pair_reax_fortran.h. Different definitions of this macro can be obtained by adding a  machine-specific macro definition to the CCFLAGS variable in your Makefile e.g. -D_IBM. See pair_reax_fortran.h for more info. 
+ The "poems" library in lib/poems computes the constrained rigid-body motion of articulated (jointed) multibody systems.  POEMS was written and is distributed by Prof Kurt Anderson's group at Rensselaer Polytechnic Institute (RPI).  
+ In all cases, these libraries are built by typing 
+ make -f Makefile.foo 
+in the appropriate directory, e.g. in lib/reax. 
+ You should use the Makefile that is a match for your system.  If one of the provided Makefiles is not appropriate for your system you can edit or add one as needed. 
+ Once the desired library or libraries are built, you can build LAMMPS. You will need to create and use a lo-level LAMMPS makefile in src/MAKE that links with the specific libraries you want.  See a Makefile.foo that has the library name in it to see how this is done. E.g. Makefile.g++_reax or Makefile.g++_poems_meam.  Typically these will have additional -I, -L, and -l arguments that enable compiling and linking with files from the library. 
+ Note that linking a Fortran library (like MEAM or REAX) to a C++ code (like LAMMPS) can be tricky.  E.g. Fortran routine may not be found due to non-standard underscore rules.  It typically requires additional C++ or Fortran libraries be included in the link.  You may need to read documentation for your Fortran and C++ compilers about how to do this correctly. 
+   2.4 Building LAMMPS as a library  
+
+ LAMMPS can be built as a library, which can then be called from another application or a scripting language.  See [this section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_howto.html#4_10") for more info on coupling LAMMPS to other codes.  Building LAMMPS as a library is done by typing 
+ make makelib
+make -f Makefile.lib foo 
+where foo is the machine name.  The first "make" command will create a current Makefile.lib with all the file names in your src dir.  The 2nd "make" command will use it to build LAMMPS as a library.  This requires that Makefile.foo have a library target (lib) and system-specific settings for ARCHIVE and ARFLAGS.  See Makefile.linux for an example.  The build will create the file liblmp_foo.a which another application can link to. 
+ When used from a C++ program, the library allows one or more LAMMPS objects to be instantiated.  All of LAMMPS is wrapped in a LAMMPS_NS namespace; you can safely use any of its classes and methods from within your application code, as needed.  See the sample code examples/couple/c++_driver.cpp as an example. 
+ When used from a C or Fortran program or a scripting language, the library has a simple function-style interface, provided in library.cpp and library.h.  See the sample code examples/couple/c_driver.cpp as an example. 
+ You can add as many functions as you wish to library.cpp and library.h.  In a general sense, those functions can access LAMMPS data and return it to the caller or set LAMMPS data values as specified by the caller.  These 4 functions are currently included in library.cpp: 
+ void lammps_open(int, char **, MPI_Comm, void **ptr);
+void lammps_close(void *ptr);
+int lammps_file(void *ptr, char *);
+int lammps_command(void *ptr, char *); 
+The lammps_open() function is used to initialize LAMMPS, passing in a list of strings as if they were [command-line arguments]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_start.html#2_6") when LAMMPS is run from the command line and a MPI communicator for LAMMPS to run under.  It returns a ptr to the LAMMPS object that is created, and which should be used in subsequent library calls.  Note that lammps_open() can be called multiple times to create multiple LAMMPS objects. 
+ The lammps_close() function is used to shut down LAMMPS and free all its memory.  The lammps_file() and lammps_command() functions are used to pass a file or string to LAMMPS as if it were an input file or single command read from an input script. 
+   2.5 Running LAMMPS  
+
+ By default, LAMMPS runs by reading commands from stdin; e.g. lmp_linux < in.file.  This means you first create an input script (e.g. in.file) containing the desired commands.  [This section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_commands.html") describes how input scripts are structured and what commands they contain. 
+ You can test LAMMPS on any of the sample inputs provided in the examples directory.  Input scripts are named in.* and sample outputs are named log.*.name.P where name is a machine and P is the number of processors it was run on. 
+ Here is how you might run one of the Lennard-Jones tests on a Linux box, using mpirun to launch a parallel job: 
+ cd src
+make linux
+cp lmp_linux ../examples/lj
+cd ../examples/lj
+mpirun -np 4 lmp_linux < in.lj.nve 
+The screen output from LAMMPS is described in the next section.  As it runs, LAMMPS also writes a log.lammps file with the same information. 
+ Note that this sequence of commands copies the LAMMPS executable (lmp_linux) to the directory with the input files.  This may not be necessary, but some versions of MPI reset the working directory to where the executable is, rather than leave it as the directory where you launch mpirun from (if you launch lmp_linux on its own and not under mpirun).  If that happens, LAMMPS will look for additional input files and write its output files to the executable directory, rather than your working directory, which is probably not what you want. 
+ If LAMMPS encounters errors in the input script or while running a simulation it will print an ERROR message and stop or a WARNING message and continue.  See [this section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_errors.html") for a discussion of the various kinds of errors LAMMPS can or can't detect, a list of all ERROR and WARNING messages, and what to do about them. 
+ LAMMPS can run a problem on any number of processors, including a single processor.  In theory you should get identical answers on any number of processors and on any machine.  In practice, numerical round-off can cause slight differences and eventual divergence of molecular dynamics phase space trajectories. 
+ LAMMPS can run as large a problem as will fit in the physical memory of one or more processors.  If you run out of memory, you must run on more processors or setup a smaller problem. 
+   2.6 Command-line options  
+
+ At run time, LAMMPS recognizes several optional command-line switches which may be used in any order.  For example, lmp_ibm might be launched as follows: 
+ mpirun -np 16 lmp_ibm -var f tmp.out -log my.log -screen none < in.alloy 
+ These are the command-line options: 
+ -echo style 
+ Set the style of command echoing.  The style can be none or screen or log or both.  Depending on the style, each command read from the input script will be echoed to the screen and/or logfile.  This can be useful to figure out which line of your script is causing an input error.  The default value is log.  The echo style can also be set by using the [echo]("file:///home/michael/Desktop/lammps-7Jul09/doc/echo.html") command in the input script itself. 
+ -partition 8x2 4 5 ... 
+Invoke LAMMPS in multi-partition mode.  When LAMMPS is run on P processors and this switch is not used, LAMMPS runs in one partition, i.e. all P processors run a single simulation.  If this switch is used, the P processors are split into separate partitions and each partition runs its own simulation.  The arguments to the switch specify the number of processors in each partition.  Arguments of the form MxN mean M partitions, each with N processors.  Arguments of the form N mean a single partition with N processors.  The sum of processors in all partitions must equal P.  Thus the command "-partition 8x2 4 5" has 10 partitions and runs on a total of 25 processors. 
+ The input script specifies what simulation is run on which partition; see the [variable]("file:///home/michael/Desktop/lammps-7Jul09/doc/variable.html") and [next]("file:///home/michael/Desktop/lammps-7Jul09/doc/next.html") commands.  This [howto section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_howto.html#4_4") gives examples of how to use these commands in this way.  Simulations running on different partitions can also communicate with each other; see the [temper]("file:///home/michael/Desktop/lammps-7Jul09/doc/temper.html") command. 
+ -in file 
+Specify a file to use as an input script.  This is an optional switch when running LAMMPS in one-partition mode.  If it is not specified, LAMMPS reads its input script from stdin - e.g. lmp_linux < in.run. This is a required switch when running LAMMPS in multi-partition mode, since multiple processors cannot all read from stdin. 
+ -log file 
+Specify a log file for LAMMPS to write status information to.  In one-partition mode, if the switch is not used, LAMMPS writes to the file log.lammps.  If this switch is used, LAMMPS writes to the specified file.  In multi-partition mode, if the switch is not used, a log.lammps file is created with hi-level status information.  Each partition also writes to a log.lammps.N file where N is the partition ID.  If the switch is specified in multi-partition mode, the hi-level logfile is named "file" and each partition also logs information to a file.N.  For both one-partition and multi-partition mode, if the specified file is "none", then no log files are created.  Using a [log]("file:///home/michael/Desktop/lammps-7Jul09/doc/log.html") command in the input script will override this setting. 
+ -screen file 
+Specify a file for LAMMPS to write its screen information to.  In one-partition mode, if the switch is not used, LAMMPS writes to the screen.  If this switch is used, LAMMPS writes to the specified file instead and you will see no screen output.  In multi-partition mode, if the switch is not used, hi-level status information is written to the screen.  Each partition also writes to a screen.N file where N is the partition ID.  If the switch is specified in multi-partition mode, the hi-level screen dump is named "file" and each partition also writes screen information to a file.N.  For both one-partition and multi-partition mode, if the specified file is "none", then no screen output is performed. 
+ -var name value 
+Specify a variable that will be defined for substitution purposes when the input script is read.  "Name" is the variable name which can be a single character (referenced as $x in the input script) or a full string (referenced as ${abc}).  The value can be any string.  Using this command-line option is equivalent to putting the line "variable name index value" at the beginning of the input script.  Defining an index variable as a command-line argument overrides any setting for the same index variable in the input script, since index variables cannot be re-defined.  See the [variable]("file:///home/michael/Desktop/lammps-7Jul09/doc/variable.html") command for more info on defining index and other kinds of variables and [this section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_commands.html#3_2") for more info on using variables in input scripts. 
+   2.7 LAMMPS screen output  
+
+ As LAMMPS reads an input script, it prints information to both the screen and a log file about significant actions it takes to setup a simulation.  When the simulation is ready to begin, LAMMPS performs various initializations and prints the amount of memory (in MBytes per processor) that the simulation requires.  It also prints details of the initial thermodynamic state of the system.  During the run itself, thermodynamic information is printed periodically, every few timesteps.  When the run concludes, LAMMPS prints the final thermodynamic state and a total run time for the simulation.  It then appends statistics about the CPU time and storage requirements for the simulation.  An example set of statistics is shown here: 
+ Loop time of 49.002 on 2 procs for 2004 atoms 
+ Pair   time (%) = 35.0495 (71.5267)
+Bond   time (%) = 0.092046 (0.187841)
+Kspce  time (%) = 6.42073 (13.103)
+Neigh  time (%) = 2.73485 (5.5811)
+Comm   time (%) = 1.50291 (3.06703)
+Outpt  time (%) = 0.013799 (0.0281601)
+Other  time (%) = 2.13669 (4.36041) 
+ Nlocal:    1002 ave, 1015 max, 989 min
+Histogram: 1 0 0 0 0 0 0 0 0 1 
+Nghost:    8720 ave, 8724 max, 8716 min 
+Histogram: 1 0 0 0 0 0 0 0 0 1
+Neighs:    354141 ave, 361422 max, 346860 min 
+Histogram: 1 0 0 0 0 0 0 0 0 1 
+ Total # of neighbors = 708282
+Ave neighs/atom = 353.434
+Ave special neighs/atom = 2.34032
+Number of reneighborings = 42
+Dangerous reneighborings = 2 
+ The first section gives the breakdown of the CPU run time (in seconds) into major categories.  The second section lists the number of owned atoms (Nlocal), ghost atoms (Nghost), and pair-wise neighbors stored per processor.  The max and min values give the spread of these values across processors with a 10-bin histogram showing the distribution. The total number of histogram counts is equal to the number of processors. 
+ The last section gives aggregate statistics for pair-wise neighbors and special neighbors that LAMMPS keeps track of (see the [special_bonds]("file:///home/michael/Desktop/lammps-7Jul09/doc/special_bonds.html") command).  The number of times neighbor lists were rebuilt during the run is given as well as the number of potentially "dangerous" rebuilds.  If atom movement triggered neighbor list rebuilding (see the [neigh_modify]("file:///home/michael/Desktop/lammps-7Jul09/doc/neigh_modify.html") command), then dangerous reneighborings are those that were triggered on the first timestep atom movement was checked for.  If this count is non-zero you may wish to reduce the delay factor to insure no force interactions are missed by atoms moving beyond the neighbor skin distance before a rebuild takes place. 
+ If an energy minimization was performed via the [minimize]("file:///home/michael/Desktop/lammps-7Jul09/doc/minimize.html") command, additional information is printed, e.g. 
+ Minimization stats:
+  E initial, next-to-last, final = -0.895962 -2.94193 -2.94342
+  Gradient 2-norm init/final= 1920.78 20.9992
+  Gradient inf-norm init/final= 304.283 9.61216
+  Iterations = 36
+  Force evaluations = 177 
+The first line lists the initial and final energy, as well as the energy on the next-to-last iteration.  The next 2 lines give a measure of the gradient of the energy (force on all atoms).  The 2-norm is the "length" of this force vector; the inf-norm is the largest component. The last 2 lines are statistics on how many iterations and force-evaluations the minimizer required.  Multiple force evaluations are typically done at each iteration to perform a 1d line minimization in the search direction. 
+ If a [kspace_style]("file:///home/michael/Desktop/lammps-7Jul09/doc/kspace_style.html") long-range Coulombics solve was performed during the run (PPPM, Ewald), then additional information is printed, e.g. 
+ FFT time (% of Kspce) = 0.200313 (8.34477)
+FFT Gflps 3d 1d-only = 2.31074 9.19989 
+The first line gives the time spent doing 3d FFTs (4 per timestep) and the fraction it represents of the total KSpace time (listed above). Each 3d FFT requires computation (3 sets of 1d FFTs) and communication (transposes).  The total flops performed is 5Nlog_2(N), where N is the number of points in the 3d grid.  The FFTs are timed with and without the communication and a Gflop rate is computed.  The 3d rate is with communication; the 1d rate is without (just the 1d FFTs).  Thus you can estimate what fraction of your FFT time was spent in communication, roughly 75% in the example above. 
+   2.8 Tips for users of previous LAMMPS versions  
+
+ LAMMPS 2003 is a complete C++ rewrite of LAMMPS 2001, which was written in F90.  Features of earlier versions of LAMMPS are listed in [this section]("file:///home/michael/Desktop/lammps-7Jul09/doc/Section_history.html").  The F90 and F77 versions (2001 and 99) are also freely distributed as open-source codes; check the [LAMMPS WWW Site]("http://lammps.sandia.gov/") for distribution information if you prefer those versions.  The 99 and 2001 versions are no longer under active development; they do not have all the features of LAMMPS 2003. 
+ If you are a previous user of LAMMPS 2001, these are the most significant changes you will notice in LAMMPS 2003: 
+ (1) The names and arguments of many input script commands have changed.  All commands are now a single word (e.g. read_data instead of read data). 
+ (2) All the functionality of LAMMPS 2001 is included in LAMMPS 2003, but you may need to specify the relevant commands in different ways. 
+ (3) The format of the data file can be streamlined for some problems. See the [read_data]("file:///home/michael/Desktop/lammps-7Jul09/doc/read_data.html") command for details.  The data file section "Nonbond Coeff" has been renamed to "Pair Coeff" in LAMMPS 2003. 
+ (4) Binary restart files written by LAMMPS 2001 cannot be read by LAMMPS 2003 with a [read_restart]("file:///home/michael/Desktop/lammps-7Jul09/doc/read_restart.html") command.  This is because they were output by F90 which writes in a different binary format than C or C++ writes or reads.  Use the restart2data tool provided with LAMMPS 2001 to convert the 2001 restart file to a text data file.  Then edit the data file as necessary before using the LAMMPS 2003 [read_data]("file:///home/michael/Desktop/lammps-7Jul09/doc/read_data.html") command to read it in. 
+ (5) There are numerous small numerical changes in LAMMPS 2003 that mean you will not get identical answers when comparing to a 2001 run. However, your initial thermodynamic energy and MD trajectory should be close if you have setup the problem for both codes the same. 
+
+```
+
+This looks scary even to me. ;)
+
+Have a look at this forum thread which shows one way to compile this application successfully:
+
+[LIST]
+[*][http://ubuntuforums.org/showthread.php?t=1038282](http://ubuntuforums.org/showthread.php?t=1038282)
+[/LIST]
+
+Not an easy task for a novice though.
+
+---
+
+### Post by Irvine_himself on 2009-09-13
+I am not sure what a tar.zp file is, but you can get what you want at    [http://sourceforge.net/projects/lammps/files/](http://sourceforge.net/projects/lammps/files/)   in tar.gz format, which is a more common method of installation.
+
+At  [http://www.psychocats.net/ubuntu/installingsoftware](http://www.psychocats.net/ubuntu/installingsoftware)   it gives basic instructions for all the main installation methods and at  [http://ubuntuforums.org/showthread.php?t=246092](http://ubuntuforums.org/showthread.php?t=246092)  is a thread discussing a tar.gz installation.
+
+
+Having said all that, tarballs are the stuff of nightmares. I am a newbie like yourself and have successfully managed it, though over the years I have seen even my evangelical Linux friends resorting to primal scream therapy when doing a tarball installation. But!  ....... It is skill well worth mastering!
+
+
+I would explore both packages and look for installation instructions, read me files and anything else that might help. If you have a friend, tutor or whatever that is knowledgeable about Linux, ask for help. Failing that, do your research and when in difficulty come back here.
+
+I know I am probably not being as helpful as you would like, but unfortunately that is the nature of tarballs..... grrrr
+
+Ps
+
+Have you tried searching other repositories for .deb or even an .rpm file? It would make your life a lot easier.
+
+---
+
+### Post by naveen.cardoza on 2009-09-13
+Thanks a lot. I got some idea. Hope I can work on. Thanks for the prompt reply.
+
+naveen
+
+---
+

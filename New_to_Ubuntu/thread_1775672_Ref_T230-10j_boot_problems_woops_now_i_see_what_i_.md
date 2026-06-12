@@ -1,0 +1,1009 @@
+---
+title: "Ref T230-10j boot problems woops now i see what i should have done with the #"
+date: 2011-06-05
+forum: New to Ubuntu
+---
+
+### Post by mjhall29 on 2011-06-05
+martin@ubuntu:~$ /usr/lib/nux/unity_support_test -p
+```
+OpenGL vendor string:   Mesa Project
+OpenGL renderer string: Software Rasterizer
+OpenGL version string:  2.1 Mesa 7.10.2
+
+Not software rendered:    no
+Not blacklisted:          yes
+GLX fbconfig:             yes
+GLX texture from pixmap:  no
+GL npot or rect textures: yes
+GL vertex program:        yes
+GL fragment program:      yes
+GL vertex buffer object:  yes
+GL framebuffer object:    yes
+GL version is 1.4+:       yes
+
+Unity supported:          no
+```
+
+```
+ubuntu                    
+    description: Laptop
+    product: Satellite T230 (*)
+    vendor: TOSHIBA
+    version: PST4AE-00D00XEN
+    serial: 6A357729K
+    width: 64 bits
+    capabilities: smbios-2.6 dmi-2.6 vsyscall64 vsyscall32
+    configuration: boot=normal chassis=laptop family=ABCDEFGHIJKLMNOPQRTUVWXYZ sku=* uuid=21444CE4-6F62-11DF-862F-88AE1D466B06
+  *-core
+       description: Motherboard
+       product: NDU10
+       vendor: TOSHIBA
+       physical id: 0
+       version: 1.00
+       serial: 123456789AB
+       slot: Part Component
+     *-firmware
+          description: BIOS
+          vendor: TOSHIBA
+          physical id: 0
+          version: 1.30
+          date: 07/22/10
+          size: 128KiB
+          capacity: 1984KiB
+          capabilities: pci upgrade shadowing cdboot bootselect edd int5printscreen int9keyboard int14serial int17printer int10video acpi usb ls120boot zipboot biosbootspecification netboot
+     *-cpu
+          description: CPU
+          product: Intel(R) Core(TM) i3 CPU       U 330  @ 1.20GHz
+          vendor: Intel Corp.
+          physical id: d
+          bus info: cpu@0
+          version: Intel(R) Core(TM) i3 CPU       U 330  @ 1.20GHz
+          serial: Not Supported by CPU
+          slot: CPU
+          size: 1199MHz
+          capacity: 4GHz
+          width: 64 bits
+          clock: 133MHz
+          capabilities: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 sse4_2 popcnt lahf_lm arat tpr_shadow vnmi flexpriority ept vpid cpufreq
+          configuration: cores=2 enabledcores=2 threads=4
+        *-cache:0
+             description: L3 cache
+             physical id: e
+             slot: L3-Cache
+             size: 3MiB
+             capacity: 3MiB
+             capabilities: synchronous internal write-back unified
+        *-cache:1
+             description: L1 cache
+             physical id: f
+             slot: L1-Cache
+             size: 32KiB
+             capacity: 32KiB
+             capabilities: synchronous internal write-through unified
+        *-cache:2
+             description: L2 cache
+             physical id: 10
+             slot: L2-Cache
+             size: 256KiB
+             capacity: 256KiB
+             capabilities: synchronous internal write-through unified
+     *-memory
+          description: System Memory
+          physical id: 11
+          slot: System board or motherboard
+          size: 4GiB
+        *-bank:0
+             description: SODIMM DDR3 Synchronous 800 MHz (1.2 ns)
+             product: M471B5673FH0-CF8
+             vendor: Samsung
+             physical id: 0
+             serial: 443CCAD5
+             slot: DIMM0
+             size: 2GiB
+             width: 64 bits
+             clock: 800MHz (1.2ns)
+        *-bank:1
+             description: SODIMM DDR3 Synchronous 800 MHz (1.2 ns)
+             product: M471B5673FH0-CF8
+             vendor: Samsung
+             physical id: 1
+             serial: 081919EC
+             slot: DIMM2
+             size: 2GiB
+             width: 64 bits
+             clock: 800MHz (1.2ns)
+     *-pci:0
+          description: Host bridge
+          product: Core Processor DRAM Controller
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 02
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=agpgart-intel
+          resources: irq:0
+        *-display
+             description: VGA compatible controller
+             product: Core Processor Integrated Graphics Controller
+             vendor: Intel Corporation
+             physical id: 2
+             bus info: pci@0000:00:02.0
+             version: 02
+             width: 64 bits
+             clock: 33MHz
+             capabilities: msi pm vga_controller bus_master cap_list rom
+             configuration: driver=i915 latency=0
+             resources: irq:41 memory:d0000000-d03fffff memory:c0000000-cfffffff ioport:7080(size=8)
+        *-communication UNCLAIMED
+             description: Communication controller
+             product: 5 Series/3400 Series Chipset HECI Controller
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: latency=0
+             resources: memory:d4705000-d470500f
+        *-usb:0
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1a
+             bus info: pci@0000:00:1a.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:16 memory:d4708000-d47083ff
+        *-multimedia
+             description: Audio device
+             product: 5 Series/3400 Series Chipset High Definition Audio
+             vendor: Intel Corporation
+             physical id: 1b
+             bus info: pci@0000:00:1b.0
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi pciexpress bus_master cap_list
+             configuration: driver=HDA Intel latency=0
+             resources: irq:42 memory:d4700000-d4703fff
+        *-pci:0
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 1
+             vendor: Intel Corporation
+             physical id: 1c
+             bus info: pci@0000:00:1c.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:16 ioport:5000(size=8192) memory:d3f00000-d46fffff ioport:d0400000(size=9437184)
+           *-network
+                description: Ethernet interface
+                product: RTL8101E/RTL8102E PCI Express Fast Ethernet controller
+                vendor: Realtek Semiconductor Co., Ltd.
+                physical id: 0
+                bus info: pci@0000:01:00.0
+                logical name: eth0
+                version: 05
+                serial: 88:ae:1d:46:6b:06
+                size: 10Mbit/s
+                capacity: 100Mbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress msix vpd bus_master cap_list ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=half latency=0 link=no multicast=yes port=MII speed=10Mbit/s
+                resources: irq:40 ioport:5000(size=256) memory:d0404000-d0404fff memory:d0400000-d0403fff
+        *-pci:1
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 2
+             vendor: Intel Corporation
+             physical id: 1c.1
+             bus info: pci@0000:00:1c.1
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:17 ioport:4000(size=4096) memory:d3600000-d3efffff ioport:d0d00000(size=8388608)
+           *-network
+                description: Wireless interface
+                product: BCM4313 802.11b/g/n Wireless LAN Controller
+                vendor: Broadcom Corporation
+                physical id: 0
+                bus info: pci@0000:06:00.0
+                logical name: eth1
+                version: 01
+                serial: e8:39:df:02:43:e5
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress bus_master cap_list ethernet physical wireless
+                configuration: broadcast=yes driver=wl0 driverversion=5.100.82.38 ip=192.168.2.112 latency=0 multicast=yes wireless=IEEE 802.11
+                resources: irq:17 memory:d3600000-d3603fff
+        *-pci:2
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 4
+             vendor: Intel Corporation
+             physical id: 1c.3
+             bus info: pci@0000:00:1c.3
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:19 ioport:3000(size=4096) memory:d2e00000-d35fffff ioport:d1500000(size=8388608)
+        *-pci:3
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 5
+             vendor: Intel Corporation
+             physical id: 1c.4
+             bus info: pci@0000:00:1c.4
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:16 ioport:2000(size=4096) memory:d2500000-d2dfffff ioport:d1d00000(size=8388608)
+           *-generic:0
+                description: System peripheral
+                product: SD/MMC Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0
+                bus info: pci@0000:10:00.0
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: driver=sdhci-pci latency=0
+                resources: irq:16 memory:d2500300-d25003ff
+           *-generic:1 UNCLAIMED
+                description: SD Host controller
+                product: Standard SD Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.2
+                bus info: pci@0000:10:00.2
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi cap_list
+                configuration: latency=0
+                resources: memory:d2500200-d25002ff
+           *-generic:2
+                description: System peripheral
+                product: MS Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.3
+                bus info: pci@0000:10:00.3
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: driver=jmb38x_ms latency=0
+                resources: irq:16 memory:d2500100-d25001ff
+           *-generic:3 UNCLAIMED
+                description: System peripheral
+                product: xD Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.4
+                bus info: pci@0000:10:00.4
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: latency=0
+                resources: memory:d2500000-d25000ff
+        *-usb:1
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1d
+             bus info: pci@0000:00:1d.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:23 memory:d4707000-d47073ff
+        *-pci:4
+             description: PCI bridge
+             product: 82801 Mobile PCI Bridge
+             vendor: Intel Corporation
+             physical id: 1e
+             bus info: pci@0000:00:1e.0
+             version: a5
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci subtractive_decode bus_master cap_list
+        *-isa
+             description: ISA bridge
+             product: Mobile 5 Series Chipset LPC Interface Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master cap_list
+             configuration: latency=0
+        *-ide:0
+             description: IDE interface
+             product: 5 Series/3400 Series Chipset 4 port SATA IDE Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             logical name: scsi1
+             version: 05
+             width: 32 bits
+             clock: 66MHz
+             capabilities: ide pm bus_master cap_list emulated
+             configuration: driver=ata_piix latency=0
+             resources: irq:19 ioport:7078(size=8) ioport:7094(size=4) ioport:7070(size=8) ioport:7090(size=4) ioport:7050(size=16) ioport:7040(size=16)
+           *-disk
+                description: ATA Disk
+                product: TOSHIBA MK5055GS
+                vendor: Toshiba
+                physical id: 0.0.0
+                bus info: scsi@1:0.0.0
+                logical name: /dev/sda
+                version: FG00
+                serial: 20NASG0BS
+                size: 465GiB (500GB)
+                capabilities: partitioned partitioned:dos
+                configuration: ansiversion=5 signature=93d171d8
+              *-volume:0
+                   description: Windows NTFS volume
+                   physical id: 1
+                   bus info: scsi@1:0.0.0,1
+                   logical name: /dev/sda1
+                   version: 3.1
+                   serial: 30b7-cbf4
+                   size: 398MiB
+                   capacity: 400MiB
+                   capabilities: primary bootable ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:22 filesystem=ntfs label=SYSTEM state=clean
+              *-volume:1
+                   description: Windows NTFS volume
+                   physical id: 2
+                   bus info: scsi@1:0.0.0,2
+                   logical name: /dev/sda2
+                   version: 3.1
+                   serial: 301eca73-e55e-1244-917a-c8e2a06aaafa
+                   size: 232GiB
+                   capacity: 232GiB
+                   capabilities: primary ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:28 filesystem=ntfs label=WINDOWS state=clean
+              *-volume:2
+                   description: Windows NTFS volume
+                   physical id: 3
+                   bus info: scsi@1:0.0.0,3
+                   logical name: /dev/sda3
+                   logical name: /host
+                   version: 3.1
+                   serial: e685df12-9f4f-7144-b982-824288a96430
+                   size: 232GiB
+                   capacity: 232GiB
+                   capabilities: primary ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:32 filesystem=ntfs label=Data mount.fstype=fuseblk mount.options=rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096 state=mounted
+        *-serial UNCLAIMED
+             description: SMBus
+             product: 5 Series/3400 Series Chipset SMBus Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             configuration: latency=0
+             resources: memory:d4704000-d47040ff ioport:efa0(size=32)
+        *-ide:1
+             description: IDE interface
+             product: 5 Series/3400 Series Chipset 2 port SATA IDE Controller
+             vendor: Intel Corporation
+             physical id: 1f.5
+             bus info: pci@0000:00:1f.5
+             version: 05
+             width: 32 bits
+             clock: 66MHz
+             capabilities: ide pm bus_master cap_list
+             configuration: driver=ata_piix latency=0
+             resources: irq:19 ioport:7068(size=8) ioport:708c(size=4) ioport:7060(size=8) ioport:7088(size=4) ioport:7030(size=16) ioport:7020(size=16)
+        *-generic
+             description: Signal processing controller
+             product: 5 Series/3400 Series Chipset Thermal Subsystem
+             vendor: Intel Corporation
+             physical id: 1f.6
+             bus info: pci@0000:00:1f.6
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=intel ips latency=0
+             resources: irq:18 memory:d4706000-d4706fff
+     *-pci:1
+          description: Host bridge
+          product: Core Processor QuickPath Architecture Generic Non-core Registers
+          vendor: Intel Corporation
+          physical id: 101
+          bus info: pci@0000:ff:00.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:2
+          description: Host bridge
+          product: Core Processor QuickPath Architecture System Address Decoder
+          vendor: Intel Corporation
+          physical id: 102
+          bus info: pci@0000:ff:00.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:3
+          description: Host bridge
+          product: Core Processor QPI Link 0
+          vendor: Intel Corporation
+          physical id: 103
+          bus info: pci@0000:ff:02.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:4
+          description: Host bridge
+          product: Core Processor QPI Physical 0
+          vendor: Intel Corporation
+          physical id: 104
+          bus info: pci@0000:ff:02.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:5
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 105
+          bus info: pci@0000:ff:02.2
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:6
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 106
+          bus info: pci@0000:ff:02.3
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+  *-battery
+       description: Lithium Ion Battery
+       product: Smart Battery
+       vendor: TOSHIBA
+       physical id: 1
+       version: 2008
+       serial: 1.0
+       slot: Rear
+       capacity: 10mWh
+       configuration: voltage=0.0V
+martin@ubuntu:~$ /usr/lib/nux/unity_support_test -p
+OpenGL vendor string:   Mesa Project
+OpenGL renderer string: Software Rasterizer
+OpenGL version string:  2.1 Mesa 7.10.2
+```
+
+---
+
+### Post by wildmanne39 on 2011-06-05
+> **mjhall29 said:**
+> martin@ubuntu:~$ /usr/lib/nux/unity_support_test -p
+```
+OpenGL vendor string:   Mesa Project
+OpenGL renderer string: Software Rasterizer
+OpenGL version string:  2.1 Mesa 7.10.2
+
+Not software rendered:    no
+Not blacklisted:          yes
+GLX fbconfig:             yes
+GLX texture from pixmap:  no
+GL npot or rect textures: yes
+GL vertex program:        yes
+GL fragment program:      yes
+GL vertex buffer object:  yes
+GL framebuffer object:    yes
+GL version is 1.4+:       yes
+
+Unity supported:          no
+```
+
+```
+ubuntu                    
+    description: Laptop
+    product: Satellite T230 (*)
+    vendor: TOSHIBA
+    version: PST4AE-00D00XEN
+    serial: 6A357729K
+    width: 64 bits
+    capabilities: smbios-2.6 dmi-2.6 vsyscall64 vsyscall32
+    configuration: boot=normal chassis=laptop family=ABCDEFGHIJKLMNOPQRTUVWXYZ sku=* uuid=21444CE4-6F62-11DF-862F-88AE1D466B06
+  *-core
+       description: Motherboard
+       product: NDU10
+       vendor: TOSHIBA
+       physical id: 0
+       version: 1.00
+       serial: 123456789AB
+       slot: Part Component
+     *-firmware
+          description: BIOS
+          vendor: TOSHIBA
+          physical id: 0
+          version: 1.30
+          date: 07/22/10
+          size: 128KiB
+          capacity: 1984KiB
+          capabilities: pci upgrade shadowing cdboot bootselect edd int5printscreen int9keyboard int14serial int17printer int10video acpi usb ls120boot zipboot biosbootspecification netboot
+     *-cpu
+          description: CPU
+          product: Intel(R) Core(TM) i3 CPU       U 330  @ 1.20GHz
+          vendor: Intel Corp.
+          physical id: d
+          bus info: cpu@0
+          version: Intel(R) Core(TM) i3 CPU       U 330  @ 1.20GHz
+          serial: Not Supported by CPU
+          slot: CPU
+          size: 1199MHz
+          capacity: 4GHz
+          width: 64 bits
+          clock: 133MHz
+          capabilities: x86-64 fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm sse4_1 sse4_2 popcnt lahf_lm arat tpr_shadow vnmi flexpriority ept vpid cpufreq
+          configuration: cores=2 enabledcores=2 threads=4
+        *-cache:0
+             description: L3 cache
+             physical id: e
+             slot: L3-Cache
+             size: 3MiB
+             capacity: 3MiB
+             capabilities: synchronous internal write-back unified
+        *-cache:1
+             description: L1 cache
+             physical id: f
+             slot: L1-Cache
+             size: 32KiB
+             capacity: 32KiB
+             capabilities: synchronous internal write-through unified
+        *-cache:2
+             description: L2 cache
+             physical id: 10
+             slot: L2-Cache
+             size: 256KiB
+             capacity: 256KiB
+             capabilities: synchronous internal write-through unified
+     *-memory
+          description: System Memory
+          physical id: 11
+          slot: System board or motherboard
+          size: 4GiB
+        *-bank:0
+             description: SODIMM DDR3 Synchronous 800 MHz (1.2 ns)
+             product: M471B5673FH0-CF8
+             vendor: Samsung
+             physical id: 0
+             serial: 443CCAD5
+             slot: DIMM0
+             size: 2GiB
+             width: 64 bits
+             clock: 800MHz (1.2ns)
+        *-bank:1
+             description: SODIMM DDR3 Synchronous 800 MHz (1.2 ns)
+             product: M471B5673FH0-CF8
+             vendor: Samsung
+             physical id: 1
+             serial: 081919EC
+             slot: DIMM2
+             size: 2GiB
+             width: 64 bits
+             clock: 800MHz (1.2ns)
+     *-pci:0
+          description: Host bridge
+          product: Core Processor DRAM Controller
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 02
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=agpgart-intel
+          resources: irq:0
+        *-display
+             description: VGA compatible controller
+             product: Core Processor Integrated Graphics Controller
+             vendor: Intel Corporation
+             physical id: 2
+             bus info: pci@0000:00:02.0
+             version: 02
+             width: 64 bits
+             clock: 33MHz
+             capabilities: msi pm vga_controller bus_master cap_list rom
+             configuration: driver=i915 latency=0
+             resources: irq:41 memory:d0000000-d03fffff memory:c0000000-cfffffff ioport:7080(size=8)
+        *-communication UNCLAIMED
+             description: Communication controller
+             product: 5 Series/3400 Series Chipset HECI Controller
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: latency=0
+             resources: memory:d4705000-d470500f
+        *-usb:0
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1a
+             bus info: pci@0000:00:1a.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:16 memory:d4708000-d47083ff
+        *-multimedia
+             description: Audio device
+             product: 5 Series/3400 Series Chipset High Definition Audio
+             vendor: Intel Corporation
+             physical id: 1b
+             bus info: pci@0000:00:1b.0
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi pciexpress bus_master cap_list
+             configuration: driver=HDA Intel latency=0
+             resources: irq:42 memory:d4700000-d4703fff
+        *-pci:0
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 1
+             vendor: Intel Corporation
+             physical id: 1c
+             bus info: pci@0000:00:1c.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:16 ioport:5000(size=8192) memory:d3f00000-d46fffff ioport:d0400000(size=9437184)
+           *-network
+                description: Ethernet interface
+                product: RTL8101E/RTL8102E PCI Express Fast Ethernet controller
+                vendor: Realtek Semiconductor Co., Ltd.
+                physical id: 0
+                bus info: pci@0000:01:00.0
+                logical name: eth0
+                version: 05
+                serial: 88:ae:1d:46:6b:06
+                size: 10Mbit/s
+                capacity: 100Mbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress msix vpd bus_master cap_list ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=half latency=0 link=no multicast=yes port=MII speed=10Mbit/s
+                resources: irq:40 ioport:5000(size=256) memory:d0404000-d0404fff memory:d0400000-d0403fff
+        *-pci:1
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 2
+             vendor: Intel Corporation
+             physical id: 1c.1
+             bus info: pci@0000:00:1c.1
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:17 ioport:4000(size=4096) memory:d3600000-d3efffff ioport:d0d00000(size=8388608)
+           *-network
+                description: Wireless interface
+                product: BCM4313 802.11b/g/n Wireless LAN Controller
+                vendor: Broadcom Corporation
+                physical id: 0
+                bus info: pci@0000:06:00.0
+                logical name: eth1
+                version: 01
+                serial: e8:39:df:02:43:e5
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi pciexpress bus_master cap_list ethernet physical wireless
+                configuration: broadcast=yes driver=wl0 driverversion=5.100.82.38 ip=192.168.2.112 latency=0 multicast=yes wireless=IEEE 802.11
+                resources: irq:17 memory:d3600000-d3603fff
+        *-pci:2
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 4
+             vendor: Intel Corporation
+             physical id: 1c.3
+             bus info: pci@0000:00:1c.3
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:19 ioport:3000(size=4096) memory:d2e00000-d35fffff ioport:d1500000(size=8388608)
+        *-pci:3
+             description: PCI bridge
+             product: 5 Series/3400 Series Chipset PCI Express Root Port 5
+             vendor: Intel Corporation
+             physical id: 1c.4
+             bus info: pci@0000:00:1c.4
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:16 ioport:2000(size=4096) memory:d2500000-d2dfffff ioport:d1d00000(size=8388608)
+           *-generic:0
+                description: System peripheral
+                product: SD/MMC Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0
+                bus info: pci@0000:10:00.0
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: driver=sdhci-pci latency=0
+                resources: irq:16 memory:d2500300-d25003ff
+           *-generic:1 UNCLAIMED
+                description: SD Host controller
+                product: Standard SD Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.2
+                bus info: pci@0000:10:00.2
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi cap_list
+                configuration: latency=0
+                resources: memory:d2500200-d25002ff
+           *-generic:2
+                description: System peripheral
+                product: MS Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.3
+                bus info: pci@0000:10:00.3
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: driver=jmb38x_ms latency=0
+                resources: irq:16 memory:d2500100-d25001ff
+           *-generic:3 UNCLAIMED
+                description: System peripheral
+                product: xD Host Controller
+                vendor: JMicron Technology Corp.
+                physical id: 0.4
+                bus info: pci@0000:10:00.4
+                version: 20
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm pciexpress msi bus_master cap_list
+                configuration: latency=0
+                resources: memory:d2500000-d25000ff
+        *-usb:1
+             description: USB Controller
+             product: 5 Series/3400 Series Chipset USB2 Enhanced Host Controller
+             vendor: Intel Corporation
+             physical id: 1d
+             bus info: pci@0000:00:1d.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm debug ehci bus_master cap_list
+             configuration: driver=ehci_hcd latency=0
+             resources: irq:23 memory:d4707000-d47073ff
+        *-pci:4
+             description: PCI bridge
+             product: 82801 Mobile PCI Bridge
+             vendor: Intel Corporation
+             physical id: 1e
+             bus info: pci@0000:00:1e.0
+             version: a5
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci subtractive_decode bus_master cap_list
+        *-isa
+             description: ISA bridge
+             product: Mobile 5 Series Chipset LPC Interface Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 05
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master cap_list
+             configuration: latency=0
+        *-ide:0
+             description: IDE interface
+             product: 5 Series/3400 Series Chipset 4 port SATA IDE Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             logical name: scsi1
+             version: 05
+             width: 32 bits
+             clock: 66MHz
+             capabilities: ide pm bus_master cap_list emulated
+             configuration: driver=ata_piix latency=0
+             resources: irq:19 ioport:7078(size=8) ioport:7094(size=4) ioport:7070(size=8) ioport:7090(size=4) ioport:7050(size=16) ioport:7040(size=16)
+           *-disk
+                description: ATA Disk
+                product: TOSHIBA MK5055GS
+                vendor: Toshiba
+                physical id: 0.0.0
+                bus info: scsi@1:0.0.0
+                logical name: /dev/sda
+                version: FG00
+                serial: 20NASG0BS
+                size: 465GiB (500GB)
+                capabilities: partitioned partitioned:dos
+                configuration: ansiversion=5 signature=93d171d8
+              *-volume:0
+                   description: Windows NTFS volume
+                   physical id: 1
+                   bus info: scsi@1:0.0.0,1
+                   logical name: /dev/sda1
+                   version: 3.1
+                   serial: 30b7-cbf4
+                   size: 398MiB
+                   capacity: 400MiB
+                   capabilities: primary bootable ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:22 filesystem=ntfs label=SYSTEM state=clean
+              *-volume:1
+                   description: Windows NTFS volume
+                   physical id: 2
+                   bus info: scsi@1:0.0.0,2
+                   logical name: /dev/sda2
+                   version: 3.1
+                   serial: 301eca73-e55e-1244-917a-c8e2a06aaafa
+                   size: 232GiB
+                   capacity: 232GiB
+                   capabilities: primary ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:28 filesystem=ntfs label=WINDOWS state=clean
+              *-volume:2
+                   description: Windows NTFS volume
+                   physical id: 3
+                   bus info: scsi@1:0.0.0,3
+                   logical name: /dev/sda3
+                   logical name: /host
+                   version: 3.1
+                   serial: e685df12-9f4f-7144-b982-824288a96430
+                   size: 232GiB
+                   capacity: 232GiB
+                   capabilities: primary ntfs initialized
+                   configuration: clustersize=4096 created=2011-05-19 07:12:32 filesystem=ntfs label=Data mount.fstype=fuseblk mount.options=rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096 state=mounted
+        *-serial UNCLAIMED
+             description: SMBus
+             product: 5 Series/3400 Series Chipset SMBus Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             configuration: latency=0
+             resources: memory:d4704000-d47040ff ioport:efa0(size=32)
+        *-ide:1
+             description: IDE interface
+             product: 5 Series/3400 Series Chipset 2 port SATA IDE Controller
+             vendor: Intel Corporation
+             physical id: 1f.5
+             bus info: pci@0000:00:1f.5
+             version: 05
+             width: 32 bits
+             clock: 66MHz
+             capabilities: ide pm bus_master cap_list
+             configuration: driver=ata_piix latency=0
+             resources: irq:19 ioport:7068(size=8) ioport:708c(size=4) ioport:7060(size=8) ioport:7088(size=4) ioport:7030(size=16) ioport:7020(size=16)
+        *-generic
+             description: Signal processing controller
+             product: 5 Series/3400 Series Chipset Thermal Subsystem
+             vendor: Intel Corporation
+             physical id: 1f.6
+             bus info: pci@0000:00:1f.6
+             version: 05
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=intel ips latency=0
+             resources: irq:18 memory:d4706000-d4706fff
+     *-pci:1
+          description: Host bridge
+          product: Core Processor QuickPath Architecture Generic Non-core Registers
+          vendor: Intel Corporation
+          physical id: 101
+          bus info: pci@0000:ff:00.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:2
+          description: Host bridge
+          product: Core Processor QuickPath Architecture System Address Decoder
+          vendor: Intel Corporation
+          physical id: 102
+          bus info: pci@0000:ff:00.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:3
+          description: Host bridge
+          product: Core Processor QPI Link 0
+          vendor: Intel Corporation
+          physical id: 103
+          bus info: pci@0000:ff:02.0
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:4
+          description: Host bridge
+          product: Core Processor QPI Physical 0
+          vendor: Intel Corporation
+          physical id: 104
+          bus info: pci@0000:ff:02.1
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:5
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 105
+          bus info: pci@0000:ff:02.2
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+     *-pci:6
+          description: Host bridge
+          product: Core Processor Reserved
+          vendor: Intel Corporation
+          physical id: 106
+          bus info: pci@0000:ff:02.3
+          version: 05
+          width: 32 bits
+          clock: 33MHz
+  *-battery
+       description: Lithium Ion Battery
+       product: Smart Battery
+       vendor: TOSHIBA
+       physical id: 1
+       version: 2008
+       serial: 1.0
+       slot: Rear
+       capacity: 10mWh
+       configuration: voltage=0.0V
+martin@ubuntu:~$ /usr/lib/nux/unity_support_test -p
+OpenGL vendor string:   Mesa Project
+OpenGL renderer string: Software Rasterizer
+OpenGL version string:  2.1 Mesa 7.10.2
+```
+
+Hi, that last command shows that your laptop can not run unity but you can go into the sofftware center or synaptic package manager and install unity 2d and run it,install unity 2d then restart your system at the log in screen click on your user name and go to the bottom of the screen and click on unity 2d and it should load the desktop. Hi, after you have done that and are satisfied,would you please go to the top of the page of both posts and mark the threads solved be clicking on forum tools. Thank you so much.
+
+---
+
+### Post by mjhall29 on 2011-06-05
+> **wildmanne39 said:**
+> Hi, that last command shows that your laptop can not run unity but you can go into the sofftware center or synaptic package manager and install unity 2d and run it,install unity 2d then restart your system at the log in screen click on your user name and go to the bottom of the screen and click on unity 2d and it should load the desktop. Hi, after you have done that and are satisfied,would you please go to the top of the page of both posts and mark the threads solved be clicking on forum tools. Thank you so much.
+
+Thanks for the help working now.
+
+---
+
+### Post by wildmanne39 on 2011-06-05
+> **mjhall29 said:**
+> Thanks for the help working now.Hi, your welcome.
+
+---
+

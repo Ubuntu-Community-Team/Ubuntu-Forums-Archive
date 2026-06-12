@@ -1,0 +1,677 @@
+---
+title: "Dual Boot with XP Grub Restarts"
+date: 2010-04-22
+forum: New to Ubuntu
+---
+
+### Post by antrozous812 on 2010-04-22
+Hi everyone! 
+
+I have 2 machines (Dell Dimension Desktop & Samsung n210 laptop), configured the exact same way: 
+I have installed WinXP SP2 on an entire partition. Then, through the Ubuntu live CD, I have used Gparted to create a partition on which I have installed Ubuntu 9.10.
+
+When I turn on my computer, Grub loads and I get the choice between Windows XP and Ubuntu. This works well on one of my desktop but on my laptop, it doesn't work despite my several attempts at reinstalling everything. 
+
+What happens on my laptop is that when Grub loads, I select the operating system I want to boot on, and my computer just restarts after a second, displaying again the Grub menu. I have to select the OS again once or twice before my computer decides to load it...
+
+I have used the update-grub command hoping it would change something, but didn't work.
+I don't understands why it works perfectly on one machine but not the other. 
+
+Could someone help me out? 
+PS: I'm a beginner at Ubuntu... :-) 
+
+Thanks in advance, 
+-C.
+
+---
+
+### Post by louieb on 2010-04-22
+It would help if you would post the laptops: make - model - amount of memory, type of cpu. 
+
+Also to check for a dual boot setup problem follow the [Boot Info Script: How to]("http://ubuntuforums.org/showthread.php?t=1291280")
+And put the results.txt file in your next post.
+
+---
+
+### Post by antrozous812 on 2010-04-22
+thank you for your prompt reply.
+Here's the log I have:
+
+```
+
+                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #3 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda3: _________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 9.10
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda4: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Disk identifier: 0x9d97ba08
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63   163,846,934   163,846,872   7 HPFS/NTFS
+/dev/sda2         163,846,935   165,887,189     2,040,255  82 Linux swap / Solaris
+/dev/sda3         165,887,190   268,285,499   102,398,310  83 Linux
+/dev/sda4         268,285,500   488,392,064   220,106,565   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        BE0498430497FD19                       ntfs                                     
+/dev/sda2        31b5bc69-ebc5-412e-afd9-568a1fef4dfe   swap                                     
+/dev/sda3        20bdffbb-51cc-4be5-8d71-209a2590dd6c   ext4                                     
+/dev/sda4        3AEE314672ABF1B3                       ntfs       storage                       
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda3        /                        ext4       (rw,errors=remount-ro)
+/dev/sda4        /media/storage           fuseblk    (rw,nosuid,nodev,allow_other,default_permissions,blksize=4096)
+
+
+================================ sda1/boot.ini: ================================
+
+[Boot Loader] 
+timeout=30 
+Default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[Operating Systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect
+=========================== sda3/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s /boot/grub/grubenv ]; then
+  have_grubenv=true
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  prev_saved_entry=
+  save_env prev_saved_entry
+fi
+insmod ext2
+set root=(hd0,3)
+search --no-floppy --fs-uuid --set 20bdffbb-51cc-4be5-8d71-209a2590dd6c
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/white
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry "Ubuntu, Linux 2.6.31-14-generic" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    set quiet=1
+    insmod ext2
+    set root=(hd0,3)
+    search --no-floppy --fs-uuid --set 20bdffbb-51cc-4be5-8d71-209a2590dd6c
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=20bdffbb-51cc-4be5-8d71-209a2590dd6c ro   quiet splash
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+menuentry "Ubuntu, Linux 2.6.31-14-generic (recovery mode)" {
+        recordfail=1
+        if [ -n ${have_grubenv} ]; then save_env recordfail; fi
+    insmod ext2
+    set root=(hd0,3)
+    search --no-floppy --fs-uuid --set 20bdffbb-51cc-4be5-8d71-209a2590dd6c
+    linux    /boot/vmlinuz-2.6.31-14-generic root=UUID=20bdffbb-51cc-4be5-8d71-209a2590dd6c ro single 
+    initrd    /boot/initrd.img-2.6.31-14-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows NT/2000/XP (on /dev/sda1)" {
+    insmod ntfs
+    set root=(hd0,1)
+    search --no-floppy --fs-uuid --set be0498430497fd19
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda3/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    defaults        0       0
+# / was on /dev/sda3 during installation
+UUID=20bdffbb-51cc-4be5-8d71-209a2590dd6c /               ext4    errors=remount-ro 0       1
+# swap was on /dev/sda2 during installation
+UUID=31b5bc69-ebc5-412e-afd9-568a1fef4dfe none            swap    sw              0       0
+
+=================== sda3: Location of files loaded by Grub: ===================
+
+
+  85.4GB: boot/grub/core.img
+  88.2GB: boot/grub/grub.cfg
+  85.5GB: boot/initrd.img-2.6.31-14-generic
+  85.4GB: boot/vmlinuz-2.6.31-14-generic
+  85.5GB: initrd.img
+  85.4GB: vmlinuz
+
+
+```
+My laptop is a Samsung n210, Intel Atom N450/1.66GHz CPU, 1G of RAM, 250 GB SATA Hard Drive.
+The Ubuntu installed in v9.10 and the Windows installed is Win.XP SP2.
+
+I hope it helps!
+Thanks!
+
+Chris.
+
+---
+
+### Post by xumuk37 on 2010-04-22
+try to copy /boot/grub/grub.cfg to your other machine changing UUIDs. you can get it runing sudo blkid
+
+---
+
+### Post by antrozous812 on 2010-04-22
+I did what you've suggested: copied the grub from my "working" computer and pasted in my laptop while changing the UUIDs but it doesn't do the trick..
+
+Do you think it could be related to something else? maybe a component of my laptop?
+
+Thanks, 
+Chris.
+
+---
+
+### Post by drs305 on 2010-04-22
+Did you make a copy of your original grub.cfg file? Since replacement didn't work, I'd go back to that one just so you have one specific to the machine you are working on. Or run "sudo update-grub" if you didn't change any of the other G2 files.
+
+If you leave the Grub menu displayed for 30-40 seconds before making a selection does it still simply reboot? Does it happen no matter which OS you select? Just wondering if there might be a problem reading drives...
+
+Have you tried booting from the G2 command line by pressing "c" from the menu to get to the prompt? Instructions on how to manually boot are found here:
+[https://help.ubuntu.com/community/Grub2#Using%20CLI%20to%20Boot]("https://help.ubuntu.com/community/Grub2#Using%20CLI%20to%20Boot")
+
+---
+
+### Post by antrozous812 on 2010-04-22
+yes, actually it happens no matter if I choose Ubuntu or Windows XP; it'll just restart and I'll have to make the choice another one or two times before it decides to load.
+
+I'll try and have a look at the instructions you gave me; but since I'm a Linux newbie, I'm not sure I'll get everything right...
+
+---
+
+### Post by drs305 on 2010-04-22
+The instructions can look very complicated but if you take it slowly and get the paths correct it should work. At least, if the system is working correctly. ;-)
+
+Just ask if you need clarification on any of it.
+
+---
+
+### Post by louieb on 2010-04-22
+Did not see anything out of place with your setup - UUIDs look good - boot flag on the XP partition that good too.  Plenty of memory. 
+
+I don't have a clue. The fact that its random - sometimes it works sometimes not. The next thing I would do is run **memtest**. Let it go for a while - 3 passes at least.
+
+---
+
+### Post by oldfred on 2010-04-22
+I would try using the manual edit of the boot commands to completely delete the one line that starts with search.....
+
+It is just an experiment.
+
+---
+
+### Post by antrozous812 on 2010-04-22
+well, with the help of DrStalk, we have booted manually through Grub and uninstalled/Reinstalled Grub with no success... 
+So apparently the problem lays somewhere else... 
+
+I'll see if the upcoming ubuntu version solves the problem... 
+
+Chris.
+
+---
+
+### Post by antrozous812 on 2010-04-26
+Update: I have re-installed everything, to the point of having just WindowsXP SP2 installed.
+I wanted to boot on my USB key loaded with Ubuntu. And my computer rebooted twice too.
+
+I took my notebook to go through CPU stress tests and the Memtest (with two passes), and no errors were detected. Does anyone have an idea as to what could cause these reboots? 
+
+Thank you, 
+Chris.
+
+---
+
+### Post by antrozous812 on 2010-04-29
+Following the advice of another member of the forum, I modified the GRUB entry by removing the UUIDs and using the path to my sda5. 
+According to what he told me, some motherboards doesn't allow GRUB to use UUID. 
+
+so I my GRUB entry for Ubuntu looked like this:
+
+> 
+set root=(hd0,5)
+linux /boot/vmlinuz-2.6.31-14-generic root=/dev/sda5
+
+
+It does load fine, but the problem still remains: if I load Ubuntu after a Windows session, I still need a couple of reboots before it loads the OS. (and vice versa)
+
+Any other advice would be appreciated.
+
+Chris.
+
+---
+
+### Post by oldfred on 2010-04-29
+There is a problem with windows corrupting the MBR, but then it does not repair itself.
+
+[http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Windows_Writes_To_MBR](http://sourceforge.net/apps/mediawiki/bootinfoscript/index.php?title=Boot_Problems:Windows_Writes_To_MBR)
+[http://www.supergrubdisk.org/wiki/WindowsErasesGrub](http://www.supergrubdisk.org/wiki/WindowsErasesGrub)
+HP ProtectTools, Dell Recovery, and a few others write into MBR meierfra.
+[https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/441941](https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/441941)
+[https://bugs.edge.launchpad.net/ubuntu/+source/grub2/+bug/441941?comments=all](https://bugs.edge.launchpad.net/ubuntu/+source/grub2/+bug/441941?comments=all)
+Dell Media direct issues with MBR
+[http://ubuntuforums.org/showthread.php?t=923576](http://ubuntuforums.org/showthread.php?t=923576)
+
+---
+
+### Post by antrozous812 on 2010-04-29
+thank you for your help.
+I have tried to fix the problem through the links you've provided me, but being a beginner at Linux, it didn't catch everything. 
+
+but I have a question: how could the MBR and the GRUB be related to the USB keys I plug in while I turn my computer on? Because when I want to boot from a USB-key live Ubuntu, and select either "try ubuntu" or "install ubuntu", my computer reboots?
+
+thank you.
+Chris.
+
+---
+
+### Post by oldfred on 2010-04-29
+You may not have a boot loader in the USB key or the system does not correctly see the USB key as a bootable device.
+
+It is not easy to see what boot loader is installed where but this script documents the entire system including boot loaders. I run it before & after any system changes just to have history and be sure of what is where.
+
+Boot Info Script courtesy of forum member meierfra
+Page with instructions and download:
+[http://bootinfoscript.sourceforge.net/](http://bootinfoscript.sourceforge.net/)
+Be sure to highlight and use code tags (# in edit panel) to make it easier to read when you post the results.txt.
+
+---
+
+### Post by antrozous812 on 2010-04-29
+here is the result of the bootinfoscript
+
+> 
+                                Boot Info Script 0.55    dated February 15th, 2010                    
+
+============================= Boot Info Summary: ==============================
+
+ => Grub 2 is installed in the MBR of /dev/sda and looks on the same drive in 
+    partition #5 for /boot/grub.
+
+sda1: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows XP
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  Windows XP
+    Boot files/dirs:   /boot.ini /ntldr /NTDETECT.COM
+
+sda2: _________________________________________________________________________
+
+    File system:       Extended Partition
+    Boot sector type:  Unknown
+    Boot sector info:  
+
+sda5: _________________________________________________________________________
+
+    File system:       ext3
+    Boot sector type:  -
+    Boot sector info:  
+    Operating System:  Ubuntu 10.04 LTS
+    Boot files/dirs:   /boot/grub/grub.cfg /etc/fstab /boot/grub/core.img
+
+sda6: _________________________________________________________________________
+
+    File system:       swap
+    Boot sector type:  -
+    Boot sector info:  
+
+sda3: _________________________________________________________________________
+
+    File system:       ntfs
+    Boot sector type:  Windows Vista/7
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files/dirs:   
+
+=========================== Drive/Partition Info: =============================
+
+Drive: sda ___________________ _____________________________________________________
+
+Disk /dev/sda: 250.1 GB, 250059350016 bytes
+255 heads, 63 sectors/track, 30401 cylinders, total 488397168 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+Partition  Boot         Start           End          Size  Id System
+
+/dev/sda1    *             63    87,890,687    87,890,625   7 HPFS/NTFS
+/dev/sda2          87,891,966   177,735,679    89,843,714   5 Extended
+/dev/sda5          87,891,968   175,781,887    87,889,920  83 Linux
+/dev/sda6         175,783,936   177,735,679     1,951,744  82 Linux swap / Solaris
+/dev/sda3         177,743,160   488,392,064   310,648,905   7 HPFS/NTFS
+
+
+blkid -c /dev/null: ____________________________________________________________
+
+Device           UUID                                   TYPE       LABEL                         
+
+/dev/sda1        7448FE3948FDFA26                       ntfs                                     
+/dev/sda2: PTTYPE="dos" 
+/dev/sda3        2FCC83172DF2C7E4                       ntfs       storage                       
+/dev/sda5        647ede49-d978-4da6-be63-9a03f67495f6   ext3                                     
+/dev/sda6        a180cb3d-318f-4ddc-af1f-96bbea8d4654   swap                                     
+/dev/sda: PTTYPE="dos" 
+
+============================ "mount | grep ^/dev  output: ===========================
+
+Device           Mount_Point              Type       Options
+
+/dev/sda5        /                        ext3       (rw,errors=remount-ro)
+
+
+================================ sda1/boot.ini: ================================
+
+[Boot Loader] 
+timeout=30 
+Default=multi(0)disk(0)rdisk(0)partition(1)\WINDOWS 
+[Operating Systems] 
+multi(0)disk(0)rdisk(0)partition(1)\WINDOWS="Microsoft Windows XP Professional" /noexecute=optin /fastdetect 
+
+=========================== sda5/boot/grub/grub.cfg: ===========================
+
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by /usr/sbin/grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+set default="0"
+if [ ${prev_saved_entry} ]; then
+  set saved_entry=${prev_saved_entry}
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z ${boot_once} ]; then
+    saved_entry=${chosen}
+    save_env saved_entry
+  fi
+}
+
+function recordfail {
+  set recordfail=1
+  if [ -n ${have_grubenv} ]; then if [ -z ${boot_once} ]; then save_env recordfail; fi; fi
+}
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+if loadfont /usr/share/grub/unicode.pf2 ; then
+  set gfxmode=640x480
+  insmod gfxterm
+  insmod vbe
+  if terminal_output gfxterm ; then true ; else
+    # For backward compatibility with versions of terminal.mod that don't
+    # understand terminal_output
+    terminal gfxterm
+  fi
+fi
+insmod ext2
+set root='(hd0,5)'
+search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+set locale_dir=($root)/boot/grub/locale
+set lang=en
+insmod gettext
+if [ ${recordfail} = 1 ]; then
+  set timeout=-1
+else
+  set timeout=10
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+### END /etc/grub.d/05_debian_theme ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+    linux    /boot/vmlinuz-2.6.32-21-generic root=UUID=647ede49-d978-4da6-be63-9a03f67495f6 ro   quiet splash
+    initrd    /boot/initrd.img-2.6.32-21-generic
+}
+menuentry 'Ubuntu, with Linux 2.6.32-21-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os {
+    recordfail
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+    echo    'Loading Linux 2.6.32-21-generic ...'
+    linux    /boot/vmlinuz-2.6.32-21-generic root=UUID=647ede49-d978-4da6-be63-9a03f67495f6 ro single 
+    echo    'Loading initial ramdisk ...'
+    initrd    /boot/initrd.img-2.6.32-21-generic
+}
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry "Memory test (memtest86+)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+    linux16    /boot/memtest86+.bin
+}
+menuentry "Memory test (memtest86+, serial console 115200)" {
+    insmod ext2
+    set root='(hd0,5)'
+    search --no-floppy --fs-uuid --set 647ede49-d978-4da6-be63-9a03f67495f6
+    linux16    /boot/memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry "Windows NT/2000/XP (loader) (on /dev/sda1)" {
+    insmod ntfs
+    set root='(hd0,1)'
+    search --no-floppy --fs-uuid --set 7448fe3948fdfa26
+    drivemap -s (hd0) ${root}
+    chainloader +1
+}
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+=============================== sda5/etc/fstab: ===============================
+
+# /etc/fstab: static file system information.
+#
+# Use 'blkid -o value -s UUID' to print the universally unique identifier
+# for a device; this may be used with UUID= as a more robust way to name
+# devices that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+proc            /proc           proc    nodev,noexec,nosuid 0       0
+# / was on /dev/sda5 during installation
+UUID=647ede49-d978-4da6-be63-9a03f67495f6 /               ext3    errors=remount-ro 0       1
+# swap was on /dev/sda6 during installation
+UUID=a180cb3d-318f-4ddc-af1f-96bbea8d4654 none            swap    sw              0       0
+
+=================== sda5: Location of files loaded by Grub: ===================
+
+
+  73.7GB: boot/grub/core.img
+  73.6GB: boot/grub/grub.cfg
+  73.6GB: boot/initrd.img-2.6.32-21-generic
+  73.7GB: boot/vmlinuz-2.6.32-21-generic
+  73.6GB: initrd.img
+  73.7GB: vmlinuz
+=========================== Unknown MBRs/Boot Sectors/etc =======================
+
+Unknown BootLoader  on sda2
+
+00000000  57 5b d4 0c ee 57 e1 26  1f 88 3e 7b 16 fd 10 b0  |W[...W.&..>{....|
+00000010  b9 93 10 a7 2e 6a 31 98  9d 95 84 63 37 16 58 24  |.....j1....c7.X$|
+00000020  77 09 a5 08 a7 1f ab 60  a7 4e d6 f4 ea c7 e5 9a  |w......`.N......|
+00000030  c1 29 4b 07 dc f4 d5 e4  0d 40 8e 25 50 af e0 96  |.)K......@.%P...|
+00000040  09 a0 fb b6 8c a5 7b c9  e2 38 44 29 cb a9 b1 dd  |......{..8D)....|
+00000050  ff 5b ef 6c b9 30 a3 f3  76 42 d3 76 fa d4 03 74  |.[.l.0..vB.v...t|
+00000060  95 88 9e be a4 d2 98 89  5a ac 52 c1 c1 8b be a0  |........Z.R.....|
+00000070  fb 92 c3 80 ce 06 e3 ed  60 03 1b ff 3e 6d 0a e6  |........`...>m..|
+00000080  a3 28 56 c7 f8 8c 4c c7  97 13 c6 65 d4 55 52 0c  |.(V...L....e.UR.|
+00000090  3e 37 90 e8 22 5f dc fa  51 eb 2d 67 23 62 3d 16  |>7.."_..Q.-g#b=.|
+000000a0  bc ea eb 79 8e bc dd ab  1f d6 69 bc 0d ef b6 49  |...y......i....I|
+000000b0  4f b0 1e 4f bd 21 d7 40  d3 62 d3 57 b2 9b e4 29  |O..O.!.@.b.W...)|
+000000c0  67 35 24 7e 70 4b 94 5e  7c 5b 03 6f 73 42 32 7e  |g5$~pK.^|[.osB2~|
+000000d0  b6 67 35 5b a8 36 1c ea  6d d0 d3 77 f2 00 47 4a  |.g5[.6..m..w..GJ|
+000000e0  2d 72 ca 7b a6 1f b9 08  36 0c 5c 25 0e 34 0d d3  |-r.{....6.\%.4..|
+000000f0  fc c2 9d b4 ea 84 f3 1e  a8 9d f6 6e eb 7a ae 9f  |...........n.z..|
+00000100  95 07 a5 1b 36 22 94 d0  d3 50 3b 87 e7 ae 91 71  |....6"...P;....q|
+00000110  a8 2b 1d 03 8b f5 a4 04  0a 31 04 e5 a5 ef 60 50  |.+.......1....`P|
+00000120  27 5d 7d 03 2a 3a 6c df  dd 8e 6a 3c 05 99 04 80  |']}.*:l...j<....|
+00000130  42 09 7f f0 94 70 76 c6  1d f4 c5 83 29 49 a6 86  |B....pv.....)I..|
+00000140  6b dc 1a de 89 51 8b 5d  dc 30 af ed 71 db af 27  |k....Q.].0..q..'|
+00000150  53 c4 89 22 0c dc b3 89  69 4f 01 f1 7e 6e c8 69  |S.."....iO..~n.i|
+00000160  ea ec 44 52 5c 4e 37 71  56 9d d3 42 31 5e da 8f  |..DR\N7qV..B1^..|
+00000170  62 c4 04 42 fb 23 a1 78  75 a8 7f d6 ac 48 0e 20  |b..B.#.xu....H. |
+00000180  2b f6 c2 07 aa 19 b9 43  d5 3d 9e e2 4f 08 cd e0  |+......C.=..O...|
+00000190  f7 70 b7 f7 6a 2c 88 b8  c9 68 08 db bc bd bf d4  |.p..j,...h......|
+000001a0  b6 60 5d a7 7b 9a 59 fc  e0 78 d7 76 d2 c3 cf 41  |.`].{.Y..x.v...A|
+000001b0  9a 32 6c ea 5f df b2 74  ed f8 64 a8 b5 b7 00 fe  |.2l._..t..d.....|
+000001c0  ff ff 83 fe ff ff 02 00  00 00 00 18 3d 05 00 fe  |............=...|
+000001d0  ff ff 05 fe ff ff 40 1d  3d 05 c2 ca 1d 00 00 00  |......@.=.......|
+000001e0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+000001f0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 55 aa  |..............U.|
+00000200
+
+does any of this helps?
+
+---
+
+### Post by oldfred on 2010-04-29
+'fraid not. I do not not see anything abnormal. 
+
+You do seem to have some data in the partition boot sector of the extended partition which is not standard, but I do not think that can cause any problem as the extended is still a partition.
+
+The only thing else may be to test BIOS settings to see if anything makes a difference. I would check that BIOS is up to date and if any setttings are not default.
+
+I have seen where someone had a CD in the drive that caused issues. I had issues with a data only USB key installed with an older version, so it is try various things that may not make sense to see if things change.
+
+---
+
+### Post by antrozous812 on 2010-04-30
+yes, I have also tried that: updating drivers, messed around with the BIOS & set back to defaults. 
+The notebook doesn't have a CD player & I have tried installing with different USB keys. 
+
+But I have reinstalled Windows XP on a unique partition. Then, after installing all the updated drivers, I tried to boot on the Ubuntu Live USB and it rebooted. 
+
+So there's definitely something wrong, but it's probably not related to Linux. Though I have no idea what it could be.... 
+
+-C.
+
+
+EDIT: I have installed Linux via WUBI and my computer behaved the same.
+
+---
+

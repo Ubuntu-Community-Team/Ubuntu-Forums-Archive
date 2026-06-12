@@ -1,0 +1,312 @@
+---
+title: "NVIDIA angst"
+date: 2008-10-04
+forum: New to Ubuntu
+---
+
+### Post by groeswenphil on 2008-10-04
+Hi group,
+My son has donated a Nvidia Geoforce 7300GT graphics card to my computer.
+
+Indeed it makes my Windows installation whizz along.
+
+When I started Ubuntu it detected the new card and then downloaded and installed drivers for it.
+
+However, after a re-start my display resolution is still very low indeed.   640 by something.
+
+I've looked at screen resolution in preferences but this is the highest screen resolution on offer.
+
+Any advice?
+
+Phil
+
+---
+
+### Post by eternalnewbee on 2008-10-04
+Yes, don't panic. I've got the same card and run a resolution of 1600x900.
+I do remember having some initial troubles, but after having searched the forums I managed to get it up and running. Sorry I can't be of more assistance besides comfoting words, but I can tell you there are some very smart brains here who will definitely be able and willing to help you. Good luck..
+
+---
+
+### Post by Martje_001 on 2008-10-04
+Try to install the drivers with EnvyNG. For hardy it's in the repository's.
+
+---
+
+### Post by eternalnewbee on 2008-10-04
+In system - administration go to Hardware drivers and enable it.
+
+---
+
+### Post by Martje_001 on 2008-10-04
+> **eternalnewbee said:**
+> In system - administration go to Hardware drivers and enable it.
+He has already done this:
+> 
+When I started Ubuntu it detected the new card and then downloaded and installed drivers for it.
+
+
+---
+
+### Post by groeswenphil on 2008-10-04
+Still stuck at 640x480
+
+Don't need to use reading glasses though.
+
+:O)
+Phil
+
+---
+
+### Post by Martje_001 on 2008-10-04
+Can I see your xorg.conf? It's in /etc/X11
+
+In a terminal you can open it by typing:
+```
+gedit /etc/X11/xorg.conf
+```
+
+---
+
+### Post by ad_267 on 2008-10-04
+Press Alt-F2 and run "gksu nvidia-settings" then set your resolution there and click on "Save to X Configuration File".
+
+If you get an error about nvidia-settings not being found or something then install it from the synaptic package manager.
+
+---
+
+### Post by soiled skivvies on 2008-10-04
+I have done everything listed and I have the exact same problem.  Envyng is what started this to begin with.  I did some compiz --replace command and I don't know if it needs reversed(?) ...
+
+---
+
+### Post by Martje_001 on 2008-10-04
+> **soiled skivvies said:**
+> I have done everything listed and I have the exact same problem.  Envyng is what started this to begin with.  I did some compiz --replace command and I don't know if it needs reversed(?) ...
+Your xorg.conf..?
+
+Compiz --replace will be reverted when you logout/login.
+
+---
+
+### Post by soiled skivvies on 2008-10-04
+Section "InputDevice"
+    Identifier    "Generic Keyboard"
+    Driver        "kbd"
+    Option        "XkbRules"    "xorg"
+    Option        "XkbModel"    "pc105"
+    Option        "XkbLayout"    "us"
+EndSection
+
+Section "InputDevice"
+    Identifier    "Configured Mouse"
+    Driver        "mouse"
+EndSection
+
+Section "Device"
+    Identifier    "Configured Video Device"
+    Boardname    "NVIDIA GeForce"
+    Busid        "PCI:0:5:0"
+    Driver        "nvidia"
+    Screen    0
+    Vendorname    "NVIDIA"
+EndSection
+
+Section "Monitor"
+    Identifier    "Configured Monitor"
+    Vendorname    "Plug 'n' Play"
+    Modelname    "Plug 'n' Play"
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+    Gamma    1.0
+EndSection
+
+Section "Screen"
+    Identifier    "Default Screen"
+    Device        "Configured Video Device"
+    Monitor        "Configured Monitor"
+    Defaultdepth    24
+    SubSection "Display"
+        Depth    24
+        Virtual    640    480
+        Modes        "640x480@60"
+    EndSubSection
+EndSection
+
+Section "ServerLayout"
+    Identifier    "Default Layout"
+  screen 0 "Default Screen" 0 0
+EndSection
+Section "Module"
+    Load        "glx"
+    Load        "v4l"
+EndSection
+Section "ServerFlags"
+EndSection
+
+
+
+It shows it as there, but 3d effects cannot run, resolution cannot be changed ... it is checked saying it is in use.  ever since envyng had to be uninstalled, it's been doing this.  I typed "compiz" into a terminal and it said:
+Checking for Xgl: not present. 
+No whitelisted driver found
+aborting and using fallback: /usr/bin/metacity
+
+---
+
+### Post by groeswenphil on 2008-10-05
+Here's the xorg.conf report.
+
+Did some fiddling last night and I'm now up to 800x600
+
+Upon startup now my computer puts up a little message asking me to inputdetails of my monitor and my graphics card. 
+Problem is.....out of all of the choices given, neither my monitor is on offer.
+
+I have a Samsung Syncmaster 732n.....(then choose analog or digital  ? )closest match is a 730b or a 750
+
+Also get to choose my graphics card. Again, no mention of a NVIDIA Geoforce 7300GT....best option is a Series 7.
+Am I making the right choices?
+
+Thanks anyway,
+Phil
+
+
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by failsafeDexconf, using
+# values from the debconf database and some overrides to use vesa mode.
+#
+# You should use dexconf or another such tool for creating a "real" xorg.conf
+# For example:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+EndSection
+
+Section "Device"
+	Identifier	"Configured Video Device"
+	Boardname	"NVIDIA GeForce"
+	Busid		"PCI:1:0:0"
+	Driver		"nv"
+	Screen	0
+	Vendorname	"NVIDIA"
+EndSection
+
+Section "Monitor"
+	Identifier	"Configured Monitor"
+	Vendorname	"Samsung"
+	Modelname	"Samsung SyncMaster 750(M)b"
+	Horizsync	30-70
+	Vertrefresh	50-160
+  modeline  "640x480@60" 25.2 640 656 752 800 480 490 492 525 -vsync -hsync
+  modeline  "640x480@72" 31.5 640 664 704 832 480 489 491 520 -vsync -hsync
+  modeline  "640x480@75" 31.5 640 656 720 840 480 481 484 500 -vsync -hsync
+  modeline  "640x480@85" 36.0 640 696 752 832 480 481 484 509 -vsync -hsync
+  modeline  "800x600@56" 36.0 800 824 896 1024 600 601 603 625 +hsync +vsync
+  modeline  "800x600@72" 50.0 800 856 976 1040 600 637 643 666 +hsync +vsync
+  modeline  "800x600@75" 49.5 800 816 896 1056 600 601 604 625 +hsync +vsync
+  modeline  "800x600@85" 56.3 800 832 896 1048 600 601 604 631 +hsync +vsync
+  modeline  "800x600@60" 40.0 800 840 968 1056 600 601 605 628 +hsync +vsync
+  modeline  "832x624@75" 57.284 832 864 928 1152 624 625 628 667 -vsync -hsync
+  modeline  "1024x768@85" 94.5 1024 1072 1168 1376 768 769 772 808 +hsync +vsync
+  modeline  "1024x768@75" 78.8 1024 1040 1136 1312 768 769 772 800 +hsync +vsync
+  modeline  "1024x768@70" 75.0 1024 1048 1184 1328 768 771 777 806 -vsync -hsync
+  modeline  "1024x768@60" 65.0 1024 1048 1184 1344 768 771 777 806 -vsync -hsync
+  modeline  "1024x768@43" 44.9 1024 1032 1208 1264 768 768 776 817 +hsync interlace +vsync
+  modeline  "1152x864@75" 108.0 1152 1216 1344 1600 864 865 868 900 +hsync +vsync
+  modeline  "1280x960@60" 102.1 1280 1360 1496 1712 960 961 964 994 -hsync +vsync
+  modeline  "1280x1024@60" 108.0 1280 1328 1440 1688 1024 1025 1028 1066 +hsync +vsync
+  modeline  "1400x1050@60" 122.61 1400 1488 1640 1880 1050 1051 1054 1087 -hsync +vsync
+	Gamma	1.0
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Configured Video Device"
+	Monitor		"Configured Monitor"
+	Defaultdepth	24
+	SubSection "Display"
+		Depth	24
+		Virtual	1400	1050
+		Modes		"800x600@75"	"800x600@85"	"800x600@72"	"800x600@60"	"800x600@56"	"832x624@75"	"640x480@85"	"1024x768@85"	"640x480@75"	"1024x768@75"	"640x480@72"	"1024x768@70"	"640x480@60"	"1024x768@60"	"1024x768@43"	"1152x864@75"	"1280x960@60"	"1280x1024@60"	"1400x1050@60"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+  screen 0 "Default Screen" 0 0
+EndSection
+Section "Module"
+	Load		"glx"
+	Load		"GLcore"
+	Load		"v4l"
+EndSection
+Section "device" # 
+	Identifier	"device1"
+	Boardname	"NVIDIA GeForce"
+	Busid		"PCI:1:0:0"
+	Driver		"nv"
+	Screen	1
+	Vendorname	"NVIDIA"
+EndSection
+Section "screen" # 
+	Identifier	"screen1"
+	Device		"device1"
+	Defaultdepth	24
+	Monitor		"monitor1"
+EndSection
+Section "monitor" # 
+	Identifier	"monitor1"
+	Gamma	1.0
+EndSection
+Section "ServerFlags"
+EndSection
+
+---
+
+### Post by groeswenphil on 2008-10-05
+I keep going to system >administration> hardware drivers and then enabling NVIDIA accelerated graphics driver....but it appears to keep de-selecting itself.
+
+Thanks,
+Phil
+
+---
+
+### Post by groeswenphil on 2008-10-05
+> **ad_267 said:**
+> Press Alt-F2 and run "gksu nvidia-settings" then set your resolution there and click on "Save to X Configuration File".
+
+If you get an error about nvidia-settings not being found or something then install it from the synaptic package manager.
+I got this
+
+Using X configuration file: "/etc/X11/xorg.conf".
+
+WARNING: The CorePointer device was not specified explicitly in the layout;
+         using the first mouse device.
+
+
+WARNING: The CoreKeyboard device was not specified explicitly in the layout;
+         using the first keyboard device.
+
+Backed up file '/etc/X11/xorg.conf' as '/etc/X11/xorg.conf.backup'
+New X configuration file written to '/etc/X11/xorg.conf'
+
+---
+
+### Post by groeswenphil on 2008-10-05
+Fixed it!!
+Installed EnvyNG
+That did the trick......but, for some reason I had to go through the process three times.
+i.e. install drivers, then uninstall then install then uninstall then install.
+Works now.
+
+---
+

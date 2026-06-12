@@ -1,0 +1,622 @@
+---
+title: "Printer Trouble"
+date: 2010-11-17
+forum: New to Ubuntu
+---
+
+### Post by GaryTheCat on 2010-11-17
+I've recently noticed some changes to CUPS in my updates.  My problem is that I can no longer print to my printer (wireless lexmark jobby) from OO / Chromium etc BUT I can print a test page from the lexmark printer toolbox.
+
+I get the following diagnostic info from the printing trouble shooter.
+
+```
+
+Page 1 (Scheduler not running?):
+{'cups_connection_failure': False}
+Page 2 (Choose printer):
+{'cups_dest': <cups.Dest Lexmark_S300S400_Series (default)>,
+ 'cups_instance': None,
+ 'cups_queue': 'Lexmark_S300S400_Series',
+ 'cups_queue_listed': True}
+Page 3 (Check printer sanity):
+{'cups_device_uri_scheme': u'lxnet',
+ 'cups_printer_dict': {'device-uri': u'lxnet://192.168.1.12',
+                       'printer-info': u'Living room',
+                       'printer-is-shared': True,
+                       'printer-location': u'',
+                       'printer-make-and-model': u'Lexmark S300-S400 Series, 1.5',
+                       'printer-state': 3,
+                       'printer-state-message': u'Processing page 1...',
+                       'printer-state-reasons': [u'none'],
+                       'printer-type': 192524,
+                       'printer-uri-supported': u'ipp://localhost:631/printers/Lexmark_S300S400_Series'},
+ 'cups_printer_remote': False,
+ 'is_cups_class': False,
+ 'local_cups_queue_attributes': {'auth-info-required': u'none',
+                                 'charset-configured': u'utf-8',
+                                 'charset-supported': [u'us-ascii', u'utf-8'],
+                                 'color-supported': True,
+                                 'compression-supported': [u'none', u'gzip'],
+                                 'copies-default': 1,
+                                 'copies-supported': (1, 9999),
+                                 'cups-version': u'1.4.4',
+                                 'device-uri': u'lxnet://192.168.1.12',
+                                 'document-format-default': u'application/octet-stream',
+                                 'document-format-supported': [u'application/octet-stream',
+                                                               u'application/openofficeps',
+                                                               u'application/pdf',
+                                                               u'application/postscript',
+                                                               u'application/vnd.cups-banner',
+                                                               u'application/vnd.cups-pdf',
+                                                               u'application/vnd.cups-postscript',
+                                                               u'application/vnd.cups-raster',
+                                                               u'application/vnd.cups-raw',
+                                                               u'application/vnd.hp-hpgl',
+                                                               u'application/x-cshell',
+                                                               u'application/x-csource',
+                                                               u'application/x-perl',
+                                                               u'application/x-shell',
+                                                               u'image/gif',
+                                                               u'image/jpeg',
+                                                               u'image/png',
+                                                               u'image/tiff',
+                                                               u'image/x-bitmap',
+                                                               u'image/x-photocd',
+                                                               u'image/x-portable-anymap',
+                                                               u'image/x-portable-bitmap',
+                                                               u'image/x-portable-graymap',
+                                                               u'image/x-portable-pixmap',
+                                                               u'image/x-sgi-rgb',
+                                                               u'image/x-sun-raster',
+                                                               u'image/x-xbitmap',
+                                                               u'image/x-xpixmap',
+                                                               u'image/x-xwindowdump',
+                                                               u'text/css',
+                                                               u'text/html',
+                                                               u'text/plain'],
+                                 'finishings-default': 3,
+                                 'finishings-supported': [3],
+                                 'generated-natural-language-supported': [u'en-us'],
+                                 'ipp-versions-supported': [u'1.0',
+                                                            u'1.1',
+                                                            u'2.0',
+                                                            u'2.1'],
+                                 'ippget-event-life': 15,
+                                 'job-creation-attributes-supported': [u'copies',
+                                                                       u'finishings',
+                                                                       u'ipp-attribute-fidelity',
+                                                                       u'job-hold-until',
+                                                                       u'job-name',
+                                                                       u'job-priority',
+                                                                       u'job-sheets',
+                                                                       u'media',
+                                                                       u'media-col',
+                                                                       u'multiple-document-handling',
+                                                                       u'number-up',
+                                                                       u'output-bin',
+                                                                       u'orientation-requested',
+                                                                       u'page-ranges',
+                                                                       u'print-quality',
+                                                                       u'printer-resolution',
+                                                                       u'sides'],
+                                 'job-hold-until-default': u'no-hold',
+                                 'job-hold-until-supported': [u'no-hold',
+                                                              u'indefinite',
+                                                              u'day-time',
+                                                              u'evening',
+                                                              u'night',
+                                                              u'second-shift',
+                                                              u'third-shift',
+                                                              u'weekend'],
+                                 'job-k-limit': 0,
+                                 'job-page-limit': 0,
+                                 'job-priority-default': 50,
+                                 'job-priority-supported': [100],
+                                 'job-quota-period': 0,
+                                 'job-settable-attributes-supported': [u'copies',
+                                                                       u'finishings',
+                                                                       u'job-hold-until',
+                                                                       u'job-name',
+                                                                       u'job-priority',
+                                                                       u'media',
+                                                                       u'media-col',
+                                                                       u'multiple-document-handling',
+                                                                       u'number-up',
+                                                                       u'output-bin',
+                                                                       u'orientation-requested',
+                                                                       u'page-ranges',
+                                                                       u'print-quality',
+                                                                       u'printer-resolution',
+                                                                       u'sides'],
+                                 'job-sheets-default': (u'none', u'none'),
+                                 'job-sheets-supported': [u'none',
+                                                          u'classified',
+                                                          u'confidential',
+                                                          u'secret',
+                                                          u'standard',
+                                                          u'topsecret',
+                                                          u'unclassified'],
+                                 'marker-change-time': 0,
+                                 'media-bottom-margin-supported': [1270, 0],
+                                 'media-col-supported': [u'media-bottom-margin',
+                                                         u'media-left-margin',
+                                                         u'media-right-margin',
+                                                         u'media-size',
+                                                         u'media-source',
+                                                         u'media-top-margin',
+                                                         u'media-type'],
+                                 'media-default': u'na_letter_8.5x11in',
+                                 'media-left-margin-supported': [635, 338],
+                                 'media-right-margin-supported': [635,
+                                                                  338,
+                                                                  169,
+                                                                  317],
+                                 'media-supported': [u'na_letter_8.5x11in',
+                                                     u'om_letter-bl_229.3x305.5mm',
+                                                     u'oe_letter-ba_8.5x110in',
+                                                     u'na_legal_8.5x14in',
+                                                     u'oe_legal-bl_9x15in',
+                                                     u'na_executive_7.25x10.5in',
+                                                     u'iso_a4_210x297mm',
+                                                     u'om_a4-bl_217.38x323.07mm',
+                                                     u'om_a4-ba_209.97x2970.03mm',
+                                                     u'iso_a5_148x210mm',
+                                                     u'om_a5-bl_155.43x236.07mm',
+                                                     u'om_b5-jis_182.03x256.96mm',
+                                                     u'om_b5-jisbl_189.51x283.06mm',
+                                                     u'om_envelope10_104.77x241.3mm',
+                                                     u'om_envelope9_100.89x225.42mm',
+                                                     u'om_envelope734_98.42x190.5mm',
+                                                     u'om_envelope634_92.07x165.1mm',
+                                                     u'om_envelope-a2_111.12x146.05mm',
+                                                     u'om_envelope-b5_176.03x249.97mm',
+                                                     u'om_envelope-c6_114.44x161.92mm',
+                                                     u'om_envelope-dl_110.06x220.02mm',
+                                                     u'om_envelope-chokei3_120.01x234.95mm',
+                                                     u'om_envelope-chokei4_89.97x205.1mm',
+                                                     u'om_envelope-chokei40_89.95x225mm',
+                                                     u'om_envelope-kakugata3_216.04x277mm',
+                                                     u'om_envelope-kakugata4_197.02x266.99mm',
+                                                     u'om_envelope-kakugata5_190x240.03mm',
+                                                     u'om_envelope-kakugata6_161.92x229.02mm',
+                                                     u'oe_card3x5_3x5in',
+                                                     u'om_card-a6_104.98x147.95mm',
+                                                     u'om_card-a6-bl_112.46x174.06mm',
+                                                     u'om_postcard-hagaki_100.01x147.95mm',
+                                                     u'om_postcard-hagaki-bl_107.49x174.06mm',
+                                                     u'om_photo312x5_88.85x127mm',
+                                                     u'om_photo312x5-bl_96.33x153.1mm',
+                                                     u'oe_4x6_4x6in',
+                                                     u'om_4x6-bl_109.07x178.5mm',
+                                                     u'oe_4x8_4x8in',
+                                                     u'om_4x8-bl_109.07x229.3mm',
+                                                     u'oe_photo5x7_5x7in',
+                                                     u'om_photo5x7-bl_134.47x203.9mm',
+                                                     u'om_photo-l_89.04x127mm',
+                                                     u'om_photo-lbl_96.52x153.1mm',
+                                                     u'om_photo2-l_127x178.01mm',
+                                                     u'om_photo2-lbl_134.47x203.9mm',
+                                                     u'om_10x15cm_101.6x152.75mm',
+                                                     u'om_10x15cm-bl_109.07x178.85mm',
+                                                     u'om_13x18cm_127x178.22mm',
+                                                     u'om_13x18cm-bl_134.47x204.32mm',
+                                                     u'oe_10x20cm_4x8in',
+                                                     u'om_10x20cm-bl_109.07x229.3mm',
+                                                     u'custom_min_3x5in',
+                                                     u'custom_max_8.5x17in'],
+                                 'media-top-margin-supported': [169,
+                                                                1270,
+                                                                0,
+                                                                63,
+                                                                204],
+                                 'media-type-supported': [u'auto',
+                                                          u'stationery',
+                                                          u'multi-purpose',
+                                                          u'stationery-inkjet',
+                                                          u'lxphoto',
+                                                          u'lxperfectfinish',
+                                                          u'photographic-glossy',
+                                                          u'heavy-weight-matte',
+                                                          u'photographic-glossy',
+                                                          u'transparency',
+                                                          u'avery-business',
+                                                          u'business',
+                                                          u'cardstock',
+                                                          u'avery-label',
+                                                          u'specialty-label',
+                                                          u'cdlabel',
+                                                          u'iron-on'],
+                                 'multiple-document-handling-supported': [u'separate-documents-uncollated-copies',
+                                                                          u'separate-documents-collated-copies'],
+                                 'multiple-document-jobs-supported': True,
+                                 'multiple-operation-time-out': 300,
+                                 'natural-language-configured': u'en-us',
+                                 'notify-attributes-supported': [u'printer-state-change-time',
+                                                                 u'notify-lease-expiration-time',
+                                                                 u'notify-subscriber-user-name'],
+                                 'notify-events-default': [u'job-completed'],
+                                 'notify-events-supported': [u'job-completed',
+                                                             u'job-config-changed',
+                                                             u'job-created',
+                                                             u'job-progress',
+                                                             u'job-state-changed',
+                                                             u'job-stopped',
+                                                             u'printer-added',
+                                                             u'printer-changed',
+                                                             u'printer-config-changed',
+                                                             u'printer-deleted',
+                                                             u'printer-finishings-changed',
+                                                             u'printer-media-changed',
+                                                             u'printer-modified',
+                                                             u'printer-restarted',
+                                                             u'printer-shutdown',
+                                                             u'printer-state-changed',
+                                                             u'printer-stopped',
+                                                             u'server-audit',
+                                                             u'server-restarted',
+                                                             u'server-started',
+                                                             u'server-stopped'],
+                                 'notify-lease-duration-default': 86400,
+                                 'notify-lease-duration-supported': (0,
+                                                                     2147483647),
+                                 'notify-max-events-supported': [100],
+                                 'notify-pull-method-supported': [u'ippget'],
+                                 'notify-schemes-supported': [u'dbus',
+                                                              u'mailto',
+                                                              u'rss'],
+                                 'number-up-default': 1,
+                                 'number-up-supported': [1, 2, 4, 6, 9, 16],
+                                 'operations-supported': [2,
+                                                          4,
+                                                          5,
+                                                          6,
+                                                          8,
+                                                          9,
+                                                          10,
+                                                          11,
+                                                          12,
+                                                          13,
+                                                          16,
+                                                          17,
+                                                          18,
+                                                          19,
+                                                          20,
+                                                          21,
+                                                          22,
+                                                          23,
+                                                          24,
+                                                          25,
+                                                          26,
+                                                          27,
+                                                          28,
+                                                          34,
+                                                          35,
+                                                          37,
+                                                          38,
+                                                          16385,
+                                                          16386,
+                                                          16387,
+                                                          16388,
+                                                          16389,
+                                                          16390,
+                                                          16391,
+                                                          16392,
+                                                          16393,
+                                                          16394,
+                                                          16395,
+                                                          16396,
+                                                          16397,
+                                                          16398,
+                                                          16399,
+                                                          16423],
+                                 'orientation-requested-default': None,
+                                 'orientation-requested-supported': [3,
+                                                                     4,
+                                                                     5,
+                                                                     6],
+                                 'output-bin-default': u'face-down',
+                                 'output-bin-supported': [u'face-down'],
+                                 'page-ranges-supported': True,
+                                 'pages-per-minute': 15,
+                                 'pages-per-minute-color': 15,
+                                 'pdl-override-supported': [u'not-attempted'],
+                                 'port-monitor': u'none',
+                                 'port-monitor-supported': [u'none'],
+                                 'print-quality-default': 4,
+                                 'print-quality-supported': [4],
+                                 'printer-commands': u'none',
+                                 'printer-current-time': '(IPP_TAG_DATE)',
+                                 'printer-error-policy': u'retry-job',
+                                 'printer-error-policy-supported': [u'abort-job',
+                                                                    u'retry-current-job',
+                                                                    u'retry-job',
+                                                                    u'stop-printer'],
+                                 'printer-info': u'Living room',
+                                 'printer-is-accepting-jobs': True,
+                                 'printer-is-shared': True,
+                                 'printer-location': u'',
+                                 'printer-make-and-model': u'Lexmark S300-S400 Series, 1.5',
+                                 'printer-more-info': u'http://localhost:631/printers/Lexmark_S300S400_Series',
+                                 'printer-name': u'Lexmark_S300S400_Series',
+                                 'printer-op-policy': u'default',
+                                 'printer-op-policy-supported': [u'authenticated',
+                                                                 u'default'],
+                                 'printer-resolution-default': '(unknown IPP tag)',
+                                 'printer-resolution-supported': '(unknown IPP tag)',
+                                 'printer-settable-attributes-supported': [u'printer-info',
+                                                                           u'printer-location'],
+                                 'printer-state': 3,
+                                 'printer-state-change-time': 1290019140,
+                                 'printer-state-message': u'Processing page 1...',
+                                 'printer-state-reasons': [u'none'],
+                                 'printer-type': 192524,
+                                 'printer-up-time': 1290019159,
+                                 'printer-uri-supported': [u'ipp://localhost:631/printers/Lexmark_S300S400_Series'],
+                                 'queued-job-count': 5,
+                                 'server-is-sharing-printers': True,
+                                 'sides-default': u'one-sided',
+                                 'sides-supported': [u'one-sided'],
+                                 'uri-authentication-supported': [u'requesting-user-name'],
+                                 'uri-security-supported': [u'none']}}
+Page 4 (Check PPD sanity):
+{'cups_printer_ppd_defaults': {u'General': {u'ColorModel': u'Color',
+                                            u'MediaType': u'Automatic',
+                                            u'PageRegion': u'Letter',
+                                            u'PageSize': u'Letter',
+                                            u'PrintMirror': u'False',
+                                            u'PrintQuality': u'Automatic',
+                                            u'Sharpening': u'Automatic'}},
+ 'cups_printer_ppd_valid': True,
+ 'missing_pkgs_and_exes': ([], [])}
+Page 5 (Local or remote?):
+{'printer_is_remote': False}
+Page 6 (Printer state reasons):
+{'printer-state-message': u'Processing page 1...',
+ 'printer-state-reasons': [u'none']}
+Page 7 (Error log checkpoint):
+{'cups_server_settings': {'BrowseLocalProtocols': 'CUPS dnssd',
+                          'BrowseRemoteProtocols': '',
+                          'DefaultAuthType': 'Basic',
+                          'LogLevel': 'warn',
+                          'MaxLogSize': '0',
+                          'SystemGroup': 'lpadmin',
+                          '_debug_logging': '0',
+                          '_remote_admin': '0',
+                          '_remote_any': '1',
+                          '_remote_printers': '0',
+                          '_share_printers': '1',
+                          '_user_cancel_any': '0'},
+ 'error_log_checkpoint': 62351L,
+ 'error_log_debug_logging_set': True}
+Page 8 (Print test page):
+{'test_page_attempted': '17/Nov/2010:18:42:09 +0000',
+ 'test_page_job_id': [31],
+ 'test_page_job_status': [(True,
+                           31,
+                           'Lexmark_S300S400_Series',
+                           'Test Page',
+                           'Stopped',
+                           {'attributes-charset': u'utf-8',
+                            'attributes-natural-language': u'en-gb',
+                            'document-count': 1,
+                            'document-format': u'application/vnd.cups-banner',
+                            'job-hold-until': u'no-hold',
+                            'job-id': 31,
+                            'job-k-octets': 1,
+                            'job-media-progress': 0,
+                            'job-media-sheets-completed': 1,
+                            'job-more-info': u'ipp://localhost:631/jobs/31',
+                            'job-name': u'Test Page',
+                            'job-originating-host-name': u'localhost',
+                            'job-originating-user-name': u'gary',
+                            'job-preserved': True,
+                            'job-printer-state-message': u'/usr/lexinkjet/lxk09/bin/printdriver failed',
+                            'job-printer-state-reasons': [u'none'],
+                            'job-printer-up-time': 1290019335,
+                            'job-printer-uri': u'ipp://gary-laptop:631/printers/Lexmark_S300S400_Series',
+                            'job-priority': 50,
+                            'job-sheets': [u'none', u'none'],
+                            'job-state': 6,
+                            'job-state-reasons': u'job-stopped',
+                            'job-uri': u'ipp://localhost:631/jobs/31',
+                            'job-uuid': u'urn:uuid:0d49438f-9b3a-3191-4070-f20c25483a8c',
+                            'printer-uri': u'ipp://localhost/printers/Lexmark_S300S400_Series',
+                            'time-at-completed': None,
+                            'time-at-creation': 1290019329,
+                            'time-at-processing': 1290019329})],
+ 'test_page_successful': False}
+Page 9 (Error log fetch):
+{'error_log': ['E [17/Nov/2010:18:42:10 +0000] [Job 31] Job stopped due to filter errors; please consult the error_log file for details.',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] The following messages were recorded from 18:42:09 to 18:42:10',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Adding start banner page "none".',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Adding end banner page "none".',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] File of type application/vnd.cups-banner queued by "gary".',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] hold_until=0',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Queued on "Lexmark_S300S400_Series" by "gary".',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] job-sheets=none,none',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[0]="Lexmark_S300S400_Series"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[1]="31"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[2]="gary"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[3]="Test Page"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[4]="1"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[5]="job-uuid=urn:uuid:0d49438f-9b3a-3191-4070-f20c25483a8c job-originating-host-name=localhost"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] argv[6]="/var/spool/cups/d00031-001"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[0]="CUPS_CACHEDIR=/var/cache/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[1]="CUPS_DATADIR=/usr/share/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[2]="CUPS_DOCROOT=/usr/share/cups/doc-root"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[3]="CUPS_FONTPATH=/usr/share/cups/fonts"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[4]="CUPS_REQUESTROOT=/var/spool/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[5]="CUPS_SERVERBIN=/usr/lib/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[6]="CUPS_SERVERROOT=/etc/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[7]="CUPS_STATEDIR=/var/run/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[8]="HOME=/var/spool/cups/tmp"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[9]="PATH=/usr/lib/cups/filter:/usr/bin:/usr/sbin:/bin:/usr/bin"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[10]="SERVER_ADMIN=root@gary-laptop"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[11]="SOFTWARE=CUPS/1.4.4"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[12]="TMPDIR=/var/spool/cups/tmp"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[13]="USER=root"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[14]="CUPS_SERVER=/var/run/cups/cups.sock"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[15]="CUPS_ENCRYPTION=IfRequested"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[16]="IPP_PORT=631"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[17]="CHARSET=utf-8"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[18]="LANG=en_GB.UTF-8"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[19]="PPD=/etc/cups/ppd/Lexmark_S300S400_Series.ppd"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[20]="RIP_MAX_CACHE=auto"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[21]="CONTENT_TYPE=application/vnd.cups-banner"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[22]="DEVICE_URI=lxnet://192.168.1.12"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[23]="PRINTER_INFO=Living room"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[24]="PRINTER_LOCATION="',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[25]="PRINTER=Lexmark_S300S400_Series"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[26]="CUPS_FILETYPE=document"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[27]="FINAL_CONTENT_TYPE=printer/Lexmark_S300S400_Series"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started filter /usr/lib/cups/filter/bannertops (PID 9503)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started filter /usr/lib/cups/filter/pstopdf (PID 9504)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started filter /usr/lib/cups/filter/pdftopdf (PID 9505)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started filter /usr/lib/cups/filter/pdftoraster (PID 9506)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started filter /usr/lexinkjet/lxk09/bin/printdriver (PID 9507)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Started backend /usr/lib/cups/backend/lxnet (PID 9508)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] pstopdf 5 args: 31 gary Test Page 1 job-uuid=urn:uuid:0d49438f-9b3a-3191-4070-f20c25483a8c job-originating-host-name=localhost',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PPD: /etc/cups/ppd/Lexmark_S300S400_Series.ppd',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] load_banner(filename="/var/spool/cups/d00031-001")',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] /usr/lexinkjet/lxk09/bin/printdriver: Permission denied',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Page = 612x792; 18,36 to 594,787',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PNG image: 128x128x8, color_type=6 (RGB+ALPHA)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PNG image: 192x128x8, color_type=2 (RGB)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PAGE: 1 1',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Resolution:',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Page size: Letter',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Width: 612.00, height: 792.00, absolute margins: 18.00, 36.00, 594.00, 787.20',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Relative margins: 18.00, 36.00, 18.00, 4.80',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PPD options: -dDEVICEWIDTHPOINTS=612.00 -dDEVICEHEIGHTPOINTS=792.00',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] PostScript to be injected:',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Running cat | /usr/bin/gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dAutoRotatePages=/None -dAutoFilterColorImages=false                -dNOPLATFONTS -dPARANOIDSAFER -sstdout=%stderr -dColorImageFilter=/FlateEncode                 -dPDFSETTINGS=/printer                 -dColorConversionStrategy=/LeaveColorUnchanged -dDoNumCopies -dDEVICEWIDTHPOINTS=612.00 -dDEVICEHEIGHTPOINTS=792.00 -sOutputFile=-  -c .setpdfwrite -f -',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Ghostscript command line: /usr/bin/gs -dQUIET -dPARANOIDSAFER -dNOPAUSE -dBATCH -sDEVICE=cups -sstdout=%stderr -sOutputFile=%stdout -I/usr/share/cups/fonts -sOutputType=5 -r600x600 -dDEVICEWIDTHPOINTS=612 -dDEVICEHEIGHTPOINTS=792 -dcupsBitsPerColor=8 -dcupsColorOrder=0 -dcupsColorSpace=1 -dcupsCompression=1 -dcupsRowStep=1 -scupsPageSizeName=Letter -c -f -_',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[0]="CUPS_CACHEDIR=/var/cache/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[1]="CUPS_DATADIR=/usr/share/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[2]="CUPS_DOCROOT=/usr/share/cups/doc-root"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[3]="CUPS_FONTPATH=/usr/share/cups/fonts"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[4]="CUPS_REQUESTROOT=/var/spool/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[5]="CUPS_SERVERBIN=/usr/lib/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[6]="CUPS_SERVERROOT=/etc/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[7]="CUPS_STATEDIR=/var/run/cups"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[8]="HOME=/var/spool/cups/tmp"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[9]="PATH=/usr/lib/cups/filter:/usr/bin:/usr/sbin:/bin:/usr/bin"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[10]="SERVER_ADMIN=root@gary-laptop"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[11]="SOFTWARE=CUPS/1.4.4"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[12]="USER=root"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[13]="CUPS_SERVER=/var/run/cups/cups.sock"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[14]="CUPS_ENCRYPTION=IfRequested"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[15]="IPP_PORT=631"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[16]="CHARSET=utf-8"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[17]="LANG=en_GB.UTF-8"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[18]="PPD=/etc/cups/ppd/Lexmark_S300S400_Series.ppd"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[19]="RIP_MAX_CACHE=auto"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[20]="CONTENT_TYPE=application/vnd.cups-banner"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[21]="DEVICE_URI=lxnet://192.168.1.12"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[22]="PRINTER_INFO=Living room"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[23]="PRINTER_LOCATION="',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[24]="PRINTER=Lexmark_S300S400_Series"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[25]="CUPS_FILETYPE=document"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] envp[26]="FINAL_CONTENT_TYPE=printer/Lexmark_S300S400_Series"',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Start rendering...',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] Processing page 1...',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] End of messages',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] printer-state=3(idle)',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] printer-state-message="Processing page 1..."',
+               'D [17/Nov/2010:18:42:10 +0000] [Job 31] printer-state-reasons=none'],
+ 'error_log_debug_logging_unset': True}
+Page 10 (Locale issues):
+{'printer_page_size': u'Letter',
+ 'system_locale_lang': None,
+ 'user_locale_ctype': 'en_GB',
+ 'user_locale_messages': 'en_GB'}
+
+```
+
+Can anyone help me with this
+
+TIA
+
+G
+
+---
+
+### Post by GaryTheCat on 2010-11-17
+Bump
+
+---
+
+### Post by GaryTheCat on 2010-11-17
+Bumpity bump
+
+---
+
+### Post by MyR on 2010-11-17
+You didn't actually include your printer model in your post or title... probably the most helpful thing you could do.  I predict 2-4 people will respond to this post with such & such a bug is in cups and they're working on it.  Probably be fixed within the next month or two.
+
+---
+
+### Post by GaryTheCat on 2010-11-17
+it's a lexmark s300
+
+---
+
+### Post by oldsoundguy on 2010-11-17
+This worked for me:
+
+reinstall cups package in terminal
+
+sudo apt-get install --reinstall cups (enter)
+(password)(enter)
+
+(my problem was with a networking setup, but the issue was the same .. cups had disappeared!)
+
+(save this as it may happen again with an update!!)
+
+---
+
+### Post by GaryTheCat on 2010-11-18
+Thanks for that - I tried and failed :o(
+
+---
+
+### Post by GaryTheCat on 2010-11-18
+No, wait a minute .... it worked :o)
+
+---
+
+### Post by GaryTheCat on 2010-11-29
+Same problem again - only the fix that worked last time no longer works
+
+Any help would be really welcomed 
+
+G
+
+---
+
+### Post by GaryTheCat on 2010-11-29
+bump
+
+---
+
+### Post by GaryTheCat on 2010-11-29
+Bump
+
+---
+
+### Post by Cosworth32 on 2010-12-09
+Same problem here with a Lexmark Pinnacle Pro 901. Worked fine last week. Noticed it didn't work today af upgrading to 10.10. Can print test page from the lexmark app but not via CUPS.
+CUPS reports *"/usr/lexinkjet/lxk09/bin/printdriver failed"*
+
+---
+
+### Post by ppepperr on 2010-12-17
+I have the same problem with a wireless Lexmark Prevail Pro705 on 10.10. Can print test page from Lexmark Printer Toolbox and via system-config-printer 1.2.3 but the problem is intermittent as well - works for one or two prints and then I get the CUPS message "Printer Error. The printer cannot communicate with the computer."
+
+---
+
+### Post by walt.smith1960 on 2010-12-18
+My solution was to remove and reinstall the printer.  HP is absolutely simple, not sure about Lexmark.  There were some CUPS updates that seem to have remedied the HP problem.
+
+---
+

@@ -1,0 +1,274 @@
+---
+title: "Verizon vzaccess manager in WINE"
+date: 2008-12-14
+forum: New to Ubuntu
+---
+
+### Post by The ragman on 2008-12-14
+I have Verizon for my internet connection, and have an antiquated pcmcia card modem that I have to use in a linksys router with pcmcia port - this makes it inconvenient for travel, as I need a power source for the router. A friend has a USB modem that would work on this setup - or so I thought. I installed the vzaccess software onto WINE, and all seemed ok, until the install wizard failed to detect the USB modem. 
+
+How can I get a windows program in wine, to recognize a modem in a USB port on my linux system?
+
+---
+
+### Post by Michael.Godawski on 2008-12-14
+hi The ragman, :p
+
+have you tried out if perhaps linux can handle the usb wlan on its own?
+
+---
+
+### Post by The ragman on 2008-12-14
+Thank you for the reply.
+
+I tried the usb wlan prior to installing the manager, and could the computer did not find it.
+
+---
+
+### Post by Michael.Godawski on 2008-12-14
+What is the exact type of the usb modem? Perhaps you need some additional drivers to activate it.
+
+---
+
+### Post by The ragman on 2008-12-14
+I searched for drivers online, for linux and windows, and could find none. The device is Verizon specific with no badges.
+
+---
+
+### Post by lswb on 2008-12-14
+Is this a device that connects to the internet over Verizons cellular phone network? It's true that linux often has to play catch-up with drivers for the newer devices, but there are many usb and pcmcia devices that do work, some with drivers available for years. I'm connected right now with a cell phone tethered through a USB cable. 
+
+If you are talking about a dial-up modem that uses regular telephone lines, well, some work out of the box with linux, some work with more or less system configuration, and some, not at all.
+
+Post back with more details about the nature of the connection and maybe someone can help.
+
+---
+
+### Post by The ragman on 2008-12-14
+It is device that connects to verizon's wireless network, using cell phone technology. It has a phone number for identity, and is billed as a data connection. 
+
+The pcmcia card I currently use in a router is also thinks it is a cell phone.
+
+---
+
+### Post by The ragman on 2008-12-14
+The device is a:
+
+Pantech USB modem - for Verizon Cellular.
+
+---
+
+### Post by lswb on 2008-12-14
+Well, the 1st thing to do is a google search with your device name or model and the words "verizon usb linux cdma" or some variation of that theme, and see if someone else has already done it.
+
+The cell phones and usb adapters I am familiar with that access verizon cellular and other CMDA cellular networks are acessed as a /dev/ttyACM0 serial device. They are _not_ recognized as a network interface like eth0 or wlan0.
+
+Many or most of these devices are recognized automatically and have the correct device created and assigned when they are plugged in. If that's the case, it's then a matter of setting up the network connection using PPP. 
+
+Try this, at a command prompt issue the command "ls /dev >before"
+Plug the device in, wait a moment, then type "ls /dev >after" followed by the command "diff before after"
+
+The output of the diff command will show if any new devices were created as a result of plugging in the adapter. Disregard any that look like " /dev/usbdev2.1_ep00 " You are looking for something like /dev/ttyACM0 or /dev/ttyUSB0, something with tty in the name. If you don't see a new tty device, don't give up, some of the newer usb devices can still be made to work with some newer software and drivers that are available.
+
+If you see the tty device then try using the pppconfig program (or gnomeppp or kppp) to configure your connection. Run "sudo pppconfig" in a terminal and it will prompt you for the information it needs. When it asks for the access number use "#777" and for username, [email]1234567890@vzw3g.com[/email]" where 1234567890 is replaced by your cell phone number. Then you connect by typing "pon connection-name" and disconnect by typing "poff" If you use gnome-ppp or kppp there will be some kind of gui or icon to start/stop the connection.
+
+Here is the /etc/ppp/peer file that works for me:
+
+```
+
+hide-password 
+noauth
+connect "/usr/sbin/chat -v -f /etc/chatscripts/vzw"
+debug
+/dev/ttyACM0
+230400
+defaultroute
+# Verizon evdo apparently doesn't respond to lcp echo-requests, 
+# causing disconnect depending on lcp-echo-failure as set in
+# /etc/ppp/options. Using value of 0 disables lcp echo-requests 
+# OTOH the link activity of sending the request does help to keep
+# the link active.
+lcp-echo-interval 60
+lcp-echo-failure 0
+# Disconnect and hang up if no activity for 15 minutes. lcp packets are not
+# counted when determining if link is idle.
+idle 900
+user "1234567890@vzw3g.com"
+remotename vzw
+ipparam vzw
+usepeerdns
+
+```
+
+and the corresponding /etc/chatscript file :
+
+```
+
+# This chatfile was generated by pppconfig 2.3.17.
+# Please do not delete any of the comments.  Pppconfig needs them.
+# 
+# ispauth PAP
+# abortstring
+ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE' ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
+# modeminit
+'' ATZ
+# ispnumber
+OK-AT-OK "ATDT#777"
+# ispconnect
+CONNECT \d\c
+# prelogin
+
+# ispname
+# isppassword
+# postlogin
+
+# end of pppconfig stuff
+
+```
+
+the pppconfig program generates these files for you, but you may have to modify them some, see the comments. Your cell phone number goes where I have "1234567890"
+Good luck.
+
+---
+
+### Post by Michaelg14 on 2008-12-14
+What is the model of your modem and what Ubuntu are you using?
+
+I have a Verizon USB727 that I have used with 8.04 with some work on my part.  Since I updated to 8.10 it is all done automatically for me.
+
+---
+
+### Post by The ragman on 2008-12-14
+Thank you for the information - it is going to take a while to get my old brain seeing sense in it, and as soon as it does, I will reply here. It may take a day or more to make any sense - I used, twenty years ago, to be a compitent computer geek, but I never developed along with computers.
+
+---
+
+### Post by The ragman on 2008-12-14
+The only detail I have of the modem is Pantech USB modem no model number is displayed on my friend's computer or on the device itself. 
+
+When I did the ls /dv, the result was:
+
+```
+333a334
+> sde
+347a349
+> sg8
+434a437
+> ttyACM0
+715a719,726
+> usbdev7.24_ep00
+> usbdev7.24_ep02
+> usbdev7.24_ep03
+> usbdev7.24_ep07
+> usbdev7.24_ep81
+> usbdev7.24_ep85
+> usbdev7.24_ep86
+> usbdev7.24_ep89
+
+```
+
+being almost computer illiterate I have no clue what this is telling me.
+
+---
+
+### Post by Michaelg14 on 2008-12-14
+To be honest I don't either.  Try running
+
+```
+sudo wvdial
+```
+
+Then look in etc/wvdial.conf with
+
+```
+gedit /etc/wvdial.conf
+```
+
+it should look something like
+
+> [Dialer Defaults]
+Init1 = ATZ
+Init2 = ATQ0 V1 E1 S0=0 &C1 &D2 +FCLASS=0
+Modem Type = Analog Modem
+ISDN = 0
+New PPPD = yes
+Phone = #777
+Modem = /dev/ttyUSB0
+Username = [email]1234567890@vzw3g.com[/email]
+Password = vzw
+Baud = 460800
+
+If it does then in a terminal type "wvdial" and see if it connects.
+
+If not then copy and paste the above info into wvdial.conf with
+
+```
+gksu gedit /etc/wvdial.conf
+```
+
+changing 1234567890 to whatever the phone number of the device is and try it again.
+
+Good luck
+
+---
+
+### Post by Michaelg14 on 2008-12-14
+A couple other things you might have to do.
+
+in a terminal type
+
+```
+sudo cat /proc/tty/driver/usbserial
+```
+
+That should tell you what USB port you are on for the Modem= line in wvdial.conf. and also the vendor and product code for the next item.
+
+Also open /etc/modules and add this line to the bottom of the file using the vendor and product code from the last step
+
+```
+usbserial vendor=0x???? product=0x????
+```
+
+---
+
+### Post by The ragman on 2008-12-14
+I will try that, just as soon as the update manager lets me have control again.
+
+---
+
+### Post by lswb on 2008-12-14
+> **The ragman said:**
+> The only detail I have of the modem is Pantech USB modem no model number is displayed on my friend's computer or on the device itself. 
+
+When I did the ls /dv, the result was:
+
+```
+333a334
+> sde
+347a349
+> sg8
+434a437
+> ttyACM0     <<<---There it is>
+715a719,726
+> usbdev7.24_ep00
+> usbdev7.24_ep02
+
+```
+
+being almost computer illiterate I have no clue what this is telling me.
+
+ttyACM0 is your modem device. Use either the textmode program pppconfig or gnome-ppp or kppp. I believe pppconfig is included in a default install of ubuntu. I am not familiar with using gnome-ppp or other gui programs for this so I will describe using pppconfig. I'm going mostly on memory; You can search the forums or google, there are much better written instructions available than what I am posting here.
+
+Open a terminal and type "sudo pppconfig" On the first screen select Create and just proceed through, supplying the information it asks for. (Leave out the quotes I use here) For purpose of this example, I will use "vzw" as the connection name. When it gets to the device or modem selection question, use "/dev/ttyACM0". Select dynamic DNS, "chat" for authentication method, For your providers number, verizon uses "#777" Your username will be "1234567890@vzw3g.com", substituting your cell phone # for 1234567890. If it asks for a password use "vzw" Don't worry about getting it all correct the 1st time. Save the file and exit from pppconfig.
+
+Now open another terminal and issue this command "tail -f /var/log/syslog" This terminal window will show any info and error messages generated during the connection process which may help to debug. In a different terminal, type "pon vzw" If you're lucky you'll connect in a moment or so and stay connected. If not, navigate to /etc/ppp/peers, and as root open the file named "vzw" change the relevant parts to match the example I posted earlier. Save the file and try "pon vzw" again.
+
+If the connection doesn't happen, copy the errors from the tail -f window and paste them into a post here, or try googling for a better howto first. Good Luck!
+
+---
+
+### Post by Don1500 on 2009-04-01
+Link to VZAccess manager
+
+---
+

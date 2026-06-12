@@ -1,0 +1,157 @@
+---
+title: "Wireless Error"
+date: 2011-03-21
+forum: New to Ubuntu
+---
+
+### Post by papa528 on 2011-03-21
+I have an HP 110 netbook that the wi-fi refuses to work on.  It works fine when I run my Windows 7 Starter edition, but not when I run my Ubuntu 10.10 netbook remix.  I haven't installed Ubuntu on it yet, (I am doing the "try it" from the USB boot) and it says that I need to download a third party driver called "Broadcom STA wireless driver".  Whenever I try to activate it, though, it gets all finished and then brings up an error message that says "SystemError:installArchives() failed."  Help!:confused:
+
+---
+
+### Post by Talon2 on 2011-03-21
+Connect the system to the internet with an ethernet cable then try to install the "sta" driver.
+
+---
+
+### Post by gnarlygnarlingtons on 2011-03-21
+I have a similar problem on my Dell XPS. On my wireless app it says: "device not ready-firmware missing." I wonder if I could use the same driver that talon mentioned.
+
+---
+
+### Post by papa528 on 2011-03-21
+> **Talon2 said:**
+> Connect the system to the internet with an ethernet cable then try to install the "sta" driver.
+
+Unfortunately, it doesn't even connect via ethernet.  I had already tried that and failed.
+
+---
+
+### Post by Hippytaff on 2011-03-21
+> **papa528 said:**
+> Unfortunately, it doesn't even connect via ethernet.  I had already tried that and failed.
+
+Your ethernet should work fine. With it plugged in and everything turned on, can you open a terminal (CTRL+ALT+T) and post the output of
+```
+ifconfig
+```
+```
+lscpi | grep -i eth
+``````
+lspci | grep -i netw
+```
+```
+rfkill list
+```
+:-)
+
+---
+
+### Post by Talon2 on 2011-03-21
+> **gnarlygnarlingtons said:**
+> I have a similar problem on my Dell XPS. On my wireless app it says: "device not ready-firmware missing." I wonder if I could use the same driver that talon mentioned.
+
+You might but can you confirm your wifi hardware is from Broadcom?
+
+---
+
+### Post by Talon2 on 2011-03-21
+> **papa528 said:**
+> Unfortunately, it doesn't even connect via ethernet.  I had already tried that and failed.
+
+I'd be interested in seeing what you get when you run this command:
+
+```
+lspci | grep -i eth
+```
+
+---
+
+### Post by papa528 on 2011-03-22
+@Hippytaff What exactly do those commands do? I inputted them, but I don't know what any of it means.  We got to the "rfkill list" and it said:
+
+1: hp-wifi: Wireless LAN
+        Soft blocked: no
+        Hard blocked: yes
+
+But I don't know what any of it means!  Forgive me, I'm a super-noob...
+
+A dialog box appeared after I inputted the commands and tried to download the driver that said:
+Sorry, the package "bcmwl-kernel-source 5.60.48.36+bdcom-0ubuntu5" failed to install or upgrade.
+
+---
+
+### Post by bkratz on 2011-03-23
+> **papa528 said:**
+> @Hippytaff What exactly do those commands do? I inputted them, but I don't know what any of it means.  We got to the "rfkill list" and it said:
+
+1: hp-wifi: Wireless LAN
+        Soft blocked: no
+        Hard blocked: yes
+
+But I don't know what any of it means!  Forgive me, I'm a super-noob...
+
+A dialog box appeared after I inputted the commands and tried to download the driver that said:
+Sorry, the package "bcmwl-kernel-source 5.60.48.36+bdcom-0ubuntu5" failed to install or upgrade.
+
+
+Hard blocked generally means you have a switch (wifi) that needs to be turned on.
+
+---
+
+### Post by Hippytaff on 2011-03-23
+> **papa528 said:**
+> @Hippytaff What exactly do those commands do? I inputted them, but I don't know what any of it means. We got to the "rfkill list" and it said:
+ 
+1: hp-wifi: Wireless LAN
+Soft blocked: no
+Hard blocked: yes
+ 
+But I don't know what any of it means! Forgive me, I'm a super-noob...
+ 
+A dialog box appeared after I inputted the commands and tried to download the driver that said:
+Sorry, the package "bcmwl-kernel-source 5.60.48.36+bdcom-0ubuntu5" failed to install or upgrade.
+ 
+They are all diagnostic commands, so they will tell us what wireless chipset you have, driver etcetc
+ 
+the rfkill thing try this```
+sudo rfkill unblock all
+``` you have a hard block. If you unblock it then you should be good to go.
+
+---
+
+### Post by grahammechanical on 2011-03-23
+Hippytaff
+
+I do not mean to be picky, but I thought that the rfkill command had two letter Ls (I am showing upper case for clarity).
+
+Regards.
+
+---
+
+### Post by Hippytaff on 2011-03-23
+> **grahammechanical said:**
+> Hippytaff
+ 
+I do not mean to be picky, but I thought that the rfkill command had two letter Ls (I am showing upper case for clarity).
+ 
+Regards.
+ 
+Thanks for pointing that out...typo..edited the post - rushing and not re-reading (shouldn't be doing this in work :? )
+
+---
+
+### Post by papa528 on 2011-03-23
+I unblocked everything and tried updating the driver via ethernet... still no luck.
+
+---
+
+### Post by Hippytaff on 2011-03-23
+then well need to see the output of some commands. You can either post  the output of the commands in my eariler post the wireless-results.txt  generated by running the bash script I have posted.
+
+If you run the script you need to navigate to the folder that id  downloaded to, right click and select the 'executable' bit in  permissions. Then open a terminal. cd to the folder where the file is  and do ```
+./wireless_script.sh
+```
+
+---
+

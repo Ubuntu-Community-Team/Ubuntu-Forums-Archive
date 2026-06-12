@@ -1,0 +1,580 @@
+---
+title: "New in Hardy for Intel chipset -- xorg.conf, Resolution, Dual monitor etc"
+date: 2008-05-26
+forum: New to Ubuntu
+---
+
+### Post by ingrid_ozikem on 2008-05-26
+I'm starting this thread because there seems to be a lot of improvements in Hardy for Intel chipset graphics cards (eg. 915GM etc.. run lspci to find out what you have). 
+
+WHY: A lot of the tutorials here and elsewhere deal with complications from the older i810 driver, 915resolution and other complicated hacks.. I just spend 4 days (and most of the nights!) getting things working for me, only to realize most of the material out there is quite dated now and things are much easier. So let's collect all the advice about what is new now. I'll get the ball rolling..
+
+
+Video card driver  -- for most Intel chipset cards, the intel driver seems far more advanced and less buggy than the older i810 driver. So specify 'intel' as the Driver in the Device section of /etc/X11/xorg.conf
+  
+   Mode lines are unneccessary now. The Intel driver apparently detects the correct modes of most monitors (external or not) without problems.. i810 on the other hand required a lot of work (and often needed the hack 915resolution).
+
+xorg.conf -- with the intel driver, this file looks very different for multiple monitors. You have only 1 Device section and specify all the monitors in that. 
+
+Extended desktop -- this is quite easy now. Create a pretty barebones xorg.conf with the intel driver in 1 Device section and create a Monitor sections for each of your monitors. Then create ONE screen section which includes the Virtual statement to create a large virtual X screen. (Largest size -- 2048 x 2048 if you want DRI enabled (makes 3d graphics faster).. otherwise no apparent limit.)
+
+     With such an xorg.conf file, you can use xrandr to position each of your monitors on different parts of your large virtual screen. Amazingly, compiz works for me after using xrandr!!
+
+
+This is just a start.. I'm afraid what I've said above is pretty condensed but I wish I had known it 96 frustrating hours ago.. so I ask you all to please join in and chip in with all that is new in Hardy (or a little less recently) with respect to Intel chipset video cards.
+ 
+Here are some links that are useful..
+
+[http://lilserenity.wordpress.com/2007/10/15/ecstatic-xrandr-12-means-decent-linux-screen-management-at-last/](http://lilserenity.wordpress.com/2007/10/15/ecstatic-xrandr-12-means-decent-linux-screen-management-at-last/)
+[http://www.thinkwiki.org/wiki/Xorg_RandR_1.2](http://www.thinkwiki.org/wiki/Xorg_RandR_1.2)
+[https://help.ubuntu.com/community/FixVideoResolutionHowto?highlight=%28resolution%29](https://help.ubuntu.com/community/FixVideoResolutionHowto?highlight=%28resolution%29)
+[http://intellinuxgraphics.org/dualhead.html](http://intellinuxgraphics.org/dualhead.html)
+
+---
+
+### Post by BandD on 2008-06-07
+Can you post what your xorg.conf file looks like?  I'm trying to get two monitors set up with the i915 chipset, but I'm just not sure how eactly to format everything in xorg.
+
+---
+
+### Post by crashsystems on 2008-06-13
+I must say, I'm quite exited about this. Every release I check out dual monitors to see if I can get it to work without a bunch of xorg.conf editing, and with 8.04 I got lucky.
+
+A big of background on my box: Laptop, Dell Inspiron 1420 (Linux preloaded :)). Now for the relevant lines from lspci:
+```
+00:02.0 VGA compatible controller: Intel Corporation Mobile GM965/GL960 Integrated Graphics Controller (rev 0c)
+00:02.1 Display controller: Intel Corporation Mobile GM965/GL960 Integrated Graphics Controller (rev 0c)
+```
+
+Using the screen resolution program in preferences, I got the external monitor working without any problems, but only with cloning. Next I unchecked the cloning option, and placed the external monitor below my LCD. When I applied these settings, my desktop background stretched as if it was spreading across two screens. However, the same view was displayed on both screens. Furthermore, when I tried dragging a windows below the bottom of my LCD, it was not stopped by the screen edge, but kept on going into the invisible darkness.
+
+So, does anyone know whats up with this strange bit? If you need more info from my end, just ask. Thanks in advance for your help.
+
+---
+
+### Post by burningbed on 2008-08-01
+Thank you so much! That was really helpful. The most useful link was the one from the intel linux website:
+[http://intellinuxgraphics.org/dualhead.html]("http://intellinuxgraphics.org/dualhead.html")
+
+I am attaching my xorg.conf file for the following setup: Laptop Lenovo Thinkpad T61 with 1440x900 resolution internal LCD display and external Lenovo L201p LCD monitor with 1600x1200 max. resolution. I have a dual monitor (/ dual head) setup where the external monitor is to the left of my laptop.
+
+```
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "InputDevice"
+        Identifier      "Generic Keyboard"
+        Driver          "kbd"
+        Option          "XkbRules"      "xorg"
+        Option          "XkbModel"      "pc104"
+        Option          "XkbLayout"     "us"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Configured Mouse"
+        Driver          "mouse"
+        Option          "CorePointer"
+EndSection
+
+Section "InputDevice"
+        Identifier      "Synaptics Touchpad"
+        Driver          "synaptics"
+        Option          "SendCoreEvents"        "true"
+        Option          "Device"                "/dev/psaux"
+        Option          "Protocol"              "auto-dev"
+        Option          "HorizEdgeScroll"       "0"
+EndSection
+
+Section "Device"
+        Identifier      "Intel 945G "
+        Driver          "intel"
+        Option "monitor-LVDS" "monLVDS"
+        Option "monitor-VGA" "monVGA"
+EndSection
+
+Section "Monitor"
+        Identifier      "monLVDS"
+        Option "PreferredMode"  "1440x900"
+        Option "Position" "0 0"
+EndSection
+
+Section "Monitor"
+        Identifier      "monVGA"
+        Option "PreferredMode"  "1600x1200"
+        Option "LeftOf"  "monLVDS"
+        Option "Position" "-1600 -300"
+EndSection
+
+Section "Screen"
+        Identifier      "Default Screen"
+        Device          "Intel Corporation 945G Integrated Graphics Controller"
+        Monitor         "monLVDS"
+        DefaultDepth    24
+        SubSection "Display"
+          Depth 24
+          Modes "1440x900"
+          Virtual 3040 1200
+        EndSubSection
+EndSection
+```
+
+---
+
+### Post by grahams on 2008-08-07
+Thanks burningbed
+
+Your xorg.conf works on my Compaq 2510p and I now have dual screen. Do you know how to make the main screen (gnomepanel), the laptop screen rather than the external screen?
+
+---
+
+### Post by burningbed on 2008-08-08
+I'm glad it worked for you. I use KDE and I could easily drag the taskbar to the laptop screen. I assume something similar should work for gnome (check the settings or preferences, or just try to drag it), but I don't know any details.
+
+---
+
+### Post by lilbudda on 2008-08-15
+Thanks! This was exactly the configuration I was going for :cool: I just copied and pasted and it worked!
+
+---
+
+### Post by LondonSteve on 2008-08-15
+To keep this concise, I'm deleting the original post here. See my final answer down below.
+
+---
+
+### Post by burningbed on 2008-08-15
+No need to be afraid to change the xorg.conf file. You'll have to do it to set up dual monitor support. Just back up your current file, so you can always copy it back if you need to (also if you completely delete the xorg.conf file you should still get a working graphical interface). Take a look at the file I posted above and try to adapt it. You can't really brake anything if you keep a copy of your current xorg.conf file and know how to copy it back on the comand line.
+
+---
+
+### Post by LondonSteve on 2008-08-16
+To keep this concise, I'm deleting the original post here and applying to my last post to the end of this discussion.
+
+---
+
+### Post by LondonSteve on 2008-08-16
+To keep this concise, I'm deleting the original post here. See my final answer down below.
+
+---
+
+### Post by LondonSteve on 2008-08-16
+To keep this concise, I'm deleting the original post here. See my final answer down below.
+
+---
+
+### Post by burningbed on 2008-08-17
+Try deleting the HorizSynch and VertRefresh lines and find out what resolution the laptop screen runs on when it's not fuzzy and enter this as PreferredMode option (use the xorg.conf file I posted above for guidance). If this doesn't work you'll just have to keep trying things out and/or see if you can find a post online from somebody who has successfully fixed a similar problem. Things like that are a bit hard to debug without physical access to the computer, so if all else fails, perhaps you can get some help from somebody at a local linux users group.
+
+---
+
+### Post by LondonSteve on 2008-08-17
+Final answer, I have a dual monitor configuration working on Ubuntu 8.04 using Gnome. Here's my configuration:
+
+- ThinkPad T21 with max resolution 1400x1050. Relevant lspci out as follows...
+
+01:00.0 VGA compatible controller: S3 Inc. 86C270-294 Savage/IX-MV (rev 13)
+
+- Dell UltraSharp 1800FP with max res 1280x1024.
+
+Thank you to burningbed in this forum for the assist. I also looked at the following URLs.
+
+[http://ubuntuforums.org/showthread.php?t=246446](http://ubuntuforums.org/showthread.php?t=246446)
+[http://beranger.org/index.php?page=diary&2008/05/23/12/41/07-ede-vs-lxde-the-history-has-not-](http://beranger.org/index.php?page=diary&2008/05/23/12/41/07-ede-vs-lxde-the-history-has-not-)
+
+In the end, it was quite a bit of trial and error. A few things I learned (not all of which apply to dual monitor setup however I'll highlight them as this is an Absolute Beginner Talk forum):
+
+1. When you open a terminal window and you want to become root: sudo -i
+2. When you want to open a gui as root from your user account: gksudo <gui program> e.g. gksudo gedit
+3. You don't have to reboot your system to test a new xorg.conf file. Pressing CTRL-ALT-DELETE will log you out and restart X.
+4. If you get hosed, (on this specific laptop) hold the power button until it powers off (roughly 8 seconds). Disconnect the external monitor altogether and power up. Hit ESC quickly when prompted and boot in recovery mode. Select root form the menu, cd into /etc/X11 and cp your xorg.conf.orig to xorg.conf. Reboot.
+5. BEFORE STARTING ANYTHING, COPY xorg.conf to xorg.conf.orig. Be generous in keeping copies that work and don't work until you've got what you want.
+6. Final answer: I now have two files, xorg.conf.orig and xorg.conf.dual. If I want to change configurations, I copy the relevant file to xorg.conf and restart X according to bullet 3 above. (In my specific configuration, the single display version will be the LCD if I have it plugged in.)
+
+Life's great.
+
+Here's the working xorg.conf.dual...
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "Device"
+	Identifier "S3 Inc. 86C270-294 Savage/IX-MV"
+	Driver "savage"
+	BusID "PCI:1:0:0"
+	Option "BusType" "PCI"
+	Option "DmaMode" "None"
+	screen 0
+EndSection
+
+Section "Device"
+	Identifier "S3 Inc. 86C270-294 Savage/IX-MV 2"
+	Driver "savage"
+	BusID "PCI:1:0:0"
+	Option "BusType" "PCI"
+	Option "DmaMode" "None"
+	screen 1
+EndSection
+
+
+Section "Monitor"
+	Identifier "ThinkPad T21 TFT"
+#	HorizSync 28-51
+#	VertRefresh 43-60
+	Option "DPMS"
+EndSection
+
+Section "Monitor"
+	Identifier "Dell UltraSharp 1800FP"
+#	HorizSync 30 - 80
+#	VertRefresh 50 - 85
+	Option "DPMS"
+EndSection
+
+Section "Screen"
+	Identifier "ThinkPad"
+	Device "S3 Inc. 86C270-294 Savage/IX-MV"
+	Monitor "ThinkPad T21 TFT"
+ 	DefaultDepth 16
+ 	SubSection "Display"
+ 		Depth 16
+ 		Modes "1400x1050"
+ 	EndSubSection
+EndSection
+
+Section "Screen"
+	Identifier "externel Monitor"
+	Device "S3 Inc. 86C270-294 Savage/IX-MV 2"
+	Monitor "Dell UltraSharp 1800FP"
+ 	DefaultDepth 16
+ 	SubSection "Display"
+ 		Depth 16
+ 		Modes "1280x1024"
+ 	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier "Default Layout"
+	Option "Clone" "off"
+	Option "Xinerama" "on"
+	Screen "ThinkPad"
+	Screen "externel Monitor" RightOf "ThinkPad"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+[B]
+GOOD LUCK!!! IF I CAN DO IT, ANYONE CAN!![/B]
+
+---
+
+### Post by ricardisimo on 2008-08-18
+Hardy is not correctly detecting the onboard video for my desktop, which should be vesa (or at least vesa works well enough). Is there a nice tutorial for editing xorg.conf in the post-Hardy universe? I must say I much preferred the old days when we could edit these things more easily ourselves.
+
+---
+
+### Post by LockeEx on 2008-08-18
+After some messing around and some searching, I've gotten some headway on this and set up my own two screens, 1280x800 and . I'll put my whole xorg.conf at the end
+
+There are some key details that I think are needed in this
+
+First is the "Device" section. I'm pretty sure you have to use
+Driver           "intel"
+if you're using an intel chip for the graphics, just like explained by previous posts
+
+Then you should make two monitor sections for sure, the Identifier should follow what you put in "Device" under Option "monitor-LVDS" and Option "monitor-VGA"
+
+Also, this is key the Subsection "Display" under section screen should have your modes and Virtual screen size, which is, I've learned is just the screen size made up of the multiple monitors.
+
+At the end, however, even after loading up my xorg.conf, it didn't work. So I just kept this xorg.conf setup, unplugged the monitor, logged out, logged back in, replugged in monitor and typed in this stuff in to the terminal to edit xrandr:
+
+xrandr --output LVDS --auto --output VGA --auto --same-as LVDS
+xrandr --output VGA --off
+xrandr --output VGA --auto --above LVDS
+
+The first line, I believe, clones the main display, and depending on the size of your main display, and secondary display, the screen might get messed up a bit, but don't worry
+
+The second line, turns off the second display
+
+The third line sets up the second display to work above your main display
+I did this because of placement constraints of my monitor and laptop, so you may actually have to change it to how you want: just replace --above with --below, --right-of, or --left-of depending on how you want yours set up, but make sure your Virtual size is correct
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "Device"
+	Identifier	"Intel 945G "
+	Driver		"intel"
+	Option "monitor-LVDS" "Laptop Monitor"
+	Option "monitor-VGA" "Second Monitor"
+EndSection
+
+Section "Monitor"
+	Identifier	"Laptop Monitor"
+	Option "PreferredMode" "1280x800"
+	Option "Position" "0 0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Second Monitor"
+	Option "PreferredMode"  "1024 768"
+	Option "Above" "Laptop Monitor"
+	Option "Position" "0 -768"
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel Corporation Mobile GM965G/GL960 Integrated Graphics Controller"
+	Monitor		"Laptop Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+	  Depth 24
+	  Modes "1280x800" "1024x768"
+	  Virtual 1280 1568
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+In the end, however, there are some screwed up things for my setup too, such as the messed up awn-dock, which I fixed by refreshing compiz-fusion and right-clicking awn and selecting preferences. 
+There is also an unsolved problem of firefox (probably other apps too) open its submenus upward when I type in the addressbar or select "File".
+This probably won't happen for those --left-of and --right-of people, but if anyone has any info on this, please let me know
+
+Thanks for reading, and good luck!
+
+---
+
+### Post by jtuchscherer on 2008-08-25
+With the help of the guys at EmperorLinux I got my DualHead setup working as well. I have a 1920x1200 internal screen and a 1600x1200 external screen. I needed to specify the mode for my external screen to get xrandr working:
+xrandr --output VGA --left-of LVDS --mode 1600x1200
+
+I still have problem with firefox which opens context menus always on the external screen, even if the window opened on the internal screen. Also, the panels are always on the external screen and I need to drag and drop them over after each restart.
+
+Thanks for the help here and thanks for the help from the EmperorLinux guys.
+
+---
+
+### Post by Specks on 2008-09-29
+I've edited my xorg.conf file as shown above, but it's not quite working. It works for the login screen, but after I login, I only have the one monitor working (laptop).
+
+Here's my xorg.conf:
+```
+
+# xorg.conf (X.Org X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"us"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Synaptics Touchpad"
+	Driver		"synaptics"
+	Option		"SendCoreEvents"	"true"
+	Option		"Device"		"/dev/psaux"
+	Option		"Protocol"		"auto-dev"
+	Option		"HorizEdgeScroll"	"0"
+EndSection
+
+Section "Device"
+	Identifier	"Intel GM965/GL960"
+	Driver			"intel"
+	Option			"monitor-LVDS" "Laptop Monitor"
+	Option			"monitor-VGA" "Second Monitor"
+EndSection
+
+Section "Monitor"
+	Identifier	"Laptop Monitor"
+	Option			"PreferredMode"	"1440x900"
+	Option			"Position" "0 0"
+EndSection
+
+Section "Monitor"
+	Identifier	"Second Monitor"
+	Option			"PreferredMode"	"1280x1024"
+	Option			"RightOf"	"Laptop Monitor"
+	Option			"Position" "-1280 -124"
+EndSection
+
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Intel Corporation Mobile GM965/GL960 Integrated Graphics Controler"
+	Monitor		"Laptop Monitor"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth 24
+		Modes "1440x900"
+		Virtual 2720 1024
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen			"Default Screen"
+	InputDevice	"Synaptics Touchpad"
+EndSection
+
+```
+
+---
+
+### Post by burningbed on 2008-09-29
+Try deleting your .kde directory (or similar directory if you are not using KDE).
+
+---
+
+### Post by Specks on 2008-09-30
+> **burningbed said:**
+> Try deleting your .kde directory (or similar directory if you are not using KDE).
+
+This didn't work. I think I've traced it to a change in /etc/network/interfaces that I made to get my wireless working.
+
+I'm still researching other ways to get both my wireless and dual monitor setup working.
+
+---
+
+### Post by cepal on 2009-07-10
+> **LockeEx said:**
+> 
+There is also an unsolved problem of firefox (probably other apps too) open its submenus upward when I type in the addressbar or select "File".
+This probably won't happen for those --left-of and --right-of people, but if anyone has any info on this, please let me know
+
+Thanks for reading, and good luck!
+Yeah, this happens to apps which don't talk to X-server and window manager much, they rather have "their own window manager", typicall for Mozilla products (on the gecko or xul engine). You have two options:
+1) restart the app (Firefox, Thunderbird..) after displays layout change
+2) use something more friendly to window manager... :-D
+
+BTW I have another problem: my graphics performance is tragic after upgrading from 8.10 to 9.04 ubuntu. I had to change the accel method to some less powerful and yet set the monitors to be one above other so that 2x 1280x1024 doesnt cross 2048 in none of the two dimensions (while the external screens are physically placed side-by-side).
+
+I have HP nc4200 with Centrino 1.7GHz, not the most powerful but we are talking about graphics (GPU) performance, not theoretically related to the CPU performance...
+
+The section of my xorg.conf I talked about:
+
+```
+Section "Device"
+        Identifier  "Card0"
+        Driver      "intel"
+        VendorName  "Intel Corporation"
+        BoardName   "Mobile 915GM/GMS/910GML Express Graphics Controller"
+        Option      "monitor-LVDS" "LVDS"
+        Option      "monitor-VGA" "VGA"
+        Option      "monitor-TMDS-1" "DVI"
+        Option      "monitor-TV" "TV"
+        Option      "AccelMethod" "UXA"
+        VideoRam    262144
+        Option          "Tiling"        "false"
+
+EndSection
+
+Section "ServerFlags"
+        Option  "DontZap"       "False"
+EndSection
+```
+
+---
+
+### Post by cepal on 2009-07-10
+> **Specks said:**
+> This didn't work. I think I've traced it to a change in /etc/network/interfaces that I made to get my wireless working.
+
+I'm still researching other ways to get both my wireless and dual monitor setup working.
+How is networking related to xorg.conf, dual displays and Intel graphics chipset??? Please start a new thread for your networking problems, thank you!
+
+CePal
+
+---
+
