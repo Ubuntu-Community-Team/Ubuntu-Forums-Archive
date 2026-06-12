@@ -1,0 +1,49 @@
+---
+title: "cant install playonlinux on hardy"
+date: 2008-08-08
+forum: Gaming &amp; Leisure
+---
+
+### Post by kajillin on 2008-08-08
+this is the error i get
+
+```
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+
+Since you only requested a single operation it is extremely likely that
+the package is simply not installable and a bug report against
+that package should be filed.
+The following information may help resolve the situation:
+
+The following packages have unmet dependencies:
+  playonlinux: Depends: python-wxgtk2.8 but it is not going to be installed
+E: Broken packages
+```
+
+are the packages realy broken?
+
+then i try to install python-wxgtk2.8 manually and i get this
+
+```
+
+python-wxgtk2.8:
+  Depends: python (<2.5) but 2.5.2-0ubuntu1 is to be installed
+```
+
+anyone know wtf is going on?
+
+---
+
+### Post by wildman4god on 2008-08-08
+I had the same problem so i installed using the .deb file [here]("http://www.playonlinux.com/script_files/PlayOnLinux/3.0.8/PlayOnLinux_3.0.8.deb").
+
+Enjoy
+
+---
+

@@ -1,0 +1,25 @@
+---
+title: "What Games/Apps Should I Get Before my Internet is Disconnected?"
+date: 2012-07-03
+forum: Gaming &amp; Leisure
+---
+
+### Post by slixz85 on 2012-07-03
+Hi. I am losing internet soon so I will be offline for some time. Could you guys please suggest to me some excellent games for offline use also I am interested programs for web design/multimedia. I will still practice making html and graphical web sites while using my desktop at home to get even better. Lol I already have a good collection of websites saved for linux/ubuntu commands and tutorials as well.
+
+So you guys know what kind of games I like warzone2100 (awesome), open-arena,0ad,smokin' guns, supertux 2, xmoto, frozen-bubble,pokerth, pingus and I've seen alot of people like battle for wesnoth or freeciv but I didn't play them very long.
+
+Thanks
+
+---
+
+### Post by ubudog on 2012-07-03
+*Thread moved to Gaming & Leisure.*
+
+---
+
+### Post by ubudog on 2012-07-03
+Thread closed.  Please use [this]("http://ubuntuforums.org/showthread.php?t=2015251") thread, and please don't double post.
+
+---
+

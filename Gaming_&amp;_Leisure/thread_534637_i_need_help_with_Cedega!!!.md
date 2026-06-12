@@ -1,0 +1,392 @@
+---
+title: "i need help with Cedega!!!"
+date: 2007-08-25
+forum: Gaming &amp; Leisure
+---
+
+### Post by xoron on 2007-08-25
+can somebody please help me!!!
+i am pretty new to ubuntu and am still learning
+
+i just recently installed cedega....it install fine but when it comes to the tests...it fails on :-
+
+OpenGL direct rendering
+3D acceleration
+
+and i have tried many things to get this to work but no sucess...can somebody help me :(
+
+i have tried:-
+nvidia-glx
+nvidia-glx-legacy
+the legacy driver from the nvidia website
+(i have done these on a number of occasions....still dont work :confused:)
+
+ask if you need more information :KS
+
+please help :(
+
+---
+
+### Post by cogadh on 2007-08-25
+What do you have for a video card?
+
+---
+
+### Post by xoron on 2007-08-25
+i have a 
+
+NV5M64 [RIVA TNT2 Model 64/Model 64 pro]
+
+if it helps :)
+
+---
+
+### Post by cogadh on 2007-08-25
+Follow these instructions here:
+[http://www.albertomilone.com/latest_nvidia_udsf_feisty.html](http://www.albertomilone.com/latest_nvidia_udsf_feisty.html)
+Use installation Method 1, you will need to use the legacy driver and make sure you follow the instructions **to the letter**.
+
+---
+
+### Post by xoron on 2007-08-25
+thanks for the tutorial...i get the nvidia splash screen so the nvidia driver is working :)
+
+but OpenGL direct rendering and 3D acceleration still does not work :confused:
+
+---
+
+### Post by cogadh on 2007-08-25
+Run this in a terminal and post the output:
+```
+glxinfo | grep direct
+```
+
+---
+
+### Post by xoron on 2007-08-25
+this is the output i get...
+
+$ glxinfo | grep direct
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Error: couldn't find RGB GLX visual
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+Xlib:  extension "GLX" missing on display ":0.0".
+
+i have had this before but i didn't know how to fix it :confused:
+
+---
+
+### Post by cogadh on 2007-08-25
+Look at your xorg.conf file for the "Module" section. It should look a little like this:
+```
+Section "Module"
+    Load           "i2c"
+    Load           "bitmap"
+    Load           "ddc"
+    Load           "extmod"
+    Load           "freetype"
+    Load           "glx"
+    Load           "int10"
+    Load           "vbe"
+EndSection
+
+```
+We're looking for the **Load     "glx" **entry. If it isn't there, add it, then reboot.
+
+---
+
+### Post by xoron on 2007-08-25
+here is my my section module:
+
+Section "Module"
+        Load    "bitmap"
+        Load    "ddc"
+        Load    "dri"
+        Load    "extmod"
+        Load    "freetype"
+        Load    "glx"
+        Load    "int10"
+        Load    "vbe"
+EndSection
+
+it is not exactly the same but it does have Load "glx"
+
+should i be concerned about the other things??
+
+---
+
+### Post by cogadh on 2007-08-25
+Actually, I think the **Load "dri"** shouldn't be there. Try commenting that out (put a # in front of it) and restart. If X fails to start and you get stuck at the console, then do this to edit the file again and uncomment that line:
+```
+sudo nano /etc/X11/xorg.conf
+```
+
+---
+
+### Post by xoron on 2007-08-25
+here is my whole xorg.conf file
+
+# /etc/X11/xorg.conf (xorg X Window System server configuration file)
+#
+# This file was generated by dexconf, the Debian X Configuration tool, using
+# values from the debconf database.
+#
+# Edit this file with caution, and see the xorg.conf(5) manual page.
+# (Type "man xorg.conf" at the shell prompt.)
+#
+# This file is automatically updated on xserver-xorg package upgrades *only*
+# if it has not been modified since the last upgrade of the xserver-xorg
+# package.
+#
+# If you have edited this file but would like it to be automatically updated
+# again, run the following command:
+#   sudo dpkg-reconfigure -phigh xserver-xorg
+
+Section "Files"
+	FontPath	"/usr/share/fonts/X11/misc"
+	FontPath	"/usr/share/fonts/X11/cyrillic"
+	FontPath	"/usr/share/fonts/X11/100dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/75dpi/:unscaled"
+	FontPath	"/usr/share/fonts/X11/Type1"
+	FontPath	"/usr/share/fonts/X11/100dpi"
+	FontPath	"/usr/share/fonts/X11/75dpi"
+	# path to defoma fonts
+	FontPath	"/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType"
+EndSection
+
+Section "Module"
+	Load	"bitmap"
+	Load	"ddc"
+	Load	"dri"
+	Load	"extmod"
+	Load	"freetype"
+	Load	"glx"
+	Load	"int10"
+	Load	"vbe"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Generic Keyboard"
+	Driver		"kbd"
+	Option		"CoreKeyboard"
+	Option		"XkbRules"	"xorg"
+	Option		"XkbModel"	"pc105"
+	Option		"XkbLayout"	"gb"
+	Option		"XkbOptions"	"lv3:ralt_switch"
+EndSection
+
+Section "InputDevice"
+	Identifier	"Configured Mouse"
+	Driver		"mouse"
+	Option		"CorePointer"
+	Option		"Device"		"/dev/input/mice"
+	Option		"Protocol"		"ImPS/2"
+	Option		"ZAxisMapping"		"4 5"
+	Option		"Emulate3Buttons"	"true"
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"stylus"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"stylus"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"eraser"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"eraser"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "InputDevice"
+	Driver		"wacom"
+	Identifier	"cursor"
+	Option		"Device"	"/dev/input/wacom"
+	Option		"Type"		"cursor"
+	Option		"ForceDevice"	"ISDV4"		# Tablet PC ONLY
+EndSection
+
+Section "Device"
+	Identifier	"Generic Video Card"
+	Driver		"nvidia"
+	BusID		"PCI:1:0:0"
+	VideoRam	64
+EndSection
+
+Section "Monitor"
+	Identifier	"DELL 828FI"
+	Option		"DPMS"
+	HorizSync	30-70
+	VertRefresh	50-120
+EndSection
+
+Section "Screen"
+	Identifier	"Default Screen"
+	Device		"Generic Video Card"
+	Monitor		"DELL 828FI"
+	DefaultDepth	24
+	SubSection "Display"
+		Depth		1
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		4
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		8
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		15
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		16
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+	SubSection "Display"
+		Depth		24
+		Modes		"1024x768" "800x600" "640x480"
+	EndSubSection
+EndSection
+
+Section "ServerLayout"
+	Identifier	"Default Layout"
+	Screen		"Default Screen"
+	InputDevice	"Generic Keyboard"
+	InputDevice	"Configured Mouse"
+	InputDevice     "stylus"	"SendCoreEvents"
+	InputDevice     "cursor"	"SendCoreEvents"
+	InputDevice     "eraser"	"SendCoreEvents"
+EndSection
+
+Section "DRI"
+	Mode	0666
+EndSection
+
+---
+
+### Post by cogadh on 2007-08-25
+I just took a look through the Nvidia driver documentation and you should definitely remove that **Load "dri"** from the "Modules" section and the entire "DRI" section at the end of the xorg.conf
+
+---
+
+### Post by xoron on 2007-08-25
+when i took off Load "dri" the xserver still works but i still get the same message from glxinfo | grep direct :(
+
+should i undo the Load "dri" thing (xserver is still working :))
+
+---
+
+### Post by xoron on 2007-08-25
+ignore the above post
+
+---
+
+### Post by xoron on 2007-08-25
+i removed the Load "dri" from the modules section and the entire dri section still not working :confused:
+
+---
+
+### Post by cogadh on 2007-08-25
+You'll need to reboot after making that change (sorry, I should have said that before).
+
+---
+
+### Post by xoron on 2007-08-25
+still get same message from $ glxinfo | grep direct :confused:
+
+and Cedega still doesn't work :confused:
+
+---
+
+### Post by cogadh on 2007-08-26
+I have a feeling that your previous attempts to get the Nvidia driver working may have hosed something up. Do CTRL-ALT-F1 to get to a console prompt and run this:
+```
+[SIZE=-1]dpkg-reconfigure -phigh xserver-xorg[/SIZE]
+```[SIZE=-1]
+That will create a default working xorg.conf. After you have done that, re-run the Nvidia configuration:
+[/SIZE]```
+[SIZE=-1]sudo nvidia-xconfig --no-composite[/SIZE]
+```[SIZE=-1]
+Reboot the PC and try it again.
+[/SIZE]
+
+---
+
+### Post by xoron on 2007-08-26
+the first command works to reset the xserver :)
+
+the second one gets an error...
+
+$ sudo nvidia-xconfig --no-composite
+nvidia-xconfig: unrecognized option: "--no-composite"
+
+Invalid commandline, please run `nvidia-xconfig --help` for usage information.
+
+but if i do  " sudo nvidia-xconfig" without the "--no-composite"...it does not give me an error :confused:
+
+---
+
+### Post by cogadh on 2007-08-26
+Odd, that might have something to do with the legacy driver, I'm not sure. All that option actually does is add an extra option entry to your xorg,conf that turns off compositing. You don't actually need to do that, though. Run it without the "--no-composite" and let's see what happens with the direct rendering issue.
+
+---
+
+### Post by xoron on 2007-08-27
+it gives me the same error :confused:
+
+---
+
+### Post by cogadh on 2007-08-27
+I hate to say it, but I think you've stumped me with this one. Maybe someone else will have a better suggestion, but I can't think of anything else at the moment.
+
+---
+
+### Post by xoron on 2007-08-27
+Ok...nevermind...
+
+i blame the hardware...gonna get new computer soon...better luck then i guess
+
+thanks for your help (at least i learned some cool stuff :))
+
+---
+
