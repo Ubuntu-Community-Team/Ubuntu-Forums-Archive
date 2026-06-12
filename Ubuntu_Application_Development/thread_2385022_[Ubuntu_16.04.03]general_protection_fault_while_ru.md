@@ -1,0 +1,74 @@
+---
+title: "[Ubuntu 16.04.03]general protection fault while running a pragram"
+date: 2018-02-15
+forum: Ubuntu Application Development
+---
+
+### Post by ajinkya19290 on 2018-02-15
+Hi all, I am hitting a panic in ubuntu system after running a specific daemon.
+
+
+I have inserted kernel module with character device registered.
+User space daemon is opening that character device.
+In open system call handling for that device, my module is saving
+struct *pid of current, i.e, user space daemon in variable in kernel.
+For that I am using "get_pid(task_pid(current))".
+
+
+As soon as this is executed, system crashes.
+Below is stack for the crash.
+
+```
+
+[ 1519.517710] **general protection fault: 0000 [#1] SMP**
+[ 1519.518921] CPU: 0 PID: 6018 **Comm: ps Tainted:** P OE 4.4.0-87-generic #110-Ubuntu
+[ 1519.519070] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 04/14/2014
+[ 1519.519298] task: ffff8800b7b54600 ti: ffff8800bb2f8000 task.ti: ffff8800bb2f8000
+[ 1519.519441] RIP: 0010:[<ffffffff81280252>] [<ffffffff81280252>] next_tgid+0x52/0xa0
+[ 1519.519554] RSP: 0018:ffff8800bb2fbdf8 EFLAGS: 00010282
+[ 1519.519611] RAX: c0ffff8800b8330c RBX: 000000000000177e RCX: 00ffff8800bb6ab6
+[ 1519.519672] RDX: ffff8800b902aa01 RSI: 0000000000000000 RDI: ffff8800bb6ab600
+[ 1519.519732] RBP: ffff8800bb2fbe18 R08: 0000000000007919 R09: 0000000000000004
+[ 1519.519796] R10: 000000000000008f R11: ffff8800b7328c00 R12: ffff8800bb6ab600
+[ 1519.519876] R13: ffffffff81e497a0 R14: 000000000000177e R15: ffff8800bb2fbef0
+[ 1519.519914] FS: 00007f4440c34880(0000) GS:ffff88013fc00000(0000) knlGS:0000000000000000
+[ 1519.519989] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1519.520039] CR2: 00000000007e4000 CR3: 00000000bb1fc000 CR4: 00000000000406f0
+[ 1519.520218] Stack:
+[ 1519.520242] 000000000000177d ffff8800b9168e00 000000000000177d ffffffff81e497a0
+[ 1519.520315] ffff8800bb2fbe80 ffffffff8128234b 0000000000000000 ffff880139ceea00
+[ 1519.520385] ffffffff00000000 003331303628319a ffff8800bb2fbef0 717080864f31c290
+[ 1519.520456] Call Trace:
+[ 1519.520486] [<ffffffff8128234b>] proc_pid_readdir+0xfb/0x210
+[ 1519.522541] [<ffffffff8127d828>] proc_root_readdir+0x38/0x40
+[ 1519.524250] [<ffffffff812234e2>] iterate_dir+0x92/0x120
+[ 1519.525387] [<ffffffff81223989>] SyS_getdents+0x99/0x110
+[ 1519.526490] [<ffffffff81223570>] ? iterate_dir+0x120/0x120
+[ 1519.527579] [<ffffffff81841eb2>] entry_SYSCALL_64_fastpath+0x16/0x71
+[ 1519.528659] Code: ee 48 89 c7 e8 60 e1 e1 ff 31 f6 4c 89 e7 89 c3 e8 64 e0 e1 ff 48 85 c0 48 89 c2 74 17 48 8b 80 50 06 00 00 48 8b 8a c0 04 00 00 <48> 39 88 e0 00 00 00 74 3c 83 c3 01 4c 89 ee 89 df e8 88 ec e1
+[ 1519.531984] RIP [<ffffffff81280252>] next_tgid+0x52/0xa0
+[ 1519.533044] RSP <ffff8800bb2fbdf8>
+```
+
+
+
+
+It can be seen from stack that "ps" process is tainting kernel. But I am not getting why this process is getting invoked.
+
+
+Any kind of help regarding this is appreciated.
+
+
+Thanks in advance.
+Regards,
+Ajinkya
+
+---
+
+### Post by coffeecat on 2018-02-15
+And second duplicate thread closed.
+
+Please stop posting duplicates. Cross-posting is considered poor netiquette and is not allowed here.
+
+---
+
