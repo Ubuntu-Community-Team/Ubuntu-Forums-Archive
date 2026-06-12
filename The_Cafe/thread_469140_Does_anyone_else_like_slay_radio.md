@@ -1,0 +1,39 @@
+---
+title: "Does anyone else like slay radio?"
+date: 2007-06-09
+forum: The Cafe
+---
+
+### Post by orange2k on 2007-06-09
+I only discovered it today, browsing trough Amarok`s "cool-streams"...
+I get a nostalgic feeling... you know I have a old C64 lying in my room - still working and all...
+time passes by but some things still remain...
+
+---
+
+### Post by jgrabham on 2007-06-09
+> **orange2k said:**
+> I only discovered it today, browsing trough Amarok`s "cool-streams"...
+I get a nostalgic feeling... you know I have a old C64 lying in my room - still working and all...
+time passes by but some things still remain...
+
+I found a C64 in my Grandmas loft, managed to make a random number generator (found a book with it) then thought "are there no tapes?" so I went back up, found them, turned it on and got a bright purple screen - now thats all I can get :[
+
+---
+
+### Post by orange2k on 2007-06-09
+Shiete...
+You probably have to load the "turbo" program first, or something...
+I have a 1541 drive and I`m not sure if I can use it right, and I used to know how to load games and stuff...
+
+---
+
+### Post by orange2k on 2007-06-09
+Oh, I just remembered...
+Some time ago, a nice synth has been released: quadrasid
+and another one "unknown 64"...
+
+They work only in windows, but anyways, they bring nostalgia, too...
+
+---
+

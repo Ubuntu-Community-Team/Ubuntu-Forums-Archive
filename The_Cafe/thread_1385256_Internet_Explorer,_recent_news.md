@@ -1,0 +1,1157 @@
+---
+title: "Internet Explorer, recent news"
+date: 2010-01-19
+forum: The Cafe
+---
+
+### Post by AllenGG on 2010-01-19
+[COLOR=DarkOrchid]**My question of the day: Why hasn't Microsoft created a version of Internet Explorer' that will run on Linux ?**[/COLOR]
+**Just think of how many other programs (apps) that will !!**
+
+If it's going to ever get fixed this is the place to do it !!!!!
+
+:cool:....... Allen
+
+---
+
+### Post by tom66 on 2010-01-19
+Uh, because Linux is kind of, well, a competitor? Microsoft only produces Mac products because there is market for selling them. But Internet Explorer is free. So they wouldn't make any money giving it away. They briefly made a version for Unix, and a few versions for Mac, but recently it's been all Windows.
+
+(And I'm glad. IE is one of the worst piece of [expletive mine] I've ever had to deal with...)
+
+---
+
+### Post by AllenGG on 2010-01-19
+C'mon Tom ! we both know it's the worst piece of *x#@*  out there !
+
+---
+
+### Post by Uncle Spellbinder on 2010-01-19
+Yeah, Microsoft will probably never make a Linux version of IE. But, with Novell and Microsoft's [partnership](http://en.wikipedia.org/wiki/Novell#Agreement_with_Microsoft) of sorts, who knows? Maybe we'll one day see IE on Linux.
+
+But I'd never use that piece of crap even if you payed me.
+
+---
+
+### Post by Techsnap on 2010-01-19
+> My question of the day: Why hasn't Microsoft created a version of Internet Explorer' that will run on Linux ?
+Just think of how many other programs (apps) that will !!
+
+They don't want to have to be fixing it every week when some depedency changes, nor do they want to have to keep it consistent across toolkits. 
+
+More to the point WHY would they, most people here say some pretty nasty things about IE.
+
+> But I'd never use that piece of crap even if you payed me.
+
+My point is backed up :)
+
+---
+
+### Post by Grenage on 2010-01-19
+IE isn't a bad browser, it really isn't.
+
+---
+
+### Post by Uncle Spellbinder on 2010-01-19
+> **Grenage said:**
+> IE isn't a bad browser, it really isn't.
+
+And Afghanistan and Iraq are now stable Democracies.
+
+---
+
+### Post by elliotn on 2010-01-19
+Lets be realistic, IE isnt bad at all
+
+---
+
+### Post by Grenage on 2010-01-19
+> And Afghanistan and Iraq are now stable Democracies.
+
+The worst thing about these forums is that so many people randomly state things without backing them up, or knowing what they are talking about.
+
+Could you elaborate, without copying and pasting someone else's opinion from a Google search?
+
+---
+
+### Post by alejaaandro on 2010-01-19
+no it's not bad... IT'S HORRIBLE!!
+
+i recently got into basic web development (html and css) and found out really how crappy IE is.. especially IE6, but even IE8 is far worse than all the other browsers i've tested my site with..
+
+i asked for some help from a friend who does some web development and told me he often has to build a site for ie and a different one for the rest of the browsers which are compatible with standards..
+
+i've made it a personal goal to make everyone i know quit ie and if for some reason they won't at least make them upgrade to IE8 which is kinda compatible with web standards.. 
+
+it's stupid making web developers' life harder, trying to fix a stupid browser's quirks in stead of spending time improving websites, functionality and offering new services..
+
+---
+
+### Post by juancarlospaco on 2010-01-19
+*It still existing today?*
+
+---
+
+### Post by Techsnap on 2010-01-19
+> i've made it a personal goal to make everyone i know quit ie and if for some reason they won't at least make them upgrade to IE8 which is kinda compatible with web standards..
+
+Because it's easy for businesses to just switch to IE8 even though they may have web applications written for IE6 which will just break. That's okay though.
+
+---
+
+### Post by madnessjack on 2010-01-19
+IE *any version* is not a bad browser for a casual PC user, end of. **</off-topic>**
+
+(The other day I saw my mate disable tabs because she found them "irrelevant"!)
+
+---
+
+### Post by tom66 on 2010-01-19
+IE6 is a really bad browser.
+IE7 is quite similar, though it was at least better than IE6.
+IE8 is better. It actually works quite well. But it's still trailing way behind the other browsers, like Firefox, Chrome, Safari, Opera, etc. (IE8 is more like Firefox 1.0 Beta.)
+
+---
+
+### Post by Uncle Spellbinder on 2010-01-19
+> **Grenage said:**
+> IE isn't a bad browser, it really isn't.
+> **Uncle Spellbinder said:**
+> And Afghanistan and Iraq are now stable Democracies.> **Grenage said:**
+> The worst thing about these forums is that so many people randomly state things without backing them up, or knowing what they are talking about.
+
+Could you elaborate, without copying and pasting someone else's opinion from a Google search?
+
+The Afghanistan and Iraq response was meant as a joke. Do all fans of anything Microsoft have no sense of humor?
+
+As far as the inference that the only opinion I could possibly have is one generated by Google, that was uncalled for. 
+
+It's a well known fact, that on Windows, IE is the easiest browser to exploit. ActiveX and the general ease at which harm can be done to one's computer often comes through IE.
+
+---
+
+### Post by Techsnap on 2010-01-19
+> Do all fans of anything Microsoft have no sense of humor?
+
+You should have seen the Computer Janitor thread if you think it's only Microsoft users who take it all seriously.
+
+---
+
+### Post by The Toxic Mite on 2010-01-19
+> **Grenage said:**
+> Could you elaborate, without copying and pasting someone else's opinion from a Google search?
+
+What's wrong with a little bit of copypasta? ;)
+
+---
+
+### Post by lisati on 2010-01-19
+I've had a website advise me to "upgrade" to IE6 or 7 from IE8.... :)
+
+---
+
+### Post by Grenage on 2010-01-19
+> **Uncle Spellbinder said:**
+> As far as the inference that the only opinion I could possibly have is one generated by Google, that was uncalled for.
+
+It was, and I apologise.  That was less directed at you, and more of a general gripe with a lot of posters who are just 'running with the crowd' when it comes to MS hatred.
+
+I'm not an MS or Linux fanboy, I just try to have a grounded and unbiased view.  IE8 is a pretty decent browser, and in the workplace it comes into it's own with group policies.  I don't use it myself, but it makes maintaining user's machines very easy.
+
+---
+
+### Post by Uncle Spellbinder on 2010-01-19
+> **Grenage said:**
+> It was, and I apologise.  That was less directed at you, and more of a general gripe with a lot of posters who are just 'running with the crowd' when it comes to MS hatred.
+
+I'm not an MS or Linux fanboy, I just try to have a grounded and unbiased view.  IE8 is a pretty decent browser, and in the workplace it comes into it's own with group policies.  I don't use it myself, but it makes maintaining users machines very easy.
+
+No worries. 
+
+As far as IE 8, It's usability is something I do not question at all. It seems quite usable and rather fast. The few times I boot into Windows, I give it a spin around the block. Having said that, it's not the usability I question, but the fact that it could be (and should) be a SAFER browser. To many exploits can be traced back directly to IE vulnerabilities.
+
+---
+
+### Post by alejaaandro on 2010-01-19
+> IE *any version* is not a bad browser for a casual PC user, end of. </off-topic>
+
+
+depends how you define a casual pc user..he might not want tabs of shortcuts or whatever else we might use, but if he values his security he shouldn't be using IE.. you might argue that all browsers have security issues and bugs but other browsers are considered way safer and bugs/security issues are fixed much faster than in ie..
+
+[http://mashable.com/2010/01/18/france-against-internet-explorer/](http://mashable.com/2010/01/18/france-against-internet-explorer/)
+[http://www.eweek.com/c/a/Security/McAfee-New-CyberAttack-Details-Point-to-Internet-Explorer-Security-Vulnerability-466286/](http://www.eweek.com/c/a/Security/McAfee-New-CyberAttack-Details-Point-to-Internet-Explorer-Security-Vulnerability-466286/)
+
+---
+
+### Post by Grenage on 2010-01-19
+> **Uncle Spellbinder said:**
+> To many exploits can be traced back directly to IE vulnerabilities.
+
+No arguing with that, but it is a lot better than it used to be.  I think that vulnerability-wise, IE and FF are about the same.  Now FF has real market share, it's worth targeting.
+
+---
+
+### Post by madnessjack on 2010-01-19
+> **alejaaandro said:**
+> depends how you define a casual pc user..he might not want tabs of shortcuts or whatever else we might use, but if he values his security he shouldn't be using IE.. you might argue that all browsers have security issues and bugs but other browsers are considered way safer and bugs/security issues are fixed much faster than in ie..
+
+[http://mashable.com/2010/01/18/france-against-internet-explorer/](http://mashable.com/2010/01/18/france-against-internet-explorer/)
+[http://www.eweek.com/c/a/Security/McAfee-New-CyberAttack-Details-Point-to-Internet-Explorer-Security-Vulnerability-466286/](http://www.eweek.com/c/a/Security/McAfee-New-CyberAttack-Details-Point-to-Internet-Explorer-Security-Vulnerability-466286/)
+Any piece of software is going to have vulnerabilities. Microsoft's gets scrutinized because of it's market share.
+
+There's also a lot of user stupidity involved in this for example if you download dodgy files anything can be compromised. Just imagine hackers creating fake screen-saver Firefox add-ons, and they would if it had a larger market-share (and to be fair, if it's users were less aware).
+
+Apologies to the OP for being off topic.
+
+---
+
+### Post by elliotbeken on 2010-01-19
+i dont like internet explorer just because or the layout and i have been using firefox for too long to change :P
+
+but i think the point here is that different people like and have different opinions.
+
+if you dont like IE good for you 
+if you like IE good for you :P
+
+---
+
+### Post by alejaaandro on 2010-01-19
+> **elliotbeken said:**
+> but i think the point here is that different people like and have different opinions.
+
+if you dont like IE good for you 
+if you like IE good for you :P
+
+in general i agree..  if someone wants to use any kind of software (that i might consider useless of problematic) i would have no problem.. i might tell him about alternatives and advantages those might have, but if he still wants to stick with what he has, it's none of my business..
+
+web browsers though are different though because all the people using old and incompatible browsers keep the internet back..
+for example:
+[LIST]ie has the least compatible browser with css (for anyone that doesn't know this is the modern way to tell a browser how to render a webpage.. it can define everything: layout, fonts, colors, background images etc)
+This makes new designing techniques difficult to evolve cause you have to consider ie users  (especially ie6) and find workarounds for them
+[/LIST]
+[LIST]ie is the slowest to adopt html5 tags and other new technologies.. for example, drag and drop, video, geolocation and more.. video could break free from flash in websites and work better with browsers.. 
+[/LIST]
+[LIST]i already talked about security issues, i agree that marketshare might be a factor, but i don't think it's the only one.. and it seems reasonable that opensource applications (like firefox and chromium) would get security issues fixed much faster because of the size of the community that can help.. maybe even discover bugs before somebody actually has time to exploit it if a developer happens to be working on a the source code and finds a vulnerability..
+[/LIST]
+
+ie on the other hand was one of the first browsers to support embedded fonts which is cool (firefox supports it since 3.5 i think, which is quite recent).. I admit not all is bad, just most of it..
+
+anyway, my point is, i don't hate ie just because it's a ms product.. i would hate any widespread browser that kept technology back..
+
+so, (refering to previous post) a typical pc user might have a lot of advantages in using a real modern browser, even if he doesn't realize it..
+
+finally, i hate websites designed only to work with IE.. even though this might be the web developers fault, it is a result of ie not being compatible to web standards..
+
+
+EDIT: another example of ie keeping back technology is it's unable to "run" google wave which is considered by many a revolution of internet communications..
+
+this is a screenshot of google wave in ie8.. only the borders are shown..
+[http://www.flickr.com/photos/31918057@N00/4028420673/](http://www.flickr.com/photos/31918057@N00/4028420673/)
+
+---
+
+### Post by amitabhishek on 2010-01-19
+I don't know if its only me but after using Chrome I find all other browsers  fairly antiquated.
+
+---
+
+### Post by MasterNetra on 2010-01-19
+[http://www.itworld.com/security/93045/dump-internet-explorer-now](http://www.itworld.com/security/93045/dump-internet-explorer-now)
+
+Enough said.
+
+---
+
+### Post by Frak on 2010-01-19
+Because they don't want to. Microsoft could give a flying crap about Linux or OS X when it comes to browsers. On the other hand, IE is a web developers worst nightmare. I've had more screaming matches with IE than just about anything, though Opera comes close.
+
+---
+
+### Post by chriswyatt on 2010-01-19
+I don't like the interface, it's messy.  And I've also got bad memories of trying to make web-pages that work in both IE and decent web browsers.
+
+Though at least with IE8 they made an effort to comply with modern web standards, my opinion of IE went up with the release of IE8.
+
+---
+
+### Post by 23meg on 2010-01-19
+> **Frak said:**
+> Microsoft could give a flying crap about Linux or OS X when it comes to browsers.
+
+And vice versa.
+
+---
+
+### Post by HermanAB on 2010-01-19
+Howdy,
+
+> Any piece of software is going to have vulnerabilities. Microsoft's gets scrutinized because of it's market share.
+
+Actually, there are a lot more Linux systems than Windows systems.  Windows is dominant on the desktop only.  Linux is dominant everywhere else.  There are more than 2 Billion Linux devices out there.  Consider that almost every Windows desktop machine hides behind a dinky little Linux router thingy and gazillions of cell phones run Linux and no, they don't suffer from viruses.
+
+```
+There's also a lot of user stupidity involved in this for example if you download dodgy files anything can be compromised.
+```
+
+Have you never heard of drive-by downloads?  With IE, you don't actually have to do anything to get infected.  How is that kind of security bug related to user stupidity?  It is pure Microsoft programmer stupidity.
+
+Nuf sed...
+
+---
+
+### Post by Techsnap on 2010-01-19
+> Have you never heard of drive-by downloads? With IE, you don't actually have to do anything to get infected. How is that kind of security bug related to user stupidity? It is pure Microsoft programmer stupidity.
+
+With Windows XP Sp2+ This is really becoming a thing of the past since it prompts you, and with IE8 it even prompts you before things run.
+
+---
+
+### Post by Frak on 2010-01-19
+> **HermanAB said:**
+> Howdy,
+
+
+
+Actually, there are a lot more Linux systems than Windows systems.  Windows is dominant on the desktop only.  Linux is dominant everywhere else.  There are more than 2 Billion Linux devices out there.  Consider that almost every Windows desktop machine hides behind a dinky little Linux router thingy and gazillions of cell phones run Linux and no, they don't suffer from viruses.
+
+```
+There's also a lot of user stupidity involved in this for example if you download dodgy files anything can be compromised.
+```
+
+Have you never heard of drive-by downloads?  With IE, you don't actually have to do anything to get infected.  How is that kind of security bug related to user stupidity?  It is pure Microsoft programmer stupidity.
+
+Nuf sed...
+And the only thing that all these Linux systems have in common is the kernel. No, I'm not just oversimplifying it. You can say "well everything else is Linux", but when you look at the makeup of them, it ranges incredibly from every piece to make the OS, including the kernel, which is heavily modified in many cases. You can say "Well, they all run Linux", but when you compare "all they who run Linux", you find that they have, at best, very little in common with each other.
+
+As for "drive by downloads", someone doesn't keep up with the news.
+
+---
+
+### Post by scouser73 on 2010-01-19
+> **AllenGG said:**
+> [COLOR=DarkOrchid]**My question of the day: Why hasn't Microsoft created a version of Internet Explorer' that will run on Linux ?**[/COLOR]
+**Just think of how many other programs (apps) that will !!**
+
+If it's going to ever get fixed this is the place to do it !!!!!
+
+:cool:....... Allen
+
+I really doubt that if IE was made for the Linux community, that no one would use it especially given recent events.
+
+---
+
+### Post by Paqman on 2010-01-19
+> **HermanAB said:**
+> There are more than 2 Billion Linux devices out there.
+
+And which browser does your router run, exactly? ;)
+
+---
+
+### Post by AllRadioisDead on 2010-01-19
+I've never had a problem with ie. Sure, it's not as great as firefox in my eyes, but I definitely wouldn't call it garbage.
+
+---
+
+### Post by dragos240 on 2010-01-19
+Internet Explorer has an unofficial port. Look up IES4Linux. And besides, Internet Explorer sucks.
+
+---
+
+### Post by madnessjack on 2010-01-20
+> **HermanAB said:**
+> Actually, there are a lot more Linux systems than Windows systems.
+This is very misleading. By far the majority of machines browsing the Internet use Windows and a lot use a Microsoft browser, especially casual users who are more susceptible to attacks.
+
+---
+
+### Post by colaho on 2010-01-20
+> **Techsnap said:**
+> With Windows XP Sp2+ This is really becoming a thing of the past since it prompts you, and with IE8 it even prompts you before things run.
+
+MS developers prefer prompting you before everything runs instead of trying to make their products to be more secured. How stupid they are!
+
+---
+
+### Post by speedwell68 on 2010-01-20
+I'm sorry that IE is just a waste of good disk space.  I am no MS hater either, they do have some good products out there.  But IE is not a good browser, it doesn't support a lot of web standards, FACT.  It isn't particularly secure, which is mostly down to the way MS works.  It isn't very user friendly.  I think that after the press reports of the last few days, nobody should consider using IE, when the governments advise their citizens not to use a product it is pretty damn bad.
+
+---
+
+### Post by airtonix on 2010-01-20
+Offical IE for linux = One less copy of windows sold.
+
+This is all they care about. Even if they give away free student copies of windows it fulfills the end goal of entrenching themselves in various communities.
+
+A child who traverses through school from the age of 5 through to 20  using windows means that aspect of computing is embedded so deeply that it's a part of their psyche.
+
+Most of the machines a person will use throughout their lifetime, will have windows on them and not through any concious choice of their own.
+
+They are not allowed to change the OS at University, or the Netcafe or the Local Library.
+
+They aren't even aware of such a choice to begin questioning why they would want to make the change.
+
+If it isn't on the supermarket shelf they won't see it.
+
+---
+
+### Post by Frak on 2010-01-20
+> **airtonix said:**
+> Offical IE for linux = One less copy of windows sold.
+
+Nope.
+
+---
+
+### Post by hessiess on 2010-01-20
+IE is a truly awful peace of software. Its practically designed to be insure and its CSS support is tarable!
+
+---
+
+### Post by Frak on 2010-01-20
+> **hessiess said:**
+> IE is a truly awful peace of software. Its practically designed to be insure and its CSS support is tarable!
+This, except it's terrible.
+
+---
+
+### Post by hessiess on 2010-01-20
+> **Frak said:**
+> This, except it's terrible.
+
+> im dyslexic, please don't comment on my spelling
+
+;)
+
+---
+
+### Post by Frak on 2010-01-20
+> **hessiess said:**
+> ;)
+I've only been trained to say this and everything before this.
+
+Que?
+
+---
+
+### Post by Skripka on 2010-01-20
+> **Frak said:**
+> I've only been trained to say this and everything before this.
+
+Que?
+
+^__^
+
+---
+
+### Post by KiwiNZ on 2010-01-20
+Much Ado about nothing.
+
+Its a browser thats all. Most of the problems are misinformed media hype. Keep your PC patched and protected and use common sense and no problems.
+
+Use what ever browser tickles your fancy , be it IE , Firefox , Word, Opera or Outlook.
+
+And when all said in done .....Its  just a Browser ;)
+
+---
+
+### Post by Frak on 2010-01-20
+> **KiwiNZ said:**
+> And when all said in done .....Its  just a Browser ;)
+
+IE is really one of the only software projects I'm strongly against, and for good reason I believe. I am a web developer by trade, and IE has never stayed compliant. I mean, if my target audience only used IE or only used Firefox/Chrome/Safari, I would be OK. Though, I have to cater to multiple audiences which makes my job take much longer than it should.
+
+It would be fine if the only thing that separated browsers was how the user interacted with it, but unfortunately it also involves how it interprets what the designers and developers create. In that way, you'll hear a lot of backlash from web designers about the adoption of Internet Explorer.
+
+---
+
+### Post by alejaaandro on 2010-01-20
+[http://mybroadband.co.za/news/Software/11096.html](http://mybroadband.co.za/news/Software/11096.html)
+
+---
+
+### Post by lisati on 2010-01-20
+> **hessiess said:**
+> ;)
+
+Keep on smiling! You can do it! (Big supportive cheer from the Lisati house.) :)
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+There's no market for it. 
+
+And in order to make it cross platform, they would have to *gasp* decouple it from Windows' inner workings and *gasp* no longer have an excuse to bundle it with Windows, thus losing out on the ability to hinder the development of competing servers and *gasp* causing everyone to dump IIS ASAP.
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> There's no market for it. 
+
+And in order to make it cross platform, they would have to *gasp* decouple it from Windows' inner workings and *gasp* no longer have an excuse to bundle it with Windows, thus losing out on the ability to hinder the development of competing servers and *gasp* causing everyone to dump IIS ASAP.
+It's not a part of Windows inner workings. You don't even have to install it with Windows.
+
+---
+
+### Post by steveneddy on 2010-01-20
+> **Uncle Spellbinder said:**
+> I'd never use that piece of crap even if you payed me.
+
+Yeah - me too-
+
+IE is the biggest reason I came to Linux.
+
+---
+
+### Post by Desert Sailor on 2010-01-20
+> **AllenGG said:**
+> [COLOR=DarkOrchid]**My question of the day: Why hasn't Microsoft created a version of Internet Explorer' that will run on Linux ?**[/COLOR]
+**Just think of how many other programs (apps) that will !!**
+
+If it's going to ever get fixed this is the place to do it !!!!!
+
+:cool:....... Allen
+
+As has been said, Microsoft would rather not admit that Linux exists.  We are just a lunatic fringe as far as they are concerned.
+
+---
+
+### Post by Frak on 2010-01-20
+> **Desert Sailor said:**
+> As has been said, Microsoft would rather not admit that Linux exists.  We are just a lunatic fringe as far as they are concerned.
+Which is why they put full support into Mono and Moonlight.
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+> **Frak said:**
+> It's not a part of Windows inner workings. You don't even have to install it with Windows.
+As of Windows 7, you can choose to skip the desktop icons and start menu entry during the setup wizard, yes. But you still get the Trident rendering engine, which is itself a security liability and the origin of most of IE's problems.
+
+---
+
+### Post by Sand &amp; Mercury on 2010-01-20
+IE isn't really *bad* these days, it's just the *worst*.
+
+---
+
+### Post by hessiess on 2010-01-20
+> **MaxIBoy said:**
+> As of Windows 7, you can choose to skip the desktop icons and start menu entry during the setup wizard, yes. But you still get the Trident rendering engine, which is itself a security liability and the origin of most of IE's problems.
+
+The IE rendering engine is used by meny programs bundled with windows and also stand-alone applications, i.e. the windows email client. The security problems are most commonly caused by the rendering engine, which it is imposable to get rid of.
+
+---
+
+### Post by hessiess on 2010-01-20
+> **frak said:**
+> ie is really one of the only software projects i'm strongly against, and for good reason i believe. I am a web developer by trade, and ie has never stayed compliant. I mean, if my target audience only used ie or only used firefox/chrome/safari, i would be ok. Though, i have to cater to multiple audiences which makes my job take much longer than it should.
+
+It would be fine if the only thing that separated browsers was how the user interacted with it, but unfortunately it also involves how it interprets what the designers and developers create. In that way, you'll hear a lot of backlash from web designers about the adoption of internet explorer.
+
++1
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> As of Windows 7, you can choose to skip the desktop icons and start menu entry during the setup wizard, yes. But you still get the Trident rendering engine, which is itself a security liability and the origin of most of IE's problems.
+The engine is not included. In fact, Windows Mail isn't even included. To install Windows Live suite, you need to also install the Trident engine.
+
+---
+
+### Post by BuffaloX on 2010-01-20
+Internet Explorer is a stellar browser.
+
+It's more than fast enough for me. (I just need faster hardware)
+I don't have to worry about new standards. (They simply aren't there.)
+It's the best for home banking. (I won't spy promise.)
+I can execute instructions even from within comments. (Suck on that W3C)
+It's design is smooth and modern. (by standards of the previous millennium)
+It works on Multiple Platforms. (Windows XP / Vista / 7)
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+> **Frak said:**
+> The engine is not included. In fact, Windows Mail isn't even included. To install Windows Live suite, you need to also install the Trident engine.So they're not just hiding the files by default?
+
+Has anyone done hard drive usage comparisons with/without (from a clean install, usage NOT measured using Windows' builtin file browser?) Show me numbers and I'll believe it (and eat my hat!)
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> So they're not just hiding the files by default?
+
+Has anyone done hard drive usage comparisons with/without (from a clean install, usage NOT measured using Windows' builtin file browser?) Show me numbers and I'll believe it (and eat my hat!)
+It's probably included in the way that it's stored, but that's because of the way Windows installs (Image based, the image on the disc is directly copied). But no application is allowed to use it because it isn't activated in the Windows features dialog (it stays retained in its archive).
+
+Now, I'm expecting a "Ha, that's a security risk!" but only Administrators are allowed to access feature archives. /nuff said
+
+---
+
+### Post by KiwiNZ on 2010-01-20
+I am OK with IE it works , it does what it is designed to do , as does Safari , Firefox  and to an extent Opera.
+
+I use Firefox , why ? as I move between Windows( various versions) , Linux ( various Distos) and OSX it gives me consistency across these.
+
+If IE were available on Linux and OSX ( and yes I know about the vintage IE4 that does not work on Snow Leopard) I would use it with out worry.
+
+---
+
+### Post by Skripka on 2010-01-20
+> **KiwiNZ said:**
+> I am OK with IE it works , it does what it is designed to do , as does Safari , Firefox  and to an extent Opera.
+
+I use Firefox , why ? as I move between Windows( various versions) , Linux ( various Distos) and OSX it gives me consistency across these.
+
+If IE were available on Linux and OSX ( and yes I know about the vintage IE4 that does not work on Snow Leopard) I would use it with out worry.
+
+The latest version of BlackBoard is completely broken at my institution on IE8.  Whose fault that one is I do not know.  Official word from the IT monkeys here is "Use Chrome instead"-so everyone is having to install another browser on institution machines for one (important)website.  Chrome is broken for other official institution websites though, so IE and/or FF need kept.
+
+---
+
+### Post by KiwiNZ on 2010-01-20
+> **Skripka said:**
+> The latest version of BlackBoard is completely broken at my institution on IE8.  Whose fault that one is I do not know.  Official word from the IT monkeys here is "Use Chrome instead"-so everyone is having to install another browser on institution machines for one (important)website.  Chrome is broken for other official institution websites though, so IE and/or FF need kept.
+
+I have been messing with Chrome , it looks nice , just can't get used to it . But I am old .:(
+
+---
+
+### Post by SuperSonic4 on 2010-01-20
+Why would I want to use a browser that carries strong recommendations against it's use by the French **and** German government
+
+---
+
+### Post by whiskeylover on 2010-01-20
+I'm not saying its wise to use IE, but you could've used a better argument. The government doesn't always consist of very bright people.
+
+---
+
+### Post by Frak on 2010-01-20
+> **KiwiNZ said:**
+> I have been messing with Chrome , it looks nice , just can't get used to it . But I am old .:(
+Use Chrome Frame, make teh frakster happay :)
+
+---
+
+### Post by forrestcupp on 2010-01-20
+If you're that desperate, use IE4Linux.
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+> **Frak said:**
+> It's probably included in the way that it's stored, but that's because of the way Windows installs (Image based, the image on the disc is directly copied). But no application is allowed to use it because it isn't activated in the Windows features dialog (it stays retained in its archive).
+
+Now, I'm expecting a "Ha, that's a security risk!" but only Administrators are allowed to access feature archives. /nuff saidOkay, I'll buy that, but how likely is it for someone to use a limited account on Windows? Are those restrictions really effective in practice? ("Yes" is a fine answer, I haven't use Win7 extensively and could be wrong.)
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> Okay, I'll buy that, but how likely is it for someone to use a limited account on Windows? Are those restrictions really effective in practice? ("Yes" is a fine answer, I haven't use Win7 extensively and could be wrong.)
+UAC effectively enforces it. Trying to extract the .cab files brings up a UAC dialog. In a corporate environment, it would bring up the UAC dialog with a username/pass field for an administrator.
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+> **Frak said:**
+> UAC effectively enforces it. Trying to extract the .cab files brings up a UAC dialog. In a corporate environment, it would bring up the UAC dialog with a username/pass field for an administrator.Corporate is a different universe.
+
+At home, the disease I call "Click-OK-itis" (or "Make-it-go-away-itosis") is rampant. People have been conditioned on Windows to just click on whatever shows up on the screen until it disappears and they can get back to work.
+
+Normally, I wouldn't care at all if some moron gets his machine infected and pays some huckster $50 to "fix" it. But the more computers get infected, the more spam ends up in my inbox, and that pisses me off.
+
+At the risk of sounding stereotypical, IE is a direct threat and affront to the well-being of the Internet in general, in more ways than one.
+
+---
+
+### Post by beetleman64 on 2010-01-20
+IE isn't on Linux and I think we should be thankful for it! Even on Windows IE is losing ground to Firefox and Chrome, on Linux it would maybe have around 0.0001% of the market.
+
+Anyway, even if the Microsoft/Novell link did lead to IE for Linux, you would have to pay me so much money to use it!
+
+---
+
+### Post by Skripka on 2010-01-20
+> **SuperSonic4 said:**
+> Why would I want to use a browser that carries strong recommendations against it's use by the French **and** German government
+
+Well according to your user info, you're in England.  If the French say one thing, they're automatically wrong ipso facto of being French.  Correct?
+
+---
+
+### Post by Techsnap on 2010-01-20
+> People have been conditioned on Windows to just click on whatever shows up on the screen until it disappears and they can get back to work.
+
+Well at least UAC prompts them every time so it's definitely their problem. Unlike sudos default configuration in Ubuntu where it won't ask you or prompt you for a password within 15 minutes, that's some real smart security there.
+
+---
+
+### Post by Skripka on 2010-01-20
+> **Techsnap said:**
+> Well at least UAC prompts them every time so it's definitely their problem. Unlike sudos default configuration in Ubuntu where it won't ask you or prompt you for a password within 15 minutes, that's some real smart security there.
+
+It is convenience.  You can edit the sudo timeout if you want.
+
+The easiest way to make your computer secure is to never turn it on, and never store anything on it.  But that would be a wee bit inconvenient to surf the web now wouldn't it?
+
+How does annoying the user with password prompts everytime a root level command needs issued, do anything than teach the user to not appreciate why sudo and root privledges exist in the 1st place.  Annoying the user constantly for privledges teaches carelessness not thought.  Besides LOTS of damage can be done without the need for your root password anyway.
+
+Nagging mother-hen alerts=/=security
+
+
+A saavy informed end user is the best security.  It doesn't matter how idiot-proof you make a system.  The world keeps coming up with better models of idiots.
+
+---
+
+### Post by xuCGC002 on 2010-01-20
+IE8 is ok, yet still not as good as Firefox, Chrome, or Opera, in my personal experience.
+
+---
+
+### Post by 3rdalbum on 2010-01-20
+[http://en.wikipedia.org/wiki/Internet_Explorer_for_UNIX](http://en.wikipedia.org/wiki/Internet_Explorer_for_UNIX)
+
+---
+
+### Post by Frak on 2010-01-20
+> **3rdalbum said:**
+> [http://en.wikipedia.org/wiki/Internet_Explorer_for_UNIX](http://en.wikipedia.org/wiki/Internet_Explorer_for_UNIX)
+I remember using it on Solaris. It was terrible.
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+The difference between UAC and Unix methods like su and sudo, is that UAC asks for confirmation for every potentially risky action (like opening a protected file for writing,) whereas with su/sudo, you authenticate a program when it first runs and it remains at elevated permissions. The Windows way is theoretically better (and might be useful on Unix as a sort of sandbox mode for untrusted binaries.) However, it's way more annoying, as you get essentially asked the same question about the same program repeatedly. In terms of user experience, the difference is huge.
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> In terms of user experience, the difference is huge.
+
+In terms of security, the difference is larger.
+
+---
+
+### Post by witeshark17 on 2010-01-20
+All of the windows users I know use FF :popcorn:
+
+---
+
+### Post by MaxIBoy on 2010-01-20
+Indeed it is. Having used both Vista and Ubuntu/Debian, I can say that even with sudo timeout reduced to 30 seconds, the Linux distros seem a lot less intrusive. If I didn't know better, I would have disabled UAC long ago because I really hate being asked the same question twice. For every person who does know better, there are at least a few people who don't. 
+
+Running your OS in a secure way needs to be a fun experience, otherwise few people will do it (especially not those who are most likely to be fooled by later social engineering.) More intrusive security measures reduce overall security. 
+
+And like I have already said, the only reason I care is because of how much spam arrives in my inbox; or, a bigger problem, how much legit mail is misclassified as spam.
+
+---
+
+### Post by Frak on 2010-01-20
+> **MaxIBoy said:**
+> Indeed it is. Having used both Vista and Ubuntu/Debian, I can say that even with sudo timeout reduced to 30 seconds, the Linux distros seem a lot less intrusive. If I didn't know better, I would have disabled UAC long ago. For every person who does know better, there are at least a few people who don't. 
+
+Running your OS in a secure way needs to be a fun experience, otherwise few people will do it (especially not those who are most likely to be fooled by later social engineering.) More intrusive security measures reduce overall security. 
+
+And like I have already said, the only reason I care is because of how much spam arrives in my inbox; or, a bigger problem, how much legit mail is misclassified as spam.
+Here's what I was taught long ago about security: It isn't fun, and that's too bad.
+
+---
+
+### Post by Megrimn on 2010-01-20
+RAWR RANT RAGE UGH SO ANGRY GAH RAWR
+
+...what? I wanted a piece of ie, too.
+
+---
+
+### Post by k64 on 2010-01-20
+Proprietary software on top of Linux is a GPL violation anyway. Next thread please.
+
+---
+
+### Post by doorknob60 on 2010-01-20
+Lol, maybe because:
+1) It would suck even worse than the Windows version (that's not easy to do)
+2) Absolutely nobody would use it, except for maybe the rare web designer checking how screwed up the perfectly standards compliant site you just designed looks in it.
+
+> **k64 said:**
+> Proprietary software on top of Linux is a GPL violation anyway. Next thread please.
+Uhh...no? Hope you're joking.
+
+---
+
+### Post by Frak on 2010-01-20
+> **k64 said:**
+> Proprietary software on top of Linux is a GPL violation anyway. Next thread please.
+k64, you just redefined how clueless I thought people could be.
+
+---
+
+### Post by k64 on 2010-01-20
+> **doorknob60 said:**
+> Lol, maybe because:
+1) It would suck even worse than the Windows version (that's not easy to do)
+2) Absolutely nobody would use it, except for maybe the rare web designer checking how screwed up the perfectly standards compliant site you just designed looks in it.
+
+
+Uhh...no? Hope you're joking.
+
+Read this and weep:
+
+> 10. Automatic Licensing of Downstream Recipients.
+
+  Each time you convey a covered work, the recipient automatically
+receives a license from the original licensors, to run, modify and
+propagate that work, subject to this License.  You are not responsible
+for enforcing compliance by third parties with this License.
+
+  An "entity transaction" is a transaction transferring control of an
+organization, or substantially all assets of one, or subdividing an
+organization, or merging organizations.  If propagation of a covered
+work results from an entity transaction, each party to that
+transaction who receives a copy of the work also receives whatever
+licenses to the work the party's predecessor in interest had or could
+give under the previous paragraph, plus a right to possession of the
+Corresponding Source of the work from the predecessor in interest, if
+the predecessor has it or can get it with reasonable efforts.
+
+  You may not impose any further restrictions on the exercise of the
+rights granted or affirmed under this License.  For example, you may
+not impose a license fee, royalty, or other charge for exercise of
+rights granted under this License, and you may not initiate litigation
+(including a cross-claim or counterclaim in a lawsuit) alleging that
+any patent claim is infringed by making, using, selling, offering for
+sale, or importing the Program or any portion of it.
+
+---
+
+### Post by KiwiNZ on 2010-01-20
+> **k64 said:**
+> Proprietary software on top of Linux is a GPL violation anyway. Next thread please.
+
+Say what now ?
+
+References please
+
+---
+
+### Post by Frak on 2010-01-20
+> **k64 said:**
+> Read this and weep:
+Pffttt...
+
+
+HAHAHAHA.
+
+I'm sorry, but I have no idea where you are going with this. Anything that runs in Userland can be closed source. Anything compiled with GCC can be closed source. Anything run on Linux can be closed source.
+
+---
+
+### Post by Skripka on 2010-01-20
+> **k64 said:**
+> Read this and weep:
+
+No weeping here, but giggling and LOLing? yes.
+
+---
+
+### Post by k64 on 2010-01-21
+> **Skripka said:**
+> No weeping here, but giggling and LOLing? yes.
+
+Did you even see the Item 10 of the GPL that I quoted? Here's the full GPL: [http://www.gnu.org/licenses/gpl.txt](http://www.gnu.org/licenses/gpl.txt)
+
+Item 10 of the GPL automatically kills sublicensing. That means that all derivative works of software licensed under the GPL must be under the GPL. That means that all Linux software must be under the GPL. HA!!!
+
+---
+
+### Post by Frak on 2010-01-21
+> **k64 said:**
+> Did you even see the Item 10 of the GPL that I quoted? Here's the full GPL: [http://www.gnu.org/licenses/gpl.txt](http://www.gnu.org/licenses/gpl.txt)
+Thank you, we've read it.
+
+---
+
+### Post by Skripka on 2010-01-21
+> **Frak said:**
+> Thank you, we've read it.
+
+And Frak and his emu in the backyard are still laughing.
+
+---
+
+### Post by Frak on 2010-01-21
+> **Skripka said:**
+> And Frak and his emu in the backyard are still laughing.
+
+I'm laughing, he's rawring.
+
+---
+
+### Post by k64 on 2010-01-21
+> **Frak said:**
+> Thank you, we've read it.
+
+As I said before, Item 10 !!KILLS!! sublicensing. Therefore, all Linux programs must be under the GPL, because Linux is under the GPL.
+
+---
+
+### Post by d3v1150m471c on 2010-01-21
+Microsoft would have to pay me to use internet explorer. Not to mention it would probably make itself necessary for your system to function once installed, and crash your system if removed. It's a known issue on window's systems.
+
+---
+
+### Post by MaxIBoy on 2010-01-21
+It's not exactly easy to get confused by this, but it happens to some people, so I'll explain it to you:
+
+It is OK to run proprietary software on a Copyleft kernel the same way it's OK to write a copyrighted book using OpenOffice or edit copyrighted music using the open-source Ardour. The program is treated by the OS as just an input file. (Similarly, it's OK to compile proprietary code using GCC.)
+
+Adding proprietary code to the Linux kernel itself (closed source drivers and firmware for example) is **not** OK with the GPL. However, if the original copyright owners (Linus Torvalds et al) are OK with it, and they don't sue, then it's still not going to be a problem. In theory they could sue you for adding proprietary code to the Linux kernel, but they will not do that. They have publicly said that they will not enforce this part of the GPL, and they often violate it themselves as well. As they hold copyright over the code in Linux, they are the only ones with power to sue over violating the GPL with it.
+
+---
+
+### Post by Skripka on 2010-01-21
+> **Frak said:**
+> I'm laughing, he's rawring.
+
+Poor fella, cannot fly, and is doomed to put his head in holes, and not be able to LOL at internet funnies.
+
+Should console the poor bird with some Daniels.  Nothing worse than a rawring emu unable to scoff at funny people with srs internet bzness.
+
+---
+
+### Post by Frak on 2010-01-21
+> **Skripka said:**
+> Poor fella, cannot fly, and is doomed to put his head in holes, and not be able to LOL at internet funnies.
+
+Should console the poor bird with some Daniels.  Nothing worse than a rawring emu unable to scoff at funny people with srs internet bzness.
+Well, I think he stole some of my Oxycodone.
+
+---
+
+### Post by Skripka on 2010-01-21
+> **Frak said:**
+> Well, I think he stole some of my Oxycodone.
+
+Watch out.  Like my mom used to tell me, "The only thing worse than an emu unable to express his self is a nauseated and constipated emu."  Nadda.
+
+---
+
+### Post by Frak on 2010-01-21
+> **Skripka said:**
+> Watch out.  Like my mom used to tell me, "The only thing worse than an emu unable to express his self is a nauseated and constipated emu."  Nadda.
+I think he's seeing pretty colors atm.
+
+---
+
+### Post by k64 on 2010-01-21
+I got corrected. Proprietary changes to the Linux kernel are the only changes that violate the GPL. Sorry for jumping to conclusions.
+
+-Kenny
+
+---
+
+### Post by KiwiNZ on 2010-01-21
+> **k64 said:**
+> I got corrected. Proprietary changes to the Linux kernel are the only changes that violate the GPL. Sorry for jumping to conclusions.
+
+-Kenny
+
+Lesson : Legal interpretations are very complicated and great care should be taken before conclusions are jumped to or ones upper extremities can become covered with the contents of eggs ;)
+
+---
+
+### Post by Skripka on 2010-01-21
+> **KiwiNZ said:**
+> Lesson : Legal interpretations are very complicated and great care should be taken before conclusions are jumped to or ones upper extremities can become covered with the contents of eggs ;)
+
+Or you could fall victim to a constipated drug overdosed emu.  Yikes.
+
+---
+
+### Post by Giant Speck on 2010-01-21
+> **k64 said:**
+> I got corrected. Proprietary changes to the Linux kernel are the only changes that violate the GPL. Sorry for jumping to conclusions.
+
+-Kenny
+
+Not to mention you were quoting the *wrong* version of the GPL.
+
+---
+
+### Post by Frak on 2010-01-21
+> **KiwiNZ said:**
+> Lesson : Legal interpretations are very complicated and great care should be taken before conclusions are jumped to or ones upper extremities can become covered with the contents of eggs ;)
+
+> **Skripka said:**
+> Or you could fall victim to a constipated drug overdosed emu.  Yikes.
+
+rawr
+
+---
+
+### Post by KiwiNZ on 2010-01-21
+> **Skripka said:**
+> Or you could fall victim to a constipated drug overdosed emu.  Yikes.
+
+yuk
+
+---
+
+### Post by Giant Speck on 2010-01-21
+> **Skripka said:**
+> Or you could fall victim to a constipated drug overdosed emu.  Yikes.
+
+[img]http://bluesuncorp.co.uk/files/upload__/do-not-want_3571.jpg[/img]
+
+---
+
+### Post by xuCGC002 on 2010-01-21
+> **k64 said:**
+> Proprietary software on top of Linux is a GPL violation anyway. Next thread please.
+
+Gee, guess I better uninstall Flash, Quake, any games I have in WINE, my proprietary codecs, non-ose Virtualbox...
+
+---
+
+### Post by BuffaloX on 2010-01-21
+> **k64 said:**
+> I got corrected. Proprietary changes to the Linux kernel are the only changes that violate the GPL. Sorry for jumping to conclusions.
+
+-Kenny
+
+Nice to see someone admitting making a mistake, that is so rare. :)
+
+---
+
+### Post by khopek on 2010-02-16
+> **alejaaandro said:**
+> no it's not bad... IT'S HORRIBLE!!
+
+i recently got into basic web development (html and css) and found out really how crappy IE is.. especially IE6, but even IE8 is far worse than all the other browsers i've tested my site with..
+
+i asked for some help from a friend who does some web development and told me he often has to build a site for ie and a different one for the rest of the browsers which are compatible with standards..
+
+i've made it a personal goal to make everyone i know quit ie and if for some reason they won't at least make them upgrade to IE8 which is kinda compatible with web standards.. 
+
+it's stupid making web developers' life harder, trying to fix a stupid browser's quirks in stead of spending time improving websites, functionality and offering new services..
+
+I agree with you there. You don't realize how ack basswards IE is until you have to hack your way through valid code to make a site work in it, because IE doesn't understand what it means.
+
+It is also necessary to have IE on Linux sometimes for other reasons then web development...especially when weirdos make a site that requires the use of IE [oh activeX though art a heartless bitch]
+
+People use <snip> [especially 6] do not deserve to see teh internets:popcorn:
+
+> Microsoft only produces Mac products because there is market for selling them
+
+Microsoft produces Mac products because Microsoft owns part of Apple.:D If you can't beat em...buy em..teehee.
+
+---
+
+### Post by mamamia88 on 2010-02-16
+thank goodness it's not on linux is all i have to say
+
+---
+
+### Post by Frak on 2010-02-16
+> **khopek said:**
+> Microsoft produces Mac products because Microsoft owns part of Apple.:D If you can't beat em...buy em..teehee.
+
+That would be a good reason if it were true.
+
+---
+
+### Post by Simon17 on 2010-02-16
+Microsoft already bought Canonical... and now Apple too?
+
+
+Once a convicted monopolist, always a convicted monoplist!
+
+---
+
+### Post by AllRadioisDead on 2010-02-16
+> **Simon17 said:**
+> Microsoft already bought Canonical... and now Apple too?
+
+
+Once a convicted monopolist, always a convicted monoplist!
+What?
+
+---
+
+### Post by matthew.ball on 2010-02-16
+> **Frak said:**
+> That would be a good reason if it were true.
+Microsoft at one point had like 40% of non-voting shares for Apple.
+
+---
+
+### Post by Simon17 on 2010-02-16
+> **ihermit said:**
+> What?
+I said...
+
+[Microsoft already bought Canonical...]("http://identi.ca/notice/20123142") and [now Apple too?]("http://ubuntuforums.org/showpost.php?p=8833710&postcount=117")
+
+---
+
+### Post by cariboo on 2010-02-16
+Is [this]("http://blogs.seattleweekly.com/dailyweekly/2009/08/this_day_in_history_microsoft.php") enough proof that Microsoft owns part of Apple.
+
+---
+
+### Post by matthew.ball on 2010-02-16
+> **Simon17 said:**
+> I said...
+
+[Microsoft already bought Canonical...]("http://identi.ca/notice/20123142") and [now Apple too?]("http://ubuntuforums.org/showpost.php?p=8833710&postcount=117")
+The leap to Microsoft buying Canonical is a bit steep, don't you think?
+
+I understand that Microsoft were interested in buying Yahoo at one point, but nothing ever came of that as far as I am aware. Thus, Yahoo is still a separate company - despite the fact it may use Microsoft's Bing for it's searching (or whatever the specifics are).
+
+---
+
+### Post by Frak on 2010-02-16
+> **matthew.ball said:**
+> Microsoft at one point had like 40% of non-voting shares for Apple.
+
+That's right. They did, *at one point*.
+
+> **cariboo907 said:**
+> Is [this]("http://blogs.seattleweekly.com/dailyweekly/2009/08/this_day_in_history_microsoft.php") enough proof that Microsoft owns part of Apple.
+
+No, because Microsoft sold all those shared back to Apple a loooong time ago. Besides, those were nonvoting shares. They had no impact on the company.
+
+---
+
+### Post by Merk42 on 2010-02-16
+> **Simon17 said:**
+> I said...
+
+[Microsoft already bought Canonical...]("http://identi.ca/notice/20123142") and [now Apple too?]("http://ubuntuforums.org/showpost.php?p=8833710&postcount=117")
+
+Using the logic that default search = owner, I guess Microsoft bought Canonical from Google.
+
+---
+
+### Post by Frak on 2010-02-16
+> **Merk42 said:**
+> Using the logic that default search = owner, I guess Microsoft bought Canonical from Google.
+It was kind of a mock of how Ubuntu using Google was fine, but now that they're using Yahoo which is sorta affiliated with Microsoft because of the search engine, users started freaking out that Microsoft was trying to buy out Canonical.
+
+Sounds stupid, but people like to get all riled up about nothing.
+
+---
+
+### Post by themarker0 on 2010-02-16
+It would be a usefull thing to have to test websites, i know a friend on mac who has his friends go through as test because it is the only thing they can't test. IE runes the internet. Even if they made trident more able to be ported to mac and windows, it would help. So say even maxthon could make a mac version, close enough to IE imho.
+
+---
+

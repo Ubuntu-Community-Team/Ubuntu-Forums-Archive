@@ -1,0 +1,38 @@
+---
+title: "[EVENT] MOCA 2008 - Metro Olografix CAmp - Hacker Camp in Italy"
+date: 2008-05-23
+forum: The Cafe
+---
+
+### Post by squibli on 2008-05-23
+**MOCA 2008: a dream come true.**
+(Metro Olografix is in Phrack Magazine: [http://www.phrack.org/issues.html?issue=65&id=15#article](http://www.phrack.org/issues.html?issue=65&id=15#article) )
+
+Many hoped, few believed, the rumors conflicting, the souls aflame, cats and dogs sleeping together, but in the end we made it!
+
+Four years after the celebration of the 10th birthday of Metro Olografix, at fans' request, the summer camp will come back to let us spend a few hot August days together again, among arrosticini and glasses of wine and swims and talks - oh my! - in neat little Pescara.
+
+*"Ardetec li cannilicchie!"* :guitar:
+
+The second edition of the Metro Olografix Camp will take place August 21st to 24th 2008, at the "ex Caserma Di Cocco" Park. MOCA is a hacker camp in north-European style, free admittance, open to all, to meet and have fun sharing information and knowledge.
+
+Just like four years ago, it will be a chance to meet old and new friends, all those who populated the computer underground so far since that infamous 1994, ready to live it in the coming years, together with those who have only just begun peeking into a telematic world made increasingly more worrisome by technologic and legal implications.
+
+See you in Pescara, you, your tent, your computer: to hack, experiment, play, chat, do whatever will ultimately send us thinking "once again, it was really worth it!" all the way back home.
+
+The Call For Papers deadline is August 1st 2008: propose your thematic area, your activity, your talk. We'll be happy to help you do something for the event and, especially, for all who'll spend together four - we hope - unforgettable days of their lives.
+
+Everyone's invited, see you in Pescara, to share experiences and knowledge in the spirit of pure hacker ethics.
+
+Information wants to be free!
+
+For info:
+
+[http://camp.olografix.org]("http://camp.olografix.org")
+
+Submit your proposals to: **moca-cfp@olografix.org**
+
+Mailing list for attendees: **camp-user@olografix.org**
+
+---
+
