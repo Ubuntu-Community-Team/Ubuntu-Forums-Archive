@@ -1,0 +1,101 @@
+---
+title: "Want to add icon for Hulu Desktop"
+date: 2010-03-04
+forum: Mythbuntu
+---
+
+### Post by molder on 2010-03-04
+So if I where to add ```
+<state name="Hulu">
+<imagetype name="watermark">
+<filename>/home/andrew/.mythtv/themes/hulu.png
+</filename>
+</imagetype>
+</state>
+``` in menu-ui.xml?
+
+My menu-ui.xml file in ~/.mythtv/themes/Graphite:
+
+```
+<mythuitheme>
+    <window name="mainmenu">
+        <font name="menufont" from="basesmall">
+            <color>#666666</color>
+        </font>
+        
+        <imagetype name="background" draworder="0">
+            <area>0,0,1280,720</area>
+            <filename>images/backgrounds/</filename>
+        </imagetype>
+        
+        <imagetype name="menuscrollback">
+            <area>-8,580,1296,30</area>
+            <filename>images/menuscrollback.png</filename>
+            <alpha>200</alpha>
+            </imagetype>
+          
+        <buttonlist name="menu">
+        
+            <area>0,559,1280,60</area>
+            <layout>horizontal</layout>
+            <spacing>20</spacing>
+            <scrollstyle>center</scrollstyle>
+            <wrapstyle>items</wrapstyle>
+            <buttonarea>0,0,1280,60</buttonarea>
+            <statetype name="buttonitem">
+                <state name="active">
+<!--                    <area>0,9,240,59</area>-->
+                    <area>0,9,413,59</area>
+                    <imagetype name="background" />
+                    <textarea name="buttontext">
+<!--                        <area>0,0,240,59</area>-->
+                        <area>0,0,413,59</area>
+                        <font>menufont</font>
+                        <align>center,vcenter</align>
+                        <cutdown>yes</cutdown>
+                        <case>upper</case>
+                    </textarea>
+                </state>
+                <state name="selected"> 
+<!--                    <area>0,9,240,59</area>-->
+                    <area>0,9,413,59</area>
+                    <imagetype name="background" />
+                    <textarea name="buttontext">
+<!--                        <area>-17,0,274,59</area>-->
+                        <area>-17,0,447,59</area>
+                        <font>basesmall</font>
+                        <alphapulse min="180" max="255" change="2"/>
+                        <align>center,vcenter</align>
+                        <cutdown>yes</cutdown>
+                        <case>upper</case>
+                    </textarea>
+                </state>
+                        
+        </buttonlist>
+        
+        <imagetype name="clockback">
+            <area>525,695,230,51</area>
+            <filename>images/clock_backdrop.png</filename>
+        </imagetype>
+        
+        <clock name="clock">
+            <area>529,700,219,25</area>
+            <font>clock</font>
+            <format>%DATE%, %TIME%</format>
+            <align>center</align>
+            <alpha>255</alpha>
+        </clock>
+        
+        <imagetype name="clockbackoverlay">
+            <area>525,695,230,23</area>
+            <filename>images/clock_backdrop_overlay.png</filename>
+        </imagetype>
+        </buttonlist>
+        
+    </window>
+</mythuitheme>
+
+```
+
+---
+

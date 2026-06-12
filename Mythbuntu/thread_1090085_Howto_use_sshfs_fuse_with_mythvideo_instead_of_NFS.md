@@ -1,0 +1,141 @@
+---
+title: "Howto: use sshfs fuse with mythvideo instead of NFS"
+date: 2009-03-07
+forum: Mythbuntu
+---
+
+### Post by oobe-feisty on 2009-03-07
+**Introduction**
+
+I had a lot of trouble with laggy slow mythvideo on my remote frontend i spent ages tweaking my nfs mounts with various options and tweaking my wireless connection my wireless is pretty solid and i get around 40MB uplink on my backend so i couldnt understand why so much lag like sometime 1 or 2 mins to load mythvideo folders though streaming was fine. this was a solution that dramitically improved my connection i found that works for me feedback is much appreciated in order to improve this guide.
+
+
+log into your remote frontend via ssh or locally 
+
+sudo apt-get install sshfs fuseutils
+
+modprobe fuse
+
+
+
+add fuse to /etc/modules
+
+logout out and log back in 
+
+create your mount point in the same structure as your backend ( i.e if your mythvideo directory is /mnt/videos then you should create /mnt/videos on your remote frontend and use that as the mount point.)
+
+add your mount point to /etc/fstab
+
+open /etc/fstab with your favourate text editor 
+
+joe /etc/fstab
+
+add the line below 
+
+```
+sshfs#user@remote.machine:/path/to/videos /path/to/videos fuse ro,user,auto 0 0
+```
+
+save and exit (remote.machine is the host name of your backend /path/to/videos is your videos path)
+
+test the fstab line by typeing ( as normal user that uses mythtv)
+
+mount /path/to/videos ( this is an example you will need to be literal with the path name ) 
+
+if it works proceed to next step.
+
+
+create a key so you can auto login to your remote mythbackend via ssh with out password prompt
+
+
+ssh-keygen -t dsa
+
+then export the key to your remote backend
+
+ssh-copy-id -i id_dsa.pub [email]user@remote.machin[/email]e
+or
+ssh-copy-id -i ~/.ssh/id_dsa.pub [email]user@remote.machin[/email]e
+
+( replace user with your user name and remote.machine with the host name of remote backend.
+
+test ssh remote.machine 
+
+your should now beable to login with password prompt 
+
+
+now add this line to your /etc/rc.local or whereever you see fit
+
+
+
+```
+sudo -u user mount /path/to/videos
+```
+
+replace user with your user name and /path/to/videos with actual mount point which again reminding you should be same path as remote backend reason is mythtv looks in the database for the files on the remote frontend as if it were the same as remote backend.
+
+anyway this should now work here is what my remote frontend looks like when i type mount 
+
+box:/data/Documents/media/mp3z on /data/Documents/media/mp3z type nfs (ro,rsize=8192,wsize=8192,timeo=14,intr,nfsvers=3,bg,actimeo=0,tcp,addr=192.168.1.10)
+box:/home/oobe/.shepherd/icons on /home/oobe/.shepherd/icons type nfs (ro,rsize=8192,wsize=8192,timeo=14,intr,nfsvers=3,bg,actimeo=0,tcp,addr=192.168.1.10)
+box:/home/oobe/.mythtv/MythVideo on /home/oobe/.mythtv/Videoremote type nfs (ro,rsize=8192,wsize=8192,timeo=14,intr,nfsvers=3,bg,actimeo=0,tcp,addr=192.168.1.10)
+oobe@box:/data/Documents/media/vids on /data/Documents/media/vids type fuse.sshfs (ro,noexec,nosuid,nodev,max_read=65536,user=oobe)
+
+
+the other shares are still using NFS i dont feel it effects speed as much as the videos mount
+
+
+**After Thought's**
+
+i put this line in my users crontab 
+
+> */5 * * * * mount /data/Documents/media/vids
+
+
+this makes my system run the mount command to mount my sshfs share every 5 mins if its already mounted it returns 
+this error
+ > mount /data/Documents/media/vids
+fuse: mountpoint is not empty
+fuse: if you are sure this is safe, use the 'nonempty' mount option
+
+please do not use noempty the idea is if its already mounted the command fails however sshfs is not like NFS
+if the share is mounted and the network connection is broken for whatever reason then the mount point is lost and re mounting is required this is why i decided to still use NFS for all of my lower bandwidth requiring shares
+
+also this is optional but this howto directed you to use a script to mount the sshfs share after boot  you can use jbernardo's method if you wish however i specifically decided not to cause if you are booting the machine while the network is down for whatever reason it will hang on boot or at least it does for auto mounting NFS shares all my NFS shares are set to noauto in fstab for that reason i have not tried auto mounting sshfs while it is disconnected from the network so i cannot say whether the behavior is the same
+
+**It also helps** if you go to Utilites Setup / Setup / Media Settings / Video Settings / General Settings and uncheck video list browses files etc.
+
+---
+
+### Post by jbernardo on 2009-03-08
+What I did differently:
+I used different dirs for the server and the client
+I set up the UID and the GID on the fstab line, and I added the "allow_others" option, so that I can mount the remote dir automatically as root while booting; for that, I also used a dsa key generated by root to the remote user, instead of the local user key.
+To work as root, I used "sudo -s" instead of doing a "sudo" for every command.
+
+And thanks to you I now have a much snappier share across 802.11n!
+
+:popcorn:
+
+---
+
+### Post by oobe-feisty on 2009-03-08
+I hope it works out for you i have seen you posting in another thread about this i have had similar probs it can be very frustrating
+
+
+> **jbernardo said:**
+> What I did differently:
+I used different dirs for the server and the client
+I set up the UID and the GID on the fstab line, and I added the "allow_others" option, so that I can mount the remote dir automatically as root while booting; for that, I also used a dsa key generated by root to the remote user, instead of the local user key.
+To work as root, I used "sudo -s" instead of doing a "sudo" for every command.
+
+And thanks to you I now have a much snappier share across 802.11n!
+
+:popcorn:
+
+---
+
+### Post by Cardale on 2009-11-11
+How did you do this again?  I can't even find fuseutils.
+
+---
+

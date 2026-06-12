@@ -1,0 +1,54 @@
+---
+title: "Wakeup from Standby S3 with Remote doesnt work"
+date: 2009-01-11
+forum: Mythbuntu
+---
+
+### Post by stronzo on 2009-01-11
+Hi!
+I want to wake up my mythbuntu with my remote. its receiver is connected via usb. i got a wakeup working with the remote, but only once and never again. what have i done:
+*activated power on via usb (S3) in the BIOS
+*when the machine is in suspend mode, the receiver of the remote is still on (led light on), that means it has power
+*edited /etc/default/acpi-support , tried to add usbcore module to the whitelist, but doesnt work
+*i catted /proc/acpi/wakeup
+everything there is disabled
+
+USB0      S3     disabled  pci:0000:00:13.0
+USB2      S3     disabled  pci:0000:00:13.1
+
+if i now go to suspend, the machine will not react on my remote.
+
+
+if i activate one or both usbports that it looks like this
+
+USB2      S3     enabled  pci:0000:00:13.1
+
+and the go to suspend the machine immediately wakes up again.
+it seems that my remotereceiver is sending continously signals to the usb port..
+
+has anyone an idea how i can get this to work, or even the same problems?
+thanks for answers!
+
+---
+
+### Post by stronzo on 2009-01-15
+push
+
+---
+
+### Post by bmwman on 2009-01-16
+Let me know if you figure this out. I have the same problem. I can put the machine to Standby via the remote and the IR receiver is active because it blinks if I push a button on the remote. But the machine never turns back on with the remote unless I push the power button.
+
+---
+
+### Post by stronzo on 2009-01-20
+push....
+
+---
+
+### Post by stronzo on 2009-01-23
+no idea? anyone?
+please help me
+
+---
+

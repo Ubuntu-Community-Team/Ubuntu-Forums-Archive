@@ -1,0 +1,1082 @@
+---
+title: "Futaba VFD Display Configuration Problems in Mythbuntu"
+date: 2008-01-14
+forum: Mythbuntu
+---
+
+### Post by deepee_oz on 2008-01-14
+Hi All
+
+Hope someone out there can help, please.
+
+I have an MSI Live Barbones HTPC systm dual booting Vista and Mythbuntu.
+
+The Mythbuntu setup works very well and the ability to get the EPG direct from the  DVB stream is excellent. Much better than Vista
+
+I'm fairly new to Ubuntu and have hit a snag in the setup of the VFD (fancy LED as described in the MSI manual!) display.
+Although this is a multi-purpose device (also contains bluetooth and wi-fi)I only need the display to work.
+
+I fountd the setup instructions in the MythTV Wiki here:- [http://www.mythtv.org/wiki/index.php/Futaba](http://www.mythtv.org/wiki/index.php/Futaba)
+
+I eventually got the driver to compile (the necessary libraries are not included by default in Mythbuntu) but now have run into final configuration problems.
+
+The wiki says:
+
+./configure --enable-drivers=dm140
+make
+make install
+edit /usr/local/etc/LCDd.conf
+
+    * Change the driver to dm140
+    * Change the driver path from server/drivers to /usr/local/lib/lcdproc
+    * Check so the dm140.so file is copied to the directory /usr/local/lib/lcdproc/ also. If not, copy! You will find it in ./server/drivers. Make sure you spelled --enable-drivers with a 's' at the end! 
+
+I have been trying to mak sense of the LCD.conf and am not sure how to "change the driver to dm140" or "Change the driver path from server/drivers to /usr/local/lib/lcdproc"
+
+I have tried inserting these lines in various positions within the driver section but suspect I have syntax errors, as running /usr/local/sbin/LCDd -c /usr/local/sbin/LCDd.conf -d dm140 -r 5 in a terminal reports the following error:-
+
+root@mythtv:~# /usr/local/sbin/LCDd -c /usr/local/sbin/LCDd.conf -d dm140 -r 5
+LCDd version 0.5.2 starting
+Built on Jan 15 2008, protocol version 0.3, API version 0.5
+Using Configuration File: /usr/local/sbin/LCDd.conf
+Set report level to 5, output to stderr
+Server forking to background
+sock_create_inet_socket: Could not bind to port 13666 at address 127.0.0.1 - Address already in use
+sock_init: Error creating socket - Address already in use
+Critical error while initializing, abort.
+root@mythtv:~# 
+
+Also had to copy LCDd.conf from /usr/local/etc/ to /usr/local/sbin/LCDd.conf as the e path in the test instructions seems to be wrong
+
+I have pasted the unedited file below and any help with correct placement or syntax would be greatly appreciated.
+
+Thanks
+D
+
+# LCDd.conf -- configuration file for the LCDproc server daemon LCDd
+#
+# This file contains the configuration for the LCDd server.
+# 
+# The format is ini-file-like. It is divided into sections that start at
+# markers that look like [section]. Comments are all line-based comments,
+# and are lines that start with '#' or ';'.
+#
+# The server has a 'central' section named [server]. For the menu there is
+# a section called [menu]. Further each driver has a section which
+# defines how the driver acts.
+#
+# The drivers are activated by specifiying them in a driver= line in the
+# server section, like:
+#
+#   Driver=curses
+#
+# This tells LCDd to use the curses driver.
+# The first driver that is loaded and is capable of output defines the
+# size of the display. The default driver to use is curses.
+# If the driver is specified using the -d <driver> command line option,
+# the Driver= options in the config file are ignored.
+#
+# The drivers read their own options from the respective sections.
+
+
+
+## Server section with all kinds of settings for the LCDd server ##
+[server]
+
+# Tells the server to load the given drivers. Multiple lines can be given.
+# The name of the driver is case sensitive and determines the section
+# where to look for further configuration options of the specific driver
+# as well as the name of the dynamic driver module to load at runtime.
+# The latter one can be changed by giving af File= directive in the
+# driver specific section.
+#
+# The following drivers are supported:
+#   bayrad, CFontz, CFontz633, CFontzPacket, curses, CwLnx, ea65, 
+#   EyeboxOne, g15, glcdlib, glk, hd44780, icp_a106, imon, IOWarrior,
+#   irman, joy, lb216, lcdm001, lcterm, lirc, MD8800, ms6931, mtc_s16209x,
+#   MtxOrb, NoritakeVFD, picolcd, pyramid, sed1330, sed1520, serialPOS,
+#   serialVFD, sli, stv5730, svga, t6963, text, tyan, ula200, xosd
+Driver=dm140
+DriverPath=/usr/local/lib/lcdproc/
+# Tells the driver to bind to the given interface
+Bind=127.0.0.1
+
+# Listen on this specified port; defaults to 13666.
+Port=13666
+
+# Sets the reporting level; defaults to 2 (warnings and errors only).
+#ReportLevel=3
+
+# Should we report to syslog instead of stderr ? Default: no
+#ReportToSyslog=yes
+
+# Sets the default time in seconds to displays a screen.
+WaitTime=5
+
+# User to run as.  LCDd will drop its root priviledges,
+# if any, and run as this user instead.
+User=nobody
+
+# If yes, the the serverscreen will be rotated as a usual info screen. If no,
+# it will be a background screen, only visible when no other screens are
+# active.
+#ServerScreen=no
+
+# The server will stay in the foreground if set to true.
+#Foreground=no
+
+# Where can we find the driver modules ?
+# IMPORTANT: Make sure to change this setting to reflect your
+#            specific setup! Otherwise LCDd won't be able to find
+#            the driver modules and will thus not be able to
+#            function properly.
+# NOTE: Always place a slash as last character !
+DriverPath=/usr/local/lib/lcdproc/
+
+# GoodBye message: each entry represents a display line; default: builtin
+#GoodBye="Thanks for using"
+#GoodBye="   LCDproc!"
+
+# The "...Key=" lines define what the server does with keypresses that
+# don't go to any client.
+# These are the defaults:
+ToggleRotateKey=Enter
+PrevScreenKey=Left
+NextScreenKey=Right
+#ScrollUpKey=Up
+#ScrollDownKey=Down
+
+# If you have only 4 keys, you can choose to use this:
+#ToggleRotateKey=Enter
+#PrevScreenKey=Up
+#NextScreenKey=Down
+
+# If you have only 3 keys, you can choose to use this:
+#ToggleRotateKey=Enter
+#PrevScreenKey=Up
+
+
+
+## The menu section. The menu is an internal LCDproc client. ##
+[menu]
+# You can configure what keys the menu should use. Note that the MenuKey
+# will be reserved exclusively, the others work in shared mode.
+
+# The following works excellent with 4 keys or more.
+MenuKey=Escape
+EnterKey=Enter
+UpKey=Up
+DownKey=Down
+# If you have 6 keys you may define these as well
+#LeftKey=Left
+#RightKey=Right
+
+# If you have only 3 keys, you could use something like this:
+#MenuKey=Escape
+#EnterKey=Enter
+#DownKey=Down
+
+
+
+### Driver sections are below this line, in alphabetical order  ###
+
+
+## EMAC BayRAD driver ##
+[bayrad]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# Set the communication speed [default: 9600; legal:  1200, 2400, 9600, 19200]
+Speed=9600
+
+
+
+## CrystalFontz driver (for CF632 & CF634) ##
+[CFontz]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/ttyS0
+# Select the LCD size [default: 20x4]
+Size=20x4
+# Set the initial contrast [default: 560; legal: 0 - 1000]
+Contrast=350
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=0
+# Set the communication speed [default: 9600; legal: 1200, 2400, 9600, 19200 or 115200]
+Speed=9600
+# Set the firmware version (New means >= 2.0) [default: no; legal: yes, no]
+NewFirmware=no
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+# normally you shouldn't need this
+Reboot=no
+
+
+
+## CrystalFontz633 driver (for CF633 only) ##
+[CFontz633]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/ttyS0
+# Select the LCD type (size) [default: 16x2]
+Size=16x2
+# Set the initial contrast [default: 560; legal: 0 - 1000]
+Contrast=350
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=50
+# Set the communication speed [default: 9600; legal: 1200, 2400, 9600, 19200, 115200]
+Speed=19200
+# Set the firmware version (New means >= 2.0) [default: no; legal: yes, no]
+# Currently this flag is not in use, there is no such thing as NewFirmware. ;=)
+#NewFirmware=no
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+# I want to reboot the LCD to make sure we start from a known state
+Reboot=yes
+
+
+
+## CrystalFontz packet driver (for CF631, CF633 & CF635) ##
+[CFontzPacket]
+
+# Select the LCD model [default: 633; legal: 631, 633, 635]
+Model=635
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/ttyUSB0
+# Select the LCD size [default: depending on model: 635: 20x4, 631: 20x2, 633: 16x2]
+Size=20x4
+# Set the initial contrast [default: 560; legal: 0 - 1000]
+Contrast=350
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=50
+# Set the communication speed [default: 9600; legal: 1200, 2400, 9600, 19200, 115200]
+Speed=115200
+# Set the firmware version (New means >= 2.0) [default: no; legal: yes, no]
+# Currently this flag is not in use, there is no such thing as NewFirmware. ;=)
+#NewFirmware=no
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+# I want to reboot the LCD to make sure we start from a known state
+Reboot=yes
+
+
+
+## Curses driver ##
+[curses]
+
+# color settings
+# foreground color [default: blue]
+Foreground=blue
+# background color when "backlight" is off [default: cyan]
+Background=cyan
+# background color when "backlight" is on [default: red]
+Backlight=red
+
+# display size [default: 20x4]
+Size=20x4
+
+# What position (X,Y) to start the left top corner at...
+# Default: (7,7)
+TopLeftX=7
+TopLeftY=7
+
+# use ASC symbols for icons & bars [default: no; legal, yes, no]
+UseACS=no
+
+
+
+## Cwlinux driver ##
+[CwLnx]
+
+# Select the LCD model [default: 12232; legal: 12232, 1602]
+Model=12232
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/ttyUSB0
+
+# Select the LCD size [default: depending on model: 12232: 20x4, 1602: 16x2]
+Size=20x4
+
+# Set the communication speed [default: 19200; legal: 9600, 19200]
+Speed=19200
+
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+# normally you shouldn't need this
+Reboot=no
+
+# If you have a keypad connected. Keypad layout is currently not
+# configureable from the config file.
+Keypad=yes
+
+# If you have a non-standard keypad you can associate any keystrings to keys.
+# There are 6 input keys in the CwLnx hardware that generate characters
+# from 'A' to 'F'.
+#
+# The following is the built-in default mapping hardcoded in the driver.
+# You can leave those unchanged if you have a standard keypad.
+# You can change it if you want to report other keystrings or have a non
+# standard keypad.
+# KeyMap_A=Up
+# KeyMap_B=Down
+# KeyMap_C=Left
+# KeyMap_D=Right
+# KeyMap_E=Enter
+# KeyMap_F=Escape
+
+# keypad_test_mode permits to test keypad assignement
+# Default value is no
+#keypad_test_mode=yes
+
+
+
+## ea65 driver for the display in AOpen XC Cube AV EA65 media barebones ##
+[ea65]
+
+# Device is fixed /dev/ttyS1
+# Width and Height are fixed 9x1
+
+# As the VFD is self luminescent we don't have a backlight
+# But we can use the backlight functions to control the front LEDs
+# Brightness 0 to 299 -> LEDs off
+# Brightness 300 to 699 -> LEDs half bright
+# Brightness 700 to 1000 -> LEDs full bright
+Brightness=500
+# OffBrightness is the the value used for the 'backlight off' state
+OffBrightness=0
+
+
+
+## EyeboxOne driver ##
+[EyeboxOne]
+
+# Select the output device to use [default: /dev/ttyS1]
+#Device=/dev/cua01
+Device=/dev/ttyS1
+
+# Set the display size [default: 20x4]
+Size=20x4
+
+# Switch on the backlight? [default: yes]
+Backlight=yes
+
+# Switch on the cursor? [default: no]
+Cursor=no
+
+# Set the communication speed [default: 19200; legal: 1200, 2400, 9600, 19200]
+Speed=19200
+
+# Enter Key is a \r character, so it's hardcoded in the driver
+LeftKey=D
+RightKey=C
+UpKey=A
+DownKey=B
+EscapeKey=P
+
+# You can find out which key of your display sends which
+# character by setting keypad_test_mode to yes and running
+# LCDd. LCDd will output all characters it receives.
+# Afterwards you can modify the settings above and set
+# keypad_set_mode to no again.
+keypad_test_mode=no
+
+
+
+## g15 driver for Logitech G15 Keyboard LCDs ##
+[g15]
+
+# Display size (currently unused)
+size=20x5
+
+## glcdlib meta driver for graphical LCDs ##
+[glcdlib]
+
+## mandatory:
+
+# which graphical display supported by graphlcd-base to use [default: image]
+# (see /etc/graphlcd.conf for possible drivers)
+Driver=noritake800
+
+# no=use graphlcd bitmap fonts (they have only one size / font file)
+# yes=use fonts supported by FreeType2 (needs Freetype2 support in libglcdprocdriver and its dependants)
+UseFT2=yes
+
+# text resolution in fixed width characters [default: 16x4]
+# (if it won't fit according to available physical pixel resolutioni
+# and the minimum available font face size in pixels, then 
+# 'DebugBorder' will automatically be turned on)
+TextResolution=20x4
+
+# path to font file to use
+FontFile=/usr/share/fonts/corefonts/courbd.ttf
+
+## these only apply if UseFT2=yes:
+
+# character encoding to use
+CharEncoding=iso8859-2
+
+# minumum size in pixels in which fonts should be rendered
+MinFontFaceSize=7x12
+
+## optional:
+Brightness=50                   # Brightness (in %) if applicable
+Contrast=50                     # Contrast (in %) if applicable
+Backlight=no                    # Backlight if applicable
+UpsideDown=no                   # flip image upside down
+Invert=no                       # invert light/dark pixels
+ShowDebugFrame=no               # turns on/off 1 pixel thick debugging
+                                # border whithin the usable text area,
+                                # for setting up TextResolution and
+                                # MinFontFaceSize (if using FT2);
+ShowBigBorder=no                # border around the unused area
+ShowThinBorder=yes              # border around the unused area
+PixelShiftX=0
+PixelShiftY=2
+
+
+
+## Matrix Orbital GLK driver ##
+[glk]
+
+# select the serial device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# set the initial contrast value [default: 560; legal: 0 - 1000]
+Contrast=560
+
+# set the serial port speed [default: 19200; legal: 9600, 19200, 38400]
+Speed=19200
+
+
+
+## Hitachi HD44780 driver ##
+[hd44780]
+
+# Select what type of connection. See documentation for types.
+ConnectionType=4bit
+
+# Port where the LPT is. Usual values are 0x278, 0x378 and 0x3BC
+Port=0x378
+
+# Device of the serial interface (default is /dev/lcd)
+Device=/dev/ttyS0
+
+# Bitrate of the serial port (0 for interface default)
+Speed=0
+
+# If you have a keypad connected.
+# You may also need to configure the keypad layout further on in this file.
+Keypad=no
+
+# set the initial contrast (for bwctusb only) [default: 0; legal: 0 - 1000]
+Contrast=0
+
+# If you have a switchable backlight.
+Backlight=no
+
+# If you have the additional output port ("bargraph") and you want to
+# be able to control it with the lcdproc OUTPUT command
+OutputPort=no
+
+# Specifies if the last line is pixel addressable or it controls an
+# underline effect. [default: true (= pixel addressable); legal: yes, no]
+#Lastline=true
+
+# Specifies the size of the LCD.
+# In case of multiple combined displays, this should be the total size.
+Size=20x4
+
+# For multiple combined displays: how many lines does each display have.
+# Vspan=2,2 means both displays have 2 lines.
+#vspan=2,2
+
+# If you have an HD66712, a KS0073 or an other 'almost HD44780-compatible',
+# set this flag to get into extended mode (4-line linear).
+# This flag is NOT the old obsolete Extended option.
+#ExtendedMode=yes
+
+# Character map to to map ISO-8859-1 to the LCD's character set
+# [default: hd44780_default; legal: hd44780_default, ea_ks0073, sed1278f_0b ]
+Charmap=hd44780_default
+
+# If your display is slow and cannot keep up with the flow of data from
+# LCDd, garbage can appear on the LCDd. Set this delay factor to 2 or 4
+# to increase the delays. Default: 1.
+#DelayMult=2
+
+# Some displays (e.g. vdr-wakeup) need a message from the driver to that it
+# is still alive. When set to a value bigger then null the character in the
+# upper left corner is updated every <KeepAliveDisplay> seconds. Default: 0.
+#KeepAliveDisplay=0
+
+# If you experience occasional garbage on your display you can use this
+# option as workaround. If set to a value bigger than null it forces a
+# full screen refresh <RefreshDiplay> seconds. Default: 0.
+#RefreshDisplay=5
+
+# You can reduce the inserted delays by setting this to false.
+# On fast PCs it is possible your LCD does not respond correctly.
+# Default: true.
+DelayBus=true
+
+# If you have a keypad you can assign keystrings to the keys.
+# See documentation for used terms and how to wire it.
+# For example to give directly connected key 4 the string "Enter", use:
+#   KeyDirect_4=Enter
+# For matrix keys use the X and Y coordinates of the key:
+#   KeyMatrix_1_3=Enter
+KeyMatrix_4_1=Enter
+KeyMatrix_4_2=Up
+KeyMatrix_4_3=Down
+KeyMatrix_4_4=Escape
+
+
+
+## ICP A106 driver ##
+[icp_a106]
+Device=/dev/ttyS1
+
+
+
+## Code Mercenaries IO-Warrior driver ##
+[IOWarrior]
+
+# display dimensions
+Size=20x4
+
+# serial number [exactly as listed by usbview]
+# (if not given, the 1st IOWarrior found gets used)
+#SerialNumber=00000674
+
+# Specifies if the last line is pixel addressable or it controls an
+# underline effect. [default: true (= pixel addressable); legal: yes, no]
+#Lastline=true
+
+
+
+## Soundgraph/Ahanix/Silverstone/Uneed/Accent iMON driver ##
+[imon]
+
+# select the device to use
+Device=/dev/lcd0
+
+# display dimensions
+Size=16x2
+
+
+
+## IrMan driver ##
+[IrMan]
+#if in trouble with IrMan, try Lirc emulator for IrMan
+
+# Select the input device to use
+#Device=/dev/irman
+
+# Select the configuration file to use
+#Config=/etc/irman.cfg
+
+
+
+## Joystick driver ##
+[joy]
+
+# Select the input device to use [default: /dev/js0]
+Device=/dev/js0
+
+# set the axis map
+Map_Axis1neg=Left
+Map_Axis1pos=Right
+Map_Axis2neg=Up
+Map_Axis2pos=Down
+
+# set the button map
+Map_Button1=Enter
+Map_Button2=Escape
+
+
+
+## LB216 driver ##
+[lb216]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# Set the initial brightness [default: 255; legal: 0 - 255]
+Brightness=255
+
+# Set the communication speed [default: 9600; legal: 2400, 9600]
+Speed=9600
+
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+Reboot=no
+
+
+
+## LCDM001 driver ##
+[lcdm001]
+
+Device=/dev/ttyS1
+
+# keypad settings
+# Keyname      Function
+#              Normal context              Menu context
+# -------      --------------              ------------
+# PauseKey     Pause/Continue              Enter/select
+# BackKey      Back(Go to previous screen) Up/Left
+# ForwardKey   Forward(Go to next screen)  Down/Right
+# MainMenuKey  Open main menu              Exit/Cancel
+PauseKey=LeftKey
+BackKey=UpKey
+ForwardKey=DownKey
+MainMenuKey=RightKey
+
+# You can rearrange the settings here.
+# If your device is broken, have a look at server/drivers/lcdm001.h
+
+
+
+## HNE LCTerm driver ##
+[lcterm]
+Device=/dev/ttyS1
+Size=16x2
+
+
+
+## LIRC input driver ##
+[lirc]
+
+# Specify an alternative location of the lircrc file [default: ~/.lircrc]
+#lircrc=/etc/lircrc.lcdproc
+
+# Must be the same as in your lircrc
+#prog=lcdd
+
+
+
+##The driver for the VFD of the Medion MD8800 PC ##
+[MD8800]
+# device to use [default: /dev/ttyS1]
+#Device=/dev/ttyS1
+
+# display size [default: 16x2]
+#Size=16x2
+
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=50
+
+
+
+## MSI MS-6931 driver for displays in 1HU servers ##
+[ms6931]
+
+# device to use [default: /dev/ttyS1]
+Device=/dev/ttyS1
+
+# display size [default: 16x2]
+#Size=16x2
+
+
+
+## MTC-S16209x driver ##
+[mtc_s16209x]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# Set the initial brightness [default: 255; legal: 0 - 255]
+Brightness=255
+
+# Reinitialize the LCD's BIOS [default: no; legal: yes, no]
+Reboot=no
+
+
+
+## Matrix Orbital driver ##
+[MtxOrb]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/ttyS0
+
+# Set the display size [default: 20x4]
+Size=20x4
+
+# Set the display type [default: lcd; legal: lcd, lkd, vfd, vkd]
+Type=lkd
+
+# Set the initial contrast [default: 480]
+# NOTE: The driver will ignore this if the display
+#       is a vfd or vkd as they don't have this feature
+Contrast=480
+
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=0
+
+# Set the communication speed [default: 19200; legal: 1200, 2400, 9600, 19200]
+Speed=19200
+
+# The following table translates from MtxOrb key letters to logical key names.
+# By default no keys are mapped, meaning the keypad is not used at all.
+#KeyMap_A=Left
+#KeyMap_B=Right
+#KeyMap_C=Up
+#KeyMap_D=Down
+#KeyMap_E=Enter
+#KeyMap_F=Escape
+# See the [menu] section for an explanation of the key mappings
+
+# You can find out which key of your display sends which
+# character by setting keypad_test_mode to yes and running
+# LCDd. LCDd will output all characters it receives.
+# Afterwards you can modify the settings above and set
+# keypad_set_mode to no again.
+keypad_test_mode=no
+
+
+
+## Noritake VFD driver ##
+[NoritakeVFD]
+# device where the VFD is. Usual values are /dev/ttyS0 and /dev/ttyS1 [default: /dev/lcd]
+Device=/dev/ttyS0
+
+# Specifies the size of the LCD.
+Size=20x4
+
+# set the brightness
+Brightness=255
+
+# set the serial port speed [default: 9600, legal: 1200, 2400, 9600, 19200, 115200]
+Speed=9600
+
+# re-initialize VFD ?
+#Reboot=yes
+
+
+
+## Mini-box.com picoLCD (usblcd) driver ##
+[picolcd]
+# This is for the Mini-Box.com usblcd device that ships with the M300.  It can 
+# also be purchased separately but this driver has only been tested on the M300 
+# setup.
+
+# KeyTimeout is the time that LCDd spends waiting for a key press before cycling 
+# through other duties.  Higher values make LCDd use less CPU time and make 
+# key presses more detectable.  Lower values make LCDd more responsive but a 
+# little prone to missing key presses.  500 (.5 second) is the default and a
+# balanced value.
+KeyTimeout=500
+
+# Contrast: [default: 1000; legal: 0 - 1000]
+Contrast=1000
+
+# Light the keys? i[default: on; legal: on, off]
+Keylights=on
+
+# If Keylights is on, the you can unlight specific keys below:
+# Key0 is the directional pad.  Key1 - Key5 correspond to the F1 - F5 keys.  
+# There is no LED for the +/- keys.  This is a handy way to indicate to users 
+# which keys are disabled.  [default: on; legal: on, off]
+Key0Light=on
+Key1Light=on
+Key2Light=on
+Key3Light=on
+Key4Light=on
+Key5Light=on
+
+
+
+## Pyramid LCD driver ##
+[pyramid]
+
+# device to connect to [default: /dev/lcd]
+Device=/dev/ttyUSB0
+
+
+
+## Seiko Epson 1330 driver ##
+[sed1330]
+
+# Port where the LPT is. Common values are 0x278, 0x378 and 0x3BC
+Port=0x378
+
+# Type of LCD module (legal: G321D, G121C, G242C, G191D, G2446, SP14Q002)
+# Note: Currently only tested with G321D & SP14Q002.
+Type=G321D
+
+# Width x Height of a character cell in pixels [legal: 6x7 - 8x16; default: 6x10]
+CellSize=6x10
+
+# Select what type of connection [legal: classic, bitshaker; default: classic]
+ConnectionType=classic
+
+
+## Seiko Epson 1520 driver ##
+[sed1520]
+
+# Port where the LPT is. Usual values are 0x278, 0x378 and 0x3BC
+Port=0x378
+
+
+
+## serial POS display driver ##
+[serialPOS]
+
+# Device to use in serial modea [default: /dev/lcd]
+Device=/dev/lcd
+
+# Specifies the size of the display in characters. [default: 16x2]
+Size=16x2
+
+# Set the communication protocol to use with the POS display.
+# [default: AEDEX; legal: IEE, Epson, Emax, IBM, LogicControls, Ultimate]
+Type=AEDEX
+
+# communication baud rate with the display [default: 9600; legal: 1200, 2400, 19200, 115200]
+Speed=9600
+
+
+
+## Serial VFD driver ##
+## Drives various (see below) serial 5x7dot VFD's.  ##
+[serialVFD]
+
+# Specifies the displaytype.[default: 0]
+# 0 NEC (FIPC8367 based) VFDs.
+# 1 KD Rev 2.1.
+# 2 Noritake VFDs (*).
+# 3 Futaba VFDs
+# (* most should work, not testet yet.)
+Type=0
+
+# "no" if display connected serial, "yes" if connected parallel. [default: no(=serial)]
+use_parallel=no
+
+# Number of Custom-Characters [default: displaytype dependent]
+#Custom-Characters=0
+
+# Portaddress where the LPT is. Used in parallelmode only. Usual values are 0x278, 0x378 and 0x3BC
+Port=0x378
+
+# Device to use in serial mode. Usual values are /dev/ttyS0 and /dev/ttyS1
+Device=/dev/ttyS1
+
+# Specifies the size of the VFD.
+Size=20x2
+
+# Set the initial brightness [default: 1000; legal: 0 - 1000]
+# (4 steps 0-250, 251-500, 501-750, 751-1000)
+Brightness=1000
+# Set the initial off-brightness [default: 0; legal: 0 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+# (4 steps 0-250, 251-500, 501-750, 751-1000)
+OffBrightness=0
+
+# set the serial port speed [default: 9600; legal: 1200, 2400, 9600, 19200, 115200]
+Speed=9600
+
+# enable ISO 8859 1 compatibility [default: yes; legal: yes, no]
+#ISO_8859_1=yes
+
+
+
+## stv5730 driver ##
+[stv5730]
+
+# Port the device is connected to [default: 0x378]
+Port=0x378
+
+
+
+## SVGAlib driver ##
+[svga]
+
+# svgalib mode to use [default: G320x240x256; legal: supported svgalib modes]
+#Mode=G640x480x256
+
+# set display size [default: 20x4]
+Size=20x4
+
+# Set the initial contrast [default: 500; legal: 0 - 1000]
+# Can be set but does not change anything internally
+Contrast=500
+
+# Set the initial brightness [default: 1000; legal: 1 - 1000]
+Brightness=1000
+
+# Set the initial off-brightness [default: 500; legal: 1 - 1000]
+# This value is used when the display is normally
+# switched off in case LCDd is inactive
+OffBrightness=500
+
+
+
+## Text driver ##
+[text]
+# Set the display size [default: 20x4]
+Size=20x4
+
+
+
+## Toshiba T6963 driver ##
+[t6963]
+
+# set display size [default: 20x6]
+Size=20x6
+
+# port to use [default: 0x378; legal: 0x200 - 0x400]
+Port=0x378
+
+# Is ECP mode on? [default: yes; legal: yes, no]
+#ECPlpt=yes
+
+# Use graphics? [default: no; legal: yes, no]
+#graphic=no
+
+
+
+## Tyan Barebones LCD driver (GS10 & GS12 series) ##
+[tyan]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# Set the communication speed [default: 9600; legal: 4800, 9600]
+Speed=9600
+
+# set display size [default: 16x2]
+Size=16x2
+
+
+
+## ELV ula200 driver ##
+[ula200]
+
+# Select the LCD size [default: 20x4]
+Size=20x4
+
+# If you have a non standard keypad you can associate any keystrings to keys.
+# There are 6 input key in the CwLnx hardware that generate characters
+# from 'A' to 'F'.
+#
+# The following it the built-in default mapping hardcoded in the driver.
+# You can leave those unchanged if you have a standard keypad.
+# You can change it if you want to report other keystrings or have a non
+# standard keypad.
+# KeyMap_A=Up
+# KeyMap_B=Down
+# KeyMap_C=Left
+# KeyMap_D=Right
+# KeyMap_E=Enter
+# KeyMap_F=Escape
+
+
+
+## Wirz SLI LCD driver ##
+[sli]
+
+# Select the output device to use [default: /dev/lcd]
+Device=/dev/lcd
+
+# Set the communication speed [default: 19200; legal: 1200, 2400, 9600, 19200, 38400, 57600, 115200]
+Speed=19200
+
+
+
+## OnScreen Display using libxosd ##
+[xosd]
+
+# set display size [default: 20x4]
+Size=20x4
+
+# font to use, in XLFD format, as given by "xfontsel"
+Font=-*-terminus-*-r-*-*-*-320-*-*-*-*-*
+
+## DM140 VFD
+[dm140]
+
+
+# end d140
+
+# EOF
+
+---
+
+### Post by murchball on 2008-01-15
+I believe the driver is already set to dm140. It's the line that reads Driver=dm140 (line 44). The driver path is on line 79 and I believe it is already correct too. I think the wiki page was written for an older version. Try it again with the original file and see if it works. I also have the MSI MediaLive. I just hooked it to my TV and I'm having problems getting component out working, but I haven't messed with it much yet.
+
+---
+
+### Post by deepee_oz on 2008-01-15
+Hi Murchball
+
+Thanks for your reply.
+
+I tried to run it with the original LCD.conf but it still returns the error:-
+
+sock_create_inet_socket: Could not bind to port 13666 at address 127.0.0.1 - Address already in use
+sock_init: Error creating socket - Address already in use
+Critical error while initializing, abort.
+
+Any thoughts on what's gone wrong?
+
+Thanks
+D
+
+
+BTW, I haven't tried the MSI Live with component video output under MythTV, only HDMI and VGA. These both work well. I'll try the component output this evening and let you know.
+
+---
+
+### Post by murchball on 2008-01-16
+I didn't take good notes when I set this up, but here are the commands I typed from the command log
+
+sudo apt-get install libc6-dev g++
+tar xvf lcdproc-0.5.2-henlar-v0.2.tar.gz
+cd lcdprov-0.5.2/
+./configure --enable-drivers=dm140
+make
+sudo make install
+
+Then I just ran 
+sudo LCDd 
+and it seemed to work. Then I just configured it in Myth. I also just (visually) verified that my LCDd.conf file is identical to the one online. Not sure if it matters, but I am running the 64 bit version.
+
+I had a chance to mess with the TV out. I haven't figured out the component yet, but HDMI is working. I think there was an option in the BIOS to enable/disable HDMI and I'm wondering if by enabling that, I disabled the component. 
+
+Are you using the SPDIF out? I noticed that I have sound when I play HD OTA content but not when I play stuff that I captured over analog.
+
+---
+
+### Post by murchball on 2008-01-18
+Are you using a remote, deepee_oz? It seems like the IR reception range is pretty limited. I've tried with 2 different remotes and it seems to be limited to about 10 feet.
+
+---
+
+### Post by deepee_oz on 2008-02-01
+Sorry for late response. I'm using the remote as well as a Shintaro RF K'bd with trackball which has a much better range. I haven't got around to doing anything more with his but I now understand that the error message relates to the IP address already being used by the driver and it is trying to load it again. 
+I tried the component video out and I agree it is really awful. I'm using either VGA or HDMI and both work really well.
+
+---
+
+### Post by murchball on 2008-02-04
+I've got a wireless keyboard too, but the remote is a must for the wife acceptance :) I'll probably just try an external receiver.
+
+---
+

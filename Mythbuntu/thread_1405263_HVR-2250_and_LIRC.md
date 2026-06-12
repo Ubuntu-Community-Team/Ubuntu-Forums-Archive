@@ -1,0 +1,544 @@
+---
+title: "HVR-2250 and LIRC"
+date: 2010-02-12
+forum: Mythbuntu
+---
+
+### Post by efether on 2010-02-12
+First...the configuration information --
+
+I'm using the XFX Nvidia 8200 system board, with an AMD X4 620 processor and 4GB of RAM.  I have an HVR-2250 attached to an outside antenna for free HD streaming, and a PVR-250 connected to an old JVC Dish Network 3100 receiver for Satellite content.  The IR Blaster of choice is the USB-UIRT (details below) and the remote is the Logitech Harmony 510 programmed as a STREAMZAP PC Remote (so I can use the standard lircd.conf files provided by Myth)). The OS is Ubuntu 9.10 with all updates applied as of this date (12 Feb 2010).  Myth code is version 0.22+fixes22594-0ubuntu1.  lirc version is 0.8.6.
+
+Okay, now onto the interesting part where help is needed...long and short, my IR Blaster (the USB-UIRT) works flawlessly for both transmitting (to the old JVC DISH 3100 Satellite tuner) and receiving (from a Logitech Harmony Remote programmed as a STREAMZAP PC Remote, .  'irw' and 'irsend' both work perfect, and the changechannel.sh script works fine too.  
+
+Here's the catch....it works until I initialise the HVR-2250 adapter.
+
+Details:
+
+When I launch 'mythfrontend', the HVR-2250 doesn't work (the USB-UIRT ir blaster is working at this point).  I exit 'mythfrontend' and go into 'mythtv-setup' and simply do a quick channel scan (usually only a single channel, so I don't screw up my channel listings).  I then exit the setup without saving anything, nor do I run 'mythfilldatabase'...the database already has the line-up.  I relaunch the frontend...and now the TV tuner (HVR-2250) works.  HOWEVER, now the USB-UIRT no longer receives signals nor accepts signals from the Remote Control.  The 'irsend' command still works, and it will change the channel...but the remote is dead.  I believe the IR Blaster on the HVR-2250, while supposedly not working, is working enough to disable USB-UIRT receive function...or is taking over the ir reception or something...I'm not sure exactly what is happening or why...I can just recreate the problem and point to the smoking gun.
+
+Now, I got the HVR-2250 drivers as source and followed the instructions found here --
+
+[http://www.linuxtv.org/wiki/index.php/Hauppauge_WinTV-HVR-2200](http://www.linuxtv.org/wiki/index.php/Hauppauge_WinTV-HVR-2200)
+
+with the exception of the 'make' command.  I found this command worked better for me -- 'make CONFIG_DVB_FIREDTV:=n'  Everything else, and the source of the drivers remain the same as the directions specified. All forum posts state that the ir-blaster on the adapter does not fully functional.  There is some chatter about the receiver working, but not the transmitter.  I think this is pointing to the problem.
+
+Now, the USB-UIRT was purchased from here -- [http://www.usbuirt.com/](http://www.usbuirt.com/) -- a long time ago (way back around 2000-2001).  It's worked fine over the years (with some lirc hacking), but modern lirc drivers include the 'usb_uirt_raw' drivers, and it works fine, pretty much out of the box.
+
+So, from what I'm seeing...the USB-UIRT works fine, but somehow inhibits the HVR-2250 from initialising (or stops it, not sure which).  Once I force the HVR-2250 to initialise by going into the 'mythtv-setup' and doing a channel scan, the USB-UIRT no longer receives a signal.  I suspect the ir blaster on the HVR-2250 has stepped on the 'usb_uirt_raw' driver, or steps on the /dev/ttyUSB0 device.  Again, not sure...the /var/log/message file isn't catching anything regarding lirc, or its service start.
+
+So, here's the hardware.conf config --
+
+> 
+# /etc/lirc/hardware.conf
+#
+#Chosen Remote Control
+REMOTE="Streamzap PC Remote"
+REMOTE_MODULES="lirc_dev lirc_streamzap"
+REMOTE_DRIVER="usb_uirt_raw"
+REMOTE_DEVICE="/dev/ttyUSB0"
+REMOTE_SOCKET=""
+REMOTE_LIRCD_CONF="streamzap/lircd.conf.streamzap"
+REMOTE_LIRCD_ARGS=" -p 666 "
+
+#Chosen IR Transmitter
+TRANSMITTER="USB-UIRT2 : Dish Receiver"
+TRANSMITTER_MODULES=""
+TRANSMITTER_DRIVER="usb_uirt_raw"
+TRANSMITTER_DEVICE="/dev/ttyUSB0"
+TRANSMITTER_SOCKET=""
+TRANSMITTER_LIRCD_CONF="dish/general.conf"
+TRANSMITTER_LIRCD_ARGS=" -p 666 "
+
+#Enable lircd
+START_LIRCD="true"
+
+#Don't start lircmd even if there seems to be a good config file
+#START_LIRCMD="false"
+
+#Try to load appropriate kernel modules
+LOAD_MODULES="true"
+
+# Default configuration files for your hardware if any
+LIRCMD_CONF=""
+
+#Forcing noninteractive reconfiguration
+#If lirc is to be reconfigured by an external application
+#that doesn't have a debconf frontend available, the noninteractive
+#frontend can be invoked and set to parse REMOTE and TRANSMITTER
+#It will then populate all other variables without any user input
+#If you would like to configure lirc via standard methods, be sure
+#to leave this set to "false"
+FORCE_NONINTERACTIVE_RECONFIGURATION="false"
+START_LIRCMD=""
+
+
+The /etc/lirc/lird.conf file is the standard one generated by mythbuntu, but is here for completeness sake --
+
+> 
+#This configuration has been automatically generated via
+#the Ubuntu LIRC package maintainer scripts.
+#
+#It includes the default configuration for the remote and/or
+#transmitter that you have selected during package installation.
+#
+#Feel free to add any custom remotes to the configuration
+#via additional include directives or below the existing
+#Ubuntu include directives from your selected remote and/or
+#transmitter.
+
+#Configuration for the Streamzap PC Remote remote:
+include "/usr/share/lirc/remotes/streamzap/lircd.conf.streamzap"
+
+#Configuration for the USB-UIRT2 : Dish Receiver transmitter:
+include "/usr/share/lirc/extras/transmitters/dish/general.conf"
+
+
+I swapped out the '/usr/share/lirc/extras/transmitters/dish/general.conf' file with a known good DISH_3100 file.  Here it is --
+
+> 
+begin remote
+
+  name DISH_3100
+  bits           16
+  flags SPACE_ENC
+  eps            30
+  aeps          100
+
+  header        400  6100
+  one           400  1700
+  zero          400  2800
+  ptrail        400
+  gap          6200
+  min_repeat      4
+  toggle_bit      0
+
+  frequency    40000
+
+      begin codes
+          power                    0x0000000000000800
+          0                        0x0000000000004400
+          1                        0x0000000000001000
+          2                        0x0000000000001400
+          3                        0x0000000000001800
+          4                        0x0000000000002000
+          5                        0x0000000000002400
+          6                        0x0000000000002800
+          7                        0x0000000000003000
+          8                        0x0000000000003400
+          9                        0x0000000000003800
+          up                       0x0000000000006800
+          cancel                   0x0000000000004800
+      end codes
+
+end remote 
+
+
+This file has worked for almost a decade, and continues to work...until HVR-2250 wakes up.
+
+Here's the '/usr/share/lirc/remotes/streamzap/lircd.conf.streamzap', again...for completeness sake --
+
+> 
+#
+# this config file was automatically generated
+# using lirc-0.7.1-CVS(serial) on Fri Feb  4 23:20:56 2005
+#
+# contributed by Christoph Bartelmus
+#
+# brand:                       Streamzap
+# model no. of remote control: PC Remote
+# devices being controlled by this remote: USB receiver
+#
+
+begin remote
+
+  name  Streamzap_PC_Remote
+  bits            6
+  flags RC5|CONST_LENGTH
+  eps            30
+  aeps          100
+
+  one           889  889
+  zero          889  889
+  plead         889
+  pre_data_bits   8
+  pre_data       0xA3
+  gap          108344
+  toggle_bit      2
+
+
+      begin codes
+          0                        0x00
+          1                        0x01
+          2                        0x02
+          3                        0x03
+          4                        0x04
+          5                        0x05
+          6                        0x06
+          7                        0x07
+          8                        0x08
+          9                        0x09
+          POWER                    0x0A
+          MUTE                     0x0B
+          CH_UP                    0x0C
+          VOL_UP                   0x0D
+          CH_DOWN                  0x0E
+          VOL_DOWN                 0x0F
+          UP                       0x10
+          LEFT                     0x11
+          OK                       0x12
+          RIGHT                    0x13
+          DOWN                     0x14
+          MENU                     0x15
+          EXIT                     0x16
+          PLAY                     0x17
+          PAUSE                    0x18
+          STOP                     0x19
+          |<<                      0x1A
+          >>|                      0x1B
+          RECORD                   0x1C
+          <<                       0x1D
+          >>                       0x1E
+          RED                      0x20
+          GREEN                    0x21
+          YELLOW                   0x22
+          BLUE                     0x23
+      end codes
+
+end remote
+
+
+and the '/usr/local/bin/changechannel.sh' script...again, for completeness sake --
+
+> 
+#!/bin/sh
+REMOTE_NAME=DISH_3100
+for digit in $(echo $1 | sed -e 's/./& /g');do
+/usr/bin/irsend SEND_ONCE $REMOTE_NAME $digit 2>/dev/null
+sleep 0.2
+done 
+
+
+and last, but not least...the '~/.lirc/mythtv' file --
+
+> 
+# LIRCRC Auto Generated by Mythbuntu Lirc Generator
+# Author(s): Mario Limonciello, Nick Fox
+# Created for use with Mythbunt
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = PLAY
+    config = P
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = RIGHT
+    config = Right
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = MUTE
+    config = |
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = VOL_DOWN
+    config = [
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = STOP
+    config = Escape
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 7
+    config = 7
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = VOL_UP
+    config = ]
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 1
+    config = 1
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = DOWN
+    config = Down
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 0
+    config = 0
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 5
+    config = 5
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 2
+    config = 2
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 4
+    config = 4
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = PAUSE
+    config = P
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = OK
+    config = Return
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = MENU
+    config = M
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 6
+    config = 6
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = UP
+    config = Up
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = CH_DOWN
+    config = /
+    #config = Down
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = RECORD
+    config = R
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = EXIT
+    config = Escape
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 3
+    config = 3
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = CH_UP
+    config = x
+    #config = Up
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 8
+    config = 8
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = 9
+    config = 9
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = LEFT
+    config = Left
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = RED
+    config = z
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = GREEN
+    config = s
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = YELLOW
+    config = i
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = BLUE
+    config = ?
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = <<
+    config = Rewind
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = >>
+    config = Forward
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = |<<
+    config = PgUp   
+    repeat = 0
+    delay = 0
+end
+
+begin
+    remote = Streamzap_PC_Remote
+    prog = mythtv
+    button = >>|
+    config = PgDown
+    repeat = 0
+    delay = 0
+end
+
+
+So, I need a little help...my first thought is to re-compile the HVR-2250 driver to disable the IR Blaster, or not even put the code in.  Or...simply use the  IR Blaster in the HVR-2250 as the receiver, and keep the USB-UIRT as my transmitter.  Anyone have any solutions, or other ideas??  
+
+Thanks a million!!
+
+Eric Fether
+
+---
+
