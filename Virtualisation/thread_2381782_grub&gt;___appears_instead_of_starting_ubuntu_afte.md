@@ -1,0 +1,406 @@
+---
+title: "grub&gt; _ appears instead of starting ubuntu after deletion of snapshots in VirtualBox"
+date: 2018-01-05
+forum: Virtualisation
+---
+
+### Post by lesscaffee on 2018-01-05
+[COLOR=#000000][FONT=&amp][B]Problem: 
+[/B]Ubuntu operating system is not started. Instead of it the gnu grub bash-like terminal appears:
+[/FONT][/COLOR]
+```
+GNU GRUB version 2.02~beta2-9ubuntu1.12
+
+Minimal BASH-like line editing is supported. For the first word, TAB lists possible command completions. Anywhere else TAB lists possible device or file completions.
+
+grub> _
+```
+
+[COLOR=#000000][FONT=&amp][ATTACH=CONFIG]278059[/ATTACH]
+
+This is shown if I do grub> ls (hd0<TAB>:[/FONT][/COLOR]
+[ATTACH=CONFIG]278056[/ATTACH]
+[COLOR=#000000][FONT=&amp]
+Before the grub terminal appears I was able to catch some errors:[/FONT][/COLOR]
+[ATTACH=CONFIG]278057[/ATTACH]
+[COLOR=#000000][FONT=&amp]
+The VirtualBox menu for selection of boot devices can be triggered:[/FONT][/COLOR]
+[ATTACH=CONFIG]278058[/ATTACH]
+
+[COLOR=#000000][FONT=&amp][B]
+Steps applied which lead to problem (Before having applied these steps everything worked since months without problems!):
+[/B][/FONT][/COLOR]
+
+[LIST]
+[*]Open Oracle VirtualBox Gui (v5.1.30).
+[*]Select virtual machine.
+[*]Go to tab "Snapshots".
+[*]Delete step by step each existing snapshot.
+[*]The deletion executed without failures (at least nothing poped up on the gui).
+[*]Start virtual machine in the same Oracle VirtualBox GUI.
+[*]Windows open and the grub terminal appears instead of loading the ubuntu operating system.
+[/LIST]
+[COLOR=#000000][FONT=&amp]
+
+I already tried to create a new virtual machine and apply the same vdi hard disk to it but the same problem occurs. This tells me that something bad changed in the vdi file, or?
+
+[/FONT][/COLOR][COLOR=#000000]I'm able to assign an optical drive, e.g. a ubuntu live disc, and VirtualBox starts it normally without any problem.[/COLOR][COLOR=#000000][FONT=&amp]
+Using a Ubuntu Live CD within VirtualBox I'm still able to access the partition and all of the data which means I can rescue that in that way. So, the system is still there, it is not deleted, but it cannot be started![/FONT][/COLOR]
+[COLOR=#000000][FONT=&amp]However, I don't want to do it in that way, since I think VirtualBox destroyed the grub menu.lst or any other configuration in the boot chain which finally prevents starting ubuntu correctly![/FONT][/COLOR]
+[COLOR=#000000][FONT=&amp]Currently I'm searching and trying to create the origin assignments within grub so that the right still existing kernel and so on can be triggered and the ubuntu system can be started again normally.
+[ATTACH=CONFIG]278055[/ATTACH][/FONT][/COLOR]
+
+
+There is a strange thing I discovered so far: the grub.cfg contains of this defect ubuntu (14.04) system contains non-UTF-8 content (checked witzh unix command less). I checked the grub.cfg of another working ubuntu (16.04) using same VirtualBox and the grub.cfg contains human-readable UTF-8 content...
+
+
+[LIST=1]
+[*]is the grub.cfg file corrupted?
+[*]is maybe the menu-lst file missing or corrupted (how can I check this)?
+[/LIST]
+[COLOR=#000000][FONT=&amp]
+Please help![/FONT][/COLOR]
+
+---
+
+### Post by oldfred on 2018-01-05
+Moved to virtualization sub-forum.
+
+Do not know virtual installs.
+
+Grub has not used menu.lst since grub legacy back in 2009.
+
+With grub2 you have a grub.cfg which is the menu you see and some settings.
+If old BIOS configuration, not newer UEFI:
+Normally grub is in MBR and that starts boot process, and then part of grub, core.img which is in the sectors after the MBR find and load grub.cfg.
+
+Can you run Boot-Repair on your virtual install?
+
+       May be best to see details, you can run from your Ubuntu live installer or any working install, use ppa version not older Boot-Repair ISO:
+Post the link to the Create BootInfo summary report. Is part of Boot-Repair:
+[https://help.ubuntu.com/community/Boot-Info](https://help.ubuntu.com/community/Boot-Info) and:
+[https://sourceforge.net/p/boot-repair/home/Home/](https://sourceforge.net/p/boot-repair/home/Home/)
+
+---
+
+### Post by lesscaffee on 2018-01-05
+Thank you very much for your reply!
+
+I will try out next boot-repair, since I was not totally successful with editing the possibly corrupted grub.cfg file (in /media/ubuntu/<id_of_megabyte-big_partition>/grub/grub.cfg) with human-readable content. The result of it:
+
+
+[LIST]
+[*]the grub menu is loaded now and lists the kernel options I had edited in the grub.cfg file:
+[ATTACH=CONFIG]278065[/ATTACH]
+I don't know what 'serial console 115200' means and if that has any effect??
+
+[ATTACH=CONFIG]278064[/ATTACH]
+[*]memtest86 runs failure-free
+[*]however when selecting ubuntu to start, the following errors appear:
+
+[ATTACH=CONFIG]278063[/ATTACH]
+[/LIST]
+
+This is the what I edited in the grub.cfg file after I had retrieved in the live-cd ubuntu information about logic volumes and groups with (sudo vgdisplay and sudo lvdisplay):
+
+```
+## DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+
+### BEGIN /etc/grub.d/00_header ###
+if [ -s $prefix/grubenv ]; then
+  set have_grubenv=true
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+fi
+
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+
+export menuentry_id_option
+
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+function recordfail {
+  set recordfail=1
+  if [ -n "${have_grubenv}" ]; then if [ -z "${boot_once}" ]; then save_env recordfail; fi; fi
+}
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+
+if [ x$feature_default_font_path = xy ] ; then
+   font=unicode
+else
+insmod part_msdos
+insmod lvm
+insmod ext2
+set root='lvmid/cjhDLV-enje-9nc3-1YvI-0AMT-sbid-Q30obB/QhHQq7-l4is-gBkf-eb4i-cKFp-ZeRF-i1rpzP'
+if [ x$feature_platform_search_hint = xy ]; then
+  search --no-floppy --fs-uuid --set=root --hint='lvmid/cjhDLV-enje-9nc3-1YvI-0AMT-sbid-Q30obB/QhHQq7-l4is-gBkf-eb4i-cKFp-ZeRF-i1rpzP'  a354d856-8285-4612-921c-3b2f99c6c40b
+else
+  search --no-floppy --fs-uuid --set=root a354d856-8285-4612-921c-3b2f99c6c40b
+fi
+    font="/usr/share/grub/unicode.pf2"
+fi
+
+
+if loadfont $font ; then
+  set gfxmode=auto
+  load_video
+  insmod gfxterm
+  set locale_dir=$prefix/locale
+  set lang=en_US
+  insmod gettext
+fi
+terminal_output gfxterm
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=30
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=hidden
+    set timeout=0
+  # Fallback hidden-timeout code in case the timeout_style feature is
+  # unavailable.
+  elif sleep --interruptible 0 ; then
+    set timeout=0
+  fi
+fi
+### END /etc/grub.d/00_header ###
+
+
+### BEGIN /etc/grub.d/05_debian_theme ###
+set menu_color_normal=white/black
+set menu_color_highlight=black/light-gray
+if background_color 44,0,30,0; then
+  clear
+fi
+### END /etc/grub.d/05_debian_theme ###
+
+
+### BEGIN /etc/grub.d/10_linux ###
+function gfxmode {
+    set gfxpayload="${1}"
+    if [ "${1}" = "keep" ]; then
+        set vt_handoff=vt.handoff=7
+    else
+        set vt_handoff=
+    fi
+}
+if [ "${recordfail}" != 1 ]; then
+  if [ -e ${prefix}/gfxblacklist.txt ]; then
+    if hwmatch ${prefix}/gfxblacklist.txt 3; then
+      if [ ${match} = 0 ]; then
+        set linux_gfx_mode=keep
+      else
+        set linux_gfx_mode=text
+      fi
+    else
+      set linux_gfx_mode=text
+    fi
+  else
+    set linux_gfx_mode=keep
+  fi
+else
+  set linux_gfx_mode=text
+fi
+export linux_gfx_mode
+menuentry 'Ubuntu' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-simple-a354d856-8285-4612-921c-3b2f99c6c40b' {
+    recordfail
+    load_video
+    gfxmode $linux_gfx_mode
+    insmod gzio
+    if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    else
+      search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    fi
+        linux    /vmlinuz-3.13.0-137-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+    initrd    /initrd.img-3.13.0-137-generic
+}
+submenu 'Advanced options for Ubuntu' $menuentry_id_option 'gnulinux-advanced-a354d856-8285-4612-921c-3b2f99c6c40b' {
+    menuentry 'Ubuntu, with Linux 3.13.0-137-generic' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-137-generic-advanced-a354d856-8285-4612-921c-3b2f99c6c40b' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        else
+          search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        fi
+        echo    'Loading Linux 3.13.0-137-generic ...'
+            linux    /vmlinuz-3.13.0-137-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-137-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-137-generic (upstart)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-137-generic-init-upstart-a354d856-8285-4612-921c-3b2f99c6c40b' {
+        recordfail
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        else
+          search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        fi
+        echo    'Loading Linux 3.13.0-137-generic ...'
+            linux    /vmlinuz-3.13.0-137-generic root=/dev/mapper/ubuntu--vg-root ro  quiet splash $vt_handoff init=/sbin/upstart
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-137-generic
+    }
+    menuentry 'Ubuntu, with Linux 3.13.0-137-generic (recovery mode)' --class ubuntu --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-3.13.0-137-generic-recovery-a354d856-8285-4612-921c-3b2f99c6c40b' {
+        recordfail
+        load_video
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_msdos
+        insmod ext2
+        set root='hd0,msdos1'
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        else
+          search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+        fi
+        echo    'Loading Linux 3.13.0-137-generic ...'
+            linux    /vmlinuz-3.13.0-137-generic root=/dev/mapper/ubuntu--vg-root ro recovery nomodeset 
+        echo    'Loading initial ramdisk ...'
+        initrd    /initrd.img-3.13.0-137-generic
+    }
+}
+
+
+### END /etc/grub.d/10_linux ###
+
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+
+
+### END /etc/grub.d/20_linux_xen ###
+
+
+### BEGIN /etc/grub.d/20_memtest86+ ###
+menuentry 'Memory test (memtest86+)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    else
+      search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    fi
+    knetbsd    /memtest86+.elf
+}
+menuentry 'Memory test (memtest86+, serial console 115200)' {
+    insmod part_msdos
+    insmod ext2
+    set root='hd0,msdos1'
+    if [ x$feature_platform_search_hint = xy ]; then
+      search --no-floppy --fs-uuid --set=root --hint-bios=hd0,msdos1 --hint-efi=hd0,msdos1 --hint-baremetal=ahci0,msdos1  6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    else
+      search --no-floppy --fs-uuid --set=root 6f4539bb-ef7a-444f-a1b6-742d5c79798c
+    fi
+    linux16    /memtest86+.bin console=ttyS0,115200n8
+}
+### END /etc/grub.d/20_memtest86+ ###
+
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+
+### BEGIN /etc/grub.d/30_uefi-firmware ###
+### END /etc/grub.d/30_uefi-firmware ###
+
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+
+```
+
+
+Since all data is unchanged and accessible and the ubuntu system just gets not started by grub, that virtualbox maybe just corrupted e.g. the grub.cfg file.
+My hope is therefore to just restore the right configuration in the grub.cfg file and magically the system starts again. :)
+But so far that doesn't work because of the errors showed above. :(
+
+---
+
+### Post by oldfred on 2018-01-05
+Also do not know LVM type installs.
+
+But bad magic number means you did not preform correct incantations. :)
+
+Or really issue is versions of grub do not match.
+If you chrooted and reinstalled grub to MBR, it may not be version in your install. Or you did not mount both /boot & / (in LVM) when reinstalling grub so it did not correctly update.
+If LVM is also encrypted you have to unencrypt as part of grub reinstall or with Boot-Repair.
+
+If you use Boot-Repair's full reinstall of grub in advanced options, it may work. 
+Boot-Repair is supposed to work with LVM, but make sure both /boot & LVM are mounted.
+
+---
+
