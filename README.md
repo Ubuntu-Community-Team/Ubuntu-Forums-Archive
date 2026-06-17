@@ -18,5 +18,12 @@ ubuntu-forums-archive/
 └── ...
 ```
 
+## How to search the archives
+While everyone can download or clone the archives, it's not always convenient or practical. There are a handful of efforts to provide a GUI for easily browsing the forums content:
+
+[Ubuntu Forums Web UI](https://ubuntu-community-team.github.io/ubuntu-forums-archive-webui/) - Simple web based index for the forums that allows you to browse by category and search for threads by their title.
+
+[Ubuntu Forums Archive Viewer](https://ubuntuforums.popey.com/) - View Ubuntu Forums conversations in the classic, Forums style and search from them by their ID or old Forums URL.
+
 ## Disclaimer
 The Ubuntu Forums Archive is a community led effort and is not maintained or affiliated with Canonical Ltd.
